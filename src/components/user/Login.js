@@ -89,7 +89,7 @@ const Login = ({ history, location }) => {
                     <div className="row">
                         <div className="col-md-6 login-bg card-height d-none d-md-block d-lg-block d-xl-block">
                         <div className="pd-50">
-                            <img src="./assets/img/logo.svg" className="img-fluid logo" alt="" srcset="" />
+                            <img src="./assets/img/logo.svg" className="img-fluid logo" alt="" srcSet="" />
                         </div>
                         </div>
                         <div className="col-md-6 login-side">
@@ -108,7 +108,6 @@ const Login = ({ history, location }) => {
                                         placeholder="Username" 
                                         type="text"
                                         id="email_field"
-                                        className="form-control"
                                         value={userName}
                                         onChange={(e) => setUsername(e.target.value)}
                                     />
@@ -119,11 +118,9 @@ const Login = ({ history, location }) => {
                                         placeholder="Password"
                                         type="password"
                                         id="password_field"
-                                        className="form-control"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                     />
-                                    <input type="password" className="form-control new" placeholder="Password" />
                                 </div>
                                 <div className="form-row mg-t-30">
                                     <div className="form-group col-md-6 col-6">
@@ -142,13 +139,13 @@ const Login = ({ history, location }) => {
                                     id="login_button"
                                     className="btn btn-primary btn-block btn-lg py-15"
                                     type="submit"
-                                    className="py-3 btn btn-block"
+                                    // className="py-3 btn btn-block"
                                     >
                                     LOGIN
                                     </button>
                                     {/* <a href="./campaign.html" type="submit" className="btn btn-primary btn-block btn-lg py-15">Login</a> */}
                                     </div>
-                                    <a href="./register.html"><span className="tx-dark" style={{color: "#000;", textDecoration: "underline;"}}>Don’t have an account yet? </span> <span style={{textDecoration: "underline;"}}>Sign Up.</span></a>
+                                    <Link to={"/register"}><span className="tx-dark" style={{color: "#000;", textDecoration: "underline;"}}>Don’t have an account yet? </span> <span style={{textDecoration: "underline;"}}>Sign Up.</span></Link>
                                 
                                 </div>
                                 </form>

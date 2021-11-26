@@ -71,10 +71,12 @@ function App() {
         <Router>
           <Routes>
             <Route path='/' element={<Home />}/>
-            <Route path='/login' element={<Login />} />
             </Routes>
             <Routes>
-            <Route path="/register" component={Register} />
+              <Route path='/login' element={<Login />} />
+            </Routes>
+            <Routes>
+            <Route path="/register" element={<Register />} />
           </Routes>
         </Router>
       </div>

@@ -22,7 +22,7 @@ const Footer = () => {
                     </div>
                     <div className="col-md-6 col-12">
                     <form action="">
-                        <label for="" className="tx-16 tx-bold footer-label">Subscribe to our newsletter</label>
+                        <label htmlFor="" className="tx-16 tx-bold footer-label">Subscribe to our newsletter</label>
                         <div className="input-group pd-5 bg-white">
                         <input type="text" className="form-control bd-0" placeholder="" aria-label="Recipient's username" aria-describedby="button-addon2" />
                         <div className="input-group-append">

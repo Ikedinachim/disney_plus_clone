@@ -4,48 +4,51 @@ import Pagination from "react-js-pagination"
 import Slider from "rc-slider"
 import 'rc-slider/assets/index.css';
 
-import MetaData from "./layout/MetaData";
-import Product from "./product/Product"
-import Loader from "./layout/Loader"
+// import MetaData from "./layout/MetaData";
+// import Product from "./product/Product"
+// import Loader from "./layout/Loader"
 
-import { useDispatch, useSelector } from "react-redux";
-import { useAlert } from "react-alert";
-import { getProducts } from "../actions/productActions";
+// import { useDispatch, useSelector } from "react-redux";
+// import { useAlert } from "react-alert";
+// import { getProducts } from "../actions/productActions";
 
-import High from "../assets/img/High_return_on_investment.svg"
+import High from "../assets/img/High_return_on_investment.svg";
+import Smile from "../assets/img/woman_smiling.png";
+// "./assets/img/Increase_Leads.svg"
+// "/assets/img/High_return_on_investment.svg"
 
-const { createSliderWithTooltip } = Slider;
-const Range = createSliderWithTooltip(Slider.Range)
+// const { createSliderWithTooltip } = Slider;
+// const Range = createSliderWithTooltip(Slider.Range)
 
 const Home = ({ match }) => {
 
-    const [currentPage, setCurrentPage] = useState(1)
-    const [price, setPrice] = useState([1, 250000])
-    const [category, setCategory] = useState('')
-    const [rating, setRating] = useState(0);
+    // const [currentPage, setCurrentPage] = useState(1)
+    // const [price, setPrice] = useState([1, 250000])
+    // const [category, setCategory] = useState('')
+    // const [rating, setRating] = useState(0);
 
-    const categories = [
-        'Electronic',
-        'Camera',
-        'Laptops',
-        'Accessories',
-        'Headphones',
-        'Food',
-        'Books',
-        'Clothes/Shoes',
-        'Beauty/Health',
-        'Sports',
-        'Outdoor',
-        'Home'
-    ]
+    // const categories = [
+    //     'Electronic',
+    //     'Camera',
+    //     'Laptops',
+    //     'Accessories',
+    //     'Headphones',
+    //     'Food',
+    //     'Books',
+    //     'Clothes/Shoes',
+    //     'Beauty/Health',
+    //     'Sports',
+    //     'Outdoor',
+    //     'Home'
+    // ]
 
-    const alert = useAlert();
-    const dispatch = useDispatch();
+    // const alert = useAlert();
+    // const dispatch = useDispatch();
 
-    const filteredProductsCount = useSelector(state => state.products || {} );
-    const { loading, products, error, productsCount, resPerPage } = useSelector(
-        (state) => state.products
-    )
+    // const filteredProductsCount = useSelector(state => state.products || {} );
+    // const { loading, products, error, productsCount, resPerPage } = useSelector(
+    //     (state) => state.products
+    // )
 
     // const keyword = match.params.keyword
 
@@ -60,9 +63,9 @@ const Home = ({ match }) => {
 
     // }, [dispatch, alert, error, keyword, currentPage, price, category, rating]);
 
-    function setCurrentPageNo(pageNumber) {
-        setCurrentPage(pageNumber)
-    }
+    // function setCurrentPageNo(pageNumber) {
+    //     setCurrentPage(pageNumber)
+    // }
 
     // let count = productsCount;
     // if(keyword) {
@@ -343,7 +346,7 @@ const Home = ({ match }) => {
                         
                     </div>
                     <div className=" mg-t-20 pd-md-t-40 order-1 order-md-2 pd-md-x-0 mar-left">
-                        <img src="./assets/img/woman_smiling.png" className="img-fluid" data-aos="fade-down" data-aos-duration="3000" alt="" srcset="" />
+                        <img src={Smile} className="img-fluid" data-aos="fade-down" data-aos-duration="3000" alt="" srcset="" />
                     </div>
                     </div>
                 

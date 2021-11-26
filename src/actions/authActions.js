@@ -62,7 +62,7 @@ export const login = (username, password) => async (dispatch) => {
 
         dispatch({
             type: LOGIN_SUCCESS,
-            payload: data.user
+            payload: data.data.user
         })
         
     } catch (error) {

@@ -4,9 +4,9 @@ import { BrowserRouter, Route, Routes, Link } from 'react-router-dom'
 
 import Logo from "../../assets/img/logo2.png"
 
-import { useDispatch, useSelector } from 'react-redux'
-import { useAlert } from 'react-alert'
-import { logout } from '../../actions/authActions'
+// import { useDispatch, useSelector } from 'react-redux'
+// import { useAlert } from 'react-alert'
+// import { logout } from '../../actions/authActions'
 
 // import "../../App.css";
 import "../../dashforge.css";
@@ -16,16 +16,16 @@ import Search from "./Search";
 
 const Header = () => {
 
-    const alert = useAlert()
-    const dispatch = useDispatch()
+    // const alert = useAlert()
+    // const dispatch = useDispatch()
 
-    const { user, loading } = useSelector(state => state.auth)
-    const { cartItems } = useSelector(state => state.cart)
+    // const { user, loading } = useSelector(state => state.auth)
+    // const { cartItems } = useSelector(state => state.cart)
 
-    const logoutHandler = () => {
-        dispatch(logout())
-        alert.success("Logged out successfully")
-    }
+    // const logoutHandler = () => {
+    //     dispatch(logout())
+    //     alert.success("Logged out successfully")
+    // }
 
     return (
         <Fragment>
@@ -102,8 +102,8 @@ const Header = () => {
 
     <header>
       <nav className="navbar navbar-expand-lg bg-white bd shadow-sm">
-        <div class="container">
-          <a className="navbar-brand tx-bold tx-spacing--2 order-1 pd-y-0" href="#"><img src={Logo} className="sec-logo img-fluid" alt="" srcset="" /></a>
+        <div className="container">
+          <a className="navbar-brand tx-bold tx-spacing--2 order-1 pd-y-0" href="#"><img src={Logo} className="sec-logo img-fluid" alt="" srcSet="" /></a>
         <button className="navbar-toggler order-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <i data-feather="menu" className="wd-20 ht-20"></i>
         </button>
@@ -122,7 +122,9 @@ const Header = () => {
                 </BrowserRouter>
             </li>
             <li className="nav-item">
-              <a href="./register.html" className="btn btn-primary pd-x-40 btn-auth">Get Started</a>
+            <BrowserRouter>
+              <Link to={"/register"} className="btn btn-primary pd-x-40 btn-auth">Get Started</Link>
+            </BrowserRouter>
             </li>
           </ul>
         </div>
