@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="65" height="65" viewBox="0 0 65 65">
+  <g id="Group_31560" data-name="Group 31560" transform="translate(-1839 -423)">
+    <circle id="Ellipse_759" data-name="Ellipse 759" cx="32.5" cy="32.5" r="32.5" transform="translate(1839 423)" fill="rgba(248,33,33,0.1)"/>
+    <g id="Group_31559" data-name="Group 31559" transform="translate(595 265)">
+      <g id="shield_1_" data-name="shield (1)" transform="translate(1220.5 171.246)">
+        <g id="Group_25167" data-name="Group 25167" transform="translate(40.168)">
+          <path id="Path_52495" data-name="Path 52495" d="M71.048,4.466,56.316.046a1.1,1.1,0,0,0-.632,0L40.952,4.466a1.1,1.1,0,0,0-.784,1.054v16.2A10.467,10.467,0,0,0,42.7,28.138a26.218,26.218,0,0,0,5.285,4.9,47.412,47.412,0,0,0,7.562,4.428,1.1,1.1,0,0,0,.9,0,47.413,47.413,0,0,0,7.561-4.428,26.219,26.219,0,0,0,5.285-4.9,10.467,10.467,0,0,0,2.536-6.413V5.52A1.1,1.1,0,0,0,71.048,4.466ZM69.632,21.725c0,3.73-3.743,7.228-6.882,9.505A46.589,46.589,0,0,1,56,35.241a46.588,46.588,0,0,1-6.749-4.011c-3.14-2.277-6.883-5.775-6.883-9.505V6.338L56,2.249,69.632,6.338Z" transform="translate(-40.168)" fill="#f82121"/>
+        </g>
+      </g>
+      <text id="i" transform="translate(1274 198)" fill="#f82121" font-size="23" font-family="SourceSansPro-Bold, Source Sans Pro" font-weight="700"><tspan x="0" y="0">i</tspan></text>
+    </g>
+  </g>
+</svg>

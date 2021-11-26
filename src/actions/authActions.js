@@ -1,4 +1,4 @@
-import axios from 'axios';
+import Axios from 'axios';
 
 import {
     LOGIN_REQUEST,
@@ -39,8 +39,14 @@ import {
     CLEAR_ERRORS
 } from '../constants/authConstants'
 
+const baseURL = 'https://mysogi.uat.com.ng/';
+
+const axios = Axios.create({
+    baseURL
+});
+
 // Login
-export const login = (email, password) => async (dispatch) => {
+export const login = (username, password) => async (dispatch) => {
     try {
 
         dispatch({ type: LOGIN_REQUEST })
@@ -51,7 +57,8 @@ export const login = (email, password) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post('api/v1/login', { email, password }, config)
+        const { data } = await axios.post('api/auth/login', { username, password }, config)
+        console.log(data)
 
         dispatch({
             type: LOGIN_SUCCESS,
@@ -61,7 +68,8 @@ export const login = (email, password) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: LOGIN_FAIL,
-            payload: error.response.data.message
+            // payload: error.response.data.message
+            payload: console.log(error.data)
         })
     }
 }
@@ -78,7 +86,7 @@ export const register = (userData) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post('api/v1/register', userData, config)
+        const { data } = await axios.post('api/auth/register', userData, config)
 
         dispatch({
             type: REGISTER_USER_SUCCESS,
@@ -99,7 +107,7 @@ export const loadUser = () => async (dispatch) => {
 
         dispatch({ type: LOAD_USER_REQUEST })
 
-        const { data } = await axios.get('/api/v1/me')
+        const { data } = await axios.get('/api/auth/me')
 
         dispatch({
             type: LOAD_USER_SUCCESS,

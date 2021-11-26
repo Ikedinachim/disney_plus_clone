@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, BrowserRouter } from 'react-router-dom'
 
 import MetaData from '../layout/MetaData'
 import Loader from '../layout/Loader'
@@ -63,12 +63,14 @@ const Dashboard = () => {
                                         <div className="card-body">
                                             <div className="text-center card-font-size">Products<br /> <b>{products && products.length}</b></div>
                                         </div>
-                                        <Link className="clearfix text-white card-footer small z-1" to="/admin/products">
-                                            <span className="float-left">View Details</span>
-                                            <span className="float-right">
-                                                <i className="fa fa-angle-right"></i>
-                                            </span>
-                                        </Link>
+                                        <BrowserRouter>
+                                            <Link className="clearfix text-white card-footer small z-1" to="/admin/products">
+                                                <span className="float-left">View Details</span>
+                                                <span className="float-right">
+                                                    <i className="fa fa-angle-right"></i>
+                                                </span>
+                                            </Link>
+                                        </BrowserRouter>
                                     </div>
                                 </div>
 
@@ -77,12 +79,14 @@ const Dashboard = () => {
                                         <div className="card-body">
                                             <div className="text-center card-font-size">Orders<br /> <b>{orders && orders.length}</b></div>
                                         </div>
+                                        <BrowserRouter>
                                         <Link className="clearfix text-white card-footer small z-1" to="/admin/orders">
                                             <span className="float-left">View Details</span>
                                             <span className="float-right">
                                                 <i className="fa fa-angle-right"></i>
                                             </span>
                                         </Link>
+                                        </BrowserRouter>
                                     </div>
                                 </div>
 
@@ -91,12 +95,14 @@ const Dashboard = () => {
                                         <div className="card-body">
                                             <div className="text-center card-font-size">Users<br /> <b>{users && users.length}</b></div>
                                         </div>
+                                        <BrowserRouter>
                                         <Link className="clearfix text-white card-footer small z-1" to="/admin/users">
                                             <span className="float-left">View Details</span>
                                             <span className="float-right">
                                                 <i className="fa fa-angle-right"></i>
                                             </span>
                                         </Link>
+                                        </BrowserRouter>
                                     </div>
                                 </div>
 
