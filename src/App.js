@@ -70,14 +70,10 @@ function App() {
       <div className="container container-fluid">
         <Router>
           <Routes>
-            <Route path='/' element={<Home />}/>
-            </Routes>
-            <Routes>
+            < Route path='/' element={<Home />}/>
               <Route path='/login' element={<Login />} />
-            </Routes>
-            <Routes>
-            <Route path="/register" element={<Register />} />
-          </Routes>
+              <Route path="/register" element={<Register />} />
+              </Routes>
         </Router>
       </div>
       <Router>
