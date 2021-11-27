@@ -36,26 +36,26 @@ import Dashboard from "../app/Dashboard"
 
 // ];
 
-function ObjRoutes() {
+// function ObjRoutes() {
     // We removed the <BrowserRouter> element from App because the
     // useRoutes hook needs to be in the context of a <BrowserRouter>
     // element. This is a common pattern with React Router apps that
     // are rendered in different environments. To render an <App>,
     // you'll need to wrap it in your own <BrowserRouter> element.
-    let element = useRoutes([
+    // let element = useRoutes([
       // A route object has the same properties as a <Route>
       // element. The `children` is just an array of child routes.
-      { path: '/', element: <Home /> },
-      {
-        path: 'app',
-        element: <Dashboard />,
-        children: [
-          { path: '/', element: <Login /> },
-          { path: 'register', element: <Register /> },
-          { path: 'home', element: <Dashboard /> },
-        ]
-      }
-    ]);
+      // { path: '/', element: <Home /> },
+      // {
+      //   path: 'app',
+      //   element: <Dashboard />,
+      //   children: [
+      //     { path: '/', element: <Login /> },
+      //     { path: 'register', element: <Register /> },
+      //     { path: 'home', element: <Dashboard /> },
+      //   ]
+      // }
+    // ]);
   
     return element;
   }
