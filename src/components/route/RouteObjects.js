@@ -1,4 +1,4 @@
-import { Navigate, Outlet, useRoutes } from 'react-router-dom';
+import { useRoutes } from 'react-router-dom';
 
 import Login from "../../components/user/Login";
 import Register from "../../components/user/Register";

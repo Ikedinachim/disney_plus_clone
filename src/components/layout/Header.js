@@ -12,7 +12,7 @@ import Logo from "../../assets/img/logo2.png"
 import "../../dashforge.css";
 import "../../main.css";
 
-import Search from "./Search";
+// import Search from "./Search";
 
 const Header = () => {
 
@@ -103,7 +103,7 @@ const Header = () => {
     <header>
       <nav className="navbar navbar-expand-lg bg-white bd shadow-sm">
         <div className="container">
-          <a className="navbar-brand tx-bold tx-spacing--2 order-1 pd-y-0" href="#"><img src={Logo} className="sec-logo img-fluid" alt="" srcSet="" /></a>
+          <Link className="navbar-brand tx-bold tx-spacing--2 order-1 pd-y-0" to="/"><img src={Logo} className="sec-logo img-fluid" alt="" srcSet="" /></Link>
         <button className="navbar-toggler order-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <i data-feather="menu" className="wd-20 ht-20"></i>
         </button>
@@ -111,10 +111,10 @@ const Header = () => {
         <div className="collapse navbar-collapse order-2" id="navbarSupportedContent">
           <ul className="navbar-nav ml-auto">
             <li className="nav-item active">
-              <a className="nav-link tx-dark" href="#">Campaign <span className="sr-only">(current)</span></a>
+              <Link className="nav-link tx-dark" to="/">Campaign <span className="sr-only">(current)</span></Link>
             </li>
             <li className="nav-item pd-x-20">
-              <a className="nav-link tx-dark" href="#">Contact Us</a>
+              <Link className="nav-link tx-dark" to="/">Contact Us</Link>
             </li>
             <li className="nav-item pd-r-20 pd-md-l-100 pd-l-20">
                 <Link to="/login" className="btn pd-y-8 pd-x- btn-auth tx-primary">Login</Link>

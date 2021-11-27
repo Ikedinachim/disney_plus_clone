@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import { Link } from "react-router-dom";
 
 // import "../../App.css";
 import "../../dashforge.css";
@@ -15,8 +16,8 @@ const Footer = () => {
                     </div>
                     <div className="col-md-3 col-6">
                         <ul className="list-unstyled tx-16 tx-bold footer-link">
-                        <li><a href="">Campaigns</a></li>
-                        <li><a href="">Contact</a></li>
+                        <li><Link to="">Campaigns</Link></li>
+                        <li><Link to="">Contact</Link></li>
                         <li></li>
                         </ul>
                     </div>
@@ -35,14 +36,14 @@ const Footer = () => {
                 <hr className="bg-white mg-t-100" />
                 <div className="row mg-t-30">
                     <div className="col-md-3 offset-md-9 col-12">
-                    <div className="d-flex">
-                        <p className="tx-14 mb-0 tx-light-blue">Terms and Policy</p>
-                        <div className="mg-l-10">
-                        <a href="http://" className="tx-white"><i className="fab fa-twitter mg-l-20 text-white" style={{fontSize: "20px"}}></i></a>
-                        <a href="http://" className="tx-white"><i className="fab fa-facebook-f mg-l-20 tx-white" style={{fontSize: "20px"}}></i></a>
-                        <a href="http://" className="tx-white"><i className="fab fa-linkedin-in mg-l-20 tx-white" style={{fontSize: "20px"}}></i></a>
+                        <div className="d-flex">
+                            <p className="tx-14 mb-0 tx-light-blue">Terms and Policy</p>
+                            <div className="mg-l-10">
+                                <Link to="http://" className="tx-white"><i className="fab fa-twitter mg-l-20 text-white" style={{fontSize: "20px"}}></i></Link>
+                                <Link to="http://" className="tx-white"><i className="fab fa-facebook-f mg-l-20 tx-white" style={{fontSize: "20px"}}></i></Link>
+                                <Link to="http://" className="tx-white"><i className="fab fa-linkedin-in mg-l-20 tx-white" style={{fontSize: "20px"}}></i></Link>
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </div>
                 </div>

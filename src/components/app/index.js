@@ -1,5 +1,5 @@
-import React, { Fragment, useEffect } from 'react'
-import { Link, BrowserRouter } from 'react-router-dom'
+import React, { Fragment } from 'react'
+import { Link } from 'react-router-dom'
 
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -11,8 +11,7 @@ import Sidebar from './Sidebar'
 
 const Dashboard = () => {
 
-
-    const { user, loading } = useSelector(state => state.auth)
+    const { loading } = useSelector(state => state.auth)
     const dispatch = useDispatch()
 
     const logoutHandler = () => {
@@ -43,7 +42,7 @@ const Dashboard = () => {
                                 Fund wallet
                                 </a>
                                 <span className="mg-l-3 tx-14 tx-medium">
-                                <img src="./assets/img/campaign.svg" alt srcSet />
+                                <img src="./assets/img/campaign.svg" alt="asset" srcSet />
                                 Balance:N50,000
                                 </span>
                             </div>
@@ -62,7 +61,7 @@ const Dashboard = () => {
                                 <img
                                     src="https://via.placeholder.com/500"
                                     className="rounded-circle"
-                                    alt
+                                    alt="asset"
                                 />
                                 </div>
                             </a>
@@ -72,7 +71,7 @@ const Dashboard = () => {
                                 <img
                                     src="https://via.placeholder.com/500"
                                     className="rounded-circle"
-                                    alt
+                                    alt="asset"
                                 />
                                 </div>
                                 <h6 className="tx-semibold mg-b-5">Katherine Pechon</h6>
@@ -129,7 +128,7 @@ const Dashboard = () => {
                                     <img
                                         src="./assets/img/Create_Campaign.svg"
                                         className="img-fluid pd-md-t-40 pd-t-20"
-                                        alt
+                                        alt="asset"
                                         srcSet
                                     />
                                     </div>
@@ -154,14 +153,14 @@ const Dashboard = () => {
                                         src="./assets/img/create_ads_illustration.svg"
                                         id="secondImg"
                                         className="img-fluid"
-                                        alt
+                                        alt="asset"
                                         srcSet
                                         />
                                         <img
                                         src="./assets/img/become_partners_illustration.svg"
                                         id="firstImg"
                                         className="img-fluid mg-t-100"
-                                        alt
+                                        alt="asset"
                                         srcSet
                                         />
                                     </div>
@@ -177,7 +176,7 @@ const Dashboard = () => {
                                     <img
                                         src="./assets/img/Become_partner.svg"
                                         className="img-fluid pd-md-t-40 pd-t-20"
-                                        alt
+                                        alt="asset"
                                         srcSet
                                     />
                                     </div>

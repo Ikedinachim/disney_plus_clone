@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, useRoutes, Route, Routes, Link, Navigate } from "react-router-dom";
-import CustomRoutes from "./components/route/RouteObjects";
+// import CustomRoutes from "./components/route/RouteObjects";
 
-import Header from "./components/layout/Header";
-import Footer from "./components/layout/Footer";
-import Loader from "./components/layout/Loader";
+// import Header from "./components/layout/Header";
+// import Footer from "./components/layout/Footer";
+// import Loader from "./components/layout/Loader";
 
 import Home from "./components/Home";
 import Dashboard from "./components/app";
@@ -25,14 +25,14 @@ import Dashboard from "./components/app";
 // Auth / User Imports
 import Login from "./components/user/Login";
 import Register from "./components/user/Register";
-import Profile from "./components/user/Profile";
+// import Profile from "./components/user/Profile";
 // import UpdateProfile from "./components/user/UpdateProfile";
 // import UpdatePassword from "./components/user/UpdatePassword";
 // import ForgotPassword from "./components/user/ForgotPassword";
 // import NewPassword from "./components/user/NewPassword";
 
 // Admin Imports
-import DashboardAdmin from "./components/admin/Dashboard";
+// import DashboardAdmin from "./components/admin/Dashboard";
 // import ProductsList from './components/admin/ProductsList'
 // import NewProduct from './components/admin/NewProduct'
 // import UpdateProduct from './components/admin/UpdateProduct'
@@ -42,17 +42,21 @@ import DashboardAdmin from "./components/admin/Dashboard";
 // import UpdateUser from './components/admin/UpdateUser'
 // import ProductReviews from './components/admin/ProductReviews'
 
-import ProtectedRoute from "./components/route/ProtectedRoute";
+// import ProtectedRoute from "./components/route/ProtectedRoute";
 import { loadUser } from "./actions/authActions";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import store from "./store";
-import axios from "axios";
+// import axios from "axios";
 
 import "./dashforge.css";
 import "./main.css";
 
 function App() {
-  const { user, isAuthenticated, loading } = useSelector((state) => state.auth);
+  useEffect(() => {
+    store.dispatch(loadUser())
+  }, [])
+
+  // const { user, isAuthenticated, loading } = useSelector((state) => state.auth);
   // const routing = useRoutes(routes(isAuthenticated));
 
   return (

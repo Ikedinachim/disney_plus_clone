@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Fragment } from 'react'
-import { Route, Routes, Navigate } from 'react-router-dom'
+import { Route, Navigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 const ProtectedRoute = ({ isAdmin, component: Component, ...rest }) => {
