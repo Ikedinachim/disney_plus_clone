@@ -49,7 +49,7 @@ const Dashboard = () => {
                             </div>
                             <div className="dropdown dropdown-profile ml-md-4 ml-2">
                             <a
-                                href
+                                href=""
                                 className="dropdown-link tx-dark tx-13 tx-medium"
                                 data-toggle="dropdown"
                                 data-display="static"

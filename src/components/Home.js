@@ -1,5 +1,5 @@
 // /* eslint-disable jsx-a11y/alt-text */
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment } from "react";
 import { Link } from 'react-router-dom'
 // import Pagination from "react-js-pagination"
 // import Slider from "rc-slider"
