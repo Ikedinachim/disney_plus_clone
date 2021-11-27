@@ -1,6 +1,6 @@
 // /* eslint-disable jsx-a11y/alt-text */
 import React, { Fragment } from "react";
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import Logo from "../../assets/img/logo2.png"
 
@@ -117,14 +117,10 @@ const Header = () => {
               <a className="nav-link tx-dark" href="#">Contact Us</a>
             </li>
             <li className="nav-item pd-r-20 pd-md-l-100 pd-l-20">
-                <BrowserRouter>
-                    <Link to="/login" className="btn pd-y-8 pd-x- btn-auth tx-primary">Login</Link>
-                </BrowserRouter>
+                <Link to="/login" className="btn pd-y-8 pd-x- btn-auth tx-primary">Login</Link>
             </li>
             <li className="nav-item">
-            <BrowserRouter>
               <Link to={"/register"} className="btn btn-primary pd-x-40 btn-auth">Get Started</Link>
-            </BrowserRouter>
             </li>
           </ul>
         </div>

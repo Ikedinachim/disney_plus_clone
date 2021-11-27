@@ -12,22 +12,20 @@ const ProtectedRoute = ({ isAdmin, component: Component, ...rest }) => {
 
         <Fragment>
             {loading === false && (
-                <Routes>
-                    <Route 
-                        {...rest}
-                        render = {props => {
-                            if(isAuthenticated === false) {
-                                return <Navigate to="/login" />
-                            }
+                <Route 
+                    {...rest}
+                    render = {props => {
+                        if(isAuthenticated === false) {
+                            return <Navigate to="login" />
+                        }
 
-                            if(isAdmin === true && user.role !== 'admin') {
-                                return <Navigate to="/" />
-                            }
+                        if(isAdmin === true && user.role !== 'admin') {
+                            return <Navigate to="home" />
+                        }
 
-                            return <Component {...props} />
-                        }}
-                    />
-                </Routes>
+                        return <Component {...props} />
+                    }}
+                />
             )}
         </Fragment>
     )

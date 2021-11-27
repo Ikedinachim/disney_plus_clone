@@ -58,11 +58,13 @@ export const login = (username, password) => async (dispatch) => {
         }
 
         const { data } = await axios.post('api/auth/login', { username, password }, config)
+        localStorage.setItem('user',JSON.stringify(data.data))
+        console.log(localStorage.getItem('user'))
         console.log(data)
 
         dispatch({
             type: LOGIN_SUCCESS,
-            payload: data.data.user
+            payload: data.data
         })
         
     } catch (error) {
@@ -90,7 +92,7 @@ export const register = (userData) => async (dispatch) => {
 
         dispatch({
             type: REGISTER_USER_SUCCESS,
-            payload: data.user
+            payload: data.data.user
         })
         
     } catch (error) {

@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import Loader from '../layout/Loader'
 import MetaData from '../layout/MetaData'
@@ -8,7 +8,10 @@ import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { login, clearErrors } from '../../actions/authActions'
 
-const Login = ({ history, location }) => {
+const Login = ({ history }) => {
+    const navHistory = useNavigate()
+
+    // const onSubmit = () => fetch("/api/login").then(() => navigate(location.state.from))
 
     const [userName, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -23,7 +26,8 @@ const Login = ({ history, location }) => {
     useEffect( () => {
 
         if(isAuthenticated) {
-            history.push('/')
+            // history.push("/")
+            navHistory('/home')
         }
 
         if(error) {
@@ -31,7 +35,7 @@ const Login = ({ history, location }) => {
             dispatch(clearErrors())
         }
 
-    }, [dispatch, alert, isAuthenticated, error, history])
+    }, [dispatch, alert, isAuthenticated, error, navHistory])
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -94,9 +98,9 @@ const Login = ({ history, location }) => {
                         </div>
                         <div className="col-md-6 login-side">
                         <div className="container pd-lg-30 pd-10">
-                            <a href="./home.html" type="button" className="close close-btn" aria-label="Close">
+                            <Link to="home" type="button" className="close close-btn" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
-                            </a>
+                            </Link>
                             <div className="">
                             <div className="col-lg-10 col-xl-8 mx-auto pd-t-30 tx-center welcome-div">
                                 <p className="tx-36 tx-bold mb-2 tx-com">Welcome Back</p>
@@ -126,11 +130,11 @@ const Login = ({ history, location }) => {
                                     <div className="form-group col-md-6 col-6">
                                     <div className="custom-control custom-checkbox float-left">
                                         <input type="checkbox" className="custom-control-input" id="customCheck1" />
-                                        <label className="custom-control-label" for="customCheck1">Remember Me</label>
+                                        <label className="custom-control-label" htmlFor="customCheck1">Remember Me</label>
                                     </div>
                                     </div>
                                     <div className="form-group col-md-6 col-6">
-                                    <a href="http://">Forgot Password</a>
+                                    <Link to="#0">Forgot Password</Link>
                                     </div>
                                 </div>
                                 <div className="mg-y-30">
@@ -145,7 +149,7 @@ const Login = ({ history, location }) => {
                                     </button>
                                     {/* <a href="./campaign.html" type="submit" className="btn btn-primary btn-block btn-lg py-15">Login</a> */}
                                     </div>
-                                    <Link to={"/register"}><span className="tx-dark" style={{color: "#000;", textDecoration: "underline;"}}>Don’t have an account yet? </span> <span style={{textDecoration: "underline;"}}>Sign Up.</span></Link>
+                                    <Link to="/register"><span className="tx-dark" style={{color: "#000;", textDecoration: "underline;"}}>Don’t have an account yet? </span> <span style={{textDecoration: "underline;"}}>Sign Up.</span></Link>
                                 
                                 </div>
                                 </form>
