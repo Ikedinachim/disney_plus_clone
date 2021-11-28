@@ -63,16 +63,21 @@ const Register = ({ history }) => {
         e.preventDefault();
 
         const formData = new FormData();
-        formData.set('firstname', firstName);
-        formData.set('lastname', lastName);
-        formData.set('middlename', middleName);
+        formData.set('firstName', firstName);
+        formData.set('lastName', lastName);
+        formData.set('middleName', middleName);
         formData.set('userType', "individual");
         formData.set('username', username);
         formData.set('email', email);
         formData.set('password', password);
         formData.set('phone', phone);
+
+        var object = {};
+        formData.forEach((value, key) => object[key] = value);
+        var json = JSON.stringify(object);
+        console.log(json);
         
-        dispatch(register(formData))
+        dispatch(register(json))
         
     }
 
@@ -80,9 +85,9 @@ const Register = ({ history }) => {
         e.preventDefault();
 
         const formData = new FormData();
-        formData.set('firstname', firstName);
-        formData.set('lastname', lastName);
-        formData.set('middlename', middleName);
+        formData.set('firstName', firstName);
+        formData.set('lastnName', lastName);
+        formData.set('middleName', middleName);
         formData.set('userType', "business");
         formData.set('username', username);
         formData.set('email', email);
@@ -217,6 +222,16 @@ const Register = ({ history }) => {
                                     </div>
                                 </div>
                                 <div className="form-group">
+                                    <input
+                                    type="text"
+                                    className="form-control new"
+                                    placeholder="Middle Name"
+                                    name="middleName"
+                                    value={middleName}
+                                    onChange={onChange}
+                                    />
+                                </div>
+                                <div className="form-group">
                                     <input 
                                         type="text" 
                                         id="individualUsername" 
@@ -225,6 +240,16 @@ const Register = ({ history }) => {
                                         name="username"
                                         value={username} 
                                         onChange={onChange}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <input
+                                    type="hidden"
+                                    className="form-control new"
+                                    placeholder="User Type"
+                                    name="userType"
+                                    value={"individual"}
+                                    onChange={onChange} 
                                     />
                                 </div>
                                 <div className="form-group">
@@ -266,8 +291,6 @@ const Register = ({ history }) => {
                                         className="custom-control-input form-control"
                                         id="customCheck1"
                                         name="userType"
-                                        value={'individual'}
-                                        onChange={onChange}
                                         />
                                         <label
                                         className="custom-control-label"
@@ -355,7 +378,7 @@ const Register = ({ history }) => {
                                 </div>
                                 <div className="form-group">
                                     <input
-                                    type="text"
+                                    type="hidden"
                                     className="form-control new"
                                     placeholder="User Type"
                                     name="userType"

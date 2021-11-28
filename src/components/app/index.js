@@ -71,7 +71,8 @@ const Dashboard = () => {
                                 aria-haspopup="true"
                                 aria-expanded="false"
                             >
-                                {user.user.firstName}
+                                {/* {user.user.firstName} */}
+                                Jane Doe
                                 <div className="avatar avatar-sm mg-l-10">
                                 <img
                                     src="https://via.placeholder.com/500"
@@ -89,7 +90,10 @@ const Dashboard = () => {
                                     alt="asset"
                                 />
                                 </div>
-                                <h6 className="tx-semibold mg-b-5">{user.user.firstName +" " + user.user.LastName}</h6>
+                                <h6 className="tx-semibold mg-b-5">
+                                    {/* {user.user.firstName +" " + user.user.LastName} */}
+                                    Jane
+                                </h6>
                                 <p className="mg-b-25 tx-12 tx-color-03">Administrator</p>
                                 <a href className="dropdown-item">
                                 <i data-feather="edit-3" /> Edit Profile
