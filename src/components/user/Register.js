@@ -73,6 +73,7 @@ const Register = ({ history }) => {
         formData.set('phone', phone);
         
         dispatch(register(formData))
+        
     }
 
     const submitBusinessHandler = (e) => {
@@ -91,7 +92,14 @@ const Register = ({ history }) => {
         formData.set('contactName', contactName);
         formData.set('businessEmail', businessEmail);
         
-        dispatch(register(formData))
+        // formData = JSON.stringify(new JSONFormData(form).formData);
+
+        var object = {};
+        formData.forEach((value, key) => object[key] = value);
+        var json = JSON.stringify(object);
+        console.log(json);
+
+        dispatch(register(json))
     }
 
     const onChange = e => {

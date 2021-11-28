@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+import FeatherIcon from 'feather-icons-react';
+
 const Sidebar = () => {
     return (
         
@@ -17,7 +19,7 @@ const Sidebar = () => {
                 </div>
             </Link>
             <a href="true" className="aside-menu-link">
-                <i data-feather="menu" />
+                <FeatherIcon icon="menu" />
                 <i data-feather="x" />
             </a>
             </div>

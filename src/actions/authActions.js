@@ -86,16 +86,18 @@ export const login = (username, password) => async (dispatch) => {
 
 // Register User
 export const register = (userData) => async (dispatch) => {
+    // for (var key of userData.entries()) {
+    //     console.log(key[0] + ', ' + key[1]);
+    //  }
     try {
 
         dispatch({ type: REGISTER_USER_REQUEST })
 
         const config = {
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'application/json'
             }
         }
-
         const { data } = await axios.post('api/auth/register', userData, config)
 
         if (data.status === "success") {
@@ -110,11 +112,12 @@ export const register = (userData) => async (dispatch) => {
             })
         }
         
-    } catch (error) {
+    } catch (data) {
         dispatch({
             type: REGISTER_USER_FAIL,
-            payload: error.response.data.message
+            payload: data.message
         })
+        console.log(data.message)
     }
 }
 
