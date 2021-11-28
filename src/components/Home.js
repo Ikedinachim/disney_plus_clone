@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 // import Pagination from "react-js-pagination"
 // import Slider from "rc-slider"
 import 'rc-slider/assets/index.css';
+import Header from "./layout/Header";
+import Footer from "./layout/Footer";
 
 import MetaData from "./layout/MetaData";
 // import Product from "./product/Product"
@@ -29,7 +31,7 @@ const Home = ({ match }) => {
             {loading ? <Loader /> : (
                 <Fragment>
                     <MetaData title={"Welcome to MysogiAds"} />
-                    <div>
+                        <Header />
                         <section className="header-part">
                             <div className="container pd-lg-t-50  pd-b-30 pd-lg-b-0">
                             <div className="row">
@@ -244,47 +246,7 @@ const Home = ({ match }) => {
                             </div>
                             </section>
                         </section>
-                        <section className="footer">
-                            <div className="container py-5 tx-white">
-                            <div className="row col-md-9">
-                                <div className="col-md-3 col-6">
-                                <img src="./assets/img/logo.png" alt="" />
-                                </div>
-                                <div className="col-md-3 col-6">
-                                <ul className="list-unstyled tx-16 tx-bold footer-link">
-                                    <li><a href>Campaigns</a></li>
-                                    <li><a href>Contact</a></li>
-                                    <li />
-                                </ul>
-                                </div>
-                                <div className="col-md-6 col-12">
-                                <form action>
-                                    <label htmlFor className="tx-16 tx-bold footer-label">Subscribe to our newsletter</label>
-                                    <div className="input-group pd-5 bg-white">
-                                    <input type="text" className="form-control bd-0" placeholder aria-label="Recipient's username" aria-describedby="button-addon2" />
-                                    <div className="input-group-append">
-                                        <button className="btn btn-primary tx-12 pd-y-5" type="button" id="button-addon2">Subscribe <i className="fa fa-arrow-right mg-l-10 mg-t-3" style={{fontSize: '14px'}} /></button>
-                                    </div>
-                                    </div>
-                                </form>
-                                </div>
-                            </div>
-                            <hr className="bg-white mg-t-100" />
-                            <div className="row mg-t-30">
-                                <div className="col-md-3 offset-md-9 col-12">
-                                <div className="d-flex">
-                                    <p className="tx-14 mb-0 tx-light-blue">Terms and Policy</p>
-                                    <div className="mg-l-10">
-                                    <a href="http://" className="tx-white"><i className="fab fa-twitter mg-l-20 text-white" style={{fontSize: '20px'}} /></a>
-                                    <a href="http://" className="tx-white"><i className="fab fa-facebook-f mg-l-20 tx-white" style={{fontSize: '20px'}} /></a>
-                                    <a href="http://" className="tx-white"><i className="fab fa-linkedin-in mg-l-20 tx-white" style={{fontSize: '20px'}} /></a>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                            </div>
-                        </section>
-                    </div>
+                        <Footer />
                 </Fragment>
             )}
             
