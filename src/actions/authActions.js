@@ -62,16 +62,24 @@ export const login = (username, password) => async (dispatch) => {
         console.log(localStorage.getItem('user'))
         console.log(data)
 
-        dispatch({
-            type: LOGIN_SUCCESS,
-            payload: data.data
-        })
+        if (data.status === "success") {
+            dispatch({
+                type: LOGIN_SUCCESS,
+                payload: data.data,
+            })
+        } else {
+            dispatch({
+                type: LOGIN_FAIL,
+                // payload: error.response.data.message
+                payload: data.message
+            })
+        }
         
     } catch (error) {
         dispatch({
             type: LOGIN_FAIL,
             // payload: error.response.data.message
-            payload: console.log(error.data)
+            payload: error.data
         })
     }
 }
@@ -90,10 +98,17 @@ export const register = (userData) => async (dispatch) => {
 
         const { data } = await axios.post('api/auth/register', userData, config)
 
-        dispatch({
-            type: REGISTER_USER_SUCCESS,
-            payload: data.data.user
-        })
+        if (data.status === "success") {
+            dispatch({
+                type: REGISTER_USER_SUCCESS,
+                payload: data.data.user
+            })
+        } else {
+            dispatch({
+                type: REGISTER_USER_FAIL,
+                payload: data.message
+            })
+        }
         
     } catch (error) {
         dispatch({
@@ -237,6 +252,7 @@ export const logout = () => async (dispatch) => {
     try {
         // eslint-disable-next-line
         const { data } = await axios.get('api/v1/logout')
+        localStorage.removeItem('user');
 
         dispatch({
             type: LOGOUT_SUCCESS,

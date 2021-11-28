@@ -11,7 +11,7 @@ import Sidebar from './Sidebar'
 
 const Dashboard = () => {
 
-    const { loading } = useSelector(state => state.auth)
+    const { loading, user } = useSelector(state => state.auth)
     const dispatch = useDispatch()
 
     const logoutHandler = () => {
@@ -56,7 +56,7 @@ const Dashboard = () => {
                                 aria-haspopup="true"
                                 aria-expanded="false"
                             >
-                                John Doe
+                                {user.user.firstName}
                                 <div className="avatar avatar-sm mg-l-10">
                                 <img
                                     src="https://via.placeholder.com/500"
@@ -74,7 +74,7 @@ const Dashboard = () => {
                                     alt="asset"
                                 />
                                 </div>
-                                <h6 className="tx-semibold mg-b-5">Katherine Pechon</h6>
+                                <h6 className="tx-semibold mg-b-5">{user.user.firstName +" " + user.user.LastName}</h6>
                                 <p className="mg-b-25 tx-12 tx-color-03">Administrator</p>
                                 <a href className="dropdown-item">
                                 <i data-feather="edit-3" /> Edit Profile
@@ -110,7 +110,7 @@ const Dashboard = () => {
                         <div className="content-body">
                         <div className="container pd-x-0">
                             <p className="mg-b-0 tx-26 tx-bold tx-com">
-                            Hello <span className> Olatunde,</span> what would you like to do?
+                            Hello <span className> {user.user.firstName},</span> what would you like to do?
                             </p>
                             <div className="row justify-content-between">
                             <div className="col-md-6 col-12">

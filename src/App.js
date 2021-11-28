@@ -4,7 +4,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 
 // import Header from "./components/layout/Header";
 // import Footer from "./components/layout/Footer";
-// import Loader from "./components/layout/Loader";
+import Loader from "./components/layout/Loader";
 
 import Home from "./components/Home";
 import Dashboard from "./components/app";
@@ -44,7 +44,7 @@ import Register from "./components/user/Register";
 
 // import ProtectedRoute from "./components/route/ProtectedRoute";
 import { loadUser } from "./actions/authActions";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import store from "./store";
 // import axios from "axios";
 
@@ -56,11 +56,11 @@ import 'aos/dist/aos.css';
 AOS.init();
 
 function App() {
-  useEffect(() => {
-    store.dispatch(loadUser())
-  }, [])
+  // useEffect(() => {
+  //   store.dispatch(loadUser())
+  // }, [])
 
-  // const { user, isAuthenticated, loading } = useSelector((state) => state.auth);
+  const { loading } = useSelector((state) => state.auth);
   // const routing = useRoutes(routes(isAuthenticated));
 
   return (
@@ -77,10 +77,9 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/' element={<Home />} />
-          <Route path='/home' element={<Dashboard />} />
-          {/* <Route path="*" element={<Login />}></Route> */}
+          <Route path="*" element={<Login />}></Route>
       </Routes>
-      {/* {loading ? <Loader /> : null} */}
+      {loading ? <Loader /> : null}
     </div>
   );
 }
@@ -88,6 +87,6 @@ function App() {
 export default App;
 
 function PrivateRoute({ children }) {
-  return localStorage.getItem('user.token') ? children : <Navigate to="/login" />;
+  return localStorage.getItem('user') ? children : <Navigate to="/login" />;
 }
 

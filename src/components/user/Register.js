@@ -66,7 +66,7 @@ const Register = ({ history }) => {
         formData.set('firstname', firstName);
         formData.set('lastname', lastName);
         formData.set('middlename', middleName);
-        formData.set('userType', userType);
+        formData.set('userType', "individual");
         formData.set('username', username);
         formData.set('email', email);
         formData.set('password', password);
@@ -82,7 +82,7 @@ const Register = ({ history }) => {
         formData.set('firstname', firstName);
         formData.set('lastname', lastName);
         formData.set('middlename', middleName);
-        formData.set('userType', userType);
+        formData.set('userType', "business");
         formData.set('username', username);
         formData.set('email', email);
         formData.set('password', password);
@@ -347,6 +347,16 @@ const Register = ({ history }) => {
                                 </div>
                                 <div className="form-group">
                                     <input
+                                    type="text"
+                                    className="form-control new"
+                                    placeholder="User Type"
+                                    name="userType"
+                                    value={"business"}
+                                    onChange={onChange} 
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <input
                                     type="email"
                                     className="form-control new"
                                     placeholder="Company Email"
@@ -405,6 +415,7 @@ const Register = ({ history }) => {
                                     onChange={onChange} 
                                     />
                                 </div>
+                                
                                 <div className="row">
                                     <div className="col-lg-9 col-12 mg-t-15">
                                     <div className="custom-control custom-checkbox pd-l-0">
@@ -412,9 +423,6 @@ const Register = ({ history }) => {
                                         type="checkbox"
                                         className="custom-control-input form-control"
                                         id="customCheck2"
-                                        name="userType"
-                                        value={'business'}
-                                        onChange={onChange} 
                                         />
                                         <label
                                         className="custom-control-label"
