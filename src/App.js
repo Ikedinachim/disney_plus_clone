@@ -43,9 +43,9 @@ import Register from "./components/user/Register";
 // import ProductReviews from './components/admin/ProductReviews'
 
 // import ProtectedRoute from "./components/route/ProtectedRoute";
-import { loadUser } from "./actions/authActions";
+// import { loadUser } from "./actions/authActions";
 import { useSelector } from "react-redux";
-import store from "./store";
+// import store from "./store";
 // import axios from "axios";
 
 import "./dashforge.css";
@@ -87,6 +87,6 @@ function App() {
 export default App;
 
 function PrivateRoute({ children }) {
-  return localStorage.getItem('user') ? children : <Navigate to="/login" />;
+  return localStorage.getItem('user') !== null ? children : <Navigate to="/login" />;
 }
 

@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react'
-import { Link } from 'react-router-dom'
+import React, { Fragment, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -8,8 +8,11 @@ import { logout } from '../../actions/authActions'
 import MetaData from '../layout/MetaData'
 import Loader from '../layout/Loader'
 import Sidebar from './Sidebar'
+import FeatherIcon from 'feather-icons-react';
 
 const Dashboard = () => {
+
+    const navigate = useNavigate();
 
     const { loading, user } = useSelector(state => state.auth)
     const dispatch = useDispatch()
@@ -18,6 +21,18 @@ const Dashboard = () => {
         dispatch(logout())
         alert.success("Logged out successfully")
     }
+
+    const [isActive, setActive] = useState("false");
+
+    const ToggleClass = (e) => {
+        setActive(!isActive); 
+        e.preventDefault()
+    };
+
+    const resetPropagation = (e) => { 
+        e.stopPropagation()
+        e.preventDefault()
+     }
 
     return (
         <Fragment>
@@ -119,10 +134,10 @@ const Dashboard = () => {
                                 </p>
                             </div>
                             </div>
-                            <div id="myCard">
-                            <div className="card">
+                            <div id="myCard" >
+                            <div className={`card ${isActive ? "card-active" : null}`} onClick={ToggleClass}>
                                 <div className="card-body">
-                                <i data-feather="check-circle" className="check" />
+                                <FeatherIcon icon="check-circle" className="check" />
                                 <div className="row">
                                     <div className="col-md-2 col-lg-2 col-2 mg-t-20 tx-center">
                                     <img
@@ -132,7 +147,7 @@ const Dashboard = () => {
                                         srcSet
                                     />
                                     </div>
-                                    <div className="col-md-5 col-10 mg-t-20 pd-md-b-40 disabler">
+                                    <div className={`col-md-5 col-10 mg-t-20 pd-md-b-40 ${!isActive ? "disabler" : null}`}>
                                     <p className="tx-24 tx-bold mb-4 tx-com">
                                         Create an Ad Campaign
                                     </p>
@@ -140,26 +155,28 @@ const Dashboard = () => {
                                         Create New Ad to tap into our massive and diverse customer
                                         base to market your product and offers.
                                     </p>
-                                    <a
-                                        href="./create-campaign.html"
-                                        className="btn btn-primary pd-x-40"
+                                    <button
+                                        type="button"
+                                        disabled={!isActive}
+                                        navigate = "/home"                                     className="btn btn-primary pd-x-40"
+                                        onClick={resetPropagation}
                                     >
                                         Get Started
-                                    </a>
+                                    </button>
                                     </div>
                                     <div className="col-md-5 d-md-block d-xl-block d-lg-block d-none">
                                     <div className="neg-div">
                                         <img
                                         src="./assets/img/create_ads_illustration.svg"
                                         id="secondImg"
-                                        className="img-fluid"
+                                        className={`img-fluid ${isActive ? "d-block" : null}`}
                                         alt="asset"
                                         srcSet
                                         />
                                         <img
                                         src="./assets/img/become_partners_illustration.svg"
                                         id="firstImg"
-                                        className="img-fluid mg-t-100"
+                                        className={`img-fluid mg-t-100 ${!isActive ? "d-block" : "d-none"}`}
                                         alt="asset"
                                         srcSet
                                         />
@@ -168,9 +185,9 @@ const Dashboard = () => {
                                 </div>
                                 </div>
                             </div>
-                            <div className="card mg-t-40 card-active">
+                            <div className={`card mg-t-40 ${!isActive ? "card-active" : null}`} onClick={ToggleClass}>
                                 <div className="card-body">
-                                <i data-feather="check-circle" className="check" />
+                                <FeatherIcon icon="check-circle" className="check" />
                                 <div className="row">
                                     <div className="col-md-2 col-lg-2 col-2 mg-t-20 tx-center">
                                     <img
@@ -180,18 +197,21 @@ const Dashboard = () => {
                                         srcSet
                                     />
                                     </div>
-                                    <div className="col-md-5 col-10 mg-t-20 pd-md-b-40">
+                                    <div className={`col-md-5 col-10 mg-t-20 pd-md-b-40 ${isActive ? "disabler" : null}`}>
                                     <p className="tx-24 tx-bold mb-4 tx-com">All Campaigns</p>
                                     <p className="tx-14 tx-blac col-md-9 pd-x-0">
                                         Tap into Mysogi massive and diverse customer base to market
                                         your product and offers.
                                     </p>
-                                    <a
+                                    <button
+                                        type="button"
+                                        disabled={isActive}
                                         href="./all-campaigns.html"
                                         className="btn btn-primary pd-x-30"
+                                        onClick={resetPropagation}
                                     >
                                         All Campaigns
-                                    </a>
+                                    </button>
                                     </div>
                                 </div>
                                 </div>
