@@ -50,7 +50,7 @@ const SenderID = () => {
         formData.forEach((value, key) => object[key] = value);
         var json = JSON.stringify(object);
         console.log(json);
-        
+
         dispatch(createSenderId(senderId))
     }
 
@@ -74,6 +74,7 @@ const SenderID = () => {
                                             className="form-control-lg form-control"
                                             placeholder="MTN X"
                                             id="sender"
+                                            name="senderId"
                                             value={senderId}
                                             onChange={(e) => setCreateSenderId(e.target.value)}
                                         />

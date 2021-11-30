@@ -81,20 +81,21 @@ function App() {
           <Route path="/app/view-sender-id" element={isAuthenticated ? <ViewSenderID /> : <Login />} />
           {/* <Route path="/register" element={<Register />} /> */}
           {/* <Route path="/login" element={<Login />} /> */}
-          <Route path="/app" element={isAuthenticated ? <Dashboard /> : <Login />} />
-          <Route path="*" element={isAuthenticated ? <Dashboard /> : <Login />} />
+          <Route path="/app" element={isAuthenticated ? <Dashboard /> : <Home />} />
+          {/* <Route path="*" element={isAuthenticated ? <Dashboard /> : <Login />} /> */}
         </Routes>
 
-      </div>
+      
         <Routes>
           <Route path="/" element={<Home />} />
           {/* <Route path="/app/sender-id" element={isAuthenticated ? <SenderID /> : <Login />} /> */}
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          {/* <Route path="/app" element={isAuthenticated ? <Dashboard /> : <Login />} /> */}
+          <Route path="register" element={<Register />} />
+          <Route path="login" element={<Login />} />
+          <Route path="/app" element={isAuthenticated ? <Dashboard /> : <Login />} />
           {/* <Route path="*" element={isAuthenticated ? <Dashboard /> : <Login />} /> */}
         </Routes>
       {loading ? <Loader /> : null}
+      </div>
     </div>
   );
 }
