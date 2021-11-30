@@ -97,6 +97,46 @@ export const getTransactionHistory = () => async (dispatch) => {
     }
 }
 
+
+// Fund Wallet
+export const fundWallet = (amount) => async (dispatch) => {
+    try {
+        
+        
+        dispatch({ type: FUND_WALLET_REQUEST })
+        let user = JSON.parse(sessionStorage.getItem('user'));
+        const token = user.user.token;
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization" : `Bearer ${token}`
+            }
+        }
+
+        const { data } = await axios.post('/api/payment/initiate-payment', amount, config)
+        console.log(data)
+
+        if (data.status === "success") {
+            dispatch({
+                type: FUND_WALLET_SUCCESS,
+                payload: data
+            })
+        } else {
+            dispatch({
+                type: FUND_WALLET_FAIL,
+                payload: data.message
+            })
+        }
+        
+    } catch (error) {
+        dispatch({
+            type: FUND_WALLET_FAIL,
+            payload: error.message
+        })
+    }
+}
+
 // Clear Errors
 export const clearErrors = () => async (dispatch) => {(
     dispatch({

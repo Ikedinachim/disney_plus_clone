@@ -73,3 +73,34 @@ export const transactionHistoryReducer = (state = { tnxHistory: [] }, action) =>
             return state;
     }
 }
+
+export const fundWalletReducer = (state = { fundWallet: [] }, action) => {
+    switch(action.type) {
+        case FUND_WALLET_REQUEST:
+            return {
+                loading: true,
+                status: action.payload
+            }
+        
+        case FUND_WALLET_SUCCESS:
+            return {
+                loading: false,
+                status: action.payload,
+            }
+
+        case FUND_WALLET_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state;
+    }
+}

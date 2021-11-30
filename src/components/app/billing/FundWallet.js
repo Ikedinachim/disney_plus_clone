@@ -1,24 +1,69 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { useAlert } from 'react-alert'
+import { useNavigate } from 'react-router-dom'
 
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
-import { getTransactionHistory, getWallet, clearErrors } from '../../../actions/billingActions'
+import { fundWallet, clearErrors } from '../../../actions/billingActions'
 
 const FundWallet = () => {
 
     const alert = useAlert();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const { user } = useSelector(state => state.auth)
-    const { wallet, loading, error } = useSelector(state => state.wallet)
+    const [amountToPay, setAmountToPay] = useState({payAmount:''})
+    const {amount} = amountToPay
+    const { status, loading, error } = useSelector(state => state.fundWallet)
+    const { wallet } = useSelector(state => state.wallet)
 
     useEffect( () => {
+        if(!loading && status === "success") {
+            alert.success(status.message)
+            navigate('/app')
+        }
 
-    }, [dispatch, alert, loading, error, getTransactionHistory])
+        if(error) {
+            alert.error(error)
+            dispatch(clearErrors())
+        }
+    }, [dispatch, alert, loading, error, status])
+
+    const makePaymentHandler = (e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.set('amount', amount);
+
+        var object = {};
+        formData.forEach((value, key) => object[key] = value);
+        var json = JSON.stringify(object);
+        console.log(json);
+
+        dispatch(fundWallet(json))
+    }
+    const onChange = e => {
+        if(e.target.name === 'avatar') {
+
+            // const reader = new FileReader()
+
+            // reader.onload = () => {
+            //     if (reader.readyState === 2) {
+            //         setAvatarPreview(reader.result)
+            //         setAvatar(reader.result)
+            //     }
+            // }
+
+            // reader.readAsDataURL(e.target.files[0])
+
+        } else {
+            setAmountToPay({ ...amountToPay, [e.target.name]: e.target.value })
+        }
+    }
+
+    // console.log(onChange)
 
     return (
         <Fragment>
@@ -50,27 +95,36 @@ const FundWallet = () => {
                                             <p className="tx-uppercase mb-0 tx-16 tx-blac tx-bold tx-com">
                                             Current Balance
                                             </p>
-                                            <p className="tx-32 tx-semibold tx-green">+ N245,000.00</p>
+                                            <p className="tx-32 tx-semibold tx-green">+ &#8358;{wallet.balance}</p>
+                                            <form onSubmit={makePaymentHandler}>
                                             <div className="form-group mg-t-40">
                                             <label htmlFor className="tx-blac mb-1">
                                                 How much would you like to fund your wallet with?
                                             </label>
-                                            <input
-                                                type="text"
-                                                className="form-control form-control-lg"
-                                                placeholder="Enter amount (NGN)"
-                                            />
-                                            </div>
-                                            <a
-                                            href="./wallet.html"
-                                            className="btn btn-primary mg-t-10 mg-md-t-30"
-                                            >
-                                            {" "}
-                                            Fund Wallet{" "}
-                                            </a>
+                                            
+                                                <input
+                                                    type="text"
+                                                    className="form-control form-control-lg"
+                                                    placeholder="Enter amount (NGN)"
+                                                    id="email_field"
+                                                    name="amount"
+                                                    value={amount}
+                                                    onChange={onChange}
+                                                />
+                                                </div>
+                                                <button
+                                                    className="btn btn-primary mg-t-10 mg-md-t-30"
+                                                    name=""
+                                                    type="submit"
+                                                    disabled={ loading ? true : false }
+                                                >
+                                                {" "}
+                                                Fund Wallet{" "}
+                                                </button>
+                                            </form>
                                         </div>
                                         <div className="col-md-6 col-12 mg-t-20 mg-md-t-0">
-                                            <img src="./assets/img/atm.jpg" className="img-fluid" alt srcSet />
+                                            <img src="../../../assets/img/atm.jpg" className="img-fluid" alt srcSet />
                                         </div>
                                         </div>
                                     </div>

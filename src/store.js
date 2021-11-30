@@ -8,7 +8,7 @@ import { cartReducer } from './reducers/cartReducers'
 import { newOrderReducer, myOrdersReducer, orderDetailsReducer, allOrdersReducer, orderReducer } from './reducers/orderReducers'
 
 import { senderIDReducer, createSenderIdReducer } from './reducers/senderIDReducers'
-import { billingReducer as walletReducer, transactionHistoryReducer } from './reducers/billingReducers'
+import { billingReducer as walletReducer, transactionHistoryReducer, fundWalletReducer } from './reducers/billingReducers'
 
 const reducer = combineReducers({
     products: productsReducer,
@@ -34,7 +34,8 @@ const reducer = combineReducers({
     auth: authReducer,
     createSenderId: createSenderIdReducer,
     wallet: walletReducer,
-    tnxHistory: transactionHistoryReducer
+    tnxHistory: transactionHistoryReducer,
+    fundWallet: fundWalletReducer
 })
 
 let initialState = {

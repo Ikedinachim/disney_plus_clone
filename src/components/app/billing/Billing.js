@@ -43,13 +43,13 @@ const BillingOverview = () => {
                                             <div className="col-md-6 col-12">
                                             <p className="tx-uppercase mb-0 tx-16">Current Balance</p>
                                             <p className="tx-32 tx-semibold tx-green">+ &#8358;{wallet.balance}</p>
-                                            <a
-                                                href="./wallet.html"
+                                            <Link
+                                                to="/app/billing/fund-wallet"
                                                 className="btn btn-primary mg-t-10 mg-md-t-30"
                                             >
                                                 {" "}
                                                 <i className="fa fa-plus mg-r-5" /> Fund Wallet{" "}
-                                            </a>
+                                            </Link>
                                             </div>
                                             <div className="col-md-6 col-12 mg-t-20 mg-md-t-0">
                                             <p className="mb-1 tx-16">Auto recharge</p>
