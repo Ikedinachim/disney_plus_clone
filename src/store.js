@@ -5,8 +5,10 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { productsReducer, newProductReducer, productDetailsReducer, productReducer, newReviewReducer, productReviewsReducer, reviewReducer } from './reducers/productReducers'
 import { authReducer, userReducer, allUsersReducer, forgotPasswordReducer, userDetailsReducer } from './reducers/authReducers'
 import { cartReducer } from './reducers/cartReducers'
-import { senderIDReducer, createSenderIdReducer } from './reducers/senderIDReducers'
 import { newOrderReducer, myOrdersReducer, orderDetailsReducer, allOrdersReducer, orderReducer } from './reducers/orderReducers'
+
+import { senderIDReducer, createSenderIdReducer } from './reducers/senderIDReducers'
+import { billingReducer as walletReducer, transactionHistoryReducer } from './reducers/billingReducers'
 
 const reducer = combineReducers({
     products: productsReducer,
@@ -15,7 +17,7 @@ const reducer = combineReducers({
     product: productReducer,
     productReviews: productReviewsReducer,
     review: reviewReducer,
-    auth: authReducer,
+    
     user: userReducer,
     allUsers: allUsersReducer,
     userDetails: userDetailsReducer,
@@ -28,7 +30,11 @@ const reducer = combineReducers({
     order: orderReducer,
     newReview: newReviewReducer,
     senderID: senderIDReducer,
+
+    auth: authReducer,
     createSenderId: createSenderIdReducer,
+    wallet: walletReducer,
+    tnxHistory: transactionHistoryReducer
 })
 
 let initialState = {

@@ -16,7 +16,8 @@ const Header = () => {
         alert.success("Logged out successfully")
     }
 
-    const { user, loading } = useSelector(state => state.auth)
+    const { user } = useSelector(state => state.auth)
+    const { wallet } = useSelector(state => state.wallet)
 
     return (
         <div className="content-header shadow-dash bd-b-0">
@@ -36,7 +37,7 @@ const Header = () => {
                     </Link>
                     <span className="mg-l-3 tx-14 tx-medium">
                     <img src="../../assets/img/campaign.svg" alt="asset" srcSet />
-                    Balance:N50,000
+                    Balance: &#8358;{wallet.balance}
                     </span>
                 </div>
                 </div>

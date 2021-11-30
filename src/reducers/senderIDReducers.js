@@ -52,7 +52,7 @@ export const createSenderIdReducer = (state = {}, action) => {
         case CREATE_SENDERID_SUCCESS:
             return {
                 loading: false,
-                status: action.payload
+                status: action.payload.status
             }
         
         case CREATE_SENDERID_FAIL:

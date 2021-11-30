@@ -5,10 +5,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useAlert } from 'react-alert'
 
 import MetaData from '../../layout/MetaData'
-import Header from '../Header'
+// import Header from '../Header'
 import Loader from '../../layout/Loader'
-import Sidebar from '../Sidebar'
-import FeatherIcon from 'feather-icons-react';
+// import Sidebar from '../Sidebar'
+// import FeatherIcon from 'feather-icons-react';
 import { createSenderId, clearErrors } from '../../../actions/senderIDActions';
 
 const SenderID = () => {

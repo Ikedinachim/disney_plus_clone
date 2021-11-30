@@ -7,6 +7,7 @@ import MetaData from '../layout/MetaData'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { login, clearErrors } from '../../actions/authActions'
+import { getWallet, } from '../../actions/billingActions'
 
 const Login = ({ history }) => {
     const navHistory = useNavigate()
@@ -40,6 +41,7 @@ const Login = ({ history }) => {
     const submitHandler = (e) => {
         e.preventDefault();
         dispatch(login(userName, password))
+        dispatch(getWallet())
     }
 
     return (
