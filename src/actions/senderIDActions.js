@@ -56,7 +56,7 @@ export const getSenderID = () => async (dispatch) => {
 
 
 // Create New Sender ID
-export const createSenderId = (senderId) => async (dispatch) => {
+export const createSenderId = (setCreateSenderId) => async (dispatch) => {
     try {
 
         dispatch({ type: CREATE_SENDERID_REQUEST })
@@ -65,15 +65,17 @@ export const createSenderId = (senderId) => async (dispatch) => {
 
         const config = {
             headers: {
+                'Content-Type': 'application/json',
                 "Authorization" : `Bearer ${token}`
             }
         }
-        const { data } = await axios.post('api/create-sender-id', senderId, config)
+        const { data } = await axios.post('api/create-sender-id', setCreateSenderId, config)
+        console.log(data)
 
         if (data.status === "success") {
             dispatch({
                 type: CREATE_SENDERID_SUCCESS,
-                payload: data.data.senderIds
+                payload: data.data.status
             })
         } else {
             dispatch({

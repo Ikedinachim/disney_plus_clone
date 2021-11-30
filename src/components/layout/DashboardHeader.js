@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { logout } from '../../actions/authActions'
 
@@ -15,6 +15,8 @@ const Header = () => {
         dispatch(logout())
         alert.success("Logged out successfully")
     }
+
+    const { user, loading } = useSelector(state => state.auth)
 
     return (
         <div className="content-header shadow-dash bd-b-0">
@@ -40,15 +42,15 @@ const Header = () => {
                 </div>
                 <div className="dropdown dropdown-profile ml-md-4 ml-2">
                 <Link
-                    to=""
+                    to="/app"
                     className="dropdown-link tx-dark tx-13 tx-medium"
                     data-toggle="dropdown"
                     data-display="static"
                     aria-haspopup="true"
                     aria-expanded="false"
                 >
-                    {/* {user.user.firstName} */}
-                    Jane Doe
+                    {user.user.firstName}
+                    {/* Jane Doe */}
                     <div className="avatar avatar-sm mg-l-10">
                     <img
                         src="https://via.placeholder.com/500"
@@ -67,8 +69,8 @@ const Header = () => {
                     />
                     </div>
                     <h6 className="tx-semibold mg-b-5">
-                        {/* {user.user.firstName +" " + user.user.LastName} */}
-                        Jane
+                        {user.user.firstName +" " + user.user.LastName}
+                        {/* Jane */}
                     </h6>
                     <p className="mg-b-25 tx-12 tx-color-03">Administrator</p>
                     <Link to="admin" className="dropdown-item">

@@ -51,8 +51,29 @@ const SenderID = () => {
         var json = JSON.stringify(object);
         console.log(json);
 
-        dispatch(createSenderId(senderId))
+        dispatch(createSenderId(json))
     }
+    console.log(status)
+
+    const onChange = e => {
+        if(e.target.name === 'avatar') {
+
+            // const reader = new FileReader()
+
+            // reader.onload = () => {
+            //     if (reader.readyState === 2) {
+            //         setAvatarPreview(reader.result)
+            //         setAvatar(reader.result)
+            //     }
+            // }
+
+            // reader.readAsDataURL(e.target.files[0])
+
+        } else {
+            setCreateSenderId({ ...newSenderId, [e.target.name]: e.target.value })
+        }
+    }
+
 
     return (
         <Fragment>
@@ -64,7 +85,7 @@ const SenderID = () => {
                             <div className="col-md-5 pd-x-0">
                                 <p className="tx-22 tx-bold tx-com mg-b-5">View Sender ID</p>
                                 <p className="tx-blac tx-16">See requested sender ID here for approval</p>
-                                <form action className="mg-t-30" id="senderIdForm" onSubmit={ submitSenderIdHandler }>
+                                <form className="mg-t-30" id="senderIdForm" onSubmit={ submitSenderIdHandler }>
                                     <div className="form-group">
                                         <label htmlFor className="mb-1 tx-medium tx-16">
                                         Sender ID
@@ -76,7 +97,7 @@ const SenderID = () => {
                                             id="sender"
                                             name="senderId"
                                             value={senderId}
-                                            onChange={(e) => setCreateSenderId(e.target.value)}
+                                            onChange={onChange}
                                         />
                                     </div>
                                     <div className="form-group">
@@ -135,8 +156,6 @@ const SenderID = () => {
                                         </div>
                                         <div className="col-6">
                                             <button
-                                            type="submit"
-                                            disabled={ loading ? true : false }
                                             className="btn btn-outline-primary w-100 tx-medium"
                                             >
                                             Reject
@@ -174,11 +193,12 @@ const SenderID = () => {
                                     </div>
                                     <div className="tx-center bd-t-0 pd-b-30">
                                     <button
-                                        type="submit"
-                                        value="Submit"
+                                        type="button"
+                                        value="submit"
                                         form="senderIdForm"
                                         className="btn btn-primary w-50"
                                         data-dismiss="modal"
+                                        onClick={submitSenderIdHandler}
                                         disabled={ loading ? true : false }
                                     >
                                         Done

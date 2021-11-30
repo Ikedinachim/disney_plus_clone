@@ -68,9 +68,7 @@ function App() {
 
   return (
     <div>
-      {!loading && (isAuthenticated) && (
-      <Sidebar />
-      )}
+      {!loading && (isAuthenticated) ? <Sidebar /> : ""}
       <div className="content ht-100v pd-0">
         {!loading && (isAuthenticated) && (
           <Header />
@@ -79,19 +77,19 @@ function App() {
           {/* <Route path="/" element={<Home />} /> */}
           <Route path="/app/sender-id" element={isAuthenticated ? <SenderID /> : <Login />} />
           <Route path="/app/view-sender-id" element={isAuthenticated ? <ViewSenderID /> : <Login />} />
+          <Route path="/app" element={isAuthenticated ? <Dashboard /> : <Login />} />
           {/* <Route path="/register" element={<Register />} /> */}
           {/* <Route path="/login" element={<Login />} /> */}
-          <Route path="/app" element={isAuthenticated ? <Dashboard /> : <Home />} />
+          {/* <Route path="/app" element={isAuthenticated ? <Dashboard /> : <Home />} /> */}
           {/* <Route path="*" element={isAuthenticated ? <Dashboard /> : <Login />} /> */}
         </Routes>
-
       
         <Routes>
           <Route path="/" element={<Home />} />
           {/* <Route path="/app/sender-id" element={isAuthenticated ? <SenderID /> : <Login />} /> */}
-          <Route path="register" element={<Register />} />
-          <Route path="login" element={<Login />} />
-          <Route path="/app" element={isAuthenticated ? <Dashboard /> : <Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          {/* <Route path="/app" element={isAuthenticated ? <Dashboard /> : <Login />} /> */}
           {/* <Route path="*" element={isAuthenticated ? <Dashboard /> : <Login />} /> */}
         </Routes>
       {loading ? <Loader /> : null}
