@@ -1,13 +1,16 @@
 import React, { useEffect } from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate, Router } from "react-router-dom";
 // import CustomRoutes from "./components/route/RouteObjects";
 
-// import Header from "./components/layout/Header";
+import Header from "./components/layout/DashboardHeader";
+import Sidebar from "./components/layout/Sidebar";
 // import Footer from "./components/layout/Footer";
 import Loader from "./components/loader";
 
 import Home from "./components/Home";
 import Dashboard from "./components/app";
+import SenderID from "./components/app/SenderID/SenderID";
+import ViewSenderID from "./components/app/SenderID/ViewSenderID";
 // import ProductDetails from "./components/product/ProductDetails";
 
 // // Cart Imports
@@ -60,25 +63,37 @@ function App() {
   //   store.dispatch(loadUser())
   // }, [])
 
-  const { loading } = useSelector((state) => state.auth);
+  const { loading, isAuthenticated } = useSelector((state) => state.auth);
   // const routing = useRoutes(routes(isAuthenticated));
 
   return (
     <div>
-      <Routes>
-        <Route
-            path="/app"
-            element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            }
-          />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/' element={<Home />} />
-          <Route path="*" element={<Login />}></Route>
-      </Routes>
+      {!loading && (isAuthenticated) && (
+      <Sidebar />
+      )}
+      <div className="content ht-100v pd-0">
+        {!loading && (isAuthenticated) && (
+          <Header />
+        )}
+        <Routes>
+          {/* <Route path="/" element={<Home />} /> */}
+          <Route path="/app/sender-id" element={isAuthenticated ? <SenderID /> : <Login />} />
+          <Route path="/app/view-sender-id" element={isAuthenticated ? <ViewSenderID /> : <Login />} />
+          {/* <Route path="/register" element={<Register />} /> */}
+          {/* <Route path="/login" element={<Login />} /> */}
+          <Route path="/app" element={isAuthenticated ? <Dashboard /> : <Login />} />
+          <Route path="*" element={isAuthenticated ? <Dashboard /> : <Login />} />
+        </Routes>
+
+      </div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          {/* <Route path="/app/sender-id" element={isAuthenticated ? <SenderID /> : <Login />} /> */}
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          {/* <Route path="/app" element={isAuthenticated ? <Dashboard /> : <Login />} /> */}
+          {/* <Route path="*" element={isAuthenticated ? <Dashboard /> : <Login />} /> */}
+        </Routes>
       {loading ? <Loader /> : null}
     </div>
   );
@@ -88,5 +103,6 @@ export default App;
 
 function PrivateRoute({ children }) {
   return localStorage.getItem('user') !== null ? children : <Navigate to="/login" />;
+
 }
 

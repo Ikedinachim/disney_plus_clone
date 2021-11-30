@@ -58,9 +58,10 @@ export const login = (username, password) => async (dispatch) => {
         }
 
         const { data } = await axios.post('api/auth/login', { username, password }, config)
-        localStorage.setItem('user',JSON.stringify(data.data))
-        console.log(localStorage.getItem('user'))
-        console.log(data)
+        sessionStorage.setItem('user',JSON.stringify(data.data))
+        
+        // console.log(localStorage.getItem('user'))
+        // console.log(data)
 
         if (data.status === "success") {
             dispatch({
@@ -86,9 +87,6 @@ export const login = (username, password) => async (dispatch) => {
 
 // Register User
 export const register = (userData) => async (dispatch) => {
-    // for (var key of userData.entries()) {
-    //     console.log(key[0] + ', ' + key[1]);
-    //  }
     try {
 
         dispatch({ type: REGISTER_USER_REQUEST })
@@ -117,7 +115,6 @@ export const register = (userData) => async (dispatch) => {
             type: REGISTER_USER_FAIL,
             payload: data.message
         })
-        console.log(data.message)
     }
 }
 

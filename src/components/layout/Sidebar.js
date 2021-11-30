@@ -33,7 +33,6 @@ const Sidebar = () => {
                 </li>
                 <li className="nav-item">
                 <Link to="/app/billing" className="nav-link">
-                    <FeatherIcon icon="menu" />
                     <i className="fas fa-money-bill mr-3" />
                     <span>Billing</span>
                 </Link>
