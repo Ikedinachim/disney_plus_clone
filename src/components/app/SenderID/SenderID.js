@@ -201,36 +201,36 @@ const SenderID = () => {
                                 </div>
                                 <div className="card card rounded bd-0 shadow-sm">
                                     <div className="card-header bd-b-0 pd-b-0 pd-t-40 pd-md-x-30">
-                                    <div className>
+                                    {/* <div className>
                                         <div className="row justify-content-between">
                                         <div className="col-12 col-lg-4 col-md-4 pd-r-5 mg-b-20 mg-md-b-0">
                                             <div className="d-flex">
-                                            <div className="mg-t-10 mg-r-20">
-                                                <div className="custom-control custom-checkbox">
-                                                <input
-                                                    type="checkbox"
-                                                    className="custom-control-input "
-                                                    name="select-all"
-                                                    id="customCheck"
-                                                />
-                                                <label
-                                                    className="custom-control-label pd-y-10"
-                                                    htmlFor="customCheck"
-                                                ></label>
+                                                <div className="mg-t-10 mg-r-20">
+                                                    <div className="custom-control custom-checkbox">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="custom-control-input "
+                                                        name="select-all"
+                                                        id="customCheck"
+                                                    />
+                                                    <label
+                                                        className="custom-control-label pd-y-10"
+                                                        htmlFor="customCheck"
+                                                    ></label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div>
-                                                <div className="search-form w-100">
-                                                <input
-                                                    type="search"
-                                                    className="form-control bg-search"
-                                                    placeholder="Search"
-                                                />
-                                                <button className="btn" type="button">
-                                                    <i data-feather="search" />
-                                                </button>
+                                                <div>
+                                                    <div className="search-form w-100">
+                                                    <input
+                                                        type="search"
+                                                        className="form-control bg-search"
+                                                        placeholder="Search"
+                                                    />
+                                                    <button className="btn" type="button">
+                                                        <i data-feather="search" />
+                                                    </button>
+                                                    </div>
                                                 </div>
-                                            </div>
                                             </div>
                                         </div>
                                         <div className="col-md-6">
@@ -285,36 +285,9 @@ const SenderID = () => {
                                             </div>
                                         </div>
                                         </div>
-                                    </div>
+                                    </div> */}
                                     </div>
                                     <div className="card-body pd-md-x-30 pd-t- mg-t-20 mg-md-t-0">
-                                    {/* <TableContainer component={Paper}>
-                                        <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                                            <TableHead>
-                                            <TableRow>
-                                                <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-                                                <StyledTableCell align="right">Calories</StyledTableCell>
-                                                <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-                                                <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-                                                <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
-                                            </TableRow>
-                                            </TableHead>
-                                            <TableBody>
-                                            {rows.map((row) => (
-                                                <StyledTableRow key={row.name}>
-                                                <StyledTableCell component="th" scope="row">
-                                                    {row.name}
-                                                </StyledTableCell>
-                                                <StyledTableCell align="right">{row.calories}</StyledTableCell>
-                                                <StyledTableCell align="right">{row.fat}</StyledTableCell>
-                                                <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-                                                <StyledTableCell align="right">{row.protein}</StyledTableCell>
-                                                </StyledTableRow>
-                                            ))}
-                                            </TableBody>
-                                        </Table>
-                                    </TableContainer> */}
-
                                     <MDBDataTable 
                                         data={setSenderID()}
                                         className="px-3 scroll"
