@@ -51,16 +51,14 @@ const Register = ({ history }) => {
     useEffect( () => {
         if (isAuthenticated) {
             navigate('/app')
-        } else if(!isAuthenticated) {
-            navigate('/login')
-        }
+        } 
 
         if(error) {
             alert.error(error)
             dispatch(clearErrors())
         }
 
-    }, [dispatch, alert, error, navigate, wallet, newUser])
+    }, [dispatch, alert, error, navigate, wallet, user])
 
     const submitIndividualHandler = (e) => {
         e.preventDefault();
