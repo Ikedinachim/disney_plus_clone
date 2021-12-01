@@ -50,7 +50,7 @@ const Header = () => {
                     aria-haspopup="true"
                     aria-expanded="false"
                 >
-                    {billing.length < 1  ? "John" :user.user.firstName}
+                    {billing.length < 1  ? "John" : user.user.firstName}
                     {/* Jane Doe */}
                     <div className="avatar avatar-sm mg-l-10">
                     <img
@@ -70,7 +70,7 @@ const Header = () => {
                     />
                     </div>
                     <h6 className="tx-semibold mg-b-5">
-                        {user.user.firstName +" " + user.user.LastName}
+                        {(billing.length < 1  ? "John" : user.user.firstName) +" " + (billing.length < 1  ? "John" : user.user.LastName)}
                         {/* Jane */}
                     </h6>
                     <p className="mg-b-25 tx-12 tx-color-03">Administrator</p>
