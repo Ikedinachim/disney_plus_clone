@@ -21,12 +21,13 @@ const Login = ({ history }) => {
     const dispatch = useDispatch();
 
     const { isAuthenticated, error, loading, user } = useSelector(state => state.auth)
+    const { wallet } = useSelector(state => state.wallet)
 
     // const redirect = location.search ? location.search.split('=')[1] : '/'
 
     useEffect( () => {
 
-        if(isAuthenticated && user !== null) {
+        if(isAuthenticated && user !== null && wallet.billing.length > 1) {
             // history.push("/")
             navHistory('/app')
         }
