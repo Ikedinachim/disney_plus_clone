@@ -46,9 +46,10 @@ const Register = ({ history }) => {
     const dispatch = useDispatch();
 
     const { isAuthenticated, error, loading } = useSelector(state => state.auth)
+    const { wallet, billing } = useSelector(state => state.wallet)
 
     useEffect( () => {
-        if (user === null) {
+        if (user === null && !isAuthenticated && billing.length < 1) {
             navigate('/login')
         } else if(isAuthenticated) {
             navigate('/login')
