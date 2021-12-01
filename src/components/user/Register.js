@@ -47,8 +47,9 @@ const Register = ({ history }) => {
     const { isAuthenticated, error, loading } = useSelector(state => state.auth)
 
     useEffect( () => {
-
-        if(isAuthenticated) {
+        if (user === null) {
+            navigate('/login')
+        } else if(isAuthenticated) {
             navigate('/login')
         }
 
