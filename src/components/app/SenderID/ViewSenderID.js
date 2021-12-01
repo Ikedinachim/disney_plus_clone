@@ -74,7 +74,6 @@ const SenderID = () => {
         }
     }
 
-
     return (
         <Fragment>
             {loading ? <Loader /> : (

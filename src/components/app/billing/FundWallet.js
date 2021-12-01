@@ -9,20 +9,21 @@ import Loader from '../../layout/Loader'
 import { fundWallet, clearErrors } from '../../../actions/billingActions'
 
 const FundWallet = () => {
-
+    
     const alert = useAlert();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    
     const [amountToPay, setAmountToPay] = useState({payAmount:''})
     const {amount} = amountToPay
-    const { status, loading, error } = useSelector(state => state.fundWallet)
+    const { status, fundWallet, loading, error } = useSelector(state => state.fundWallet)
     const { wallet } = useSelector(state => state.wallet)
 
     useEffect( () => {
-        if(!loading && status === "success") {
+        if(!loading && fundWallet !== null ) {
+            navigate('/app/billing/fund-wallet')
             alert.success(status.message)
-            navigate('/app')
+            // this.setState({ payAmount: '' })
         }
 
         if(error) {
@@ -40,7 +41,7 @@ const FundWallet = () => {
         var object = {};
         formData.forEach((value, key) => object[key] = value);
         var json = JSON.stringify(object);
-        console.log(json);
+        // console.log(json);
 
         dispatch(fundWallet(json))
     }

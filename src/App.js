@@ -11,6 +11,7 @@ import SenderID from "./components/app/SenderID/SenderID";
 import BillingOverview from "./components/app/billing/Billing";
 import FundWallet from "./components/app/billing/FundWallet";
 import ViewSenderID from "./components/app/SenderID/ViewSenderID";
+// import { fundWallet } from '../../../actions/billingActions'
 
 // Auth / User Imports
 import Login from "./components/user/Login";
@@ -31,7 +32,7 @@ function App() {
   // }, [])
 
   const { loading, isAuthenticated } = useSelector((state) => state.auth);
-  // const routing = useRoutes(routes(isAuthenticated));
+  const { fundWallet } = useSelector(state => state.fundWallet)
 
   return (
     <div>
@@ -46,7 +47,7 @@ function App() {
           <Route path="/app/view-sender-id" element={isAuthenticated ? <ViewSenderID /> : <Login />} />
           <Route path="/app" element={isAuthenticated ? <Dashboard /> : <Login />} />
           <Route path="/app/billing" element={isAuthenticated ? <BillingOverview /> : <Login />} />
-          <Route path="/app/billing/fund-wallet" element={isAuthenticated ? <FundWallet /> : <Login />} />
+          <Route path="/app/billing/fund-wallet" element={isAuthenticated || fundWallet !== null ? <FundWallet /> : <Login />} />
           {/* <Route path="/register" element={<Register />} /> */}
           {/* <Route path="/login" element={<Login />} /> */}
           {/* <Route path="/app" element={isAuthenticated ? <Dashboard /> : <Home />} /> */}

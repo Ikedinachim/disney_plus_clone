@@ -129,8 +129,8 @@ const SenderID = () => {
             )
             console.log(formattedDate)
             const sp = formattedDate.split(' ')
-            console.log(sp)
-            console.log(`${sp[1]} ${sp[0]} ${sp[2]}`)
+            // console.log(sp)
+            // console.log(`${sp[1]} ${sp[0]} ${sp[2]}`)
             return sp
         } 
 

@@ -29,7 +29,7 @@ const Header = () => {
                 <div className=" ml-md-4 ml-2 mg-t-5">
                 <div className="d-flex">
                     <Link
-                    to="./wallet.html"
+                    to="/app/billing/fund-wallet"
                     className="tx-semibold tx-orange pd-t-1 mg-r-5"
                     style={{ textDecoration: "underline" }}
                     >
@@ -37,7 +37,7 @@ const Header = () => {
                     </Link>
                     <span className="mg-l-3 tx-14 tx-medium">
                     <img src="../../assets/img/campaign.svg" alt="asset" srcSet />
-                    Balance: &#8358;{wallet.balance}
+                    Balance: &#8358;{wallet.balance !== null ? wallet.balance : 0.00}
                     </span>
                 </div>
                 </div>
