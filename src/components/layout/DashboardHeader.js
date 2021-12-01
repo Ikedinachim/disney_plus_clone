@@ -37,7 +37,7 @@ const Header = () => {
                     </Link>
                     <span className="mg-l-3 tx-14 tx-medium">
                     <img src="../../assets/img/campaign.svg" alt="asset" srcSet />
-                    Balance: &#8358;{billing.length < 2  ? 0.00 : wallet.balance}
+                    Balance: &#8358;{billing.length < 1  ? 0.00 : wallet.balance}
                     </span>
                 </div>
                 </div>
@@ -50,7 +50,7 @@ const Header = () => {
                     aria-haspopup="true"
                     aria-expanded="false"
                 >
-                    {user.user.firstName}
+                    {billing.length < 1  ? "John" :user.user.firstName}
                     {/* Jane Doe */}
                     <div className="avatar avatar-sm mg-l-10">
                     <img
