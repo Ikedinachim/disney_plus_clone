@@ -20,13 +20,13 @@ const Login = ({ history }) => {
     const alert = useAlert();
     const dispatch = useDispatch();
 
-    const { isAuthenticated, error, loading } = useSelector(state => state.auth)
+    const { isAuthenticated, error, loading, user } = useSelector(state => state.auth)
 
     // const redirect = location.search ? location.search.split('=')[1] : '/'
 
     useEffect( () => {
 
-        if(isAuthenticated) {
+        if(isAuthenticated && user !== null) {
             // history.push("/")
             navHistory('/app')
         }
