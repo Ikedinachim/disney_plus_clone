@@ -6,6 +6,7 @@ import MetaData from '../layout/MetaData'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { register, clearErrors } from '../../actions/authActions'
+import { getWallet, } from '../../actions/billingActions'
 
 const Register = ({ history }) => {
     const navigate = useNavigate()
@@ -79,6 +80,7 @@ const Register = ({ history }) => {
         console.log(json);
         
         dispatch(register(json))
+        dispatch(getWallet())
         
     }
 
