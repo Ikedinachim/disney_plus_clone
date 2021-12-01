@@ -37,7 +37,7 @@ const Header = () => {
                     </Link>
                     <span className="mg-l-3 tx-14 tx-medium">
                     <img src="../../assets/img/campaign.svg" alt="asset" srcSet />
-                    Balance: &#8358;{wallet.balance === undefined && (wallet.balance = 0.00) ? wallet.balance : 0.00}
+                    Balance: &#8358;{wallet.length < 2  && (wallet.balance = 0.00) ? wallet.balance : 0.00}
                     </span>
                 </div>
                 </div>
