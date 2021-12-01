@@ -97,7 +97,6 @@ export const register = (userData) => async (dispatch) => {
             }
         }
         const { data } = await axios.post('api/auth/register', userData, config)
-        sessionStorage.setItem('user',JSON.stringify(data.data))
 
         if (data.status === "success") {
             dispatch({
