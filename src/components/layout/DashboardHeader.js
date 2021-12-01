@@ -17,7 +17,7 @@ const Header = () => {
     }
 
     const { user } = useSelector(state => state.auth)
-    const { wallet } = useSelector(state => state.wallet)
+    const { wallet, billing } = useSelector(state => state.wallet)
 
     return (
         <div className="content-header shadow-dash bd-b-0">
@@ -37,7 +37,7 @@ const Header = () => {
                     </Link>
                     <span className="mg-l-3 tx-14 tx-medium">
                     <img src="../../assets/img/campaign.svg" alt="asset" srcSet />
-                    Balance: &#8358;{wallet.length < 2  && (wallet.balance = 0.00) ? wallet.balance : 0.00}
+                    Balance: &#8358;{billing.length < 2  ? 0.00 : wallet.balance}
                     </span>
                 </div>
                 </div>
