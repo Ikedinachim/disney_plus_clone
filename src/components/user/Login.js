@@ -27,7 +27,7 @@ const Login = ({ history }) => {
 
     useEffect( () => {
 
-        if(isAuthenticated && user !== null && wallet.billing.length > 1) {
+        if(isAuthenticated && user !== null && wallet.length > 1) {
             // history.push("/")
             navHistory('/app')
         }
