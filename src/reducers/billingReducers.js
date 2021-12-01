@@ -12,7 +12,7 @@ import {
 
 } from '../constants/billingConstants'
 
-export const billingReducer = (state = { billing: [] }, action) => {
+export const walletReducer = (state = { wallet: [] }, action) => {
     switch(action.type) {
         case GET_WALLET_REQUEST:
             return {
@@ -79,13 +79,15 @@ export const fundWalletReducer = (state = { fundWallet: [] }, action) => {
         case FUND_WALLET_REQUEST:
             return {
                 loading: true,
-                status: action.payload
+                // status: action.payload
+                fundWallet: []
             }
         
         case FUND_WALLET_SUCCESS:
             return {
                 loading: false,
-                status: action.payload,
+                // status: action.payload,
+                fundWallet: action.payload
             }
 
         case FUND_WALLET_FAIL:

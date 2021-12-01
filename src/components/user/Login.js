@@ -8,6 +8,7 @@ import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { login, clearErrors } from '../../actions/authActions'
 import { getWallet, } from '../../actions/billingActions'
+import { fundWallet } from '../../actions/billingActions'
 
 const Login = ({ history }) => {
     const navHistory = useNavigate()
@@ -23,13 +24,17 @@ const Login = ({ history }) => {
     const { isAuthenticated, error, loading, user } = useSelector(state => state.auth)
     const { wallet } = useSelector(state => state.wallet)
 
+    console.log(wallet)
+
     // const redirect = location.search ? location.search.split('=')[1] : '/'
 
     useEffect( () => {
 
-        if(isAuthenticated && user !== null && wallet.length > 1) {
+        if(isAuthenticated) {
             // history.push("/")
             navHistory('/app')
+        } else {
+            navHistory('/login')
         }
 
         if(error) {
@@ -37,7 +42,7 @@ const Login = ({ history }) => {
             dispatch(clearErrors())
         }
 
-    }, [dispatch, alert, isAuthenticated, error, navHistory])
+    }, [dispatch, alert, isAuthenticated, user, error, wallet])
 
     const submitHandler = (e) => {
         e.preventDefault();

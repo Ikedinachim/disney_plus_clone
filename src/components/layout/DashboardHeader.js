@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Link } from 'react-router-dom'
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -17,7 +17,11 @@ const Header = () => {
     }
 
     const { user } = useSelector(state => state.auth)
-    const { wallet, billing } = useSelector(state => state.wallet)
+    const { wallet, loading, error } = useSelector(state => state.wallet)
+
+    useEffect( () => {
+
+    }, [dispatch, alert, loading, error, wallet,])
 
     return (
         <div className="content-header shadow-dash bd-b-0">
@@ -37,7 +41,7 @@ const Header = () => {
                     </Link>
                     <span className="mg-l-3 tx-14 tx-medium">
                     <img src="../../assets/img/campaign.svg" alt="asset" srcSet />
-                    Balance: &#8358;{billing.length < 1  ? 0.00 : wallet.balance}
+                    Balance: &#8358;{wallet.balance}
                     </span>
                 </div>
                 </div>
@@ -50,7 +54,7 @@ const Header = () => {
                     aria-haspopup="true"
                     aria-expanded="false"
                 >
-                    {billing.length < 1  ? "John" : user.user.firstName}
+                    {user.user.firstName}
                     {/* Jane Doe */}
                     <div className="avatar avatar-sm mg-l-10">
                     <img
@@ -70,7 +74,7 @@ const Header = () => {
                     />
                     </div>
                     <h6 className="tx-semibold mg-b-5">
-                        {(billing.length < 1  ? "John" : user.user.firstName) +" " + (billing.length < 1  ? "John" : user.user.LastName)}
+                        {user.user.firstName +" " + user.user.LastName}
                         {/* Jane */}
                     </h6>
                     <p className="mg-b-25 tx-12 tx-color-03">Administrator</p>

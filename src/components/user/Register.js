@@ -11,7 +11,7 @@ import { getWallet, } from '../../actions/billingActions'
 const Register = ({ history }) => {
     const navigate = useNavigate()
 
-    const [user, setUser] = useState({
+    const [newUser, setNewUser] = useState({
         firstName: '',
         lastName: '',
         middleName: '',
@@ -37,7 +37,7 @@ const Register = ({ history }) => {
         businessName, 
         contactName, 
         businessEmail 
-    } = user;
+    } = newUser;
 
     // const [avatar, setAvatar] = useState('')
     // const [avatarPreview, setAvatarPreview] = useState('/images/default_avatar.png')
@@ -45,13 +45,13 @@ const Register = ({ history }) => {
     const alert = useAlert();
     const dispatch = useDispatch();
 
-    const { isAuthenticated, error, loading } = useSelector(state => state.auth)
+    const { isAuthenticated, error, loading, user } = useSelector(state => state.auth)
     const { wallet, billing } = useSelector(state => state.wallet)
 
     useEffect( () => {
-        if (user === null && !isAuthenticated && billing.length < 1) {
-            navigate('/login')
-        } else if(isAuthenticated) {
+        if (isAuthenticated) {
+            navigate('/app')
+        } else if(!isAuthenticated) {
             navigate('/login')
         }
 
@@ -60,7 +60,7 @@ const Register = ({ history }) => {
             dispatch(clearErrors())
         }
 
-    }, [dispatch, alert, isAuthenticated, error, navigate])
+    }, [dispatch, alert, error, navigate, wallet, newUser])
 
     const submitIndividualHandler = (e) => {
         e.preventDefault();
@@ -126,7 +126,7 @@ const Register = ({ history }) => {
             // reader.readAsDataURL(e.target.files[0])
 
         } else {
-            setUser({ ...user, [e.target.name]: e.target.value })
+            setNewUser({ ...newUser, [e.target.name]: e.target.value })
         }
     }
 

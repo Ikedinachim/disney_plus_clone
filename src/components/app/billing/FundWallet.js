@@ -6,31 +6,38 @@ import { useNavigate } from 'react-router-dom'
 
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
-import { fundWallet, clearErrors } from '../../../actions/billingActions'
+import { fundUserWallet, clearErrors } from '../../../actions/billingActions'
+import { getWallet } from '../../../actions/billingActions'
 
 const FundWallet = () => {
-    
     const alert = useAlert();
     const dispatch = useDispatch();
+    // dispatch(getWallet())
     const navigate = useNavigate();
-    
+
     const [amountToPay, setAmountToPay] = useState({payAmount:''})
     const {amount} = amountToPay
-    const { status, fundWallet, loading, error } = useSelector(state => state.fundWallet)
+    const { fundWallet, loading, error } = useSelector(state => state.fundWallet)
     const { wallet } = useSelector(state => state.wallet)
+    const { isAuthenticated, user } = useSelector(state => state.auth)
+
+    console.log(fundWallet)
 
     useEffect( () => {
-        if(!loading && fundWallet !== null ) {
+
+        if (!isAuthenticated || user === null) {
+            navigate('/login')
+        }else if(!loading && fundWallet.status === "success") {
+            alert.success(fundWallet.message)
             navigate('/app/billing/fund-wallet')
-            alert.success(status.message)
-            // this.setState({ payAmount: '' })
+            console.log(fundWallet.message)
         }
 
         if(error) {
             alert.error(error)
             dispatch(clearErrors())
         }
-    }, [dispatch, alert, loading, error, status])
+    }, [dispatch, alert, loading, error, fundWallet])
 
     const makePaymentHandler = (e) => {
         e.preventDefault();
@@ -43,7 +50,7 @@ const FundWallet = () => {
         var json = JSON.stringify(object);
         // console.log(json);
 
-        dispatch(fundWallet(json))
+        dispatch(fundUserWallet(json))
     }
     const onChange = e => {
         if(e.target.name === 'avatar') {

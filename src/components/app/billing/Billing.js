@@ -18,7 +18,7 @@ const BillingOverview = () => {
 
     useEffect( () => {
 
-    }, [dispatch, alert, loading, error, getTransactionHistory])
+    }, [dispatch, alert, loading, error, user, wallet])
 
     dispatch(getTransactionHistory())
 

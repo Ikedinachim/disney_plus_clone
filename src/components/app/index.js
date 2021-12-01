@@ -40,9 +40,9 @@ const Dashboard = () => {
                         <div className="content-body">
                             <div className="container pd-x-0">
                                 <p className="mg-b-0 tx-26 tx-bold tx-com">
-                                Hello 
+                                Hello {" "}
                                 <span className> 
-                                    {/* {user.user.firstName}, */}Jane,
+                                    {user.user.firstName},
                                 </span> what would you like to do?
                                 </p>
                                 <div className="row justify-content-between">

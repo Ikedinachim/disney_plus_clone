@@ -99,7 +99,7 @@ export const getTransactionHistory = () => async (dispatch) => {
 
 
 // Fund Wallet
-export const fundWallet = (amount) => async (dispatch) => {
+export const fundUserWallet = (amount) => async (dispatch) => {
     try {
         
         
