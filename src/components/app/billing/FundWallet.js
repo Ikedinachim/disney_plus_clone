@@ -96,7 +96,7 @@ const FundWallet = () => {
                                             <p className="tx-32 tx-semibold tx-green">+ &#8358;{wallet.balance}</p>
                                             <form onSubmit={makePaymentHandler}>
                                             <div className="form-group mg-t-40">
-                                            <label htmlFor className="tx-blac mb-1">
+                                            <label className="tx-blac mb-1">
                                                 How much would you like to fund your wallet with?
                                             </label>
                                             

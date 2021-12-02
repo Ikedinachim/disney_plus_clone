@@ -82,8 +82,8 @@ const SenderID = () => {
                         <div className="content-body">
                             <div className="container pd-x-0">
                             <div className="col-md-5 pd-x-0">
-                                <p className="tx-22 tx-bold tx-com mg-b-5">View Sender ID</p>
-                                <p className="tx-blac tx-16">See requested sender ID here for approval</p>
+                                <p className="tx-22 tx-bold tx-com mg-b-5">Request Sender ID</p>
+                                <p className="tx-blac tx-16">Fill the form to request for Sender-ID</p>
                                 <form className="mg-t-30" id="senderIdForm" onSubmit={ submitSenderIdHandler }>
                                     <div className="form-group">
                                         <label htmlFor className="mb-1 tx-medium tx-16">
