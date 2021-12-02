@@ -78,7 +78,7 @@ const SenderID = () => {
         <Fragment>
             {loading ? <Loader /> : (
                 <Fragment>
-                    <MetaData title={"Sender ID"} />
+                    <MetaData title={"Request Sender ID"} />
                         <div className="content-body">
                             <div className="container pd-x-0">
                             <div className="col-md-5 pd-x-0">
@@ -99,47 +99,6 @@ const SenderID = () => {
                                             onChange={onChange}
                                         />
                                     </div>
-                                    <div className="form-group">
-                                        <div className="custom-control custom-checkbox mg-b-20">
-                                        <input
-                                            type="checkbox"
-                                            className="custom-control-input"
-                                            id="customCheck1"
-                                        />
-                                        <label
-                                            className="custom-control-label tx-blac tx-16"
-                                            htmlFor="customCheck1"
-                                        >
-                                            MTN
-                                        </label>
-                                        </div>
-                                        <div className="custom-control custom-checkbox mg-b-20">
-                                        <input
-                                            type="checkbox"
-                                            className="custom-control-input"
-                                            id="customCheck2"
-                                        />
-                                        <label
-                                            className="custom-control-label tx-blac tx-16"
-                                            htmlFor="customCheck2"
-                                        >
-                                            Glo
-                                        </label>
-                                        </div>
-                                        <div className="custom-control custom-checkbox mg-b-20">
-                                        <input
-                                            type="checkbox"
-                                            className="custom-control-input"
-                                            id="customCheck3"
-                                        />
-                                        <label
-                                            className="custom-control-label tx-blac tx-16"
-                                            htmlFor="customCheck3"
-                                        >
-                                            9mobile
-                                        </label>
-                                        </div>
-                                    </div>
                                     <div className="col-md-8 pd-x-0 mg-t-30">
                                         <div className="row">
                                         <div className="col-6">
@@ -150,14 +109,7 @@ const SenderID = () => {
                                             data-target="#successModal"
                                             data-dismiss="modal"
                                             >
-                                            Accept
-                                            </button>
-                                        </div>
-                                        <div className="col-6">
-                                            <button
-                                            className="btn btn-outline-primary w-100 tx-medium"
-                                            >
-                                            Reject
+                                            Request
                                             </button>
                                         </div>
                                         </div>
@@ -178,12 +130,12 @@ const SenderID = () => {
                                     <div className="modal-body tx-center pd-x-10">
                                     <div className="form-group">
                                         <img
-                                        src="../../assets/img/Check.svg"
+                                        src="../../assets/img/logo.svg"
                                         className="img-fluid wd-100 ht-100"
                                         alt
                                         srcSet
                                         />
-                                        <p className="tx-26 tx-com tx-bold">Accepted</p>
+                                        <p className="tx-26 tx-com tx-bold">Please Note</p>
                                         <p className="tx-16 mb-0">
                                         Sender ID takes up to 48 hours to process, User will get a
                                         response within that period
@@ -200,7 +152,7 @@ const SenderID = () => {
                                         onClick={submitSenderIdHandler}
                                         disabled={ loading ? true : false }
                                     >
-                                        Done
+                                        Confirm
                                     </button>
                                     </div>
                                 </div>

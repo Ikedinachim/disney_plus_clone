@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { useDispatch, useSelector } from 'react-redux'
+import { useAlert } from 'react-alert'
 
 import { logout } from '../../actions/authActions'
 
@@ -10,6 +11,7 @@ import FeatherIcon from 'feather-icons-react';
 const Header = () => {
 
     const dispatch = useDispatch()
+    const alert = useAlert();
 
     const logoutHandler = () => {
         dispatch(logout())

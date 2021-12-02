@@ -28,6 +28,7 @@ const FundWallet = () => {
         if (!isAuthenticated || user === null) {
             navigate('/login')
         }else if(!loading && fundWallet.status === "success") {
+            navigate('/app/billing')
             alert.success(fundWallet.message)
             navigate('/app/billing/fund-wallet')
             console.log(fundWallet.message)

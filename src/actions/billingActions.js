@@ -10,6 +10,9 @@ import {
     FUND_WALLET_REQUEST,
     FUND_WALLET_SUCCESS,
     FUND_WALLET_FAIL,
+    CONFIRM_FUNDING_REQUEST,
+    CONFIRM_FUNDING_SUCCESS,
+    CONFIRM_FUNDING_FAIL,
     CLEAR_ERRORS
 } from '../constants/billingConstants'
 
@@ -101,8 +104,6 @@ export const getTransactionHistory = () => async (dispatch) => {
 // Fund Wallet
 export const fundUserWallet = (amount) => async (dispatch) => {
     try {
-        
-        
         dispatch({ type: FUND_WALLET_REQUEST })
         let user = JSON.parse(sessionStorage.getItem('user'));
         const token = user.user.token;
@@ -114,10 +115,21 @@ export const fundUserWallet = (amount) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post('/api/payment/initiate-payment', amount, config)
-        console.log(data)
 
+        // Make first two requests
+        const [fundAcc] = await Promise.all([
+            await axios.post('/api/payment/initiate-payment', amount, config),
+        ]);
+        
+        const reference = fundAcc.data.data.reference
+        amount = fundAcc.data.data.amount
+
+        const confirmFund = await axios.post('/api/payment/confirm-payment',{ amount, reference}, config)
+
+        const data = confirmFund.data
+        
         if (data.status === "success") {
+            
             dispatch({
                 type: FUND_WALLET_SUCCESS,
                 payload: data
@@ -132,6 +144,45 @@ export const fundUserWallet = (amount) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: FUND_WALLET_FAIL,
+            payload: error.message
+        })
+    }
+}
+
+// Confirm Wallet Funding
+export const confirmFunding = (amount, reference) => async (dispatch) => {
+    try {
+        
+        
+        dispatch({ type: CONFIRM_FUNDING_REQUEST })
+        let user = JSON.parse(sessionStorage.getItem('user'));
+        const token = user.user.token;
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization" : `Bearer ${token}`
+            }
+        }
+
+        const { data } = await axios.post('/api/payment/confirm-payment', amount, reference, config)
+        console.log(data)
+
+        if (data.status === "success") {
+            dispatch({
+                type: CONFIRM_FUNDING_SUCCESS,
+                payload: data
+            })
+        } else {
+            dispatch({
+                type: CONFIRM_FUNDING_FAIL,
+                payload: data.message
+            })
+        }
+        
+    } catch (error) {
+        dispatch({
+            type: CONFIRM_FUNDING_FAIL,
             payload: error.message
         })
     }

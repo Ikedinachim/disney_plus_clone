@@ -8,6 +8,9 @@ import {
     FUND_WALLET_REQUEST,
     FUND_WALLET_SUCCESS,
     FUND_WALLET_FAIL,
+    CONFIRM_FUNDING_REQUEST,
+    CONFIRM_FUNDING_SUCCESS,
+    CONFIRM_FUNDING_FAIL,
     CLEAR_ERRORS,
 
 } from '../constants/billingConstants'
@@ -91,6 +94,39 @@ export const fundWalletReducer = (state = { fundWallet: [] }, action) => {
             }
 
         case FUND_WALLET_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state;
+    }
+}
+
+export const confirmFundingReducer = (state = { confirmFund: [] }, action) => {
+    switch(action.type) {
+        case CONFIRM_FUNDING_REQUEST:
+            return {
+                loading: true,
+                // status: action.payload
+                confirmFund: []
+            }
+        
+        case CONFIRM_FUNDING_SUCCESS:
+            return {
+                loading: false,
+                // status: action.payload,
+                confirmFund: action.payload
+            }
+
+        case CONFIRM_FUNDING_FAIL:
             return {
                 loading: false,
                 error: action.payload
