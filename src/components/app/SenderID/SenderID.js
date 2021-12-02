@@ -25,15 +25,13 @@ const SenderID = () => {
     const { loading, error, senderID } = useSelector(state => state.senderID  || []);
     const dispatch = useDispatch()
 
-
-
     useEffect(() => {
-        dispatch(getSenderID())
 
         if(error) {
             alert.error(error)
-            dispatch(clearErrors())
+            // dispatch(clearErrors())
         }
+        dispatch(getSenderID())
 
     }, [dispatch, alert, error])
 

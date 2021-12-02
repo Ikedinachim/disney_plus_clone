@@ -329,6 +329,11 @@ a{
 .table{
   width: 100%!important;
 }
+
+.dropdown-menu-right.dropdown-adjust {
+  left: auto!important;
+  right: 0 !important;
+}
 /* X-Small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) { 
   .started-btn{

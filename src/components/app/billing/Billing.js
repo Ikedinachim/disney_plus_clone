@@ -26,7 +26,7 @@ const BillingOverview = () => {
         <Fragment>
             {loading ? <Loader /> : (
                 <Fragment>
-                    <MetaData title={"Sender ID"} />
+                    <MetaData title={"Billing Overview"} />
                         <div className="content-body">
                             <div className="container pd-x-0">
                                 <div className="row justify-content-between">

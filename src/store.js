@@ -29,12 +29,12 @@ const reducer = combineReducers({
     // orderDetails: orderDetailsReducer,
     // order: orderReducer,
     // newReview: newReviewReducer,
-    // senderID: senderIDReducer,
 
     auth: authReducer,
     createSenderId: createSenderIdReducer,
     wallet: walletReducer,
     tnxHistory: transactionHistoryReducer,
+    senderID: senderIDReducer,
     fundWallet: fundWalletReducer
 })
 

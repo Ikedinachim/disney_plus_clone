@@ -2,12 +2,12 @@ import React, { Fragment, useState, useEffect } from 'react'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { useAlert } from 'react-alert'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
 import { fundUserWallet, clearErrors } from '../../../actions/billingActions'
-import { getWallet } from '../../../actions/billingActions'
+// import { getWallet } from '../../../actions/billingActions'
 
 const FundWallet = () => {
     const alert = useAlert();
@@ -82,7 +82,7 @@ const FundWallet = () => {
                             <div className="container pd-x-0">
                                 <div className="row justify-content-between">
                                     <div className="col-md-6 mg-b-20 mg-md-b-0">
-                                    <a href="./billing.html" className="tx-black">
+                                    <Link to="/app/billing" className="tx-black">
                                         <div className="d-flex">
                                         <div>
                                             <i className="fa fa-angle-left mg-r-10 pd-t-15 tx-18" />
@@ -91,7 +91,7 @@ const FundWallet = () => {
                                             <p className="tx-28 tx-bold mb-0">Billing</p>
                                         </div>
                                         </div>
-                                    </a>
+                                    </Link>
                                     </div>
                                 </div>
                                 <div className="pd-md-y-20">
@@ -132,7 +132,7 @@ const FundWallet = () => {
                                             </form>
                                         </div>
                                         <div className="col-md-6 col-12 mg-t-20 mg-md-t-0">
-                                            <img src="../../../assets/img/atm.jpg" className="img-fluid" alt srcSet />
+                                            <img src="../../../assets/img/Promote_Offers.svg" className="img-fluid" alt srcSet />
                                         </div>
                                         </div>
                                     </div>

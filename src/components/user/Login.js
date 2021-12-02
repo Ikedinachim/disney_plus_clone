@@ -24,8 +24,6 @@ const Login = ({ history }) => {
     const { isAuthenticated, error, loading, user } = useSelector(state => state.auth)
     const { wallet } = useSelector(state => state.wallet)
 
-    console.log(wallet)
-
     // const redirect = location.search ? location.search.split('=')[1] : '/'
 
     useEffect( () => {
