@@ -50,7 +50,7 @@ function App() {
           {/* <Route path="/register" element={<Register />} /> */}
           {/* <Route path="/login" element={<Login />} /> */}
           {/* <Route path="/app" element={isAuthenticated ? <Dashboard /> : <Home />} /> */}
-          {/* <Route path="*" element={isAuthenticated ? <Dashboard /> : <Login />} /> */}
+          {/* <Route path="*" element={isAuthenticated ? <Dashboard /> : <Home />} /> */}
         </Routes>
       
         <Routes>
