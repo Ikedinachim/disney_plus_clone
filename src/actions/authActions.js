@@ -251,7 +251,7 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
 export const logout = () => async (dispatch) => {
     try {
         // eslint-disable-next-line
-        const { data } = await axios.get('api/v1/logout')
+        // const { data } = await axios.get('api/v1/logout')
         localStorage.removeItem('user');
 
         dispatch({
