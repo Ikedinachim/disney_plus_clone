@@ -60,8 +60,6 @@ export const login = (username, password) => async (dispatch) => {
         const { data } = await axios.post('api/auth/login', { username, password }, config)
         sessionStorage.setItem('user',JSON.stringify(data.data))
         
-        // console.log(localStorage.getItem('user'))
-        // console.log(data)
 
         if (data.status === "success") {
             dispatch({
@@ -71,7 +69,6 @@ export const login = (username, password) => async (dispatch) => {
         } else {
             dispatch({
                 type: LOGIN_FAIL,
-                // payload: error.response.data.message
                 payload: data.message
             })
         }
@@ -79,7 +76,6 @@ export const login = (username, password) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: LOGIN_FAIL,
-            // payload: error.response.data.message
             payload: error.data
         })
     }

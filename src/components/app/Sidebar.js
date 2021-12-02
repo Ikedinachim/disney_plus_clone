@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Navlink } from 'react-router-dom'
 
 import FeatherIcon from 'feather-icons-react';
 
@@ -8,7 +8,7 @@ const Sidebar = () => {
         
         <aside className="aside aside-fixed">
             <div className="aside-header">
-            <Link to="/" className="aside-logo">
+            <Navlink to="/"  className="aside-logo">
                 <div className="pd-50">
                 <img
                     src="../assets/img/logo.svg"
@@ -17,7 +17,7 @@ const Sidebar = () => {
                     srcSet
                 />
                 </div>
-            </Link>
+            </Navlink>
             <a href="true" className="aside-menu-link">
                 <FeatherIcon icon="menu" />
                 <FeatherIcon icon="x" />
@@ -26,35 +26,39 @@ const Sidebar = () => {
             <div className="aside-body">
             <ul className="nav nav-aside">
                 <li className="nav-item active">
-                    <Link to="/app/campaign" className="nav-link">
+                    <Navlink to="/app/campaign" className={({ isActive }) =>
+                    isActive ? 'nav-link active' : 'nav-link'}>
                         <i className="fa fa-archive mr-3" />
                         <span>Campaigns</span>
-                    </Link>
+                    </Navlink>
                 </li>
                 <li className="nav-item">
-                <Link to="/app/billing" className="nav-link">
+                <Navlink to="/app/billing" className={({ isActive }) =>
+                    isActive ? 'nav-link active' : 'nav-link'}>
                     <FeatherIcon icon="menu" />
                     <i className="fas fa-money-bill mr-3" />
                     <span>Billing</span>
-                </Link>
+                </Navlink>
                 </li>
                 <li className="nav-item">
-                <Link to="/app/sender-id" className="nav-link">
+                <Navlink to="/app/sender-id" className={({ isActive }) =>
+                    isActive ? 'nav-link active' : 'nav-link'}>
                     <i className="fa fa-user mr-3 tx-muted" />
                     <span>Sender ID</span>
-                </Link>
+                </Navlink>
                 </li>
                 <li className="nav-item">
-                <Link to="/app/setting" className="nav-link">
+                <Navlink to="/app/setting" className={({ isActive }) =>
+                    isActive ? 'nav-link active' : 'nav-link'}>
                     <i className="fa fa-cog mr-3" />
                     <span>Settings</span>
-                </Link>
+                </Navlink>
                 </li>
                 <li className="nav-item">
-                <Link to="/app/analytics" className="nav-link">
+                <Navlink to="/app/analytics" activeClassName="active" className="nav-link">
                     <i className="fa fa-chart-bar mr-3" />{" "}
                     <span className="marine-active-menu">Analytics</span>
-                </Link>
+                </Navlink>
                 </li>
             </ul>
             </div>

@@ -32,7 +32,6 @@ export const getSenderID = () => async (dispatch) => {
         }
 
         const { data } = await axios.get('/api/view-sender-ids', config)
-        console.log(data)
 
         if (data.status === "success") {
             dispatch({
@@ -70,7 +69,6 @@ export const createSenderId = (setCreateSenderId) => async (dispatch) => {
             }
         }
         const { data } = await axios.post('api/create-sender-id', setCreateSenderId, config)
-        console.log(data.status)
 
         if (data.status === "success") {
             dispatch({

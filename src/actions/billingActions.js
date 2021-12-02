@@ -39,7 +39,6 @@ export const getWallet = () => async (dispatch) => {
         }
 
         const { data } = await axios.get('/api/payment/wallet', config)
-        console.log(data)
 
         if (data.status === "success") {
             dispatch({
@@ -78,7 +77,6 @@ export const getTransactionHistory = () => async (dispatch) => {
         }
 
         const { data } = await axios.get('/api/payment/transaction-history', config)
-        // console.log(data)
 
         if (data.status === "success") {
             dispatch({
@@ -115,8 +113,6 @@ export const fundUserWallet = (amount) => async (dispatch) => {
             }
         }
 
-
-        // Make first two requests
         const [fundAcc] = await Promise.all([
             await axios.post('/api/payment/initiate-payment', amount, config),
         ]);
@@ -166,7 +162,6 @@ export const confirmFunding = (amount, reference) => async (dispatch) => {
         }
 
         const { data } = await axios.post('/api/payment/confirm-payment', amount, reference, config)
-        console.log(data)
 
         if (data.status === "success") {
             dispatch({

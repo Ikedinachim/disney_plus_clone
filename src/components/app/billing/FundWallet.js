@@ -8,6 +8,7 @@ import MetaData from '../../layout/MetaData'
 import Loader from '../../loader'
 import { fundUserWallet, getWallet, clearErrors } from '../../../actions/billingActions'
 import NumberFormat from 'react-number-format'
+import { FUND_WALLET_RESET } from '../../../constants/billingConstants'
 
 const FundWallet = () => {
     const alert = useAlert();
@@ -15,35 +16,34 @@ const FundWallet = () => {
     // dispatch(getWallet())
     const navigate = useNavigate();
 
-    const [amountToPay, setAmountToPay] = useState({payAmount:''})
-    const {amount} = amountToPay
+    const [amount, setAmountToPay] = useState('')
+    // const {amount} = amountToPay
     const { fundWallet, loading, error } = useSelector(state => state.fundWallet)
     const { wallet } = useSelector(state => state.wallet)
     const { isAuthenticated, user } = useSelector(state => state.auth)
 
-    console.log(fundWallet)
-    const onChange = e => {
-        if(e.target.name === 'avatar') {
+    // const onChange = e => {
+    //     if(e.target.name === 'avatar') {
 
-        } else {
-            setAmountToPay({ ...amountToPay, [e.target.name]: e.target.value })
+    //     } else {
+    //         setAmountToPay({ ...amountToPay, [e.target.name]: e.target.value })
             
-        }
-    }
+    //     }
+    // }
 
     const makePaymentHandler = (e) => {
         e.preventDefault();
 
         const formData = new FormData();
-        formData.set('amount', amount);
+        // formData.set('amount', amount);
 
-        var object = {};
-        formData.forEach((value, key) => object[key] = value);
-        var amountToPay = JSON.stringify(object);
+        // var object = {};
+        // formData.forEach((value, key) => object[key] = value);
+        // var amount = JSON.stringify(object);
+        const obj = JSON.parse(`{"amount": ${amount}}`);
 
-        dispatch(fundUserWallet(amountToPay))
-        e.target.value = ''
-        e.target.name = ''
+        dispatch(fundUserWallet(obj))
+        setAmountToPay("");
     }
 
     useEffect( () => {
@@ -52,17 +52,14 @@ const FundWallet = () => {
             navigate('/login')
         }else if(!loading && fundWallet.status === "success") {
             alert.success(fundWallet.message)
+            dispatch({ type: FUND_WALLET_RESET })
             navigate('/app/billing')
-            console.log(fundWallet.message)
         }
 
         if(error) {
             alert.error(error)
             dispatch(clearErrors())
         }
-        // dispatch({ 
-        //     type: GET_WALLET_SUCCESS
-        // })
         dispatch(getWallet())
     }, [dispatch, alert, loading, error, fundWallet])
 
@@ -112,7 +109,7 @@ const FundWallet = () => {
                                                     id="email_field"
                                                     name="amount"
                                                     value={amount}
-                                                    onChange={onChange}
+                                                    onChange={(e) => setAmountToPay(e.target.value)}
                                                 />
                                                 </div>
                                                 <button

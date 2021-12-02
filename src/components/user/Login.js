@@ -14,8 +14,6 @@ import { fundWallet } from '../../actions/billingActions'
 const Login = ({ history }) => {
     const navHistory = useNavigate()
 
-    // const onSubmit = () => fetch("/api/login").then(() => navigate(location.state.from))
-
     const [userName, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
@@ -25,12 +23,9 @@ const Login = ({ history }) => {
     const { isAuthenticated, error, loading, user } = useSelector(state => state.auth)
     const { wallet } = useSelector(state => state.wallet)
 
-    // const redirect = location.search ? location.search.split('=')[1] : '/'
-
     useEffect( () => {
 
         if(isAuthenticated) {
-            // history.push("/")
             navHistory('/app')
         } else {
             navHistory('/login')
@@ -70,7 +65,7 @@ const Login = ({ history }) => {
                             <div className="col-lg-10 col-xl-8 mx-auto pd-t-30 tx-center welcome-div">
                                 <p className="tx-36 tx-bold mb-2 tx-com">Welcome Back</p>
                                 <p className="tx-16 tx-gray">Welcome back! Please login to your account.</p>
-                                <form className="mg-y-50"  onSubmit={ submitHandler }>
+                                <form className="mg-y-50" onSubmit={ submitHandler }>
                                 <div className="form-group">
                                     <input
                                         className="form-control new"

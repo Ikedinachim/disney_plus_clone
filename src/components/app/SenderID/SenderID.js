@@ -79,51 +79,40 @@ const SenderID = () => {
                 dataRequested: DateTime.fromJSDate(new Date(senderids.createdAt)).toFormat('dd MMM yyyy'),
                 status: <span className={`{"badge" ${senderids.status == null || (senderids.status == "pending") ? "badge-pink" : "badge-active"}`}>{senderids.status == null || (senderids.status == "pending") ? "Pending" : "Approved"}</span>,
                 actions:
-                    <Fragment>
-                        <div className="dropdown">
-                            <span
-                                className
-                                type="button"
-                                id="dropdownMenuButton"
-                                data-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                            >
-                                <span className="dot" />
-                                <span className="dot" />
-                                <span className="dot" />
-                            </span>
-                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a className="dropdown-item" href="./view-sender.html">
-                                {" "}
-                                <i data-feather="eye" className="favourite-icon mr-2 wd-15 ht-15" />
-                                View
-                                </a>
-                                <a className="dropdown-item" href>
-                                {" "}
-                                <i data-feather="edit" className="favourite-icon mr-2 wd-15 ht-15" />
-                                Edit
-                                </a>
-                                <a className="dropdown-item" href="#">
-                                <i data-feather="trash-2" className="favourite-icon mr-2 wd-15 ht-15" />
-                                Delete
-                                </a>
-                            </div>
+                <Fragment>
+                    <div className="dropdown">
+                        <span
+                            className
+                            type="button"
+                            id="dropdownMenuButton"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                        >
+                            <span className="dot" />
+                            <span className="dot" />
+                            <span className="dot" />
+                        </span>
+                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a className="dropdown-item" href="./view-sender.html">
+                            {" "}
+                            <i data-feather="eye" className="favourite-icon mr-2 wd-15 ht-15" />
+                            View
+                            </a>
+                            <a className="dropdown-item" href>
+                            {" "}
+                            <i data-feather="edit" className="favourite-icon mr-2 wd-15 ht-15" />
+                            Edit
+                            </a>
+                            <a className="dropdown-item" href="#">
+                            <i data-feather="trash-2" className="favourite-icon mr-2 wd-15 ht-15" />
+                            Delete
+                            </a>
                         </div>
-                    </Fragment> 
+                    </div>
+                </Fragment> 
             })
         })
-
-        function formatDate(date) {
-            const formattedDate = new Date(date)
-                .toLocaleDateString({},
-                {timeZone:"GMT", day:"2-digit", month:"short" , year:"numeric"}
-            )
-            console.log(formattedDate)
-            const sp = formattedDate.split(' ')
-            return sp
-        } 
-
         return data;
     }
 

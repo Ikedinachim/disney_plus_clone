@@ -77,7 +77,6 @@ const Register = ({ history }) => {
         var object = {};
         formData.forEach((value, key) => object[key] = value);
         var json = JSON.stringify(object);
-        console.log(json);
         
         dispatch(register(json))
         dispatch(getWallet())
@@ -100,12 +99,10 @@ const Register = ({ history }) => {
         formData.set('contactName', contactName);
         formData.set('businessEmail', businessEmail);
         
-        // formData = JSON.stringify(new JSONFormData(form).formData);
 
         var object = {};
         formData.forEach((value, key) => object[key] = value);
         var json = JSON.stringify(object);
-        console.log(json);
 
         dispatch(register(json))
     }

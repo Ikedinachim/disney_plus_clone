@@ -49,11 +49,9 @@ const SenderID = () => {
         var object = {};
         formData.forEach((value, key) => object[key] = value);
         var json = JSON.stringify(object);
-        console.log(json);
 
         dispatch(createSenderId(json))
     }
-    console.log(status)
 
     const onChange = e => {
         if(e.target.name === 'avatar') {

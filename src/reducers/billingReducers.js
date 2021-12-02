@@ -7,6 +7,7 @@ import {
     GET_TRANSACTION_HISTORY_FAIL,
     FUND_WALLET_REQUEST,
     FUND_WALLET_SUCCESS,
+    FUND_WALLET_RESET,
     FUND_WALLET_FAIL,
     CONFIRM_FUNDING_REQUEST,
     CONFIRM_FUNDING_SUCCESS,
@@ -90,7 +91,11 @@ export const fundWalletReducer = (state = { fundWallet: [] }, action) => {
                 loading: false,
                 fundWallet: action.payload
             }
-
+        case FUND_WALLET_RESET:
+            return {
+                ...state,
+                fundWallet: []
+            }
         case FUND_WALLET_FAIL:
             return {
                 loading: false,

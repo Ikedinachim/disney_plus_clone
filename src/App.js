@@ -61,7 +61,7 @@ function App() {
           {/* <Route path="/app" element={isAuthenticated ? <Dashboard /> : <Login />} /> */}
           {/* <Route path="*" element={isAuthenticated ? <Dashboard /> : <Login />} /> */}
         </Routes>
-      {/* {loading ? <Loader /> : null} */}
+      {loading ? <Loader /> : null}
       </div>
     </div>
   );
