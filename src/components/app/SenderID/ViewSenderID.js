@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { useAlert } from 'react-alert'
@@ -36,7 +36,7 @@ const SenderID = () => {
             alert.error(error)
             dispatch(clearErrors())
         }
-
+        
     }, [dispatch, alert, status, error, navigate])
 
 
@@ -57,17 +57,6 @@ const SenderID = () => {
 
     const onChange = e => {
         if(e.target.name === 'avatar') {
-
-            // const reader = new FileReader()
-
-            // reader.onload = () => {
-            //     if (reader.readyState === 2) {
-            //         setAvatarPreview(reader.result)
-            //         setAvatar(reader.result)
-            //     }
-            // }
-
-            // reader.readAsDataURL(e.target.files[0])
 
         } else {
             setCreateSenderId({ ...newSenderId, [e.target.name]: e.target.value })

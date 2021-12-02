@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useAlert } from 'react-alert'
 
 import { logout } from '../../actions/authActions'
+import NumberFormat from 'react-number-format'
 
 import FeatherIcon from 'feather-icons-react';
 
@@ -51,7 +52,7 @@ const Header = () => {
                     </Link>
                     <span className="mg-l-3 tx-14 tx-medium">
                     <img src="../../assets/img/campaign.svg" alt="asset" srcSet style={{marginRight: "3px"}} />
-                    Balance: &#8358;{wallet.balance}
+                    Balance: <NumberFormat value={wallet.balance} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
                     </span>
                 </div>
                 </div>

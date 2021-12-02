@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import { useSelector, useDispatch } from 'react-redux'
+import { DateTime } from "luxon";
 
 import Loader from "../../loader";
 import MetaData from '../../layout/MetaData'
@@ -75,7 +76,7 @@ const SenderID = () => {
                 id: senderids._id,
                 name: senderids.name,
                 senderId: senderids.senderId,
-                dataRequested: formatDate(senderids.createdAt),
+                dataRequested: DateTime.fromJSDate(new Date(senderids.createdAt)).toFormat('dd MMM yyyy'),
                 status: <span className={`{"badge" ${senderids.status == null || (senderids.status == "pending") ? "badge-pink" : "badge-active"}`}>{senderids.status == null || (senderids.status == "pending") ? "Pending" : "Approved"}</span>,
                 actions:
                     <Fragment>

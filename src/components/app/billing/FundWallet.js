@@ -1,4 +1,4 @@
-import React, { Fragment, useState, setState, useEffect } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { useAlert } from 'react-alert'
@@ -7,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../loader'
 import { fundUserWallet, getWallet, clearErrors } from '../../../actions/billingActions'
-// import { GET_WALLET_SUCCESS } from '../../../constants/billingConstants'
+import NumberFormat from 'react-number-format'
 
 const FundWallet = () => {
     const alert = useAlert();
@@ -27,6 +27,7 @@ const FundWallet = () => {
 
         } else {
             setAmountToPay({ ...amountToPay, [e.target.name]: e.target.value })
+            
         }
     }
 
@@ -41,6 +42,8 @@ const FundWallet = () => {
         var amountToPay = JSON.stringify(object);
 
         dispatch(fundUserWallet(amountToPay))
+        e.target.value = ''
+        e.target.name = ''
     }
 
     useEffect( () => {
@@ -93,7 +96,9 @@ const FundWallet = () => {
                                             <p className="tx-uppercase mb-0 tx-16 tx-blac tx-bold tx-com">
                                             Current Balance
                                             </p>
-                                            <p className="tx-32 tx-semibold tx-green">+ &#8358;{wallet.balance}</p>
+                                            <p className="tx-32 tx-semibold tx-green">
+                                                + <NumberFormat value={wallet.balance} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
+                                            </p>
                                             <form onSubmit={makePaymentHandler}>
                                             <div className="form-group mg-t-40">
                                             <label className="tx-blac mb-1">

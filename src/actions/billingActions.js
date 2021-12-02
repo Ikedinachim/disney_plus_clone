@@ -78,7 +78,7 @@ export const getTransactionHistory = () => async (dispatch) => {
         }
 
         const { data } = await axios.get('/api/payment/transaction-history', config)
-        console.log(data)
+        // console.log(data)
 
         if (data.status === "success") {
             dispatch({
