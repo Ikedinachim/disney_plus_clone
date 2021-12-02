@@ -6,7 +6,7 @@ import { useAlert } from 'react-alert'
 
 import MetaData from '../../layout/MetaData'
 // import Header from '../Header'
-import Loader from '../../layout/Loader'
+import Loader from '../../loader'
 // import Sidebar from '../Sidebar'
 // import FeatherIcon from 'feather-icons-react';
 import { createSenderId, clearErrors } from '../../../actions/senderIDActions';

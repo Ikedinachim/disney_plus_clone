@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useAlert } from 'react-alert'
 
 import MetaData from '../../layout/MetaData'
-import Loader from '../../layout/Loader'
+import Loader from '../../loader'
 import { getTransactionHistory, getWallet, clearErrors } from '../../../actions/billingActions'
 
 const BillingOverview = () => {

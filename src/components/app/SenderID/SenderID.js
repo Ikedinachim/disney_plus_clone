@@ -1,12 +1,11 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import NumberFormat from 'react-number-format'
-// import { useNavigate } from 'react-router-dom'
 
 import { useSelector, useDispatch } from 'react-redux'
 
+import Loader from "../../loader";
 import MetaData from '../../layout/MetaData'
-import Loader from '../../layout/Loader'
+// import Loader from '../../layout/Loader'
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -80,12 +79,6 @@ const SenderID = () => {
                 status: <span className={`{"badge" ${senderids.status == null || (senderids.status == "pending") ? "badge-pink" : "badge-active"}`}>{senderids.status == null || (senderids.status == "pending") ? "Pending" : "Approved"}</span>,
                 actions:
                     <Fragment>
-                        {/* <Link to={`/admin/product/${senderids._id}`} className="px-2 py-1 btn btn-primary">
-                            <i className="fa fa-pencil"></i>
-                        </Link>
-                        <button className="px-2 py-1 ml-2 btn btn-danger" onClick={() => deleteProductHandler(senderids._id)}>
-                            <i className="fa fa-trash"></i>
-                        </button> */}
                         <div className="dropdown">
                             <span
                                 className
@@ -127,15 +120,8 @@ const SenderID = () => {
             )
             console.log(formattedDate)
             const sp = formattedDate.split(' ')
-            // console.log(sp)
-            // console.log(`${sp[1]} ${sp[0]} ${sp[2]}`)
             return sp
         } 
-
-        
-        // console.log(formattedDate)
-        // const sp = formattedDate.split(' ')
-        // console.log(`${sp[1]} ${sp[0]}, ${sp[2]}`)
 
         return data;
     }
@@ -199,91 +185,7 @@ const SenderID = () => {
                                 </div>
                                 <div className="card card rounded bd-0 shadow-sm">
                                     <div className="card-header bd-b-0 pd-b-0 pd-t-40 pd-md-x-30">
-                                    {/* <div className>
-                                        <div className="row justify-content-between">
-                                        <div className="col-12 col-lg-4 col-md-4 pd-r-5 mg-b-20 mg-md-b-0">
-                                            <div className="d-flex">
-                                                <div className="mg-t-10 mg-r-20">
-                                                    <div className="custom-control custom-checkbox">
-                                                    <input
-                                                        type="checkbox"
-                                                        className="custom-control-input "
-                                                        name="select-all"
-                                                        id="customCheck"
-                                                    />
-                                                    <label
-                                                        className="custom-control-label pd-y-10"
-                                                        htmlFor="customCheck"
-                                                    ></label>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <div className="search-form w-100">
-                                                    <input
-                                                        type="search"
-                                                        className="form-control bg-search"
-                                                        placeholder="Search"
-                                                    />
-                                                    <button className="btn" type="button">
-                                                        <i data-feather="search" />
-                                                    </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div className="row">
-                                            <div className="col-md-6  mg-b-10 mg-md-b-0">
-                                                <div className="form-group form-row">
-                                                <label
-                                                    htmlFor="inputEmail3"
-                                                    className="col-3 col-form-label pd-r-0"
-                                                >
-                                                    Sort by
-                                                </label>
-                                                <div className="col-9">
-                                                    <select className="custom-select">
-                                                    <option selected>Most recent</option>
-                                                    <option value={1}>One</option>
-                                                    <option value={2}>Two</option>
-                                                    <option value={3}>Three</option>
-                                                    </select>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-12 col-md-6">
-                                                <div className="d-flex justify-content-between">
-                                                <div>
-                                                    <button
-                                                    className="btn btn-outline w-100 pd-x-30"
-                                                    data-toggle="modal"
-                                                    data-target="#exportModal"
-                                                    >
-                                                    <span>
-                                                        <i data-feather="download" className="mg-r-5" />
-                                                        Export as
-                                                    </span>
-                                                    </button>
-                                                </div>
-                                                <div>
-                                                    <div className="d-flex justify-content-end">
-                                                    <button className="btn">
-                                                        <span>
-                                                        <i
-                                                            data-feather="printer"
-                                                            className="tx-primary mg-r-5 print-icon"
-                                                        />
-                                                        Print
-                                                        </span>
-                                                    </button>
-                                                    </div>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            </div>
-                                        </div>
-                                        </div>
-                                    </div> */}
+                                    
                                     </div>
                                     <div className="card-body pd-md-x-30 pd-t- mg-t-20 mg-md-t-0">
                                     <MDBDataTable 

@@ -5,7 +5,7 @@ import { useAlert } from 'react-alert'
 import { Link, useNavigate } from 'react-router-dom'
 
 import MetaData from '../../layout/MetaData'
-import Loader from '../../layout/Loader'
+import Loader from '../../loader'
 import { fundUserWallet, getWallet, clearErrors } from '../../../actions/billingActions'
 // import { GET_WALLET_SUCCESS } from '../../../constants/billingConstants'
 

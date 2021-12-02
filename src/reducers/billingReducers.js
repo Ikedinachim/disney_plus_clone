@@ -82,14 +82,12 @@ export const fundWalletReducer = (state = { fundWallet: [] }, action) => {
         case FUND_WALLET_REQUEST:
             return {
                 loading: true,
-                // status: action.payload
                 fundWallet: []
             }
         
         case FUND_WALLET_SUCCESS:
             return {
                 loading: false,
-                // status: action.payload,
                 fundWallet: action.payload
             }
 
@@ -115,14 +113,12 @@ export const confirmFundingReducer = (state = { confirmFund: [] }, action) => {
         case CONFIRM_FUNDING_REQUEST:
             return {
                 loading: true,
-                // status: action.payload
                 confirmFund: []
             }
         
         case CONFIRM_FUNDING_SUCCESS:
             return {
                 loading: false,
-                // status: action.payload,
                 confirmFund: action.payload
             }
 
