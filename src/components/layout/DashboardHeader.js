@@ -76,7 +76,7 @@ const Header = () => {
                         </div>
                     </a>
                     {/* dropdown-link */}
-                    <div className={`dropdown-menu dropdown-menu-right dropdown-adjust tx-13 ${isActive ? "show" : null}`} onClick={ToggleClass}>
+                    <div className={`dropdown-menu dropdown-menu-right dropdown-adjust tx-13 ${!isActive ? "show" : null}`} onClick={ToggleClass}>
                         <div className="avatar avatar-lg mg-b-15">
                         <img
                             src="https://via.placeholder.com/500"

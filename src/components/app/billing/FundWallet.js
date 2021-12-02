@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState, setState, useEffect } from 'react'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { useAlert } from 'react-alert'
@@ -6,8 +6,8 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
-import { fundUserWallet, clearErrors } from '../../../actions/billingActions'
-// import { getWallet } from '../../../actions/billingActions'
+import { fundUserWallet, getWallet, clearErrors } from '../../../actions/billingActions'
+// import { GET_WALLET_SUCCESS } from '../../../constants/billingConstants'
 
 const FundWallet = () => {
     const alert = useAlert();
@@ -22,6 +22,26 @@ const FundWallet = () => {
     const { isAuthenticated, user } = useSelector(state => state.auth)
 
     console.log(fundWallet)
+    const onChange = e => {
+        if(e.target.name === 'avatar') {
+
+        } else {
+            setAmountToPay({ ...amountToPay, [e.target.name]: e.target.value })
+        }
+    }
+
+    const makePaymentHandler = (e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.set('amount', amount);
+
+        var object = {};
+        formData.forEach((value, key) => object[key] = value);
+        var amountToPay = JSON.stringify(object);
+
+        dispatch(fundUserWallet(amountToPay))
+    }
 
     useEffect( () => {
 
@@ -37,41 +57,11 @@ const FundWallet = () => {
             alert.error(error)
             dispatch(clearErrors())
         }
+        // dispatch({ 
+        //     type: GET_WALLET_SUCCESS
+        // })
+        dispatch(getWallet())
     }, [dispatch, alert, loading, error, fundWallet])
-
-    const makePaymentHandler = (e) => {
-        e.preventDefault();
-
-        const formData = new FormData();
-        formData.set('amount', amount);
-
-        var object = {};
-        formData.forEach((value, key) => object[key] = value);
-        var json = JSON.stringify(object);
-        // console.log(json);
-
-        dispatch(fundUserWallet(json))
-    }
-    const onChange = e => {
-        if(e.target.name === 'avatar') {
-
-            // const reader = new FileReader()
-
-            // reader.onload = () => {
-            //     if (reader.readyState === 2) {
-            //         setAvatarPreview(reader.result)
-            //         setAvatar(reader.result)
-            //     }
-            // }
-
-            // reader.readAsDataURL(e.target.files[0])
-
-        } else {
-            setAmountToPay({ ...amountToPay, [e.target.name]: e.target.value })
-        }
-    }
-
-    // console.log(onChange)
 
     return (
         <Fragment>

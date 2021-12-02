@@ -458,3 +458,7 @@ color: #FFFC00;
 table.dataTable thead th{
   font-weight: 600!important;
 }
+
+.dropdown-profile .dropdown-link {
+  cursor: pointer;
+}
