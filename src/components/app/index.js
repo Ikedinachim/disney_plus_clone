@@ -26,7 +26,8 @@ const Dashboard = () => {
     const [isActive, setActive] = useState("false");
 
     console.log(user.walletBalance);
-
+    console.log(user.user);
+    
     const ToggleClass = (e) => {
         setActive(!isActive); 
         e.preventDefault()

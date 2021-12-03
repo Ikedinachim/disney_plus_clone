@@ -118,7 +118,7 @@ a{
   background-color: #F0F1FA;
 }
 
-.nav-aside .nav-item.active .nav-link::before{
+.nav-aside .nav-link.active .nav-link::before{
   background-color: #f0f1fa54!important;
   opacity: 1;
 }

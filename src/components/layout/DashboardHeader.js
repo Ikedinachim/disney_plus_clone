@@ -34,8 +34,7 @@ const Header = () => {
     const { wallet, loading, error } = useSelector(state => state.wallet)
 
     useEffect( () => {
-        dispatch(getSenderID())
-        dispatch(getTransactionHistory())
+        // dispatch(getWallet())
     }, [dispatch,])
 
     return (

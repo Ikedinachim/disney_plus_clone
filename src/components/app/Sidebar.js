@@ -8,25 +8,25 @@ const Sidebar = () => {
         
         <aside className="aside aside-fixed">
             <div className="aside-header">
-            <Navlink to="/app"  className="aside-logo">
+            <Navlink to=""  className="aside-logo">
                 <div className="pd-50">
-                <img
-                    src="../assets/img/logo.svg"
-                    className="img-fluid logo"
-                    alt="logo"
-                    srcSet
-                />
+                    <img
+                        src="../assets/img/logo.svg"
+                        className="img-fluid logo"
+                        alt="logo"
+                        srcSet
+                    />
                 </div>
             </Navlink>
-            <a href="true" className="aside-menu-link">
+            <button href="true" className="aside-menu-link">
                 <FeatherIcon icon="menu" />
                 <FeatherIcon icon="x" />
-            </a>
+            </button>
             </div>
             <div className="aside-body">
             <ul className="nav nav-aside">
                 <li className="nav-item active">
-                    <Navlink to="/app/campaign" className={({ isActive }) =>
+                    <Navlink to="/app" className={({ isActive }) =>
                     isActive ? 'nav-link active' : 'nav-link'}>
                         <i className="fa fa-archive mr-3" />
                         <span>Campaigns</span>

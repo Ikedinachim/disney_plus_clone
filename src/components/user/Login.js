@@ -21,12 +21,13 @@ const Login = ({ history }) => {
     const dispatch = useDispatch();
 
     const { isAuthenticated, error, loading, user } = useSelector(state => state.auth)
-    const { wallet } = useSelector(state => state.wallet)
+    // const { wallet } = useSelector(state => state.wallet)
 
     useEffect( () => {
 
         if(isAuthenticated) {
             navHistory('/app')
+            dispatch(getWallet())
         } else {
             navHistory('/login')
             setUsername("");
@@ -38,14 +39,14 @@ const Login = ({ history }) => {
             dispatch(clearErrors())
         }
 
-    }, [dispatch, alert, isAuthenticated, user, error])
+    }, [dispatch, alert, isAuthenticated, error])
 
     const submitHandler = (e) => {
         e.preventDefault();
         dispatch(login(userName, password))
+        // dispatch(getWallet())
         setUsername("");
         setPassword("");
-        dispatch(getWallet())
     }
 
     return (
