@@ -56,7 +56,7 @@ const Header = () => {
                     </Link>
                     <span className="mg-l-3 tx-14 tx-medium">
                     <img src="../../assets/img/campaign.svg" alt="asset" srcSet style={{marginRight: "3px"}} />
-                    Balance: <NumberFormat value={user.user.walletBalance} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
+                    Balance: <NumberFormat value={wallet.balance} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
                     </span>
                 </div>
                 </div>

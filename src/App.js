@@ -56,7 +56,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           {/* <Route path="/app/sender-id" element={isAuthenticated ? <SenderID /> : <Login />} /> */}
-          <Route path="/register" element={<Register />} />
+          <Route path="/register" element={isAuthenticated ? <Login /> : <Register />} />
           <Route path="/login" element={<Login />} />
           {/* <Route path="/app" element={isAuthenticated ? <Dashboard /> : <Login />} /> */}
           {/* <Route path="*" element={isAuthenticated ? <Dashboard /> : <Login />} /> */}

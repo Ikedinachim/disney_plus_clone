@@ -47,14 +47,19 @@ const Register = ({ history }) => {
     const alert = useAlert();
     const dispatch = useDispatch();
 
-    const { isAuthenticated, error, loading, user } = useSelector(state => state.auth)
+    const { isAuthenticated, isRegistered, error, loading, user } = useSelector(state => state.auth)
     // const { wallet, billing } = useSelector(state => state.wallet)
     // const { senderID } = useSelector(state => state.senderID  || []);
     // const { tnxHistory } = useSelector(state => state.tnxHistory || {})
     // const { wallet } = useSelector(state => state.wallet)
 
     useEffect( () => {
-        
+        if (isAuthenticated) {
+            navigate('/login')
+        } else if (isRegistered) {
+            navigate('/login')
+        }
+
         if(error) {
             alert.error(error)
             dispatch(clearErrors())
@@ -80,9 +85,7 @@ const Register = ({ history }) => {
         var json = JSON.stringify(object);
         
         dispatch(register(json))
-        if (user.token === undefined) {
-            navigate('/login')
-        }
+        // setNewUser("")
         
     }
 
@@ -131,7 +134,10 @@ const Register = ({ history }) => {
 
     return (
         <Fragment>
-            {loading ? <Loader /> : (
+            {loading ? 
+            <Loader /> 
+            
+            : (
                 <Fragment>
                     <MetaData title={'Register User'} />
                     <section className="ht-100v container-fluid">

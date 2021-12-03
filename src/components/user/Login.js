@@ -29,6 +29,8 @@ const Login = ({ history }) => {
             navHistory('/app')
         } else {
             navHistory('/login')
+            setUsername("");
+            setPassword("");
         }
 
         if(error) {
@@ -41,6 +43,9 @@ const Login = ({ history }) => {
     const submitHandler = (e) => {
         e.preventDefault();
         dispatch(login(userName, password))
+        setUsername("");
+        setPassword("");
+        dispatch(getWallet())
     }
 
     return (

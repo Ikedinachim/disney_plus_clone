@@ -8,7 +8,7 @@ const Sidebar = () => {
         
         <aside className="aside aside-fixed">
             <div className="aside-header">
-            <Navlink to="/"  className="aside-logo">
+            <Navlink to="/app"  className="aside-logo">
                 <div className="pd-50">
                 <img
                     src="../assets/img/logo.svg"
