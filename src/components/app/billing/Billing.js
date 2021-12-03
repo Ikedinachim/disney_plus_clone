@@ -7,6 +7,7 @@ import { useAlert } from 'react-alert'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../loader'
 import { getTransactionHistory, getWallet, clearErrors } from '../../../actions/billingActions'
+import { getSenderID } from '../../../actions/senderIDActions';
 import TransactionCard from './TransactionCard'
 import NumberFormat from 'react-number-format'
 
@@ -21,6 +22,7 @@ const BillingOverview = () => {
 
     useEffect( () => {
         dispatch(getTransactionHistory())
+        dispatch(getSenderID())
     }, [dispatch, alert, error, user, wallet])
 
     function reverseArray(arr) {
@@ -32,7 +34,6 @@ const BillingOverview = () => {
       }
 
     const reverseTnxHistory = reverseArray(tnxHistory)
-
     return (
         <Fragment>
             {loading ? <Loader /> : (
@@ -54,7 +55,7 @@ const BillingOverview = () => {
                                                 <div className="col-md-6 col-12">
                                                 <p className="tx-uppercase mb-0 tx-16">Current Balance</p>
                                                 <p className="tx-32 tx-semibold tx-green">
-                                                    + <NumberFormat value={wallet.balance} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
+                                                    + <NumberFormat value={user.user.walletBalance} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
                                                 </p>
                                                 <Link
                                                     to="/app/billing/fund-wallet"

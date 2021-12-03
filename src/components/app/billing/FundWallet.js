@@ -22,24 +22,11 @@ const FundWallet = () => {
     const { wallet } = useSelector(state => state.wallet)
     const { isAuthenticated, user } = useSelector(state => state.auth)
 
-    // const onChange = e => {
-    //     if(e.target.name === 'avatar') {
-
-    //     } else {
-    //         setAmountToPay({ ...amountToPay, [e.target.name]: e.target.value })
-            
-    //     }
-    // }
 
     const makePaymentHandler = (e) => {
         e.preventDefault();
 
-        const formData = new FormData();
-        // formData.set('amount', amount);
-
-        // var object = {};
-        // formData.forEach((value, key) => object[key] = value);
-        // var amount = JSON.stringify(object);
+        // const formData = new FormData();
         const obj = JSON.parse(`{"amount": ${amount}}`);
 
         dispatch(fundUserWallet(obj))

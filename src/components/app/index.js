@@ -6,16 +6,26 @@ import { useSelector, useDispatch } from 'react-redux'
 import MetaData from '../layout/MetaData'
 import Loader from '../layout/Loader'
 import FeatherIcon from 'feather-icons-react';
+import { getSenderID, clearErrors } from '../../actions/senderIDActions';
+import { getTransactionHistory, getWallet } from '../../actions/billingActions';
+import { useAlert } from 'react-alert'
 
 const Dashboard = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const alert = useAlert();
 
     const { loading, user } = useSelector(state => state.auth)
+    const { senderID } = useSelector(state => state.senderID  || []);
+    const { tnxHistory } = useSelector(state => state.tnxHistory || {})
+    const { wallet, error } = useSelector(state => state.wallet)
+
     // const dispatch = useDispatch()
 
     const [isActive, setActive] = useState("false");
+
+    console.log(user.walletBalance);
 
     const ToggleClass = (e) => {
         setActive(!isActive); 
@@ -27,9 +37,13 @@ const Dashboard = () => {
         e.preventDefault()
      }
 
-    //  useEffect(() => {
-    //     dispatch(login())
-    // }, [dispatch])
+     useEffect(() => {
+        if(error) {
+            return alert.error(error)
+        }
+        // dispatch(getSenderID())
+        // dispatch(getTransactionHistory())
+    }, [dispatch ])
 
     return (
         

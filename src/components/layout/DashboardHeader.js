@@ -7,6 +7,9 @@ import { useAlert } from 'react-alert'
 import { logout } from '../../actions/authActions'
 import NumberFormat from 'react-number-format'
 
+import { getSenderID } from '../../actions/senderIDActions';
+import { getTransactionHistory, getWallet, } from '../../actions/billingActions'
+
 import FeatherIcon from 'feather-icons-react';
 
 const Header = () => {
@@ -31,8 +34,9 @@ const Header = () => {
     const { wallet, loading, error } = useSelector(state => state.wallet)
 
     useEffect( () => {
-
-    }, [dispatch, alert, loading, error, wallet,])
+        dispatch(getSenderID())
+        dispatch(getTransactionHistory())
+    }, [dispatch,])
 
     return (
         <div className="content-header shadow-dash bd-b-0">
@@ -52,7 +56,7 @@ const Header = () => {
                     </Link>
                     <span className="mg-l-3 tx-14 tx-medium">
                     <img src="../../assets/img/campaign.svg" alt="asset" srcSet style={{marginRight: "3px"}} />
-                    Balance: <NumberFormat value={wallet.balance} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
+                    Balance: <NumberFormat value={user.user.walletBalance} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
                     </span>
                 </div>
                 </div>

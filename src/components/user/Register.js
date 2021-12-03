@@ -6,8 +6,9 @@ import Loader from "../../components/loader";
 
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
+import { getSenderID } from '../../actions/senderIDActions';
 import { register, clearErrors } from '../../actions/authActions'
-import { getWallet, } from '../../actions/billingActions'
+import { getTransactionHistory, getWallet, } from '../../actions/billingActions'
 
 const Register = ({ history }) => {
     const navigate = useNavigate()
@@ -47,19 +48,19 @@ const Register = ({ history }) => {
     const dispatch = useDispatch();
 
     const { isAuthenticated, error, loading, user } = useSelector(state => state.auth)
-    const { wallet, billing } = useSelector(state => state.wallet)
+    // const { wallet, billing } = useSelector(state => state.wallet)
+    // const { senderID } = useSelector(state => state.senderID  || []);
+    // const { tnxHistory } = useSelector(state => state.tnxHistory || {})
+    // const { wallet } = useSelector(state => state.wallet)
 
     useEffect( () => {
-        if (isAuthenticated) {
-            navigate('/login')
-        }
-
+        
         if(error) {
             alert.error(error)
             dispatch(clearErrors())
         }
 
-    }, [dispatch, alert, error, navigate, wallet, user])
+    }, [dispatch, isAuthenticated, error, alert ])
 
     const submitIndividualHandler = (e) => {
         e.preventDefault();
@@ -79,6 +80,9 @@ const Register = ({ history }) => {
         var json = JSON.stringify(object);
         
         dispatch(register(json))
+        if (user.token === undefined) {
+            navigate('/login')
+        }
         
     }
 

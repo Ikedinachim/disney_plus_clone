@@ -36,12 +36,11 @@ const Login = ({ history }) => {
             dispatch(clearErrors())
         }
 
-    }, [dispatch, alert, isAuthenticated, user, error, wallet])
+    }, [dispatch, alert, isAuthenticated, user, error])
 
     const submitHandler = (e) => {
         e.preventDefault();
         dispatch(login(userName, password))
-        dispatch(getWallet())
     }
 
     return (
