@@ -36,10 +36,32 @@ import {
     DELETE_USER_SUCCESS,
     DELETE_USER_RESET,
     DELETE_USER_FAIL,
+    LOGOUT_REQUEST,
     LOGOUT_SUCCESS,
     LOGOUT_FAIL,
-    CLEAR_ERRORS
+    CLEAR_ERRORS,
+    // RESETAPP_REQUEST
 } from '../constants/authConstants'
+
+// const initialState = {
+//     loading: false,
+//     isAuthenticated: false,
+//     fundWallet: [],
+//     tnxHistory: [],
+//     wallet: []
+// };
+// export const resetReducer = (state = initialState , action) => {
+//     switch (action.type) {
+//         case RESETAPP_REQUEST:
+//             return {
+//                 initialState
+
+//             }
+
+//             default:
+//             return state
+//     }
+// }
 
 export const authReducer = (state = {user: {} }, action) => {
     switch (action.type) {
@@ -65,7 +87,7 @@ export const authReducer = (state = {user: {} }, action) => {
                 return {
                     loading: false,
                     isAuthenticated: false,
-                    user: null
+                    user: {},
                 }
 
         case LOAD_USER_FAIL:

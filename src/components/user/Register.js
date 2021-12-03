@@ -51,8 +51,8 @@ const Register = ({ history }) => {
 
     useEffect( () => {
         if (isAuthenticated) {
-            navigate('/app')
-        } 
+            navigate('/login')
+        }
 
         if(error) {
             alert.error(error)
@@ -79,7 +79,6 @@ const Register = ({ history }) => {
         var json = JSON.stringify(object);
         
         dispatch(register(json))
-        dispatch(getWallet())
         
     }
 

@@ -10,7 +10,7 @@ const TransactionCard = ({ transaction }) => {
                 <div className="card-body pd-y-5">
                     <div className="d-flex justify-content-between">
                         <div>
-                            <p className="mb-0"> Card Payment </p>
+                            <p className="mb-0"> Funded Wallet </p>
                             <p className="tx-gray mb-0"> 
                                 {DateTime.fromJSDate(new Date(transaction.timestamp)).toFormat('dd MMM yyyy')}
                             </p>

@@ -7,7 +7,7 @@ import { authReducer } from './reducers/authReducers'
 import { senderIDReducer, createSenderIdReducer } from './reducers/senderIDReducers'
 import {  walletReducer, transactionHistoryReducer, fundWalletReducer, confirmFundingReducer } from './reducers/billingReducers'
 
-const reducer = combineReducers({
+const appReducer = combineReducers({
 
     auth: authReducer,
     createSenderId: createSenderIdReducer,
@@ -15,18 +15,29 @@ const reducer = combineReducers({
     tnxHistory: transactionHistoryReducer,
     senderID: senderIDReducer,
     fundWallet: fundWalletReducer,
-    confirmFund: confirmFundingReducer
+    confirmFund: confirmFundingReducer,
+    
 })
 
-let initialState = {
-    cart: {
-        cartItems: localStorage.getItem('cartItems')
-            ? JSON.parse(localStorage.getItem('cartItems'))
-            : [],
-        shippingInfo: localStorage.getItem('shippingInfo')
-            ? JSON.parse(localStorage.getItem('shippingInfo'))
-            : {}
+const reducer = (state, action) => {
+    if (action.type === 'USER_LOGOUT') {
+        return appReducer(undefined, action)
     }
+  
+    return appReducer(state, action)
+}
+
+
+let initialState = {
+    // cart: {
+    //     cartItems: localStorage.getItem('cartItems')
+    //         ? JSON.parse(localStorage.getItem('cartItems'))
+    //         : [],
+    //     shippingInfo: localStorage.getItem('shippingInfo')
+    //         ? JSON.parse(localStorage.getItem('shippingInfo'))
+    //         : {}
+    // }
+    
 }
 
 const middleWare = [thunk]

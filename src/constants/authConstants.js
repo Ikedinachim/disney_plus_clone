@@ -49,4 +49,6 @@ export const DELETE_USER_FAIL = 'DELETE_USER_FAIL'
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
 export const LOGOUT_FAIL = 'LOGOUT_FAIL'
 
+export const USER_LOGOUT = 'USER_LOGOUT'
+
 export const CLEAR_ERRORS = 'CLEAR_ERRORS'

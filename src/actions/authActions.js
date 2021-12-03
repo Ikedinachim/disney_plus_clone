@@ -36,7 +36,9 @@ import {
     DELETE_USER_FAIL,
     LOGOUT_SUCCESS,
     LOGOUT_FAIL,
-    CLEAR_ERRORS
+    CLEAR_ERRORS,
+    RESETAPP_REQUEST,
+    USER_LOGOUT
 } from '../constants/authConstants'
 
 const baseURL = 'https://mysogi.uat.com.ng/';
@@ -248,10 +250,11 @@ export const logout = () => async (dispatch) => {
     try {
         // eslint-disable-next-line
         // const { data } = await axios.get('api/v1/logout')
+        // dispatch({ type: ALL_USERS_REQUEST })
         localStorage.removeItem('user');
 
         dispatch({
-            type: LOGOUT_SUCCESS,
+            type: USER_LOGOUT
         })
         
     } catch (error) {
