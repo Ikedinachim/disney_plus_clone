@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { login, clearErrors } from '../../actions/authActions'
 import { getWallet, } from '../../actions/billingActions'
 import { fundWallet } from '../../actions/billingActions'
+import { REGISTER_USER_RESET } from '../../constants/authConstants';
 
 const Login = ({ history }) => {
     const navHistory = useNavigate()
@@ -27,6 +28,7 @@ const Login = ({ history }) => {
 
         if(isAuthenticated) {
             navHistory('/app')
+            // dispatch({ type: REGISTER_USER_RESET })
             dispatch(getWallet())
         } else {
             navHistory('/login')

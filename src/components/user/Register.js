@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getSenderID } from '../../actions/senderIDActions';
 import { register, clearErrors } from '../../actions/authActions'
 import { getTransactionHistory, getWallet, } from '../../actions/billingActions'
+import { REGISTER_USER_RESET } from '../../constants/authConstants';
 
 const Register = ({ history }) => {
     const navigate = useNavigate()
@@ -54,18 +55,21 @@ const Register = ({ history }) => {
     // const { wallet } = useSelector(state => state.wallet)
 
     useEffect( () => {
-        if (isAuthenticated) {
+        if (isRegistered) {
+            alert.success('User registered successfully')
             navigate('/login')
-        } else if (isRegistered) {
-            navigate('/login')
-        }
+            dispatch({ type: REGISTER_USER_RESET })
+        } 
+        // else if (isRegistered || !isAuthenticated) {
+        //     navigate('/register')
+        // }
 
         if(error) {
             alert.error(error)
             dispatch(clearErrors())
         }
 
-    }, [dispatch, isAuthenticated, error, alert ])
+    }, [dispatch, isAuthenticated, isRegistered, error, alert ])
 
     const submitIndividualHandler = (e) => {
         e.preventDefault();

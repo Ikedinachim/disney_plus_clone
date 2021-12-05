@@ -25,8 +25,7 @@ const Dashboard = () => {
 
     const [isActive, setActive] = useState("false");
 
-    console.log(user.walletBalance);
-    console.log(user.user);
+    // console.log(user.user);
     
     const ToggleClass = (e) => {
         setActive(!isActive); 
@@ -42,8 +41,6 @@ const Dashboard = () => {
         if(error) {
             return alert.error(error)
         }
-        // dispatch(getSenderID())
-        // dispatch(getTransactionHistory())
     }, [dispatch ])
 
     return (
