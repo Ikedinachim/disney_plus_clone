@@ -4,6 +4,7 @@ import {
     GET_SENDERID_FAIL,
     CREATE_SENDERID_REQUEST,
     CREATE_SENDERID_SUCCESS,
+    CREATE_SENDERID_RESET,
     CREATE_SENDERID_FAIL,
     CLEAR_ERRORS
 
@@ -51,8 +52,13 @@ export const createSenderIdReducer = (state = {}, action) => {
 
         case CREATE_SENDERID_SUCCESS:
             return {
+                loading: true,
+                status: action.payload
+            }
+        case CREATE_SENDERID_RESET:
+            return {
                 loading: false,
-                status: action.payload.status
+                status: null
             }
         
         case CREATE_SENDERID_FAIL:

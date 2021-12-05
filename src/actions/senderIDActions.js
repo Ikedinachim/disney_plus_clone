@@ -73,7 +73,7 @@ export const createSenderId = (setCreateSenderId) => async (dispatch) => {
         if (data.status === "success") {
             dispatch({
                 type: CREATE_SENDERID_SUCCESS,
-                payload: data.status
+                payload: data
             })
         } else {
             dispatch({

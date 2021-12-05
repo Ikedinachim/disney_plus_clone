@@ -10,6 +10,7 @@ import Loader from '../../loader'
 // import Sidebar from '../Sidebar'
 // import FeatherIcon from 'feather-icons-react';
 import { createSenderId, clearErrors } from '../../../actions/senderIDActions';
+import { CREATE_SENDERID_RESET } from '../../../constants/senderIDConstants'
 
 const SenderID = () => {
 
@@ -28,8 +29,10 @@ const SenderID = () => {
 
     useEffect( () => {
 
-        if(!loading && status === "success") {
+        if(loading && status !== null) {
             navigate('/app/sender-id')
+            // alert.success(status.message)
+            dispatch({ type: CREATE_SENDERID_RESET })
         }
 
         if(error) {
