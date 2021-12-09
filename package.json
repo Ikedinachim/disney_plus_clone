@@ -16,6 +16,7 @@
     "formik": "^2.2.9",
     "luxon": "^2.1.1",
     "mdbreact": "^5.2.0",
+    "naija-state-local-government": "^1.1.2",
     "rc-slider": "^9.7.4",
     "react": "^17.0.2",
     "react-alert": "^7.0.3",
@@ -39,7 +40,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "preinstall": "npx npm-force-resolutions"
   },
   "eslintConfig": {
     "extends": [
@@ -61,5 +63,8 @@
   },
   "devDependencies": {
     "sass": "^1.43.5"
+  },
+  "resolutions": {
+    "ansi-html": "https://registry.npmjs.org/ansi-html-community/-/ansi-html-community-0.0.8.tgz"
   }
 }

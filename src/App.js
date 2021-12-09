@@ -11,6 +11,12 @@ import SenderID from "./components/app/SenderID/SenderID";
 import BillingOverview from "./components/app/billing/Billing";
 import FundWallet from "./components/app/billing/FundWallet";
 import RequestSenderID from "./components/app/SenderID/RequestSenderID";
+import CreateCampaign from "./components/app/campaigns/CreateCampaign"
+import SmsCampaign from "./components/app/campaigns/SmsCampaign"
+import TargetAudience from "./components/app/campaigns/TargetAudience"
+import ViewCampaign from "./components/app/campaigns/ViewCampaign"
+import PreviewCampaign from "./components/app/campaigns/PreviewCampaign"
+import SmsStepForm from "./components/app/campaigns/stepForm/SmsStepForm"
 
 // Auth / User Imports
 import Login from "./components/user/Login";
@@ -47,6 +53,11 @@ function App() {
           <Route path="/app" element={isAuthenticated ? <Dashboard /> : <Login />} />
           <Route path="/app/billing" element={isAuthenticated ? <BillingOverview /> : <Login />} />
           <Route path="/app/billing/fund-wallet" element={isAuthenticated ? <FundWallet /> : <Login />} />
+          <Route path="/app/campaigns" element={isAuthenticated ? <ViewCampaign /> : <Login />} />
+          <Route path="/app/campaign/create" element={isAuthenticated ? <CreateCampaign /> : <Login />} />
+          <Route path="/app/campaign/sms" element={isAuthenticated ? <SmsStepForm /> : <Login />} />
+          <Route path="/app/campaign/preview" element={isAuthenticated ? <PreviewCampaign /> : <Login />} />
+          <Route path="/app/campaign/audience" element={isAuthenticated ? <TargetAudience /> : <Login />} />
           {/* <Route path="/register" element={<Register />} /> */}
           {/* <Route path="/login" element={<Login />} /> */}
           {/* <Route path="/app" element={isAuthenticated ? <Dashboard /> : <Home />} /> */}

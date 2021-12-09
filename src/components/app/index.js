@@ -88,9 +88,9 @@ const Dashboard = () => {
                                         <button
                                             type="button"
                                             disabled={!isActive}
-                                            navigate = "/home"                                     
+                                            // navigate = "/app/create"                                     
                                             className="btn btn-primary pd-x-40"
-                                            onClick={() => navigate("/login"), resetPropagation}
+                                            onClick={() => navigate("/app/campaign/create")}
                                         >
                                             Get Started
                                         </button>
@@ -139,7 +139,8 @@ const Dashboard = () => {
                                             disabled={isActive}
                                             href="./all-campaigns.html"
                                             className="btn btn-primary pd-x-30"
-                                            onClick={resetPropagation}
+                                            onClick={() => navigate("/app/campaigns")}
+                                            // onClick={resetPropagation}
                                         >
                                             All Campaigns
                                         </button>

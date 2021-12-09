@@ -363,7 +363,12 @@ a{
   .nav-line .nav-link{
     padding: 8px 5px!important;
   }
-  
+  .content-search {
+    display: none;
+  }
+  .mar-left {
+    position: initial;
+  }
 }
 
 /* extra large screen  */

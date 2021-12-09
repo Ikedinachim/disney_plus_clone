@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,6 +14,9 @@ import FeatherIcon from 'feather-icons-react';
 
 const Header = () => {
 
+    const ref = useRef()
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
+
     const dispatch = useDispatch()
     const alert = useAlert();
 
@@ -24,18 +27,31 @@ const Header = () => {
 
     const [isActive, setActive] = useState("false");
 
-    const ToggleClass = (e) => {
-        setActive(!isActive); 
-        e.preventDefault()
-        e.stopPropagation();
-    };
+    // const ToggleClass = (e) => {
+    //     setActive(!isActive); 
+    //     e.preventDefault()
+    //     e.stopPropagation();
+    // };
 
     const { user } = useSelector(state => state.auth)
     const { wallet, loading, error } = useSelector(state => state.wallet)
 
-    useEffect( () => {
-        // dispatch(getWallet())
-    }, [dispatch,])
+    useEffect(() => {
+        const checkIfClickedOutside = e => {
+          // If the menu is open and the clicked target is not within the menu,
+          // then close the menu
+          if (isMenuOpen && ref.current && !ref.current.contains(e.target)) {
+            setIsMenuOpen(false)
+          }
+        }
+    
+        document.addEventListener("mousedown", checkIfClickedOutside)
+    
+        return () => {
+          // Cleanup the event listener
+          document.removeEventListener("mousedown", checkIfClickedOutside)
+        }
+    }, [isMenuOpen])
 
     return (
         <div className="content-header shadow-dash bd-b-0">
@@ -59,63 +75,70 @@ const Header = () => {
                     </span>
                 </div>
                 </div>
-                <div className={`dropdown dropdown-profile ml-md-4 ml-2 ${isActive ? "show" : null}`} onClick={ToggleClass}>
-                    <a
-                        href
-                        // to="/app"
+                {/* <div className={`dropdown dropdown-profile ml-md-4 ml-2 ${isActive ? "show" : null}`} onClick={ToggleClass}> */}
+                <div 
+                    // className={`dropdown dropdown-profile ml-md-4 ml-2 ${isActive ? "show" : null}`} onClick={ToggleClass}
+                    className="dropdown dropdown-profile ml-md-4 ml-2"
+                    ref={ref}
+                >
+                    <div
                         className="dropdown-link tx-dark tx-13 tx-medium"
-                        data-toggle="dropdown"
-                        data-display="static"
-                        aria-haspopup="true"
-                        aria-expanded="false"
+                        onClick={() => setIsMenuOpen(oldState => !oldState)}
                     >
                         {user.user.firstName}
                         {/* Jane Doe */}
-                        <div className="avatar avatar-sm mg-l-10">
+                        <div 
+                            className="avatar avatar-sm mg-l-10" 
+                            // onClick={() => setIsMenuOpen(oldState => !oldState)}
+                        >
                             <img
                                 src="https://via.placeholder.com/500"
                                 className="rounded-circle"
+                                // onClick={() => setIsMenuOpen(oldState => !oldState)}
                                 alt="asset"
                             />
                         </div>
-                    </a>
-                    {/* dropdown-link */}
-                    <div className={`dropdown-menu dropdown-menu-right dropdown-adjust tx-13 ${!isActive ? "show" : null}`} onClick={ToggleClass}>
-                        <div className="avatar avatar-lg mg-b-15">
-                        <img
-                            src="https://via.placeholder.com/500"
-                            className="rounded-circle"
-                            alt="asset"
-                        />
-                        </div>
-                        <h6 className="tx-semibold mg-b-5">
-                            {user.user.firstName +" " + user.user.LastName}
-                            {/* Jane */}
-                        </h6>
-                        <p className="mg-b-25 tx-12 tx-color-03">Administrator</p>
-                        <Link to="admin" className="dropdown-item">
-                            <FeatherIcon icon="edit-3" /> Edit Profile
-                        </Link>
-                        <Link to="page-profile-view.html" className="dropdown-item">
-                            <FeatherIcon icon="user" /> View Profile
-                        </Link>
-                        <div className="dropdown-divider" />
-                        <Link to="page-help-center.html" className="dropdown-item">
-                            <FeatherIcon icon="help-circle" /> Help Center
-                        </Link>
-                        <Link to="" className="dropdown-item">
-                            <FeatherIcon icon="uslife-buoyer" /> Forum
-                        </Link>
-                        <Link to="" className="dropdown-item">
-                            <FeatherIcon icon="settings" /> Account Settings
-                        </Link>
-                        <Link to="" className="dropdown-item">
-                            <FeatherIcon icon="settings" /> Privacy Settings
-                        </Link>
-                        <Link to="/" className="dropdown-item" onClick={logoutHandler}>
-                            <FeatherIcon icon="log-out" /> Sign Out
-                        </Link>
                     </div>
+                    {/* dropdown-link */}
+                    {/* <div className={`dropdown-menu dropdown-menu-right dropdown-adjust tx-13 ${!isActive ? "show" : null}`} onClick={ToggleClass}> */}
+                    {isMenuOpen && (
+                        <div className="dropdown-menu dropdown-menu-right dropdown-adjust tx-13 show">
+                            <div className="avatar avatar-lg mg-b-15">
+                                <img
+                                    src="https://via.placeholder.com/500"
+                                    className="rounded-circle"
+                                    alt="asset"
+                                />
+                            </div>
+                            <h6 className="tx-semibold mg-b-5">
+                                {user.user.firstName +" " + user.user.LastName}
+                                {/* Jane */}
+                            </h6>
+                            <p className="mg-b-25 tx-12 tx-color-03">Administrator</p>
+                            <Link to="admin" className="dropdown-item">
+                                <FeatherIcon icon="edit-3" /> Edit Profile
+                            </Link>
+                            <Link to="page-profile-view.html" className="dropdown-item">
+                                <FeatherIcon icon="user" /> View Profile
+                            </Link>
+                            <div className="dropdown-divider" />
+                            <Link to="page-help-center.html" className="dropdown-item">
+                                <FeatherIcon icon="help-circle" /> Help Center
+                            </Link>
+                            <Link to="" className="dropdown-item">
+                                <FeatherIcon icon="uslife-buoyer" /> Forum
+                            </Link>
+                            <Link to="" className="dropdown-item">
+                                <FeatherIcon icon="settings" /> Account Settings
+                            </Link>
+                            <Link to="" className="dropdown-item">
+                                <FeatherIcon icon="settings" /> Privacy Settings
+                            </Link>
+                            <Link to="/" className="dropdown-item" onClick={logoutHandler}>
+                                <FeatherIcon icon="log-out" /> Sign Out
+                            </Link>
+                        </div>
+                    )}
                     {/* dropdown-menu */}
                 </div>
             </nav>
