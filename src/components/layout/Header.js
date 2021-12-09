@@ -1,6 +1,7 @@
 // /* eslint-disable jsx-a11y/alt-text */
 import React, { Fragment } from "react";
 import { Link } from 'react-router-dom'
+import FeatherIcon from 'feather-icons-react';
 
 import Logo from "../../assets/img/logo2.png"
 
@@ -24,7 +25,8 @@ const Header = () => {
                 <div className="container">
                 <Link className="navbar-brand tx-bold tx-spacing--2 order-1 pd-y-0" to="/"><img src={Logo} className="sec-logo img-fluid" alt="" srcSet="" /></Link>
                 <button className="navbar-toggler order-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <i data-feather="menu" className="wd-20 ht-20"></i>
+                    {/* <i data-feather="menu" className="wd-20 ht-20"></i> */}
+                    <FeatherIcon icon="menu" className="wd-20 ht-20" />
                 </button>
             
                 <div className="collapse navbar-collapse order-2" id="navbarSupportedContent">
