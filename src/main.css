@@ -369,6 +369,10 @@ a{
   .mar-left {
     position: initial;
   }
+  .login-side {
+    display: flex;
+    align-items: center;
+  }
 }
 
 /* extra large screen  */
