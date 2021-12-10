@@ -27,8 +27,6 @@ const SmsCampaign = ({ nextStep, handleChange, values }) => {
         },
     ]
 
-    console.log(senderID)
-
     return (
         <Fragment>
             <MetaData title={"Create SMS Campaign"} />
@@ -63,6 +61,7 @@ const SmsCampaign = ({ nextStep, handleChange, values }) => {
                                             defaultValue={values.senderId}
                                             onChange={handleChange('senderId')}
                                         >
+                                            <option value="Select Sender ID">Select Sender ID</option>
                                             {senderID.map(senderids => (
                                             <option value={senderids.senderId}>{senderids.senderId}</option>
                                             ))}
