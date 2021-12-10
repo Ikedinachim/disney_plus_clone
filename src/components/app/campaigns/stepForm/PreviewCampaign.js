@@ -35,7 +35,10 @@ const PreviewCampaign = ({ prevStep, values, audience }) => {
             navigate('/app/campaigns')
             alert.success(createSmsCampaign.message)
             dispatch({ type: SMS_CAMPAIGN_RESET })
-        }
+        } 
+        // else {
+        //     alert.error('Ops, something is off')
+        // }
 
         if(error) {
             alert.error(error)
@@ -190,21 +193,29 @@ const PreviewCampaign = ({ prevStep, values, audience }) => {
                                         <label htmlFor className="tx-14 tx-gray mb-1 tx-medium">
                                         Potential Audience Based on Manual Input
                                         </label>
-                                        <p className="tx-18 tx-com tx-bold mb-0">{audience}</p>
+                                        <p className="tx-18 tx-com tx-bold mb-0">{audience} <span className="tx-14 tx-gray tx-medium">number(s) loaded</span></p>
+                                        {/* <div className="form-group col-md-3">
+                                            <p className="tx-18 tx-com tx-bold mb-0">{audience}</p>
+                                            <span className="badge badge-pink  tx-18 mg-5 tx-amt w-100 mt-0">
+                                                {" "}
+                                                <NumberFormat value={values.price} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
+                                            </span>
+                                        </div> */}
                                     </div>
-                                    <div className="form-row mg-t-15 col-lg-6 pd-x-0">
-                                        <div className="form-group col-md-9">
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            placeholder="Enter your target audience number to get price"
-                                        />
-                                        </div>
-                                        <div className="form-group col-md-3">
-                                        <span className="badge badge-pink  tx-18 mg-5 tx-amt w-100 mt-0">
-                                            {" "}
-                                            <NumberFormat value={values.price} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
-                                        </span>
+                                    <div className="form-row mg-t-15 pd-x-0">
+                                        {/* <div className="form-group col-md-9">
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                placeholder="Enter your target audience number to get price"
+                                            />
+                                        </div> */}
+                                        <div className=" col-md-2 d-flex">
+                                            <p className="tx-18 tx-com tx-bold mb-0">Amount:</p>
+                                            <span className="badge tx-green tx-bold tx-18 mg-5 tx-amt w-100 mt-0">
+                                                {" "}
+                                                <NumberFormat value={values.price} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
+                                            </span>
                                         </div>
                                     </div>
                                     </div>
