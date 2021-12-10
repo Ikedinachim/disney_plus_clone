@@ -28,6 +28,10 @@ const PreviewCampaign = ({ prevStep, values, audience }) => {
 
         dispatch(createSmsCampaignAction(values))
     }
+    const fundWalletHandler = (e) => {
+        e.preventDefault();
+        navigate('/app/billing/fund-wallet')
+    }
 
     // console.log(createSmsCampaign.status);
     useEffect( () => {
@@ -221,7 +225,18 @@ const PreviewCampaign = ({ prevStep, values, audience }) => {
                                     </div>
                                     </div>
                                     <div className="mg-t-20">
-                                    <button
+                                    {wallet.balance < values.price ?
+                                        <button
+                                        className="btn btn-primary pd-x-40 tx-com mg-r-15"
+                                        onClick={ fundWalletHandler }
+                                        disabled={ loading ? true : false }
+                                        type="submit"
+                                        variant="contained"
+                                        >
+                                            Fund Wallet
+                                        </button>
+                                        :
+                                        <button
                                         className="btn btn-primary pd-x-40 tx-com mg-r-15"
                                         onClick={ submitSmsCampaignHandler }
                                         disabled={ loading ? true : false }
@@ -230,6 +245,16 @@ const PreviewCampaign = ({ prevStep, values, audience }) => {
                                     >
                                         Publish
                                     </button>
+                                    }
+                                    {/* <button
+                                        className="btn btn-primary pd-x-40 tx-com mg-r-15"
+                                        onClick={ submitSmsCampaignHandler }
+                                        disabled={ loading ? true : false }
+                                        type="submit"
+                                        variant="contained"
+                                    >
+                                        Publish
+                                    </button> */}
                                     <button
                                         className="btn btn-outline-primary pd-x-40 tx-com mg-r-15"
                                         onClick={ Previous }
