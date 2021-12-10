@@ -479,3 +479,7 @@ table.dataTable thead th{
 .capitalize {
   text-transform: capitalize;
 }
+
+.sb-transform {
+  transform: translateX(-100%)
+}

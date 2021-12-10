@@ -1,15 +1,28 @@
 import React, { Fragment, useEffect } from 'react'
 
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { useAlert } from 'react-alert'
 
 import MetaData from '../../../layout/MetaData'
 
 const SmsCampaign = ({ nextStep, handleChange, values }) => {
+    const alert = useAlert();
+    const dispatch = useDispatch();
     const { senderID } = useSelector(state => state.senderID  || []);
     const Continue = e => {
         e.preventDefault();
-        nextStep();
+        if(values.senderId === '') {
+            alert.error('Select a Sender ID or request for one if not available')
+        } else if (values.channel === ''){
+            alert.error('Choose a channel')
+        }  
+        else if (values.campaignMessage === ''){
+            alert.error('Create the campaign message')
+        } 
+        else {
+            nextStep();
+        }
     }
     
     const selectChannels = [
@@ -104,7 +117,7 @@ const SmsCampaign = ({ nextStep, handleChange, values }) => {
                                     onClick={ Continue }
                                     type="submit"
                                     variant="contained"
-                                    disabled={ values.senderId === '' || values.campaignMessage === '' || values.channel === '' ? true : false }
+                                    // disabled={ values.senderId === '' || values.campaignMessage === '' || values.channel === '' ? true : false }
                                 >Proceed
                                 </button>
                                 <Link to="/app/campaign/create" className="btn btn-outline-primary w-100 mg-l-20 mg-b-15">Go Back</Link>

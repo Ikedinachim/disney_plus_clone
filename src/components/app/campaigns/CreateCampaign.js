@@ -50,6 +50,7 @@ const CreateCampaign = () => {
         dispatch(getWallet())
         dispatch(getSenderID())
     }, [dispatch])
+    dispatch(getSenderID())
 
     return (
         <Fragment>
