@@ -224,45 +224,47 @@ const PreviewCampaign = ({ prevStep, values, audience }) => {
                                         </div>
                                     </div>
                                     </div>
-                                    <div className="mg-t-20">
-                                    {wallet.balance < values.price ?
-                                        <button
-                                        className="btn btn-primary pd-x-40 tx-com mg-r-15"
-                                        onClick={ fundWalletHandler }
-                                        disabled={ loading ? true : false }
-                                        type="submit"
-                                        variant="contained"
-                                        >
-                                            Fund Wallet
-                                        </button>
-                                        :
-                                        <button
-                                        className="btn btn-primary pd-x-40 tx-com mg-r-15"
-                                        onClick={ submitSmsCampaignHandler }
-                                        disabled={ loading ? true : false }
-                                        type="submit"
-                                        variant="contained"
-                                    >
-                                        Publish
-                                    </button>
-                                    }
-                                    {/* <button
-                                        className="btn btn-primary pd-x-40 tx-com mg-r-15"
-                                        onClick={ submitSmsCampaignHandler }
-                                        disabled={ loading ? true : false }
-                                        type="submit"
-                                        variant="contained"
-                                    >
-                                        Publish
-                                    </button> */}
-                                    <button
-                                        className="btn btn-outline-primary pd-x-40 tx-com mg-r-15"
-                                        onClick={ Previous }
-                                        type="submit"
-                                        variant="contained"
-                                    >
-                                    Go Back
-                                    </button>
+                                    <div className="col-md-5 pd-x-0 mg-y-40">
+                                        <div className="mg-t-20 d-flex">
+                                            {wallet.balance < values.price ?
+                                                <button
+                                                className="btn btn-primary w-100 tx-com mg-r-15"
+                                                onClick={ fundWalletHandler }
+                                                disabled={ loading ? true : false }
+                                                type="submit"
+                                                variant="contained"
+                                                >
+                                                    Fund Wallet
+                                                </button>
+                                                :
+                                                <button
+                                                className="btn btn-primary w-100 tx-com mg-r-15"
+                                                onClick={ submitSmsCampaignHandler }
+                                                disabled={ loading ? true : false }
+                                                type="submit"
+                                                variant="contained"
+                                            >
+                                                Publish
+                                            </button>
+                                            }
+                                            {/* <button
+                                                className="btn btn-primary pd-x-40 tx-com mg-r-15"
+                                                onClick={ submitSmsCampaignHandler }
+                                                disabled={ loading ? true : false }
+                                                type="submit"
+                                                variant="contained"
+                                            >
+                                                Publish
+                                            </button> */}
+                                            <button
+                                                className="btn btn-outline-primary w-100 tx-com mg-r-15"
+                                                onClick={ Previous }
+                                                type="submit"
+                                                variant="contained"
+                                            >
+                                            Go Back
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
