@@ -27,6 +27,8 @@ const SmsCampaign = ({ nextStep, handleChange, values }) => {
         },
     ]
 
+    console.log(values.senderId);
+
     return (
         <Fragment>
             <MetaData title={"Create SMS Campaign"} />
@@ -102,6 +104,7 @@ const SmsCampaign = ({ nextStep, handleChange, values }) => {
                                     onClick={ Continue }
                                     type="submit"
                                     variant="contained"
+                                    disabled={ values.senderId === '' && values.senderId === '' ? true : false }
                                 >Proceed
                                 </button>
                                 <Link to="/app/campaign/create" className="btn btn-outline-primary w-100 mg-l-20 mg-b-15">Go Back</Link>

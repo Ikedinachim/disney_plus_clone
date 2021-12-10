@@ -229,6 +229,7 @@ const TargetAudience = ({ prevStep, nextStep, handleChange, values, phoneNumber 
                                             onClick={ Continue }
                                             type="submit"
                                             variant="contained"
+                                            disabled={ phoneNumber === '' ? true : false }
                                         >
                                             Filter
                                         </button>

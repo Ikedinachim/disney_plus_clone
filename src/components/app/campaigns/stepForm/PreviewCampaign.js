@@ -16,6 +16,7 @@ const PreviewCampaign = ({ prevStep, values, audience }) => {
     const alert = useAlert();
     const dispatch = useDispatch()
     const navigate = useNavigate();
+    const { wallet } = useSelector(state => state.wallet)
 
     const Previous = e => {
         e.preventDefault();
@@ -80,7 +81,7 @@ const PreviewCampaign = ({ prevStep, values, audience }) => {
                                         />
                                         </div>
                                         <div>
-                                        <p className="tx-20 tx-bold pd-t-15 tx-com">Flash SMS</p>
+                                        <p className="tx-20 tx-bold pd-t-15 tx-com capitalize">{values.channel}</p>
                                         </div>
                                     </div>
                                     <div>

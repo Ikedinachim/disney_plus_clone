@@ -475,3 +475,7 @@ table.dataTable thead th{
 .tnx-card {
   margin-bottom: 10px;
 }
+
+.capitalize {
+  text-transform: capitalize;
+}
