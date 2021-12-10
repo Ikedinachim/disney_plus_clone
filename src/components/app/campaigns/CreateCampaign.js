@@ -8,6 +8,7 @@ import MetaData from '../../layout/MetaData'
 import Loader from '../../loader'
 import { fundUserWallet, getWallet, clearErrors } from '../../../actions/billingActions'
 import { FUND_WALLET_RESET } from '../../../constants/billingConstants'
+import { getSenderID } from '../../../actions/senderIDActions';
 
 const CreateCampaign = () => {
     const alert = useAlert();
@@ -22,15 +23,15 @@ const CreateCampaign = () => {
     const { isAuthenticated, user } = useSelector(state => state.auth)
 
 
-    const createCampaignHandler = (e) => {
-        e.preventDefault();
+    // const createCampaignHandler = (e) => {
+    //     e.preventDefault();
 
-        // const formData = new FormData();
-        const obj = JSON.parse(`{"amount": ${amount}}`);
+    //     // const formData = new FormData();
+    //     const obj = JSON.parse(`{"amount": ${amount}}`);
 
-        dispatch(fundUserWallet(obj))
-        setAmountToPay("");
-    }
+    //     dispatch(fundUserWallet(obj))
+    //     setAmountToPay("");
+    // }
 
     useEffect( () => {
 
@@ -47,6 +48,7 @@ const CreateCampaign = () => {
             dispatch(clearErrors())
         }
         dispatch(getWallet())
+        dispatch(getSenderID())
     }, [dispatch])
 
     return (
@@ -72,7 +74,7 @@ const CreateCampaign = () => {
                                             <Link to="/app/campaign/create" className="tx-dark">
                                                 <div className="card card-height rounded bd-0 shadow-sm">
                                                     <div className="card-body tx-center pd-x-12 pd-md-x-30">
-                                                    <img src="./assets/img/Influencer_Marketing_sm.png" alt="" className="img-fluid" srcSet />
+                                                    <img src="../../../assets/img/Influencer_Marketing_sm.png" alt="" className="img-fluid" srcSet />
                                                     <div className="pd-t-15">
                                                         <p className="tx-16 tx-bold">Influential Marketing</p>
                                                         <p className="tx-14 tx-gray mb-0">Tap from our unlimited network of top influencers</p>
@@ -85,7 +87,7 @@ const CreateCampaign = () => {
                                             <Link to="/app/campaign/sms" className="tx-dark">
                                             <div className="card card-height rounded bd-0 shadow-sm">
                                                 <div className="card-body tx-center pd-x-12 pd-md-x-30">
-                                                <img src="./assets/img/flashsms_sm.png" alt="" className="img-fluid" srcSet />
+                                                <img src="../../../assets/img/flashsms_sm.png" alt="" className="img-fluid" srcSet />
                                                 <div className="pd-t-15">
                                                     <p className="tx-16 tx-bold">Flash SMS / SMS</p>
                                                     <p className="tx-14 tx-gray mb-0">Hit your right target with smart SMS</p>
@@ -98,7 +100,7 @@ const CreateCampaign = () => {
                                             <Link to="/app/campaign/create" className="tx-dark">
                                                 <div className="card card-height rounded bd-0 shadow-sm">
                                                     <div className="card-body tx-center pd-x-12">
-                                                    <img src="./assets/img/flier_campaign_sm.png" alt="" className="img-fluid" srcSet />
+                                                    <img src="../../../assets/img/flier_campaign_sm.png" alt="" className="img-fluid" srcSet />
                                                     <div className="pd-t-15">
                                                         <p className="tx-16 tx-bold">Flier/Video Campaign</p>
                                                         <p className="tx-14 tx-gray mb-0">Bring speed and scale to your business with juicy and premium offers for your customers</p>
@@ -111,7 +113,7 @@ const CreateCampaign = () => {
                                             <Link to="/app/campaign/create" className="tx-dark">
                                                 <div className="card card-height rounded bd-0 shadow-sm">
                                                     <div className="card-body tx-center pd-x-12">
-                                                    <img src="./assets/img/mysogi_phone_sm.png" alt="" className="img-fluid" srcSet />
+                                                    <img src="../../../assets/img/mysogi_phone_sm.png" alt="" className="img-fluid" srcSet />
                                                     <div className="pd-t-15">
                                                         <p className="tx-16 tx-bold">APP Download Campaign</p>
                                                         <p className="tx-14 tx-gray mb-0">Get access to a new world of campaigning with the right touch</p>

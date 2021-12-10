@@ -6,6 +6,7 @@ import { authReducer } from './reducers/authReducers'
 
 import { senderIDReducer, createSenderIdReducer } from './reducers/senderIDReducers'
 import {  walletReducer, transactionHistoryReducer, fundWalletReducer, confirmFundingReducer } from './reducers/billingReducers'
+import { createSmsCampaignReducer, getAllCampaignsReducer } from './reducers/campaignReducers'
 
 const appReducer = combineReducers({
 
@@ -16,6 +17,8 @@ const appReducer = combineReducers({
     senderID: senderIDReducer,
     fundWallet: fundWalletReducer,
     confirmFund: confirmFundingReducer,
+    smsCampaign: createSmsCampaignReducer,
+    getAllCampaign: getAllCampaignsReducer
     
 })
 

@@ -43,17 +43,17 @@ $(function(){
   })
 
   // Closing dropdown menu of navbar menu
-  // $(document).on('click touchstart', function(e){
-  //   e.stopPropagation();
+  $(document).on('click touchstart', function(e){
+    e.stopPropagation();
 
-  //   // closing nav sub menu of header when clicking outside of it
-  //   if(window.matchMedia('(min-width: 992px)').matches) {
-  //     var navTarg = $(e.target).closest('.navbar-menu .nav-item').length;
-  //     if(!navTarg) {
-  //       $('.navbar-header .show').removeClass('show');
-  //     }
-  //   }
-  // })
+    // closing nav sub menu of header when clicking outside of it
+    if(window.matchMedia('(min-width: 992px)').matches) {
+      var navTarg = $(e.target).closest('.navbar-menu .nav-item').length;
+      if(!navTarg) {
+        $('.navbar-header .show').removeClass('show');
+      }
+    }
+  })
 
   $('#mainMenuClose').on('click', function(e){
     e.preventDefault();

@@ -7,9 +7,9 @@ import { Link } from 'react-router-dom'
 import MetaData from '../../../layout/MetaData'
 // import Loader from '../../loader'
 
-const TargetAudience = ({ prevStep, nextStep, handleChange, values }) => {
+const TargetAudience = ({ prevStep, nextStep, handleChange, values, phoneNumber }) => {
     
-    const [status, setStatus] = useState(0);
+    const [status, setStatus] = useState(3);
     const radioHandler = (status) => {
         setStatus(status);
     };
@@ -22,6 +22,8 @@ const TargetAudience = ({ prevStep, nextStep, handleChange, values }) => {
         e.preventDefault();
         prevStep();
     }
+
+    // console.log(values.contactNumber.length)
 
     return (
         <Fragment>
@@ -37,7 +39,7 @@ const TargetAudience = ({ prevStep, nextStep, handleChange, values }) => {
                             </div>
                             <div className="progress">
                             <div
-                                className="progress-bar bg-primary progress-bar-striped progress-bar-animated wd-60p"
+                                className="progress-bar bg-primary progress-bar-striped progress-bar-animated wd-100p"
                                 role="progressbar"
                                 aria-valuenow={40}
                                 aria-valuemin={0}
@@ -210,8 +212,9 @@ const TargetAudience = ({ prevStep, nextStep, handleChange, values }) => {
                                                     className="form-control"
                                                     id
                                                     rows={4}
+                                                    onChange={handleChange('phoneNumber')}
                                                     placeholder="Enter Number"
-                                                    defaultValue={""}
+                                                    defaultValue={phoneNumber}
                                                 />
                                                 </div>
                                             </div>

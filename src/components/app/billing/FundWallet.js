@@ -111,7 +111,7 @@ const FundWallet = () => {
                                             </form>
                                         </div>
                                         <div className="col-md-6 col-12 mg-t-20 mg-md-t-0">
-                                            <img src="../../../assets/img/Promote_Offers.svg" className="img-fluid" alt srcSet />
+                                            <img src="../../../assets/img/atm.jpg" className="img-fluid" alt srcSet />
                                         </div>
                                         </div>
                                     </div>

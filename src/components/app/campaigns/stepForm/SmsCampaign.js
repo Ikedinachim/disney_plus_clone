@@ -1,11 +1,12 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 import MetaData from '../../../layout/MetaData'
 
 const SmsCampaign = ({ nextStep, handleChange, values }) => {
-    // for continue event listener
+    const { senderID } = useSelector(state => state.senderID  || []);
     const Continue = e => {
         e.preventDefault();
         nextStep();
@@ -21,10 +22,12 @@ const SmsCampaign = ({ nextStep, handleChange, values }) => {
             value: "smart sms"
         },
         {
-            label: "Display Ads",
-            value: "display ads"
+            label: "Flash SMS",
+            value: "flash sms"
         },
     ]
+
+    console.log(senderID)
 
     return (
         <Fragment>
@@ -47,13 +50,23 @@ const SmsCampaign = ({ nextStep, handleChange, values }) => {
                                 <div className="row">
                                     <div className="form-group col-md-6">
                                     <label htmlFor className="mb-1">Sender ID</label>
-                                    <input 
+                                    {/* <input 
                                         type="text" 
                                         className="form-control" 
                                         placeholder="Enter Sender ID"
                                         onChange={handleChange('senderId')}
                                         defaultValue={values.senderId}
-                                    />
+                                    /> */}
+                                    <select 
+                                            className="custom-select" 
+                                            // value="select channel"
+                                            defaultValue={values.senderId}
+                                            onChange={handleChange('senderId')}
+                                        >
+                                            {senderID.map(senderids => (
+                                            <option value={senderids.senderId}>{senderids.senderId}</option>
+                                            ))}
+                                        </select>
                                     </div>
                                     <div className="form-group col-md-6">
                                     <div className="form-group">

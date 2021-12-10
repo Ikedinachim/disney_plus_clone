@@ -1,0 +1,131 @@
+/* .dataTables_wrapper .dataTables_length,
+.dataTables_info,
+.nav-tabs .nav-link.active,
+.dataTables_length select {
+  color: var(--color-table-tx) !important;
+  border-color: var(--color-border-main) !important;
+  background-color: var(--color-bg-container);
+} */
+.content-body{
+  background-color: #FAFAFA;
+}
+.marine-icons {
+  width: 70%;
+
+}
+
+    .marine-active-menu {
+      font-weight: bold;
+    }
+
+    .marine-tab-text {
+      font-size: 13px;
+    }
+
+    .marine-borders {
+      border-radius: 5px;
+      box-shadow: 0 8px 6px -6px #ddd;
+      Submitpadding-bottom: 10px;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.previous,
+    .dataTables_wrapper .dataTables_paginate .paginate_button.next,
+    .dataTables_paginate .paginate_button.current,
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover,
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current:focus,
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+      font-size: 10px;
+    }
+.icon{
+  max-width: 75%!important;
+}
+.icon-btn{
+  width: 50px;
+  height: 50px;
+  border: none;
+  background: red;
+  border-radius: 25px;
+  overflow: hidden;
+  position: relative;
+  transition: width 0.2s ease-in-out;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 15px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 15px;
+  width: 15px;
+  /* left: 4px; */
+  background-color: #FAFAFA;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked+.slider {
+  background-color: #D70900;
+}
+
+input:focus+.slider {
+  box-shadow: 0 0 1px #D70900;
+}
+
+input:checked+.slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+.my-table{
+  width: 100%!important;
+}
+.fix-form{
+  width: 20%!important;
+  height: calc(1.4em + 0.79rem + 1px);
+}
+.small-svg{
+  width: 18px;
+  height: 18px;
+  margin-top: 5px;
+}
+.paginate > .page-item > .page-link{
+  color: #B2B2B2 !important;
+}
+
+@media (min-width: 1600px) {
+  .container {
+    max-width: none !important;
+  }
+}

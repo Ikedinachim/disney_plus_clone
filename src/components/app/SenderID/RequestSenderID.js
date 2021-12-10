@@ -73,7 +73,7 @@ const SenderID = () => {
                             <div className="container pd-x-0">
                             <div className="col-md-5 pd-x-0">
                                 <p className="tx-22 tx-bold tx-com mg-b-5">Request Sender ID</p>
-                                <p className="tx-blac tx-16">Fill the form to request for Sender-ID</p>
+                                <p className="tx-blac tx-16">Input Sender ID details for processing (Sender ID takes up to 48 hours to process)</p>
                                 <form className="mg-t-30" id="senderIdForm" onSubmit={ submitSenderIdHandler }>
                                     <div className="form-group">
                                         <label htmlFor className="mb-1 tx-medium tx-16">
@@ -82,7 +82,7 @@ const SenderID = () => {
                                         <input
                                             type="text"
                                             className="form-control-lg form-control"
-                                            placeholder="MTN X"
+                                            placeholder="Enter preferred Sender ID"
                                             id="sender"
                                             name="senderId"
                                             value={senderId}
@@ -99,7 +99,7 @@ const SenderID = () => {
                                             data-target="#successModal"
                                             data-dismiss="modal"
                                             >
-                                            Request
+                                            Proceed
                                             </button>
                                         </div>
                                         </div>
@@ -142,7 +142,7 @@ const SenderID = () => {
                                         onClick={submitSenderIdHandler}
                                         disabled={ loading ? true : false }
                                     >
-                                        Confirm
+                                        Request
                                     </button>
                                     </div>
                                 </div>

@@ -3,26 +3,18 @@ import { Link } from 'react-router-dom'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { DateTime } from "luxon";
+import NumberFormat from 'react-number-format'
 
 import Loader from "../../loader";
 import MetaData from '../../layout/MetaData'
-// import Loader from '../../layout/Loader'
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 
 import { MDBDataTable } from 'mdbreact'
-import { getSenderID, clearErrors } from '../../../actions/senderIDActions';
+import { getAllCampaigns, clearErrors } from '../../../actions/campaignActions';
 
 const ViewCampaign = () => {
 
 
-    const { loading, error, senderID } = useSelector(state => state.senderID  || []);
+    const { loading, error, allCampaigns } = useSelector(state => state.getAllCampaign  || []);
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -31,12 +23,12 @@ const ViewCampaign = () => {
             alert.error(error)
             // dispatch(clearErrors())
         }
-        dispatch(getSenderID())
+        dispatch(getAllCampaigns())
 
     }, [dispatch, alert, error])
 
 
-    const setSenderID = () => {
+    const setAllCampaigns = () => {
         const data = {
             columns: [
                 {
@@ -45,42 +37,56 @@ const ViewCampaign = () => {
                     sort: 'asc'    
                 },
                 {
-                    label: 'USER',
-                    field: 'user',
+                    label: 'CAMPAIGN NAME',
+                    field: 'campaignName',
                     sort: 'asc'    
                 },
                 {
-                    label: 'SENDER ID',
-                    field: 'senderId',
+                    label: 'AD TYPE',
+                    field: 'adType',
                     sort: 'asc'    
                 },
                 {
-                    label: 'DATE REQUESTED',
-                    field: 'dataRequested',
+                    label: 'REVENUE',
+                    field: 'revenue',
                     sort: 'asc'    
+                },
+                {
+                    label: 'COST',
+                    field: 'cost',
+                    sort: 'asc' 
+                },
+                {
+                    label: 'DATE CREATED',
+                    field: 'dateCreated',
+                    sort: 'asc' 
                 },
                 {
                     label: 'STATUS',
-                    field: 'status', 
+                    field: 'status',
+                    sort: 'asc' 
                 },
                 {
-                    label: 'ACTION',
-                    field: 'actions', 
+                    label: 'ACTIONS',
+                    field: 'actions',
+                    sort: 'asc' 
                 }
             ],
             rows: []
         }
 
-        senderID.forEach(senderids => {
+        allCampaigns.forEach(campaigns => {
             data.rows.push({
-                id: senderids._id,
-                name: senderids.name,
-                senderId: senderids.senderId,
-                dataRequested: DateTime.fromJSDate(new Date(senderids.createdAt)).toFormat('dd MMM yyyy'),
-                status: <span className={`{"badge" ${senderids.status == null || (senderids.status == "pending") ? "badge-pink" : "badge-active"}`}>{senderids.status == null || (senderids.status == "pending") ? "Pending" : "Approved"}</span>,
+                id: campaigns.id,
+                campaignName: campaigns.name,
+                adType: campaigns.channel,
+                revenue: <NumberFormat value={0} displayType={'text'} thousandSeparator={true} prefix={'₦'} />,
+                cost: <NumberFormat value={campaigns.price} displayType={'text'} thousandSeparator={true} prefix={'₦'} />,
+                dateCreated: DateTime.fromJSDate(new Date(campaigns.createdAt)).toFormat('dd MMM, yyyy'),
+                status: <span className={`{"badge" ${campaigns.status == null || (campaigns.status == "pending") ? "badge-pink" : "badge-active"}`}>{campaigns.status == null || (campaigns.status == "pending") ? "Pending" : "Approved"}</span>,
                 actions:
                 <Fragment>
-                    <div className="dropdown">
+                    {/* <div className="dropdown">
                         <span
                             className
                             type="button"
@@ -108,6 +114,12 @@ const ViewCampaign = () => {
                             <i data-feather="trash-2" className="favourite-icon mr-2 wd-15 ht-15" />
                             Delete
                             </a>
+                        </div>
+                    </div> */}
+                     <div class="tx-black tx-14">
+                        <div class="d-flex">
+                            <i class="fa fa-eye tx-orange pd-t-4 mg-r-5"></i>
+                            View
                         </div>
                     </div>
                 </Fragment> 
@@ -142,7 +154,7 @@ const ViewCampaign = () => {
                                     </div>
                                     <div className="card-body pd-md-x-30 pd-t- mg-t-20 mg-md-t-0">
                                     <MDBDataTable 
-                                        data={setSenderID()}
+                                        data={setAllCampaigns()}
                                         className="px-3 scroll"
                                         bordered
                                         striped

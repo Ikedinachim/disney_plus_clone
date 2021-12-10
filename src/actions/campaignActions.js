@@ -1,40 +1,97 @@
-import axios from 'axios'
-import { ADD_TO_CART, REMOVE_CART_ITEM, SAVE_SHIPPING_INFO } from '../constants/cartConstants'
+import Axios from 'axios';
 
-export const addItemToCart = (id, quantity) => async (dispatch, getState) => {
-    const { data } = await axios.get(`/api/v1/product/${id}`)
+import {
+    SMS_CAMPAIGN_REQUEST,
+    SMS_CAMPAIGN_SUCCESS,
+    SMS_CAMPAIGN_FAIL,
+    GET_ALL_CAMPAIGN_REQUEST,
+    GET_ALL_CAMPAIGN_SUCCESS,
+    GET_ALL_CAMPAIGN_FAIL,
+    CLEAR_ERRORS,
+} from '../constants/campaignConstants'
 
-    dispatch({
-        type: ADD_TO_CART,
-        payload: {
-            product: data.product._id,
-            name: data.product.name,
-            price: data.product.price,
-            image: data.product.images[0].url,
-            stock: data.product.stock,
-            quantity
+const baseURL = 'https://mysogi.uat.com.ng/';
+
+const axios = Axios.create({
+    baseURL
+});
+
+// Create SMS Campaign
+export const createSmsCampaignAction = (smsCampaignData) => async (dispatch) => {
+    try {
+
+        dispatch({ type: SMS_CAMPAIGN_REQUEST })
+        let user = JSON.parse(sessionStorage.getItem('user'));
+        const token = user.user.token;
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization" : `Bearer ${token}`
+            }
         }
-    })
+        const { data } = await axios.post('api/campaign/create-campaign', smsCampaignData, config)
 
-    localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
+        if (data.status === "success") {
+            dispatch({
+                type: SMS_CAMPAIGN_SUCCESS,
+                payload: data
+            })
+        } else {
+            dispatch({
+                type: SMS_CAMPAIGN_FAIL,
+                payload: data.message
+            })
+        }
+        
+    } catch (data) {
+        dispatch({
+            type: SMS_CAMPAIGN_FAIL,
+            payload: data.message
+        })
+    }
 }
 
-export const removeItemFromCart = (id) => async (dispatch, getState) => {
+// Get All Campaigns
+export const getAllCampaigns = () => async (dispatch) => {
+    try {
+        
+        
+        dispatch({ type: GET_ALL_CAMPAIGN_REQUEST })
+        let user = JSON.parse(sessionStorage.getItem('user'));
+        const token = user.user.token;
 
+        const config = {
+            headers: {
+                "Authorization" : `Bearer ${token}`
+            }
+        }
+
+        const { data } = await axios.get('/api/campaign/all-campaign', config)
+
+        if (data.status === "success") {
+            dispatch({
+                type: GET_ALL_CAMPAIGN_SUCCESS,
+                payload: data.data,
+            })
+        } else {
+            dispatch({
+                type: GET_ALL_CAMPAIGN_FAIL,
+                payload: data.message
+            })
+        }
+        
+    } catch (error) {
+        dispatch({
+            type: GET_ALL_CAMPAIGN_FAIL,
+            payload: error.message
+        })
+    }
+}
+
+// Clear Errors
+export const clearErrors = () => async (dispatch) => {(
     dispatch({
-        type: REMOVE_CART_ITEM,
-        payload: id
+        type: CLEAR_ERRORS
     })
-
-    localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
-}
-
-export const saveShippingInfo = (data) => async (dispatch) => {
-
-    dispatch({
-        type: SAVE_SHIPPING_INFO,
-        payload: data
-    })
-
-    localStorage.setItem('shippingInfo', JSON.stringify(data))
-}
+)}

@@ -1,20 +1,21 @@
 import React, { Component } from 'react'
-// import PersonalDetails from './PersonalDetails'
-// import Confirmation from './Confirmation'
-// import Success from './Success'
-
 import SmsCampaign from './SmsCampaign'
 import TargetAudience from './TargetAudience'
 import PreviewCampaign from './PreviewCampaign'
 
-export default class Signup extends Component {
+export default class SmsStepForm extends Component {
 
   state = {
     step: 1,
     senderId: '',
     channel: '', 
     campaignMessage: '',
+    gender: 'male',
+    targetAge: '21',
+    location: ['Lagos'],
+    interest: 'business',
     phoneNumber: '',
+    price: 0,
   }
 
   // go back to previous step
@@ -34,10 +35,17 @@ export default class Signup extends Component {
     this.setState({ [input]: e.target.value });
   }
 
-  render() {
+  render() {    
     const { step } = this.state;
-    const { senderId, channel, campaignMessage, phoneNumber } = this.state;
-    const values = { senderId, channel, campaignMessage, phoneNumber }
+    const { senderId, channel, campaignMessage, gender, targetAge, location, interest,  phoneNumber } = this.state;
+    const contactNumber = phoneNumber.split(',')
+    const audience = contactNumber.length
+    const price = audience * 5
+    const values = { senderId, channel, campaignMessage, contactNumber, gender, targetAge, location, interest, price }
+    const payLoad = [values.senderId, values.channel, values.campaignMessage, values.contactNumber, gender, targetAge, location, interest, price];
+    // const payLoad = Object.assign(setPayload, values.senderId, values.channel, values.campaignMessage, values.contactNumber, gender, targetAge, location, interest, price );
+
+    console.log(values);
     
     switch(step) {
       case 1: 
@@ -54,6 +62,7 @@ export default class Signup extends Component {
             prevStep={ this.prevStep }
             nextStep={ this.nextStep }
             handleChange={ this.handleChange }
+            phoneNumber={ phoneNumber }
             values={ values }
           />
         )
@@ -63,6 +72,8 @@ export default class Signup extends Component {
               prevStep={ this.prevStep }
               nextStep={ this.nextStep }
               values={ values }
+              audience={audience}
+              payLoad={payLoad}
             />
           )
       //   case 4: 

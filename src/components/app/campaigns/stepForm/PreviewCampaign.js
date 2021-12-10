@@ -1,19 +1,48 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useEffect } from 'react'
 
 import { Link, useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { useAlert } from 'react-alert'
 
 import MetaData from '../../../layout/MetaData'
 import NumberFormat from 'react-number-format'
 
-const PreviewCampaign = ({ prevStep, nextStep, handleChange, values }) => {
-    const Continue = e => {
-        e.preventDefault();
-        nextStep();
-    }
+import { createSmsCampaignAction, clearErrors } from '../../../../actions/campaignActions';
+import { SMS_CAMPAIGN_RESET } from '../../../../constants/campaignConstants'
+
+const PreviewCampaign = ({ prevStep, values, audience }) => {
+    
+    const { loading, error, createSmsCampaign } = useSelector(state => state.smsCampaign || [])
+    const alert = useAlert();
+    const dispatch = useDispatch()
+    const navigate = useNavigate();
+
     const Previous = e => {
         e.preventDefault();
         prevStep();
     }
+
+    const submitSmsCampaignHandler = (e) => {
+        e.preventDefault();
+
+        dispatch(createSmsCampaignAction(values))
+    }
+
+    // console.log(createSmsCampaign.status);
+    useEffect( () => {
+
+        if(!loading && createSmsCampaign.status === 'success') {
+            navigate('/app/campaigns')
+            alert.success(createSmsCampaign.message)
+            dispatch({ type: SMS_CAMPAIGN_RESET })
+        }
+
+        if(error) {
+            alert.error(error)
+            dispatch(clearErrors())
+        }
+        
+    }, [dispatch, alert, createSmsCampaign, error, navigate])
 
     return (
         <Fragment>
@@ -41,7 +70,7 @@ const PreviewCampaign = ({ prevStep, nextStep, handleChange, values }) => {
                                     <div className="d-flex">
                                         <div className="mg-r-20">
                                         <img
-                                            src="./assets/img/Brand_Awareness.svg"
+                                            src="../../../../assets/img/Brand_Awareness.svg"
                                             className="img-fluid wd-50 ht-50"
                                             alt
                                             srcSet
@@ -83,86 +112,85 @@ const PreviewCampaign = ({ prevStep, nextStep, handleChange, values }) => {
                                             Campaign Message
                                         </label>
                                         <p className="tx-15 mb-0">
-                                            Get unlimited offer with Tizeti LTD. Super fast and reliable
-                                            network access All day long
+                                            {values.campaignMessage}
                                         </p>
                                         </div>
                                     </div>
                                     </div>
-                                    <hr />
+                                    {/* <hr />
                                     <div className="mg-b-20 mg-md-b-10">
-                                    <div className="d-flex justify-content-between">
-                                        <div>
-                                        <p className="tx-18 mb-0 tx-bold tx-com">Target Audience</p>
-                                        </div>
-                                        <div>
-                                        <div className="d-flex pd-t-3">
+                                        <div className="d-flex justify-content-between">
                                             <div>
-                                            <i className="fa fa-edit tx-primary mg-r-5" />
+                                            <p className="tx-18 mb-0 tx-bold tx-com">Target Audience</p>
                                             </div>
-                                            <p className="mb-0">Edit</p>
+                                            <div>
+                                            <div className="d-flex pd-t-3">
+                                                <div>
+                                                <i className="fa fa-edit tx-primary mg-r-5" />
+                                                </div>
+                                                <p className="mb-0">Edit</p>
+                                            </div>
+                                            </div>
                                         </div>
+                                        <div className="form-row mg-t-15">
+                                            <div className="col-md-3 form-group">
+                                            <label
+                                                htmlFor
+                                                className="tx-14 tx-gray mb-0 tx-medium d-block"
+                                            >
+                                                Age Range
+                                            </label>
+                                            <div className="d-flex">
+                                                <span className="badge badge-pink tx-14 mg-5">
+                                                {" "}
+                                                13-24 years
+                                                </span>
+                                                <span className="badge badge-pink tx-14 mg-5">
+                                                {" "}
+                                                13-24 years
+                                                </span>
+                                            </div>
+                                            </div>
+                                            <div className="col-md-1 form-group">
+                                            <label
+                                                htmlFor
+                                                className="tx-14 tx-gray mb-0 tx-medium d-block"
+                                            >
+                                                Gender
+                                            </label>
+                                            <span className="badge badge-pink tx-14 mg-5"> Male</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="form-row mg-t-15">
-                                        <div className="col-md-3 form-group">
-                                        <label
-                                            htmlFor
-                                            className="tx-14 tx-gray mb-0 tx-medium d-block"
-                                        >
-                                            Age Range
-                                        </label>
-                                        <div className="d-flex">
+                                        <div className="form-group">
+                                            <label htmlFor className="tx-14 tx-gray mb-0 tx-medium d-block">
+                                            Location
+                                            </label>
+                                            <div className="d-flex">
+                                            <span className="badge badge-pink tx-14 mg-5"> Adamawa</span>
+                                            <span className="badge badge-pink tx-14 mg-5">
+                                                {" "}
+                                                Maidugairi
+                                            </span>
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
+                                            <label htmlFor className="tx-14 tx-gray mb-0 tx-medium d-block">
+                                            Interest
+                                            </label>
                                             <span className="badge badge-pink tx-14 mg-5">
                                             {" "}
-                                            13-24 years
-                                            </span>
-                                            <span className="badge badge-pink tx-14 mg-5">
-                                            {" "}
-                                            13-24 years
+                                            Surfing Net
                                             </span>
                                         </div>
-                                        </div>
-                                        <div className="col-md-1 form-group">
-                                        <label
-                                            htmlFor
-                                            className="tx-14 tx-gray mb-0 tx-medium d-block"
-                                        >
-                                            Gender
-                                        </label>
-                                        <span className="badge badge-pink tx-14 mg-5"> Male</span>
-                                        </div>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor className="tx-14 tx-gray mb-0 tx-medium d-block">
-                                        Location
-                                        </label>
-                                        <div className="d-flex">
-                                        <span className="badge badge-pink tx-14 mg-5"> Adamawa</span>
-                                        <span className="badge badge-pink tx-14 mg-5">
-                                            {" "}
-                                            Maidugairi
-                                        </span>
-                                        </div>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor className="tx-14 tx-gray mb-0 tx-medium d-block">
-                                        Interest
-                                        </label>
-                                        <span className="badge badge-pink tx-14 mg-5">
-                                        {" "}
-                                        Surfing Net
-                                        </span>
-                                    </div>
-                                    </div>
+                                    </div> */}
                                     <hr />
                                     <div className="mg-b-20 mg-md-b-10">
                                     <p className="tx-18 tx-com tx-semibold mb-0">Pricing</p>
                                     <div className="form-group mg-t-15">
                                         <label htmlFor className="tx-14 tx-gray mb-1 tx-medium">
-                                        Potential Audience Based on filter
+                                        Potential Audience Based on Manual Input
                                         </label>
-                                        <p className="tx-18 tx-com tx-bold mb-0">268,000</p>
+                                        <p className="tx-18 tx-com tx-bold mb-0">{audience}</p>
                                     </div>
                                     <div className="form-row mg-t-15 col-lg-6 pd-x-0">
                                         <div className="form-group col-md-9">
@@ -175,7 +203,7 @@ const PreviewCampaign = ({ prevStep, nextStep, handleChange, values }) => {
                                         <div className="form-group col-md-3">
                                         <span className="badge badge-pink  tx-18 mg-5 tx-amt w-100 mt-0">
                                             {" "}
-                                            N50,000
+                                            <NumberFormat value={values.price} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
                                         </span>
                                         </div>
                                     </div>
@@ -183,11 +211,20 @@ const PreviewCampaign = ({ prevStep, nextStep, handleChange, values }) => {
                                     <div className="mg-t-20">
                                     <button
                                         className="btn btn-primary pd-x-40 tx-com mg-r-15"
-                                        onClick={ Previous }
+                                        onClick={ submitSmsCampaignHandler }
+                                        disabled={ loading ? true : false }
                                         type="submit"
                                         variant="contained"
                                     >
                                         Publish
+                                    </button>
+                                    <button
+                                        className="btn btn-outline-primary pd-x-40 tx-com mg-r-15"
+                                        onClick={ Previous }
+                                        type="submit"
+                                        variant="contained"
+                                    >
+                                    Go Back
                                     </button>
                                     </div>
                                 </div>

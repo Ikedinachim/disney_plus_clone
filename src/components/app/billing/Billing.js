@@ -6,7 +6,7 @@ import { useAlert } from 'react-alert'
 
 import MetaData from '../../layout/MetaData'
 import Loader from '../../loader'
-import { getTransactionHistory, getWallet, clearErrors } from '../../../actions/billingActions'
+import { getTransactionHistory} from '../../../actions/billingActions'
 import { getSenderID } from '../../../actions/senderIDActions';
 import TransactionCard from './TransactionCard'
 import NumberFormat from 'react-number-format'

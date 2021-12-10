@@ -26,6 +26,13 @@ const Sidebar = () => {
             <div className="aside-body">
                 <ul className="nav nav-aside">
                     <li className="nav-item active">
+                        <NavLink to="/app" className={({ isActive }) =>
+                        isActive ? 'nav-link active' : 'nav-link'}>
+                            <i className="fa fa-home mr-3" />
+                            <span>Home</span>
+                        </NavLink>
+                    </li>
+                    <li className="nav-item">
                         <NavLink to="/app/campaigns" className={({ isActive }) =>
                         isActive ? 'nav-link active' : 'nav-link'}>
                             <i className="fa fa-archive mr-3" />

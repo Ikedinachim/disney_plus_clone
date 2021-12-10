@@ -80,8 +80,7 @@ function App() {
 
 export default App;
 
-function PrivateRoute({ children }) {
-  return localStorage.getItem('user') !== null ? children : <Navigate to="/login" />;
+// function PrivateRoute({ children }) {
+//   return localStorage.getItem('user') !== null ? children : <Navigate to="/login" />;
 
-}
-
+// }
