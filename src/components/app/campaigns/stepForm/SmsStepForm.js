@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import SmsCampaign from './SmsCampaign'
 import TargetAudience from './TargetAudience'
 import PreviewCampaign from './PreviewCampaign'
+import FundWalletSMS from './FundWalletSMS'
 
 export default class SmsStepForm extends Component {
 
@@ -45,7 +46,7 @@ export default class SmsStepForm extends Component {
     const payLoad = [values.senderId, values.channel, values.campaignMessage, values.contactNumber, gender, targetAge, location, interest, price];
     // const payLoad = Object.assign(setPayload, values.senderId, values.channel, values.campaignMessage, values.contactNumber, gender, targetAge, location, interest, price );
 
-    console.log(values);
+    // console.log(values);
     
     switch(step) {
       case 1: 
@@ -76,10 +77,14 @@ export default class SmsStepForm extends Component {
               payLoad={payLoad}
             />
           )
-      //   case 4: 
-      //     return (
-      //       <Success />
-      //     )
+        case 4: 
+          return (
+            <FundWalletSMS
+              prevStep={ this.prevStep }
+              nextStep={ this.nextStep }
+              values={ values }
+            />
+          )
       default: 
           // do nothing
     }

@@ -30,7 +30,11 @@ const Login = ({ history }) => {
             navHistory('/app')
             // dispatch({ type: REGISTER_USER_RESET })
             dispatch(getWallet())
-        } else {
+        } 
+        // else if(!isAuthenticated && user === undefined) {
+        //     alert.error('Network error')
+        // } 
+        else {
             navHistory('/login')
             setUsername("");
             setPassword("");
@@ -53,7 +57,7 @@ const Login = ({ history }) => {
 
     return (
         <Fragment>
-            {loading ? <Loader /> : (
+            {loading ? <Loader /> : null} 
                 <Fragment>
                     <MetaData title={'Login'} />
                     <section className="ht-100v container-fluid">
@@ -129,7 +133,7 @@ const Login = ({ history }) => {
                     </section>
 
                 </Fragment>
-            )}
+            {/* // )} */}
         </Fragment>
     )
 }

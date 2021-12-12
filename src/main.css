@@ -480,6 +480,13 @@ table.dataTable thead th{
   text-transform: capitalize;
 }
 
-.sb-transform {
+.sb-show {
   transform: translateX(-100%)
+}
+
+.sb-hide {
+  transform: translateX(54px);
+}
+.pointer {
+  cursor: pointer;
 }
