@@ -32,7 +32,7 @@ const Header = () => {
                 <div className="collapse navbar-collapse order-2" id="navbarSupportedContent">
                 <ul className="navbar-nav ml-auto">
                     <li className="nav-item active">
-                    <Link className="nav-link tx-dark" to="/">Campaign <span className="sr-only">(current)</span></Link>
+                    <a className="nav-link tx-dark" href="#campaign">Campaign <span className="sr-only">(current)</span></a>
                     </li>
                     <li className="nav-item pd-x-20">
                     <Link className="nav-link tx-dark" to="/">Contact Us</Link>

@@ -14,14 +14,14 @@ import { getAllCampaigns, clearErrors } from '../../../actions/campaignActions';
 const ViewCampaign = () => {
 
 
-    const { loading, error, allCampaigns } = useSelector(state => state.getAllCampaign  || []);
+    const { loading, error, allCampaigns } = useSelector(state => state.getAllCampaign || {});
     const dispatch = useDispatch()
 
     useEffect(() => {
 
         if(error) {
             alert.error(error)
-            // dispatch(clearErrors())
+            dispatch(clearErrors())
         }
         dispatch(getAllCampaigns())
 

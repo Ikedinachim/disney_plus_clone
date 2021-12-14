@@ -6,16 +6,6 @@ import { DateTime } from "luxon";
 
 import Loader from "../../loader";
 import MetaData from '../../layout/MetaData'
-// import Loader from '../../layout/Loader'
-// import { styled } from '@mui/material/styles';
-// import Table from '@mui/material/Table';
-// import TableBody from '@mui/material/TableBody';
-// import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-// import TableContainer from '@mui/material/TableContainer';
-// import TableHead from '@mui/material/TableHead';
-// import TableRow from '@mui/material/TableRow';
-// import Paper from '@mui/material/Paper';
-
 import { MDBDataTable } from 'mdbreact'
 import { getSenderID, clearErrors } from '../../../actions/senderIDActions';
 
@@ -29,7 +19,7 @@ const SenderID = () => {
 
         if(error) {
             alert.error(error)
-            // dispatch(clearErrors())
+            dispatch(clearErrors())
         }
         dispatch(getSenderID())
 

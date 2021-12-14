@@ -49,7 +49,6 @@ export const getAllCampaignsReducer = (state = { allCampaigns: [] }, action) => 
         case GET_ALL_CAMPAIGN_REQUEST:
             return {
                 loading: true,
-                // senderID: []
             }
         
         case GET_ALL_CAMPAIGN_SUCCESS:

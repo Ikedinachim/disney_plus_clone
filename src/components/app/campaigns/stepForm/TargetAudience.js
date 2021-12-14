@@ -31,7 +31,7 @@ const TargetAudience = ({ prevStep, nextStep, handleChange, values, phoneNumber 
                         <div className="container-fluid">
                             <div className="card card-body rounded bd-0 shadow-sm pd-lg-x-50 pd-lg-y-30">
                                 <div className="d-flex justify-content-between">
-                                <p className="tx-18 mb-0">60%</p>
+                                <p className="tx-18 mb-0">100%</p>
                                 <p className="tx-18 mb-0">3 out of 3</p>
                                 </div>
                                 <div className="progress">

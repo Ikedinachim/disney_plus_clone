@@ -59,7 +59,7 @@ const Home = ({ match }) => {
                             </div>
                             </div>
                         </section>
-                        <section className="ads-body">
+                        <section id="campaign" className="ads-body">
                             <div className="container pd-y-30 pd-md-t-70 pd-md-b-0">
                             <p className="tx-28 tx-com tx-center tx-bold mb-0">Why Mysogi?</p>
                             <div className="row mg-t-10">
