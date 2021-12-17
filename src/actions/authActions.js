@@ -57,7 +57,7 @@ export const login = (username, password) => async (dispatch) => {
 }
 
 // Register User
-export const register = (userData) => async (dispatch) => {
+export const registerUser = (userData) => async (dispatch) => {
     try {
 
         dispatch({ type: REGISTER_USER_REQUEST })

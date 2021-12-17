@@ -75,15 +75,15 @@ const ViewCampaign = () => {
             rows: []
         }
 
-        allCampaigns.forEach(campaigns => {
+        allCampaigns.forEach(campaign => {
             data.rows.push({
-                id: campaigns.id,
-                campaignName: campaigns.name,
-                adType: campaigns.channel,
+                id: campaign.id,
+                campaignName: campaign.name,
+                adType: campaign.channel,
                 revenue: <NumberFormat value={0} displayType={'text'} thousandSeparator={true} prefix={'₦'} />,
-                cost: <NumberFormat value={campaigns.price} displayType={'text'} thousandSeparator={true} prefix={'₦'} />,
-                dateCreated: DateTime.fromJSDate(new Date(campaigns.createdAt)).toFormat('dd MMM, yyyy'),
-                status: <span className={`{"badge" ${campaigns.status == null || (campaigns.status == "pending") ? "badge-pink" : "badge-active"}`}>{campaigns.status == null || (campaigns.status == "pending") ? "Pending" : "Approved"}</span>,
+                cost: <NumberFormat value={campaign.price} displayType={'text'} thousandSeparator={true} prefix={'₦'} />,
+                dateCreated: DateTime.fromJSDate(new Date(campaign.createdAt)).toFormat('dd MMM, yyyy'),
+                status: <span className={`{"badge" ${campaign.status == null || (campaign.status == "pending") ? "badge-pink" : "badge-active"}`}>{campaign.status == null || (campaign.status == "pending") ? "Pending" : "Approved"}</span>,
                 actions:
                 <Fragment>
                     {/* <div className="dropdown">

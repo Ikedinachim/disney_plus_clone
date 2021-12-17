@@ -98,7 +98,7 @@ const CreateCampaign = () => {
                                             </Link>
                                         </div>
                                         <div className="col-md-6 col-lg-3 col-12 mg-t-20">
-                                            <Link to="/app/campaign/create" className="tx-dark">
+                                            <Link to="/app/campaign/flier-video" className="tx-dark">
                                                 <div className="card card-height rounded bd-0 shadow-sm">
                                                     <div className="card-body tx-center pd-x-12">
                                                     <img src="../../../assets/img/flier_campaign_sm.png" alt="" className="img-fluid" srcSet />

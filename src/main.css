@@ -490,3 +490,8 @@ table.dataTable thead th{
 .pointer {
   cursor: pointer;
 }
+
+.form-group .reg-error::before {
+  display: inline;
+  content: "⚠ ";
+}

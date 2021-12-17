@@ -7,9 +7,13 @@ import Loader from "../../components/loader";
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { getSenderID } from '../../actions/senderIDActions';
-import { register, clearErrors } from '../../actions/authActions'
+import { registerUser, clearErrors } from '../../actions/authActions'
 import { getTransactionHistory, getWallet, } from '../../actions/billingActions'
 import { REGISTER_USER_RESET } from '../../constants/authConstants';
+
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
 
 const Register = ({ history }) => {
     const navigate = useNavigate()
@@ -22,6 +26,7 @@ const Register = ({ history }) => {
         userType: '',
         // email: '',
         password: '',
+        confirmPassword: '',
         phone: '',
         businessName: '',
         contactName: '',
@@ -35,15 +40,42 @@ const Register = ({ history }) => {
         username,
         userType, 
         email, 
-        password, 
+        password,
+        confirmPassword, 
         phone, 
         businessName, 
         contactName, 
         businessEmail 
     } = newUser;
 
-    // const [avatar, setAvatar] = useState('')
-    // const [avatarPreview, setAvatarPreview] = useState('/images/default_avatar.png')
+    const schema = Yup.object().shape({
+        firstName: Yup.string()
+            .min(2, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Required'),
+        lastName: Yup.string()
+            .min(2, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Required'),
+        email: Yup.string().email().required(),
+        password: Yup.string()
+            .required('Password is required')
+            .min(6, 'Password must be at least 6 characters'),
+        confirmPassword: Yup.string()
+            .oneOf([Yup.ref('password'), null], 'The passwords do not match')
+        // confirmPassword: Yup.string()
+        //     .test('passwords-match', 'Passwords must match', function(value){
+        //       return this.parent.password === value
+        // })
+    });
+
+    const { register, handleSubmit, formState: { errors }, reset } = useForm({
+        resolver: yupResolver(schema),
+    });
+
+    const { register: registerBusiness, handleSubmit: handleBusinessSubmit, formState: { errors: businessError }, reset: resetBusiness } = useForm({
+        resolver: yupResolver(schema),
+    });
 
     const alert = useAlert();
     const dispatch = useDispatch();
@@ -71,50 +103,54 @@ const Register = ({ history }) => {
 
     }, [dispatch, isAuthenticated, isRegistered, error, alert ])
 
-    const submitIndividualHandler = (e) => {
-        e.preventDefault();
+    const submitIndividualHandler = (data) => {
+        // data.preventDefault();
+        console.log(data);
 
-        const formData = new FormData();
-        formData.set('firstName', firstName);
-        formData.set('lastName', lastName);
-        // formData.set('middleName', middleName);
-        formData.set('userType', "individual");
-        formData.set('username', username);
-        formData.set('email', email);
-        formData.set('password', password);
-        formData.set('phone', phone);
+        // const formData = new FormData();
+        // formData.set('firstName', firstName);
+        // formData.set('lastName', lastName);
+        // // formData.set('middleName', middleName);
+        // formData.set('userType', "individual");
+        // formData.set('username', username);
+        // formData.set('email', email);
+        // formData.set('password', password);
+        // formData.set('phone', phone);
 
-        var object = {};
-        formData.forEach((value, key) => object[key] = value);
-        var json = JSON.stringify(object);
+        // var object = {};
+        // formData.forEach((value, key) => object[key] = value);
+        // var json = JSON.stringify(object);
         
-        dispatch(register(json))
+        dispatch(registerUser(data))
         // setNewUser("")
+        reset();
         
     }
 
-    const submitBusinessHandler = (e) => {
-        e.preventDefault();
+    const submitBusinessHandler = (data) => {
+        // e.preventDefault();
+        console.log(data);
 
-        const formData = new FormData();
-        formData.set('firstName', firstName);
-        formData.set('lastnName', lastName);
-        // formData.set('middleName', middleName);
-        formData.set('userType', "business");
-        formData.set('username', username);
-        // formData.set('email', email);
-        formData.set('password', password);
-        formData.set('phone', phone);
-        formData.set('businessName', businessName);
-        // formData.set('contactName', contactName);
-        formData.set('businessEmail', businessEmail);
+        // const formData = new FormData();
+        // formData.set('firstName', firstName);
+        // formData.set('lastnName', lastName);
+        // // formData.set('middleName', middleName);
+        // formData.set('userType', "business");
+        // formData.set('username', username);
+        // // formData.set('email', email);
+        // formData.set('password', password);
+        // formData.set('phone', phone);
+        // formData.set('businessName', businessName);
+        // // formData.set('contactName', contactName);
+        // formData.set('businessEmail', businessEmail);
         
 
-        var object = {};
-        formData.forEach((value, key) => object[key] = value);
-        var json = JSON.stringify(object);
+        // var object = {};
+        // formData.forEach((value, key) => object[key] = value);
+        // var json = JSON.stringify(object);
 
-        dispatch(register(json))
+        dispatch(registerUser(data))
+        resetBusiness();
     }
 
     const onChange = e => {
@@ -211,10 +247,11 @@ const Register = ({ history }) => {
                                                     role="tabpanel"
                                                     aria-labelledby="home-tab"
                                                 >
-                                                    <form className="pd-y-30 pd-md-x-20" onSubmit={submitIndividualHandler}>
+                                                    <form key={1} className="pd-y-30 pd-md-x-20" onSubmit={handleSubmit(submitIndividualHandler)}>
                                                         <div className="form-row">
                                                             <div className="form-group col-md-6">
-                                                            <input 
+                                                            <input
+                                                                {...register("firstName")} 
                                                                 type="text" 
                                                                 id="firstname" 
                                                                 className="form-control new"
@@ -226,7 +263,8 @@ const Register = ({ history }) => {
                                                             />
                                                             </div>
                                                             <div className="form-group col-md-6">
-                                                            <input 
+                                                            <input
+                                                                {...register("lastName")}  
                                                                 type="text" 
                                                                 id="lastname" 
                                                                 className="form-control new"
@@ -238,18 +276,9 @@ const Register = ({ history }) => {
                                                             />
                                                             </div>
                                                         </div>
-                                                        {/* <div className="form-group">
-                                                            <input
-                                                            type="text"
-                                                            className="form-control new"
-                                                            placeholder="Middle Name"
-                                                            name="middleName"
-                                                            value={middleName}
-                                                            onChange={onChange}
-                                                            />
-                                                        </div> */}
                                                         <div className="form-group">
-                                                            <input 
+                                                            <input
+                                                                {...register("username")}  
                                                                 type="text" 
                                                                 id="individualUsername" 
                                                                 className="form-control new"
@@ -262,6 +291,7 @@ const Register = ({ history }) => {
                                                         </div>
                                                         <div className="form-group">
                                                             <input
+                                                            {...register("userType")} 
                                                             type="hidden"
                                                             className="form-control new"
                                                             placeholder="User Type"
@@ -271,70 +301,87 @@ const Register = ({ history }) => {
                                                             />
                                                         </div>
                                                         <div className="form-group">
-                                                            <input 
+                                                            <input
+                                                                {...register("email")} 
                                                                 type="email" 
                                                                 id="email" 
                                                                 className="form-control new"
                                                                 placeholder="Email"
                                                                 name="email"
-                                                                required
+                                                                // required
                                                                 value={email} 
+                                                                // onChange={onChange}
+                                                            />
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <input
+                                                                {...register("password")}
+                                                                type="password"
+                                                                className="form-control new"
+                                                                placeholder="Password"
+                                                                name="password"
+                                                                // required
+                                                                // value={password} 
+                                                                // onChange={onChange}
+                                                            />
+                                                            {errors.password && <span className="tx-primary">{errors.password.message}</span>}
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <input
+                                                                {...register("confirmPassword")}
+                                                                type="password"
+                                                                className="form-control new"
+                                                                placeholder="Confirm Password"
+                                                                name="confirmPassword"
+                                                                // required
+                                                                // value={confirmPassword} 
+                                                                // onChange={onChange}
+                                                            />
+                                                            {errors.confirmPassword && <span className="tx-primary">{errors.confirmPassword.message}</span>}
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <input
+                                                                {...register("phone")} 
+                                                                type="number"
+                                                                className="form-control new"
+                                                                placeholder="Phone Number"
+                                                                name="phone"
+                                                                required
+                                                                value={phone}
                                                                 onChange={onChange}
-                                                            />
-                                                        </div>
-                                                        <div className="form-group">
-                                                            <input
-                                                            type="password"
-                                                            className="form-control new"
-                                                            placeholder="Password"
-                                                            name="password"
-                                                            required
-                                                            value={password} 
-                                                            onChange={onChange}
-                                                            />
-                                                        </div>
-                                                        <div className="form-group">
-                                                            <input
-                                                            type="number"
-                                                            className="form-control new"
-                                                            placeholder="Phone Number"
-                                                            name="phone"
-                                                            required
-                                                            value={phone}
-                                                            onChange={onChange}
                                                             />
                                                         </div>
                                                         <div className="row">
                                                             <div className="col-lg-9 col-12 mg-t-15">
-                                                            <div className="custom-control custom-checkbox pd-l-0">
-                                                                <input
-                                                                type="checkbox"
-                                                                className="custom-control-input form-control"
-                                                                id="customCheck1"
-                                                                name="userType"
-                                                                required
-                                                                />
-                                                                <label
-                                                                className="custom-control-label"
-                                                                htmlFor="customCheck1"
-                                                                >
-                                                                I agree with{" "}
-                                                                <span className="tx-primary">
-                                                                    terms and conditions
-                                                                </span>
-                                                                </label>
-                                                            </div>
+                                                                <div className="custom-control custom-checkbox pd-l-0">
+                                                                    <input
+                                                                    type="checkbox"
+                                                                    className="custom-control-input form-control"
+                                                                    id="customCheck1"
+                                                                    name="userType"
+                                                                    required
+                                                                    />
+                                                                    <label
+                                                                    className="custom-control-label"
+                                                                    htmlFor="customCheck1"
+                                                                    >
+                                                                    I agree with{" "}
+                                                                    <span className="tx-primary">
+                                                                        terms and conditions
+                                                                    </span>
+                                                                    </label>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div className="form-row mg-t-30">
                                                             <div className="form-group col-md-5 mx-auto">
-                                                            <button
-                                                                type="submit"
-                                                                className="btn btn-primary btn-block btn-lg pd-y-15"
-                                                                disabled={ loading ? true : false }
-                                                            >
-                                                                Sign up
-                                                            </button>
+                                                                <button
+                                                                    type="submit"
+                                                                    className="btn btn-primary btn-block btn-lg pd-y-15"
+                                                                    disabled={ loading ? true : false }
+                                                                >
+                                                                    Sign up
+                                                                </button>
                                                             </div>
                                                         </div>
                                                         <Link to="/login">
@@ -356,28 +403,30 @@ const Register = ({ history }) => {
                                                     role="tabpanel"
                                                     aria-labelledby="profile-tab"
                                                 >
-                                                    <form className="pd-y-30 pd-md-x-20" onSubmit={submitBusinessHandler}>
+                                                    <form key={2} className="pd-y-30 pd-md-x-20" onSubmit={handleBusinessSubmit(submitBusinessHandler)}>
                                                         <div className="form-row">
                                                             <div className="form-group col-md-6">
                                                                 <input
-                                                                type="text"
-                                                                className="form-control new"
-                                                                placeholder="First Name"
-                                                                name="firstName"
-                                                                required
-                                                                value={firstName}
-                                                                onChange={onChange}
+                                                                    {...registerBusiness("firstName")}
+                                                                    type="text"
+                                                                    className="form-control new"
+                                                                    placeholder="First Name"
+                                                                    // name="firstName"
+                                                                    required
+                                                                    value={firstName}
+                                                                    onChange={onChange}
                                                                 />
                                                             </div>
                                                             <div className="form-group col-md-6">
                                                                 <input
-                                                                type="text"
-                                                                className="form-control new"
-                                                                placeholder="Last Name"
-                                                                name="lastName"
-                                                                required
-                                                                value={lastName}
-                                                                onChange={onChange}
+                                                                    {...registerBusiness("lastName")}
+                                                                    type="text"
+                                                                    className="form-control new"
+                                                                    placeholder="Last Name"
+                                                                    // name="lastName"
+                                                                    required
+                                                                    value={lastName}
+                                                                    onChange={onChange}
                                                                 />
                                                             </div>
                                                         </div>
@@ -393,6 +442,7 @@ const Register = ({ history }) => {
                                                         </div> */}
                                                         <div className="form-group">
                                                             <input 
+                                                                {...registerBusiness("username")}
                                                                 type="text" 
                                                                 id="businessUsername" 
                                                                 className="form-control new"
@@ -405,13 +455,14 @@ const Register = ({ history }) => {
                                                         </div>
                                                         <div className="form-group">
                                                             <input
-                                                            type="hidden"
-                                                            className="form-control new"
-                                                            placeholder="User Type"
-                                                            name="userType"
-                                                            required
-                                                            value={"business"}
-                                                            onChange={onChange} 
+                                                                {...registerBusiness("userType")}
+                                                                type="hidden"
+                                                                className="form-control new"
+                                                                placeholder="User Type"
+                                                                name="userType"
+                                                                required
+                                                                value={"business"}
+                                                                onChange={onChange} 
                                                             />
                                                         </div>
                                                         {/* <div className="form-group">
@@ -427,56 +478,75 @@ const Register = ({ history }) => {
                                                         </div> */}
                                                         <div className="form-group">
                                                             <input
-                                                            type="password"
-                                                            className="form-control new"
-                                                            placeholder="Password"
-                                                            name="password"
-                                                            required
-                                                            value={password}
-                                                            onChange={onChange}
+                                                                {...registerBusiness("password")}
+                                                                type="password"
+                                                                className="form-control new"
+                                                                placeholder="Password"
+                                                                // name="password"
+                                                                // required
+                                                                // value={password}
+                                                                // onChange={onChange}
+                                                            />
+                                                            {businessError.password && <span className="tx-primary reg-error">{businessError.password.message}</span>}
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <input
+                                                                {...registerBusiness("confirmPassword")}
+                                                                type="password"
+                                                                className="form-control new"
+                                                                placeholder="Confirm Password"
+                                                                // name="confirmPassword"
+                                                                // required
+                                                                // value={confirmPassword} 
+                                                                // onChange={onChange}
+                                                            />
+                                                            {businessError.confirmPassword && <span className="tx-primary reg-error">{businessError.confirmPassword.message}</span>}
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <input
+                                                                {...registerBusiness("phone")}
+                                                                type="number"
+                                                                className="form-control new"
+                                                                placeholder="Phone Number"
+                                                                name="phone"
+                                                                required
+                                                                // value={phone}
+                                                                // onChange={onChange} 
                                                             />
                                                         </div>
                                                         <div className="form-group">
                                                             <input
-                                                            type="number"
-                                                            className="form-control new"
-                                                            placeholder="Phone Number"
-                                                            name="phone"
-                                                            required
-                                                            value={phone}
-                                                            onChange={onChange} 
+                                                                {...registerBusiness("businessName")}
+                                                                type="text"
+                                                                className="form-control new"
+                                                                placeholder="Business Name"
+                                                                name="businessName"
+                                                                required
+                                                                value={businessName}
+                                                                onChange={onChange} 
                                                             />
                                                         </div>
                                                         <div className="form-group">
                                                             <input
-                                                            type="text"
-                                                            className="form-control new"
-                                                            placeholder="Business Name"
-                                                            name="businessName"
-                                                            required
-                                                            value={businessName}
-                                                            onChange={onChange} 
+                                                                {...registerBusiness("businessEmail")}
+                                                                type="email"
+                                                                className="form-control new"
+                                                                placeholder="Business Email"
+                                                                name="businessEmail"
+                                                                value={businessEmail}
+                                                                onChange={onChange} 
                                                             />
                                                         </div>
                                                         <div className="form-group">
                                                             <input
-                                                            type="email"
-                                                            className="form-control new"
-                                                            placeholder="Business Email"
-                                                            name="businessEmail"
-                                                            value={businessEmail}
-                                                            onChange={onChange} 
-                                                            />
-                                                        </div>
-                                                        <div className="form-group">
-                                                            <input
-                                                            type="text"
-                                                            className="form-control new"
-                                                            placeholder="Contact Name"
-                                                            name="contactName"
-                                                            required
-                                                            value={contactName}
-                                                            onChange={onChange} 
+                                                                {...registerBusiness("contactName")}
+                                                                type="text"
+                                                                className="form-control new"
+                                                                placeholder="Contact Name"
+                                                                name="contactName"
+                                                                required
+                                                                value={contactName}
+                                                                onChange={onChange} 
                                                             />
                                                         </div>
                                                         

@@ -17,6 +17,7 @@ import TargetAudience from "./components/app/campaigns/TargetAudience"
 import ViewCampaign from "./components/app/campaigns/ViewCampaign"
 import PreviewCampaign from "./components/app/campaigns/PreviewCampaign"
 import SmsStepForm from "./components/app/campaigns/stepForm/SmsStepForm"
+import FlierVideoStepForm from "./components/app/campaigns/flierVideoCampaign/FlierVideoStepForm"
 
 // Auth / User Imports
 import Login from "./components/user/Login";
@@ -26,6 +27,7 @@ import { useSelector } from "react-redux";
 
 import "./dashforge.css";
 import "./main.css";
+import "./style.css"
 
 import AOS from 'aos'
 import 'aos/dist/aos.css';
@@ -58,6 +60,7 @@ function App() {
           <Route path="/app/campaign/sms" element={isAuthenticated ? <SmsStepForm /> : <Login />} />
           <Route path="/app/campaign/preview" element={isAuthenticated ? <PreviewCampaign /> : <Login />} />
           <Route path="/app/campaign/audience" element={isAuthenticated ? <TargetAudience /> : <Login />} />
+          <Route path="/app/campaign/flier-video" element={isAuthenticated ? <FlierVideoStepForm /> : <Login />} />
           {/* <Route path="/register" element={<Register />} /> */}
           {/* <Route path="/login" element={<Login />} /> */}
           {/* <Route path="/app" element={isAuthenticated ? <Dashboard /> : <Home />} /> */}

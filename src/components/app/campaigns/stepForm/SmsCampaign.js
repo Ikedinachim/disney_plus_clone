@@ -62,8 +62,8 @@ const SmsCampaign = ({ nextStep, handleChange, values }) => {
                                         <p className="tx-14">Provide all requested details to help complete the campaign creation</p>
                                         <div className="row">
                                             <div className="form-group col-md-6">
-                                            <label htmlFor className="mb-1">Sender ID</label>
-                                            <select 
+                                                <label htmlFor className="mb-1">Sender ID</label>
+                                                <select 
                                                     className="custom-select" 
                                                     // value="select channel"
                                                     defaultValue={values.senderId}
