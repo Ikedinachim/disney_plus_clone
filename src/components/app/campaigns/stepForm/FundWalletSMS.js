@@ -16,10 +16,10 @@ const FundWalletSMS = ({ prevStep, handleChange, values }) => {
     // dispatch(getWallet())
     const navigate = useNavigate();
 
+    const { wallet } = useSelector(state => state.wallet)
     const [amount, setAmountToPay] = useState(values.price - wallet.balance)
     // const {amount} = amountToPay
     const { fundWallet, loading, error } = useSelector(state => state.fundWallet)
-    const { wallet } = useSelector(state => state.wallet)
     const { isAuthenticated, user } = useSelector(state => state.auth)
 
 
