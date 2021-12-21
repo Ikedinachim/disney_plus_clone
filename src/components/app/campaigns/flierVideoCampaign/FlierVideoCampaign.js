@@ -40,6 +40,14 @@ const FlierVideoCampaign = ({ nextStep, handleChange, values }) => {
             label: "Flash SMS",
             value: "flash sms"
         },
+        {
+            label: "Display ADs",
+            value: "display ads"
+        },
+        {
+            label: "Influencer Marketing",
+            value: "Influencer Marketing"
+        }
     ]
 
     const onChangeCampaignImage = e => {
@@ -234,24 +242,36 @@ const FlierVideoCampaign = ({ nextStep, handleChange, values }) => {
                                     <div className="card shadow-sm rounded bd-0">
                                     <div className="card-body">
                                         <div>
-                                        <img src={campaignImage} className="img-fluid mg-b-10" alt="" srcSet />
-                                        <p className="mb-4">
-                                            {values.campaignMessage}
-                                        </p>
+                                            <img src={campaignImage} className="img-fluid mg-b-10" alt="" srcSet />
+                                            <p className="mb-4">
+                                                {values.campaignMessage}
+                                            </p>
                                         </div>
                                         <div>
-                                        <button className="btn btn-primary w-100 mg-b-15 round-5">
-                                            <i className="fa fa-whatsapp mg-r-5"> </i>
-                                            {values.callToAction} via WhatsApp
-                                        </button>
-                                        <button className="btn btn-primary w-100 mg-b-15 round-5">
-                                            <i className="fa fa-phone mg-r-5" />
-                                            {values.callToAction} via Mobile
-                                        </button>
-                                        <button className="btn btn-primary w-100 mg-b-15 round-5">
-                                            <i className="fa fa-comment mg-r-10"> </i>
-                                            {values.callToAction} via Text
-                                        </button>
+                                            {values.callToAction === "" || values.whatsappNumber === "" ? null :
+                                                <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                                    <i className="fa fa-whatsapp mg-r-5"> </i>
+                                                    {values.callToAction} via WhatsApp
+                                                </button>
+                                            }
+                                            {values.callToAction === "" || values.phoneNumber === "" ? null :
+                                                <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                                    <i className="fa fa-phone mg-r-5" />
+                                                    {values.callToAction} via Mobile
+                                                </button>
+                                            }
+                                            {values.callToAction === "" || values.ussd === "" ? null :
+                                                <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                                    <i className="fa fa-phone mg-r-5" />
+                                                    {values.callToAction} USSD
+                                                </button>
+                                            }
+                                            {values.callToAction === "" || values.smsNumber === "" ? null :
+                                                <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                                    <i className="fa fa-comment mg-r-10"> </i>
+                                                    {values.callToAction} via Text
+                                                </button>
+                                            }
                                         </div>
                                     </div>
                                     </div>
