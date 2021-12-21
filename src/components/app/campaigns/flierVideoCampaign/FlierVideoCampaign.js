@@ -60,7 +60,7 @@ const FlierVideoCampaign = ({ nextStep, handleChange, values }) => {
 
     return (
         <Fragment>
-            <MetaData title={"Create SMS Campaign"} />
+            <MetaData title={"Create Flier/Video Campaign"} />
                 <div className="content-body">
                     <div className="container pd-x-0">
                         <div className="d-flex justify-content-between">

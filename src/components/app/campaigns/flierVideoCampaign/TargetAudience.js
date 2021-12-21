@@ -24,7 +24,7 @@ const TargetAudience = ({ prevStep, nextStep, handleChange, values, numbers }) =
 
     return (
             <Fragment>
-                <MetaData title={"Sender ID"} />
+                <MetaData title={"Target Audience"} />
                     <div className="content-body">
                         {/* <div className="container pd-x-0">
                         </div> */}

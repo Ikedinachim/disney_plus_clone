@@ -1,13 +1,44 @@
-import React from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import FeatherIcon from 'feather-icons-react';
+// import EventBus  from './_helpers/Events';
 
 const Sidebar = () => {
+
+    const ref = useRef();
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    // const GlobalState = React.createContext([{}, () => {}]); 
+
+    useEffect(() => {
+        // EventBus.on('isMenuOpen', ()=>{
+        //     setLoader(true)
+        // })
+        // EventBus.on('isMenuClose', ()=>{
+        //     setLoader(false)
+        // })
+
+        const checkIfClickedOutside = e => {
+          // If the menu is open and the clicked target is not within the menu,
+          // then close the menu
+          if (isMenuOpen && ref.current && !ref.current.contains(e.target)) {
+            setIsMenuOpen(false)
+          }
+        }
+
+        document.addEventListener("mousedown", checkIfClickedOutside)
+    
+        return () => {
+          // Cleanup the event listener
+          document.removeEventListener("mousedown", checkIfClickedOutside)
+        }
+    }, [isMenuOpen])
+
     return (
         
-        <aside className="aside aside-fixed">
-            <div className="aside-header">
+        <aside className={`aside aside-fixed ${!isMenuOpen ? "sb-show" : ""}`} ref={ref}>
+            <div className={`aside-header ${isMenuOpen ? "" : "sb-hide"}`}>
                 <NavLink to="/app" className="aside-logo">
                     <div className="pd-50">
                     <img
@@ -19,7 +50,7 @@ const Sidebar = () => {
                     </div>
                 </NavLink>
                 <div className="aside-menu-link">
-                    <FeatherIcon icon="menu" />
+                    <FeatherIcon icon="menu" onClick={() => setIsMenuOpen(oldState => !oldState)}/>
                     <FeatherIcon icon="x" />
                 </div>
             </div>

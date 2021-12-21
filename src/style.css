@@ -124,8 +124,8 @@ input:checked+.slider:before {
   color: #B2B2B2 !important;
 }
 
-@media (min-width: 1600px) {
+/* @media (min-width: 1600px) {
   .container {
     max-width: none !important;
   }
-}
+} */

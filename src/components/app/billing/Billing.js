@@ -55,7 +55,7 @@ const BillingOverview = () => {
                                                 <div className="col-md-6 col-12">
                                                 <p className="tx-uppercase mb-0 tx-16">Current Balance</p>
                                                 <p className="tx-32 tx-semibold tx-green">
-                                                    + <NumberFormat value={wallet.balance} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
+                                                    + <NumberFormat value={parseInt(wallet.balance)} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
                                                 </p>
                                                 <Link
                                                     to="/app/billing/fund-wallet"

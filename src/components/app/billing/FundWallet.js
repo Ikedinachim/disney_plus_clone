@@ -81,7 +81,7 @@ const FundWallet = () => {
                                             Current Balance
                                             </p>
                                             <p className="tx-32 tx-semibold tx-green">
-                                                + <NumberFormat value={wallet.balance} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
+                                                + <NumberFormat value={parseInt(wallet.balance)} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
                                             </p>
                                             <form onSubmit={makePaymentHandler}>
                                             <div className="form-group mg-t-40">

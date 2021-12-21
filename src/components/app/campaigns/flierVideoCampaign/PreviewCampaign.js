@@ -237,7 +237,7 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
                                                 </div> */}
                                                 <div className="col-md-5 pd-x-0 mg-y-40">
                                                     <div className="mg-t-20 d-flex">
-                                                        {wallet.balance < values.price ?
+                                                        {parseInt(wallet.balance) < values.price ?
                                                             <button
                                                             className="btn btn-primary w-100 tx-com mg-r-15"
                                                             onClick={ Continue }

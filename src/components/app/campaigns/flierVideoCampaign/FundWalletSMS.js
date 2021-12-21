@@ -16,9 +16,9 @@ const FundWalletSMS = ({ prevStep, handleChange, values }) => {
     // dispatch(getWallet())
     const navigate = useNavigate();
 
-    const [amount, setAmountToPay] = useState(values.price - wallet.balance)
-    // const {amount} = amountToPay
     const { fundWallet, loading, error } = useSelector(state => state.fundWallet)
+    const [amount, setAmountToPay] = useState(values.price - parseInt(wallet.balance))
+    // const {amount} = amountToPay
     const { wallet } = useSelector(state => state.wallet)
     const { isAuthenticated, user } = useSelector(state => state.auth)
 
@@ -87,7 +87,7 @@ const FundWalletSMS = ({ prevStep, handleChange, values }) => {
                                             Current Balance
                                             </p>
                                             <p className="tx-32 tx-semibold tx-green">
-                                                + <NumberFormat value={wallet.balance} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
+                                                + <NumberFormat value={parseInt(wallet.balance)} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
                                             </p>
                                             <form onSubmit={makePaymentHandler}>
                                                 <div className="form-group mg-t-40">
