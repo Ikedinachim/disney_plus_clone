@@ -56,7 +56,7 @@ const CreateCampaign = () => {
         <Fragment>
             {loading ? <Loader /> : (
                 <Fragment>
-                    <MetaData title={"Sender ID"} />
+                    <MetaData title={"Create a Campaign"} />
                         <div className="content-body">
                             <div className="container pd-x-0">
                                 <div className="pd-y-20">
