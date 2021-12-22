@@ -17,12 +17,22 @@ const Login = ({ history }) => {
 
     const [userName, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [userStatus, setUserStatus] = useState()
 
     const alert = useAlert();
     const dispatch = useDispatch();
 
     const { isAuthenticated, error, loading, user } = useSelector(state => state.auth)
     // const { wallet } = useSelector(state => state.wallet)
+
+    // useEffect(() => {
+    //     const loggedInUser = sessionStorage.getItem("user");
+    //     if (loggedInUser) {
+    //       const foundUser = JSON.parse(loggedInUser);
+    //     //   isAuthenticated = true
+    //       setUserStatus(foundUser);
+    //     }
+    //   }, []);
 
     useEffect( () => {
 
@@ -133,7 +143,6 @@ const Login = ({ history }) => {
                     </section>
 
                 </Fragment>
-            {/* // )} */}
         </Fragment>
     )
 }

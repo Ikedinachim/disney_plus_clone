@@ -51,6 +51,8 @@ export const getWallet = () => async (dispatch) => {
                 payload: data.message
             })
         }
+
+        console.log(data.data);
         
     } catch (error) {
         dispatch({

@@ -2,11 +2,14 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
-import { authReducer } from './reducers/authReducers'
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
+
+import { authReducer, userDetailsReducer } from './reducers/authReducers'
 
 import { senderIDReducer, createSenderIdReducer } from './reducers/senderIDReducers'
 import {  walletReducer, transactionHistoryReducer, fundWalletReducer, confirmFundingReducer } from './reducers/billingReducers'
-import { createSmsCampaignReducer, getAllCampaignsReducer } from './reducers/campaignReducers'
+import { createSmsCampaignReducer, createFlierVideoCampaignReducer, getAllCampaignsReducer } from './reducers/campaignReducers'
 
 const appReducer = combineReducers({
 
@@ -18,7 +21,8 @@ const appReducer = combineReducers({
     fundWallet: fundWalletReducer,
     confirmFund: confirmFundingReducer,
     smsCampaign: createSmsCampaignReducer,
-    getAllCampaign: getAllCampaignsReducer
+    flierVideoCampaign: createFlierVideoCampaignReducer,
+    getAllCampaign: getAllCampaignsReducer,
     
 })
 
@@ -31,10 +35,30 @@ const reducer = (state, action) => {
     return appReducer(state, action)
 }
 
+// const userStatus = sessionStorage.getItem('user')
 
 let initialState = {}
 
-const middleWare = [thunk]
-const store = createStore(reducer, initialState, composeWithDevTools(applyMiddleware(...middleWare)))
+// let initialState = {
+//     token: userStatus.token,
+//     isAuthenticated: userStatus ? true : false, // or just !!localStorage.getItem('token')
+//     isLoading: false,
+//     isRegistered: false
+//  }
 
-export default store
+const persistConfig = {
+    key: 'root',
+    storage,
+}
+  
+const persistedReducer = persistReducer(persistConfig, reducer)
+
+const middleWare = [thunk]
+const store = createStore(persistedReducer, initialState, composeWithDevTools(applyMiddleware(...middleWare)))
+
+
+// let store = createStore(persistedReducer, initialState, composeWithDevTools(applyMiddleware(...middleWare)))
+const persistor = persistStore(store)
+// export default store
+
+export { store, persistor }

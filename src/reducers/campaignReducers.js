@@ -3,6 +3,12 @@ import {
     SMS_CAMPAIGN_SUCCESS,
     SMS_CAMPAIGN_RESET,
     SMS_CAMPAIGN_FAIL,
+
+    VIDEO_FLIER_CAMPAIGN_REQUEST,
+    VIDEO_FLIER_CAMPAIGN_SUCCESS,
+    VIDEO_FLIER_CAMPAIGN_FAIL,
+    VIDEO_FLIER_CAMPAIGN_RESET,
+
     GET_ALL_CAMPAIGN_REQUEST,
     GET_ALL_CAMPAIGN_SUCCESS,
     GET_ALL_CAMPAIGN_FAIL,
@@ -28,6 +34,41 @@ export const createSmsCampaignReducer = (state = { createSmsCampaign: [] }, acti
                 createSmsCampaign: []
             }
         case SMS_CAMPAIGN_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state;
+    }
+}
+
+export const createFlierVideoCampaignReducer = (state = { createFlierVideoCampaign: [] }, action) => {
+    switch(action.type) {
+        case VIDEO_FLIER_CAMPAIGN_REQUEST:
+            return {
+                loading: true,
+                createFlierVideoCampaign: []
+            }
+        
+        case VIDEO_FLIER_CAMPAIGN_SUCCESS:
+            return {
+                loading: false,
+                createFlierVideoCampaign: action.payload
+            }
+        case VIDEO_FLIER_CAMPAIGN_FAIL:
+            return {
+                ...state,
+                createFlierVideoCampaign: []
+            }
+        case VIDEO_FLIER_CAMPAIGN_RESET:
             return {
                 loading: false,
                 error: action.payload

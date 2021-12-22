@@ -38,6 +38,14 @@ const SmsCampaign = ({ nextStep, handleChange, values }) => {
             label: "Flash SMS",
             value: "flash sms"
         },
+        {
+            label: "Display ADs",
+            value: "display ads"
+        },
+        {
+            label: "Influencer Marketing",
+            value: "Influencer Marketing"
+        }
     ]
 
     // console.log(values.senderId);

@@ -16,7 +16,7 @@ import SmsCampaign from "./components/app/campaigns/SmsCampaign"
 import TargetAudience from "./components/app/campaigns/TargetAudience"
 import ViewCampaign from "./components/app/campaigns/ViewCampaign"
 import PreviewCampaign from "./components/app/campaigns/PreviewCampaign"
-import SmsStepForm from "./components/app/campaigns/stepForm/SmsStepForm"
+import SmsStepForm from "./components/app/campaigns/smsCampaign/SmsStepForm"
 import FlierVideoStepForm from "./components/app/campaigns/flierVideoCampaign/FlierVideoStepForm"
 
 // Auth / User Imports

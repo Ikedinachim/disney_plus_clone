@@ -4,6 +4,12 @@ import {
     SMS_CAMPAIGN_REQUEST,
     SMS_CAMPAIGN_SUCCESS,
     SMS_CAMPAIGN_FAIL,
+
+    VIDEO_FLIER_CAMPAIGN_REQUEST,
+    VIDEO_FLIER_CAMPAIGN_SUCCESS,
+    VIDEO_FLIER_CAMPAIGN_FAIL,
+
+
     GET_ALL_CAMPAIGN_REQUEST,
     GET_ALL_CAMPAIGN_SUCCESS,
     GET_ALL_CAMPAIGN_FAIL,
@@ -16,7 +22,7 @@ const axios = Axios.create({
     baseURL
 });
 
-// Create SMS Campaign
+// Create SMS Campaign Action
 export const createSmsCampaignAction = (smsCampaignData) => async (dispatch) => {
     try {
 
@@ -47,6 +53,42 @@ export const createSmsCampaignAction = (smsCampaignData) => async (dispatch) => 
     } catch (data) {
         dispatch({
             type: SMS_CAMPAIGN_FAIL,
+            payload: data.message
+        })
+    }
+}
+
+// Create Flier and Video Campaign Action
+export const createFlierVideoCampaignAction = (flierVideoCampaignData) => async (dispatch) => {
+    try {
+
+        dispatch({ type: VIDEO_FLIER_CAMPAIGN_REQUEST })
+        let user = JSON.parse(sessionStorage.getItem('user'));
+        const token = user.user.token;
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization" : `Bearer ${token}`
+            }
+        }
+        const { data } = await axios.post('api/campaign/flier-video-campaign', flierVideoCampaignData, config)
+
+        if (data.status === "success") {
+            dispatch({
+                type: VIDEO_FLIER_CAMPAIGN_SUCCESS,
+                payload: data
+            })
+        } else {
+            dispatch({
+                type: VIDEO_FLIER_CAMPAIGN_FAIL,
+                payload: data.message
+            })
+        }
+        
+    } catch (data) {
+        dispatch({
+            type: VIDEO_FLIER_CAMPAIGN_FAIL,
             payload: data.message
         })
     }

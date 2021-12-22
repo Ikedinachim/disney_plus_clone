@@ -8,7 +8,7 @@ import MetaData from '../../../layout/MetaData'
 import NumberFormat from 'react-number-format'
 
 import { getWallet } from '../../../../actions/billingActions'
-import { createSmsCampaignAction, clearErrors } from '../../../../actions/campaignActions';
+import { createFlierVideoCampaignAction, clearErrors } from '../../../../actions/campaignActions';
 import { SMS_CAMPAIGN_RESET } from '../../../../constants/campaignConstants'
 import Loader from '../../../loader';
 
@@ -16,7 +16,7 @@ import PreviewIcon from '../../../../assets/img/Promote_Offers.svg'
 
 const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
     
-    const { error, createSmsCampaign } = useSelector(state => state.smsCampaign || [])
+    const { error, createFlierVideoCampaign } = useSelector(state => state.flierVideoCampaign || [])
     const alert = useAlert();
     const dispatch = useDispatch()
     const navigate = useNavigate();
@@ -32,10 +32,10 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
         prevStep();
     }
 
-    const submitSmsCampaignHandler = (e) => {
+    const submitFlierVideoCampaignHandler = (e) => {
         e.preventDefault();
 
-        dispatch(createSmsCampaignAction(values))
+        dispatch(createFlierVideoCampaignAction(values))
     }
     // const fundWalletHandler = (e) => {
     //     e.preventDefault();
@@ -45,14 +45,14 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
     // console.log(createSmsCampaign.status);
     useEffect( () => {
 
-        if(createSmsCampaign.status === 'success') {
+        if(createFlierVideoCampaign.status === 'success') {
             navigate('/app/campaigns')
-            alert.success(createSmsCampaign.message)
+            alert.success(createFlierVideoCampaign.message)
             dispatch({ type: SMS_CAMPAIGN_RESET })
         } 
-        // else {
-        //     alert.error('Ops, something is off')
-        // }
+        else {
+            alert.error('Ops, something is off')
+        }
 
         if(error) {
             alert.error(error)
@@ -60,7 +60,7 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
         }
         dispatch(getWallet())
         
-    }, [dispatch, alert, createSmsCampaign, error, navigate])
+    }, [dispatch, alert, createFlierVideoCampaign, error, navigate])
 
     return (
         <Fragment>
@@ -227,7 +227,7 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
                                                             <p className="tx-18 tx-com tx-bold mb-0">Amount:</p>
                                                             <span className="badge tx-green tx-bold tx-18 mg-5 tx-amt w-100 mt-0">
                                                                 {" "}
-                                                                <NumberFormat value={values.price} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
+                                                                <NumberFormat value={parseInt(values.price)} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
                                                             </span>
                                                         </div>
                                                     </div>
@@ -250,7 +250,7 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
                                                             :
                                                             <button
                                                             className="btn btn-primary w-100 tx-com mg-r-15"
-                                                            onClick={ submitSmsCampaignHandler }
+                                                            onClick={ submitFlierVideoCampaignHandler }
                                                             disabled={ loading ? true : false }
                                                             type="submit"
                                                             variant="contained"
