@@ -47,7 +47,7 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
         else {
             alert.error('Campaign failed to publish')
             dispatch(clearErrors())
-            navigate('/app/campaign/flier-video')
+            navigate('/app/campaign/sms')
         }
 
     }

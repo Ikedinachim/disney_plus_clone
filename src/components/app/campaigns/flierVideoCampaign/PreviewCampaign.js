@@ -34,12 +34,18 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
 
     const submitFlierVideoCampaignHandler = (e) => {
         e.preventDefault();
-
-        if(createFlierVideoCampaign.status === undefined) {
-            alert.error(error)
-        } 
-
         dispatch(createFlierVideoCampaignAction(values))
+
+        if(createFlierVideoCampaign.status === 'success') {
+            navigate('/app/campaigns')
+            alert.success(createFlierVideoCampaign.message)
+            dispatch({ type: SMS_CAMPAIGN_RESET })
+        } else {
+            alert.error('Ops, something is off in useEffect')
+            dispatch(clearErrors())
+            navigate('/app/campaign/flier-video')
+        }
+
     }
     // const fundWalletHandler = (e) => {
     //     e.preventDefault();
@@ -48,14 +54,6 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
 
     // console.log(createSmsCampaign.status);
     useEffect( () => {
-        if(createFlierVideoCampaign.status === 'success') {
-            navigate('/app/campaigns')
-            alert.success(createFlierVideoCampaign.message)
-            dispatch({ type: SMS_CAMPAIGN_RESET })
-        } else {
-            alert.error('Ops, something is off in useEffect')
-            dispatch(clearErrors())
-        }
         if(error) {
             alert.error(error)
             dispatch(clearErrors())
