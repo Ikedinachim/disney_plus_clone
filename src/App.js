@@ -65,12 +65,15 @@ function App() {
           {/* <Route path="/login" element={<Login />} /> */}
           {/* <Route path="/app" element={isAuthenticated ? <Dashboard /> : <Home />} /> */}
           {/* <Route path="*" element={isAuthenticated ? <Dashboard /> : <Login />} /> */}
-          <Route exact path="/" element={<Home />} />
+          {/* <Route exact path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login />} /> */}
         </Routes>
       
         <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
           {/* <Route path="/app/sender-id" element={isAuthenticated ? <SenderID /> : <Login />} /> */}
           {/* <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />

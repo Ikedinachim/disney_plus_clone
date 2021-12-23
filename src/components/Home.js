@@ -1,5 +1,6 @@
 // /* eslint-disable jsx-a11y/alt-text */
 import React, { Fragment, useState } from "react";
+import Axios from 'axios';
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 // import Pagination from "react-js-pagination"
@@ -25,6 +26,11 @@ import { useSelector } from "react-redux";
 // const Range = createSliderWithTooltip(Slider.Range)
 
 const Home = ({ match }) => {
+    const baseURL = 'https://mysogi.uat.com.ng/';
+
+    const axios = Axios.create({
+        baseURL
+    });
     const { loading } = useSelector(state => state.auth)
     const alert = useAlert();
 
@@ -39,25 +45,30 @@ const Home = ({ match }) => {
         city: ''
     });
 
-    function handleStateChange(e) {
-        setMailerState((prevState) => ({
-          ...prevState,
+    const {
+        name,
+        email,
+        phone,
+        company,
+        designation,
+        industry,
+        employee,
+        city
+    } = mailerState;
+
+    const handleStateChange = e => {
+        setMailerState({
+            ...mailerState,
           [e.target.name]: e.target.value,
-        }));
+        });
     }
 
     const submitEmail = async (e) => {
         e.preventDefault();
-        console.log({ mailerState });
-        const response = await fetch("https://mysogi.uat.com.ng/api/contact", {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify({ mailerState }),
-        })
-          .then((res) => res.json())
-          .then(() => {
+
+          const { data } = await axios.post('api/contact', mailerState)
+          if (data.status === "success") {
+            alert.success(data.message)
             setMailerState({
                 name: '',
                 email: '',
@@ -68,8 +79,9 @@ const Home = ({ match }) => {
                 employee: '',
                 city: ''
             });
-            alert.success('Mail Sent')
-          });
+          } else {
+            alert.error('Mail Not Sent')
+          }
     };
 
     return (
@@ -225,7 +237,7 @@ const Home = ({ match }) => {
                                                     id="inputEmail4" 
                                                     placeholder="Enter Name" 
                                                     onChange={handleStateChange}
-                                                    value={mailerState.name}
+                                                    value={name}
                                                 />
                                             </div>
                                             <div className="form-group col-md-5">
@@ -236,7 +248,7 @@ const Home = ({ match }) => {
                                                     className="form-control contact" 
                                                     placeholder="Enter Number"
                                                     onChange={handleStateChange}
-                                                    value={mailerState.phone}
+                                                    value={phone}
                                                 />
                                             </div>
                                             </div>
@@ -250,7 +262,7 @@ const Home = ({ match }) => {
                                                     id="inputEmail4" 
                                                     placeholder="Enter Email Address" 
                                                     onChange={handleStateChange}
-                                                    value={mailerState.email}
+                                                    value={email}
                                                 />
                                             </div>
                                             <div className="form-group col-md-5">
@@ -261,7 +273,7 @@ const Home = ({ match }) => {
                                                     className="form-control contact" 
                                                     placeholder="Enter Company Name" 
                                                     onChange={handleStateChange}
-                                                    value={mailerState.company}
+                                                    value={company}
                                                 />
                                             </div>
                                             </div>
@@ -274,7 +286,7 @@ const Home = ({ match }) => {
                                                     className="form-control contact"
                                                     placeholder="Enter Designation" 
                                                     onChange={handleStateChange}
-                                                    value={mailerState.designation}
+                                                    value={designation}
                                                 />
                                             </div>
                                             <div className="form-group col-md-5">
@@ -286,7 +298,7 @@ const Home = ({ match }) => {
                                                     id="inputEmail4" 
                                                     placeholder="Enter Industry"
                                                     onChange={handleStateChange}
-                                                    value={mailerState.industry} 
+                                                    value={industry} 
                                                 />
                                             </div>
                                             </div>
@@ -299,7 +311,7 @@ const Home = ({ match }) => {
                                                         className="form-control contact" 
                                                         placeholder="Enter Number" 
                                                         onChange={handleStateChange}
-                                                        value={mailerState.employee}
+                                                        value={employee}
                                                     />
                                                 </div>
                                                 <div className="form-group col-md-5">
@@ -310,7 +322,7 @@ const Home = ({ match }) => {
                                                         className="form-control contact" 
                                                         placeholder="Enter City"
                                                         onChange={handleStateChange}
-                                                        value={mailerState.city} 
+                                                        value={city} 
                                                     />
                                                 </div>
                                             </div>
