@@ -59,11 +59,12 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
 
     // console.log(createSmsCampaign.status);
     useEffect( () => {
+        if(error) {
+            alert.error(error)
+            dispatch(clearErrors())
+        }
+
         dispatch(getWallet())
-            if(error) {
-                alert.error(error)
-                dispatch(clearErrors())
-            }
         
     }, [dispatch, alert, createSmsCampaign, error, navigate])
 
