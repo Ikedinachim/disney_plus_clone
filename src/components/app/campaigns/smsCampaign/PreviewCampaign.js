@@ -32,12 +32,24 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
 
     const submitSmsCampaignHandler = (e) => {
         e.preventDefault();
+        dispatch(createSmsCampaignAction(values))
 
-        if (createSmsCampaign.status === undefined) {
-            alert.error('Ops, something is off')
+        // if (createSmsCampaign.status === 'success') {
+        //     alert.error('Ops, something is off')
+        //     dispatch(clearErrors())
+        // }
+
+        if(createSmsCampaign.status !== undefined && createSmsCampaign.status === 'success') {
+            navigate('/app/campaigns')
+            alert.success(createSmsCampaign.message)
+            dispatch({ type: SMS_CAMPAIGN_RESET })
+        } 
+        else {
+            alert.error('Campaign failed to publish')
+            dispatch(clearErrors())
+            navigate('/app/campaign/flier-video')
         }
 
-        dispatch(createSmsCampaignAction(values))
     }
     // const fundWalletHandler = (e) => {
     //     e.preventDefault();
@@ -46,16 +58,6 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
 
     // console.log(createSmsCampaign.status);
     useEffect( () => {
-        if(createSmsCampaign.status !== [] || createSmsCampaign.status === 'success') {
-            navigate('/app/campaigns')
-            alert.success(createSmsCampaign.message)
-            dispatch({ type: SMS_CAMPAIGN_RESET })
-        } 
-        else {
-            alert.error('Ops, something is off in useEffect')
-            dispatch(clearErrors())
-        }
-
         if(error) {
             alert.error(error)
             dispatch(clearErrors())

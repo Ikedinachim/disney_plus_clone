@@ -6,7 +6,7 @@ import { useAlert } from 'react-alert'
 
 import MetaData from '../../../layout/MetaData'
 
-const FlierVideoCampaign = ({ nextStep, handleChange, onChangeattachment, values }) => {
+const FlierVideoCampaign = ({ nextStep, handleChange, onChangeAttachment, values }) => {
     const alert = useAlert();
     const dispatch = useDispatch();
     const { senderID } = useSelector(state => state.senderID  || []);
@@ -24,8 +24,8 @@ const FlierVideoCampaign = ({ nextStep, handleChange, onChangeattachment, values
             nextStep();
         }
     }
-    // const [attachmentPreview, setattachmentPreview] = useState('')
-    // const [attachment, setattachment] = useState('')
+    const [attachmentPreview, setattachmentPreview] = useState('')
+    const [attachment, setattachment] = useState('')
     
     const selectChannels = [
         {
@@ -50,19 +50,19 @@ const FlierVideoCampaign = ({ nextStep, handleChange, onChangeattachment, values
         }
     ]
 
-    // const onChangeattachment = e => {
-    //     const reader = new FileReader()
+    const onChangeattachment = e => {
+        const reader = new FileReader()
 
-    //     reader.onload = () => {
-    //         if (reader.readyState === 2) {
-    //             // setattachmentPreview(reader.result)
-    //             this.setState(reader.result)
-    //         }
-    //     }
+        reader.onload = () => {
+            if (reader.readyState === 2) {
+                setattachmentPreview(reader.result)
+                setattachment(reader.result)
+            }
+        }
 
-    //     reader.readAsDataURL(e.target.files[0])
+        reader.readAsDataURL(e.target.files[0])
 
-    // }
+    }
 
     // console.log(values.senderId);
 
@@ -228,7 +228,7 @@ const FlierVideoCampaign = ({ nextStep, handleChange, onChangeattachment, values
                                                         type="file" 
                                                         className="custom-file-input" 
                                                         id="customFile"
-                                                        onChange={onChangeattachment('attachment')}
+                                                        onChange={onChangeattachment}
                                                     />
                                                     <label className="custom-file-label" htmlFor="customFile">Click to upload desired icon (if needed)</label>
                                                 </div>
@@ -256,7 +256,7 @@ const FlierVideoCampaign = ({ nextStep, handleChange, onChangeattachment, values
                                     <div className="card shadow-sm rounded bd-0">
                                     <div className="card-body">
                                         <div>
-                                            <img src={values.attachment} className="img-fluid mg-b-10" alt="" srcSet />
+                                            <img src={attachmentPreview} className="img-fluid mg-b-10" alt="" srcSet />
                                             <p className="mb-4">
                                                 {values.campaignMessage}
                                             </p>

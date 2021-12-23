@@ -46,7 +46,7 @@ export default class FlierVideoStepForm extends Component {
   }
 
   // Handle image change
-  onChangeattachment = e => {
+  onChangeAttachment = e => {
     const reader = new FileReader()
 
     reader.onload = () => {
@@ -84,7 +84,7 @@ export default class FlierVideoStepForm extends Component {
     const contactNumber = numbers.split(',')
     const audience = contactNumber.length
     const price = audience * 5
-    const timeRange = [(timeRangeFrom+'-'+timeRangeTo) ]
+    const timeRange = [(timeRangeFrom+' - '+timeRangeTo) ]
     const values = { 
       senderId, 
       channel, 
@@ -124,7 +124,7 @@ export default class FlierVideoStepForm extends Component {
             prevStep={ this.prevStep }
             nextStep={ this.nextStep }
             handleChange={ this.handleChange }
-            onChangeattachment={this.onChangeattachment}
+            onChangeAttachment={this.onChangeAttachment}
             numbers={ numbers }
             values={ values }
           />
