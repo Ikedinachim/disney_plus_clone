@@ -39,10 +39,11 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
         //     dispatch(clearErrors())
         // }
 
-        if(createSmsCampaign.status !== undefined && createSmsCampaign.status === 'success') {
+        if(createSmsCampaign.status === 'success') {
             navigate('/app/campaigns')
             alert.success(createSmsCampaign.message)
             dispatch({ type: SMS_CAMPAIGN_RESET })
+            dispatch(getWallet())
         } 
         else {
             alert.error(error)
@@ -63,7 +64,7 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
             alert.error(error)
             dispatch(clearErrors())
         }
-        dispatch(getWallet())
+        // dispatch(getWallet())
     }, [dispatch, alert, createSmsCampaign, error, navigate])
 
     return (
