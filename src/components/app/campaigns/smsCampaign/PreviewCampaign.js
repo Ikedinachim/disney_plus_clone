@@ -14,11 +14,11 @@ import Loader from '../../../loader';
 
 const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
     
-    const { error, createSmsCampaign } = useSelector(state => state.smsCampaign || [])
+    const { error, createSmsCampaign, loading } = useSelector(state => state.smsCampaign || [])
     const alert = useAlert();
     const dispatch = useDispatch()
     const navigate = useNavigate();
-    const { wallet, loading } = useSelector(state => state.wallet)
+    const { wallet } = useSelector(state => state.wallet)
 
     const Continue = e => {
         e.preventDefault();
@@ -45,10 +45,11 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
             dispatch({ type: SMS_CAMPAIGN_RESET })
         } 
         else {
-            alert.error('Campaign failed to publish')
+            alert.error(error)
             dispatch(clearErrors())
             navigate('/app/campaign/sms')
         }
+        // dispatch(getWallet())
 
     }
     // const fundWalletHandler = (e) => {
@@ -58,11 +59,11 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
 
     // console.log(createSmsCampaign.status);
     useEffect( () => {
-        if(error) {
-            alert.error(error)
-            dispatch(clearErrors())
-        }
         dispatch(getWallet())
+            if(error) {
+                alert.error(error)
+                dispatch(clearErrors())
+            }
         
     }, [dispatch, alert, createSmsCampaign, error, navigate])
 

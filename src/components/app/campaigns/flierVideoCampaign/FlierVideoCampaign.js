@@ -33,20 +33,24 @@ const FlierVideoCampaign = ({ nextStep, handleChange, onChangeAttachment, values
             value: "select channel"
         },
         {
-            label: "Smart SMS",
-            value: "smart sms"
-        },
-        {
-            label: "Flash SMS",
+            label: "Flash sms",
             value: "flash sms"
         },
         {
-            label: "Display ADs",
-            value: "display ads"
+            label: "SMS/Flash SMS Campaign",
+            value: "SMS/FLASH SMS Campaigns"
         },
         {
-            label: "Influencer Marketing",
-            value: "Influencer Marketing"
+            label: "Flier/Video Ad Campaign",
+            value: "Flier/Video Ad Campaign"
+        },
+        {
+            label: "Influential Marketing",
+            value: "Influential Marketing"
+        },
+        {
+            label: "App Download",
+            value: "App Download"
         }
     ]
 
