@@ -33,6 +33,10 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
     const submitSmsCampaignHandler = (e) => {
         e.preventDefault();
 
+        if (createSmsCampaign.status === undefined) {
+            alert.error('Ops, something is off')
+        }
+
         dispatch(createSmsCampaignAction(values))
     }
     // const fundWalletHandler = (e) => {
@@ -42,15 +46,15 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
 
     // console.log(createSmsCampaign.status);
     useEffect( () => {
-
-        if(createSmsCampaign.status === 'success') {
+        if(createSmsCampaign.status !== [] || createSmsCampaign.status === 'success') {
             navigate('/app/campaigns')
             alert.success(createSmsCampaign.message)
             dispatch({ type: SMS_CAMPAIGN_RESET })
         } 
-        // else {
-        //     alert.error('Ops, something is off')
-        // }
+        else {
+            alert.error('Ops, something is off in useEffect')
+            dispatch(clearErrors())
+        }
 
         if(error) {
             alert.error(error)

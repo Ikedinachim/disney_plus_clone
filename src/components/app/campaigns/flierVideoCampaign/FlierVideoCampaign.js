@@ -6,7 +6,7 @@ import { useAlert } from 'react-alert'
 
 import MetaData from '../../../layout/MetaData'
 
-const FlierVideoCampaign = ({ nextStep, handleChange, values }) => {
+const FlierVideoCampaign = ({ nextStep, handleChange, onChangeattachment, values }) => {
     const alert = useAlert();
     const dispatch = useDispatch();
     const { senderID } = useSelector(state => state.senderID  || []);
@@ -24,8 +24,8 @@ const FlierVideoCampaign = ({ nextStep, handleChange, values }) => {
             nextStep();
         }
     }
-    const [campaignImagePreview, setCampaignImagePreview] = useState('')
-    const [campaignImage, setCampaignImage] = useState('')
+    // const [attachmentPreview, setattachmentPreview] = useState('')
+    // const [attachment, setattachment] = useState('')
     
     const selectChannels = [
         {
@@ -50,19 +50,19 @@ const FlierVideoCampaign = ({ nextStep, handleChange, values }) => {
         }
     ]
 
-    const onChangeCampaignImage = e => {
-        const reader = new FileReader()
+    // const onChangeattachment = e => {
+    //     const reader = new FileReader()
 
-        reader.onload = () => {
-            if (reader.readyState === 2) {
-                setCampaignImagePreview(reader.result)
-                setCampaignImage(reader.result)
-            }
-        }
+    //     reader.onload = () => {
+    //         if (reader.readyState === 2) {
+    //             // setattachmentPreview(reader.result)
+    //             this.setState(reader.result)
+    //         }
+    //     }
 
-        reader.readAsDataURL(e.target.files[0])
+    //     reader.readAsDataURL(e.target.files[0])
 
-    }
+    // }
 
     // console.log(values.senderId);
 
@@ -86,6 +86,20 @@ const FlierVideoCampaign = ({ nextStep, handleChange, values }) => {
                                         <div>
                                             <p className="tx-24 tx-bold mb-1 tx-com">Flier/Video Campaign</p>
                                             <p className="tx-14">Provide all requested details to help complete the campaign creation</p>
+                                            <div className="form-group">
+                                                <label htmlFor className="mb-1">Sender ID</label>
+                                                <select 
+                                                    className="custom-select" 
+                                                    // value="select channel"
+                                                    defaultValue={values.senderId}
+                                                    onChange={handleChange('senderId')}
+                                                >
+                                                    <option value="">Select Sender ID</option>
+                                                    {senderID.map(senderids => (
+                                                    <option value={senderids.senderId}>{senderids.senderId}</option>
+                                                    ))}
+                                                </select>
+                                            </div>
                                             <div className="form-group">
                                                 <div className="form-group">
                                                     <label htmlFor className="mb-1">Select Channel</label>
@@ -214,7 +228,7 @@ const FlierVideoCampaign = ({ nextStep, handleChange, values }) => {
                                                         type="file" 
                                                         className="custom-file-input" 
                                                         id="customFile"
-                                                        onChange={onChangeCampaignImage}
+                                                        onChange={onChangeattachment('attachment')}
                                                     />
                                                     <label className="custom-file-label" htmlFor="customFile">Click to upload desired icon (if needed)</label>
                                                 </div>
@@ -242,7 +256,7 @@ const FlierVideoCampaign = ({ nextStep, handleChange, values }) => {
                                     <div className="card shadow-sm rounded bd-0">
                                     <div className="card-body">
                                         <div>
-                                            <img src={campaignImage} className="img-fluid mg-b-10" alt="" srcSet />
+                                            <img src={values.attachment} className="img-fluid mg-b-10" alt="" srcSet />
                                             <p className="mb-4">
                                                 {values.campaignMessage}
                                             </p>

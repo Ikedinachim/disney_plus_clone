@@ -37,11 +37,12 @@ const CreateCampaign = () => {
 
         if (!isAuthenticated || user === null) {
             navigate('/login')
-        }else if(!loading && fundWallet.status === "success") {
-            alert.success(fundWallet.message)
-            dispatch({ type: FUND_WALLET_RESET })
-            navigate('/app/billing')
         }
+        // else if(!loading && fundWallet.status === "success") {
+        //     alert.success(fundWallet.message)
+        //     dispatch({ type: FUND_WALLET_RESET })
+        //     navigate('/app/billing')
+        // }
 
         if(error) {
             alert.error(error)

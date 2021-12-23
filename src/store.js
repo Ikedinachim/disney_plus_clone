@@ -28,23 +28,14 @@ const appReducer = combineReducers({
 
 const reducer = (state, action) => {
     if (action.type === 'USER_LOGOUT') {
-        
+        storage.removeItem('persist:root')
         return appReducer(undefined, action)
     }
   
     return appReducer(state, action)
 }
 
-// const userStatus = sessionStorage.getItem('user')
-
 let initialState = {}
-
-// let initialState = {
-//     token: userStatus.token,
-//     isAuthenticated: userStatus ? true : false, // or just !!localStorage.getItem('token')
-//     isLoading: false,
-//     isRegistered: false
-//  }
 
 const persistConfig = {
     key: 'root',
@@ -56,9 +47,5 @@ const persistedReducer = persistReducer(persistConfig, reducer)
 const middleWare = [thunk]
 const store = createStore(persistedReducer, initialState, composeWithDevTools(applyMiddleware(...middleWare)))
 
-
-// let store = createStore(persistedReducer, initialState, composeWithDevTools(applyMiddleware(...middleWare)))
 const persistor = persistStore(store)
-// export default store
-
 export { store, persistor }

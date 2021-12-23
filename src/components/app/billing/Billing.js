@@ -7,6 +7,7 @@ import { useAlert } from 'react-alert'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../loader'
 import { getTransactionHistory} from '../../../actions/billingActions'
+import { getAllCampaigns, clearErrors } from '../../../actions/campaignActions';
 import { getSenderID } from '../../../actions/senderIDActions';
 import TransactionCard from './TransactionCard'
 import NumberFormat from 'react-number-format'
@@ -19,6 +20,7 @@ const BillingOverview = () => {
     const { user } = useSelector(state => state.auth)
     const { wallet, loading, error } = useSelector(state => state.wallet)
     const { tnxHistory } = useSelector(state => state.tnxHistory || {})
+    const { allCampaigns } = useSelector(state => state.getAllCampaign || {});
 
     useEffect( () => {
         dispatch(getTransactionHistory())
@@ -120,64 +122,64 @@ const BillingOverview = () => {
                                 </div>
                                 <div className="row mg-t-30">
                                     <div className="col-md-7 col-12">
-                                    <div className="row justify-content-between mg-b-5">
-                                        <div className="col-md-4 col-12">
-                                        <p className="mg-md-b-0 pd-t-10 tx-medium">Usage Summary</p>
+                                        <div className="row justify-content-between mg-b-5">
+                                            <div className="col-md-4 col-12">
+                                            <p className="mg-md-b-0 pd-t-10 tx-medium">Usage Summary</p>
+                                            </div>
+                                            <div className="col-md-5 col-12">
+                                                <div className="d-flex">
+                                                    <select className="col-8 custom-select col-7">
+                                                    <option selected>August 2021</option>
+                                                    <option value={1}>August 2021</option>
+                                                    <option value={2}>October 2021</option>
+                                                    <option value={3}>March 2021</option>
+                                                    </select>
+                                                    <p className="mg-b-10 ml-auto pd-t-10">
+                                                    <Link to="/app/billing" className="tx-primary tx-medium">
+                                                        View All
+                                                    </Link>
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="col-md-5 col-12">
-                                        <div className="d-flex">
-                                            <select className="col-8 custom-select col-7">
-                                            <option selected>August 2021</option>
-                                            <option value={1}>August 2021</option>
-                                            <option value={2}>October 2021</option>
-                                            <option value={3}>March 2021</option>
-                                            </select>
-                                            <p className="mg-b-10 ml-auto pd-t-10">
-                                            <Link to="/app/billing" className="tx-primary tx-medium">
-                                                View All
-                                            </Link>
-                                            </p>
+                                        <div className="card rounded bd-0 shadow-sm">
+                                            <div className="card-body">
+                                                <div className="table-responsive">
+                                                    <table className="table table-borderless" id="campaig">
+                                                        <thead className="tx-uppercase tx-medium">
+                                                            <tr>
+                                                            <th scope="col">Product</th>
+                                                            <th scope="col" className="tx-right">
+                                                                Cost
+                                                            </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr className="tx-medium">
+                                                            <td>Total</td>
+                                                            <td className="tx-right">&#8358;250,000</td>
+                                                            </tr>
+                                                            <tr>
+                                                            <td>Enterprise Table</td>
+                                                            <td className="tx-right">&#8358;250,000</td>
+                                                            </tr>
+                                                            <tr>
+                                                            <td>HOR Campaign</td>
+                                                            <td className="tx-right">&#8358;250,000</td>
+                                                            </tr>
+                                                            <tr>
+                                                            <td>Art Campaign</td>
+                                                            <td className="tx-right">&#8358;250,000</td>
+                                                            </tr>
+                                                            <tr>
+                                                            <td>Art Campaign</td>
+                                                            <td className="tx-right">&#8358;250,000</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
                                         </div>
-                                        </div>
-                                    </div>
-                                    <div className="card rounded bd-0 shadow-sm">
-                                        <div className="card-body">
-                                        <div className="table-responsive">
-                                            <table className="table table-borderless" id="campaig">
-                                            <thead className="tx-uppercase tx-medium">
-                                                <tr>
-                                                <th scope="col">Product</th>
-                                                <th scope="col" className="tx-right">
-                                                    Cost
-                                                </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr className="tx-medium">
-                                                <td>Total</td>
-                                                <td className="tx-right">&#8358;250,000</td>
-                                                </tr>
-                                                <tr>
-                                                <td>Enterprise Table</td>
-                                                <td className="tx-right">&#8358;250,000</td>
-                                                </tr>
-                                                <tr>
-                                                <td>HOR Campaign</td>
-                                                <td className="tx-right">&#8358;250,000</td>
-                                                </tr>
-                                                <tr>
-                                                <td>Art Campaign</td>
-                                                <td className="tx-right">&#8358;250,000</td>
-                                                </tr>
-                                                <tr>
-                                                <td>Art Campaign</td>
-                                                <td className="tx-right">&#8358;250,000</td>
-                                                </tr>
-                                            </tbody>
-                                            </table>
-                                        </div>
-                                        </div>
-                                    </div>
                                     </div>
                                     <div className="col-md-5 col-12 mg-md-t-0 mg-t-20">
                                         <div className="d-flex justify-content-between mg-b-10">
@@ -194,7 +196,6 @@ const BillingOverview = () => {
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                 </Fragment>

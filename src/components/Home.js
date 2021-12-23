@@ -1,6 +1,7 @@
 // /* eslint-disable jsx-a11y/alt-text */
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Link } from 'react-router-dom'
+import { useAlert } from 'react-alert'
 // import Pagination from "react-js-pagination"
 // import Slider from "rc-slider"
 import 'rc-slider/assets/index.css';
@@ -25,6 +26,51 @@ import { useSelector } from "react-redux";
 
 const Home = ({ match }) => {
     const { loading } = useSelector(state => state.auth)
+    const alert = useAlert();
+
+    const [mailerState, setMailerState] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        company: '',
+        designation: '',
+        industry: '',
+        employee: '',
+        city: ''
+    });
+
+    function handleStateChange(e) {
+        setMailerState((prevState) => ({
+          ...prevState,
+          [e.target.name]: e.target.value,
+        }));
+    }
+
+    const submitEmail = async (e) => {
+        e.preventDefault();
+        console.log({ mailerState });
+        const response = await fetch("https://mysogi.uat.com.ng/api/contact", {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({ mailerState }),
+        })
+          .then((res) => res.json())
+          .then(() => {
+            setMailerState({
+                name: '',
+                email: '',
+                phone: '',
+                company: '',
+                designation: '',
+                industry: '',
+                employee: '',
+                city: ''
+            });
+            alert.success('Mail Sent')
+          });
+    };
 
     return (
         <Fragment>
@@ -168,46 +214,105 @@ const Home = ({ match }) => {
                                     <div className="col-md-11 mg-t-20 order-2 ">
                                     <div className="card bd-0 shadow">
                                         <div className="card-body pd-lg-60">
-                                        <form>
+                                        <form onSubmit={submitEmail}>
                                             <div className="form-row">
                                             <div className="form-group col-md-5">
                                                 <label htmlFor="name" className="tx-14 tx-com tx-blac mg-b-3">Your Name</label>
-                                                <input type="text" className="form-control contact" id="inputEmail4" placeholder="Enter Name" />
+                                                <input 
+                                                    name="name"
+                                                    type="text" 
+                                                    className="form-control contact" 
+                                                    id="inputEmail4" 
+                                                    placeholder="Enter Name" 
+                                                    onChange={handleStateChange}
+                                                    value={mailerState.name}
+                                                />
                                             </div>
                                             <div className="form-group col-md-5">
                                                 <label htmlFor="name" className="tx-14 tx-com tx-blac mg-b-3">Phone Number</label>
-                                                <input type="text" className="form-control contact" id placeholder="Enter Number" />
+                                                <input 
+                                                    name="phone"
+                                                    type="text" 
+                                                    className="form-control contact" 
+                                                    placeholder="Enter Number"
+                                                    onChange={handleStateChange}
+                                                    value={mailerState.phone}
+                                                />
                                             </div>
                                             </div>
                                             <div className="form-row">
                                             <div className="form-group col-md-5">
                                                 <label htmlFor="name" className="tx-14 tx-com tx-blac mg-b-3">Email Address</label>
-                                                <input type="email" className="form-control contact" id="inputEmail4" placeholder="Enter Email Address" />
+                                                <input 
+                                                    name="email"
+                                                    type="email" 
+                                                    className="form-control contact" 
+                                                    id="inputEmail4" 
+                                                    placeholder="Enter Email Address" 
+                                                    onChange={handleStateChange}
+                                                    value={mailerState.email}
+                                                />
                                             </div>
                                             <div className="form-group col-md-5">
                                                 <label htmlFor="name" className="tx-14 tx-com tx-blac mg-b-3">Company Name</label>
-                                                <input type="text" className="form-control contact" id placeholder="Enter Company Name" />
+                                                <input 
+                                                    name="company"
+                                                    type="text" 
+                                                    className="form-control contact" 
+                                                    placeholder="Enter Company Name" 
+                                                    onChange={handleStateChange}
+                                                    value={mailerState.company}
+                                                />
                                             </div>
                                             </div>
                                             <div className="form-row">
                                             <div className="form-group col-md-5">
                                                 <label htmlFor="name" className="tx-14 tx-com tx-blac mg-b-3">Designation</label>
-                                                <input type="text" className="form-control contact" id placeholder="Enter Designation" />
+                                                <input 
+                                                    name="designation"
+                                                    type="text" 
+                                                    className="form-control contact"
+                                                    placeholder="Enter Designation" 
+                                                    onChange={handleStateChange}
+                                                    value={mailerState.designation}
+                                                />
                                             </div>
                                             <div className="form-group col-md-5">
                                                 <label htmlFor="name" className="tx-14 tx-com tx-blac mg-b-3">Industry</label>
-                                                <input type="text" className="form-control contact" id="inputEmail4" placeholder="Enter Industry" />
+                                                <input 
+                                                    name="industry"
+                                                    type="text" 
+                                                    className="form-control contact" 
+                                                    id="inputEmail4" 
+                                                    placeholder="Enter Industry"
+                                                    onChange={handleStateChange}
+                                                    value={mailerState.industry} 
+                                                />
                                             </div>
                                             </div>
                                             <div className="form-row">
-                                            <div className="form-group col-md-5">
-                                                <label htmlFor="name" className="tx-14 tx-com tx-blac mg-b-3">Employee Count</label>
-                                                <input type="text" className="form-control contact" id placeholder="Enter Number" />
-                                            </div>
-                                            <div className="form-group col-md-5">
-                                                <label htmlFor="name" className="tx-14 tx-com tx-blac mg-b-3">City</label>
-                                                <input type="text" className="form-control contact" id placeholder="Enter City" />
-                                            </div>
+                                                <div className="form-group col-md-5">
+                                                    <label htmlFor="name" className="tx-14 tx-com tx-blac mg-b-3">Employee Count</label>
+                                                    <input 
+                                                        name="employee"
+                                                        type="text" 
+                                                        className="form-control contact" 
+                                                        placeholder="Enter Number" 
+                                                        onChange={handleStateChange}
+                                                        value={mailerState.employee}
+                                                    />
+                                                </div>
+                                                <div className="form-group col-md-5">
+                                                    <label htmlFor="name" className="tx-14 tx-com tx-blac mg-b-3">City</label>
+                                                    <input 
+                                                        name="city"
+                                                        type="text" 
+                                                        className="form-control contact" 
+                                                        placeholder="Enter City"
+                                                        onChange={handleStateChange}
+                                                        value={mailerState.city} 
+                                                    />
+                                                </div>
                                             </div>
                                             <button type="submit" className="btn btn-primary pd-x-40 mg-t-20">Submit</button>
                                         </form>

@@ -12,7 +12,7 @@ export default class FlierVideoStepForm extends Component {
     channel: '', 
     url: '',
     campaignMessage: '',
-    gender: 'male',
+    // gender: 'male',
     targetAge: '21',
     location: ['Lagos'],
     interest: 'business',
@@ -45,16 +45,30 @@ export default class FlierVideoStepForm extends Component {
     this.setState({ [input]: e.target.value });
   }
 
+  // Handle image change
+  onChangeattachment = e => {
+    const reader = new FileReader()
+
+    reader.onload = () => {
+        if (reader.readyState === 2) {
+            // setattachmentPreview(reader.result)
+            this.setState(reader.result)
+        }
+    }
+
+    reader.readAsDataURL(e.target.files[0])
+  }
+
   render() {    
     const { step } = this.state;
     const { 
       senderId, 
       channel, 
       campaignMessage, 
-      gender, 
-      targetAge, 
-      location, 
-      interest,
+      // gender, 
+      // targetAge, 
+      // location, 
+      // interest,
       url,
       whatsappNumber,  
       phoneNumber,
@@ -63,34 +77,35 @@ export default class FlierVideoStepForm extends Component {
       callToAction,
       timeRangeFrom,
       timeRangeTo,
-      campaignImage,
+      attachment,
       numbers
     } = this.state;
 
     const contactNumber = numbers.split(',')
     const audience = contactNumber.length
     const price = audience * 5
+    const timeRange = [(timeRangeFrom+'-'+timeRangeTo) ]
     const values = { 
       senderId, 
       channel, 
       campaignMessage, 
-      contactNumber, 
-      gender, 
-      targetAge, 
-      location, 
-      interest,
+      contactNumber,
+      timeRange,
+      // gender, 
+      // targetAge, 
+      // location, 
+      // interest,
       url,
       whatsappNumber,  
       phoneNumber,
       ussd,
       smsNumber,
       callToAction,
-      timeRangeFrom,
-      timeRangeTo,
-      campaignImage,
+      timeRange,
+      attachment,
       price 
     }
-    const payLoad = [values.senderId, values.channel, values.campaignMessage, values.contactNumber, gender, targetAge, location, interest, price];
+    const payLoad = [values.senderId, values.channel, values.campaignMessage, values.contactNumber,  price];
 
     console.log(values);
     
@@ -109,6 +124,7 @@ export default class FlierVideoStepForm extends Component {
             prevStep={ this.prevStep }
             nextStep={ this.nextStep }
             handleChange={ this.handleChange }
+            onChangeattachment={this.onChangeattachment}
             numbers={ numbers }
             values={ values }
           />
