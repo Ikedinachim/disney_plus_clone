@@ -63,9 +63,7 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
             alert.error(error)
             dispatch(clearErrors())
         }
-
         dispatch(getWallet())
-        
     }, [dispatch, alert, createSmsCampaign, error, navigate])
 
     return (

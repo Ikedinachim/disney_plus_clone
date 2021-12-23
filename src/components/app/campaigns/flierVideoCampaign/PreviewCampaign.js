@@ -86,7 +86,7 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
                             <div className="pd-md-y-20">
                                 <div className="row justify-content-between">
                                     <div className="col-md-7 col-12 mg-t-20">
-                                        <div className="card rounded card-scrolll bd-0 shadow-sm">
+                                        <div className="card rounded bd-0 shadow-sm">
                                             <div className="card-body pd-lg-x-50">
                                                 <div className="d-flex justify-content-between">
                                                     <div className="d-flex">

@@ -37,6 +37,7 @@ const Header = () => {
     const { wallet, loading, error } = useSelector(state => state.wallet)
 
     useEffect(() => {
+        dispatch(getWallet())
         const checkIfClickedOutside = e => {
           // If the menu is open and the clicked target is not within the menu,
           // then close the menu
@@ -46,12 +47,12 @@ const Header = () => {
         }
     
         document.addEventListener("mousedown", checkIfClickedOutside)
-    
+
         return () => {
           // Cleanup the event listener
           document.removeEventListener("mousedown", checkIfClickedOutside)
         }
-    }, [isMenuOpen])
+    }, [dispatch, isMenuOpen])
 
     return (
         <div className="content-header shadow-dash bd-b-0">
