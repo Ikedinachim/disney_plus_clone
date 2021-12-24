@@ -38,7 +38,7 @@ const SmsCampaign = ({ nextStep, handleChange, values }) => {
         },
         {
             label: "SMS/Flash SMS Campaign",
-            value: "SMS/FLASH SMS Campaigns"
+            value: "SMS/FLASH SMS Campaign"
         },
         {
             label: "Flier/Video Ad Campaign",

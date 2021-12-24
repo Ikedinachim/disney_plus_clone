@@ -30,6 +30,12 @@ const Register = ({ history }) => {
         phone: '',
         businessName: '',
         contactName: '',
+        businessFirstName: '',
+        businessLastName: '',
+        businessUsername: '',
+        businessPassword: '',
+        businessConfirmPassword: '',
+        businessPhone: '',
         businessEmail: ''
     })
 
@@ -45,10 +51,31 @@ const Register = ({ history }) => {
         phone, 
         businessName, 
         contactName, 
+        businessFirstName,
+        businessLastName,
+        businessUsername,
         businessEmail 
     } = newUser;
 
     const schema = Yup.object().shape({
+        // firstName: Yup.string()
+        //     .min(2, 'Too Short!')
+        //     .max(50, 'Too Long!')
+        //     .required('Required'),
+        // lastName: Yup.string()
+        //     .min(2, 'Too Short!')
+        //     .max(50, 'Too Long!')
+        //     .required('Required'),
+        // email: Yup.string().email().required(),
+        // password: Yup.string()
+        //     .required('Password is required')
+        //     .min(6, 'Password must be at least 6 characters'),
+        // confirmPassword: Yup.string()
+        //     .oneOf([Yup.ref('password'), null], 'The passwords do not match'),
+        
+    });
+
+    const businessSchema = Yup.object().shape({
         firstName: Yup.string()
             .min(2, 'Too Short!')
             .max(50, 'Too Long!')
@@ -63,18 +90,16 @@ const Register = ({ history }) => {
             .min(6, 'Password must be at least 6 characters'),
         confirmPassword: Yup.string()
             .oneOf([Yup.ref('password'), null], 'The passwords do not match')
-        // confirmPassword: Yup.string()
-        //     .test('passwords-match', 'Passwords must match', function(value){
-        //       return this.parent.password === value
-        // })
     });
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
         resolver: yupResolver(schema),
+        mode: 'onChange'
     });
 
     const { register: registerBusiness, handleSubmit: handleBusinessSubmit, formState: { errors: businessError }, reset: resetBusiness } = useForm({
-        resolver: yupResolver(schema),
+        resolver: yupResolver(businessSchema),
+        mode: 'onChange'
     });
 
     const alert = useAlert();
@@ -412,9 +437,9 @@ const Register = ({ history }) => {
                                                                     className="form-control new"
                                                                     placeholder="First Name"
                                                                     // name="firstName"
-                                                                    required
-                                                                    value={firstName}
-                                                                    onChange={onChange}
+                                                                    // required
+                                                                    // value={businessFirstName}
+                                                                    // onChange={onChange}
                                                                 />
                                                             </div>
                                                             <div className="form-group col-md-6">
@@ -424,9 +449,9 @@ const Register = ({ history }) => {
                                                                     className="form-control new"
                                                                     placeholder="Last Name"
                                                                     // name="lastName"
-                                                                    required
-                                                                    value={lastName}
-                                                                    onChange={onChange}
+                                                                    // required
+                                                                    // value={businessLastName}
+                                                                    // onChange={onChange}
                                                                 />
                                                             </div>
                                                         </div>
@@ -447,10 +472,10 @@ const Register = ({ history }) => {
                                                                 id="businessUsername" 
                                                                 className="form-control new"
                                                                 placeholder="Username"
-                                                                name="username"
-                                                                required
-                                                                value={username} 
-                                                                onChange={onChange}
+                                                                // name="username"
+                                                                // required
+                                                                // value={businessUsername} 
+                                                                // onChange={onChange}
                                                             />
                                                         </div>
                                                         <div className="form-group">
@@ -462,7 +487,7 @@ const Register = ({ history }) => {
                                                                 name="userType"
                                                                 required
                                                                 value={"business"}
-                                                                onChange={onChange} 
+                                                                // onChange={onChange} 
                                                             />
                                                         </div>
                                                         {/* <div className="form-group">
@@ -504,12 +529,12 @@ const Register = ({ history }) => {
                                                         </div>
                                                         <div className="form-group">
                                                             <input
-                                                                {...registerBusiness("phone")}
+                                                                {...registerBusiness("businessPhone")}
                                                                 type="number"
                                                                 className="form-control new"
                                                                 placeholder="Phone Number"
-                                                                name="phone"
-                                                                required
+                                                                // name="phone"
+                                                                // required
                                                                 // value={phone}
                                                                 // onChange={onChange} 
                                                             />
@@ -520,10 +545,10 @@ const Register = ({ history }) => {
                                                                 type="text"
                                                                 className="form-control new"
                                                                 placeholder="Business Name"
-                                                                name="businessName"
-                                                                required
-                                                                value={businessName}
-                                                                onChange={onChange} 
+                                                                // name="businessName"
+                                                                // required
+                                                                // value={businessName}
+                                                                // onChange={onChange} 
                                                             />
                                                         </div>
                                                         <div className="form-group">
@@ -532,9 +557,9 @@ const Register = ({ history }) => {
                                                                 type="email"
                                                                 className="form-control new"
                                                                 placeholder="Business Email"
-                                                                name="businessEmail"
-                                                                value={businessEmail}
-                                                                onChange={onChange} 
+                                                                // name="businessEmail"
+                                                                // value={businessEmail}
+                                                                // onChange={onChange} 
                                                             />
                                                         </div>
                                                         <div className="form-group">
@@ -543,10 +568,10 @@ const Register = ({ history }) => {
                                                                 type="text"
                                                                 className="form-control new"
                                                                 placeholder="Contact Name"
-                                                                name="contactName"
-                                                                required
-                                                                value={contactName}
-                                                                onChange={onChange} 
+                                                                // name="contactName"
+                                                                // required
+                                                                // value={contactName}
+                                                                // onChange={onChange} 
                                                             />
                                                         </div>
                                                         
@@ -563,7 +588,7 @@ const Register = ({ history }) => {
                                                                     className="custom-control-label"
                                                                     htmlFor="customCheck2"
                                                                     >
-                                                                        I agree with
+                                                                        I agree with{" "}
                                                                         <span className="tx-primary">
                                                                             terms and conditions
                                                                         </span>

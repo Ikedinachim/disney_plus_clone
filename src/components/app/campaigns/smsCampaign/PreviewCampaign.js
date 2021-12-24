@@ -38,17 +38,17 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
         //     alert.error('Ops, something is off')
         //     dispatch(clearErrors())
         // }
-
-        if(!loading || createSmsCampaign.status === 'success') {
-            navigate('/app/campaigns')
+        
+        
+        if(createSmsCampaign.status === 'success') {
             alert.success(createSmsCampaign.message)
-            dispatch({ type: SMS_CAMPAIGN_RESET })
+            navigate('/app/campaigns')
             dispatch(getWallet())
-        } 
-        else {
+            dispatch({ type: SMS_CAMPAIGN_RESET })
+        }else {
             alert.error(error)
-            dispatch(clearErrors())
             navigate('/app/campaign/sms')
+            dispatch(clearErrors())
         }
         // dispatch(getWallet())
 
@@ -64,6 +64,7 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
             alert.error(error)
             dispatch(clearErrors())
         }
+        // dispatch({ type: SMS_CAMPAIGN_RESET })
         // dispatch(getWallet())
     }, [dispatch, alert, createSmsCampaign, error, navigate])
 

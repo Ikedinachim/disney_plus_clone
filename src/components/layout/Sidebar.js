@@ -7,7 +7,7 @@ import FeatherIcon from 'feather-icons-react';
 const Sidebar = () => {
 
     const ref = useRef();
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(true);
 
     // const GlobalState = React.createContext([{}, () => {}]); 
 
