@@ -42,8 +42,8 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
         
         if(createSmsCampaign.status === 'success') {
             alert.success(createSmsCampaign.message)
-            navigate('/app/campaigns')
             dispatch(getWallet())
+            navigate('/app/campaigns')
             dispatch({ type: SMS_CAMPAIGN_RESET })
         }else {
             alert.error(error)
