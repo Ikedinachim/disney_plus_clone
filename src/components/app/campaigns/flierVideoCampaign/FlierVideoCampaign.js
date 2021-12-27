@@ -24,8 +24,8 @@ const FlierVideoCampaign = ({ nextStep, handleChange, onChangeAttachment, values
             nextStep();
         }
     }
-    const [attachmentPreview, setattachmentPreview] = useState('')
-    const [attachment, setattachment] = useState('')
+    // const [attachmentPreview, setattachmentPreview] = useState('')
+    // const [attachment, setattachment] = useState('')
     
     const selectChannels = [
         {
@@ -54,21 +54,24 @@ const FlierVideoCampaign = ({ nextStep, handleChange, onChangeAttachment, values
         }
     ]
 
-    const onChangeattachment = e => {
-        const reader = new FileReader()
+    // useEffect( () => {
 
-        reader.onload = () => {
-            if (reader.readyState === 2) {
-                setattachmentPreview(reader.result)
-                setattachment(reader.result)
-            }
-        }
+    //     if (values.attachment.length < 1) return;
+    //     const newImageUrls = [];
+    //     values.attachment.forEach(preview => newImageUrls.push(URL.createObjectURL(preview)));
 
-        reader.readAsDataURL(e.target.files[0])
+    //     this.setState({[input]: newImageUrls})
 
-    }
+    //         // function printFile(file) {
+    //         //     const reader = new FileReader();
+    //         //     reader.onload = function(evt) {
+    //         //     console.log(evt.target.result);
+    //         //     };
+    //         //     reader.readAsDataURL(file);
+    //         // }
 
-    // console.log(values.senderId);
+
+    // }, [dispatch, newImageUrls])
 
     return (
         <Fragment>
@@ -232,7 +235,8 @@ const FlierVideoCampaign = ({ nextStep, handleChange, onChangeAttachment, values
                                                         type="file" 
                                                         className="custom-file-input" 
                                                         id="customFile"
-                                                        onChange={onChangeattachment}
+                                                        defaultValue={values.attachment}
+                                                        onChange={onChangeAttachment('attachmentPreview')}
                                                     />
                                                     <label className="custom-file-label" htmlFor="customFile">Click to upload desired icon (if needed)</label>
                                                 </div>
@@ -260,7 +264,7 @@ const FlierVideoCampaign = ({ nextStep, handleChange, onChangeAttachment, values
                                     <div className="card shadow-sm rounded bd-0">
                                     <div className="card-body">
                                         <div>
-                                            <img src={attachmentPreview} className="img-fluid mg-b-10" alt="" srcSet />
+                                            <img src={values.attachment} className="img-fluid mg-b-10" alt="" srcSet />
                                             <p className="mb-4">
                                                 {values.campaignMessage}
                                             </p>

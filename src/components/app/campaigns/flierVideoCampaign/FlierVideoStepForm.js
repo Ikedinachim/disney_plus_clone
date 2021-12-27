@@ -25,6 +25,9 @@ export default class FlierVideoStepForm extends Component {
     timeRangeFrom: '',
     timeRangeTo: '',
     campaignImage: '',
+    attachment: '',
+    attachmentPreview: '',
+    preview: '',
     price: 0,
   }
 
@@ -44,19 +47,24 @@ export default class FlierVideoStepForm extends Component {
   handleChange = input => e => {
     this.setState({ [input]: e.target.value });
   }
+  
 
   // Handle image change
-  onChangeAttachment = e => {
+  onChangeAttachment = input => e => {
     const reader = new FileReader()
 
-    reader.onload = () => {
-        if (reader.readyState === 2) {
-            // setattachmentPreview(reader.result)
-            this.setState(reader.result)
-        }
-    }
+      reader.onload = () => {
+          if (reader.readyState === 2) {
+            console.log(reader.result);
+            this.setState({[input]: e.target.files})
+
+              // setAvatar(reader.result)
+          }
+          this.setState({attachmentPreview: [reader.result]})
+      }
 
     reader.readAsDataURL(e.target.files[0])
+    // this.setState({[input]: e.target.files})
   }
 
   render() {    
@@ -77,7 +85,9 @@ export default class FlierVideoStepForm extends Component {
       callToAction,
       timeRangeFrom,
       timeRangeTo,
-      attachment,
+      attachmentPreview,
+      preview,
+      // attachment,
       numbers
     } = this.state;
 
@@ -85,6 +95,7 @@ export default class FlierVideoStepForm extends Component {
     const audience = contactNumber.length
     const price = audience * 5
     const timeRange = [(timeRangeFrom+' - '+timeRangeTo) ]
+    const attachment = attachmentPreview
     const values = { 
       senderId, 
       channel, 
@@ -103,9 +114,10 @@ export default class FlierVideoStepForm extends Component {
       callToAction,
       timeRange,
       attachment,
+      preview,
       price 
     }
-    const payLoad = [values.senderId, values.channel, values.campaignMessage, values.contactNumber,  price];
+    const payLoad = [values.senderId, values.channel, values.campaignMessage, values.contactNumber, values.attachment, price];
 
     console.log(values);
     
@@ -115,6 +127,7 @@ export default class FlierVideoStepForm extends Component {
           <FlierVideoCampaign 
             nextStep={ this.nextStep }
             handleChange={ this.handleChange }
+            onChangeAttachment={ this.onChangeAttachment }
             values={ values }
           />
         )

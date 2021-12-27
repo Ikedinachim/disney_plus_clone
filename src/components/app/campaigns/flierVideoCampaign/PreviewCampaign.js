@@ -285,7 +285,7 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
                                             <div className="card-body">
                                             <p className="tx-20 tx-bold tx-com">Preview</p>
                                             <div>
-                                                <img src={''} className="img-fluid mg-b-10" alt="" />
+                                                <img src={values.attachment} className="img-fluid mg-b-10" alt="" />
                                                 <p className="mb-4">
                                                     {values.campaignMessage}
                                                 </p>
