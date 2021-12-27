@@ -27,7 +27,6 @@ export default class FlierVideoStepForm extends Component {
     campaignImage: '',
     attachment: '',
     attachmentPreview: '',
-    preview: '',
     price: 0,
   }
 
@@ -60,7 +59,7 @@ export default class FlierVideoStepForm extends Component {
 
               // setAvatar(reader.result)
           }
-          this.setState({attachmentPreview: [reader.result]})
+          this.setState({attachmentPreview: reader.result})
       }
 
     reader.readAsDataURL(e.target.files[0])
@@ -86,7 +85,6 @@ export default class FlierVideoStepForm extends Component {
       timeRangeFrom,
       timeRangeTo,
       attachmentPreview,
-      preview,
       // attachment,
       numbers
     } = this.state;
@@ -114,7 +112,6 @@ export default class FlierVideoStepForm extends Component {
       callToAction,
       timeRange,
       attachment,
-      preview,
       price 
     }
     const payLoad = [values.senderId, values.channel, values.campaignMessage, values.contactNumber, values.attachment, price];

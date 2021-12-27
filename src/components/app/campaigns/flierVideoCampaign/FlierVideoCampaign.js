@@ -235,7 +235,7 @@ const FlierVideoCampaign = ({ nextStep, handleChange, onChangeAttachment, values
                                                         type="file" 
                                                         className="custom-file-input" 
                                                         id="customFile"
-                                                        defaultValue={values.attachment}
+                                                        // defaultValue={values.attachment}
                                                         onChange={onChangeAttachment('attachmentPreview')}
                                                     />
                                                     <label className="custom-file-label" htmlFor="customFile">Click to upload desired icon (if needed)</label>
@@ -285,7 +285,7 @@ const FlierVideoCampaign = ({ nextStep, handleChange, onChangeAttachment, values
                                             {values.callToAction === "" || values.ussd === "" ? null :
                                                 <button className="btn btn-primary w-100 mg-b-15 round-5">
                                                     <i className="fa fa-phone mg-r-5" />
-                                                    {values.callToAction} USSD
+                                                    {values.callToAction} via USSD
                                                 </button>
                                             }
                                             {values.callToAction === "" || values.smsNumber === "" ? null :
