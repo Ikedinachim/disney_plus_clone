@@ -11,7 +11,7 @@ export default class SmsStepForm extends Component {
     senderId: '',
     channel: '', 
     campaignMessage: '',
-    gender: 'male',
+    gender: 'Male',
     targetAge: '21',
     location: ['Lagos'],
     interest: 'business',
