@@ -50,9 +50,8 @@ export const getSenderID = () => async (dispatch) => {
             type: GET_SENDERID_FAIL,
             payload: error.message
         })
-    }
-}
-
+    };
+};
 
 // Create New Sender ID
 export const createSenderId = (setCreateSenderId) => async (dispatch) => {
@@ -68,7 +67,7 @@ export const createSenderId = (setCreateSenderId) => async (dispatch) => {
                 "Authorization" : `Bearer ${token}`
             }
         }
-        const { data } = await axios.post('api/create-sender-id', setCreateSenderId, config)
+        const { data } = await axios.post('api/create-sender-id', setCreateSenderId, config);
 
         if (data.status === "success") {
             dispatch({
@@ -96,4 +95,4 @@ export const clearErrors = () => async (dispatch) => {(
     dispatch({
         type: CLEAR_ERRORS
     })
-)}
+)};

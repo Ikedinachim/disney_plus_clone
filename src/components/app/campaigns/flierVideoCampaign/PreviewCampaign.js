@@ -47,12 +47,6 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
         }
 
     }
-    // const fundWalletHandler = (e) => {
-    //     e.preventDefault();
-    //     navigate('/app/billing/fund-wallet')
-    // }
-
-    // console.log(createSmsCampaign.status);
     useEffect( () => {
         if(error) {
             alert.error(error)
@@ -60,7 +54,7 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
         }
         dispatch(getWallet())
         
-    }, [dispatch, alert, createFlierVideoCampaign, error, navigate])
+    }, [dispatch, alert, error ])
 
     return (
         <Fragment>
@@ -90,58 +84,58 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
                                             <div className="card-body pd-lg-x-50">
                                                 <div className="d-flex justify-content-between">
                                                     <div className="d-flex">
-                                                    <div className="mg-r-20">
-                                                        <img src={PreviewIcon} className="img-fluid wd-50 ht-50" alt="" srcSet />
-                                                    </div>
-                                                    <div>
-                                                        <p className="tx-20 tx-bold pd-t-15 tx-com capitalize">{values.channel}</p>
-                                                    </div>
-                                                    </div>
-                                                    <div>
-                                                    <div className="d-flex pd-t-25">
-                                                        <div>
-                                                        <i className="fa fa-edit tx-primary mg-r-5" />
+                                                        <div className="mg-r-20">
+                                                            <img src={PreviewIcon} className="img-fluid wd-50 ht-50" alt="" />
                                                         </div>
-                                                        <p className="mb-0">Edit</p>
+                                                        <div>
+                                                            <p className="tx-20 tx-bold pd-t-15 tx-com capitalize">{values.channel}</p>
+                                                        </div>
                                                     </div>
+                                                    <div>
+                                                        <div className="d-flex pd-t-25">
+                                                            <div>
+                                                                <i className="fa fa-edit tx-primary mg-r-5" />
+                                                            </div>
+                                                            <p className="mb-0">Edit</p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <hr />
                                                 <div className=" mg-b-20 mg-md-b-10">
                                                     <div className="d-flex justify-content-between">
-                                                    <div>
-                                                        <p className="tx-18 mb-0 tx-bold tx-com">Campaign Information</p>
-                                                    </div>
-                                                    <div>
-                                                        <div className="d-flex pd-t-3">
                                                         <div>
-                                                            <i className="fa fa-edit tx-primary mg-r-5" />
+                                                            <p className="tx-18 mb-0 tx-bold tx-com">Campaign Information</p>
                                                         </div>
-                                                        <p className="mb-0">Edit</p>
+                                                        <div>
+                                                            <div className="d-flex pd-t-3">
+                                                                <div>
+                                                                    <i className="fa fa-edit tx-primary mg-r-5" />
+                                                                </div>
+                                                                <p className="mb-0">Edit</p>
+                                                            </div>
                                                         </div>
-                                                    </div>
                                                     </div>
                                                     <div className="row mg-t-15">
-                                                    <div className="form-group col-md-6">
-                                                        <label htmlFor className="tx-14 tx-gray mb-0 tx-medium">USSD Code</label>
-                                                        <p className="tx-16 mb-0">*{values.ussd}#</p>
-                                                    </div>
-                                                    <div className="form-group col-md-6">
-                                                        <label htmlFor className="tx-14 tx-gray mb-0 tx-medium">Phone Call</label>
-                                                        <p className="tx-16 mb-0">{values.phoneNumber}</p>
-                                                    </div>
-                                                    <div className="form-group col-md-6">
-                                                        <label htmlFor className="tx-14 tx-gray mb-0 tx-medium">WhatsApp Number</label>
-                                                        <p className="tx-16 mb-0">{values.whatsappNumber}</p>
-                                                    </div>
-                                                    <div className="form-group col-md-6">
-                                                        <label htmlFor className="tx-14 tx-gray mb-0 tx-medium">SMS Number</label>
-                                                        <p className="tx-16 mb-0">{values.smsNumber}</p>
-                                                    </div>
-                                                    <div className="form-group col-md-12">
-                                                        <label htmlFor className="tx-14 tx-gray mb-0 tx-medium">Campaign Message</label>
-                                                        <p className="tx-15 mb-0">{values.campaignMessage}</p>
-                                                    </div>
+                                                        <div className="form-group col-md-6">
+                                                            <label htmlFor className="tx-14 tx-gray mb-0 tx-medium">USSD Code</label>
+                                                            <p className="tx-16 mb-0">*{values.ussd}#</p>
+                                                        </div>
+                                                        <div className="form-group col-md-6">
+                                                            <label htmlFor className="tx-14 tx-gray mb-0 tx-medium">Phone Call</label>
+                                                            <p className="tx-16 mb-0">{values.phoneNumber}</p>
+                                                        </div>
+                                                        <div className="form-group col-md-6">
+                                                            <label htmlFor className="tx-14 tx-gray mb-0 tx-medium">WhatsApp Number</label>
+                                                            <p className="tx-16 mb-0">{values.whatsappNumber}</p>
+                                                        </div>
+                                                        <div className="form-group col-md-6">
+                                                            <label htmlFor className="tx-14 tx-gray mb-0 tx-medium">SMS Number</label>
+                                                            <p className="tx-16 mb-0">{values.smsNumber}</p>
+                                                        </div>
+                                                        <div className="form-group col-md-12">
+                                                            <label htmlFor className="tx-14 tx-gray mb-0 tx-medium">Campaign Message</label>
+                                                            <p className="tx-15 mb-0">{values.campaignMessage}</p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <hr />
@@ -232,48 +226,36 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {/* <div className="mg-t-20">
-                                                    <button type="button" className="btn btn-primary pd-x-40 tx-com mg-r-15" data-toggle="modal" data-target="#assignModal">Assign To</button>
-                                                </div> */}
                                                 <div className="col-md-5 pd-x-0 mg-y-40">
                                                     <div className="mg-t-20 d-flex">
                                                         {parseInt(wallet.balance) < values.price ?
                                                             <button
-                                                            className="btn btn-primary w-100 tx-com mg-r-15"
-                                                            onClick={ Continue }
-                                                            disabled={ loading ? true : false }
-                                                            type="submit"
-                                                            variant="contained"
+                                                                className="btn btn-primary w-100 tx-com mg-r-15"
+                                                                onClick={ Continue }
+                                                                disabled={ loading ? true : false }
+                                                                type="submit"
+                                                                variant="contained"
                                                             >
                                                                 Fund Wallet
                                                             </button>
                                                             :
                                                             <button
-                                                            className="btn btn-primary w-100 tx-com mg-r-15"
-                                                            onClick={ submitFlierVideoCampaignHandler }
-                                                            disabled={ loading ? true : false }
-                                                            type="submit"
-                                                            variant="contained"
-                                                        >
-                                                            Publish
-                                                        </button>
+                                                                className="btn btn-primary w-100 tx-com mg-r-15"
+                                                                onClick={ submitFlierVideoCampaignHandler }
+                                                                disabled={ loading ? true : false }
+                                                                type="submit"
+                                                                variant="contained"
+                                                            >
+                                                                Publish
+                                                            </button>
                                                         }
-                                                        {/* <button
-                                                            className="btn btn-primary pd-x-40 tx-com mg-r-15"
-                                                            onClick={ submitSmsCampaignHandler }
-                                                            disabled={ loading ? true : false }
-                                                            type="submit"
-                                                            variant="contained"
-                                                        >
-                                                            Publish
-                                                        </button> */}
                                                         <button
                                                             className="btn btn-outline-primary w-100 tx-com mg-r-15"
                                                             onClick={ Previous }
                                                             type="submit"
                                                             variant="contained"
                                                         >
-                                                        Go Back
+                                                            Go Back
                                                         </button>
                                                     </div>
                                                 </div>
@@ -283,39 +265,39 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
                                     <div className="col-md-5 col-12 mg-t-20">
                                         <div className="card shadow-sm rounded bd-0">
                                             <div className="card-body">
-                                            <p className="tx-20 tx-bold tx-com">Preview</p>
-                                            <div>
-                                                <img src={values.attachment} className="img-fluid mg-b-10" alt="" />
-                                                <p className="mb-4">
-                                                    {values.campaignMessage}
-                                                </p>
-                                            </div>
-                                            <div>
-                                                {values.callToAction === "" || values.whatsappNumber === "" ? null :
-                                                    <button className="btn btn-primary w-100 mg-b-15 round-5">
-                                                        <i className="fa fa-whatsapp mg-r-5"> </i>
-                                                        {values.callToAction} via WhatsApp
-                                                    </button>
-                                                }
-                                                {values.callToAction === "" || values.phoneNumber === "" ? null :
-                                                    <button className="btn btn-primary w-100 mg-b-15 round-5">
-                                                        <i className="fa fa-phone mg-r-5" />
-                                                        {values.callToAction} via Mobile
-                                                    </button>
-                                                }
-                                                {values.callToAction === "" || values.ussd === "" ? null :
-                                                    <button className="btn btn-primary w-100 mg-b-15 round-5">
-                                                        <i className="fa fa-phone mg-r-5" />
-                                                        {values.callToAction} USSD
-                                                    </button>
-                                                }
-                                                {values.callToAction === "" || values.smsNumber === "" ? null :
-                                                    <button className="btn btn-primary w-100 mg-b-15 round-5">
-                                                        <i className="fa fa-comment mg-r-10"> </i>
-                                                        {values.callToAction} via Text
-                                                    </button>
-                                                }
-                                            </div>
+                                                <p className="tx-20 tx-bold tx-com">Preview</p>
+                                                <div>
+                                                    <img src={values.attachment} className="img-fluid mg-b-10" alt="" />
+                                                    <p className="mb-4">
+                                                        {values.campaignMessage}
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    {values.callToAction === "" || values.whatsappNumber === "" ? null :
+                                                        <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                                            <i className="fa fa-whatsapp mg-r-5"> </i>
+                                                            {values.callToAction} via WhatsApp
+                                                        </button>
+                                                    }
+                                                    {values.callToAction === "" || values.phoneNumber === "" ? null :
+                                                        <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                                            <i className="fa fa-phone mg-r-5" />
+                                                            {values.callToAction} via Mobile
+                                                        </button>
+                                                    }
+                                                    {values.callToAction === "" || values.ussd === "" ? null :
+                                                        <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                                            <i className="fa fa-phone mg-r-5" />
+                                                            {values.callToAction} USSD
+                                                        </button>
+                                                    }
+                                                    {values.callToAction === "" || values.smsNumber === "" ? null :
+                                                        <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                                            <i className="fa fa-comment mg-r-10"> </i>
+                                                            {values.callToAction} via Text
+                                                        </button>
+                                                    }
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

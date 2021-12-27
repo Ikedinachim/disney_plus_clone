@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Route, Routes, Navigate, Router } from "react-router-dom";
 
 import Header from "./components/layout/DashboardHeader";
@@ -12,10 +12,9 @@ import BillingOverview from "./components/app/billing/Billing";
 import FundWallet from "./components/app/billing/FundWallet";
 import RequestSenderID from "./components/app/SenderID/RequestSenderID";
 import CreateCampaign from "./components/app/campaigns/CreateCampaign"
-import SmsCampaign from "./components/app/campaigns/SmsCampaign"
-import TargetAudience from "./components/app/campaigns/TargetAudience"
+// import TargetAudience from "./components/app/campaigns/TargetAudience"
 import ViewCampaign from "./components/app/campaigns/ViewCampaign"
-import PreviewCampaign from "./components/app/campaigns/PreviewCampaign"
+// import PreviewCampaign from "./components/app/campaigns/PreviewCampaign"
 import SmsStepForm from "./components/app/campaigns/smsCampaign/SmsStepForm"
 import FlierVideoStepForm from "./components/app/campaigns/flierVideoCampaign/FlierVideoStepForm"
 
@@ -34,12 +33,8 @@ import 'aos/dist/aos.css';
 AOS.init();
 
 function App() {
-  // useEffect(() => {
-  //   store.dispatch(loadUser())
-  // }, [])
 
   const { loading, isAuthenticated } = useSelector((state) => state.auth);
-  // const routing = useRoutes(routes(isAuthenticated));
 
   return (
     <div>
@@ -58,8 +53,8 @@ function App() {
           <Route path="/app/campaigns" element={isAuthenticated ? <ViewCampaign /> : <Login />} />
           <Route path="/app/campaign/create" element={isAuthenticated ? <CreateCampaign /> : <Login />} />
           <Route path="/app/campaign/sms" element={isAuthenticated ? <SmsStepForm /> : <Login />} />
-          <Route path="/app/campaign/preview" element={isAuthenticated ? <PreviewCampaign /> : <Login />} />
-          <Route path="/app/campaign/audience" element={isAuthenticated ? <TargetAudience /> : <Login />} />
+          {/* <Route path="/app/campaign/preview" element={isAuthenticated ? <PreviewCampaign /> : <Login />} /> */}
+          {/* <Route path="/app/campaign/audience" element={isAuthenticated ? <TargetAudience /> : <Login />} /> */}
           <Route path="/app/campaign/flier-video" element={isAuthenticated ? <FlierVideoStepForm /> : <Login />} />
           {/* <Route path="/register" element={<Register />} /> */}
           {/* <Route path="/login" element={<Login />} /> */}

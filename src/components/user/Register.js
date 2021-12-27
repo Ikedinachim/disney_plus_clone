@@ -6,16 +6,16 @@ import Loader from "../../components/loader";
 
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { getSenderID } from '../../actions/senderIDActions';
+// import { getSenderID } from '../../actions/senderIDActions';
 import { registerUser, clearErrors } from '../../actions/authActions'
-import { getTransactionHistory, getWallet, } from '../../actions/billingActions'
+// import { getTransactionHistory, getWallet, } from '../../actions/billingActions'
 import { REGISTER_USER_RESET } from '../../constants/authConstants';
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
-const Register = ({ history }) => {
+const Register = () => {
     const navigate = useNavigate()
 
     const [newUser, setNewUser] = useState({
@@ -58,20 +58,20 @@ const Register = ({ history }) => {
     } = newUser;
 
     const schema = Yup.object().shape({
-        // firstName: Yup.string()
-        //     .min(2, 'Too Short!')
-        //     .max(50, 'Too Long!')
-        //     .required('Required'),
-        // lastName: Yup.string()
-        //     .min(2, 'Too Short!')
-        //     .max(50, 'Too Long!')
-        //     .required('Required'),
-        // email: Yup.string().email().required(),
-        // password: Yup.string()
-        //     .required('Password is required')
-        //     .min(6, 'Password must be at least 6 characters'),
-        // confirmPassword: Yup.string()
-        //     .oneOf([Yup.ref('password'), null], 'The passwords do not match'),
+        firstName: Yup.string()
+            .min(2, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Required'),
+        lastName: Yup.string()
+            .min(2, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Required'),
+        email: Yup.string().email().required(),
+        password: Yup.string()
+            .required('Password is required')
+            .min(6, 'Password must be at least 6 characters'),
+        confirmPassword: Yup.string()
+            .oneOf([Yup.ref('password'), null], 'The passwords do not match'),
         
     });
 
@@ -106,48 +106,25 @@ const Register = ({ history }) => {
     const dispatch = useDispatch();
 
     const { isAuthenticated, isRegistered, error, loading, user } = useSelector(state => state.auth)
-    // const { wallet, billing } = useSelector(state => state.wallet)
-    // const { senderID } = useSelector(state => state.senderID  || []);
-    // const { tnxHistory } = useSelector(state => state.tnxHistory || {})
-    // const { wallet } = useSelector(state => state.wallet)
 
     useEffect( () => {
         if (isRegistered) {
             alert.success('User registered successfully')
             navigate('/login')
             dispatch({ type: REGISTER_USER_RESET })
-        } 
-        // else if (isRegistered || !isAuthenticated) {
-        //     navigate('/register')
-        // }
-
+        }
         if(error) {
             alert.error(error)
             dispatch(clearErrors())
         }
 
-    }, [dispatch, isAuthenticated, isRegistered, error, alert ])
+    }, [dispatch, isAuthenticated, isRegistered, error, alert, navigate ])
 
     const submitIndividualHandler = (data) => {
         // data.preventDefault();
         console.log(data);
-
-        // const formData = new FormData();
-        // formData.set('firstName', firstName);
-        // formData.set('lastName', lastName);
-        // // formData.set('middleName', middleName);
-        // formData.set('userType', "individual");
-        // formData.set('username', username);
-        // formData.set('email', email);
-        // formData.set('password', password);
-        // formData.set('phone', phone);
-
-        // var object = {};
-        // formData.forEach((value, key) => object[key] = value);
-        // var json = JSON.stringify(object);
         
         dispatch(registerUser(data))
-        // setNewUser("")
         reset();
         
     }
@@ -156,41 +133,12 @@ const Register = ({ history }) => {
         // e.preventDefault();
         console.log(data);
 
-        // const formData = new FormData();
-        // formData.set('firstName', firstName);
-        // formData.set('lastnName', lastName);
-        // // formData.set('middleName', middleName);
-        // formData.set('userType', "business");
-        // formData.set('username', username);
-        // // formData.set('email', email);
-        // formData.set('password', password);
-        // formData.set('phone', phone);
-        // formData.set('businessName', businessName);
-        // // formData.set('contactName', contactName);
-        // formData.set('businessEmail', businessEmail);
-        
-
-        // var object = {};
-        // formData.forEach((value, key) => object[key] = value);
-        // var json = JSON.stringify(object);
-
         dispatch(registerUser(data))
         resetBusiness();
     }
 
     const onChange = e => {
         if(e.target.name === 'avatar') {
-
-            // const reader = new FileReader()
-
-            // reader.onload = () => {
-            //     if (reader.readyState === 2) {
-            //         setAvatarPreview(reader.result)
-            //         setAvatar(reader.result)
-            //     }
-            // }
-
-            // reader.readAsDataURL(e.target.files[0])
 
         } else {
             setNewUser({ ...newUser, [e.target.name]: e.target.value })
@@ -199,9 +147,7 @@ const Register = ({ history }) => {
 
     return (
         <Fragment>
-            {loading ? 
-            <Loader /> 
-            
+            {loading ? <Loader /> 
             : (
                 <Fragment>
                     <MetaData title={'Register User'} />
@@ -213,7 +159,6 @@ const Register = ({ history }) => {
                                     src="./assets/img/logo.svg"
                                     className="img-fluid logo"
                                     alt ="register logo"
-                                    srcSet
                                     />
                                 </div>
                             </div>
@@ -225,13 +170,13 @@ const Register = ({ history }) => {
                                     className="close close-btn"
                                     aria-label="Close"
                                     >
-                                    <span aria-hidden="true">×</span>
+                                        <span aria-hidden="true">×</span>
                                     </Link>
                                     <div className>
                                         <div className="col-lg-10 col-xl-8 mx-auto pd-t-100 pd-md-t-50 pd-lg-t-20 tx-center">
                                             <p className="tx-36 tx-bold mb-2 tx-com">Let’s get started</p>
                                             <p className="tx-18 tx-gray">
-                                            Please complete to create your account.
+                                                Please complete to create your account.
                                             </p>
                                             <ul
                                             className="nav nav-tabs bd-tab pd-5 col-lg-11 justify-content-between mx-auto"
@@ -275,30 +220,30 @@ const Register = ({ history }) => {
                                                     <form key={1} className="pd-y-30 pd-md-x-20" onSubmit={handleSubmit(submitIndividualHandler)}>
                                                         <div className="form-row">
                                                             <div className="form-group col-md-6">
-                                                            <input
-                                                                {...register("firstName")} 
-                                                                type="text" 
-                                                                id="firstname" 
-                                                                className="form-control new"
-                                                                placeholder="First Name"
-                                                                name="firstName"
-                                                                required
-                                                                value={firstName}
-                                                                onChange={onChange}
-                                                            />
+                                                                <input
+                                                                    {...register("firstName")} 
+                                                                    type="text" 
+                                                                    id="firstname" 
+                                                                    className="form-control new"
+                                                                    placeholder="First Name"
+                                                                    name="firstName"
+                                                                    required
+                                                                    value={firstName}
+                                                                    onChange={onChange}
+                                                                />
                                                             </div>
                                                             <div className="form-group col-md-6">
-                                                            <input
-                                                                {...register("lastName")}  
-                                                                type="text" 
-                                                                id="lastname" 
-                                                                className="form-control new"
-                                                                placeholder="Last Name"
-                                                                name="lastName"
-                                                                required
-                                                                value={lastName}
-                                                                onChange={onChange}
-                                                            />
+                                                                <input
+                                                                    {...register("lastName")}  
+                                                                    type="text" 
+                                                                    id="lastname" 
+                                                                    className="form-control new"
+                                                                    placeholder="Last Name"
+                                                                    name="lastName"
+                                                                    required
+                                                                    value={lastName}
+                                                                    onChange={onChange}
+                                                                />
                                                             </div>
                                                         </div>
                                                         <div className="form-group">
@@ -316,13 +261,13 @@ const Register = ({ history }) => {
                                                         </div>
                                                         <div className="form-group">
                                                             <input
-                                                            {...register("userType")} 
-                                                            type="hidden"
-                                                            className="form-control new"
-                                                            placeholder="User Type"
-                                                            name="userType"
-                                                            value={"individual"}
-                                                            onChange={onChange} 
+                                                                {...register("userType")} 
+                                                                type="hidden"
+                                                                className="form-control new"
+                                                                placeholder="User Type"
+                                                                name="userType"
+                                                                value={"individual"}
+                                                                onChange={onChange} 
                                                             />
                                                         </div>
                                                         <div className="form-group">
@@ -414,10 +359,10 @@ const Register = ({ history }) => {
                                                             className="tx-dark"
                                                             style={{ color: "#000", textDecoration: "underline" }}
                                                             >
-                                                            Already have an account?
+                                                                Already have an account?
                                                             </span>{" "}
                                                             <span style={{ textDecoration: "underline" }}>
-                                                            Sign in.
+                                                                Sign in.
                                                             </span>
                                                         </Link>
                                                     </form>
@@ -448,10 +393,6 @@ const Register = ({ history }) => {
                                                                     type="text"
                                                                     className="form-control new"
                                                                     placeholder="Last Name"
-                                                                    // name="lastName"
-                                                                    // required
-                                                                    // value={businessLastName}
-                                                                    // onChange={onChange}
                                                                 />
                                                             </div>
                                                         </div>
@@ -472,10 +413,6 @@ const Register = ({ history }) => {
                                                                 id="businessUsername" 
                                                                 className="form-control new"
                                                                 placeholder="Username"
-                                                                // name="username"
-                                                                // required
-                                                                // value={businessUsername} 
-                                                                // onChange={onChange}
                                                             />
                                                         </div>
                                                         <div className="form-group">
@@ -486,8 +423,7 @@ const Register = ({ history }) => {
                                                                 placeholder="User Type"
                                                                 name="userType"
                                                                 required
-                                                                value={"business"}
-                                                                // onChange={onChange} 
+                                                                value={"business"} 
                                                             />
                                                         </div>
                                                         {/* <div className="form-group">
@@ -579,14 +515,14 @@ const Register = ({ history }) => {
                                                             <div className="col-lg-9 col-12 mg-t-15">
                                                                 <div className="custom-control custom-checkbox pd-l-0">
                                                                     <input
-                                                                    type="checkbox"
-                                                                    className="custom-control-input form-control"
-                                                                    id="customCheck2"
-                                                                    required
+                                                                        type="checkbox"
+                                                                        className="custom-control-input form-control"
+                                                                        id="customCheck2"
+                                                                        required
                                                                     />
                                                                     <label
-                                                                    className="custom-control-label"
-                                                                    htmlFor="customCheck2"
+                                                                        className="custom-control-label"
+                                                                        htmlFor="customCheck2"
                                                                     >
                                                                         I agree with{" "}
                                                                         <span className="tx-primary">
@@ -609,13 +545,13 @@ const Register = ({ history }) => {
                                                         </div>
                                                         <Link to="/login">
                                                             <span
-                                                            className="tx-dark"
-                                                            style={{ color: "#000", textDecoration: "underline" }}
+                                                                className="tx-dark"
+                                                                style={{ color: "#000", textDecoration: "underline" }}
                                                             >
-                                                            Already have an account?
+                                                                Already have an account?
                                                             </span>{" "}
                                                             <span style={{ textDecoration: "underline" }}>
-                                                            Sign in.
+                                                                Sign in.
                                                             </span>
                                                         </Link>
                                                     </form>

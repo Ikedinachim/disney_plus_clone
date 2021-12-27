@@ -44,9 +44,6 @@ export default class SmsStepForm extends Component {
     const price = audience * 5
     const values = { senderId, channel, campaignMessage, contactNumber, gender, targetAge, location, interest, price }
     const payLoad = [values.senderId, values.channel, values.campaignMessage, values.contactNumber, gender, targetAge, location, interest, price];
-    // const payLoad = Object.assign(setPayload, values.senderId, values.channel, values.campaignMessage, values.contactNumber, gender, targetAge, location, interest, price );
-
-    // console.log(values);
     
     switch(step) {
       case 1: 

@@ -1,8 +1,8 @@
-import React, { Component, useState } from 'react'
+import React, { Component } from 'react'
 import FlierVideoCampaign from './FlierVideoCampaign'
 import TargetAudience from './TargetAudience'
 import PreviewCampaign from './PreviewCampaign'
-import FundWalletSMS from './FundWalletSMS'
+import FundWalletFlierVideo from './FundWalletFlierVideo'
 
 export default class FlierVideoStepForm extends Component {
 
@@ -56,14 +56,11 @@ export default class FlierVideoStepForm extends Component {
           if (reader.readyState === 2) {
             console.log(reader.result);
             this.setState({[input]: e.target.files})
-
-              // setAvatar(reader.result)
           }
           this.setState({attachmentPreview: reader.result})
       }
 
     reader.readAsDataURL(e.target.files[0])
-    // this.setState({[input]: e.target.files})
   }
 
   render() {    
@@ -110,7 +107,6 @@ export default class FlierVideoStepForm extends Component {
       ussd,
       smsNumber,
       callToAction,
-      timeRange,
       attachment,
       price 
     }
@@ -151,7 +147,7 @@ export default class FlierVideoStepForm extends Component {
           )
         case 4: 
           return (
-            <FundWalletSMS
+            <FundWalletFlierVideo
               prevStep={ this.prevStep }
               nextStep={ this.nextStep }
               values={ values }

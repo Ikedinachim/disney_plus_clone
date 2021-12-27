@@ -2,68 +2,73 @@ import React, { Fragment, useState, useEffect } from 'react'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { useAlert } from 'react-alert'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-import MetaData from '../../layout/MetaData'
-import Loader from '../../loader'
-import { fundUserWallet, getWallet, clearErrors } from '../../../actions/billingActions'
+import MetaData from '../../../layout/MetaData'
+import Loader from '../../../loader'
+import { fundUserWallet, getWallet, clearErrors } from '../../../../actions/billingActions'
 import NumberFormat from 'react-number-format'
-import { FUND_WALLET_RESET } from '../../../constants/billingConstants'
+import { FUND_WALLET_RESET } from '../../../../constants/billingConstants'
 
-const FundWallet = () => {
+const FundWalletFlierVideo = ({ prevStep, values }) => {
     const alert = useAlert();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [amount, setAmountToPay] = useState('')
-    const { fundWallet, loading, error } = useSelector(state => state.fundWallet)
     const { wallet } = useSelector(state => state.wallet)
+    const { fundWallet, loading, error } = useSelector(state => state.fundWallet)
+    const [amount, setAmountToPay] = useState(values.price - parseInt(wallet.balance))
     const { isAuthenticated, user } = useSelector(state => state.auth)
-
 
     const makePaymentHandler = (e) => {
         e.preventDefault();
+
         const obj = JSON.parse(`{"amount": ${amount}}`);
 
         dispatch(fundUserWallet(obj))
         setAmountToPay("");
     }
 
+    const Previous = e => {
+        e.preventDefault();
+        prevStep();
+    }
+
     useEffect( () => {
         if (!isAuthenticated || user === null) {
             navigate('/login')
-        }else if(!loading && fundWallet.status === "success") {
+        } else if(!loading && fundWallet.status === "success") {
+            dispatch(getWallet())
             alert.success(fundWallet.message)
             dispatch({ type: FUND_WALLET_RESET })
-            navigate('/app/billing')
+            prevStep();
         }
 
         if(error) {
             alert.error(error)
             dispatch(clearErrors())
         }
-        dispatch(getWallet())
-    }, [dispatch, alert, loading, error, fundWallet, isAuthenticated, user, navigate])
+    }, [dispatch, alert, loading, error, fundWallet, isAuthenticated, user, navigate, prevStep ])
 
     return (
         <Fragment>
             {loading ? <Loader /> : (
                 <Fragment>
-                    <MetaData title={"Sender ID"} />
+                    <MetaData title={"Fund Wallet"} />
                         <div className="content-body">
                             <div className="container pd-x-0">
                                 <div className="row justify-content-between">
                                     <div className="col-md-6 mg-b-20 mg-md-b-0">
-                                        <Link to="/app/billing" className="tx-black">
+                                        <div className="tx-black" onClick={ Previous }>
                                             <div className="d-flex">
-                                                <div>
+                                                <div className="pointer">
                                                     <i className="fa fa-angle-left mg-r-10 pd-t-15 tx-18" />
                                                 </div>
                                                 <div>
-                                                    <p className="tx-28 tx-bold mb-0">Billing</p>
+                                                    <p className="tx-28 tx-bold mb-0">Target Audience</p>
                                                 </div>
                                             </div>
-                                        </Link>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="pd-md-y-20">
@@ -73,7 +78,7 @@ const FundWallet = () => {
                                             <div className="row justify-content-between">
                                                 <div className="col-md-5 col-12">
                                                     <p className="tx-uppercase mb-0 tx-16 tx-blac tx-bold tx-com">
-                                                    Current Balance
+                                                        Current Balance
                                                     </p>
                                                     <p className="tx-32 tx-semibold tx-green">
                                                         + <NumberFormat value={parseInt(wallet.balance)} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
@@ -100,8 +105,7 @@ const FundWallet = () => {
                                                             type="submit"
                                                             disabled={ loading ? true : false }
                                                         >
-                                                            {" "}
-                                                            Fund Wallet{" "}
+                                                            Fund Wallet
                                                         </button>
                                                     </form>
                                                 </div>
@@ -112,7 +116,6 @@ const FundWallet = () => {
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                 </Fragment>
@@ -121,4 +124,4 @@ const FundWallet = () => {
     )
 }
 
-export default FundWallet
+export default FundWalletFlierVideo

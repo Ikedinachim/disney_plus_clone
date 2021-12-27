@@ -7,10 +7,8 @@ import {
     REGISTER_USER_REQUEST,
     REGISTER_USER_SUCCESS,
     REGISTER_USER_FAIL,
-    LOGOUT_SUCCESS,
     LOGOUT_FAIL,
     CLEAR_ERRORS,
-    RESETAPP_REQUEST,
     USER_LOGOUT
 } from '../constants/authConstants'
 

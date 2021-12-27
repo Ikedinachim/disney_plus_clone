@@ -23,7 +23,7 @@ const SenderID = () => {
         }
         dispatch(getSenderID())
 
-    }, [dispatch, alert, error])
+    }, [dispatch, error])
 
 
     const setSenderID = () => {
@@ -67,7 +67,7 @@ const SenderID = () => {
                 name: senderids.name,
                 senderId: senderids.senderId,
                 dataRequested: DateTime.fromJSDate(new Date(senderids.createdAt)).toFormat('dd MMM yyyy'),
-                status: <span className={`{"badge" ${senderids.status == null || (senderids.status == "pending") ? "badge-pink" : "badge-active"}`}>{senderids.status == null || (senderids.status == "pending") ? "Pending" : "Approved"}</span>,
+                status: <span className={`{"badge" ${senderids.status === null || (senderids.status === "pending") ? "badge-pink" : "badge-active"}`}>{senderids.status === null || (senderids.status === "pending") ? "Pending" : "Approved"}</span>,
                 actions:
                 <Fragment>
                     <div className="dropdown">
@@ -176,7 +176,6 @@ const SenderID = () => {
                                         hover
                                         checkboxFirstColumn
                                     />
-
                                     </div>
                                 </div>
                             </div>

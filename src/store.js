@@ -5,7 +5,10 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 
-import { authReducer, userDetailsReducer } from './reducers/authReducers'
+import { 
+    authReducer, 
+    // userDetailsReducer 
+} from './reducers/authReducers'
 
 import { senderIDReducer, createSenderIdReducer } from './reducers/senderIDReducers'
 import {  walletReducer, transactionHistoryReducer, fundWalletReducer, confirmFundingReducer } from './reducers/billingReducers'

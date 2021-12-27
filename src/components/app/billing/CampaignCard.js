@@ -1,11 +1,11 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import NumberFormat from 'react-number-format'
 import { DateTime } from "luxon";
 
 const TransactionCard = ({ transaction }) => {
 
     return (
-        <>
+        <Fragment>
             <div className="card tnx-card rounded bd-0 shadow-sm">
                 <div className="card-body pd-y-5">
                     <div className="d-flex justify-content-between">
@@ -21,7 +21,7 @@ const TransactionCard = ({ transaction }) => {
                     </div>
                 </div>
             </div>
-        </>
+        </Fragment>
     )
 }
 

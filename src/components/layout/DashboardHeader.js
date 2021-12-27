@@ -3,12 +3,10 @@ import { Link } from 'react-router-dom'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { useAlert } from 'react-alert'
-
-import { logout } from '../../actions/authActions'
 import NumberFormat from 'react-number-format'
 
-import { getSenderID } from '../../actions/senderIDActions';
-import { getTransactionHistory, getWallet, } from '../../actions/billingActions'
+import { logout } from '../../actions/authActions'
+import { getWallet, } from '../../actions/billingActions'
 
 import FeatherIcon from 'feather-icons-react';
 
@@ -25,16 +23,8 @@ const Header = () => {
         alert.success("Logged out successfully")
     }
 
-    const [isActive, setActive] = useState("false");
-
-    // const ToggleClass = (e) => {
-    //     setActive(!isActive); 
-    //     e.preventDefault()
-    //     e.stopPropagation();
-    // };
-
     const { user } = useSelector(state => state.auth)
-    const { wallet, loading, error } = useSelector(state => state.wallet)
+    const { wallet } = useSelector(state => state.wallet)
 
     useEffect(() => {
         dispatch(getWallet())
@@ -62,21 +52,20 @@ const Header = () => {
             </div>
             <nav className="nav">
                 <div className=" ml-md-4 ml-2 mg-t-5">
-                <div className="d-flex">
-                    <Link
-                    to="/app/billing/fund-wallet"
-                    className="tx-semibold tx-orange pd-t-1 mg-r-5"
-                    style={{ textDecoration: "underline" }}
-                    >
-                    Fund wallet
-                    </Link>
-                    <span className="mg-l-3 tx-14 tx-medium">
-                    <img src="../../assets/img/campaign.svg" alt="asset" srcSet style={{marginRight: "3px"}} />
-                    Balance: <NumberFormat value={wallet.balance} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
-                    </span>
+                    <div className="d-flex">
+                        <Link
+                            to="/app/billing/fund-wallet"
+                            className="tx-semibold tx-orange pd-t-1 mg-r-5"
+                            style={{ textDecoration: "underline" }}
+                        >
+                            Fund wallet
+                        </Link>
+                        <span className="mg-l-3 tx-14 tx-medium">
+                            <img src="../../assets/img/campaign.svg" alt="asset" srcSet style={{marginRight: "3px"}} />
+                            Balance: <NumberFormat value={wallet.balance} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
+                        </span>
+                    </div>
                 </div>
-                </div>
-                {/* <div className={`dropdown dropdown-profile ml-md-4 ml-2 ${isActive ? "show" : null}`} onClick={ToggleClass}> */}
                 <div 
                     // className={`dropdown dropdown-profile ml-md-4 ml-2 ${isActive ? "show" : null}`} onClick={ToggleClass}
                     className="dropdown dropdown-profile ml-md-4 ml-2"
@@ -87,21 +76,16 @@ const Header = () => {
                         onClick={() => setIsMenuOpen(oldState => !oldState)}
                     >
                         {user.user.firstName}
-                        {/* Jane Doe */}
                         <div 
                             className="avatar avatar-sm mg-l-10" 
-                            // onClick={() => setIsMenuOpen(oldState => !oldState)}
                         >
                             <img
                                 src="https://via.placeholder.com/500"
                                 className="rounded-circle"
-                                // onClick={() => setIsMenuOpen(oldState => !oldState)}
                                 alt="asset"
                             />
                         </div>
                     </div>
-                    {/* dropdown-link */}
-                    {/* <div className={`dropdown-menu dropdown-menu-right dropdown-adjust tx-13 ${!isActive ? "show" : null}`} onClick={ToggleClass}> */}
                     {isMenuOpen && (
                         <div className="dropdown-menu dropdown-menu-right dropdown-adjust tx-13 show">
                             <div className="avatar avatar-lg mg-b-15">
@@ -113,7 +97,6 @@ const Header = () => {
                             </div>
                             <h6 className="tx-semibold mg-b-5">
                                 {user.user.firstName +" " + user.user.LastName}
-                                {/* Jane */}
                             </h6>
                             <p className="mg-b-25 tx-12 tx-color-03">Administrator</p>
                             <Link to="admin" className="dropdown-item">
@@ -140,7 +123,6 @@ const Header = () => {
                             </Link>
                         </div>
                     )}
-                    {/* dropdown-menu */}
                 </div>
             </nav>
         </div>

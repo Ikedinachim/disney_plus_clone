@@ -24,19 +24,19 @@ const Header = () => {
             </div>
             <nav className="nav">
                 <div className=" ml-md-4 ml-2 mg-t-5">
-                <div className="d-flex">
-                    <Link
-                    to="./wallet.html"
-                    className="tx-semibold tx-orange pd-t-1 mg-r-5"
-                    style={{ textDecoration: "underline" }}
-                    >
-                    Fund wallet
-                    </Link>
-                    <span className="mg-l-3 tx-14 tx-medium">
-                    <img src="./assets/img/campaign.svg" alt="asset" srcSet />
-                    Balance:N50,000
-                    </span>
-                </div>
+                    <div className="d-flex">
+                        <Link
+                            to="./wallet.html"
+                            className="tx-semibold tx-orange pd-t-1 mg-r-5"
+                            style={{ textDecoration: "underline" }}
+                        >
+                            Fund wallet
+                        </Link>
+                        <span className="mg-l-3 tx-14 tx-medium">
+                            <img src="./assets/img/campaign.svg" alt="asset" />
+                            Balance:N50,000
+                        </span>
+                    </div>
                 </div>
                 <div className="dropdown dropdown-profile ml-md-4 ml-2">
                 <Link

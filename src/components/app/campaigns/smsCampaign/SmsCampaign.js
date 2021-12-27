@@ -26,7 +26,6 @@ const SmsCampaign = ({ nextStep, handleChange, values }) => {
             nextStep();
         }
     }
-    console.log(senderID);
     const selectChannels = [
         {
             label: "Select Channel",
@@ -58,8 +57,6 @@ const SmsCampaign = ({ nextStep, handleChange, values }) => {
         dispatch(getSenderID())
     }, [dispatch])
 
-    // console.log(values.senderId);
-
     return (
         <Fragment>
             {loading ? <Loader /> : (
@@ -72,7 +69,13 @@ const SmsCampaign = ({ nextStep, handleChange, values }) => {
                                     <p className="tx-18 mb-0">2 out of 3</p>
                                 </div>
                                 <div className="progress">
-                                    <div className="progress-bar bg-primary progress-bar-striped progress-bar-animated wd-60p" role="progressbar" aria-valuenow={40} aria-valuemin={0} aria-valuemax={100} />
+                                    <div 
+                                        className="progress-bar bg-primary progress-bar-striped progress-bar-animated wd-60p" 
+                                        role="progressbar" 
+                                        aria-valuenow={40} 
+                                        aria-valuemin={0} 
+                                        aria-valuemax={100} 
+                                    />
                                 </div>
                                 <div className="pd-md-y-20">
                                     <div className="col-lg-11 pd-x-0">
@@ -96,19 +99,19 @@ const SmsCampaign = ({ nextStep, handleChange, values }) => {
                                                         </select>
                                                     </div>
                                                     <div className="form-group col-md-6">
-                                                    <div className="form-group">
-                                                        <label htmlFor className="mb-1">Select Channel</label>
-                                                        <select 
-                                                            className="custom-select" 
-                                                            // value="select channel"
-                                                            defaultValue={values.channel}
-                                                            onChange={handleChange('channel')}
-                                                        >
-                                                            {selectChannels.map((selectChannel) => (
-                                                            <option value={selectChannel.value}>{selectChannel.label}</option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
+                                                        <div className="form-group">
+                                                            <label htmlFor className="mb-1">Select Channel</label>
+                                                            <select 
+                                                                className="custom-select" 
+                                                                // value="select channel"
+                                                                defaultValue={values.channel}
+                                                                onChange={handleChange('channel')}
+                                                            >
+                                                                {selectChannels.map((selectChannel) => (
+                                                                <option value={selectChannel.value}>{selectChannel.label}</option>
+                                                                ))}
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div className="form-group">
@@ -132,7 +135,8 @@ const SmsCampaign = ({ nextStep, handleChange, values }) => {
                                                     variant="contained"
                                                 >Proceed
                                                 </button>
-                                                <Link to="/app/campaign/create" className="btn btn-outline-primary w-100 mg-l-20 mg-b-15">Go Back
+                                                <Link to="/app/campaign/create" className="btn btn-outline-primary w-100 mg-l-20 mg-b-15">
+                                                    Go Back
                                                 </Link>
                                             </div>
                                         </div>

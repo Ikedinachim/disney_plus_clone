@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import { useSelector, useDispatch } from 'react-redux'
@@ -26,7 +26,7 @@ const ViewCampaign = () => {
         dispatch(getAllCampaigns())
         dispatch(getWallet())
 
-    }, [dispatch, alert, error])
+    }, [dispatch, error])
 
 
     const setAllCampaigns = () => {
@@ -84,7 +84,7 @@ const ViewCampaign = () => {
                 revenue: <NumberFormat value={0} displayType={'text'} thousandSeparator={true} prefix={'₦'} />,
                 cost: <NumberFormat value={campaign.price} displayType={'text'} thousandSeparator={true} prefix={'₦'} />,
                 dateCreated: DateTime.fromJSDate(new Date(campaign.createdAt)).toFormat('dd MMM, yyyy'),
-                status: <span className={`{"badge" ${campaign.status == null || (campaign.status == "pending") ? "badge-pink" : "badge-active"}`}>{campaign.status == null || (campaign.status == "pending") ? "Pending" : "Approved"}</span>,
+                status: <span className={`{"badge" ${campaign.status === null || (campaign.status === "pending") ? "badge-pink" : "badge-active"}`}>{campaign.status === null || (campaign.status === "pending") ? "Pending" : "Approved"}</span>,
                 actions:
                 <Fragment>
                     {/* <div className="dropdown">
