@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import FlierVideoCampaign from './FlierVideoCampaign'
+import AppDownloadCampaign from './AppDownloadCampaign'
 import TargetAudience from './TargetAudience'
 import PreviewCampaign from './PreviewCampaign'
-import FundWalletFlierVideo from './FundWalletFlierVideo'
+import FundWalletAppDownlaod from './FundWalletAppDownlaod'
 
-export default class FlierVideoStepForm extends Component {
+export default class AppDownloadStepForm extends Component {
 
   state = {
     step: 1,
@@ -54,7 +54,6 @@ export default class FlierVideoStepForm extends Component {
 
       reader.onload = () => {
           if (reader.readyState === 2) {
-            console.log(reader.result);
             this.setState({[input]: e.target.files})
           }
           this.setState({attachmentPreview: reader.result})
@@ -117,7 +116,7 @@ export default class FlierVideoStepForm extends Component {
     switch(step) {
       case 1: 
         return (
-          <FlierVideoCampaign 
+          <AppDownloadCampaign 
             nextStep={ this.nextStep }
             handleChange={ this.handleChange }
             onChangeAttachment={ this.onChangeAttachment }
@@ -147,7 +146,7 @@ export default class FlierVideoStepForm extends Component {
           )
         case 4: 
           return (
-            <FundWalletFlierVideo
+            <FundWalletAppDownlaod
               prevStep={ this.prevStep }
               nextStep={ this.nextStep }
               values={ values }

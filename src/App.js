@@ -17,6 +17,7 @@ import ViewCampaign from "./components/app/campaigns/ViewCampaign"
 // import PreviewCampaign from "./components/app/campaigns/PreviewCampaign"
 import SmsStepForm from "./components/app/campaigns/smsCampaign/SmsStepForm"
 import FlierVideoStepForm from "./components/app/campaigns/flierVideoCampaign/FlierVideoStepForm"
+import AppDownloadStepForm from "./components/app/campaigns/appDownloadCampaign/AppDownloadStepForm";
 
 // Auth / User Imports
 import Login from "./components/user/Login";
@@ -56,6 +57,7 @@ function App() {
           {/* <Route path="/app/campaign/preview" element={isAuthenticated ? <PreviewCampaign /> : <Login />} /> */}
           {/* <Route path="/app/campaign/audience" element={isAuthenticated ? <TargetAudience /> : <Login />} /> */}
           <Route path="/app/campaign/flier-video" element={isAuthenticated ? <FlierVideoStepForm /> : <Login />} />
+          <Route path="/app/campaign/app-download" element={isAuthenticated ? <AppDownloadStepForm /> : <Login />} />
           {/* <Route path="/register" element={<Register />} /> */}
           {/* <Route path="/login" element={<Login />} /> */}
           {/* <Route path="/app" element={isAuthenticated ? <Dashboard /> : <Home />} /> */}
