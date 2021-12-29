@@ -106,6 +106,7 @@ export const createAppDownloadCampaignReducer = (state = { createAppDownloadCamp
         case APP_DOWNLOAD_CAMPAIGN_FAIL:
             return {
                 loading: false,
+                createAppDownloadCampaign: null,
                 error: action.payload
             }
         case APP_DOWNLOAD_CAMPAIGN_RESET:

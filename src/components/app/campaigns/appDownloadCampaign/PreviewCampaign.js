@@ -32,31 +32,31 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience, attachmentPrevi
         prevStep();
     }
 
-    const submitFlierVideoCampaignHandler = (e) => {
+    const submitFlierVideoCampaignHandler = async (e) => {
         e.preventDefault();
 
         dispatch(createAppDownloadCampaignAction(values))
 
-        if(loading === false || createAppDownloadCampaign.status === 'success') {
+    }
+    useEffect( () => {
+        if(createAppDownloadCampaign && createAppDownloadCampaign.status === 'success') {
             alert.success(createAppDownloadCampaign.message)
             dispatch(getWallet())
             navigate('/app/campaigns')
             dispatch({ type: APP_DOWNLOAD_CAMPAIGN_RESET })
-        } else {
-            alert.error(error)
-            dispatch(clearErrors())
-            navigate('/app/campaign/app-download')
-        }
+        } 
+        // else {
+        //     alert.error(error)
+        //     dispatch(clearErrors())
+        //     navigate('/app/campaign/app-download')
+        // }
 
-    }
-    useEffect( () => {
         if(error) {
             alert.error(error)
             dispatch(clearErrors())
             dispatch(getWallet())
-            console.log(price)
         }        
-    }, [dispatch, alert, error ])
+    }, [dispatch, alert, error, createAppDownloadCampaign, loading, navigate ])
 
     return (
         <Fragment>
@@ -275,13 +275,14 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience, attachmentPrevi
                                                     </p>
                                                 </div>
                                                 <div>
-                                                    {values.callToAction === "" || values.whatsappNumber === "" ? null :
-                                                        <button className="btn btn-primary w-100 mg-b-15 round-5">
-                                                            <i className="fa fa-whatsapp mg-r-5"> </i>
-                                                            {values.callToAction} via WhatsApp
-                                                        </button>
+                                                    {values.callToAction === "" || (values.androidStoreUrl === "" || values.iosStoreUrl === "") ? null :
+                                                        <div className="pd-b-40">
+                                                            <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                                                {values.callToAction}
+                                                            </button>
+                                                        </div>
                                                     }
-                                                    {values.callToAction === "" || values.phoneNumber === "" ? null :
+                                                    {/* {values.callToAction === "" || values.phoneNumber === "" ? null :
                                                         <button className="btn btn-primary w-100 mg-b-15 round-5">
                                                             <i className="fa fa-phone mg-r-5" />
                                                             {values.callToAction} via Mobile
@@ -298,7 +299,7 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience, attachmentPrevi
                                                             <i className="fa fa-comment mg-r-10"> </i>
                                                             {values.callToAction} via Text
                                                         </button>
-                                                    }
+                                                    } */}
                                                 </div>
                                             </div>
                                         </div>

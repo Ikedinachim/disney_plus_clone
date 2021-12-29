@@ -28,7 +28,9 @@ const Sidebar = () => {
 
     return (
         
-        <aside className={`aside aside-fixed ${!isMenuOpen ? "minimize" : ""}`} ref={ref}>
+        <aside className={`aside aside-fixed ${!isMenuOpen ? "minimize" : ""}`} 
+            // ref={ref}
+        >
             <div className={`aside-header ${isMenuOpen ? "" : ""}`}>
                 <NavLink to="/app" className="aside-logo">
                     <div className="pd-50">
