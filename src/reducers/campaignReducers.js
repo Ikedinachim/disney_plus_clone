@@ -9,6 +9,11 @@ import {
     VIDEO_FLIER_CAMPAIGN_FAIL,
     VIDEO_FLIER_CAMPAIGN_RESET,
 
+    APP_DOWNLOAD_CAMPAIGN_REQUEST,
+    APP_DOWNLOAD_CAMPAIGN_SUCCESS,
+    APP_DOWNLOAD_CAMPAIGN_RESET,
+    APP_DOWNLOAD_CAMPAIGN_FAIL,
+
     GET_ALL_CAMPAIGN_REQUEST,
     GET_ALL_CAMPAIGN_SUCCESS,
     GET_ALL_CAMPAIGN_FAIL,
@@ -65,13 +70,13 @@ export const createFlierVideoCampaignReducer = (state = { createFlierVideoCampai
             }
         case VIDEO_FLIER_CAMPAIGN_FAIL:
             return {
-                ...state,
-                createFlierVideoCampaign: []
+                loading: false,
+                error: action.payload
             }
         case VIDEO_FLIER_CAMPAIGN_RESET:
             return {
-                loading: false,
-                error: action.payload
+                ...state,
+                createFlierVideoCampaign: []
             }
 
         case CLEAR_ERRORS:

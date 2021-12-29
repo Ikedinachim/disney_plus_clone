@@ -9,18 +9,18 @@ import NumberFormat from 'react-number-format'
 
 import { getWallet } from '../../../../actions/billingActions'
 import { createFlierVideoCampaignAction, clearErrors } from '../../../../actions/campaignActions';
-import { SMS_CAMPAIGN_RESET } from '../../../../constants/campaignConstants'
+import { VIDEO_FLIER_CAMPAIGN_RESET } from '../../../../constants/campaignConstants'
 import Loader from '../../../loader';
 
 import PreviewIcon from '../../../../assets/img/Promote_Offers.svg'
 
-const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
+const PreviewCampaign = ({ nextStep, prevStep, values, audience, attachmentPreview, price }) => {
     
-    const { error, createFlierVideoCampaign } = useSelector(state => state.flierVideoCampaign || [])
+    const { error, createFlierVideoCampaign, loading } = useSelector(state => state.flierVideoCampaign || [])
     const alert = useAlert();
     const dispatch = useDispatch()
     const navigate = useNavigate();
-    const { wallet, loading } = useSelector(state => state.wallet)
+    const { wallet } = useSelector(state => state.wallet)
 
     const Continue = e => {
         e.preventDefault();
@@ -34,14 +34,16 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
 
     const submitFlierVideoCampaignHandler = (e) => {
         e.preventDefault();
+
         dispatch(createFlierVideoCampaignAction(values))
 
         if(createFlierVideoCampaign.status === 'success') {
-            navigate('/app/campaigns')
             alert.success(createFlierVideoCampaign.message)
-            dispatch({ type: SMS_CAMPAIGN_RESET })
+            dispatch(getWallet())
+            navigate('/app/campaigns')
+            dispatch({ type: VIDEO_FLIER_CAMPAIGN_RESET })
         } else {
-            alert.error('Ops, something is off in useEffect')
+            alert.error(error)
             dispatch(clearErrors())
             navigate('/app/campaign/flier-video')
         }
@@ -51,9 +53,8 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
         if(error) {
             alert.error(error)
             dispatch(clearErrors())
-        }
-        dispatch(getWallet())
-        
+            dispatch(getWallet())
+        }        
     }, [dispatch, alert, error ])
 
     return (
@@ -126,7 +127,7 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
                                                         </div>
                                                         <div className="form-group col-md-6">
                                                             <label htmlFor className="tx-14 tx-gray mb-0 tx-medium">WhatsApp Number</label>
-                                                            <p className="tx-16 mb-0">{values.whatsappNumber}</p>
+                                                            <p className="tx-16 mb-0">{values.whatsAppNumber}</p>
                                                         </div>
                                                         <div className="form-group col-md-6">
                                                             <label htmlFor className="tx-14 tx-gray mb-0 tx-medium">SMS Number</label>
@@ -221,14 +222,14 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
                                                             <p className="tx-18 tx-com tx-bold mb-0">Amount:</p>
                                                             <span className="badge tx-green tx-bold tx-18 mg-5 tx-amt w-100 mt-0">
                                                                 {" "}
-                                                                <NumberFormat value={parseInt(values.price)} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
+                                                                <NumberFormat value={parseInt(price)} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
                                                             </span>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="col-md-5 pd-x-0 mg-y-40">
                                                     <div className="mg-t-20 d-flex">
-                                                        {parseInt(wallet.balance) < values.price ?
+                                                        {parseInt(wallet.balance) < price ?
                                                             <button
                                                                 className="btn btn-primary w-100 tx-com mg-r-15"
                                                                 onClick={ Continue }
@@ -267,7 +268,7 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
                                             <div className="card-body">
                                                 <p className="tx-20 tx-bold tx-com">Preview</p>
                                                 <div>
-                                                    <img src={values.attachment} className="img-fluid mg-b-10" alt="" />
+                                                    <img src={attachmentPreview} className="img-fluid mg-b-10" alt="" />
                                                     <p className="mb-4">
                                                         {values.campaignMessage}
                                                     </p>

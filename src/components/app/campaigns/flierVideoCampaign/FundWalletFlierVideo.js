@@ -10,14 +10,14 @@ import { fundUserWallet, getWallet, clearErrors } from '../../../../actions/bill
 import NumberFormat from 'react-number-format'
 import { FUND_WALLET_RESET } from '../../../../constants/billingConstants'
 
-const FundWalletFlierVideo = ({ prevStep, values }) => {
+const FundWalletFlierVideo = ({ prevStep, values, price }) => {
     const alert = useAlert();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const { wallet } = useSelector(state => state.wallet)
     const { fundWallet, loading, error } = useSelector(state => state.fundWallet)
-    const [amount, setAmountToPay] = useState(values.price - parseInt(wallet.balance))
+    const [amount, setAmountToPay] = useState(price - parseInt(wallet.balance))
     const { isAuthenticated, user } = useSelector(state => state.auth)
 
     const makePaymentHandler = (e) => {

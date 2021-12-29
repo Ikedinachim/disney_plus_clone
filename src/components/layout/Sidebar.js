@@ -2,22 +2,13 @@ import React, { useEffect, useState, useRef } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import FeatherIcon from 'feather-icons-react';
-// import EventBus  from './_helpers/Events';
 
 const Sidebar = () => {
 
     const ref = useRef();
-    const [isMenuOpen, setIsMenuOpen] = useState(true);
-
-    // const GlobalState = React.createContext([{}, () => {}]); 
+    const [isMenuOpen, setIsMenuOpen] = useState(true); 
 
     useEffect(() => {
-        // EventBus.on('isMenuOpen', ()=>{
-        //     setLoader(true)
-        // })
-        // EventBus.on('isMenuClose', ()=>{
-        //     setLoader(false)
-        // })
 
         const checkIfClickedOutside = e => {
           // If the menu is open and the clicked target is not within the menu,

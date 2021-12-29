@@ -6,7 +6,7 @@ import { useAlert } from 'react-alert'
 
 import MetaData from '../../../layout/MetaData'
 
-const FlierVideoCampaign = ({ nextStep, handleChange, onChangeAttachment, values }) => {
+const FlierVideoCampaign = ({ nextStep, handleChange, onChangeAttachment, values, attachmentPreview, handleImageUpload }) => {
     const alert = useAlert();
     const { senderID } = useSelector(state => state.senderID  || []);
     const Continue = e => {
@@ -21,8 +21,11 @@ const FlierVideoCampaign = ({ nextStep, handleChange, onChangeAttachment, values
         } 
         else {
             nextStep();
+            handleImageUpload()
         }
     }
+
+    // console.log(values);
     
     const selectChannels = [
         {
@@ -35,7 +38,7 @@ const FlierVideoCampaign = ({ nextStep, handleChange, onChangeAttachment, values
         },
         {
             label: "SMS/Flash SMS Campaign",
-            value: "SMS/FLASH SMS Campaigns"
+            value: "SMS/FLASH SMS Campaign"
         },
         {
             label: "Flier/Video Ad Campaign",
@@ -126,8 +129,8 @@ const FlierVideoCampaign = ({ nextStep, handleChange, onChangeAttachment, values
                                                         type="number" 
                                                         className="form-control" 
                                                         placeholder="WhatsApp Number"
-                                                        defaultValue={values.whatsappNumber}
-                                                        onChange={handleChange('whatsappNumber')} 
+                                                        defaultValue={values.whatsAppNumber}
+                                                        onChange={handleChange('whatsAppNumber')} 
                                                     />
                                                 </div>
                                                 <div className="form-group">
@@ -214,7 +217,7 @@ const FlierVideoCampaign = ({ nextStep, handleChange, onChangeAttachment, values
                                                             className="custom-file-input" 
                                                             id="customFile"
                                                             // defaultValue={values.attachment}
-                                                            onChange={onChangeAttachment('attachmentPreview')}
+                                                            onChange={onChangeAttachment('uploadedImage')}
                                                         />
                                                         <label className="custom-file-label" htmlFor="customFile">Click to upload desired icon (if needed)</label>
                                                     </div>
@@ -245,7 +248,7 @@ const FlierVideoCampaign = ({ nextStep, handleChange, onChangeAttachment, values
                                     <div className="card shadow-sm rounded bd-0">
                                         <div className="card-body">
                                             <div>
-                                                <img src={values.attachment} className="img-fluid mg-b-10" alt="" />
+                                                <img src={attachmentPreview} className="img-fluid mg-b-10" alt="" />
                                                 <p className="mb-4">
                                                     {values.campaignMessage}
                                                 </p>

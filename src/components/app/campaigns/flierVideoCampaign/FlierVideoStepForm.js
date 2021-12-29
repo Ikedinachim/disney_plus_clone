@@ -17,7 +17,7 @@ export default class FlierVideoStepForm extends Component {
     location: ['Lagos'],
     interest: 'business',
     phoneNumber: '',
-    whatsappNumber: '',
+    whatsAppNumber: '',
     numbers: '',
     ussd: '',
     smsNumber: '',
@@ -27,6 +27,8 @@ export default class FlierVideoStepForm extends Component {
     campaignImage: '',
     attachment: '',
     attachmentPreview: '',
+    targetAudience: '',
+    uploadedImage: '',
     price: 0,
   }
 
@@ -54,14 +56,58 @@ export default class FlierVideoStepForm extends Component {
 
       reader.onload = () => {
           if (reader.readyState === 2) {
-            console.log(reader.result);
-            this.setState({[input]: e.target.files})
+            // console.log(reader.result);
+            this.setState({[input]: e.target.files[0]})
           }
           this.setState({attachmentPreview: reader.result})
       }
 
     reader.readAsDataURL(e.target.files[0])
   }
+
+  handleImageUpload = async () => {
+    const { files } = document.querySelector('input[type="file"]')
+    const formData = new FormData();
+    formData.append('file', files[0]);
+    // replace this with your upload preset name
+    formData.append('upload_preset', 'mysogi');
+    const options = {
+      method: 'POST',
+      // mode: "no-cors",
+      body: formData,
+    };
+
+    // replace cloudname with your Cloudinary cloud_name
+    try {
+      const res = await fetch('https://api.Cloudinary.com/v1_1/mysogi/image/upload', options)
+      const res_1 = await res.json()
+      this.setState({
+        attachment: res_1.secure_url,
+        imageAlt: `An image of ${res_1.original_filename}`
+      })
+    } catch (err) {
+      return console.log(err)
+    }
+  }
+
+  // openWidget = () => {
+  //   // create the widget
+  //   const widget = window.cloudinary.createUploadWidget(
+  //     {
+  //       cloudName: 'mysogi',
+  //       uploadPreset: 'mysogi',
+  //     },
+  //     (error, result) => {
+  //       if (result.event === 'success') {
+  //         this.setState({
+  //           imageUrl: result.info.secure_url,
+  //           imageAlt: `An image of ${result.info.original_filename}`
+  //         })
+  //       }
+  //     },
+  //   );
+  //   widget.open(); // open up the widget after creation
+  // };
 
   render() {    
     const { step } = this.state;
@@ -74,45 +120,46 @@ export default class FlierVideoStepForm extends Component {
       // location, 
       // interest,
       url,
-      whatsappNumber,  
+      whatsAppNumber,  
       phoneNumber,
       ussd,
       smsNumber,
       callToAction,
       timeRangeFrom,
       timeRangeTo,
+      attachment,
       attachmentPreview,
       // attachment,
       numbers
     } = this.state;
 
-    const contactNumber = numbers.split(',')
-    const audience = contactNumber.length
+    const targetAudience = numbers.split(',')
+    const audience = targetAudience.length
     const price = audience * 5
-    const timeRange = [(timeRangeFrom+' - '+timeRangeTo) ]
-    const attachment = attachmentPreview
+    const timeRange = (timeRangeFrom + ' - ' + timeRangeTo)
+    // const attachment = attachmentPreview
     const values = { 
       senderId, 
       channel, 
       campaignMessage, 
-      contactNumber,
       timeRange,
       // gender, 
       // targetAge, 
       // location, 
       // interest,
       url,
-      whatsappNumber,  
+      whatsAppNumber,  
       phoneNumber,
       ussd,
       smsNumber,
       callToAction,
       attachment,
-      price 
+      targetAudience,
+      // price
     }
-    const payLoad = [values.senderId, values.channel, values.campaignMessage, values.contactNumber, values.attachment, price];
+    // const payLoad = [values.senderId, values.channel, values.campaignMessage, values.whatsAppNumber, values.targetAudience, values.attachment, price];
 
-    // console.log(values);
+    console.log(values);
     
     switch(step) {
       case 1: 
@@ -122,6 +169,8 @@ export default class FlierVideoStepForm extends Component {
             handleChange={ this.handleChange }
             onChangeAttachment={ this.onChangeAttachment }
             values={ values }
+            attachmentPreview={attachmentPreview}
+            handleImageUpload={this.handleImageUpload}
           />
         )
       case 2: 
@@ -142,7 +191,8 @@ export default class FlierVideoStepForm extends Component {
               nextStep={ this.nextStep }
               values={ values }
               audience={audience}
-              payLoad={payLoad}
+              price={price}
+              attachmentPreview={attachmentPreview}
             />
           )
         case 4: 
@@ -150,6 +200,7 @@ export default class FlierVideoStepForm extends Component {
             <FundWalletFlierVideo
               prevStep={ this.prevStep }
               nextStep={ this.nextStep }
+              price={price}
               values={ values }
             />
           )
