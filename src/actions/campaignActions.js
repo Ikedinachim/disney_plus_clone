@@ -9,6 +9,10 @@ import {
     VIDEO_FLIER_CAMPAIGN_SUCCESS,
     VIDEO_FLIER_CAMPAIGN_FAIL,
 
+    APP_DOWNLOAD_CAMPAIGN_REQUEST,
+    APP_DOWNLOAD_CAMPAIGN_SUCCESS,
+    APP_DOWNLOAD_CAMPAIGN_FAIL,
+
 
     GET_ALL_CAMPAIGN_REQUEST,
     GET_ALL_CAMPAIGN_SUCCESS,
@@ -82,6 +86,42 @@ export const createFlierVideoCampaignAction = (flierVideoCampaignData) => async 
         } else {
             dispatch({
                 type: VIDEO_FLIER_CAMPAIGN_FAIL,
+                payload: data.message
+            })
+        }
+        
+    } catch (data) {
+        dispatch({
+            type: VIDEO_FLIER_CAMPAIGN_FAIL,
+            payload: data.message
+        })
+    }
+}
+
+// Create App Download Campaign Action
+export const createAppDownloadCampaignAction = (appDownloadCampaignData) => async (dispatch) => {
+    try {
+
+        dispatch({ type: APP_DOWNLOAD_CAMPAIGN_REQUEST })
+        let user = JSON.parse(sessionStorage.getItem('user'));
+        const token = user.user.token;
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization" : `Bearer ${token}`
+            }
+        }
+        const { data } = await axios.post('api/campaign/app-download', appDownloadCampaignData, config)
+
+        if (data.status === "success") {
+            dispatch({
+                type: APP_DOWNLOAD_CAMPAIGN_SUCCESS,
+                payload: data
+            })
+        } else {
+            dispatch({
+                type: APP_DOWNLOAD_CAMPAIGN_FAIL,
                 payload: data.message
             })
         }

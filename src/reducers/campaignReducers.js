@@ -90,6 +90,41 @@ export const createFlierVideoCampaignReducer = (state = { createFlierVideoCampai
     }
 }
 
+export const createAppDownloadCampaignReducer = (state = { createAppDownloadCampaign: [] }, action) => {
+    switch(action.type) {
+        case APP_DOWNLOAD_CAMPAIGN_REQUEST:
+            return {
+                loading: true,
+                createAppDownloadCampaign: []
+            }
+        
+        case APP_DOWNLOAD_CAMPAIGN_SUCCESS:
+            return {
+                loading: false,
+                createAppDownloadCampaign: action.payload
+            }
+        case APP_DOWNLOAD_CAMPAIGN_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+        case APP_DOWNLOAD_CAMPAIGN_RESET:
+            return {
+                ...state,
+                createAppDownloadCampaign: []
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state;
+    }
+}
+
 export const getAllCampaignsReducer = (state = { allCampaigns: [] }, action) => {
     switch(action.type) {
         case GET_ALL_CAMPAIGN_REQUEST:

@@ -10,21 +10,11 @@ export default class AppDownloadStepForm extends Component {
     step: 1,
     senderId: '',
     channel: '', 
-    url: '',
     campaignMessage: '',
-    // gender: 'male',
-    targetAge: '21',
-    location: ['Lagos'],
-    interest: 'business',
-    phoneNumber: '',
-    whatsappNumber: '',
+    iosStoreUrl: '',
+    androidStoreUrl: '',
     numbers: '',
-    ussd: '',
-    smsNumber: '',
     callToAction: '',
-    timeRangeFrom: '',
-    timeRangeTo: '',
-    campaignImage: '',
     attachment: '',
     attachmentPreview: '',
     price: 0,
@@ -62,57 +52,64 @@ export default class AppDownloadStepForm extends Component {
     reader.readAsDataURL(e.target.files[0])
   }
 
+  handleImageUpload = async () => {
+    const { files } = document.querySelector('input[type="file"]')
+    const formData = new FormData();
+    formData.append('file', files[0]);
+    // replace this with your upload preset name
+    formData.append('upload_preset', 'mysogi');
+    const options = {
+      method: 'POST',
+      // mode: "no-cors",
+      body: formData,
+    };
+
+    // replace cloudname with your Cloudinary cloud_name
+    try {
+      const res = await fetch('https://api.Cloudinary.com/v1_1/mysogi/image/upload', options)
+      const res_1 = await res.json()
+      this.setState({
+        attachment: res_1.secure_url,
+        imageAlt: `An image of ${res_1.original_filename}`
+      })
+    } catch (err) {
+      return console.log(err)
+    }
+  }
+
   render() {    
     const { step } = this.state;
     const { 
       senderId, 
       channel, 
       campaignMessage, 
-      // gender, 
-      // targetAge, 
-      // location, 
-      // interest,
-      url,
-      whatsappNumber,  
-      phoneNumber,
-      ussd,
       smsNumber,
       callToAction,
-      timeRangeFrom,
-      timeRangeTo,
+      attachment,
       attachmentPreview,
-      // attachment,
+      iosStoreUrl,
+      androidStoreUrl,
       numbers
     } = this.state;
 
-    const contactNumber = numbers.split(',')
-    const audience = contactNumber.length
+    const targetAudience = numbers.split(',')
+    const audience = targetAudience.length
     const price = audience * 5
-    const timeRange = [(timeRangeFrom+' - '+timeRangeTo) ]
-    const attachment = attachmentPreview
+    // const attachment = attachmentPreview
     const values = { 
       senderId, 
       channel, 
       campaignMessage, 
-      contactNumber,
-      timeRange,
-      // gender, 
-      // targetAge, 
-      // location, 
-      // interest,
-      url,
-      whatsappNumber,  
-      phoneNumber,
-      ussd,
-      smsNumber,
+      targetAudience,
       callToAction,
       attachment,
+      iosStoreUrl,
+      androidStoreUrl,
       price 
     }
-    const payLoad = [values.senderId, values.channel, values.campaignMessage, values.contactNumber, values.attachment, price];
-
-    // console.log(values);
     
+    console.log(values)
+
     switch(step) {
       case 1: 
         return (
@@ -121,6 +118,8 @@ export default class AppDownloadStepForm extends Component {
             handleChange={ this.handleChange }
             onChangeAttachment={ this.onChangeAttachment }
             values={ values }
+            handleImageUpload={this.handleImageUpload}
+            attachmentPreview={this.attachmentPreview}
           />
         )
       case 2: 
@@ -141,7 +140,6 @@ export default class AppDownloadStepForm extends Component {
               nextStep={ this.nextStep }
               values={ values }
               audience={audience}
-              payLoad={payLoad}
             />
           )
         case 4: 

@@ -8,7 +8,7 @@ import Loader from '../../../loader'
 
 import MetaData from '../../../layout/MetaData'
 
-const SmsCampaign = ({ nextStep, handleChange, values, onChangeAttachment }) => {
+const SmsCampaign = ({ nextStep, handleChange, values, onChangeAttachment, handleImageUpload, attachmentPreview }) => {
     const alert = useAlert();
     const dispatch = useDispatch();
     const { senderID, loading } = useSelector(state => state.senderID  || []);
@@ -24,6 +24,7 @@ const SmsCampaign = ({ nextStep, handleChange, values, onChangeAttachment }) => 
         } 
         else {
             nextStep();
+            handleImageUpload();
         }
     }
     const selectChannels = [
@@ -102,11 +103,23 @@ const SmsCampaign = ({ nextStep, handleChange, values, onChangeAttachment }) => 
                                                             </div>
                                                             <div className="form-group">
                                                                 <label htmlFor className="mb-1">IOS store URL</label>
-                                                                <input type="text" className="form-control" id placeholder="Enter URL here" />
+                                                                <input 
+                                                                    type="text" 
+                                                                    className="form-control" 
+                                                                    placeholder="Enter URL here" 
+                                                                    defaultValue={values.iosStoreUrl}
+                                                                    onChange={handleChange('iosStoreUrl')}
+                                                                />
                                                             </div>
                                                             <div className="form-group">
                                                                 <label htmlFor className="mb-1">Android store URL</label>
-                                                                <input type="text" className="form-control" id placeholder="Enter URL here" />
+                                                                <input 
+                                                                    type="text" 
+                                                                    className="form-control" 
+                                                                    placeholder="Enter URL here"
+                                                                    defaultValue={values.androidStoreUrl}
+                                                                    onChange={handleChange('androidStoreUrl')}
+                                                                />
                                                             </div>
                                                             <div className="form-group">
                                                                 <label htmlFor className="mb-1">Select Channel</label>
@@ -122,14 +135,21 @@ const SmsCampaign = ({ nextStep, handleChange, values, onChangeAttachment }) => 
                                                             </div>
                                                             <div className="form-group">
                                                                 <label htmlFor className="mb-1">Call to Action</label>
-                                                                <input type="number" className="form-control" id placeholder="Enter call to action prompt e.g download now" />
+                                                                <input 
+                                                                    type="number" 
+                                                                    className="form-control" 
+                                                                    placeholder="Enter call to action prompt e.g download now"
+                                                                    defaultValue={values.callToAction}
+                                                                    onChange={handleChange('callToAction')}
+                                                                />
                                                             </div>
                                                             <div className="form-group">
                                                                 <label htmlFor className="mb-1">Campaign Message</label>
                                                                 <textarea 
                                                                     className="form-control" 
                                                                     rows={3} 
-                                                                    placeholder="Type your ad message here" defaultValue={values.campaignMessage}
+                                                                    placeholder="Type your ad message here" 
+                                                                    defaultValue={values.campaignMessage}
                                                                     onChange={handleChange('campaignMessage')}
                                                                 />
                                                             </div>
@@ -173,7 +193,7 @@ const SmsCampaign = ({ nextStep, handleChange, values, onChangeAttachment }) => 
                                                 <div className="card shadow-sm rounded bd-0">
                                                     <div className="card-body">
                                                         <div>
-                                                            <img src={values.attachment} className="img-fluid mg-b-10" alt="" srcSet />
+                                                            <img src={attachmentPreview} className="img-fluid mg-b-10" alt="" srcSet />
                                                             <p className="mb-4">
                                                                 {values.campaignMessage}
                                                             </p>
