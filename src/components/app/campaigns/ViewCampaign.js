@@ -133,7 +133,7 @@ const ViewCampaign = () => {
         <Fragment>
             {loading ? <Loader /> : (
                 <Fragment>
-                    <MetaData title={"All Campaings"} />
+                    <MetaData title={"All Campaigns"} />
                         <div className="content-body">
                             <div className="container pd-x-0">
                                 <div className="row justify-content-between">
