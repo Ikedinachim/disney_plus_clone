@@ -17,6 +17,7 @@ export default class AppDownloadStepForm extends Component {
     callToAction: '',
     attachment: '',
     attachmentPreview: '',
+    uploadedImage: '',
     price: 0,
   }
 
@@ -82,8 +83,7 @@ export default class AppDownloadStepForm extends Component {
     const { 
       senderId, 
       channel, 
-      campaignMessage, 
-      smsNumber,
+      campaignMessage,
       callToAction,
       attachment,
       attachmentPreview,
@@ -119,7 +119,7 @@ export default class AppDownloadStepForm extends Component {
             onChangeAttachment={ this.onChangeAttachment }
             values={ values }
             handleImageUpload={this.handleImageUpload}
-            attachmentPreview={this.attachmentPreview}
+            attachmentPreview={attachmentPreview}
           />
         )
       case 2: 
@@ -140,6 +140,8 @@ export default class AppDownloadStepForm extends Component {
               nextStep={ this.nextStep }
               values={ values }
               audience={audience}
+              attachmentPreview={attachmentPreview}
+              price={price}
             />
           )
         case 4: 

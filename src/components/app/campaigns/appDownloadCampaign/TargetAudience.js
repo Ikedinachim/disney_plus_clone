@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react'
 
 import MetaData from '../../../layout/MetaData'
 
-const TargetAudience = ({ prevStep, nextStep, handleChange, phoneNumber }) => {
+const TargetAudience = ({ prevStep, nextStep, handleChange, numbers }) => {
     
     const [status, setStatus] = useState(3);
     const radioHandler = (status) => {
@@ -203,9 +203,9 @@ const TargetAudience = ({ prevStep, nextStep, handleChange, phoneNumber }) => {
                                                             className="form-control"
                                                             id
                                                             rows={4}
-                                                            onChange={handleChange('phoneNumber')}
+                                                            onChange={handleChange('numbers')}
                                                             placeholder="Enter Number"
-                                                            defaultValue={phoneNumber}
+                                                            defaultValue={numbers}
                                                         />
                                                     </div>
                                                 </div>
@@ -220,7 +220,7 @@ const TargetAudience = ({ prevStep, nextStep, handleChange, phoneNumber }) => {
                                             onClick={ Continue }
                                             type="submit"
                                             variant="contained"
-                                            disabled={ phoneNumber === '' ? true : false }
+                                            disabled={ numbers === '' ? true : false }
                                         >
                                             Filter
                                         </button>

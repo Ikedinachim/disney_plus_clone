@@ -136,11 +136,11 @@ const SmsCampaign = ({ nextStep, handleChange, values, onChangeAttachment, handl
                                                             <div className="form-group">
                                                                 <label htmlFor className="mb-1">Call to Action</label>
                                                                 <input 
-                                                                    type="number" 
+                                                                    type="text" 
                                                                     className="form-control" 
                                                                     placeholder="Enter call to action prompt e.g download now"
                                                                     defaultValue={values.callToAction}
-                                                                    onChange={handleChange('callToAction')}
+                                                                    onBlur={handleChange('callToAction')}
                                                                 />
                                                             </div>
                                                             <div className="form-group">
@@ -162,7 +162,7 @@ const SmsCampaign = ({ nextStep, handleChange, values, onChangeAttachment, handl
                                                                         type="file" 
                                                                         className="custom-file-input" 
                                                                         id="customFile"
-                                                                        onChange={onChangeAttachment('attachmentPreview')}
+                                                                        onChange={onChangeAttachment('uploadedImage')}
                                                                     />
                                                                     <label className="custom-file-label" htmlFor="customFile">Click to upload desired icon (if needed)</label>
                                                                 </div>
@@ -198,11 +198,25 @@ const SmsCampaign = ({ nextStep, handleChange, values, onChangeAttachment, handl
                                                                 {values.campaignMessage}
                                                             </p>
                                                         </div>
-                                                        <div className="pd-b-40">
+                                                        {values.callToAction === "" || (values.androidStoreUrl === "" || values.iosStoreUrl === "") ? null :
+                                                            <div className="pd-b-40">
+                                                                <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                                                    {values.callToAction}
+                                                                </button>
+                                                            </div>
+                                                        }
+                                                        {/* {values.callToAction === "" || values.androidStoreUrl === "" || values.iosStoreUrl === "" ? null :
+                                                            <div className="pd-b-40">
+                                                                <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                                                    Download
+                                                                </button>
+                                                            </div>
+                                                        } */}
+                                                        {/* <div className="pd-b-40">
                                                             <button className="btn btn-primary w-100 mg-b-15 round-5">
                                                                 Download
                                                             </button>
-                                                        </div>
+                                                        </div> */}
                                                     </div>
                                                 </div>
                                             </div>
