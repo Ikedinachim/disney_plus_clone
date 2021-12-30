@@ -34,29 +34,22 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience, attachmentPrevi
 
     const submitFlierVideoCampaignHandler = async (e) => {
         e.preventDefault();
-
         dispatch(createAppDownloadCampaignAction(values))
 
     }
+    
     useEffect( () => {
         if(createAppDownloadCampaign && createAppDownloadCampaign.status === 'success') {
             alert.success(createAppDownloadCampaign.message)
             dispatch(getWallet())
             navigate('/app/campaigns')
             dispatch({ type: APP_DOWNLOAD_CAMPAIGN_RESET })
-        } 
-        // else {
-        //     alert.error(error)
-        //     dispatch(clearErrors())
-        //     navigate('/app/campaign/app-download')
-        // }
-
-        if(error) {
+        } else if(error) {
             alert.error(error)
             dispatch(clearErrors())
             dispatch(getWallet())
         }        
-    }, [dispatch, alert, error, createAppDownloadCampaign, loading, navigate ])
+    }, [dispatch, alert, error, createAppDownloadCampaign, navigate ])
 
     return (
         <Fragment>

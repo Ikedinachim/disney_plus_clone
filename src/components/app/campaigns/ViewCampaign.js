@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import { useSelector, useDispatch } from 'react-redux'
+import { useAlert } from 'react-alert'
 import { DateTime } from "luxon";
 import NumberFormat from 'react-number-format'
 
@@ -16,6 +17,7 @@ const ViewCampaign = () => {
 
     const { loading, error, allCampaigns } = useSelector(state => state.getAllCampaign || {});
     const dispatch = useDispatch()
+    const alert = useAlert();
 
     useEffect(() => {
 
@@ -24,9 +26,9 @@ const ViewCampaign = () => {
             dispatch(clearErrors())
         }
         dispatch(getAllCampaigns())
-        dispatch(getWallet())
+        // dispatch(getWallet())
 
-    }, [dispatch, error])
+    }, [dispatch, alert, error])
 
 
     const setAllCampaigns = () => {

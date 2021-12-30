@@ -37,25 +37,19 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience, attachmentPrevi
 
         dispatch(createFlierVideoCampaignAction(values))
 
-        if(createFlierVideoCampaign.status === 'success') {
+    }
+    useEffect( () => {
+        if(createFlierVideoCampaign && createFlierVideoCampaign.status === 'success') {
             alert.success(createFlierVideoCampaign.message)
             dispatch(getWallet())
             navigate('/app/campaigns')
             dispatch({ type: VIDEO_FLIER_CAMPAIGN_RESET })
-        } else {
-            alert.error(error)
-            dispatch(clearErrors())
-            navigate('/app/campaign/flier-video')
-        }
-
-    }
-    useEffect( () => {
-        if(error) {
+        } else if(error) {
             alert.error(error)
             dispatch(clearErrors())
             dispatch(getWallet())
         }        
-    }, [dispatch, alert, error ])
+    }, [dispatch, alert, error, createFlierVideoCampaign, navigate ])
 
     return (
         <Fragment>

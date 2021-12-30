@@ -55,7 +55,7 @@ const FundWalletSMS = ({ prevStep, values }) => {
         <Fragment>
             {loading ? <Loader /> : (
                 <Fragment>
-                    <MetaData title={"Sender ID"} />
+                    <MetaData title={"Fund Wallet"} />
                         <div className="content-body">
                             <div className="container pd-x-0">
                                 <div className="row justify-content-between">

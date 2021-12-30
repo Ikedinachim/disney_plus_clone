@@ -41,6 +41,7 @@ export const createSmsCampaignReducer = (state = { createSmsCampaign: [] }, acti
         case SMS_CAMPAIGN_FAIL:
             return {
                 loading: false,
+                createSmsCampaign: null,
                 error: action.payload
             }
 
@@ -71,6 +72,7 @@ export const createFlierVideoCampaignReducer = (state = { createFlierVideoCampai
         case VIDEO_FLIER_CAMPAIGN_FAIL:
             return {
                 loading: false,
+                createFlierVideoCampaign: null,
                 error: action.payload
             }
         case VIDEO_FLIER_CAMPAIGN_RESET:

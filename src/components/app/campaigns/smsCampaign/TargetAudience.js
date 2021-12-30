@@ -20,7 +20,7 @@ const TargetAudience = ({ prevStep, nextStep, handleChange, phoneNumber }) => {
 
     return (
         <Fragment>
-            <MetaData title={"Sender ID"} />
+            <MetaData title={"Target Audience"} />
                 <div className="content-body">
                     <div className="container-fluid">
                         <div className="card card-body rounded bd-0 shadow-sm pd-lg-x-50 pd-lg-y-30">

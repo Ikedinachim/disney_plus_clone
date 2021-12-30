@@ -32,26 +32,21 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
 
     const submitSmsCampaignHandler = (e) => {
         e.preventDefault();
-        dispatch(createSmsCampaignAction(values))        
-        
-        if(createSmsCampaign.status === 'success') {
+        dispatch(createSmsCampaignAction(values))    
+    }
+    
+    useEffect( () => {
+        if(createSmsCampaign && createSmsCampaign.status === 'success') {
             alert.success(createSmsCampaign.message)
             dispatch(getWallet())
             navigate('/app/campaigns')
             dispatch({ type: SMS_CAMPAIGN_RESET })
-        }else {
-            alert.error(error)
-            navigate('/app/campaign/sms')
-            dispatch(clearErrors())
-        }
-
-    }
-    useEffect( () => {
-        if(error) {
+        } else if(error) {
             alert.error(error)
             dispatch(clearErrors())
+            dispatch(getWallet())
         }
-    }, [dispatch, alert, error])
+    }, [dispatch, alert, error, createSmsCampaign, navigate])
 
     return (
         <Fragment>
