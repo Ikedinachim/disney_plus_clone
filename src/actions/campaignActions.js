@@ -76,7 +76,7 @@ export const createFlierVideoCampaignAction = (flierVideoCampaignData) => async 
                 "Authorization" : `Bearer ${token}`
             }
         }
-        const { data } = await axios.post('api/campaign/flier-video-campaign', flierVideoCampaignData, config)
+        const { data } = await axios.post('api/campaign/create-flier-video-campaign', flierVideoCampaignData, config)
 
         if (data.status === "success") {
             dispatch({
@@ -112,7 +112,7 @@ export const createAppDownloadCampaignAction = (appDownloadCampaignData) => asyn
                 "Authorization" : `Bearer ${token}`
             }
         }
-        const { data } = await axios.post('api/campaign/app-download', appDownloadCampaignData, config)
+        const { data } = await axios.post('api/campaign/create-app-download', appDownloadCampaignData, config)
 
         if (data.status === "success") {
             dispatch({

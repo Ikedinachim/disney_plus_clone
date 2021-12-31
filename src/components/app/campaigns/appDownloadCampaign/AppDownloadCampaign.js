@@ -33,24 +33,20 @@ const SmsCampaign = ({ nextStep, handleChange, values, onChangeAttachment, handl
             value: "select channel"
         },
         {
-            label: "Flash sms",
-            value: "flash sms"
+            label: "Flash SMS",
+            value: "flash_sms"
         },
         {
-            label: "SMS/Flash SMS Campaign",
-            value: "SMS/FLASH SMS Campaign"
+            label: "Smart SMS",
+            value: "smart_sms"
         },
         {
-            label: "Flier/Video Ad Campaign",
-            value: "Flier/Video Ad Campaign"
+            label: "Display Ads",
+            value: "display_ads"
         },
         {
-            label: "Influential Marketing",
-            value: "Influential Marketing"
-        },
-        {
-            label: "App Download",
-            value: "App Download"
+            label: "SMS",
+            value: "sms"
         }
     ]
 
