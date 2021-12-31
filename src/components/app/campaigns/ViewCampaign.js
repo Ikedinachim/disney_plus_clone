@@ -39,11 +39,11 @@ const ViewCampaign = () => {
                     field: 'id',
                     sort: 'asc'    
                 },
-                // {
-                //     label: 'CAMPAIGN NAME',
-                //     field: 'campaignName',
-                //     sort: 'asc'    
-                // },
+                {
+                    label: 'CAMPAIGN NAME',
+                    field: 'campaignName',
+                    sort: 'asc'    
+                },
                 {
                     label: 'AD TYPE',
                     field: 'adType',
@@ -81,7 +81,7 @@ const ViewCampaign = () => {
         allCampaigns.forEach(campaign => {
             data.rows.push({
                 id: campaign.id,
-                // campaignName: campaign.name,
+                campaignName: campaign.name,
                 adType: campaign.channel,
                 revenue: <NumberFormat value={0} displayType={'text'} thousandSeparator={true} prefix={'₦'} />,
                 cost: <NumberFormat value={campaign.price} displayType={'text'} thousandSeparator={true} prefix={'₦'} />,

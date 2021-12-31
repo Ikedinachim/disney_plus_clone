@@ -37,7 +37,7 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience, attachmentPrevi
         dispatch(createAppDownloadCampaignAction(values))
 
     }
-    
+
     useEffect( () => {
         if(createAppDownloadCampaign && createAppDownloadCampaign.status === 'success') {
             alert.success(createAppDownloadCampaign.message)
@@ -112,21 +112,21 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience, attachmentPrevi
                                                     </div>
                                                     <div className="row mg-t-15">
                                                         <div className="form-group col-md-6">
-                                                            <label htmlFor className="tx-14 tx-gray mb-0 tx-medium">USSD Code</label>
-                                                            <p className="tx-16 mb-0">*{values.ussd}#</p>
+                                                            <label htmlFor className="tx-14 tx-gray mb-0 tx-medium">Channel</label>
+                                                            <p className="tx-16 mb-0">{values.channel}</p>
                                                         </div>
                                                         <div className="form-group col-md-6">
-                                                            <label htmlFor className="tx-14 tx-gray mb-0 tx-medium">Phone Call</label>
-                                                            <p className="tx-16 mb-0">{values.phoneNumber}</p>
+                                                            <label htmlFor className="tx-14 tx-gray mb-0 tx-medium">Call To Action</label>
+                                                            <p className="tx-16 mb-0">{values.callToAction}</p>
                                                         </div>
-                                                        <div className="form-group col-md-6">
+                                                        {/* <div className="form-group col-md-6">
                                                             <label htmlFor className="tx-14 tx-gray mb-0 tx-medium">WhatsApp Number</label>
                                                             <p className="tx-16 mb-0">{values.whatsAppNumber}</p>
                                                         </div>
                                                         <div className="form-group col-md-6">
                                                             <label htmlFor className="tx-14 tx-gray mb-0 tx-medium">SMS Number</label>
                                                             <p className="tx-16 mb-0">{values.smsNumber}</p>
-                                                        </div>
+                                                        </div> */}
                                                         <div className="form-group col-md-12">
                                                             <label htmlFor className="tx-14 tx-gray mb-0 tx-medium">Campaign Message</label>
                                                             <p className="tx-15 mb-0">{values.campaignMessage}</p>
