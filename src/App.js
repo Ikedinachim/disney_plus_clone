@@ -18,6 +18,7 @@ import ViewCampaign from "./components/app/campaigns/ViewCampaign"
 import SmsStepForm from "./components/app/campaigns/smsCampaign/SmsStepForm"
 import FlierVideoStepForm from "./components/app/campaigns/flierVideoCampaign/FlierVideoStepForm"
 import AppDownloadStepForm from "./components/app/campaigns/appDownloadCampaign/AppDownloadStepForm";
+import Ads from "./adsView/Ads"
 
 // Auth / User Imports
 import Login from "./components/user/Login";
@@ -75,7 +76,7 @@ function App() {
           {/* <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} /> */}
-          {/* <Route path="/app" element={isAuthenticated ? <Dashboard /> : <Login />} /> */}
+          <Route path="/ad/:id/:campaignType/:slug" element={<Ads />} />
           {/* <Route path="*" element={isAuthenticated ? <Dashboard /> : <Login />} /> */}
         </Routes>
       {loading ? <Loader /> : null}

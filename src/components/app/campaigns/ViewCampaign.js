@@ -9,7 +9,7 @@ import NumberFormat from 'react-number-format'
 import Loader from "../../loader";
 import MetaData from '../../layout/MetaData'
 
-import { getWallet } from '../../../actions/billingActions'
+// import { getWallet } from '../../../actions/billingActions'
 import { MDBDataTable } from 'mdbreact'
 import { getAllCampaigns, clearErrors } from '../../../actions/campaignActions';
 

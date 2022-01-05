@@ -14,6 +14,11 @@ import {
     APP_DOWNLOAD_CAMPAIGN_RESET,
     APP_DOWNLOAD_CAMPAIGN_FAIL,
 
+    SHOW_ADS_REQUEST,
+    SHOW_ADS_SUCCESS,
+    SHOW_ADS_FAIL,
+    SHOW_ADS_RESET,
+
     GET_ALL_CAMPAIGN_REQUEST,
     GET_ALL_CAMPAIGN_SUCCESS,
     GET_ALL_CAMPAIGN_FAIL,
@@ -145,6 +150,42 @@ export const getAllCampaignsReducer = (state = { allCampaigns: [] }, action) => 
             return {
                 loading: false,
                 error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state;
+    }
+}
+
+export const createShowAdsReducer = (state = { createShowAds: [] }, action) => {
+    switch(action.type) {
+        case SHOW_ADS_REQUEST:
+            return {
+                loading: true,
+                createShowAds: []
+            }
+        
+        case SHOW_ADS_SUCCESS:
+            return {
+                loading: false,
+                createShowAds: action.payload
+            }
+        case SHOW_ADS_FAIL:
+            return {
+                loading: false,
+                createShowAds: null,
+                error: action.payload
+            }
+        case SHOW_ADS_RESET:
+            return {
+                ...state,
+                createShowAds: []
             }
 
         case CLEAR_ERRORS:

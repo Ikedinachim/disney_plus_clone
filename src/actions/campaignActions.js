@@ -13,6 +13,10 @@ import {
     APP_DOWNLOAD_CAMPAIGN_SUCCESS,
     APP_DOWNLOAD_CAMPAIGN_FAIL,
 
+    SHOW_ADS_REQUEST,
+    SHOW_ADS_SUCCESS,
+    SHOW_ADS_FAIL,
+    // SHOW_ADS_RESET,
 
     GET_ALL_CAMPAIGN_REQUEST,
     GET_ALL_CAMPAIGN_SUCCESS,
@@ -159,6 +163,43 @@ export const getAllCampaigns = () => async (dispatch) => {
         } else {
             dispatch({
                 type: GET_ALL_CAMPAIGN_FAIL,
+                payload: data.message
+            })
+        }
+        
+    } catch (error) {
+        dispatch({
+            type: GET_ALL_CAMPAIGN_FAIL,
+            payload: error.message
+        })
+    }
+}
+
+// Get All Campaigns
+export const showAds = (id, campaignType, slug) => async (dispatch) => {
+    try {
+        
+        
+        dispatch({ type: SHOW_ADS_REQUEST })
+        // let user = JSON.parse(sessionStorage.getItem('user'));
+        // const token = user.user.token;
+
+        // const config = {
+        //     headers: {
+        //         "Authorization" : `Bearer ${token}`
+        //     }
+        // }
+
+        const { data } = await axios.get(`/api/campaign/get-data/${id}/${campaignType}/${slug}`)
+
+        if (data.status === "success") {
+            dispatch({
+                type: SHOW_ADS_SUCCESS,
+                payload: data.data,
+            })
+        } else {
+            dispatch({
+                type: SHOW_ADS_FAIL,
                 payload: data.message
             })
         }

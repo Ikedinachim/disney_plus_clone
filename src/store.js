@@ -12,7 +12,7 @@ import {
 
 import { senderIDReducer, createSenderIdReducer } from './reducers/senderIDReducers'
 import {  walletReducer, transactionHistoryReducer, fundWalletReducer, confirmFundingReducer } from './reducers/billingReducers'
-import { createSmsCampaignReducer, createFlierVideoCampaignReducer, getAllCampaignsReducer, createAppDownloadCampaignReducer } from './reducers/campaignReducers'
+import { createSmsCampaignReducer, createFlierVideoCampaignReducer, getAllCampaignsReducer, createAppDownloadCampaignReducer, createShowAdsReducer } from './reducers/campaignReducers'
 
 const appReducer = combineReducers({
 
@@ -26,6 +26,7 @@ const appReducer = combineReducers({
     smsCampaign: createSmsCampaignReducer,
     flierVideoCampaign: createFlierVideoCampaignReducer,
     getAllCampaign: getAllCampaignsReducer,
+    showAds: createShowAdsReducer,
     appDownload: createAppDownloadCampaignReducer    
 })
 
