@@ -118,7 +118,7 @@ const Register = () => {
 
     const submitIndividualHandler = (data) => {
         // data.preventDefault();
-        console.log(data);
+        // console.log(data);
         
         dispatch(registerUser(data))
         reset();
@@ -130,8 +130,7 @@ const Register = () => {
 
     const submitBusinessHandler = (data) => {
         // e.preventDefault();
-        console.log(data);
-        console.log('Working!!')
+        // console.log(data);
 
         dispatch(registerUser(data))
         resetBusiness();

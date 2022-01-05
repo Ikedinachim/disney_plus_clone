@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Outlet } from 'react-router-dom'
 
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -41,6 +41,7 @@ const Dashboard = () => {
             {loading ? <Loader /> : (
                 <Fragment>
                     <MetaData title={"Dashboard"} />
+                    {/* <Outlet /> */}
                         <div className="content-body">
                             <div className="container pd-x-0">
                                 <p className="mg-b-0 tx-26 tx-bold tx-com">

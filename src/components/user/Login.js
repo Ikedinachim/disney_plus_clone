@@ -24,8 +24,8 @@ const Login = () => {
     useEffect( () => {
 
         if(isAuthenticated) {
-            navHistory('/app')
             dispatch(getWallet())
+            navHistory('/app')
         } 
         else {
             navHistory('/login')
@@ -43,6 +43,7 @@ const Login = () => {
     const submitHandler = (e) => {
         e.preventDefault();
         dispatch(login(userName, password))
+        dispatch(getWallet())
         setUsername("");
         setPassword("");
     }

@@ -48,7 +48,7 @@ const CreateCampaign = () => {
                                         <p className="tx-14">Select the goal that would make the campaign successful for you</p>
                                         <div className="row">
                                             <div className="col-md-6 col-lg-3 col-12 mg-t-20">
-                                                <Link to="/app/campaign/create" className="tx-dark">
+                                                <Link to="/app/campaign/influencer" className="tx-dark">
                                                     <div className="card card-height rounded bd-0 shadow-sm">
                                                         <div className="card-body tx-center pd-x-12 pd-md-x-30">
                                                             <img src="../../../assets/img/Influencer_Marketing_sm.png" alt="" className="img-fluid" />
