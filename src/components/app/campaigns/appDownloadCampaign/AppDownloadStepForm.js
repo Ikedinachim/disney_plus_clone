@@ -18,6 +18,7 @@ export default class AppDownloadStepForm extends Component {
     attachment: '',
     attachmentPreview: '',
     uploadedImage: '',
+    campaignType: 'app_download',
     price: 0,
   }
 
@@ -89,6 +90,7 @@ export default class AppDownloadStepForm extends Component {
       attachmentPreview,
       iosStoreUrl,
       androidStoreUrl,
+      campaignType,
       numbers
     } = this.state;
 
@@ -105,6 +107,7 @@ export default class AppDownloadStepForm extends Component {
       attachment,
       iosStoreUrl,
       androidStoreUrl,
+      campaignType,
       price 
     }
     

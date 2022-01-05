@@ -16,12 +16,11 @@ const SenderID = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-
+        dispatch(getSenderID())
         if(error) {
             alert.error(error)
             dispatch(clearErrors())
         }
-        dispatch(getSenderID())
 
     }, [dispatch, error])
 

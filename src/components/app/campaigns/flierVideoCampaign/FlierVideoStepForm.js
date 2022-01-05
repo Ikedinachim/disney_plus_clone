@@ -29,6 +29,7 @@ export default class FlierVideoStepForm extends Component {
     attachmentPreview: '',
     targetAudience: '',
     uploadedImage: '',
+    campaignType: 'flier_video',
     price: 0,
   }
 
@@ -129,6 +130,7 @@ export default class FlierVideoStepForm extends Component {
       timeRangeTo,
       attachment,
       attachmentPreview,
+      campaignType,
       // attachment,
       numbers
     } = this.state;
@@ -155,6 +157,7 @@ export default class FlierVideoStepForm extends Component {
       callToAction,
       attachment,
       targetAudience,
+      campaignType
       // price
     }
     // const payLoad = [values.senderId, values.channel, values.campaignMessage, values.whatsAppNumber, values.targetAudience, values.attachment, price];

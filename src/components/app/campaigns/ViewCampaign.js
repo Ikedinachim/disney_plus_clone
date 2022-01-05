@@ -20,12 +20,11 @@ const ViewCampaign = () => {
     const alert = useAlert();
 
     useEffect(() => {
-
+        dispatch(getAllCampaigns())
         if(error) {
             alert.error(error)
             dispatch(clearErrors())
         }
-        dispatch(getAllCampaigns())
         // dispatch(getWallet())
 
     }, [dispatch, alert, error])
