@@ -16,6 +16,7 @@ export default class SmsStepForm extends Component {
     location: ['Lagos'],
     interest: 'business',
     phoneNumber: '',
+    campaignType: 'sms',
     price: 0,
   }
 
@@ -38,11 +39,32 @@ export default class SmsStepForm extends Component {
 
   render() {    
     const { step } = this.state;
-    const { senderId, channel, campaignMessage, gender, targetAge, location, interest,  phoneNumber } = this.state;
+    const { 
+      senderId, 
+      channel, 
+      campaignMessage, 
+      gender, 
+      targetAge, 
+      location, 
+      interest,
+      campaignType, 
+      phoneNumber 
+    } = this.state;
     const contactNumber = phoneNumber.split(',')
     const audience = contactNumber.length
     const price = audience * 5
-    const values = { senderId, channel, campaignMessage, contactNumber, gender, targetAge, location, interest, price }
+    const values = { 
+      senderId, 
+      channel, 
+      campaignMessage, 
+      contactNumber, 
+      gender, 
+      targetAge, 
+      location, 
+      interest,
+      campaignType, 
+      price 
+    }
     const payLoad = [values.senderId, values.channel, values.campaignMessage, values.contactNumber, gender, targetAge, location, interest, price];
     
     switch(step) {

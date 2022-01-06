@@ -6,32 +6,31 @@ import { useAlert } from 'react-alert'
 import { DateTime } from "luxon";
 import NumberFormat from 'react-number-format'
 
-import Loader from "../../loader";
-import MetaData from '../../layout/MetaData'
-import Tabs from './tabComponent/Tabs'
+import Loader from "../../../loader";
+import MetaData from '../../../layout/MetaData'
 
 // import { getWallet } from '../../../actions/billingActions'
 import { MDBDataTable } from 'mdbreact'
-import { getAllCampaigns, clearErrors } from '../../../actions/campaignActions';
+import { getViewFlierVideosCampaigns, clearErrors } from '../../../../actions/campaignActions';
 
-const ViewCampaign = () => {
+const ViewAppDownloadsCampaigns = () => {
 
-    const { loading, error, allCampaigns } = useSelector(state => state.getAllCampaign || {});
+    const { adLoading, error, viewAppDownloadCampaigns } = useSelector(state => state.viewAppDownloadCampaign || {});
     const dispatch = useDispatch()
     const alert = useAlert();
 
-    useEffect(() => {
-        dispatch(getAllCampaigns())
-        if(error) {
-            alert.error(error)
-            dispatch(clearErrors())
-        }
-        // dispatch(getWallet())
+    // useEffect(() => {
+    //     dispatch(getViewFlierVideosCampaigns())
+    //     if(error) {
+    //         alert.error(error)
+    //         dispatch(clearErrors())
+    //     }
+    //     // dispatch(getWallet())
 
-    }, [dispatch, alert, error])
+    // }, [dispatch, alert, error])
 
 
-    const setAllCampaigns = () => {
+    const setViewAppDownloadCampaigns = () => {
         const data = {
             columns: [
                 {
@@ -78,7 +77,7 @@ const ViewCampaign = () => {
             rows: []
         }
 
-        allCampaigns.forEach(campaign => {
+        viewAppDownloadCampaigns.forEach(campaign => {
             data.rows.push({
                 id: campaign.id,
                 campaignName: campaign.name,
@@ -133,46 +132,19 @@ const ViewCampaign = () => {
 
     return (
         <Fragment>
-            {loading ? <Loader /> : (
-                <Fragment>
-                    <MetaData title={"All Campaigns"} />
-                        <div className="content-body">
-                            <div className="container pd-x-0">
-                                <div className="row justify-content-between">
-                                    <div className="col-md-6 col-6">
-                                    <p className="mg-b-0 tx-26 tx-bold">Campaigns</p>
-                                    </div>
-                                    <div className="col-md-2 col-6">
-                                    <p>
-                                        <Link to="/app/campaign/create" className="btn btn-primary w-100">
-                                        {" "}
-                                        Create Campaign
-                                        </Link>
-                                    </p>
-                                    </div>
-                                </div>
-                                <div className="card card rounded bd-0 shadow-sm">
-                                    <div className="card-header bd-b-0 pd-b-0 pd-t-40 pd-md-x-30">
-                                        <Tabs />
-                                    </div>
-                                    <div className="card-body pd-md-x-30 pd-t- mg-t-20 mg-md-t-0">
-                                    <MDBDataTable 
-                                        data={setAllCampaigns()}
-                                        className="px-3 scroll"
-                                        bordered
-                                        striped
-                                        hover
-                                        checkboxFirstColumn
-                                    />
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                </Fragment>
+            {/* <MetaData title={"SMS Campaigns"} /> */}
+            {adLoading ? <Loader /> : (
+                <MDBDataTable 
+                    data={setViewAppDownloadCampaigns()}
+                    className="px-3 scroll"
+                    bordered
+                    striped
+                    hover
+                    checkboxFirstColumn
+                />
             )}
         </Fragment>
     )
 }
 
-export default ViewCampaign
+export default ViewAppDownloadsCampaigns

@@ -14,7 +14,8 @@ import FundWallet from "./components/app/billing/FundWallet";
 import RequestSenderID from "./components/app/SenderID/RequestSenderID";
 import CreateCampaign from "./components/app/campaigns/CreateCampaign"
 // import TargetAudience from "./components/app/campaigns/TargetAudience"
-import ViewCampaign from "./components/app/campaigns/ViewCampaign"
+// import ViewCampaign from "./components/app/campaigns/ViewCampaign"
+import ViewCampaignTabs from "./components/app/campaigns/viewCampaigns/ViewCampaignTabs";
 // import PreviewCampaign from "./components/app/campaigns/PreviewCampaign"
 import SmsStepForm from "./components/app/campaigns/smsCampaign/SmsStepForm"
 import FlierVideoStepForm from "./components/app/campaigns/flierVideoCampaign/FlierVideoStepForm"
@@ -55,7 +56,7 @@ function App() {
             <Route path="request-sender-id" element={isAuthenticated ? <RequestSenderID /> : <Login />} />
             <Route path="billing" element={isAuthenticated ? <BillingOverview /> : <Login />} />
             <Route path="billing/fund-wallet" element={isAuthenticated ? <FundWallet /> : <Login />} />
-            <Route path="campaigns" element={isAuthenticated ? <ViewCampaign /> : <Login />} />
+            <Route path="campaigns" element={isAuthenticated ? <ViewCampaignTabs /> : <Login />} />
             <Route path="campaign/create" element={isAuthenticated ? <CreateCampaign /> : <Login />} />
             <Route path="campaign/sms" element={isAuthenticated ? <SmsStepForm /> : <Login />} />
             <Route path="campaign/flier-video" element={isAuthenticated ? <FlierVideoStepForm /> : <Login />} />

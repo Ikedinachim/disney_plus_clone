@@ -19,9 +19,18 @@ import {
     SHOW_ADS_FAIL,
     SHOW_ADS_RESET,
 
-    GET_ALL_CAMPAIGN_REQUEST,
-    GET_ALL_CAMPAIGN_SUCCESS,
-    GET_ALL_CAMPAIGN_FAIL,
+    GET_SMS_CAMPAIGN_REQUEST,
+    GET_SMS_CAMPAIGN_SUCCESS,
+    GET_SMS_CAMPAIGN_FAIL,
+
+    VIEW_FLIER_VIDEO_CAMPAIGN_REQUEST,
+    VIEW_FLIER_VIDEO_CAMPAIGN_SUCCESS,
+    VIEW_FLIER_VIDEO_CAMPAIGN_FAIL,
+
+    VIEW_APP_DOWNLOAD_CAMPAIGN_REQUEST,
+    VIEW_APP_DOWNLOAD_CAMPAIGN_SUCCESS,
+    VIEW_APP_DOWNLOAD_CAMPAIGN_FAIL,
+
     CLEAR_ERRORS
 } from '../constants/campaignConstants'
 
@@ -133,22 +142,82 @@ export const createAppDownloadCampaignReducer = (state = { createAppDownloadCamp
     }
 }
 
-export const getAllCampaignsReducer = (state = { allCampaigns: [] }, action) => {
+export const getSmsCampaignsReducer = (state = { smsCampaigns: [] }, action) => {
     switch(action.type) {
-        case GET_ALL_CAMPAIGN_REQUEST:
+        case GET_SMS_CAMPAIGN_REQUEST:
             return {
                 loading: true,
             }
         
-        case GET_ALL_CAMPAIGN_SUCCESS:
+        case GET_SMS_CAMPAIGN_SUCCESS:
             return {
                 loading: false,
-                allCampaigns: action.payload,
+                smsCampaigns: action.payload,
             }
 
-        case GET_ALL_CAMPAIGN_FAIL:
+        case GET_SMS_CAMPAIGN_FAIL:
             return {
                 loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state;
+    }
+}
+
+export const viewFlierVideosCampaignsReducer = (state = { viewFlierVideosCampaigns: [] }, action) => {
+    switch(action.type) {
+        case VIEW_FLIER_VIDEO_CAMPAIGN_REQUEST:
+            return {
+                vfLoading: true,
+            }
+        
+        case VIEW_FLIER_VIDEO_CAMPAIGN_SUCCESS:
+            return {
+                vfLoading: false,
+                viewFlierVideosCampaigns: action.payload,
+            }
+
+        case VIEW_FLIER_VIDEO_CAMPAIGN_FAIL:
+            return {
+                vfLoading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state;
+    }
+}
+
+export const viewAppDownloadCampaignsReducer = (state = { viewAppDownloadCampaigns: [] }, action) => {
+    switch(action.type) {
+        case VIEW_APP_DOWNLOAD_CAMPAIGN_REQUEST:
+            return {
+                adLoading: true,
+            }
+        
+        case VIEW_APP_DOWNLOAD_CAMPAIGN_SUCCESS:
+            return {
+                adLoading: false,
+                viewAppDownloadCampaigns: action.payload,
+            }
+
+        case VIEW_APP_DOWNLOAD_CAMPAIGN_FAIL:
+            return {
+                adLoading: false,
                 error: action.payload
             }
 
