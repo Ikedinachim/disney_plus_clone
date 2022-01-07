@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
@@ -12,6 +12,11 @@ const FlierVideoCampaign = ({ nextStep, handleChange, onChangeAttachment, values
     const alert = useAlert();
     const dispatch = useDispatch();
     const { senderID, loading } = useSelector(state => state.senderID  || []);
+
+    const [showWhatsapp, setShowWhatsapp] = useState(false);
+    const [showSms, setShowSms] = useState(false);
+    const [showUssd, setShowUssd] = useState(false);
+
     const Continue = e => {
         e.preventDefault();
         if(values.callToAction === '') {
@@ -28,7 +33,25 @@ const FlierVideoCampaign = ({ nextStep, handleChange, onChangeAttachment, values
         }
     }
 
-    // console.log(values);
+    // handle click event of the Add button
+    const handleAddClick = (e) => {
+        e.preventDefault();
+        setShowWhatsapp(true);
+        setShowSms(true);
+        setShowUssd(true);
+    };
+
+    // handle click event of the Remove button
+    const handleRemoveClick = (whatsapp) => (e) => {
+        e.preventDefault();
+        if(whatsapp === 'whatsapp'){
+            setShowWhatsapp(false)
+        }else if(whatsapp === 'showSms') {
+            setShowSms(false)
+        }else if(whatsapp === 'showUssd') {
+            setShowUssd(false)
+        }
+    };
     
     const selectChannels = [
         {
@@ -127,37 +150,62 @@ const FlierVideoCampaign = ({ nextStep, handleChange, onChangeAttachment, values
                                                                 defaultValue={values.phoneNumber}
                                                                 onChange={handleChange('phoneNumber')}
                                                             />
+                                                            <button onClick={handleAddClick}>Add</button>
                                                         </div>
-                                                        <div className="form-group">
-                                                            <label htmlFor className="mb-1">WhatsApp Number</label>
-                                                            <input 
-                                                                type="number" 
-                                                                className="form-control" 
-                                                                placeholder="WhatsApp Number"
-                                                                defaultValue={values.whatsAppNumber}
-                                                                onChange={handleChange('whatsAppNumber')} 
-                                                            />
-                                                        </div>
-                                                        <div className="form-group">
-                                                            <label htmlFor className="mb-1">USSD</label>
-                                                            <input 
-                                                                type="number" 
-                                                                className="form-control" 
-                                                                placeholder="Enter preferred code"
-                                                                defaultValue={values.ussd}
-                                                                onChange={handleChange('ussd')} 
-                                                            />
-                                                        </div>
-                                                        <div className="form-group">
-                                                            <label htmlFor className="mb-1">SMS Number</label>
-                                                            <input 
-                                                                type="number" 
-                                                                className="form-control" 
-                                                                placeholder="Enter number you want to be texted on by your customers"
-                                                                defaultValue={values.smsNumber}
-                                                                onChange={handleChange('smsNumber')}
-                                                            />
-                                                        </div>
+                                                        {showWhatsapp &&
+                                                            <div className="form-group">
+                                                                <label htmlFor className="mb-1">WhatsApp Number</label>
+                                                                <input 
+                                                                    type="number" 
+                                                                    className="form-control" 
+                                                                    placeholder="WhatsApp Number"
+                                                                    defaultValue={values.whatsAppNumber}
+                                                                    onChange={handleChange('whatsAppNumber')} 
+                                                                />
+                                                                <button
+                                                                    className="mr10"
+                                                                    onClick={handleRemoveClick('whatsapp')}
+                                                                >
+                                                                    Remove
+                                                                </button>
+                                                            </div>
+                                                        }
+                                                        {showUssd &&
+                                                            <div className="form-group">
+                                                                <label htmlFor className="mb-1">USSD</label>
+                                                                <input 
+                                                                    type="number" 
+                                                                    className="form-control" 
+                                                                    placeholder="Enter preferred code"
+                                                                    defaultValue={values.ussd}
+                                                                    onChange={handleChange('ussd')} 
+                                                                />
+                                                                <button
+                                                                    className="mr10"
+                                                                    onClick={handleRemoveClick('showUssd')}
+                                                                >
+                                                                    Remove
+                                                                </button>
+                                                            </div>
+                                                        }
+                                                        {showSms &&
+                                                            <div className="form-group">
+                                                                <label htmlFor className="mb-1">SMS Number</label>
+                                                                <input 
+                                                                    type="number" 
+                                                                    className="form-control" 
+                                                                    placeholder="Enter number you want to be texted on by your customers"
+                                                                    defaultValue={values.smsNumber}
+                                                                    onChange={handleChange('smsNumber')}
+                                                                />
+                                                                <button
+                                                                    className="mr10"
+                                                                    onClick={handleRemoveClick('showSms')}
+                                                                >
+                                                                    Remove
+                                                                </button>
+                                                            </div>
+                                                        }
                                                         <div className="form-group">
                                                             <label htmlFor className="mb-1">Call To Action</label>
                                                             <input 
@@ -213,7 +261,7 @@ const FlierVideoCampaign = ({ nextStep, handleChange, onChangeAttachment, values
                                                             />
                                                         </div>
                                                     </div>
-                                                    <div className="mg-t-30">
+                                                    <div className="mg-t-20">
                                                         <p className="tx-24 tx-bold mb-1 tx-com">Attachment</p>
                                                         <div className="form-group">
                                                             <div className="custom-file">
@@ -259,7 +307,7 @@ const FlierVideoCampaign = ({ nextStep, handleChange, onChangeAttachment, values
                                                         </p>
                                                     </div>
                                                     <div>
-                                                        {values.callToAction === "" || values.whatsappNumber === "" ? null :
+                                                        {values.callToAction === "" || values.whatsAppNumber === "" ? null :
                                                             <button className="btn btn-primary w-100 mg-b-15 round-5">
                                                                 <i className="fa fa-whatsapp mg-r-5"> </i>
                                                                 {values.callToAction} via WhatsApp

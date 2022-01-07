@@ -31,6 +31,10 @@ import {
     VIEW_APP_DOWNLOAD_CAMPAIGN_SUCCESS,
     VIEW_APP_DOWNLOAD_CAMPAIGN_FAIL,
 
+    GET_FILTERED_CONTACT_LIST_REQUEST,
+    GET_FILTERED_CONTACT_LIST_SUCCESS,
+    GET_FILTERED_CONTACT_LIST_FAIL,
+
     CLEAR_ERRORS
 } from '../constants/campaignConstants'
 
@@ -225,6 +229,37 @@ export const viewAppDownloadCampaignsReducer = (state = { viewAppDownloadCampaig
             return {
                 ...state,
                 error: null
+            }
+
+        default:
+            return state;
+    }
+}
+
+export const getFilteredContactListReducer = (state = { filteredContactList: [] }, action) => {
+    switch(action.type) {
+        case GET_FILTERED_CONTACT_LIST_REQUEST:
+            return {
+                fcLoading: true,
+            }
+        
+        case GET_FILTERED_CONTACT_LIST_SUCCESS:
+            return {
+                fcLoading: false,
+                filteredContactList: action.payload,
+            }
+
+        case GET_FILTERED_CONTACT_LIST_FAIL:
+            return {
+                fcLoading: false,
+                filteredContactList: null,
+                fcError: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                fcError: null
             }
 
         default:

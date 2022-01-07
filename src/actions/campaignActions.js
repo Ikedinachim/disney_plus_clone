@@ -30,6 +30,10 @@ import {
     VIEW_APP_DOWNLOAD_CAMPAIGN_SUCCESS,
     VIEW_APP_DOWNLOAD_CAMPAIGN_FAIL,
 
+    GET_FILTERED_CONTACT_LIST_REQUEST,
+    GET_FILTERED_CONTACT_LIST_SUCCESS,
+    GET_FILTERED_CONTACT_LIST_FAIL,
+
     CLEAR_ERRORS,
 } from '../constants/campaignConstants'
 
@@ -253,6 +257,41 @@ export const getAppDownloadCampaigns = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: VIEW_APP_DOWNLOAD_CAMPAIGN_FAIL,
+            payload: error.message
+        })
+    }
+}
+
+// Get Filtered Contact List
+export const getFilteredContactList = (filterContactData) => async (dispatch) => {
+    try {        
+        dispatch({ type: GET_FILTERED_CONTACT_LIST_REQUEST })
+        let user = JSON.parse(sessionStorage.getItem('user'));
+        const token = user.user.token;
+
+        const config = {
+            headers: {
+                "Authorization" : `Bearer ${token}`
+            }
+        }
+
+        const { data } = await axios.post('/api/campaign/filter-database',filterContactData, config)
+
+        if (data.status === "success") {
+            dispatch({
+                type: GET_FILTERED_CONTACT_LIST_SUCCESS,
+                payload: data,
+            })
+        } else {
+            dispatch({
+                type: GET_FILTERED_CONTACT_LIST_FAIL,
+                payload: data.message
+            })
+        }
+        
+    } catch (error) {
+        dispatch({
+            type: GET_FILTERED_CONTACT_LIST_FAIL,
             payload: error.message
         })
     }

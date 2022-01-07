@@ -12,7 +12,6 @@ export default class FlierVideoStepForm extends Component {
     channel: '', 
     url: '',
     campaignMessage: '',
-    // gender: 'male',
     targetAge: '21',
     location: ['Lagos'],
     interest: 'business',
@@ -30,7 +29,15 @@ export default class FlierVideoStepForm extends Component {
     targetAudience: '',
     uploadedImage: '',
     campaignType: 'flier_video',
+    targetAudienceType: 'manual_contact',
     price: 0,
+
+    ageRange: '',
+    gender: '',
+    state: 'abia',
+    lga: '',
+    location: ''
+
   }
 
   // go back to previous step
@@ -131,14 +138,21 @@ export default class FlierVideoStepForm extends Component {
       attachment,
       attachmentPreview,
       campaignType,
+      targetAudienceType,
       // attachment,
-      numbers
+      numbers,
+
+      ageRange,
+      gender,
+      state,
+      lga,
     } = this.state;
 
-    const targetAudience = numbers.split(',')
-    const audience = targetAudience.length
-    const price = audience * 5
-    const timeRange = (timeRangeFrom + ' - ' + timeRangeTo)
+    const location = state;
+    const targetAudience = numbers.split(',');
+    const audience = targetAudience.length;
+    const price = audience * 5;
+    const timeRange = (timeRangeFrom + ' - ' + timeRangeTo);
     // const attachment = attachmentPreview
     const values = { 
       senderId, 
@@ -157,10 +171,18 @@ export default class FlierVideoStepForm extends Component {
       callToAction,
       attachment,
       targetAudience,
-      campaignType
+      campaignType,
+      targetAudienceType
       // price
     }
-    // const payLoad = [values.senderId, values.channel, values.campaignMessage, values.whatsAppNumber, values.targetAudience, values.attachment, price];
+
+    const filteredContact = {
+      ageRange,
+      gender,
+      state,
+      lga,
+      location
+    }
 
     console.log(values);
     
@@ -185,6 +207,7 @@ export default class FlierVideoStepForm extends Component {
             onChangeAttachment={this.onChangeAttachment}
             numbers={ numbers }
             values={ values }
+            filteredContact={ filteredContact }
           />
         )
       case 3: 
@@ -192,10 +215,12 @@ export default class FlierVideoStepForm extends Component {
             <PreviewCampaign 
               prevStep={ this.prevStep }
               nextStep={ this.nextStep }
+              numbers={ numbers }
               values={ values }
               audience={audience}
               price={price}
               attachmentPreview={attachmentPreview}
+              filteredContact={ filteredContact }
             />
           )
         case 4: 
