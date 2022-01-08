@@ -418,39 +418,31 @@ const PreviewCampaign = ({
                         <div>
                           {values.callToAction === "" ||
                           values.whatsappNumber === "" ? null : (
-                            <a href="https://api.whatsapp.com/send?phone=23494344035">
-                              <button className="btn btn-primary w-100 mg-b-15 round-5">
-                                <i className="fa fa-whatsapp mg-r-5"> </i>
-                                {values.callToAction} via WhatsApp
-                              </button>
-                            </a>
+                            <button className="btn btn-primary w-100 mg-b-15 round-5">
+                              <i className="fa fa-whatsapp mg-r-5"> </i>
+                              {values.callToAction} via WhatsApp
+                            </button>
                           )}
                           {values.callToAction === "" ||
                           values.phoneNumber === "" ? null : (
-                            <a href="tel:+238167696729">
-                              <button className="btn btn-primary w-100 mg-b-15 round-5">
-                                <i className="fa fa-phone mg-r-5" />
-                                {values.callToAction} via Mobile
-                              </button>
-                            </a>
+                            <button className="btn btn-primary w-100 mg-b-15 round-5">
+                              <i className="fa fa-phone mg-r-5" />
+                              {values.callToAction} via Mobile
+                            </button>
                           )}
                           {values.callToAction === "" ||
                           values.ussd === "" ? null : (
-                            <a href="tel:+238167696729">
-                              <button className="btn btn-primary w-100 mg-b-15 round-5">
-                                <i className="fa fa-phone mg-r-5" />
-                                {values.callToAction} USSD
-                              </button>
-                            </a>
+                            <button className="btn btn-primary w-100 mg-b-15 round-5">
+                              <i className="fa fa-phone mg-r-5" />
+                              {values.callToAction} USSD
+                            </button>
                           )}
                           {values.callToAction === "" ||
                           values.smsNumber === "" ? null : (
-                            <a href="sms:+2348167696729">
-                              <button className="btn btn-primary w-100 mg-b-15 round-5">
-                                <i className="fa fa-comment mg-r-10"> </i>
-                                {values.callToAction} via Text
-                              </button>
-                            </a>
+                            <button className="btn btn-primary w-100 mg-b-15 round-5">
+                              <i className="fa fa-comment mg-r-10"> </i>
+                              {values.callToAction} via Text
+                            </button>
                           )}
                         </div>
                       </div>
