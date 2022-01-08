@@ -54,41 +54,6 @@ const ViewCampaign = () => {
                     <div>
                       {createShowAds.callToAction === "" ||
                       createShowAds.whatsappNumber === "" ? null : (
-<<<<<<< HEAD
-                        <a href="https://api.whatsapp.com/send?phone=2348167696729">
-                          <button className="btn btn-primary w-100 mg-b-15 round-5">
-                            <i className="fa fa-whatsapp mg-r-5"> </i>
-                            {createShowAds.callToAction} via WhatsApp
-                          </button>
-                        </a>
-                      )}
-                      {createShowAds.callToAction === "" ||
-                      createShowAds.phoneNumber === "" ? null : (
-                        <a href="tel:+2348167696729">
-                          <button className="btn btn-primary w-100 mg-b-15 round-5">
-                            <i className="fa fa-phone mg-r-5" />
-                            {createShowAds.callToAction} via Mobile
-                          </button>
-                        </a>
-                      )}
-                      {createShowAds.callToAction === "" ||
-                      createShowAds.ussd === "" ? null : (
-                        <a href="tel:+2348167696729">
-                          <button className="btn btn-primary w-100 mg-b-15 round-5">
-                            <i className="fa fa-phone mg-r-5" />
-                            {createShowAds.callToAction} USSD
-                          </button>
-                        </a>
-                      )}
-                      {createShowAds.callToAction === "" ||
-                      createShowAds.smsNumber === "" ? null : (
-                        <a href="sms:+2348167696729">
-                          <button className="btn btn-primary w-100 mg-b-15 round-5">
-                            <i className="fa fa-comment mg-r-10"> </i>
-                            {createShowAds.callToAction} via Text
-                          </button>
-                        </a>
-=======
                         <button className="btn btn-primary w-100 mg-b-15 round-5">
                           <i className="fa fa-whatsapp mg-r-5"> </i>
                           {createShowAds.callToAction} via WhatsApp
@@ -114,7 +79,6 @@ const ViewCampaign = () => {
                           <i className="fa fa-comment mg-r-10"> </i>
                           {createShowAds.callToAction} via Text
                         </button>
->>>>>>> dev
                       )}
                     </div>
                   </div>
