@@ -12,7 +12,16 @@ import {
 
 import { senderIDReducer, createSenderIdReducer } from './reducers/senderIDReducers'
 import {  walletReducer, transactionHistoryReducer, fundWalletReducer, confirmFundingReducer } from './reducers/billingReducers'
-import { createSmsCampaignReducer, createFlierVideoCampaignReducer, getAllCampaignsReducer, createAppDownloadCampaignReducer, createShowAdsReducer } from './reducers/campaignReducers'
+import { 
+    createSmsCampaignReducer, 
+    createFlierVideoCampaignReducer, 
+    getSmsCampaignsReducer, 
+    createAppDownloadCampaignReducer, 
+    createShowAdsReducer, 
+    viewFlierVideosCampaignsReducer,
+    viewAppDownloadCampaignsReducer,
+    getFilteredContactListReducer
+} from './reducers/campaignReducers'
 
 const appReducer = combineReducers({
 
@@ -25,9 +34,12 @@ const appReducer = combineReducers({
     confirmFund: confirmFundingReducer,
     smsCampaign: createSmsCampaignReducer,
     flierVideoCampaign: createFlierVideoCampaignReducer,
-    getAllCampaign: getAllCampaignsReducer,
+    getSmsCampaign: getSmsCampaignsReducer,
     showAds: createShowAdsReducer,
-    appDownload: createAppDownloadCampaignReducer    
+    appDownload: createAppDownloadCampaignReducer,
+    viewFlierVideosCampaign: viewFlierVideosCampaignsReducer,
+    viewAppDownloadCampaign: viewAppDownloadCampaignsReducer,
+    filteredContactList: getFilteredContactListReducer 
 })
 
 const reducer = (state, action) => {

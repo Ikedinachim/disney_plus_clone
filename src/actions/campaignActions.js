@@ -18,9 +18,22 @@ import {
     SHOW_ADS_FAIL,
     // SHOW_ADS_RESET,
 
-    GET_ALL_CAMPAIGN_REQUEST,
-    GET_ALL_CAMPAIGN_SUCCESS,
-    GET_ALL_CAMPAIGN_FAIL,
+    GET_SMS_CAMPAIGN_REQUEST,
+    GET_SMS_CAMPAIGN_SUCCESS,
+    GET_SMS_CAMPAIGN_FAIL,
+
+    VIEW_FLIER_VIDEO_CAMPAIGN_REQUEST,
+    VIEW_FLIER_VIDEO_CAMPAIGN_SUCCESS,
+    VIEW_FLIER_VIDEO_CAMPAIGN_FAIL,
+
+    VIEW_APP_DOWNLOAD_CAMPAIGN_REQUEST,
+    VIEW_APP_DOWNLOAD_CAMPAIGN_SUCCESS,
+    VIEW_APP_DOWNLOAD_CAMPAIGN_FAIL,
+
+    GET_FILTERED_CONTACT_LIST_REQUEST,
+    GET_FILTERED_CONTACT_LIST_SUCCESS,
+    GET_FILTERED_CONTACT_LIST_FAIL,
+
     CLEAR_ERRORS,
 } from '../constants/campaignConstants'
 
@@ -138,12 +151,12 @@ export const createAppDownloadCampaignAction = (appDownloadCampaignData) => asyn
     }
 }
 
-// Get All Campaigns
-export const getAllCampaigns = () => async (dispatch) => {
+// Get SMS Campaigns
+export const getSmsCampaigns = () => async (dispatch) => {
     try {
         
         
-        dispatch({ type: GET_ALL_CAMPAIGN_REQUEST })
+        dispatch({ type: GET_SMS_CAMPAIGN_REQUEST })
         let user = JSON.parse(sessionStorage.getItem('user'));
         const token = user.user.token;
 
@@ -157,25 +170,134 @@ export const getAllCampaigns = () => async (dispatch) => {
 
         if (data.status === "success") {
             dispatch({
-                type: GET_ALL_CAMPAIGN_SUCCESS,
+                type: GET_SMS_CAMPAIGN_SUCCESS,
                 payload: data.data,
             })
         } else {
             dispatch({
-                type: GET_ALL_CAMPAIGN_FAIL,
+                type: GET_SMS_CAMPAIGN_FAIL,
                 payload: data.message
             })
         }
         
     } catch (error) {
         dispatch({
-            type: GET_ALL_CAMPAIGN_FAIL,
+            type: GET_SMS_CAMPAIGN_FAIL,
             payload: error.message
         })
     }
 }
 
-// Get All Campaigns
+// Get Flier/Video Campaigns
+export const getViewFlierVideosCampaigns = () => async (dispatch) => {
+    try {
+        
+        
+        dispatch({ type: VIEW_FLIER_VIDEO_CAMPAIGN_REQUEST })
+        let user = JSON.parse(sessionStorage.getItem('user'));
+        const token = user.user.token;
+
+        const config = {
+            headers: {
+                "Authorization" : `Bearer ${token}`
+            }
+        }
+
+        const { data } = await axios.get('/api/campaign/all-flier-campaign', config)
+
+        if (data.status === "success") {
+            dispatch({
+                type: VIEW_FLIER_VIDEO_CAMPAIGN_SUCCESS,
+                payload: data.data,
+            })
+        } else {
+            dispatch({
+                type: VIEW_FLIER_VIDEO_CAMPAIGN_FAIL,
+                payload: data.message
+            })
+        }
+        
+    } catch (error) {
+        dispatch({
+            type: VIEW_FLIER_VIDEO_CAMPAIGN_FAIL,
+            payload: error.message
+        })
+    }
+}
+
+// Get App Download Campaigns
+export const getAppDownloadCampaigns = () => async (dispatch) => {
+    try {
+        
+        
+        dispatch({ type: VIEW_APP_DOWNLOAD_CAMPAIGN_REQUEST })
+        let user = JSON.parse(sessionStorage.getItem('user'));
+        const token = user.user.token;
+
+        const config = {
+            headers: {
+                "Authorization" : `Bearer ${token}`
+            }
+        }
+
+        const { data } = await axios.get('/api/campaign/all-app-download-campaign', config)
+
+        if (data.status === "success") {
+            dispatch({
+                type: VIEW_APP_DOWNLOAD_CAMPAIGN_SUCCESS,
+                payload: data.data,
+            })
+        } else {
+            dispatch({
+                type: VIEW_APP_DOWNLOAD_CAMPAIGN_FAIL,
+                payload: data.message
+            })
+        }
+        
+    } catch (error) {
+        dispatch({
+            type: VIEW_APP_DOWNLOAD_CAMPAIGN_FAIL,
+            payload: error.message
+        })
+    }
+}
+
+// Get Filtered Contact List
+export const getFilteredContactList = (filterContactData) => async (dispatch) => {
+    try {        
+        dispatch({ type: GET_FILTERED_CONTACT_LIST_REQUEST })
+        let user = JSON.parse(sessionStorage.getItem('user'));
+        const token = user.user.token;
+
+        const config = {
+            headers: {
+                "Authorization" : `Bearer ${token}`
+            }
+        }
+
+        const { data } = await axios.post('/api/campaign/filter-database',filterContactData, config)
+
+        if (data.status === "success") {
+            dispatch({
+                type: GET_FILTERED_CONTACT_LIST_SUCCESS,
+                payload: data,
+            })
+        } else {
+            dispatch({
+                type: GET_FILTERED_CONTACT_LIST_FAIL,
+                payload: data.message
+            })
+        }
+        
+    } catch (error) {
+        dispatch({
+            type: GET_FILTERED_CONTACT_LIST_FAIL,
+            payload: error.message
+        })
+    }
+}
+
+// Get Ads
 export const showAds = (id, campaignType, slug) => async (dispatch) => {
     try {
         
@@ -206,7 +328,7 @@ export const showAds = (id, campaignType, slug) => async (dispatch) => {
         
     } catch (error) {
         dispatch({
-            type: GET_ALL_CAMPAIGN_FAIL,
+            type: SHOW_ADS_FAIL,
             payload: error.message
         })
     }
