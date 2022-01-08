@@ -1,7 +1,7 @@
 // Validation errors messages for Parsley
 // Load this after Parsley
 
-Parsley.addMessages('hr', {
+Parsley.addMessages("hr", {
   defaultMessage: "Neispravan unos.",
   type: {
     email: "Ovo polje treba sadržavati ispravnu email adresu.",
@@ -9,7 +9,7 @@ Parsley.addMessages('hr', {
     number: "Ovo polje treba sadržavati ispravno upisan broj.",
     integer: "Ovo polje treba sadržavati ispravno upisan cijeli broj.",
     digits: "Ovo polje treba sadržavati znamenke.",
-    alphanum: "Ovo polje treba sadržavati brojke ili slova."
+    alphanum: "Ovo polje treba sadržavati brojke ili slova.",
   },
   notblank: "Ovo polje ne smije biti prazno.",
   required: "Ovo polje je obavezno.",
@@ -23,7 +23,7 @@ Parsley.addMessages('hr', {
   mincheck: "Treba odabrati najmanje %s izbora.",
   maxcheck: "Treba odabrati %s ili manje izbora.",
   check: "Treba odabrati između %s i %s izbora.",
-  equalto: "Ova vrijednost treba biti ista."
+  equalto: "Ova vrijednost treba biti ista.",
 });
 
-Parsley.setLocale('hr');
+Parsley.setLocale("hr");

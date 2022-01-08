@@ -1,9 +1,15 @@
-define(['exports', 'module', '../exception'], function (exports, module, _exception) {
-  'use strict';
+define(["exports", "module", "../exception"], function (
+  exports,
+  module,
+  _exception
+) {
+  "use strict";
 
   // istanbul ignore next
 
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { default: obj };
+  }
 
   var _Exception = _interopRequireDefault(_exception);
 
@@ -22,7 +28,14 @@ define(['exports', 'module', '../exception'], function (exports, module, _except
         // Hacky sanity check: This may have a few false positives for type for the helper
         // methods but will generally do the right thing without a lot of overhead.
         if (value && !Visitor.prototype[value.type]) {
-          throw new _Exception['default']('Unexpected node type "' + value.type + '" found when accepting ' + name + ' on ' + node.type);
+          throw new _Exception["default"](
+            'Unexpected node type "' +
+              value.type +
+              '" found when accepting ' +
+              name +
+              " on " +
+              node.type
+          );
         }
         node[name] = value;
       }
@@ -34,7 +47,7 @@ define(['exports', 'module', '../exception'], function (exports, module, _except
       this.acceptKey(node, name);
 
       if (!node[name]) {
-        throw new _Exception['default'](node.type + ' requires ' + name);
+        throw new _Exception["default"](node.type + " requires " + name);
       }
     },
 
@@ -59,7 +72,7 @@ define(['exports', 'module', '../exception'], function (exports, module, _except
 
       /* istanbul ignore next: Sanity code */
       if (!this[object.type]) {
-        throw new _Exception['default']('Unknown type: ' + object.type, object);
+        throw new _Exception["default"]("Unknown type: " + object.type, object);
       }
 
       if (this.current) {
@@ -92,45 +105,45 @@ define(['exports', 'module', '../exception'], function (exports, module, _except
     PartialBlockStatement: function PartialBlockStatement(partial) {
       visitPartial.call(this, partial);
 
-      this.acceptKey(partial, 'program');
+      this.acceptKey(partial, "program");
     },
 
-    ContentStatement: function ContentStatement() /* content */{},
-    CommentStatement: function CommentStatement() /* comment */{},
+    ContentStatement: function ContentStatement() /* content */ {},
+    CommentStatement: function CommentStatement() /* comment */ {},
 
     SubExpression: visitSubExpression,
 
-    PathExpression: function PathExpression() /* path */{},
+    PathExpression: function PathExpression() /* path */ {},
 
-    StringLiteral: function StringLiteral() /* string */{},
-    NumberLiteral: function NumberLiteral() /* number */{},
-    BooleanLiteral: function BooleanLiteral() /* bool */{},
-    UndefinedLiteral: function UndefinedLiteral() /* literal */{},
-    NullLiteral: function NullLiteral() /* literal */{},
+    StringLiteral: function StringLiteral() /* string */ {},
+    NumberLiteral: function NumberLiteral() /* number */ {},
+    BooleanLiteral: function BooleanLiteral() /* bool */ {},
+    UndefinedLiteral: function UndefinedLiteral() /* literal */ {},
+    NullLiteral: function NullLiteral() /* literal */ {},
 
     Hash: function Hash(hash) {
       this.acceptArray(hash.pairs);
     },
     HashPair: function HashPair(pair) {
-      this.acceptRequired(pair, 'value');
-    }
+      this.acceptRequired(pair, "value");
+    },
   };
 
   function visitSubExpression(mustache) {
-    this.acceptRequired(mustache, 'path');
+    this.acceptRequired(mustache, "path");
     this.acceptArray(mustache.params);
-    this.acceptKey(mustache, 'hash');
+    this.acceptKey(mustache, "hash");
   }
   function visitBlock(block) {
     visitSubExpression.call(this, block);
 
-    this.acceptKey(block, 'program');
-    this.acceptKey(block, 'inverse');
+    this.acceptKey(block, "program");
+    this.acceptKey(block, "inverse");
   }
   function visitPartial(partial) {
-    this.acceptRequired(partial, 'name');
+    this.acceptRequired(partial, "name");
     this.acceptArray(partial.params);
-    this.acceptKey(partial, 'hash');
+    this.acceptKey(partial, "hash");
   }
 
   module.exports = Visitor;

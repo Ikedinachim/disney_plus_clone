@@ -1,94 +1,121 @@
-import React, { Fragment, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import React, { Fragment, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-import { useSelector, useDispatch } from 'react-redux'
-import { useAlert } from 'react-alert'
+import { useSelector, useDispatch } from "react-redux";
+import { useAlert } from "react-alert";
 import { DateTime } from "luxon";
-import NumberFormat from 'react-number-format'
+import NumberFormat from "react-number-format";
 
 import Loader from "../../../loader";
-import MetaData from '../../../layout/MetaData'
+import MetaData from "../../../layout/MetaData";
 
 // import { getWallet } from '../../../actions/billingActions'
-import { MDBDataTable } from 'mdbreact'
-import { getSmsCampaigns, clearErrors } from '../../../../actions/campaignActions';
+import { MDBDataTable } from "mdbreact";
+import {
+  getSmsCampaigns,
+  clearErrors,
+} from "../../../../actions/campaignActions";
 
 const ViewSmsCampaign = () => {
+  const { loading, error, smsCampaigns } = useSelector(
+    (state) => state.getSmsCampaign || {}
+  );
+  const dispatch = useDispatch();
+  const alert = useAlert();
 
-    const { loading, error, smsCampaigns } = useSelector(state => state.getSmsCampaign || {});
-    const dispatch = useDispatch()
-    const alert = useAlert();
+  // useEffect(() => {
+  //     dispatch(getSmsCampaigns())
+  //     if(error) {
+  //         alert.error(error)
+  //         dispatch(clearErrors())
+  //     }
+  //     // dispatch(getWallet())
 
-    // useEffect(() => {
-    //     dispatch(getSmsCampaigns())
-    //     if(error) {
-    //         alert.error(error)
-    //         dispatch(clearErrors())
-    //     }
-    //     // dispatch(getWallet())
+  // }, [dispatch, alert, error])
 
-    // }, [dispatch, alert, error])
+  const setSmsCampaigns = () => {
+    const data = {
+      columns: [
+        {
+          label: "ID",
+          field: "id",
+          sort: "asc",
+        },
+        {
+          label: "CAMPAIGN NAME",
+          field: "campaignName",
+          sort: "asc",
+        },
+        {
+          label: "AD TYPE",
+          field: "adType",
+          sort: "asc",
+        },
+        {
+          label: "REVENUE",
+          field: "revenue",
+          sort: "asc",
+        },
+        {
+          label: "COST",
+          field: "cost",
+          sort: "asc",
+        },
+        {
+          label: "DATE CREATED",
+          field: "dateCreated",
+          sort: "asc",
+        },
+        {
+          label: "STATUS",
+          field: "status",
+          sort: "asc",
+        },
+        {
+          label: "ACTIONS",
+          field: "actions",
+          sort: "asc",
+        },
+      ],
+      rows: [],
+    };
 
-
-    const setSmsCampaigns = () => {
-        const data = {
-            columns: [
-                {
-                    label: 'ID',
-                    field: 'id',
-                    sort: 'asc'    
-                },
-                {
-                    label: 'CAMPAIGN NAME',
-                    field: 'campaignName',
-                    sort: 'asc'    
-                },
-                {
-                    label: 'AD TYPE',
-                    field: 'adType',
-                    sort: 'asc'    
-                },
-                {
-                    label: 'REVENUE',
-                    field: 'revenue',
-                    sort: 'asc'    
-                },
-                {
-                    label: 'COST',
-                    field: 'cost',
-                    sort: 'asc' 
-                },
-                {
-                    label: 'DATE CREATED',
-                    field: 'dateCreated',
-                    sort: 'asc' 
-                },
-                {
-                    label: 'STATUS',
-                    field: 'status',
-                    sort: 'asc' 
-                },
-                {
-                    label: 'ACTIONS',
-                    field: 'actions',
-                    sort: 'asc' 
-                }
-            ],
-            rows: []
-        }
-
-        smsCampaigns.forEach(campaign => {
-            data.rows.push({
-                id: campaign.id,
-                campaignName: campaign.name,
-                adType: campaign.channel,
-                revenue: <NumberFormat value={0} displayType={'text'} thousandSeparator={true} prefix={'₦'} />,
-                cost: <NumberFormat value={campaign.price} displayType={'text'} thousandSeparator={true} prefix={'₦'} />,
-                dateCreated: DateTime.fromJSDate(new Date(campaign.createdAt)).toFormat('dd MMM, yyyy'),
-                status: <span className={`{"badge" ${ !campaign.isApproved ? "badge-pink" : "badge-active"}`}>{!campaign.isApproved ? "Pending" : "Approved"}</span>,
-                actions:
-                <Fragment>
-                    {/* <div className="dropdown">
+    smsCampaigns.forEach((campaign) => {
+      data.rows.push({
+        id: campaign.id,
+        campaignName: campaign.name,
+        adType: campaign.channel,
+        revenue: (
+          <NumberFormat
+            value={0}
+            displayType={"text"}
+            thousandSeparator={true}
+            prefix={"₦"}
+          />
+        ),
+        cost: (
+          <NumberFormat
+            value={campaign.price}
+            displayType={"text"}
+            thousandSeparator={true}
+            prefix={"₦"}
+          />
+        ),
+        dateCreated: DateTime.fromJSDate(new Date(campaign.createdAt)).toFormat(
+          "dd MMM, yyyy"
+        ),
+        status: (
+          <span
+            className={`{"badge" ${
+              !campaign.isApproved ? "badge-pink" : "badge-active"
+            }`}
+          >
+            {!campaign.isApproved ? "Pending" : "Approved"}
+          </span>
+        ),
+        actions: (
+          <Fragment>
+            {/* <div className="dropdown">
                         <span
                             className
                             type="button"
@@ -118,33 +145,36 @@ const ViewSmsCampaign = () => {
                             </a>
                         </div>
                     </div> */}
-                     <div class="tx-black tx-14">
-                        <div class="d-flex">
-                            <i class="fa fa-eye tx-orange pd-t-4 mg-r-5"></i>
-                            View
-                        </div>
-                    </div>
-                </Fragment> 
-            })
-        })
-        return data;
-    }
+            <div class="tx-black tx-14">
+              <div class="d-flex">
+                <i class="fa fa-eye tx-orange pd-t-4 mg-r-5"></i>
+                View
+              </div>
+            </div>
+          </Fragment>
+        ),
+      });
+    });
+    return data;
+  };
 
-    return (
-        <Fragment>
-            {/* <MetaData title={"SMS Campaigns"} /> */}
-            {loading ? "" : (
-                <MDBDataTable 
-                    data={setSmsCampaigns()}
-                    className="px-3 scroll"
-                    bordered
-                    striped
-                    hover
-                    checkboxFirstColumn
-                />
-            )}
-        </Fragment>
-    )
-}
+  return (
+    <Fragment>
+      {/* <MetaData title={"SMS Campaigns"} /> */}
+      {loading ? (
+        ""
+      ) : (
+        <MDBDataTable
+          data={setSmsCampaigns()}
+          className="px-3 scroll"
+          bordered
+          striped
+          hover
+          checkboxFirstColumn
+        />
+      )}
+    </Fragment>
+  );
+};
 
-export default ViewSmsCampaign
+export default ViewSmsCampaign;

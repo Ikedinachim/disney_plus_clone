@@ -1,5 +1,10 @@
-define(['exports', './utils', './exception', './base'], function (exports, _utils, _exception, _base) {
-  'use strict';
+define(["exports", "./utils", "./exception", "./base"], function (
+  exports,
+  _utils,
+  _exception,
+  _base
+) {
+  "use strict";
 
   exports.__esModule = true;
   exports.checkRevision = checkRevision;
@@ -10,22 +15,36 @@ define(['exports', './utils', './exception', './base'], function (exports, _util
   exports.noop = noop;
   // istanbul ignore next
 
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { default: obj };
+  }
 
   var _Exception = _interopRequireDefault(_exception);
 
   function checkRevision(compilerInfo) {
-    var compilerRevision = compilerInfo && compilerInfo[0] || 1,
-        currentRevision = _base.COMPILER_REVISION;
+    var compilerRevision = (compilerInfo && compilerInfo[0]) || 1,
+      currentRevision = _base.COMPILER_REVISION;
 
     if (compilerRevision !== currentRevision) {
       if (compilerRevision < currentRevision) {
         var runtimeVersions = _base.REVISION_CHANGES[currentRevision],
-            compilerVersions = _base.REVISION_CHANGES[compilerRevision];
-        throw new _Exception['default']('Template was precompiled with an older version of Handlebars than the current runtime. ' + 'Please update your precompiler to a newer version (' + runtimeVersions + ') or downgrade your runtime to an older version (' + compilerVersions + ').');
+          compilerVersions = _base.REVISION_CHANGES[compilerRevision];
+        throw new _Exception["default"](
+          "Template was precompiled with an older version of Handlebars than the current runtime. " +
+            "Please update your precompiler to a newer version (" +
+            runtimeVersions +
+            ") or downgrade your runtime to an older version (" +
+            compilerVersions +
+            ")."
+        );
       } else {
         // Use the embedded version info since the runtime doesn't know about this revision yet
-        throw new _Exception['default']('Template was precompiled with a newer version of Handlebars than the current runtime. ' + 'Please update your runtime to a newer version (' + compilerInfo[1] + ').');
+        throw new _Exception["default"](
+          "Template was precompiled with a newer version of Handlebars than the current runtime. " +
+            "Please update your runtime to a newer version (" +
+            compilerInfo[1] +
+            ")."
+        );
       }
     }
   }
@@ -33,10 +52,12 @@ define(['exports', './utils', './exception', './base'], function (exports, _util
   function template(templateSpec, env) {
     /* istanbul ignore next */
     if (!env) {
-      throw new _Exception['default']('No environment passed to template');
+      throw new _Exception["default"]("No environment passed to template");
     }
     if (!templateSpec || !templateSpec.main) {
-      throw new _Exception['default']('Unknown template object: ' + typeof templateSpec);
+      throw new _Exception["default"](
+        "Unknown template object: " + typeof templateSpec
+      );
     }
 
     templateSpec.main.decorator = templateSpec.main_d;
@@ -57,12 +78,16 @@ define(['exports', './utils', './exception', './base'], function (exports, _util
       var result = env.VM.invokePartial.call(this, partial, context, options);
 
       if (result == null && env.compile) {
-        options.partials[options.name] = env.compile(partial, templateSpec.compilerOptions, env);
+        options.partials[options.name] = env.compile(
+          partial,
+          templateSpec.compilerOptions,
+          env
+        );
         result = options.partials[options.name](context, options);
       }
       if (result != null) {
         if (options.indent) {
-          var lines = result.split('\n');
+          var lines = result.split("\n");
           for (var i = 0, l = lines.length; i < l; i++) {
             if (!lines[i] && i + 1 === l) {
               break;
@@ -70,11 +95,15 @@ define(['exports', './utils', './exception', './base'], function (exports, _util
 
             lines[i] = options.indent + lines[i];
           }
-          result = lines.join('\n');
+          result = lines.join("\n");
         }
         return result;
       } else {
-        throw new _Exception['default']('The partial ' + options.name + ' could not be compiled when running in runtime-only mode');
+        throw new _Exception["default"](
+          "The partial " +
+            options.name +
+            " could not be compiled when running in runtime-only mode"
+        );
       }
     }
 
@@ -82,7 +111,9 @@ define(['exports', './utils', './exception', './base'], function (exports, _util
     var container = {
       strict: function strict(obj, name) {
         if (!(name in obj)) {
-          throw new _Exception['default']('"' + name + '" not defined in ' + obj);
+          throw new _Exception["default"](
+            '"' + name + '" not defined in ' + obj
+          );
         }
         return obj[name];
       },
@@ -95,7 +126,7 @@ define(['exports', './utils', './exception', './base'], function (exports, _util
         }
       },
       lambda: function lambda(current, context) {
-        return typeof current === 'function' ? current.call(context) : current;
+        return typeof current === "function" ? current.call(context) : current;
       },
 
       escapeExpression: _utils.escapeExpression,
@@ -103,16 +134,30 @@ define(['exports', './utils', './exception', './base'], function (exports, _util
 
       fn: function fn(i) {
         var ret = templateSpec[i];
-        ret.decorator = templateSpec[i + '_d'];
+        ret.decorator = templateSpec[i + "_d"];
         return ret;
       },
 
       programs: [],
-      program: function program(i, data, declaredBlockParams, blockParams, depths) {
+      program: function program(
+        i,
+        data,
+        declaredBlockParams,
+        blockParams,
+        depths
+      ) {
         var programWrapper = this.programs[i],
-            fn = this.fn(i);
+          fn = this.fn(i);
         if (data || depths || blockParams || declaredBlockParams) {
-          programWrapper = wrapProgram(this, i, fn, data, declaredBlockParams, blockParams, depths);
+          programWrapper = wrapProgram(
+            this,
+            i,
+            fn,
+            data,
+            declaredBlockParams,
+            blockParams,
+            depths
+          );
         } else if (!programWrapper) {
           programWrapper = this.programs[i] = wrapProgram(this, i, fn);
         }
@@ -138,11 +183,12 @@ define(['exports', './utils', './exception', './base'], function (exports, _util
       nullContext: Object.seal({}),
 
       noop: env.VM.noop,
-      compilerInfo: templateSpec.compiler
+      compilerInfo: templateSpec.compiler,
     };
 
     function ret(context) {
-      var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+      var options =
+        arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
       var data = options.data;
 
@@ -151,19 +197,40 @@ define(['exports', './utils', './exception', './base'], function (exports, _util
         data = initData(context, data);
       }
       var depths = undefined,
-          blockParams = templateSpec.useBlockParams ? [] : undefined;
+        blockParams = templateSpec.useBlockParams ? [] : undefined;
       if (templateSpec.useDepths) {
         if (options.depths) {
-          depths = context != options.depths[0] ? [context].concat(options.depths) : options.depths;
+          depths =
+            context != options.depths[0]
+              ? [context].concat(options.depths)
+              : options.depths;
         } else {
           depths = [context];
         }
       }
 
       function main(context /*, options*/) {
-        return '' + templateSpec.main(container, context, container.helpers, container.partials, data, blockParams, depths);
+        return (
+          "" +
+          templateSpec.main(
+            container,
+            context,
+            container.helpers,
+            container.partials,
+            data,
+            blockParams,
+            depths
+          )
+        );
       }
-      main = executeDecorators(templateSpec.main, main, container, options.depths || [], data, blockParams);
+      main = executeDecorators(
+        templateSpec.main,
+        main,
+        container,
+        options.depths || [],
+        data,
+        blockParams
+      );
       return main(context, options);
     }
     ret.isTop = true;
@@ -176,7 +243,10 @@ define(['exports', './utils', './exception', './base'], function (exports, _util
           container.partials = container.merge(options.partials, env.partials);
         }
         if (templateSpec.usePartial || templateSpec.useDecorators) {
-          container.decorators = container.merge(options.decorators, env.decorators);
+          container.decorators = container.merge(
+            options.decorators,
+            env.decorators
+          );
         }
       } else {
         container.helpers = options.helpers;
@@ -187,27 +257,56 @@ define(['exports', './utils', './exception', './base'], function (exports, _util
 
     ret._child = function (i, data, blockParams, depths) {
       if (templateSpec.useBlockParams && !blockParams) {
-        throw new _Exception['default']('must pass block params');
+        throw new _Exception["default"]("must pass block params");
       }
       if (templateSpec.useDepths && !depths) {
-        throw new _Exception['default']('must pass parent depths');
+        throw new _Exception["default"]("must pass parent depths");
       }
 
-      return wrapProgram(container, i, templateSpec[i], data, 0, blockParams, depths);
+      return wrapProgram(
+        container,
+        i,
+        templateSpec[i],
+        data,
+        0,
+        blockParams,
+        depths
+      );
     };
     return ret;
   }
 
-  function wrapProgram(container, i, fn, data, declaredBlockParams, blockParams, depths) {
+  function wrapProgram(
+    container,
+    i,
+    fn,
+    data,
+    declaredBlockParams,
+    blockParams,
+    depths
+  ) {
     function prog(context) {
-      var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+      var options =
+        arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
       var currentDepths = depths;
-      if (depths && context != depths[0] && !(context === container.nullContext && depths[0] === null)) {
+      if (
+        depths &&
+        context != depths[0] &&
+        !(context === container.nullContext && depths[0] === null)
+      ) {
         currentDepths = [context].concat(depths);
       }
 
-      return fn(container, context, container.helpers, container.partials, options.data || data, blockParams && [options.blockParams].concat(blockParams), currentDepths);
+      return fn(
+        container,
+        context,
+        container.helpers,
+        container.partials,
+        options.data || data,
+        blockParams && [options.blockParams].concat(blockParams),
+        currentDepths
+      );
     }
 
     prog = executeDecorators(fn, prog, container, depths, data, blockParams);
@@ -220,8 +319,8 @@ define(['exports', './utils', './exception', './base'], function (exports, _util
 
   function resolvePartial(partial, context, options) {
     if (!partial) {
-      if (options.name === '@partial-block') {
-        partial = options.data['partial-block'];
+      if (options.name === "@partial-block") {
+        partial = options.data["partial-block"];
       } else {
         partial = options.partials[options.name];
       }
@@ -235,7 +334,7 @@ define(['exports', './utils', './exception', './base'], function (exports, _util
 
   function invokePartial(partial, context, options) {
     // Use the current closure context to save the partial-block if this partial
-    var currentPartialBlock = options.data && options.data['partial-block'];
+    var currentPartialBlock = options.data && options.data["partial-block"];
     options.partial = true;
     if (options.ids) {
       options.data.contextPath = options.ids[0] || options.data.contextPath;
@@ -247,15 +346,19 @@ define(['exports', './utils', './exception', './base'], function (exports, _util
         options.data = _base.createFrame(options.data);
         // Wrapper function to get access to currentPartialBlock from the closure
         var fn = options.fn;
-        partialBlock = options.data['partial-block'] = function partialBlockWrapper(context) {
-          var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+        partialBlock = options.data["partial-block"] =
+          function partialBlockWrapper(context) {
+            var options =
+              arguments.length <= 1 || arguments[1] === undefined
+                ? {}
+                : arguments[1];
 
-          // Restore the partial-block from the closure for the execution of the block
-          // i.e. the part inside the block of the partial call.
-          options.data = _base.createFrame(options.data);
-          options.data['partial-block'] = currentPartialBlock;
-          return fn(context, options);
-        };
+            // Restore the partial-block from the closure for the execution of the block
+            // i.e. the part inside the block of the partial call.
+            options.data = _base.createFrame(options.data);
+            options.data["partial-block"] = currentPartialBlock;
+            return fn(context, options);
+          };
         if (fn.partials) {
           options.partials = _utils.extend({}, options.partials, fn.partials);
         }
@@ -267,18 +370,20 @@ define(['exports', './utils', './exception', './base'], function (exports, _util
     }
 
     if (partial === undefined) {
-      throw new _Exception['default']('The partial ' + options.name + ' could not be found');
+      throw new _Exception["default"](
+        "The partial " + options.name + " could not be found"
+      );
     } else if (partial instanceof Function) {
       return partial(context, options);
     }
   }
 
   function noop() {
-    return '';
+    return "";
   }
 
   function initData(context, data) {
-    if (!data || !('root' in data)) {
+    if (!data || !("root" in data)) {
       data = data ? _base.createFrame(data) : {};
       data.root = context;
     }
@@ -288,7 +393,15 @@ define(['exports', './utils', './exception', './base'], function (exports, _util
   function executeDecorators(fn, prog, container, depths, data, blockParams) {
     if (fn.decorator) {
       var props = {};
-      prog = fn.decorator(prog, props, container, depths && depths[0], data, blockParams, depths);
+      prog = fn.decorator(
+        prog,
+        props,
+        container,
+        depths && depths[0],
+        data,
+        blockParams,
+        depths
+      );
       _utils.extend(prog, props);
     }
     return prog;

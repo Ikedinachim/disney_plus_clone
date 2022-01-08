@@ -1,13 +1,13 @@
-define(['exports', 'module', './utils'], function (exports, module, _utils) {
-  'use strict';
+define(["exports", "module", "./utils"], function (exports, module, _utils) {
+  "use strict";
 
   var logger = {
-    methodMap: ['debug', 'info', 'warn', 'error'],
-    level: 'info',
+    methodMap: ["debug", "info", "warn", "error"],
+    level: "info",
 
     // Maps a given level value to the `methodMap` indexes above.
     lookupLevel: function lookupLevel(level) {
-      if (typeof level === 'string') {
+      if (typeof level === "string") {
         var levelMap = _utils.indexOf(logger.methodMap, level.toLowerCase());
         if (levelMap >= 0) {
           level = levelMap;
@@ -23,20 +23,29 @@ define(['exports', 'module', './utils'], function (exports, module, _utils) {
     log: function log(level) {
       level = logger.lookupLevel(level);
 
-      if (typeof console !== 'undefined' && logger.lookupLevel(logger.level) <= level) {
+      if (
+        typeof console !== "undefined" &&
+        logger.lookupLevel(logger.level) <= level
+      ) {
         var method = logger.methodMap[level];
         if (!console[method]) {
           // eslint-disable-line no-console
-          method = 'log';
+          method = "log";
         }
 
-        for (var _len = arguments.length, message = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        for (
+          var _len = arguments.length,
+            message = Array(_len > 1 ? _len - 1 : 0),
+            _key = 1;
+          _key < _len;
+          _key++
+        ) {
           message[_key - 1] = arguments[_key];
         }
 
         console[method].apply(console, message); // eslint-disable-line no-console
       }
-    }
+    },
   };
 
   module.exports = logger;

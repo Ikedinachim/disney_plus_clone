@@ -1,67 +1,78 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
-import { composeWithDevTools } from 'redux-devtools-extension'
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
 
-import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 
-import { 
-    authReducer, 
-    // userDetailsReducer 
-} from './reducers/authReducers'
+import {
+  authReducer,
+  // userDetailsReducer
+} from "./reducers/authReducers";
 
-import { senderIDReducer, createSenderIdReducer } from './reducers/senderIDReducers'
-import {  walletReducer, transactionHistoryReducer, fundWalletReducer, confirmFundingReducer } from './reducers/billingReducers'
-import { 
-    createSmsCampaignReducer, 
-    createFlierVideoCampaignReducer, 
-    getSmsCampaignsReducer, 
-    createAppDownloadCampaignReducer, 
-    createShowAdsReducer, 
-    viewFlierVideosCampaignsReducer,
-    viewAppDownloadCampaignsReducer,
-    getFilteredContactListReducer
-} from './reducers/campaignReducers'
+import {
+  senderIDReducer,
+  createSenderIdReducer,
+} from "./reducers/senderIDReducers";
+import {
+  walletReducer,
+  transactionHistoryReducer,
+  fundWalletReducer,
+  confirmFundingReducer,
+} from "./reducers/billingReducers";
+import {
+  createSmsCampaignReducer,
+  createFlierVideoCampaignReducer,
+  getSmsCampaignsReducer,
+  createAppDownloadCampaignReducer,
+  createShowAdsReducer,
+  viewFlierVideosCampaignsReducer,
+  viewAppDownloadCampaignsReducer,
+  getFilteredContactListReducer,
+} from "./reducers/campaignReducers";
 
 const appReducer = combineReducers({
-
-    auth: authReducer,
-    createSenderId: createSenderIdReducer,
-    wallet: walletReducer,
-    tnxHistory: transactionHistoryReducer,
-    senderID: senderIDReducer,
-    fundWallet: fundWalletReducer,
-    confirmFund: confirmFundingReducer,
-    smsCampaign: createSmsCampaignReducer,
-    flierVideoCampaign: createFlierVideoCampaignReducer,
-    getSmsCampaign: getSmsCampaignsReducer,
-    showAds: createShowAdsReducer,
-    appDownload: createAppDownloadCampaignReducer,
-    viewFlierVideosCampaign: viewFlierVideosCampaignsReducer,
-    viewAppDownloadCampaign: viewAppDownloadCampaignsReducer,
-    filteredContactList: getFilteredContactListReducer 
-})
+  auth: authReducer,
+  createSenderId: createSenderIdReducer,
+  wallet: walletReducer,
+  tnxHistory: transactionHistoryReducer,
+  senderID: senderIDReducer,
+  fundWallet: fundWalletReducer,
+  confirmFund: confirmFundingReducer,
+  smsCampaign: createSmsCampaignReducer,
+  flierVideoCampaign: createFlierVideoCampaignReducer,
+  getSmsCampaign: getSmsCampaignsReducer,
+  showAds: createShowAdsReducer,
+  appDownload: createAppDownloadCampaignReducer,
+  viewFlierVideosCampaign: viewFlierVideosCampaignsReducer,
+  viewAppDownloadCampaign: viewAppDownloadCampaignsReducer,
+  filteredContactList: getFilteredContactListReducer,
+});
 
 const reducer = (state, action) => {
-    if (action.type === 'USER_LOGOUT') {
-        storage.removeItem('persist:root')
-        return appReducer(undefined, action)
-    }
-  
-    return appReducer(state, action)
-}
+  if (action.type === "USER_LOGOUT") {
+    storage.removeItem("persist:root");
+    return appReducer(undefined, action);
+  }
 
-let initialState = {}
+  return appReducer(state, action);
+};
+
+let initialState = {};
 
 const persistConfig = {
-    key: 'root',
-    storage,
-}
-  
-const persistedReducer = persistReducer(persistConfig, reducer)
+  key: "root",
+  storage,
+};
 
-const middleWare = [thunk]
-const store = createStore(persistedReducer, initialState, composeWithDevTools(applyMiddleware(...middleWare)))
+const persistedReducer = persistReducer(persistConfig, reducer);
 
-const persistor = persistStore(store)
-export { store, persistor }
+const middleWare = [thunk];
+const store = createStore(
+  persistedReducer,
+  initialState,
+  composeWithDevTools(applyMiddleware(...middleWare))
+);
+
+const persistor = persistStore(store);
+export { store, persistor };

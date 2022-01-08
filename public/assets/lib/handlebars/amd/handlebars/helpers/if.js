@@ -1,8 +1,8 @@
-define(['exports', 'module', '../utils'], function (exports, module, _utils) {
-  'use strict';
+define(["exports", "module", "../utils"], function (exports, module, _utils) {
+  "use strict";
 
   module.exports = function (instance) {
-    instance.registerHelper('if', function (conditional, options) {
+    instance.registerHelper("if", function (conditional, options) {
       if (_utils.isFunction(conditional)) {
         conditional = conditional.call(this);
       }
@@ -10,15 +10,22 @@ define(['exports', 'module', '../utils'], function (exports, module, _utils) {
       // Default behavior is to render the positive path if the value is truthy and not empty.
       // The `includeZero` option may be set to treat the condtional as purely not empty based on the
       // behavior of isEmpty. Effectively this determines if 0 is handled by the positive path or negative.
-      if (!options.hash.includeZero && !conditional || _utils.isEmpty(conditional)) {
+      if (
+        (!options.hash.includeZero && !conditional) ||
+        _utils.isEmpty(conditional)
+      ) {
         return options.inverse(this);
       } else {
         return options.fn(this);
       }
     });
 
-    instance.registerHelper('unless', function (conditional, options) {
-      return instance.helpers['if'].call(this, conditional, { fn: options.inverse, inverse: options.fn, hash: options.hash });
+    instance.registerHelper("unless", function (conditional, options) {
+      return instance.helpers["if"].call(this, conditional, {
+        fn: options.inverse,
+        inverse: options.fn,
+        hash: options.hash,
+      });
     });
   };
 });

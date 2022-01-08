@@ -2,13 +2,11 @@
 // Danish (dk) localization
 // https://github.com/bgrins/spectrum
 
-(function ( $ ) {
+(function ($) {
+  var localization = ($.spectrum.localization["dk"] = {
+    cancelText: "annuller",
+    chooseText: "Vælg",
+  });
 
-    var localization = $.spectrum.localization["dk"] = {
-		cancelText: "annuller",
-		chooseText: "Vælg"
-    };
-
-    $.extend($.fn.spectrum.defaults, localization);
-
-})( jQuery );
+  $.extend($.fn.spectrum.defaults, localization);
+})(jQuery);

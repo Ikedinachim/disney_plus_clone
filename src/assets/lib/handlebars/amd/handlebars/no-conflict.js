@@ -1,11 +1,11 @@
-define(['exports', 'module'], function (exports, module) {
+define(["exports", "module"], function (exports, module) {
   /* global window */
-  'use strict';
+  "use strict";
 
   module.exports = function (Handlebars) {
     /* istanbul ignore next */
-    var root = typeof global !== 'undefined' ? global : window,
-        $Handlebars = root.Handlebars;
+    var root = typeof global !== "undefined" ? global : window,
+      $Handlebars = root.Handlebars;
     /* istanbul ignore next */
     Handlebars.noConflict = function () {
       if (root.Handlebars === Handlebars) {

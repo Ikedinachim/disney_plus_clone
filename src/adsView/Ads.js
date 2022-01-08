@@ -54,6 +54,7 @@ const ViewCampaign = () => {
                     <div>
                       {createShowAds.callToAction === "" ||
                       createShowAds.whatsappNumber === "" ? null : (
+<<<<<<< HEAD
                         <a href="https://api.whatsapp.com/send?phone=2348167696729">
                           <button className="btn btn-primary w-100 mg-b-15 round-5">
                             <i className="fa fa-whatsapp mg-r-5"> </i>
@@ -87,6 +88,33 @@ const ViewCampaign = () => {
                             {createShowAds.callToAction} via Text
                           </button>
                         </a>
+=======
+                        <button className="btn btn-primary w-100 mg-b-15 round-5">
+                          <i className="fa fa-whatsapp mg-r-5"> </i>
+                          {createShowAds.callToAction} via WhatsApp
+                        </button>
+                      )}
+                      {createShowAds.callToAction === "" ||
+                      createShowAds.phoneNumber === "" ? null : (
+                        <button className="btn btn-primary w-100 mg-b-15 round-5">
+                          <i className="fa fa-phone mg-r-5" />
+                          {createShowAds.callToAction} via Mobile
+                        </button>
+                      )}
+                      {createShowAds.callToAction === "" ||
+                      createShowAds.ussd === "" ? null : (
+                        <button className="btn btn-primary w-100 mg-b-15 round-5">
+                          <i className="fa fa-phone mg-r-5" />
+                          {createShowAds.callToAction} USSD
+                        </button>
+                      )}
+                      {createShowAds.callToAction === "" ||
+                      createShowAds.smsNumber === "" ? null : (
+                        <button className="btn btn-primary w-100 mg-b-15 round-5">
+                          <i className="fa fa-comment mg-r-10"> </i>
+                          {createShowAds.callToAction} via Text
+                        </button>
+>>>>>>> dev
                       )}
                     </div>
                   </div>

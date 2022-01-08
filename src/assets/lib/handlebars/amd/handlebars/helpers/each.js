@@ -1,27 +1,36 @@
-define(['exports', 'module', '../utils', '../exception'], function (exports, module, _utils, _exception) {
-  'use strict';
+define(["exports", "module", "../utils", "../exception"], function (
+  exports,
+  module,
+  _utils,
+  _exception
+) {
+  "use strict";
 
   // istanbul ignore next
 
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { default: obj };
+  }
 
   var _Exception = _interopRequireDefault(_exception);
 
   module.exports = function (instance) {
-    instance.registerHelper('each', function (context, options) {
+    instance.registerHelper("each", function (context, options) {
       if (!options) {
-        throw new _Exception['default']('Must pass iterator to #each');
+        throw new _Exception["default"]("Must pass iterator to #each");
       }
 
       var fn = options.fn,
-          inverse = options.inverse,
-          i = 0,
-          ret = '',
-          data = undefined,
-          contextPath = undefined;
+        inverse = options.inverse,
+        i = 0,
+        ret = "",
+        data = undefined,
+        contextPath = undefined;
 
       if (options.data && options.ids) {
-        contextPath = _utils.appendContextPath(options.data.contextPath, options.ids[0]) + '.';
+        contextPath =
+          _utils.appendContextPath(options.data.contextPath, options.ids[0]) +
+          ".";
       }
 
       if (_utils.isFunction(context)) {
@@ -44,13 +53,18 @@ define(['exports', 'module', '../utils', '../exception'], function (exports, mod
           }
         }
 
-        ret = ret + fn(context[field], {
-          data: data,
-          blockParams: _utils.blockParams([context[field], field], [contextPath + field, null])
-        });
+        ret =
+          ret +
+          fn(context[field], {
+            data: data,
+            blockParams: _utils.blockParams(
+              [context[field], field],
+              [contextPath + field, null]
+            ),
+          });
       }
 
-      if (context && typeof context === 'object') {
+      if (context && typeof context === "object") {
         if (_utils.isArray(context)) {
           for (var j = context.length; i < j; i++) {
             if (i in context) {

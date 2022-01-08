@@ -1,17 +1,25 @@
-define(['exports', 'module'], function (exports, module) {
-  'use strict';
+define(["exports", "module"], function (exports, module) {
+  "use strict";
 
-  var errorProps = ['description', 'fileName', 'lineNumber', 'message', 'name', 'number', 'stack'];
+  var errorProps = [
+    "description",
+    "fileName",
+    "lineNumber",
+    "message",
+    "name",
+    "number",
+    "stack",
+  ];
 
   function Exception(message, node) {
     var loc = node && node.loc,
-        line = undefined,
-        column = undefined;
+      line = undefined,
+      column = undefined;
     if (loc) {
       line = loc.start.line;
       column = loc.start.column;
 
-      message += ' - ' + line + ':' + column;
+      message += " - " + line + ":" + column;
     }
 
     var tmp = Error.prototype.constructor.call(this, message);
@@ -33,9 +41,9 @@ define(['exports', 'module'], function (exports, module) {
         // Work around issue under safari where we can't directly set the column value
         /* istanbul ignore next */
         if (Object.defineProperty) {
-          Object.defineProperty(this, 'column', {
+          Object.defineProperty(this, "column", {
             value: column,
-            enumerable: true
+            enumerable: true,
           });
         } else {
           this.column = column;
