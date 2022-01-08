@@ -1,8 +1,8 @@
-define(['exports', 'module'], function (exports, module) {
-  'use strict';
+define(["exports", "module"], function (exports, module) {
+  "use strict";
 
   module.exports = function (instance) {
-    instance.registerHelper('lookup', function (obj, field) {
+    instance.registerHelper("lookup", function (obj, field) {
       return obj && obj[field];
     });
   };

@@ -1,10 +1,10 @@
-define(['exports', 'module'], function (exports, module) {
-  'use strict';
+define(["exports", "module"], function (exports, module) {
+  "use strict";
 
   module.exports = function (instance) {
-    instance.registerHelper('log', function () /* message, options */{
+    instance.registerHelper("log", function () /* message, options */ {
       var args = [undefined],
-          options = arguments[arguments.length - 1];
+        options = arguments[arguments.length - 1];
       for (var i = 0; i < arguments.length - 1; i++) {
         args.push(arguments[i]);
       }

@@ -1,13 +1,15 @@
-define(['exports', './visitor'], function (exports, _visitor) {
+define(["exports", "./visitor"], function (exports, _visitor) {
   /* eslint-disable new-cap */
-  'use strict';
+  "use strict";
 
   exports.__esModule = true;
   exports.print = print;
   exports.PrintVisitor = PrintVisitor;
   // istanbul ignore next
 
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { default: obj };
+  }
 
   var _Visitor = _interopRequireDefault(_visitor);
 
@@ -19,31 +21,31 @@ define(['exports', './visitor'], function (exports, _visitor) {
     this.padding = 0;
   }
 
-  PrintVisitor.prototype = new _Visitor['default']();
+  PrintVisitor.prototype = new _Visitor["default"]();
 
   PrintVisitor.prototype.pad = function (string) {
-    var out = '';
+    var out = "";
 
     for (var i = 0, l = this.padding; i < l; i++) {
-      out += '  ';
+      out += "  ";
     }
 
-    out += string + '\n';
+    out += string + "\n";
     return out;
   };
 
   PrintVisitor.prototype.Program = function (program) {
-    var out = '',
-        body = program.body,
-        i = undefined,
-        l = undefined;
+    var out = "",
+      body = program.body,
+      i = undefined,
+      l = undefined;
 
     if (program.blockParams) {
-      var blockParams = 'BLOCK PARAMS: [';
+      var blockParams = "BLOCK PARAMS: [";
       for (i = 0, l = program.blockParams.length; i < l; i++) {
-        blockParams += ' ' + program.blockParams[i];
+        blockParams += " " + program.blockParams[i];
       }
-      blockParams += ' ]';
+      blockParams += " ]";
       out += this.pad(blockParams);
     }
 
@@ -57,66 +59,69 @@ define(['exports', './visitor'], function (exports, _visitor) {
   };
 
   PrintVisitor.prototype.MustacheStatement = function (mustache) {
-    return this.pad('{{ ' + this.SubExpression(mustache) + ' }}');
+    return this.pad("{{ " + this.SubExpression(mustache) + " }}");
   };
   PrintVisitor.prototype.Decorator = function (mustache) {
-    return this.pad('{{ DIRECTIVE ' + this.SubExpression(mustache) + ' }}');
+    return this.pad("{{ DIRECTIVE " + this.SubExpression(mustache) + " }}");
   };
 
-  PrintVisitor.prototype.BlockStatement = PrintVisitor.prototype.DecoratorBlock = function (block) {
-    var out = '';
+  PrintVisitor.prototype.BlockStatement =
+    PrintVisitor.prototype.DecoratorBlock = function (block) {
+      var out = "";
 
-    out += this.pad((block.type === 'DecoratorBlock' ? 'DIRECTIVE ' : '') + 'BLOCK:');
-    this.padding++;
-    out += this.pad(this.SubExpression(block));
-    if (block.program) {
-      out += this.pad('PROGRAM:');
+      out += this.pad(
+        (block.type === "DecoratorBlock" ? "DIRECTIVE " : "") + "BLOCK:"
+      );
       this.padding++;
-      out += this.accept(block.program);
-      this.padding--;
-    }
-    if (block.inverse) {
+      out += this.pad(this.SubExpression(block));
       if (block.program) {
+        out += this.pad("PROGRAM:");
         this.padding++;
-      }
-      out += this.pad('{{^}}');
-      this.padding++;
-      out += this.accept(block.inverse);
-      this.padding--;
-      if (block.program) {
+        out += this.accept(block.program);
         this.padding--;
       }
-    }
-    this.padding--;
+      if (block.inverse) {
+        if (block.program) {
+          this.padding++;
+        }
+        out += this.pad("{{^}}");
+        this.padding++;
+        out += this.accept(block.inverse);
+        this.padding--;
+        if (block.program) {
+          this.padding--;
+        }
+      }
+      this.padding--;
 
-    return out;
-  };
+      return out;
+    };
 
   PrintVisitor.prototype.PartialStatement = function (partial) {
-    var content = 'PARTIAL:' + partial.name.original;
+    var content = "PARTIAL:" + partial.name.original;
     if (partial.params[0]) {
-      content += ' ' + this.accept(partial.params[0]);
+      content += " " + this.accept(partial.params[0]);
     }
     if (partial.hash) {
-      content += ' ' + this.accept(partial.hash);
+      content += " " + this.accept(partial.hash);
     }
-    return this.pad('{{> ' + content + ' }}');
+    return this.pad("{{> " + content + " }}");
   };
   PrintVisitor.prototype.PartialBlockStatement = function (partial) {
-    var content = 'PARTIAL BLOCK:' + partial.name.original;
+    var content = "PARTIAL BLOCK:" + partial.name.original;
     if (partial.params[0]) {
-      content += ' ' + this.accept(partial.params[0]);
+      content += " " + this.accept(partial.params[0]);
     }
     if (partial.hash) {
-      content += ' ' + this.accept(partial.hash);
+      content += " " + this.accept(partial.hash);
     }
 
-    content += ' ' + this.pad('PROGRAM:');
+    content += " " + this.pad("PROGRAM:");
     this.padding++;
     content += this.accept(partial.program);
     this.padding--;
 
-    return this.pad('{{> ' + content + ' }}');
+    return this.pad("{{> " + content + " }}");
   };
 
   PrintVisitor.prototype.ContentStatement = function (content) {
@@ -129,23 +134,23 @@ define(['exports', './visitor'], function (exports, _visitor) {
 
   PrintVisitor.prototype.SubExpression = function (sexpr) {
     var params = sexpr.params,
-        paramStrings = [],
-        hash = undefined;
+      paramStrings = [],
+      hash = undefined;
 
     for (var i = 0, l = params.length; i < l; i++) {
       paramStrings.push(this.accept(params[i]));
     }
 
-    params = '[' + paramStrings.join(', ') + ']';
+    params = "[" + paramStrings.join(", ") + "]";
 
-    hash = sexpr.hash ? ' ' + this.accept(sexpr.hash) : '';
+    hash = sexpr.hash ? " " + this.accept(sexpr.hash) : "";
 
-    return this.accept(sexpr.path) + ' ' + params + hash;
+    return this.accept(sexpr.path) + " " + params + hash;
   };
 
   PrintVisitor.prototype.PathExpression = function (id) {
-    var path = id.parts.join('/');
-    return (id.data ? '@' : '') + 'PATH:' + path;
+    var path = id.parts.join("/");
+    return (id.data ? "@" : "") + "PATH:" + path;
   };
 
   PrintVisitor.prototype.StringLiteral = function (string) {
@@ -153,33 +158,33 @@ define(['exports', './visitor'], function (exports, _visitor) {
   };
 
   PrintVisitor.prototype.NumberLiteral = function (number) {
-    return 'NUMBER{' + number.value + '}';
+    return "NUMBER{" + number.value + "}";
   };
 
   PrintVisitor.prototype.BooleanLiteral = function (bool) {
-    return 'BOOLEAN{' + bool.value + '}';
+    return "BOOLEAN{" + bool.value + "}";
   };
 
   PrintVisitor.prototype.UndefinedLiteral = function () {
-    return 'UNDEFINED';
+    return "UNDEFINED";
   };
 
   PrintVisitor.prototype.NullLiteral = function () {
-    return 'NULL';
+    return "NULL";
   };
 
   PrintVisitor.prototype.Hash = function (hash) {
     var pairs = hash.pairs,
-        joinedPairs = [];
+      joinedPairs = [];
 
     for (var i = 0, l = pairs.length; i < l; i++) {
       joinedPairs.push(this.accept(pairs[i]));
     }
 
-    return 'HASH{' + joinedPairs.join(', ') + '}';
+    return "HASH{" + joinedPairs.join(", ") + "}";
   };
   PrintVisitor.prototype.HashPair = function (pair) {
-    return pair.key + '=' + this.accept(pair.value);
+    return pair.key + "=" + this.accept(pair.value);
   };
   /* eslint-enable new-cap */
 });

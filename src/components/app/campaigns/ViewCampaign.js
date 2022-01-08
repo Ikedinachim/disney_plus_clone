@@ -1,95 +1,118 @@
-import React, { Fragment, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import React, { Fragment, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-import { useSelector, useDispatch } from 'react-redux'
-import { useAlert } from 'react-alert'
+import { useSelector, useDispatch } from "react-redux";
+import { useAlert } from "react-alert";
 import { DateTime } from "luxon";
-import NumberFormat from 'react-number-format'
+import NumberFormat from "react-number-format";
 
 import Loader from "../../loader";
-import MetaData from '../../layout/MetaData'
-import Tabs from './tabComponent/Tabs'
+import MetaData from "../../layout/MetaData";
+import Tabs from "./tabComponent/Tabs";
 
 // import { getWallet } from '../../../actions/billingActions'
-import { MDBDataTable } from 'mdbreact'
-import { getAllCampaigns, clearErrors } from '../../../actions/campaignActions';
+import { MDBDataTable } from "mdbreact";
+import { getAllCampaigns, clearErrors } from "../../../actions/campaignActions";
 
 const ViewCampaign = () => {
+  const { loading, error, allCampaigns } = useSelector(
+    (state) => state.getAllCampaign || {}
+  );
+  const dispatch = useDispatch();
+  const alert = useAlert();
 
-    const { loading, error, allCampaigns } = useSelector(state => state.getAllCampaign || {});
-    const dispatch = useDispatch()
-    const alert = useAlert();
+  useEffect(() => {
+    dispatch(getAllCampaigns());
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+    // dispatch(getWallet())
+  }, [dispatch, alert, error]);
 
-    useEffect(() => {
-        dispatch(getAllCampaigns())
-        if(error) {
-            alert.error(error)
-            dispatch(clearErrors())
-        }
-        // dispatch(getWallet())
+  const setAllCampaigns = () => {
+    const data = {
+      columns: [
+        {
+          label: "ID",
+          field: "id",
+          sort: "asc",
+        },
+        {
+          label: "CAMPAIGN NAME",
+          field: "campaignName",
+          sort: "asc",
+        },
+        {
+          label: "AD TYPE",
+          field: "adType",
+          sort: "asc",
+        },
+        {
+          label: "REVENUE",
+          field: "revenue",
+          sort: "asc",
+        },
+        {
+          label: "COST",
+          field: "cost",
+          sort: "asc",
+        },
+        {
+          label: "DATE CREATED",
+          field: "dateCreated",
+          sort: "asc",
+        },
+        {
+          label: "STATUS",
+          field: "status",
+          sort: "asc",
+        },
+        {
+          label: "ACTIONS",
+          field: "actions",
+          sort: "asc",
+        },
+      ],
+      rows: [],
+    };
 
-    }, [dispatch, alert, error])
-
-
-    const setAllCampaigns = () => {
-        const data = {
-            columns: [
-                {
-                    label: 'ID',
-                    field: 'id',
-                    sort: 'asc'    
-                },
-                {
-                    label: 'CAMPAIGN NAME',
-                    field: 'campaignName',
-                    sort: 'asc'    
-                },
-                {
-                    label: 'AD TYPE',
-                    field: 'adType',
-                    sort: 'asc'    
-                },
-                {
-                    label: 'REVENUE',
-                    field: 'revenue',
-                    sort: 'asc'    
-                },
-                {
-                    label: 'COST',
-                    field: 'cost',
-                    sort: 'asc' 
-                },
-                {
-                    label: 'DATE CREATED',
-                    field: 'dateCreated',
-                    sort: 'asc' 
-                },
-                {
-                    label: 'STATUS',
-                    field: 'status',
-                    sort: 'asc' 
-                },
-                {
-                    label: 'ACTIONS',
-                    field: 'actions',
-                    sort: 'asc' 
-                }
-            ],
-            rows: []
-        }
-
-        allCampaigns.forEach(campaign => {
-            data.rows.push({
-                id: campaign.id,
-                campaignName: campaign.name,
-                adType: campaign.channel,
-                revenue: <NumberFormat value={0} displayType={'text'} thousandSeparator={true} prefix={'₦'} />,
-                cost: <NumberFormat value={campaign.price} displayType={'text'} thousandSeparator={true} prefix={'₦'} />,
-                dateCreated: DateTime.fromJSDate(new Date(campaign.createdAt)).toFormat('dd MMM, yyyy'),
-                status: <span className={`{"badge" ${ !campaign.isApproved ? "badge-pink" : "badge-active"}`}>{!campaign.isApproved ? "Pending" : "Approved"}</span>,
-                actions:
-                <Fragment>
-                    {/* <div className="dropdown">
+    allCampaigns.forEach((campaign) => {
+      data.rows.push({
+        id: campaign.id,
+        campaignName: campaign.name,
+        adType: campaign.channel,
+        revenue: (
+          <NumberFormat
+            value={0}
+            displayType={"text"}
+            thousandSeparator={true}
+            prefix={"₦"}
+          />
+        ),
+        cost: (
+          <NumberFormat
+            value={campaign.price}
+            displayType={"text"}
+            thousandSeparator={true}
+            prefix={"₦"}
+          />
+        ),
+        dateCreated: DateTime.fromJSDate(new Date(campaign.createdAt)).toFormat(
+          "dd MMM, yyyy"
+        ),
+        status: (
+          <span
+            className={`{"badge" ${
+              !campaign.isApproved ? "badge-pink" : "badge-active"
+            }`}
+          >
+            {!campaign.isApproved ? "Pending" : "Approved"}
+          </span>
+        ),
+        actions: (
+          <Fragment>
+            {/* <div className="dropdown">
                         <span
                             className
                             type="button"
@@ -119,60 +142,65 @@ const ViewCampaign = () => {
                             </a>
                         </div>
                     </div> */}
-                     <div class="tx-black tx-14">
-                        <div class="d-flex">
-                            <i class="fa fa-eye tx-orange pd-t-4 mg-r-5"></i>
-                            View
-                        </div>
-                    </div>
-                </Fragment> 
-            })
-        })
-        return data;
-    }
+            <div class="tx-black tx-14">
+              <div class="d-flex">
+                <i class="fa fa-eye tx-orange pd-t-4 mg-r-5"></i>
+                View
+              </div>
+            </div>
+          </Fragment>
+        ),
+      });
+    });
+    return data;
+  };
 
-    return (
+  return (
+    <Fragment>
+      {loading ? (
+        <Loader />
+      ) : (
         <Fragment>
-            {loading ? <Loader /> : (
-                <Fragment>
-                    <MetaData title={"All Campaigns"} />
-                        <div className="content-body">
-                            <div className="container pd-x-0">
-                                <div className="row justify-content-between">
-                                    <div className="col-md-6 col-6">
-                                    <p className="mg-b-0 tx-26 tx-bold">Campaigns</p>
-                                    </div>
-                                    <div className="col-md-2 col-6">
-                                    <p>
-                                        <Link to="/app/campaign/create" className="btn btn-primary w-100">
-                                        {" "}
-                                        Create Campaign
-                                        </Link>
-                                    </p>
-                                    </div>
-                                </div>
-                                <div className="card card rounded bd-0 shadow-sm">
-                                    <div className="card-header bd-b-0 pd-b-0 pd-t-40 pd-md-x-30">
-                                        <Tabs />
-                                    </div>
-                                    <div className="card-body pd-md-x-30 pd-t- mg-t-20 mg-md-t-0">
-                                    <MDBDataTable 
-                                        data={setAllCampaigns()}
-                                        className="px-3 scroll"
-                                        bordered
-                                        striped
-                                        hover
-                                        checkboxFirstColumn
-                                    />
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                </Fragment>
-            )}
+          <MetaData title={"All Campaigns"} />
+          <div className="content-body">
+            <div className="container pd-x-0">
+              <div className="row justify-content-between">
+                <div className="col-md-6 col-6">
+                  <p className="mg-b-0 tx-26 tx-bold">Campaigns</p>
+                </div>
+                <div className="col-md-2 col-6">
+                  <p>
+                    <Link
+                      to="/app/campaign/create"
+                      className="btn btn-primary w-100"
+                    >
+                      {" "}
+                      Create Campaign
+                    </Link>
+                  </p>
+                </div>
+              </div>
+              <div className="card card rounded bd-0 shadow-sm">
+                <div className="card-header bd-b-0 pd-b-0 pd-t-40 pd-md-x-30">
+                  <Tabs />
+                </div>
+                <div className="card-body pd-md-x-30 pd-t- mg-t-20 mg-md-t-0">
+                  <MDBDataTable
+                    data={setAllCampaigns()}
+                    className="px-3 scroll"
+                    bordered
+                    striped
+                    hover
+                    checkboxFirstColumn
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </Fragment>
-    )
-}
+      )}
+    </Fragment>
+  );
+};
 
-export default ViewCampaign
+export default ViewCampaign;

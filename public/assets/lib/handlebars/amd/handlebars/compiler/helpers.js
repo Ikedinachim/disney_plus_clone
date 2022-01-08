@@ -1,5 +1,5 @@
-define(['exports', '../exception'], function (exports, _exception) {
-  'use strict';
+define(["exports", "../exception"], function (exports, _exception) {
+  "use strict";
 
   exports.__esModule = true;
   exports.SourceLocation = SourceLocation;
@@ -14,7 +14,9 @@ define(['exports', '../exception'], function (exports, _exception) {
   exports.preparePartialBlock = preparePartialBlock;
   // istanbul ignore next
 
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { default: obj };
+  }
 
   var _Exception = _interopRequireDefault(_exception);
 
@@ -24,7 +26,10 @@ define(['exports', '../exception'], function (exports, _exception) {
     if (open.path.original !== close) {
       var errorNode = { loc: open.path.loc };
 
-      throw new _Exception['default'](open.path.original + " doesn't match " + close, errorNode);
+      throw new _Exception["default"](
+        open.path.original + " doesn't match " + close,
+        errorNode
+      );
     }
   }
 
@@ -32,11 +37,11 @@ define(['exports', '../exception'], function (exports, _exception) {
     this.source = source;
     this.start = {
       line: locInfo.first_line,
-      column: locInfo.first_column
+      column: locInfo.first_column,
     };
     this.end = {
       line: locInfo.last_line,
-      column: locInfo.last_column
+      column: locInfo.last_column,
     };
   }
 
@@ -50,34 +55,35 @@ define(['exports', '../exception'], function (exports, _exception) {
 
   function stripFlags(open, close) {
     return {
-      open: open.charAt(2) === '~',
-      close: close.charAt(close.length - 3) === '~'
+      open: open.charAt(2) === "~",
+      close: close.charAt(close.length - 3) === "~",
     };
   }
 
   function stripComment(comment) {
-    return comment.replace(/^\{\{~?!-?-?/, '').replace(/-?-?~?\}\}$/, '');
+    return comment.replace(/^\{\{~?!-?-?/, "").replace(/-?-?~?\}\}$/, "");
   }
 
   function preparePath(data, parts, loc) {
     loc = this.locInfo(loc);
 
-    var original = data ? '@' : '',
-        dig = [],
-        depth = 0;
+    var original = data ? "@" : "",
+      dig = [],
+      depth = 0;
 
     for (var i = 0, l = parts.length; i < l; i++) {
       var part = parts[i].part,
+        // If we have [] syntax then we do not treat path references as operators,
+        // i.e. foo.[this] resolves to approximately context.foo['this']
+        isLiteral = parts[i].original !== part;
+      original += (parts[i].separator || "") + part;
 
-      // If we have [] syntax then we do not treat path references as operators,
-      // i.e. foo.[this] resolves to approximately context.foo['this']
-      isLiteral = parts[i].original !== part;
-      original += (parts[i].separator || '') + part;
-
-      if (!isLiteral && (part === '..' || part === '.' || part === 'this')) {
+      if (!isLiteral && (part === ".." || part === "." || part === "this")) {
         if (dig.length > 0) {
-          throw new _Exception['default']('Invalid path: ' + original, { loc: loc });
-        } else if (part === '..') {
+          throw new _Exception["default"]("Invalid path: " + original, {
+            loc: loc,
+          });
+        } else if (part === "..") {
           depth++;
         }
       } else {
@@ -86,29 +92,29 @@ define(['exports', '../exception'], function (exports, _exception) {
     }
 
     return {
-      type: 'PathExpression',
+      type: "PathExpression",
       data: data,
       depth: depth,
       parts: dig,
       original: original,
-      loc: loc
+      loc: loc,
     };
   }
 
   function prepareMustache(path, params, hash, open, strip, locInfo) {
     // Must use charAt to support IE pre-10
     var escapeFlag = open.charAt(3) || open.charAt(2),
-        escaped = escapeFlag !== '{' && escapeFlag !== '&';
+      escaped = escapeFlag !== "{" && escapeFlag !== "&";
 
     var decorator = /\*/.test(open);
     return {
-      type: decorator ? 'Decorator' : 'MustacheStatement',
+      type: decorator ? "Decorator" : "MustacheStatement",
       path: path,
       params: params,
       hash: hash,
       escaped: escaped,
       strip: strip,
-      loc: this.locInfo(locInfo)
+      loc: this.locInfo(locInfo),
     };
   }
 
@@ -117,14 +123,14 @@ define(['exports', '../exception'], function (exports, _exception) {
 
     locInfo = this.locInfo(locInfo);
     var program = {
-      type: 'Program',
+      type: "Program",
       body: contents,
       strip: {},
-      loc: locInfo
+      loc: locInfo,
     };
 
     return {
-      type: 'BlockStatement',
+      type: "BlockStatement",
       path: openRawBlock.path,
       params: openRawBlock.params,
       hash: openRawBlock.hash,
@@ -132,11 +138,18 @@ define(['exports', '../exception'], function (exports, _exception) {
       openStrip: {},
       inverseStrip: {},
       closeStrip: {},
-      loc: locInfo
+      loc: locInfo,
     };
   }
 
-  function prepareBlock(openBlock, program, inverseAndProgram, close, inverted, locInfo) {
+  function prepareBlock(
+    openBlock,
+    program,
+    inverseAndProgram,
+    close,
+    inverted,
+    locInfo
+  ) {
     if (close && close.path) {
       validateClose(openBlock, close);
     }
@@ -146,11 +159,14 @@ define(['exports', '../exception'], function (exports, _exception) {
     program.blockParams = openBlock.blockParams;
 
     var inverse = undefined,
-        inverseStrip = undefined;
+      inverseStrip = undefined;
 
     if (inverseAndProgram) {
       if (decorator) {
-        throw new _Exception['default']('Unexpected inverse block on decorator', inverseAndProgram);
+        throw new _Exception["default"](
+          "Unexpected inverse block on decorator",
+          inverseAndProgram
+        );
       }
 
       if (inverseAndProgram.chain) {
@@ -168,7 +184,7 @@ define(['exports', '../exception'], function (exports, _exception) {
     }
 
     return {
-      type: decorator ? 'DecoratorBlock' : 'BlockStatement',
+      type: decorator ? "DecoratorBlock" : "BlockStatement",
       path: openBlock.path,
       params: openBlock.params,
       hash: openBlock.hash,
@@ -177,14 +193,14 @@ define(['exports', '../exception'], function (exports, _exception) {
       openStrip: openBlock.strip,
       inverseStrip: inverseStrip,
       closeStrip: close && close.strip,
-      loc: this.locInfo(locInfo)
+      loc: this.locInfo(locInfo),
     };
   }
 
   function prepareProgram(statements, loc) {
     if (!loc && statements.length) {
       var firstLoc = statements[0].loc,
-          lastLoc = statements[statements.length - 1].loc;
+        lastLoc = statements[statements.length - 1].loc;
 
       /* istanbul ignore else */
       if (firstLoc && lastLoc) {
@@ -192,21 +208,21 @@ define(['exports', '../exception'], function (exports, _exception) {
           source: firstLoc.source,
           start: {
             line: firstLoc.start.line,
-            column: firstLoc.start.column
+            column: firstLoc.start.column,
           },
           end: {
             line: lastLoc.end.line,
-            column: lastLoc.end.column
-          }
+            column: lastLoc.end.column,
+          },
         };
       }
     }
 
     return {
-      type: 'Program',
+      type: "Program",
       body: statements,
       strip: {},
-      loc: loc
+      loc: loc,
     };
   }
 
@@ -214,14 +230,14 @@ define(['exports', '../exception'], function (exports, _exception) {
     validateClose(open, close);
 
     return {
-      type: 'PartialBlockStatement',
+      type: "PartialBlockStatement",
       name: open.path,
       params: open.params,
       hash: open.hash,
       program: program,
       openStrip: open.strip,
       closeStrip: close && close.strip,
-      loc: this.locInfo(locInfo)
+      loc: this.locInfo(locInfo),
     };
   }
 });

@@ -1,13 +1,13 @@
-define(['exports', 'module'], function (exports, module) {
+define(["exports", "module"], function (exports, module) {
   // Build out our basic SafeString type
-  'use strict';
+  "use strict";
 
   function SafeString(string) {
     this.string = string;
   }
 
   SafeString.prototype.toString = SafeString.prototype.toHTML = function () {
-    return '' + this.string;
+    return "" + this.string;
   };
 
   module.exports = SafeString;

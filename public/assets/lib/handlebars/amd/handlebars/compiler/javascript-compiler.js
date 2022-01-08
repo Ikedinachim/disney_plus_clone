@@ -1,9 +1,18 @@
-define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'], function (exports, module, _base, _exception, _utils, _codeGen) {
-  'use strict';
+define([
+  "exports",
+  "module",
+  "../base",
+  "../exception",
+  "../utils",
+  "./code-gen",
+], function (exports, module, _base, _exception, _utils, _codeGen) {
+  "use strict";
 
   // istanbul ignore next
 
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { default: obj };
+  }
 
   var _Exception = _interopRequireDefault(_exception);
 
@@ -19,22 +28,29 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
     // PUBLIC API: You can override these methods in a subclass to provide
     // alternative compiled forms for name lookup and buffering semantics
     nameLookup: function nameLookup(parent, name /* , type*/) {
-      if (name === 'constructor') {
-        return ['(', parent, '.propertyIsEnumerable(\'constructor\') ? ', parent, '.constructor : undefined', ')'];
+      if (name === "constructor") {
+        return [
+          "(",
+          parent,
+          ".propertyIsEnumerable('constructor') ? ",
+          parent,
+          ".constructor : undefined",
+          ")",
+        ];
       }
       if (JavaScriptCompiler.isValidJavaScriptVariableName(name)) {
-        return [parent, '.', name];
+        return [parent, ".", name];
       } else {
-        return [parent, '[', JSON.stringify(name), ']'];
+        return [parent, "[", JSON.stringify(name), "]"];
       }
     },
     depthedLookup: function depthedLookup(name) {
-      return [this.aliasable('container.lookup'), '(depths, "', name, '")'];
+      return [this.aliasable("container.lookup"), '(depths, "', name, '")'];
     },
 
     compilerInfo: function compilerInfo() {
       var revision = _base.COMPILER_REVISION,
-          versions = _base.REVISION_CHANGES[revision];
+        versions = _base.REVISION_CHANGES[revision];
       return [revision, versions];
     },
 
@@ -46,12 +62,12 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
       source = this.source.wrap(source, location);
 
       if (this.environment.isSimple) {
-        return ['return ', source, ';'];
+        return ["return ", source, ";"];
       } else if (explicit) {
         // This is a case where the buffer operation occurs as a child of another
         // construct, generally braces. We have to explicitly output these buffer
         // operations to ensure that the emitted code goes in the correct location.
-        return ['buffer += ', source, ';'];
+        return ["buffer += ", source, ";"];
       } else {
         source.appendToBuffer = true;
         return source;
@@ -59,7 +75,7 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
     },
 
     initializeBuffer: function initializeBuffer() {
-      return this.quotedString('');
+      return this.quotedString("");
     },
     // END PUBLIC API
 
@@ -75,7 +91,7 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
       this.context = context || {
         decorators: [],
         programs: [],
-        environments: []
+        environments: [],
       };
 
       this.preamble();
@@ -91,14 +107,18 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
 
       this.compileChildren(environment, options);
 
-      this.useDepths = this.useDepths || environment.useDepths || environment.useDecorators || this.options.compat;
+      this.useDepths =
+        this.useDepths ||
+        environment.useDepths ||
+        environment.useDecorators ||
+        this.options.compat;
       this.useBlockParams = this.useBlockParams || environment.useBlockParams;
 
       var opcodes = environment.opcodes,
-          opcode = undefined,
-          firstLoc = undefined,
-          i = undefined,
-          l = undefined;
+        opcode = undefined,
+        firstLoc = undefined,
+        i = undefined,
+        l = undefined;
 
       for (i = 0, l = opcodes.length; i < l; i++) {
         opcode = opcodes[i];
@@ -110,24 +130,41 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
 
       // Flush any trailing content that might be pending.
       this.source.currentLocation = firstLoc;
-      this.pushSource('');
+      this.pushSource("");
 
       /* istanbul ignore next */
-      if (this.stackSlot || this.inlineStack.length || this.compileStack.length) {
-        throw new _Exception['default']('Compile completed with content left on stack');
+      if (
+        this.stackSlot ||
+        this.inlineStack.length ||
+        this.compileStack.length
+      ) {
+        throw new _Exception["default"](
+          "Compile completed with content left on stack"
+        );
       }
 
       if (!this.decorators.isEmpty()) {
         this.useDecorators = true;
 
-        this.decorators.prepend('var decorators = container.decorators;\n');
-        this.decorators.push('return fn;');
+        this.decorators.prepend("var decorators = container.decorators;\n");
+        this.decorators.push("return fn;");
 
         if (asObject) {
-          this.decorators = Function.apply(this, ['fn', 'props', 'container', 'depth0', 'data', 'blockParams', 'depths', this.decorators.merge()]);
+          this.decorators = Function.apply(this, [
+            "fn",
+            "props",
+            "container",
+            "depth0",
+            "data",
+            "blockParams",
+            "depths",
+            this.decorators.merge(),
+          ]);
         } else {
-          this.decorators.prepend('function(fn, props, container, depth0, data, blockParams, depths) {\n');
-          this.decorators.push('}\n');
+          this.decorators.prepend(
+            "function(fn, props, container, depth0, data, blockParams, depths) {\n"
+          );
+          this.decorators.push("}\n");
           this.decorators = this.decorators.merge();
         }
       } else {
@@ -138,7 +175,7 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
       if (!this.isChild) {
         var ret = {
           compiler: this.compilerInfo(),
-          main: fn
+          main: fn,
         };
 
         if (this.decorators) {
@@ -154,7 +191,7 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
           if (programs[i]) {
             ret[i] = programs[i];
             if (decorators[i]) {
-              ret[i + '_d'] = decorators[i];
+              ret[i + "_d"] = decorators[i];
               ret.useDecorators = true;
             }
           }
@@ -202,16 +239,16 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
       // track the last context pushed into place to allow skipping the
       // getContext opcode when it would be a noop
       this.lastContext = 0;
-      this.source = new _CodeGen['default'](this.options.srcName);
-      this.decorators = new _CodeGen['default'](this.options.srcName);
+      this.source = new _CodeGen["default"](this.options.srcName);
+      this.decorators = new _CodeGen["default"](this.options.srcName);
     },
 
     createFunctionContext: function createFunctionContext(asObject) {
-      var varDeclarations = '';
+      var varDeclarations = "";
 
       var locals = this.stackVars.concat(this.registers.list);
       if (locals.length > 0) {
-        varDeclarations += ', ' + locals.join(', ');
+        varDeclarations += ", " + locals.join(", ");
       }
 
       // Generate minimizer alias mappings
@@ -225,19 +262,23 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
         // eslint-disable-line guard-for-in
         var node = this.aliases[alias];
 
-        if (this.aliases.hasOwnProperty(alias) && node.children && node.referenceCount > 1) {
-          varDeclarations += ', alias' + ++aliasCount + '=' + alias;
-          node.children[0] = 'alias' + aliasCount;
+        if (
+          this.aliases.hasOwnProperty(alias) &&
+          node.children &&
+          node.referenceCount > 1
+        ) {
+          varDeclarations += ", alias" + ++aliasCount + "=" + alias;
+          node.children[0] = "alias" + aliasCount;
         }
       }
 
-      var params = ['container', 'depth0', 'helpers', 'partials', 'data'];
+      var params = ["container", "depth0", "helpers", "partials", "data"];
 
       if (this.useBlockParams || this.useDepths) {
-        params.push('blockParams');
+        params.push("blockParams");
       }
       if (this.useDepths) {
-        params.push('depths');
+        params.push("depths");
       }
 
       // Perform a second pass over the output to merge content when possible
@@ -248,20 +289,26 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
 
         return Function.apply(this, params);
       } else {
-        return this.source.wrap(['function(', params.join(','), ') {\n  ', source, '}']);
+        return this.source.wrap([
+          "function(",
+          params.join(","),
+          ") {\n  ",
+          source,
+          "}",
+        ]);
       }
     },
     mergeSource: function mergeSource(varDeclarations) {
       var isSimple = this.environment.isSimple,
-          appendOnly = !this.forceBuffer,
-          appendFirst = undefined,
-          sourceSeen = undefined,
-          bufferStart = undefined,
-          bufferEnd = undefined;
+        appendOnly = !this.forceBuffer,
+        appendFirst = undefined,
+        sourceSeen = undefined,
+        bufferStart = undefined,
+        bufferEnd = undefined;
       this.source.each(function (line) {
         if (line.appendToBuffer) {
           if (bufferStart) {
-            line.prepend('  + ');
+            line.prepend("  + ");
           } else {
             bufferStart = line;
           }
@@ -271,9 +318,9 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
             if (!sourceSeen) {
               appendFirst = true;
             } else {
-              bufferStart.prepend('buffer += ');
+              bufferStart.prepend("buffer += ");
             }
-            bufferEnd.add(';');
+            bufferEnd.add(";");
             bufferStart = bufferEnd = undefined;
           }
 
@@ -286,24 +333,27 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
 
       if (appendOnly) {
         if (bufferStart) {
-          bufferStart.prepend('return ');
-          bufferEnd.add(';');
+          bufferStart.prepend("return ");
+          bufferEnd.add(";");
         } else if (!sourceSeen) {
           this.source.push('return "";');
         }
       } else {
-        varDeclarations += ', buffer = ' + (appendFirst ? '' : this.initializeBuffer());
+        varDeclarations +=
+          ", buffer = " + (appendFirst ? "" : this.initializeBuffer());
 
         if (bufferStart) {
-          bufferStart.prepend('return buffer + ');
-          bufferEnd.add(';');
+          bufferStart.prepend("return buffer + ");
+          bufferEnd.add(";");
         } else {
-          this.source.push('return buffer;');
+          this.source.push("return buffer;");
         }
       }
 
       if (varDeclarations) {
-        this.source.prepend('var ' + varDeclarations.substring(2) + (appendFirst ? '' : ';\n'));
+        this.source.prepend(
+          "var " + varDeclarations.substring(2) + (appendFirst ? "" : ";\n")
+        );
       }
 
       return this.source.merge();
@@ -319,14 +369,14 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
     // replace it on the stack with the result of properly
     // invoking blockHelperMissing.
     blockValue: function blockValue(name) {
-      var blockHelperMissing = this.aliasable('helpers.blockHelperMissing'),
-          params = [this.contextName(0)];
+      var blockHelperMissing = this.aliasable("helpers.blockHelperMissing"),
+        params = [this.contextName(0)];
       this.setupHelperArgs(name, 0, params);
 
       var blockName = this.popStack();
       params.splice(1, 0, blockName);
 
-      this.push(this.source.functionCall(blockHelperMissing, 'call', params));
+      this.push(this.source.functionCall(blockHelperMissing, "call", params));
     },
 
     // [ambiguousBlockValue]
@@ -337,16 +387,24 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
     // On stack, after, if lastHelper: value
     ambiguousBlockValue: function ambiguousBlockValue() {
       // We're being a bit cheeky and reusing the options value from the prior exec
-      var blockHelperMissing = this.aliasable('helpers.blockHelperMissing'),
-          params = [this.contextName(0)];
-      this.setupHelperArgs('', 0, params, true);
+      var blockHelperMissing = this.aliasable("helpers.blockHelperMissing"),
+        params = [this.contextName(0)];
+      this.setupHelperArgs("", 0, params, true);
 
       this.flushInline();
 
       var current = this.topStack();
       params.splice(1, 0, current);
 
-      this.pushSource(['if (!', this.lastHelper, ') { ', current, ' = ', this.source.functionCall(blockHelperMissing, 'call', params), '}']);
+      this.pushSource([
+        "if (!",
+        this.lastHelper,
+        ") { ",
+        current,
+        " = ",
+        this.source.functionCall(blockHelperMissing, "call", params),
+        "}",
+      ]);
     },
 
     // [appendContent]
@@ -377,15 +435,25 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
     append: function append() {
       if (this.isInline()) {
         this.replaceStack(function (current) {
-          return [' != null ? ', current, ' : ""'];
+          return [" != null ? ", current, ' : ""'];
         });
 
         this.pushSource(this.appendToBuffer(this.popStack()));
       } else {
         var local = this.popStack();
-        this.pushSource(['if (', local, ' != null) { ', this.appendToBuffer(local, undefined, true), ' }']);
+        this.pushSource([
+          "if (",
+          local,
+          " != null) { ",
+          this.appendToBuffer(local, undefined, true),
+          " }",
+        ]);
         if (this.environment.isSimple) {
-          this.pushSource(['else { ', this.appendToBuffer("''", undefined, true), ' }']);
+          this.pushSource([
+            "else { ",
+            this.appendToBuffer("''", undefined, true),
+            " }",
+          ]);
         }
       }
     },
@@ -397,7 +465,14 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
     //
     // Escape `value` and append it to the buffer
     appendEscaped: function appendEscaped() {
-      this.pushSource(this.appendToBuffer([this.aliasable('container.escapeExpression'), '(', this.popStack(), ')']));
+      this.pushSource(
+        this.appendToBuffer([
+          this.aliasable("container.escapeExpression"),
+          "(",
+          this.popStack(),
+          ")",
+        ])
+      );
     },
 
     // [getContext]
@@ -439,7 +514,7 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
         this.pushContext();
       }
 
-      this.resolvePath('context', parts, i, falsy, strict);
+      this.resolvePath("context", parts, i, falsy, strict);
     },
 
     // [lookupBlockParam]
@@ -452,8 +527,8 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
     lookupBlockParam: function lookupBlockParam(blockParamId, parts) {
       this.useBlockParams = true;
 
-      this.push(['blockParams[', blockParamId[0], '][', blockParamId[1], ']']);
-      this.resolvePath('context', parts, 1);
+      this.push(["blockParams[", blockParamId[0], "][", blockParamId[1], "]"]);
+      this.resolvePath("context", parts, 1);
     },
 
     // [lookupData]
@@ -464,12 +539,12 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
     // Push the data lookup operator
     lookupData: function lookupData(depth, parts, strict) {
       if (!depth) {
-        this.pushStackLiteral('data');
+        this.pushStackLiteral("data");
       } else {
-        this.pushStackLiteral('container.data(data, ' + depth + ')');
+        this.pushStackLiteral("container.data(data, " + depth + ")");
       }
 
-      this.resolvePath('data', parts, 0, true, strict);
+      this.resolvePath("data", parts, 0, true, strict);
     },
 
     resolvePath: function resolvePath(type, parts, i, falsy, strict) {
@@ -478,7 +553,9 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
       var _this = this;
 
       if (this.options.strict || this.options.assumeObjects) {
-        this.push(strictLookup(this.options.strict && strict, this, parts, type));
+        this.push(
+          strictLookup(this.options.strict && strict, this, parts, type)
+        );
         return;
       }
 
@@ -490,10 +567,10 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
           // We want to ensure that zero and false are handled properly if the context (falsy flag)
           // needs to have the special handling for these values.
           if (!falsy) {
-            return [' != null ? ', lookup, ' : ', current];
+            return [" != null ? ", lookup, " : ", current];
           } else {
             // Otherwise we can use generic falsy handling
-            return [' && ', lookup];
+            return [" && ", lookup];
           }
         });
         /* eslint-enable no-loop-func */
@@ -508,7 +585,14 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
     // If the `value` is a lambda, replace it on the stack by
     // the return value of the lambda
     resolvePossibleLambda: function resolvePossibleLambda() {
-      this.push([this.aliasable('container.lambda'), '(', this.popStack(), ', ', this.contextName(0), ')']);
+      this.push([
+        this.aliasable("container.lambda"),
+        "(",
+        this.popStack(),
+        ", ",
+        this.contextName(0),
+        ")",
+      ]);
     },
 
     // [pushStringParam]
@@ -525,8 +609,8 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
 
       // If it's a subexpression, the string result
       // will be pushed after this opcode.
-      if (type !== 'SubExpression') {
-        if (typeof string === 'string') {
+      if (type !== "SubExpression") {
+        if (typeof string === "string") {
           this.pushString(string);
         } else {
           this.pushStackLiteral(string);
@@ -536,13 +620,13 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
 
     emptyHash: function emptyHash(omitEmpty) {
       if (this.trackIds) {
-        this.push('{}'); // hashIds
+        this.push("{}"); // hashIds
       }
       if (this.stringParams) {
-        this.push('{}'); // hashContexts
-        this.push('{}'); // hashTypes
+        this.push("{}"); // hashContexts
+        this.push("{}"); // hashTypes
       }
-      this.pushStackLiteral(omitEmpty ? 'undefined' : '{}');
+      this.pushStackLiteral(omitEmpty ? "undefined" : "{}");
     },
     pushHash: function pushHash() {
       if (this.hash) {
@@ -611,10 +695,19 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
     // Pops off the decorator's parameters, invokes the decorator,
     // and inserts the decorator into the decorators list.
     registerDecorator: function registerDecorator(paramSize, name) {
-      var foundDecorator = this.nameLookup('decorators', name, 'decorator'),
-          options = this.setupHelperArgs(name, paramSize);
+      var foundDecorator = this.nameLookup("decorators", name, "decorator"),
+        options = this.setupHelperArgs(name, paramSize);
 
-      this.decorators.push(['fn = ', this.decorators.functionCall(foundDecorator, '', ['fn', 'props', 'container', options]), ' || fn;']);
+      this.decorators.push([
+        "fn = ",
+        this.decorators.functionCall(foundDecorator, "", [
+          "fn",
+          "props",
+          "container",
+          options,
+        ]),
+        " || fn;",
+      ]);
     },
 
     // [invokeHelper]
@@ -628,16 +721,16 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
     // If the helper is not found, `helperMissing` is called.
     invokeHelper: function invokeHelper(paramSize, name, isSimple) {
       var nonHelper = this.popStack(),
-          helper = this.setupHelper(paramSize, name),
-          simple = isSimple ? [helper.name, ' || '] : '';
+        helper = this.setupHelper(paramSize, name),
+        simple = isSimple ? [helper.name, " || "] : "";
 
-      var lookup = ['('].concat(simple, nonHelper);
+      var lookup = ["("].concat(simple, nonHelper);
       if (!this.options.strict) {
-        lookup.push(' || ', this.aliasable('helpers.helperMissing'));
+        lookup.push(" || ", this.aliasable("helpers.helperMissing"));
       }
-      lookup.push(')');
+      lookup.push(")");
 
-      this.push(this.source.functionCall(lookup, 'call', helper.callParams));
+      this.push(this.source.functionCall(lookup, "call", helper.callParams));
     },
 
     // [invokeKnownHelper]
@@ -649,7 +742,9 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
     // so a `helperMissing` fallback is not required.
     invokeKnownHelper: function invokeKnownHelper(paramSize, name) {
       var helper = this.setupHelper(paramSize, name);
-      this.push(this.source.functionCall(helper.name, 'call', helper.callParams));
+      this.push(
+        this.source.functionCall(helper.name, "call", helper.callParams)
+      );
     },
 
     // [invokeAmbiguous]
@@ -665,22 +760,39 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
     // and can be avoided by passing the `knownHelpers` and
     // `knownHelpersOnly` flags at compile-time.
     invokeAmbiguous: function invokeAmbiguous(name, helperCall) {
-      this.useRegister('helper');
+      this.useRegister("helper");
 
       var nonHelper = this.popStack();
 
       this.emptyHash();
       var helper = this.setupHelper(0, name, helperCall);
 
-      var helperName = this.lastHelper = this.nameLookup('helpers', name, 'helper');
+      var helperName = (this.lastHelper = this.nameLookup(
+        "helpers",
+        name,
+        "helper"
+      ));
 
-      var lookup = ['(', '(helper = ', helperName, ' || ', nonHelper, ')'];
+      var lookup = ["(", "(helper = ", helperName, " || ", nonHelper, ")"];
       if (!this.options.strict) {
-        lookup[0] = '(helper = ';
-        lookup.push(' != null ? helper : ', this.aliasable('helpers.helperMissing'));
+        lookup[0] = "(helper = ";
+        lookup.push(
+          " != null ? helper : ",
+          this.aliasable("helpers.helperMissing")
+        );
       }
 
-      this.push(['(', lookup, helper.paramsInit ? ['),(', helper.paramsInit] : [], '),', '(typeof helper === ', this.aliasable('"function"'), ' ? ', this.source.functionCall('helper', 'call', helper.callParams), ' : helper))']);
+      this.push([
+        "(",
+        lookup,
+        helper.paramsInit ? ["),(", helper.paramsInit] : [],
+        "),",
+        "(typeof helper === ",
+        this.aliasable('"function"'),
+        " ? ",
+        this.source.functionCall("helper", "call", helper.callParams),
+        " : helper))",
+      ]);
     },
 
     // [invokePartial]
@@ -692,7 +804,7 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
     // and pushes the result of the invocation back.
     invokePartial: function invokePartial(isDynamic, name, indent) {
       var params = [],
-          options = this.setupParams(name, 1, params);
+        options = this.setupParams(name, 1, params);
 
       if (isDynamic) {
         name = this.popStack();
@@ -702,23 +814,25 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
       if (indent) {
         options.indent = JSON.stringify(indent);
       }
-      options.helpers = 'helpers';
-      options.partials = 'partials';
-      options.decorators = 'container.decorators';
+      options.helpers = "helpers";
+      options.partials = "partials";
+      options.decorators = "container.decorators";
 
       if (!isDynamic) {
-        params.unshift(this.nameLookup('partials', name, 'partial'));
+        params.unshift(this.nameLookup("partials", name, "partial"));
       } else {
         params.unshift(name);
       }
 
       if (this.options.compat) {
-        options.depths = 'depths';
+        options.depths = "depths";
       }
       options = this.objectLiteral(options);
       params.push(options);
 
-      this.push(this.source.functionCall('container.invokePartial', '', params));
+      this.push(
+        this.source.functionCall("container.invokePartial", "", params)
+      );
     },
 
     // [assignToHash]
@@ -729,9 +843,9 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
     // Pops a value off the stack and assigns it to the current hash
     assignToHash: function assignToHash(key) {
       var value = this.popStack(),
-          context = undefined,
-          type = undefined,
-          id = undefined;
+        context = undefined,
+        type = undefined,
+        id = undefined;
 
       if (this.trackIds) {
         id = this.popStack();
@@ -755,14 +869,21 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
     },
 
     pushId: function pushId(type, name, child) {
-      if (type === 'BlockParam') {
-        this.pushStackLiteral('blockParams[' + name[0] + '].path[' + name[1] + ']' + (child ? ' + ' + JSON.stringify('.' + child) : ''));
-      } else if (type === 'PathExpression') {
+      if (type === "BlockParam") {
+        this.pushStackLiteral(
+          "blockParams[" +
+            name[0] +
+            "].path[" +
+            name[1] +
+            "]" +
+            (child ? " + " + JSON.stringify("." + child) : "")
+        );
+      } else if (type === "PathExpression") {
         this.pushString(name);
-      } else if (type === 'SubExpression') {
-        this.pushStackLiteral('true');
+      } else if (type === "SubExpression") {
+        this.pushStackLiteral("true");
       } else {
-        this.pushStackLiteral('null');
+        this.pushStackLiteral("null");
       }
     },
 
@@ -772,8 +893,8 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
 
     compileChildren: function compileChildren(environment, options) {
       var children = environment.children,
-          child = undefined,
-          compiler = undefined;
+        child = undefined,
+        compiler = undefined;
 
       for (var i = 0, l = children.length; i < l; i++) {
         child = children[i];
@@ -782,11 +903,16 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
         var existing = this.matchExistingProgram(child);
 
         if (existing == null) {
-          this.context.programs.push(''); // Placeholder to prevent name conflicts for nested children
+          this.context.programs.push(""); // Placeholder to prevent name conflicts for nested children
           var index = this.context.programs.length;
           child.index = index;
-          child.name = 'program' + index;
-          this.context.programs[index] = compiler.compile(child, options, this.context, !this.precompile);
+          child.name = "program" + index;
+          this.context.programs[index] = compiler.compile(
+            child,
+            options,
+            this.context,
+            !this.precompile
+          );
           this.context.decorators[index] = compiler.decorators;
           this.context.environments[index] = child;
 
@@ -796,7 +922,7 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
           child.useBlockParams = this.useBlockParams;
         } else {
           child.index = existing.index;
-          child.name = 'program' + existing.index;
+          child.name = "program" + existing.index;
 
           this.useDepths = this.useDepths || existing.useDepths;
           this.useBlockParams = this.useBlockParams || existing.useBlockParams;
@@ -814,16 +940,16 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
 
     programExpression: function programExpression(guid) {
       var child = this.environment.children[guid],
-          programParams = [child.index, 'data', child.blockParams];
+        programParams = [child.index, "data", child.blockParams];
 
       if (this.useBlockParams || this.useDepths) {
-        programParams.push('blockParams');
+        programParams.push("blockParams");
       }
       if (this.useDepths) {
-        programParams.push('depths');
+        programParams.push("depths");
       }
 
-      return 'container.program(' + programParams.join(', ') + ')';
+      return "container.program(" + programParams.join(", ") + ")";
     },
 
     useRegister: function useRegister(name) {
@@ -848,7 +974,12 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
 
     pushSource: function pushSource(source) {
       if (this.pendingContent) {
-        this.source.push(this.appendToBuffer(this.source.quotedString(this.pendingContent), this.pendingLocation));
+        this.source.push(
+          this.appendToBuffer(
+            this.source.quotedString(this.pendingContent),
+            this.pendingLocation
+          )
+        );
         this.pendingContent = undefined;
       }
 
@@ -858,14 +989,14 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
     },
 
     replaceStack: function replaceStack(callback) {
-      var prefix = ['('],
-          stack = undefined,
-          createdStack = undefined,
-          usedLiteral = undefined;
+      var prefix = ["("],
+        stack = undefined,
+        createdStack = undefined,
+        usedLiteral = undefined;
 
       /* istanbul ignore next */
       if (!this.isInline()) {
-        throw new _Exception['default']('replaceStack on non-inline');
+        throw new _Exception["default"]("replaceStack on non-inline");
       }
 
       // We want to merge the inline statement into the replacement statement via ','
@@ -874,14 +1005,14 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
       if (top instanceof Literal) {
         // Literals do not need to be inlined
         stack = [top.value];
-        prefix = ['(', stack];
+        prefix = ["(", stack];
         usedLiteral = true;
       } else {
         // Get or create the current stack name for use by the inline
         createdStack = true;
         var _name = this.incrStack();
 
-        prefix = ['((', this.push(_name), ' = ', top, ')'];
+        prefix = ["((", this.push(_name), " = ", top, ")"];
         stack = this.topStack();
       }
 
@@ -893,18 +1024,18 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
       if (createdStack) {
         this.stackSlot--;
       }
-      this.push(prefix.concat(item, ')'));
+      this.push(prefix.concat(item, ")"));
     },
 
     incrStack: function incrStack() {
       this.stackSlot++;
       if (this.stackSlot > this.stackVars.length) {
-        this.stackVars.push('stack' + this.stackSlot);
+        this.stackVars.push("stack" + this.stackSlot);
       }
       return this.topStackName();
     },
     topStackName: function topStackName() {
-      return 'stack' + this.stackSlot;
+      return "stack" + this.stackSlot;
     },
     flushInline: function flushInline() {
       var inlineStack = this.inlineStack;
@@ -916,7 +1047,7 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
           this.compileStack.push(entry);
         } else {
           var stack = this.incrStack();
-          this.pushSource([stack, ' = ', entry, ';']);
+          this.pushSource([stack, " = ", entry, ";"]);
           this.compileStack.push(stack);
         }
       }
@@ -927,7 +1058,7 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
 
     popStack: function popStack(wrapped) {
       var inline = this.isInline(),
-          item = (inline ? this.inlineStack : this.compileStack).pop();
+        item = (inline ? this.inlineStack : this.compileStack).pop();
 
       if (!wrapped && item instanceof Literal) {
         return item.value;
@@ -935,7 +1066,7 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
         if (!inline) {
           /* istanbul ignore next */
           if (!this.stackSlot) {
-            throw new _Exception['default']('Invalid stack pop');
+            throw new _Exception["default"]("Invalid stack pop");
           }
           this.stackSlot--;
         }
@@ -945,7 +1076,7 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
 
     topStack: function topStack() {
       var stack = this.isInline() ? this.inlineStack : this.compileStack,
-          item = stack[stack.length - 1];
+        item = stack[stack.length - 1];
 
       /* istanbul ignore if */
       if (item instanceof Literal) {
@@ -957,9 +1088,9 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
 
     contextName: function contextName(context) {
       if (this.useDepths && context) {
-        return 'depths[' + context + ']';
+        return "depths[" + context + "]";
       } else {
-        return 'depth' + context;
+        return "depth" + context;
       }
     },
 
@@ -987,25 +1118,30 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
 
     setupHelper: function setupHelper(paramSize, name, blockHelper) {
       var params = [],
-          paramsInit = this.setupHelperArgs(name, paramSize, params, blockHelper);
-      var foundHelper = this.nameLookup('helpers', name, 'helper'),
-          callContext = this.aliasable(this.contextName(0) + ' != null ? ' + this.contextName(0) + ' : (container.nullContext || {})');
+        paramsInit = this.setupHelperArgs(name, paramSize, params, blockHelper);
+      var foundHelper = this.nameLookup("helpers", name, "helper"),
+        callContext = this.aliasable(
+          this.contextName(0) +
+            " != null ? " +
+            this.contextName(0) +
+            " : (container.nullContext || {})"
+        );
 
       return {
         params: params,
         paramsInit: paramsInit,
         name: foundHelper,
-        callParams: [callContext].concat(params)
+        callParams: [callContext].concat(params),
       };
     },
 
     setupParams: function setupParams(helper, paramSize, params) {
       var options = {},
-          contexts = [],
-          types = [],
-          ids = [],
-          objectArgs = !params,
-          param = undefined;
+        contexts = [],
+        types = [],
+        ids = [],
+        objectArgs = !params,
+        param = undefined;
 
       if (objectArgs) {
         params = [];
@@ -1023,13 +1159,13 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
       }
 
       var inverse = this.popStack(),
-          program = this.popStack();
+        program = this.popStack();
 
       // Avoid setting fn and inverse if neither are set. This allows
       // helpers to do a check for `if (options.fn)`
       if (program || inverse) {
-        options.fn = program || 'container.noop';
-        options.inverse = inverse || 'container.noop';
+        options.fn = program || "container.noop";
+        options.inverse = inverse || "container.noop";
       }
 
       // The parameters go on to the stack in order (making sure that they are evaluated in order)
@@ -1061,34 +1197,56 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
       }
 
       if (this.options.data) {
-        options.data = 'data';
+        options.data = "data";
       }
       if (this.useBlockParams) {
-        options.blockParams = 'blockParams';
+        options.blockParams = "blockParams";
       }
       return options;
     },
 
-    setupHelperArgs: function setupHelperArgs(helper, paramSize, params, useRegister) {
+    setupHelperArgs: function setupHelperArgs(
+      helper,
+      paramSize,
+      params,
+      useRegister
+    ) {
       var options = this.setupParams(helper, paramSize, params);
       options = this.objectLiteral(options);
       if (useRegister) {
-        this.useRegister('options');
-        params.push('options');
-        return ['options=', options];
+        this.useRegister("options");
+        params.push("options");
+        return ["options=", options];
       } else if (params) {
         params.push(options);
-        return '';
+        return "";
       } else {
         return options;
       }
-    }
+    },
   };
 
   (function () {
-    var reservedWords = ('break else new var' + ' case finally return void' + ' catch for switch while' + ' continue function this with' + ' default if throw' + ' delete in try' + ' do instanceof typeof' + ' abstract enum int short' + ' boolean export interface static' + ' byte extends long super' + ' char final native synchronized' + ' class float package throws' + ' const goto private transient' + ' debugger implements protected volatile' + ' double import public let yield await' + ' null true false').split(' ');
+    var reservedWords = (
+      "break else new var" +
+      " case finally return void" +
+      " catch for switch while" +
+      " continue function this with" +
+      " default if throw" +
+      " delete in try" +
+      " do instanceof typeof" +
+      " abstract enum int short" +
+      " boolean export interface static" +
+      " byte extends long super" +
+      " char final native synchronized" +
+      " class float package throws" +
+      " const goto private transient" +
+      " debugger implements protected volatile" +
+      " double import public let yield await" +
+      " null true false"
+    ).split(" ");
 
-    var compilerWords = JavaScriptCompiler.RESERVED_WORDS = {};
+    var compilerWords = (JavaScriptCompiler.RESERVED_WORDS = {});
 
     for (var i = 0, l = reservedWords.length; i < l; i++) {
       compilerWords[reservedWords[i]] = true;
@@ -1096,13 +1254,16 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
   })();
 
   JavaScriptCompiler.isValidJavaScriptVariableName = function (name) {
-    return !JavaScriptCompiler.RESERVED_WORDS[name] && /^[a-zA-Z_$][0-9a-zA-Z_$]*$/.test(name);
+    return (
+      !JavaScriptCompiler.RESERVED_WORDS[name] &&
+      /^[a-zA-Z_$][0-9a-zA-Z_$]*$/.test(name)
+    );
   };
 
   function strictLookup(requireTerminal, compiler, parts, type) {
     var stack = compiler.popStack(),
-        i = 0,
-        len = parts.length;
+      i = 0,
+      len = parts.length;
     if (requireTerminal) {
       len--;
     }
@@ -1112,7 +1273,14 @@ define(['exports', 'module', '../base', '../exception', '../utils', './code-gen'
     }
 
     if (requireTerminal) {
-      return [compiler.aliasable('container.strict'), '(', stack, ', ', compiler.quotedString(parts[i]), ')'];
+      return [
+        compiler.aliasable("container.strict"),
+        "(",
+        stack,
+        ", ",
+        compiler.quotedString(parts[i]),
+        ")",
+      ];
     } else {
       return stack;
     }

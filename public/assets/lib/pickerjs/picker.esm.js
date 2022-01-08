@@ -15,7 +15,12 @@ function _typeof(obj) {
     };
   } else {
     _typeof = function (obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      return obj &&
+        typeof Symbol === "function" &&
+        obj.constructor === Symbol &&
+        obj !== Symbol.prototype
+        ? "symbol"
+        : typeof obj;
     };
   }
 
@@ -45,19 +50,26 @@ function _createClass(Constructor, protoProps, staticProps) {
 }
 
 function _toConsumableArray(arr) {
-  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+  return (
+    _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread()
+  );
 }
 
 function _arrayWithoutHoles(arr) {
   if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++)
+      arr2[i] = arr[i];
 
     return arr2;
   }
 }
 
 function _iterableToArray(iter) {
-  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+  if (
+    Symbol.iterator in Object(iter) ||
+    Object.prototype.toString.call(iter) === "[object Arguments]"
+  )
+    return Array.from(iter);
 }
 
 function _nonIterableSpread() {
@@ -72,7 +84,7 @@ var DEFAULTS = {
   // The initial date. If not present, use the current date.
   date: null,
   // The date string format, also as the sorting order for columns.
-  format: 'YYYY-MM-DD HH:mm',
+  format: "YYYY-MM-DD HH:mm",
   // Indicate whether show the column headers.
   headers: false,
   // Define the increment for each date / time part.
@@ -80,25 +92,51 @@ var DEFAULTS = {
   // Enable inline mode.
   inline: false,
   // Define the language. (An ISO language code).
-  language: '',
+  language: "",
   // Months' name.
-  months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+  months: [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ],
   // Shorter months' name.
-  monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  monthsShort: [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ],
   // Define the number of rows for showing.
   rows: 5,
   // Define the text of the picker.
   text: {
-    title: 'Pick a date and time',
-    cancel: 'Cancel',
-    confirm: 'OK',
-    year: 'Year',
-    month: 'Month',
-    day: 'Day',
-    hour: 'Hour',
-    minute: 'Minute',
-    second: 'Second',
-    millisecond: 'Millisecond'
+    title: "Pick a date and time",
+    cancel: "Cancel",
+    confirm: "OK",
+    year: "Year",
+    month: "Month",
+    day: "Day",
+    hour: "Hour",
+    minute: "Minute",
+    second: "Second",
+    millisecond: "Millisecond",
   },
   // Translate date / time text.
   translate: function translate(type, text) {
@@ -109,22 +147,39 @@ var DEFAULTS = {
   shown: null,
   hide: null,
   hidden: null,
-  pick: null
+  pick: null,
 };
 
-var TEMPLATE = '<div class="picker" data-picker-action="hide" touch-action="none" tabindex="-1" role="dialog">' + '<div class="picker-dialog" role="document">' + '<div class="picker-header">' + '<h4 class="picker-title">{{ title }}</h4>' + '<button type="button" class="picker-close" data-picker-action="hide" aria-label="Close">&times;</button>' + '</div>' + '<div class="picker-body">' + '<div class="picker-grid"></div>' + '</div>' + '<div class="picker-footer">' + '<button type="button" class="picker-cancel" data-picker-action="hide">{{ cancel }}</button>' + '<button type="button" class="picker-confirm" data-picker-action="pick">{{ confirm }}</button>' + '</div>' + '</div>' + '</div>';
+var TEMPLATE =
+  '<div class="picker" data-picker-action="hide" touch-action="none" tabindex="-1" role="dialog">' +
+  '<div class="picker-dialog" role="document">' +
+  '<div class="picker-header">' +
+  '<h4 class="picker-title">{{ title }}</h4>' +
+  '<button type="button" class="picker-close" data-picker-action="hide" aria-label="Close">&times;</button>' +
+  "</div>" +
+  '<div class="picker-body">' +
+  '<div class="picker-grid"></div>' +
+  "</div>" +
+  '<div class="picker-footer">' +
+  '<button type="button" class="picker-cancel" data-picker-action="hide">{{ cancel }}</button>' +
+  '<button type="button" class="picker-confirm" data-picker-action="pick">{{ confirm }}</button>' +
+  "</div>" +
+  "</div>" +
+  "</div>";
 
-var IS_BROWSER = typeof window !== 'undefined';
+var IS_BROWSER = typeof window !== "undefined";
 var WINDOW = IS_BROWSER ? window : {};
-var IS_TOUCH_DEVICE = IS_BROWSER ? 'ontouchstart' in WINDOW.document.documentElement : false;
-var HAS_POINTER_EVENT = IS_BROWSER ? 'PointerEvent' in WINDOW : false;
-var NAMESPACE = 'picker';
+var IS_TOUCH_DEVICE = IS_BROWSER
+  ? "ontouchstart" in WINDOW.document.documentElement
+  : false;
+var HAS_POINTER_EVENT = IS_BROWSER ? "PointerEvent" in WINDOW : false;
+var NAMESPACE = "picker";
 var LANGUAGES = {}; // Actions
 
-var ACTION_HIDE = 'hide';
-var ACTION_NEXT = 'next';
-var ACTION_PICK = 'pick';
-var ACTION_PREV = 'prev'; // Classes
+var ACTION_HIDE = "hide";
+var ACTION_NEXT = "next";
+var ACTION_PICK = "pick";
+var ACTION_PREV = "prev"; // Classes
 
 var CLASS_OPEN = "".concat(NAMESPACE, "-open");
 var CLASS_OPENED = "".concat(NAMESPACE, "-opened");
@@ -132,30 +187,32 @@ var CLASS_PICKED = "".concat(NAMESPACE, "-picked"); // Data keys
 // Add namespace to avoid to conflict to some other libraries.
 
 var DATA_ACTION = "".concat(NAMESPACE, "Action");
-var DATA_TOKEN = 'token';
-var DATA_TYPE = 'type';
-var DATA_NAME = 'name';
-var DATA_VALUE = 'value'; // Events
+var DATA_TOKEN = "token";
+var DATA_TYPE = "type";
+var DATA_NAME = "name";
+var DATA_VALUE = "value"; // Events
 
-var EVENT_CLICK = 'click';
-var EVENT_FOCUS = 'focus';
-var EVENT_HIDDEN = 'hidden';
-var EVENT_HIDE = 'hide';
-var EVENT_KEY_DOWN = 'keydown';
-var EVENT_PICK = 'pick';
-var EVENT_TOUCH_START = IS_TOUCH_DEVICE ? 'touchstart' : 'mousedown';
-var EVENT_TOUCH_MOVE = IS_TOUCH_DEVICE ? 'touchmove' : 'mousemove';
-var EVENT_TOUCH_END = IS_TOUCH_DEVICE ? 'touchend touchcancel' : 'mouseup';
-var EVENT_POINTER_DOWN = HAS_POINTER_EVENT ? 'pointerdown' : EVENT_TOUCH_START;
-var EVENT_POINTER_MOVE = HAS_POINTER_EVENT ? 'pointermove' : EVENT_TOUCH_MOVE;
-var EVENT_POINTER_UP = HAS_POINTER_EVENT ? 'pointerup pointercancel' : EVENT_TOUCH_END;
-var EVENT_SHOW = 'show';
-var EVENT_SHOWN = 'shown';
-var EVENT_WHEEL = 'wheel mousewheel DOMMouseScroll';
+var EVENT_CLICK = "click";
+var EVENT_FOCUS = "focus";
+var EVENT_HIDDEN = "hidden";
+var EVENT_HIDE = "hide";
+var EVENT_KEY_DOWN = "keydown";
+var EVENT_PICK = "pick";
+var EVENT_TOUCH_START = IS_TOUCH_DEVICE ? "touchstart" : "mousedown";
+var EVENT_TOUCH_MOVE = IS_TOUCH_DEVICE ? "touchmove" : "mousemove";
+var EVENT_TOUCH_END = IS_TOUCH_DEVICE ? "touchend touchcancel" : "mouseup";
+var EVENT_POINTER_DOWN = HAS_POINTER_EVENT ? "pointerdown" : EVENT_TOUCH_START;
+var EVENT_POINTER_MOVE = HAS_POINTER_EVENT ? "pointermove" : EVENT_TOUCH_MOVE;
+var EVENT_POINTER_UP = HAS_POINTER_EVENT
+  ? "pointerup pointercancel"
+  : EVENT_TOUCH_END;
+var EVENT_SHOW = "show";
+var EVENT_SHOWN = "shown";
+var EVENT_WHEEL = "wheel mousewheel DOMMouseScroll";
 
 var _Object$prototype = Object.prototype,
-    hasOwnProperty = _Object$prototype.hasOwnProperty,
-    toString = _Object$prototype.toString;
+  hasOwnProperty = _Object$prototype.hasOwnProperty,
+  toString = _Object$prototype.toString;
 /**
  * Detect the type of the given value.
  * @param {*} value - The value to detect.
@@ -172,7 +229,7 @@ function typeOf(value) {
  */
 
 function isString(value) {
-  return typeof value === 'string';
+  return typeof value === "string";
 }
 /**
  * Check if the given value is finite.
@@ -191,7 +248,7 @@ var isNaN = Number.isNaN || WINDOW.isNaN;
  */
 
 function isNumber(value) {
-  return typeof value === 'number' && !isNaN(value);
+  return typeof value === "number" && !isNaN(value);
 }
 /**
  * Check if the given value is an object.
@@ -200,7 +257,7 @@ function isNumber(value) {
  */
 
 function isObject(value) {
-  return _typeof(value) === 'object' && value !== null;
+  return _typeof(value) === "object" && value !== null;
 }
 /**
  * Check if the given value is a plain object.
@@ -216,7 +273,11 @@ function isPlainObject(value) {
   try {
     var _constructor = value.constructor;
     var prototype = _constructor.prototype;
-    return _constructor && prototype && hasOwnProperty.call(prototype, 'isPrototypeOf');
+    return (
+      _constructor &&
+      prototype &&
+      hasOwnProperty.call(prototype, "isPrototypeOf")
+    );
   } catch (error) {
     return false;
   }
@@ -228,7 +289,7 @@ function isPlainObject(value) {
  */
 
 function isFunction(value) {
-  return typeof value === 'function';
+  return typeof value === "function";
 }
 /**
  * Check if the given value is a date.
@@ -237,7 +298,7 @@ function isFunction(value) {
  */
 
 function isDate(value) {
-  return typeOf(value) === 'date';
+  return typeOf(value) === "date";
 }
 /**
  * Check if the given value is a valid date.
@@ -246,7 +307,7 @@ function isDate(value) {
  */
 
 function isValidDate(value) {
-  return isDate(value) && value.toString() !== 'Invalid Date';
+  return isDate(value) && value.toString() !== "Invalid Date";
 }
 /**
  * Iterate the given data.
@@ -257,18 +318,20 @@ function isValidDate(value) {
 
 function forEach(data, callback) {
   if (data && isFunction(callback)) {
-    if (Array.isArray(data) || isNumber(data.length)
-    /* array-like */
+    if (
+      Array.isArray(data) ||
+      isNumber(data.length)
+      /* array-like */
     ) {
-        var length = data.length;
-        var i;
+      var length = data.length;
+      var i;
 
-        for (i = 0; i < length; i += 1) {
-          if (callback.call(data, data[i], i, data) === false) {
-            break;
-          }
+      for (i = 0; i < length; i += 1) {
+        if (callback.call(data, data[i], i, data) === false) {
+          break;
         }
-      } else if (isObject(data)) {
+      }
+    } else if (isObject(data)) {
       Object.keys(data).forEach(function (key) {
         callback.call(data, data[key], key, data);
       });
@@ -285,7 +348,13 @@ function forEach(data, callback) {
  */
 
 function deepAssign(target) {
-  for (var _len = arguments.length, sources = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+  for (
+    var _len = arguments.length,
+      sources = new Array(_len > 1 ? _len - 1 : 0),
+      _key = 1;
+    _key < _len;
+    _key++
+  ) {
     sources[_key - 1] = arguments[_key];
   }
 
@@ -360,7 +429,7 @@ function removeClass(element, value) {
   }
 
   if (element.className.indexOf(value) >= 0) {
-    element.className = element.className.replace(value, '');
+    element.className = element.className.replace(value, "");
   }
 }
 var REGEXP_HYPHENATE = /([a-z\d])([A-Z])/g;
@@ -371,7 +440,7 @@ var REGEXP_HYPHENATE = /([a-z\d])([A-Z])/g;
  */
 
 function hyphenate(value) {
-  return value.replace(REGEXP_HYPHENATE, '$1-$2').toLowerCase();
+  return value.replace(REGEXP_HYPHENATE, "$1-$2").toLowerCase();
 }
 /**
  * Get data from the given element.
@@ -433,7 +502,7 @@ function removeData(element, name) {
 }
 var REGEXP_SPACES = /\s\s*/;
 
-var onceSupported = function () {
+var onceSupported = (function () {
   var supported = false;
 
   if (IS_BROWSER) {
@@ -441,7 +510,7 @@ var onceSupported = function () {
 
     var listener = function listener() {};
 
-    var options = Object.defineProperty({}, 'once', {
+    var options = Object.defineProperty({}, "once", {
       get: function get() {
         supported = true;
         return once;
@@ -454,14 +523,14 @@ var onceSupported = function () {
        */
       set: function set(value) {
         once = value;
-      }
+      },
     });
-    WINDOW.addEventListener('test', listener, options);
-    WINDOW.removeEventListener('test', listener, options);
+    WINDOW.addEventListener("test", listener, options);
+    WINDOW.removeEventListener("test", listener, options);
   }
 
   return supported;
-}();
+})();
 /**
  * Remove event listener from the target element.
  * @param {Element} element - The event target.
@@ -470,30 +539,33 @@ var onceSupported = function () {
  * @param {Object} options - The event options.
  */
 
-
 function removeListener(element, type, listener) {
-  var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+  var options =
+    arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
   var handler = listener;
-  type.trim().split(REGEXP_SPACES).forEach(function (event) {
-    if (!onceSupported) {
-      var listeners = element.listeners;
+  type
+    .trim()
+    .split(REGEXP_SPACES)
+    .forEach(function (event) {
+      if (!onceSupported) {
+        var listeners = element.listeners;
 
-      if (listeners && listeners[event] && listeners[event][listener]) {
-        handler = listeners[event][listener];
-        delete listeners[event][listener];
+        if (listeners && listeners[event] && listeners[event][listener]) {
+          handler = listeners[event][listener];
+          delete listeners[event][listener];
 
-        if (Object.keys(listeners[event]).length === 0) {
-          delete listeners[event];
-        }
+          if (Object.keys(listeners[event]).length === 0) {
+            delete listeners[event];
+          }
 
-        if (Object.keys(listeners).length === 0) {
-          delete element.listeners;
+          if (Object.keys(listeners).length === 0) {
+            delete element.listeners;
+          }
         }
       }
-    }
 
-    element.removeEventListener(event, handler, options);
-  });
+      element.removeEventListener(event, handler, options);
+    });
 }
 /**
  * Add event listener to the target element.
@@ -504,38 +576,50 @@ function removeListener(element, type, listener) {
  */
 
 function addListener(element, type, listener) {
-  var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+  var options =
+    arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
   var _handler = listener;
-  type.trim().split(REGEXP_SPACES).forEach(function (event) {
-    if (options.once && !onceSupported) {
-      var _element$listeners = element.listeners,
+  type
+    .trim()
+    .split(REGEXP_SPACES)
+    .forEach(function (event) {
+      if (options.once && !onceSupported) {
+        var _element$listeners = element.listeners,
           listeners = _element$listeners === void 0 ? {} : _element$listeners;
 
-      _handler = function handler() {
-        delete listeners[event][listener];
-        element.removeEventListener(event, _handler, options);
+        _handler = function handler() {
+          delete listeners[event][listener];
+          element.removeEventListener(event, _handler, options);
 
-        for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-          args[_key2] = arguments[_key2];
+          for (
+            var _len2 = arguments.length, args = new Array(_len2), _key2 = 0;
+            _key2 < _len2;
+            _key2++
+          ) {
+            args[_key2] = arguments[_key2];
+          }
+
+          listener.apply(element, args);
+        };
+
+        if (!listeners[event]) {
+          listeners[event] = {};
         }
 
-        listener.apply(element, args);
-      };
+        if (listeners[event][listener]) {
+          element.removeEventListener(
+            event,
+            listeners[event][listener],
+            options
+          );
+        }
 
-      if (!listeners[event]) {
-        listeners[event] = {};
+        listeners[event][listener] = _handler;
+        element.listeners = listeners;
       }
 
-      if (listeners[event][listener]) {
-        element.removeEventListener(event, listeners[event][listener], options);
-      }
-
-      listeners[event][listener] = _handler;
-      element.listeners = listeners;
-    }
-
-    element.addEventListener(event, _handler, options);
-  });
+      element.addEventListener(event, _handler, options);
+    });
 }
 /**
  * Dispatch event on the target element.
@@ -552,10 +636,10 @@ function dispatchEvent(element, type, data) {
     event = new CustomEvent(type, {
       detail: data,
       bubbles: true,
-      cancelable: true
+      cancelable: true,
     });
   } else {
-    event = document.createEvent('CustomEvent');
+    event = document.createEvent("CustomEvent");
     event.initCustomEvent(type, true, true, data);
   }
 
@@ -568,7 +652,7 @@ function dispatchEvent(element, type, data) {
  */
 
 function isLeapYear(year) {
-  return year % 4 === 0 && year % 100 !== 0 || year % 400 === 0;
+  return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
 }
 /**
  * Get days number of the given month.
@@ -578,7 +662,20 @@ function isLeapYear(year) {
  */
 
 function getDaysInMonth(year, month) {
-  return [31, isLeapYear(year) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month];
+  return [
+    31,
+    isLeapYear(year) ? 29 : 28,
+    31,
+    30,
+    31,
+    30,
+    31,
+    31,
+    30,
+    31,
+    30,
+    31,
+  ][month];
 }
 /**
  * Add leading zeroes to the given value
@@ -588,18 +685,19 @@ function getDaysInMonth(year, month) {
  */
 
 function addLeadingZero(value) {
-  var length = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+  var length =
+    arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
   var str = String(Math.abs(value));
   var i = str.length;
-  var result = '';
+  var result = "";
 
   if (value < 0) {
-    result += '-';
+    result += "-";
   }
 
   while (i < length) {
     i += 1;
-    result += '0';
+    result += "0";
   }
 
   return result + str;
@@ -612,13 +710,13 @@ function addLeadingZero(value) {
 
 function tokenToType(token) {
   return {
-    Y: 'year',
-    M: 'month',
-    D: 'day',
-    H: 'hour',
-    m: 'minute',
-    s: 'second',
-    S: 'millisecond'
+    Y: "year",
+    M: "month",
+    D: "day",
+    H: "hour",
+    m: "minute",
+    s: "second",
+    S: "millisecond",
   }[token.charAt(0)];
 }
 var REGEXP_TOKENS = /(Y|M|D|H|m|s|S)\1*/g;
@@ -632,11 +730,11 @@ function parseFormat(format) {
   var tokens = format.match(REGEXP_TOKENS);
 
   if (!tokens) {
-    throw new Error('Invalid format.');
+    throw new Error("Invalid format.");
   }
 
   var result = {
-    tokens: tokens
+    tokens: tokens,
   };
   tokens.forEach(function (token) {
     result[tokenToType(token)] = token;
@@ -647,8 +745,8 @@ function parseFormat(format) {
 var events = {
   bind: function bind() {
     var element = this.element,
-        options = this.options,
-        grid = this.grid;
+      options = this.options,
+      grid = this.grid;
 
     if (isFunction(options.show)) {
       addListener(element, EVENT_SHOW, options.show);
@@ -670,19 +768,39 @@ var events = {
       addListener(element, EVENT_PICK, options.pick);
     }
 
-    addListener(element, EVENT_FOCUS, this.onFocus = this.focus.bind(this));
+    addListener(element, EVENT_FOCUS, (this.onFocus = this.focus.bind(this)));
     addListener(element, EVENT_CLICK, this.onFocus);
-    addListener(this.picker, EVENT_CLICK, this.onClick = this.click.bind(this));
-    addListener(grid, EVENT_WHEEL, this.onWheel = this.wheel.bind(this));
-    addListener(grid, EVENT_POINTER_DOWN, this.onPointerDown = this.pointerdown.bind(this));
-    addListener(document, EVENT_POINTER_MOVE, this.onPointerMove = this.pointermove.bind(this));
-    addListener(document, EVENT_POINTER_UP, this.onPointerUp = this.pointerup.bind(this));
-    addListener(document, EVENT_KEY_DOWN, this.onKeyDown = this.keydown.bind(this));
+    addListener(
+      this.picker,
+      EVENT_CLICK,
+      (this.onClick = this.click.bind(this))
+    );
+    addListener(grid, EVENT_WHEEL, (this.onWheel = this.wheel.bind(this)));
+    addListener(
+      grid,
+      EVENT_POINTER_DOWN,
+      (this.onPointerDown = this.pointerdown.bind(this))
+    );
+    addListener(
+      document,
+      EVENT_POINTER_MOVE,
+      (this.onPointerMove = this.pointermove.bind(this))
+    );
+    addListener(
+      document,
+      EVENT_POINTER_UP,
+      (this.onPointerUp = this.pointerup.bind(this))
+    );
+    addListener(
+      document,
+      EVENT_KEY_DOWN,
+      (this.onKeyDown = this.keydown.bind(this))
+    );
   },
   unbind: function unbind() {
     var element = this.element,
-        options = this.options,
-        grid = this.grid;
+      options = this.options,
+      grid = this.grid;
 
     if (isFunction(options.show)) {
       removeListener(element, EVENT_SHOW, options.show);
@@ -712,7 +830,7 @@ var events = {
     removeListener(document, EVENT_POINTER_MOVE, this.onPointerMove);
     removeListener(document, EVENT_POINTER_UP, this.onPointerUp);
     removeListener(document, EVENT_KEY_DOWN, this.onKeyDown);
-  }
+  },
 };
 
 var handlers = {
@@ -769,7 +887,6 @@ var handlers = {
       return;
     } // This line is required for preventing page scrolling in iOS browsers
 
-
     event.preventDefault();
 
     while (target.parentElement && target.parentElement !== this.grid) {
@@ -784,8 +901,10 @@ var handlers = {
       moveY: 0,
       maxMoveY: itemHeight,
       minMoveY: itemHeight / 2,
-      startY: event.changedTouches ? event.changedTouches[0].pageY : event.pageY,
-      type: getData(target, DATA_TYPE)
+      startY: event.changedTouches
+        ? event.changedTouches[0].pageY
+        : event.pageY,
+      type: getData(target, DATA_TYPE),
     };
   },
   pointermove: function pointermove(event) {
@@ -796,7 +915,9 @@ var handlers = {
     }
 
     event.preventDefault();
-    var endY = event.changedTouches ? event.changedTouches[0].pageY : event.pageY;
+    var endY = event.changedTouches
+      ? event.changedTouches[0].pageY
+      : event.pageY;
     var moveY = cell.moveY + (endY - cell.startY);
     cell.startY = endY;
     cell.moveY = moveY;
@@ -834,10 +955,10 @@ var handlers = {
     this.cell = null;
   },
   keydown: function keydown(event) {
-    if (this.shown && (event.key === 'Escape' || event.keyCode === 27)) {
+    if (this.shown && (event.key === "Escape" || event.keyCode === 27)) {
       this.hide();
     }
-  }
+  },
 };
 
 var helpers = {
@@ -862,11 +983,11 @@ var helpers = {
       base = min > 0 ? max : max + 1;
     }
 
-    data.list.innerHTML = '';
+    data.list.innerHTML = "";
     data.current = current;
 
     for (var i = 0; i < options.rows + 2; i += 1) {
-      var item = document.createElement('li');
+      var item = document.createElement("li");
       var position = i - data.index;
       var newValue = current + position * data.increment;
 
@@ -878,7 +999,12 @@ var helpers = {
         }
       }
 
-      item.textContent = options.translate(type, data.aliases ? data.aliases[newValue] : addLeadingZero(newValue + data.offset, data.digit));
+      item.textContent = options.translate(
+        type,
+        data.aliases
+          ? data.aliases[newValue]
+          : addLeadingZero(newValue + data.offset, data.digit)
+      );
       setData(item, DATA_NAME, type);
       setData(item, DATA_VALUE, newValue);
       addClass(item, "".concat(NAMESPACE, "-item"));
@@ -897,7 +1023,7 @@ var helpers = {
     var token = format[type];
 
     switch (token.charAt(0)) {
-      case 'Y':
+      case "Y":
         if (isNumber(value)) {
           date.setFullYear(token.length === 2 ? 2000 + value : value);
 
@@ -912,10 +1038,12 @@ var helpers = {
 
         return date.getFullYear();
 
-      case 'M':
+      case "M":
         if (isNumber(value)) {
-          date.setMonth(value, // The current day should not exceed its maximum day in current month
-          Math.min(date.getDate(), getDaysInMonth(date.getFullYear(), value)));
+          date.setMonth(
+            value, // The current day should not exceed its maximum day in current month
+            Math.min(date.getDate(), getDaysInMonth(date.getFullYear(), value))
+          );
 
           if (format.day) {
             this.render(tokenToType(format.day));
@@ -924,35 +1052,35 @@ var helpers = {
 
         return date.getMonth();
 
-      case 'D':
+      case "D":
         if (isNumber(value)) {
           date.setDate(value);
         }
 
         return date.getDate();
 
-      case 'H':
+      case "H":
         if (isNumber(value)) {
           date.setHours(value);
         }
 
         return date.getHours();
 
-      case 'm':
+      case "m":
         if (isNumber(value)) {
           date.setMinutes(value);
         }
 
         return date.getMinutes();
 
-      case 's':
+      case "s":
         if (isNumber(value)) {
           date.setSeconds(value);
         }
 
         return date.getSeconds();
 
-      case 'S':
+      case "S":
         if (isNumber(value)) {
           date.setMilliseconds(value);
         }
@@ -979,14 +1107,17 @@ var helpers = {
   },
   open: function open() {
     var body = this.body;
-    body.style.overflow = 'hidden';
-    body.style.paddingRight = "".concat(this.scrollBarWidth + (parseFloat(this.initialBodyPaddingRight) || 0), "px");
+    body.style.overflow = "hidden";
+    body.style.paddingRight = "".concat(
+      this.scrollBarWidth + (parseFloat(this.initialBodyPaddingRight) || 0),
+      "px"
+    );
   },
   close: function close() {
     var body = this.body;
-    body.style.overflow = '';
+    body.style.overflow = "";
     body.style.paddingRight = this.initialBodyPaddingRight;
-  }
+  },
 };
 
 var methods = {
@@ -996,9 +1127,10 @@ var methods = {
    * @returns {Picker} this
    */
   show: function show() {
-    var immediate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+    var immediate =
+      arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
     var element = this.element,
-        picker = this.picker;
+      picker = this.picker;
 
     if (this.inline || this.shown) {
       return this;
@@ -1041,9 +1173,10 @@ var methods = {
   hide: function hide() {
     var _this = this;
 
-    var immediate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+    var immediate =
+      arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
     var element = this.element,
-        picker = this.picker;
+      picker = this.picker;
 
     if (this.inline || !this.shown) {
       return this;
@@ -1086,13 +1219,19 @@ var methods = {
     var max = isFunction(data.max) ? data.max() : data.max;
     var min = isFunction(data.min) ? data.min() : data.min;
     var prev = data.item.previousElementSibling;
-    var value = Number(getData(list.firstElementChild, DATA_VALUE)) - data.increment;
+    var value =
+      Number(getData(list.firstElementChild, DATA_VALUE)) - data.increment;
 
     if (value < min) {
       value += max - min + 1;
     }
 
-    item.textContent = options.translate(type, data.aliases ? data.aliases[value] : addLeadingZero(value + data.offset, token.length));
+    item.textContent = options.translate(
+      type,
+      data.aliases
+        ? data.aliases[value]
+        : addLeadingZero(value + data.offset, token.length)
+    );
     setData(item, DATA_VALUE, value);
 
     if (prev) {
@@ -1126,13 +1265,19 @@ var methods = {
     var max = isFunction(data.max) ? data.max() : data.max;
     var min = isFunction(data.min) ? data.min() : data.min;
     var next = data.item.nextElementSibling;
-    var value = Number(getData(list.lastElementChild, DATA_VALUE)) + data.increment;
+    var value =
+      Number(getData(list.lastElementChild, DATA_VALUE)) + data.increment;
 
     if (value > max) {
       value -= max - min + 1;
     }
 
-    item.textContent = options.translate(type, data.aliases ? data.aliases[value] : addLeadingZero(value + data.offset, token.length));
+    item.textContent = options.translate(
+      type,
+      data.aliases
+        ? data.aliases[value]
+        : addLeadingZero(value + data.offset, token.length)
+    );
     setData(item, DATA_VALUE, value);
     list.appendChild(item);
 
@@ -1162,7 +1307,7 @@ var methods = {
     var value = this.formatDate(this.date);
     this.setValue(value);
 
-    if (this.isInput && dispatchEvent(element, 'change') === false) {
+    if (this.isInput && dispatchEvent(element, "change") === false) {
       this.reset();
     }
 
@@ -1176,7 +1321,8 @@ var methods = {
    * @return {Date|string} The output date.
    */
   getDate: function getDate() {
-    var formatted = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+    var formatted =
+      arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
     var date = this.date;
     return formatted ? this.formatDate(date) : new Date(date);
   },
@@ -1215,7 +1361,7 @@ var methods = {
    */
   parseDate: function parseDate(date) {
     var options = this.options,
-        format = this.format;
+      format = this.format;
     var digits = [];
 
     if (isDate(date)) {
@@ -1223,11 +1369,18 @@ var methods = {
     }
 
     if (isString(date)) {
-      var groups = _toConsumableArray(options.months).concat(_toConsumableArray(options.monthsShort), ['\\d+']);
+      var groups = _toConsumableArray(options.months).concat(
+        _toConsumableArray(options.monthsShort),
+        ["\\d+"]
+      );
 
-      digits = date.match(new RegExp("(".concat(groups.join('|'), ")"), 'g')); // Parse `11111111` (YYYYMMDD) to ['1111', '11', '11']
+      digits = date.match(new RegExp("(".concat(groups.join("|"), ")"), "g")); // Parse `11111111` (YYYYMMDD) to ['1111', '11', '11']
 
-      if (digits && date.length === options.format.length && digits.length !== format.tokens.length) {
+      if (
+        digits &&
+        date.length === options.format.length &&
+        digits.length !== format.tokens.length
+      ) {
         digits = format.tokens.map(function (token) {
           return date.substr(options.format.indexOf(token), token.length);
         });
@@ -1244,57 +1397,58 @@ var methods = {
       var n = Number(digit);
 
       switch (token) {
-        case 'YYYY':
-        case 'YYY':
-        case 'Y':
-          {
-            var index = date.indexOf(digit);
-            var isHyphen = date.substr(index - 1, 1) === '-';
-            var isBC = index > 1 && isHyphen && /\S/.test(date.substr(index - 2, 1)) || index === 1 && isHyphen;
-            parsedDate.setFullYear(isBC ? -n : n);
-            break;
-          }
+        case "YYYY":
+        case "YYY":
+        case "Y": {
+          var index = date.indexOf(digit);
+          var isHyphen = date.substr(index - 1, 1) === "-";
+          var isBC =
+            (index > 1 && isHyphen && /\S/.test(date.substr(index - 2, 1))) ||
+            (index === 1 && isHyphen);
+          parsedDate.setFullYear(isBC ? -n : n);
+          break;
+        }
 
-        case 'YY':
+        case "YY":
           parsedDate.setFullYear(2000 + n);
           break;
 
-        case 'MMMM':
+        case "MMMM":
           parsedDate.setMonth(options.months.indexOf(digit));
           break;
 
-        case 'MMM':
+        case "MMM":
           parsedDate.setMonth(options.monthsShort.indexOf(digit));
           break;
 
-        case 'MM':
-        case 'M':
+        case "MM":
+        case "M":
           parsedDate.setMonth(n - 1);
           break;
 
-        case 'DD':
-        case 'D':
+        case "DD":
+        case "D":
           parsedDate.setDate(n);
           break;
 
-        case 'HH':
-        case 'H':
+        case "HH":
+        case "H":
           parsedDate.setHours(n);
           break;
 
-        case 'mm':
-        case 'm':
+        case "mm":
+        case "m":
           parsedDate.setMinutes(n);
           break;
 
-        case 'ss':
-        case 's':
+        case "ss":
+        case "s":
           parsedDate.setSeconds(n);
           break;
 
-        case 'SSS':
-        case 'SS':
-        case 'S':
+        case "SSS":
+        case "SS":
+        case "S":
           parsedDate.setMilliseconds(n);
           break;
 
@@ -1311,8 +1465,8 @@ var methods = {
    */
   formatDate: function formatDate(date) {
     var options = this.options,
-        format = this.format;
-    var formatted = '';
+      format = this.format;
+    var formatted = "";
 
     if (isValidDate(date)) {
       var year = date.getFullYear();
@@ -1324,55 +1478,55 @@ var methods = {
       var milliseconds = date.getMilliseconds();
       formatted = options.format;
       format.tokens.forEach(function (token) {
-        var replacement = '';
+        var replacement = "";
 
         switch (token) {
-          case 'YYYY':
-          case 'YYY':
-          case 'Y':
+          case "YYYY":
+          case "YYY":
+          case "Y":
             replacement = addLeadingZero(year, token.length);
             break;
 
-          case 'YY':
+          case "YY":
             replacement = addLeadingZero(year % 100, 2);
             break;
 
-          case 'MMMM':
+          case "MMMM":
             replacement = options.months[month];
             break;
 
-          case 'MMM':
+          case "MMM":
             replacement = options.monthsShort[month];
             break;
 
-          case 'MM':
-          case 'M':
+          case "MM":
+          case "M":
             replacement = addLeadingZero(month + 1, token.length);
             break;
 
-          case 'DD':
-          case 'D':
+          case "DD":
+          case "D":
             replacement = addLeadingZero(day, token.length);
             break;
 
-          case 'HH':
-          case 'H':
+          case "HH":
+          case "H":
             replacement = addLeadingZero(hours, token.length);
             break;
 
-          case 'mm':
-          case 'm':
+          case "mm":
+          case "m":
             replacement = addLeadingZero(minutes, token.length);
             break;
 
-          case 'ss':
-          case 's':
+          case "ss":
+          case "s":
             replacement = addLeadingZero(seconds, token.length);
             break;
 
-          case 'SSS':
-          case 'SS':
-          case 'S':
+          case "SSS":
+          case "SS":
+          case "S":
             replacement = addLeadingZero(milliseconds, token.length);
             break;
 
@@ -1388,7 +1542,7 @@ var methods = {
   // Destroy the picker and remove the instance from the target element.
   destroy: function destroy() {
     var element = this.element,
-        picker = this.picker;
+      picker = this.picker;
 
     if (!getData(element, NAMESPACE)) {
       return this;
@@ -1399,7 +1553,7 @@ var methods = {
     removeData(element, NAMESPACE);
     picker.parentNode.removeChild(picker);
     return this;
-  }
+  },
 };
 
 var REGEXP_DELIMITER = /\{\{\s*(\w+)\s*\}\}/g;
@@ -1407,265 +1561,301 @@ var REGEXP_INPUTS = /input|textarea/i;
 var AnotherPicker = WINDOW.Picker;
 
 var Picker =
-/*#__PURE__*/
-function () {
-  /**
-   * Create a new Picker.
-   * @param {Element} element - The target element for picking.
-   * @param {Object} [options={}] - The configuration options.
-   */
-  function Picker(element) {
-    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  /*#__PURE__*/
+  (function () {
+    /**
+     * Create a new Picker.
+     * @param {Element} element - The target element for picking.
+     * @param {Object} [options={}] - The configuration options.
+     */
+    function Picker(element) {
+      var options =
+        arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-    _classCallCheck(this, Picker);
+      _classCallCheck(this, Picker);
 
-    if (!element || element.nodeType !== 1) {
-      throw new Error('The first argument is required and must be an element.');
+      if (!element || element.nodeType !== 1) {
+        throw new Error(
+          "The first argument is required and must be an element."
+        );
+      }
+
+      this.element = element;
+      this.options = deepAssign(
+        {},
+        DEFAULTS,
+        LANGUAGES[options.language],
+        isPlainObject(options) && options
+      );
+      this.shown = false;
+      this.init();
     }
 
-    this.element = element;
-    this.options = deepAssign({}, DEFAULTS, LANGUAGES[options.language], isPlainObject(options) && options);
-    this.shown = false;
-    this.init();
-  }
+    _createClass(
+      Picker,
+      [
+        {
+          key: "init",
+          value: function init() {
+            var _this = this;
 
-  _createClass(Picker, [{
-    key: "init",
-    value: function init() {
-      var _this = this;
+            var element = this.element;
 
-      var element = this.element;
-
-      if (getData(element, NAMESPACE)) {
-        return;
-      }
-
-      setData(element, NAMESPACE, this);
-      var options = this.options;
-      var isInput = REGEXP_INPUTS.test(element.tagName);
-      var inline = options.inline && (options.container || !isInput);
-      var template = document.createElement('div');
-      template.insertAdjacentHTML('afterbegin', TEMPLATE.replace(REGEXP_DELIMITER, function () {
-        for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-
-        return options.text[args[1]];
-      }));
-      var picker = template.getElementsByClassName(NAMESPACE)[0];
-      var grid = picker.getElementsByClassName("".concat(NAMESPACE, "-grid"))[0];
-      var container = options.container;
-
-      if (isString(container)) {
-        container = document.querySelector(container);
-      }
-
-      if (inline) {
-        addClass(picker, CLASS_OPEN);
-        addClass(picker, CLASS_OPENED);
-
-        if (!container) {
-          container = element;
-        }
-      } else {
-        var ownerDocument = element.ownerDocument;
-        var body = ownerDocument.body || ownerDocument.documentElement;
-        this.body = body;
-        this.scrollBarWidth = WINDOW.innerWidth - ownerDocument.documentElement.clientWidth;
-        this.initialBodyPaddingRight = WINDOW.getComputedStyle(body).paddingRight;
-        addClass(picker, "".concat(NAMESPACE, "-fixed"));
-
-        if (!container) {
-          container = document.body;
-        }
-      }
-
-      this.isInput = isInput;
-      this.inline = inline;
-      this.container = container;
-      this.picker = picker;
-      this.grid = grid;
-      this.cell = null;
-      this.format = parseFormat(options.format);
-      var initialValue = this.getValue();
-      var date = this.parseDate(options.date || initialValue);
-      this.date = date;
-      this.initialDate = new Date(date);
-      this.initialValue = initialValue;
-      this.data = {};
-      var rows = Number(options.rows);
-
-      if (!(rows % 2)) {
-        rows += 1;
-      }
-
-      options.rows = rows || 5;
-      addClass(grid, "".concat(NAMESPACE, "-").concat(options.rows > 1 ? 'multiple' : 'single'));
-
-      if (options.controls) {
-        addClass(grid, "".concat(NAMESPACE, "-controls"));
-      }
-
-      var headers = options.headers,
-          increment = options.increment;
-
-      if (headers) {
-        addClass(grid, "".concat(NAMESPACE, "-headers")); // TODO: Drop the `headers` option's object support in v2.
-
-        headers = isPlainObject(headers) ? headers : options.text;
-      }
-
-      if (!isPlainObject(increment)) {
-        increment = {
-          year: increment,
-          month: increment,
-          day: increment,
-          hour: increment,
-          minute: increment,
-          second: increment,
-          millisecond: increment
-        };
-      }
-
-      this.format.tokens.forEach(function (token) {
-        var type = tokenToType(token);
-        var cell = document.createElement('div');
-        var cellBody = document.createElement('div');
-        var list = document.createElement('ul');
-        var data = {
-          digit: token.length,
-          increment: Math.abs(Number(increment[type])) || 1,
-          list: list,
-          max: Infinity,
-          min: -Infinity,
-          index: Math.floor((options.rows + 2) / 2),
-          offset: 0
-        };
-
-        switch (token.charAt(0)) {
-          case 'Y':
-            if (data.digit === 2) {
-              data.max = 99;
-              data.min = 0;
+            if (getData(element, NAMESPACE)) {
+              return;
             }
 
-            break;
+            setData(element, NAMESPACE, this);
+            var options = this.options;
+            var isInput = REGEXP_INPUTS.test(element.tagName);
+            var inline = options.inline && (options.container || !isInput);
+            var template = document.createElement("div");
+            template.insertAdjacentHTML(
+              "afterbegin",
+              TEMPLATE.replace(REGEXP_DELIMITER, function () {
+                for (
+                  var _len = arguments.length, args = new Array(_len), _key = 0;
+                  _key < _len;
+                  _key++
+                ) {
+                  args[_key] = arguments[_key];
+                }
 
-          case 'M':
-            data.max = 11;
-            data.min = 0;
-            data.offset = 1;
+                return options.text[args[1]];
+              })
+            );
+            var picker = template.getElementsByClassName(NAMESPACE)[0];
+            var grid = picker.getElementsByClassName(
+              "".concat(NAMESPACE, "-grid")
+            )[0];
+            var container = options.container;
 
-            if (data.digit === 3) {
-              data.aliases = options.monthsShort;
-            } else if (data.digit === 4) {
-              data.aliases = options.months;
+            if (isString(container)) {
+              container = document.querySelector(container);
             }
 
-            break;
+            if (inline) {
+              addClass(picker, CLASS_OPEN);
+              addClass(picker, CLASS_OPENED);
 
-          case 'D':
-            data.max = function () {
-              return getDaysInMonth(date.getFullYear(), date.getMonth());
-            };
+              if (!container) {
+                container = element;
+              }
+            } else {
+              var ownerDocument = element.ownerDocument;
+              var body = ownerDocument.body || ownerDocument.documentElement;
+              this.body = body;
+              this.scrollBarWidth =
+                WINDOW.innerWidth - ownerDocument.documentElement.clientWidth;
+              this.initialBodyPaddingRight =
+                WINDOW.getComputedStyle(body).paddingRight;
+              addClass(picker, "".concat(NAMESPACE, "-fixed"));
 
-            data.min = 1;
-            break;
+              if (!container) {
+                container = document.body;
+              }
+            }
 
-          case 'H':
-            data.max = 23;
-            data.min = 0;
-            break;
+            this.isInput = isInput;
+            this.inline = inline;
+            this.container = container;
+            this.picker = picker;
+            this.grid = grid;
+            this.cell = null;
+            this.format = parseFormat(options.format);
+            var initialValue = this.getValue();
+            var date = this.parseDate(options.date || initialValue);
+            this.date = date;
+            this.initialDate = new Date(date);
+            this.initialValue = initialValue;
+            this.data = {};
+            var rows = Number(options.rows);
 
-          case 'm':
-            data.max = 59;
-            data.min = 0;
-            break;
+            if (!(rows % 2)) {
+              rows += 1;
+            }
 
-          case 's':
-            data.max = 59;
-            data.min = 0;
-            break;
+            options.rows = rows || 5;
+            addClass(
+              grid,
+              ""
+                .concat(NAMESPACE, "-")
+                .concat(options.rows > 1 ? "multiple" : "single")
+            );
 
-          case 'S':
-            data.max = 999;
-            data.min = 0;
-            break;
+            if (options.controls) {
+              addClass(grid, "".concat(NAMESPACE, "-controls"));
+            }
 
-          default:
-        }
+            var headers = options.headers,
+              increment = options.increment;
 
-        setData(cell, DATA_TYPE, type);
-        setData(cell, DATA_TOKEN, token);
+            if (headers) {
+              addClass(grid, "".concat(NAMESPACE, "-headers")); // TODO: Drop the `headers` option's object support in v2.
 
-        if (headers) {
-          var cellHeader = document.createElement('div');
-          addClass(cellHeader, "".concat(NAMESPACE, "-cell__header"));
-          cellHeader.textContent = headers[type] || type[0].toUpperCase() + type.substr(1);
-          cell.appendChild(cellHeader);
-        }
+              headers = isPlainObject(headers) ? headers : options.text;
+            }
 
-        if (options.controls) {
-          var prev = document.createElement('div');
-          addClass(prev, "".concat(NAMESPACE, "-cell__control"));
-          addClass(prev, "".concat(NAMESPACE, "-cell__control--prev"));
-          setData(prev, DATA_ACTION, ACTION_PREV);
-          cell.appendChild(prev);
-        }
+            if (!isPlainObject(increment)) {
+              increment = {
+                year: increment,
+                month: increment,
+                day: increment,
+                hour: increment,
+                minute: increment,
+                second: increment,
+                millisecond: increment,
+              };
+            }
 
-        addClass(list, "".concat(NAMESPACE, "-list"));
-        addClass(cellBody, "".concat(NAMESPACE, "-cell__body"));
-        addClass(cell, "".concat(NAMESPACE, "-cell"));
-        addClass(cell, "".concat(NAMESPACE, "-").concat(type, "s"));
-        cellBody.appendChild(list);
-        cell.appendChild(cellBody);
+            this.format.tokens.forEach(function (token) {
+              var type = tokenToType(token);
+              var cell = document.createElement("div");
+              var cellBody = document.createElement("div");
+              var list = document.createElement("ul");
+              var data = {
+                digit: token.length,
+                increment: Math.abs(Number(increment[type])) || 1,
+                list: list,
+                max: Infinity,
+                min: -Infinity,
+                index: Math.floor((options.rows + 2) / 2),
+                offset: 0,
+              };
 
-        if (options.controls) {
-          var next = document.createElement('div');
-          addClass(next, "".concat(NAMESPACE, "-cell__control"));
-          addClass(next, "".concat(NAMESPACE, "-cell__control--next"));
-          setData(next, DATA_ACTION, ACTION_NEXT);
-          cell.appendChild(next);
-        }
+              switch (token.charAt(0)) {
+                case "Y":
+                  if (data.digit === 2) {
+                    data.max = 99;
+                    data.min = 0;
+                  }
 
-        grid.appendChild(cell);
-        _this.data[type] = data;
+                  break;
 
-        _this.render(type);
-      });
+                case "M":
+                  data.max = 11;
+                  data.min = 0;
+                  data.offset = 1;
 
-      if (inline) {
-        container.innerHTML = '';
-      }
+                  if (data.digit === 3) {
+                    data.aliases = options.monthsShort;
+                  } else if (data.digit === 4) {
+                    data.aliases = options.months;
+                  }
 
-      container.appendChild(picker);
-      this.bind();
-    }
-    /**
-     * Get the no conflict picker class.
-     * @returns {Picker} The picker class.
-     */
+                  break;
 
-  }], [{
-    key: "noConflict",
-    value: function noConflict() {
-      WINDOW.Picker = AnotherPicker;
-      return Picker;
-    }
-    /**
-     * Change the default options.
-     * @param {Object} options - The new default options.
-     */
+                case "D":
+                  data.max = function () {
+                    return getDaysInMonth(date.getFullYear(), date.getMonth());
+                  };
 
-  }, {
-    key: "setDefaults",
-    value: function setDefaults(options) {
-      deepAssign(DEFAULTS, LANGUAGES[options.language], isPlainObject(options) && options);
-    }
-  }]);
+                  data.min = 1;
+                  break;
 
-  return Picker;
-}();
+                case "H":
+                  data.max = 23;
+                  data.min = 0;
+                  break;
+
+                case "m":
+                  data.max = 59;
+                  data.min = 0;
+                  break;
+
+                case "s":
+                  data.max = 59;
+                  data.min = 0;
+                  break;
+
+                case "S":
+                  data.max = 999;
+                  data.min = 0;
+                  break;
+
+                default:
+              }
+
+              setData(cell, DATA_TYPE, type);
+              setData(cell, DATA_TOKEN, token);
+
+              if (headers) {
+                var cellHeader = document.createElement("div");
+                addClass(cellHeader, "".concat(NAMESPACE, "-cell__header"));
+                cellHeader.textContent =
+                  headers[type] || type[0].toUpperCase() + type.substr(1);
+                cell.appendChild(cellHeader);
+              }
+
+              if (options.controls) {
+                var prev = document.createElement("div");
+                addClass(prev, "".concat(NAMESPACE, "-cell__control"));
+                addClass(prev, "".concat(NAMESPACE, "-cell__control--prev"));
+                setData(prev, DATA_ACTION, ACTION_PREV);
+                cell.appendChild(prev);
+              }
+
+              addClass(list, "".concat(NAMESPACE, "-list"));
+              addClass(cellBody, "".concat(NAMESPACE, "-cell__body"));
+              addClass(cell, "".concat(NAMESPACE, "-cell"));
+              addClass(cell, "".concat(NAMESPACE, "-").concat(type, "s"));
+              cellBody.appendChild(list);
+              cell.appendChild(cellBody);
+
+              if (options.controls) {
+                var next = document.createElement("div");
+                addClass(next, "".concat(NAMESPACE, "-cell__control"));
+                addClass(next, "".concat(NAMESPACE, "-cell__control--next"));
+                setData(next, DATA_ACTION, ACTION_NEXT);
+                cell.appendChild(next);
+              }
+
+              grid.appendChild(cell);
+              _this.data[type] = data;
+
+              _this.render(type);
+            });
+
+            if (inline) {
+              container.innerHTML = "";
+            }
+
+            container.appendChild(picker);
+            this.bind();
+          },
+          /**
+           * Get the no conflict picker class.
+           * @returns {Picker} The picker class.
+           */
+        },
+      ],
+      [
+        {
+          key: "noConflict",
+          value: function noConflict() {
+            WINDOW.Picker = AnotherPicker;
+            return Picker;
+          },
+          /**
+           * Change the default options.
+           * @param {Object} options - The new default options.
+           */
+        },
+        {
+          key: "setDefaults",
+          value: function setDefaults(options) {
+            deepAssign(
+              DEFAULTS,
+              LANGUAGES[options.language],
+              isPlainObject(options) && options
+            );
+          },
+        },
+      ]
+    );
+
+    return Picker;
+  })();
 
 deepAssign(Picker.prototype, events, handlers, helpers, methods);
 Picker.languages = LANGUAGES;

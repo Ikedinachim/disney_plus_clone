@@ -1,6 +1,6 @@
 /* eslint-disable new-cap */
 
-'use strict';
+"use strict";
 
 exports.__esModule = true;
 exports.Compiler = Compiler;
@@ -8,15 +8,17 @@ exports.precompile = precompile;
 exports.compile = compile;
 // istanbul ignore next
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
-var _exception = require('../exception');
+var _exception = require("../exception");
 
 var _exception2 = _interopRequireDefault(_exception);
 
-var _utils = require('../utils');
+var _utils = require("../utils");
 
-var _ast = require('./ast');
+var _ast = require("./ast");
 
 var _ast2 = _interopRequireDefault(_ast);
 
@@ -40,8 +42,11 @@ Compiler.prototype = {
 
     for (var i = 0; i < len; i++) {
       var opcode = this.opcodes[i],
-          otherOpcode = other.opcodes[i];
-      if (opcode.opcode !== otherOpcode.opcode || !argEquals(opcode.args, otherOpcode.args)) {
+        otherOpcode = other.opcodes[i];
+      if (
+        opcode.opcode !== otherOpcode.opcode ||
+        !argEquals(opcode.args, otherOpcode.args)
+      ) {
         return false;
       }
     }
@@ -73,14 +78,14 @@ Compiler.prototype = {
     // These changes will propagate to the other compiler components
     var knownHelpers = options.knownHelpers;
     options.knownHelpers = {
-      'helperMissing': true,
-      'blockHelperMissing': true,
-      'each': true,
-      'if': true,
-      'unless': true,
-      'with': true,
-      'log': true,
-      'lookup': true
+      helperMissing: true,
+      blockHelperMissing: true,
+      each: true,
+      if: true,
+      unless: true,
+      with: true,
+      log: true,
+      lookup: true,
     };
     if (knownHelpers) {
       // the next line should use "Object.keys", but the code has been like this a long time and changing it, might
@@ -96,9 +101,9 @@ Compiler.prototype = {
 
   compileProgram: function compileProgram(program) {
     var childCompiler = new this.compiler(),
-        // eslint-disable-line new-cap
-    result = childCompiler.compile(program, this.options),
-        guid = this.guid++;
+      // eslint-disable-line new-cap
+      result = childCompiler.compile(program, this.options),
+      guid = this.guid++;
 
     this.usePartial = this.usePartial || result.usePartial;
 
@@ -111,7 +116,7 @@ Compiler.prototype = {
   accept: function accept(node) {
     /* istanbul ignore next: Sanity code */
     if (!this[node.type]) {
-      throw new _exception2['default']('Unknown type: ' + node.type, node);
+      throw new _exception2["default"]("Unknown type: " + node.type, node);
     }
 
     this.sourceNode.unshift(node);
@@ -124,7 +129,7 @@ Compiler.prototype = {
     this.options.blockParams.unshift(program.blockParams);
 
     var body = program.body,
-        bodyLength = body.length;
+      bodyLength = body.length;
     for (var i = 0; i < bodyLength; i++) {
       this.accept(body[i]);
     }
@@ -141,45 +146,45 @@ Compiler.prototype = {
     transformLiteralToPath(block);
 
     var program = block.program,
-        inverse = block.inverse;
+      inverse = block.inverse;
 
     program = program && this.compileProgram(program);
     inverse = inverse && this.compileProgram(inverse);
 
     var type = this.classifySexpr(block);
 
-    if (type === 'helper') {
+    if (type === "helper") {
       this.helperSexpr(block, program, inverse);
-    } else if (type === 'simple') {
+    } else if (type === "simple") {
       this.simpleSexpr(block);
 
       // now that the simple mustache is resolved, we need to
       // evaluate it by executing `blockHelperMissing`
-      this.opcode('pushProgram', program);
-      this.opcode('pushProgram', inverse);
-      this.opcode('emptyHash');
-      this.opcode('blockValue', block.path.original);
+      this.opcode("pushProgram", program);
+      this.opcode("pushProgram", inverse);
+      this.opcode("emptyHash");
+      this.opcode("blockValue", block.path.original);
     } else {
       this.ambiguousSexpr(block, program, inverse);
 
       // now that the simple mustache is resolved, we need to
       // evaluate it by executing `blockHelperMissing`
-      this.opcode('pushProgram', program);
-      this.opcode('pushProgram', inverse);
-      this.opcode('emptyHash');
-      this.opcode('ambiguousBlockValue');
+      this.opcode("pushProgram", program);
+      this.opcode("pushProgram", inverse);
+      this.opcode("emptyHash");
+      this.opcode("ambiguousBlockValue");
     }
 
-    this.opcode('append');
+    this.opcode("append");
   },
 
   DecoratorBlock: function DecoratorBlock(decorator) {
     var program = decorator.program && this.compileProgram(decorator.program);
     var params = this.setupFullMustacheParams(decorator, program, undefined),
-        path = decorator.path;
+      path = decorator.path;
 
     this.useDecorators = true;
-    this.opcode('registerDecorator', params.length, path.original);
+    this.opcode("registerDecorator", params.length, path.original);
   },
 
   PartialStatement: function PartialStatement(partial) {
@@ -192,31 +197,34 @@ Compiler.prototype = {
 
     var params = partial.params;
     if (params.length > 1) {
-      throw new _exception2['default']('Unsupported number of partial arguments: ' + params.length, partial);
+      throw new _exception2["default"](
+        "Unsupported number of partial arguments: " + params.length,
+        partial
+      );
     } else if (!params.length) {
       if (this.options.explicitPartialContext) {
-        this.opcode('pushLiteral', 'undefined');
+        this.opcode("pushLiteral", "undefined");
       } else {
-        params.push({ type: 'PathExpression', parts: [], depth: 0 });
+        params.push({ type: "PathExpression", parts: [], depth: 0 });
       }
     }
 
     var partialName = partial.name.original,
-        isDynamic = partial.name.type === 'SubExpression';
+      isDynamic = partial.name.type === "SubExpression";
     if (isDynamic) {
       this.accept(partial.name);
     }
 
     this.setupFullMustacheParams(partial, program, undefined, true);
 
-    var indent = partial.indent || '';
+    var indent = partial.indent || "";
     if (this.options.preventIndent && indent) {
-      this.opcode('appendContent', indent);
-      indent = '';
+      this.opcode("appendContent", indent);
+      indent = "";
     }
 
-    this.opcode('invokePartial', isDynamic, partialName, indent);
-    this.opcode('append');
+    this.opcode("invokePartial", isDynamic, partialName, indent);
+    this.opcode("append");
   },
   PartialBlockStatement: function PartialBlockStatement(partialBlock) {
     this.PartialStatement(partialBlock);
@@ -226,9 +234,9 @@ Compiler.prototype = {
     this.SubExpression(mustache);
 
     if (mustache.escaped && !this.options.noEscape) {
-      this.opcode('appendEscaped');
+      this.opcode("appendEscaped");
     } else {
-      this.opcode('append');
+      this.opcode("append");
     }
   },
   Decorator: function Decorator(decorator) {
@@ -237,7 +245,7 @@ Compiler.prototype = {
 
   ContentStatement: function ContentStatement(content) {
     if (content.value) {
-      this.opcode('appendContent', content.value);
+      this.opcode("appendContent", content.value);
     }
   },
 
@@ -247,9 +255,9 @@ Compiler.prototype = {
     transformLiteralToPath(sexpr);
     var type = this.classifySexpr(sexpr);
 
-    if (type === 'simple') {
+    if (type === "simple") {
       this.simpleSexpr(sexpr);
-    } else if (type === 'helper') {
+    } else if (type === "helper") {
       this.helperSexpr(sexpr);
     } else {
       this.ambiguousSexpr(sexpr);
@@ -257,105 +265,123 @@ Compiler.prototype = {
   },
   ambiguousSexpr: function ambiguousSexpr(sexpr, program, inverse) {
     var path = sexpr.path,
-        name = path.parts[0],
-        isBlock = program != null || inverse != null;
+      name = path.parts[0],
+      isBlock = program != null || inverse != null;
 
-    this.opcode('getContext', path.depth);
+    this.opcode("getContext", path.depth);
 
-    this.opcode('pushProgram', program);
-    this.opcode('pushProgram', inverse);
+    this.opcode("pushProgram", program);
+    this.opcode("pushProgram", inverse);
 
     path.strict = true;
     this.accept(path);
 
-    this.opcode('invokeAmbiguous', name, isBlock);
+    this.opcode("invokeAmbiguous", name, isBlock);
   },
 
   simpleSexpr: function simpleSexpr(sexpr) {
     var path = sexpr.path;
     path.strict = true;
     this.accept(path);
-    this.opcode('resolvePossibleLambda');
+    this.opcode("resolvePossibleLambda");
   },
 
   helperSexpr: function helperSexpr(sexpr, program, inverse) {
     var params = this.setupFullMustacheParams(sexpr, program, inverse),
-        path = sexpr.path,
-        name = path.parts[0];
+      path = sexpr.path,
+      name = path.parts[0];
 
     if (this.options.knownHelpers[name]) {
-      this.opcode('invokeKnownHelper', params.length, name);
+      this.opcode("invokeKnownHelper", params.length, name);
     } else if (this.options.knownHelpersOnly) {
-      throw new _exception2['default']('You specified knownHelpersOnly, but used the unknown helper ' + name, sexpr);
+      throw new _exception2["default"](
+        "You specified knownHelpersOnly, but used the unknown helper " + name,
+        sexpr
+      );
     } else {
       path.strict = true;
       path.falsy = true;
 
       this.accept(path);
-      this.opcode('invokeHelper', params.length, path.original, _ast2['default'].helpers.simpleId(path));
+      this.opcode(
+        "invokeHelper",
+        params.length,
+        path.original,
+        _ast2["default"].helpers.simpleId(path)
+      );
     }
   },
 
   PathExpression: function PathExpression(path) {
     this.addDepth(path.depth);
-    this.opcode('getContext', path.depth);
+    this.opcode("getContext", path.depth);
 
     var name = path.parts[0],
-        scoped = _ast2['default'].helpers.scopedId(path),
-        blockParamId = !path.depth && !scoped && this.blockParamIndex(name);
+      scoped = _ast2["default"].helpers.scopedId(path),
+      blockParamId = !path.depth && !scoped && this.blockParamIndex(name);
 
     if (blockParamId) {
-      this.opcode('lookupBlockParam', blockParamId, path.parts);
+      this.opcode("lookupBlockParam", blockParamId, path.parts);
     } else if (!name) {
       // Context reference, i.e. `{{foo .}}` or `{{foo ..}}`
-      this.opcode('pushContext');
+      this.opcode("pushContext");
     } else if (path.data) {
       this.options.data = true;
-      this.opcode('lookupData', path.depth, path.parts, path.strict);
+      this.opcode("lookupData", path.depth, path.parts, path.strict);
     } else {
-      this.opcode('lookupOnContext', path.parts, path.falsy, path.strict, scoped);
+      this.opcode(
+        "lookupOnContext",
+        path.parts,
+        path.falsy,
+        path.strict,
+        scoped
+      );
     }
   },
 
   StringLiteral: function StringLiteral(string) {
-    this.opcode('pushString', string.value);
+    this.opcode("pushString", string.value);
   },
 
   NumberLiteral: function NumberLiteral(number) {
-    this.opcode('pushLiteral', number.value);
+    this.opcode("pushLiteral", number.value);
   },
 
   BooleanLiteral: function BooleanLiteral(bool) {
-    this.opcode('pushLiteral', bool.value);
+    this.opcode("pushLiteral", bool.value);
   },
 
   UndefinedLiteral: function UndefinedLiteral() {
-    this.opcode('pushLiteral', 'undefined');
+    this.opcode("pushLiteral", "undefined");
   },
 
   NullLiteral: function NullLiteral() {
-    this.opcode('pushLiteral', 'null');
+    this.opcode("pushLiteral", "null");
   },
 
   Hash: function Hash(hash) {
     var pairs = hash.pairs,
-        i = 0,
-        l = pairs.length;
+      i = 0,
+      l = pairs.length;
 
-    this.opcode('pushHash');
+    this.opcode("pushHash");
 
     for (; i < l; i++) {
       this.pushParam(pairs[i].value);
     }
     while (i--) {
-      this.opcode('assignToHash', pairs[i].key);
+      this.opcode("assignToHash", pairs[i].key);
     }
-    this.opcode('popHash');
+    this.opcode("popHash");
   },
 
   // HELPERS
   opcode: function opcode(name) {
-    this.opcodes.push({ opcode: name, args: slice.call(arguments, 1), loc: this.sourceNode[0].loc });
+    this.opcodes.push({
+      opcode: name,
+      args: slice.call(arguments, 1),
+      loc: this.sourceNode[0].loc,
+    });
   },
 
   addDepth: function addDepth(depth) {
@@ -367,13 +393,14 @@ Compiler.prototype = {
   },
 
   classifySexpr: function classifySexpr(sexpr) {
-    var isSimple = _ast2['default'].helpers.simpleId(sexpr.path);
+    var isSimple = _ast2["default"].helpers.simpleId(sexpr.path);
 
     var isBlockParam = isSimple && !!this.blockParamIndex(sexpr.path.parts[0]);
 
     // a mustache is an eligible helper if:
     // * its id is simple (a single part, not `this` or `..`)
-    var isHelper = !isBlockParam && _ast2['default'].helpers.helperExpression(sexpr);
+    var isHelper =
+      !isBlockParam && _ast2["default"].helpers.helperExpression(sexpr);
 
     // if a mustache is an eligible helper but not a definite
     // helper, it is ambiguous, and will be resolved in a later
@@ -384,7 +411,7 @@ Compiler.prototype = {
     // An eligible helper is one that does not have a complex path, i.e. `this.foo`, `../foo` etc.
     if (isEligible && !isHelper) {
       var _name2 = sexpr.path.parts[0],
-          options = this.options;
+        options = this.options;
 
       if (options.knownHelpers[_name2]) {
         isHelper = true;
@@ -394,11 +421,11 @@ Compiler.prototype = {
     }
 
     if (isHelper) {
-      return 'helper';
+      return "helper";
     } else if (isEligible) {
-      return 'ambiguous';
+      return "ambiguous";
     } else {
-      return 'simple';
+      return "simple";
     }
   },
 
@@ -409,20 +436,20 @@ Compiler.prototype = {
   },
 
   pushParam: function pushParam(val) {
-    var value = val.value != null ? val.value : val.original || '';
+    var value = val.value != null ? val.value : val.original || "";
 
     if (this.stringParams) {
       if (value.replace) {
-        value = value.replace(/^(\.?\.\/)*/g, '').replace(/\//g, '.');
+        value = value.replace(/^(\.?\.\/)*/g, "").replace(/\//g, ".");
       }
 
       if (val.depth) {
         this.addDepth(val.depth);
       }
-      this.opcode('getContext', val.depth || 0);
-      this.opcode('pushStringParam', value, val.type);
+      this.opcode("getContext", val.depth || 0);
+      this.opcode("pushStringParam", value, val.type);
 
-      if (val.type === 'SubExpression') {
+      if (val.type === "SubExpression") {
         // SubExpressions get evaluated and passed in
         // in string params mode.
         this.accept(val);
@@ -430,59 +457,81 @@ Compiler.prototype = {
     } else {
       if (this.trackIds) {
         var blockParamIndex = undefined;
-        if (val.parts && !_ast2['default'].helpers.scopedId(val) && !val.depth) {
+        if (
+          val.parts &&
+          !_ast2["default"].helpers.scopedId(val) &&
+          !val.depth
+        ) {
           blockParamIndex = this.blockParamIndex(val.parts[0]);
         }
         if (blockParamIndex) {
-          var blockParamChild = val.parts.slice(1).join('.');
-          this.opcode('pushId', 'BlockParam', blockParamIndex, blockParamChild);
+          var blockParamChild = val.parts.slice(1).join(".");
+          this.opcode("pushId", "BlockParam", blockParamIndex, blockParamChild);
         } else {
           value = val.original || value;
           if (value.replace) {
-            value = value.replace(/^this(?:\.|$)/, '').replace(/^\.\//, '').replace(/^\.$/, '');
+            value = value
+              .replace(/^this(?:\.|$)/, "")
+              .replace(/^\.\//, "")
+              .replace(/^\.$/, "");
           }
 
-          this.opcode('pushId', val.type, value);
+          this.opcode("pushId", val.type, value);
         }
       }
       this.accept(val);
     }
   },
 
-  setupFullMustacheParams: function setupFullMustacheParams(sexpr, program, inverse, omitEmpty) {
+  setupFullMustacheParams: function setupFullMustacheParams(
+    sexpr,
+    program,
+    inverse,
+    omitEmpty
+  ) {
     var params = sexpr.params;
     this.pushParams(params);
 
-    this.opcode('pushProgram', program);
-    this.opcode('pushProgram', inverse);
+    this.opcode("pushProgram", program);
+    this.opcode("pushProgram", inverse);
 
     if (sexpr.hash) {
       this.accept(sexpr.hash);
     } else {
-      this.opcode('emptyHash', omitEmpty);
+      this.opcode("emptyHash", omitEmpty);
     }
 
     return params;
   },
 
   blockParamIndex: function blockParamIndex(name) {
-    for (var depth = 0, len = this.options.blockParams.length; depth < len; depth++) {
+    for (
+      var depth = 0, len = this.options.blockParams.length;
+      depth < len;
+      depth++
+    ) {
       var blockParams = this.options.blockParams[depth],
-          param = blockParams && _utils.indexOf(blockParams, name);
+        param = blockParams && _utils.indexOf(blockParams, name);
       if (blockParams && param >= 0) {
         return [depth, param];
       }
     }
-  }
+  },
 };
 
 function precompile(input, options, env) {
-  if (input == null || typeof input !== 'string' && input.type !== 'Program') {
-    throw new _exception2['default']('You must pass a string or Handlebars AST to Handlebars.precompile. You passed ' + input);
+  if (
+    input == null ||
+    (typeof input !== "string" && input.type !== "Program")
+  ) {
+    throw new _exception2["default"](
+      "You must pass a string or Handlebars AST to Handlebars.precompile. You passed " +
+        input
+    );
   }
 
   options = options || {};
-  if (!('data' in options)) {
+  if (!("data" in options)) {
     options.data = true;
   }
   if (options.compat) {
@@ -490,19 +539,25 @@ function precompile(input, options, env) {
   }
 
   var ast = env.parse(input, options),
-      environment = new env.Compiler().compile(ast, options);
+    environment = new env.Compiler().compile(ast, options);
   return new env.JavaScriptCompiler().compile(environment, options);
 }
 
 function compile(input, options, env) {
   if (options === undefined) options = {};
 
-  if (input == null || typeof input !== 'string' && input.type !== 'Program') {
-    throw new _exception2['default']('You must pass a string or Handlebars AST to Handlebars.compile. You passed ' + input);
+  if (
+    input == null ||
+    (typeof input !== "string" && input.type !== "Program")
+  ) {
+    throw new _exception2["default"](
+      "You must pass a string or Handlebars AST to Handlebars.compile. You passed " +
+        input
+    );
   }
 
   options = _utils.extend({}, options);
-  if (!('data' in options)) {
+  if (!("data" in options)) {
     options.data = true;
   }
   if (options.compat) {
@@ -513,8 +568,13 @@ function compile(input, options, env) {
 
   function compileInput() {
     var ast = env.parse(input, options),
-        environment = new env.Compiler().compile(ast, options),
-        templateSpec = new env.JavaScriptCompiler().compile(environment, options, undefined, true);
+      environment = new env.Compiler().compile(ast, options),
+      templateSpec = new env.JavaScriptCompiler().compile(
+        environment,
+        options,
+        undefined,
+        true
+      );
     return env.template(templateSpec);
   }
 
@@ -561,12 +621,12 @@ function transformLiteralToPath(sexpr) {
     // Casting to string here to make false and 0 literal values play nicely with the rest
     // of the system.
     sexpr.path = {
-      type: 'PathExpression',
+      type: "PathExpression",
       data: false,
       depth: 0,
-      parts: [literal.original + ''],
-      original: literal.original + '',
-      loc: literal.loc
+      parts: [literal.original + ""],
+      original: literal.original + "",
+      loc: literal.loc,
     };
   }
 }

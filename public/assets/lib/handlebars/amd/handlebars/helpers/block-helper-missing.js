@@ -1,10 +1,10 @@
-define(['exports', 'module', '../utils'], function (exports, module, _utils) {
-  'use strict';
+define(["exports", "module", "../utils"], function (exports, module, _utils) {
+  "use strict";
 
   module.exports = function (instance) {
-    instance.registerHelper('blockHelperMissing', function (context, options) {
+    instance.registerHelper("blockHelperMissing", function (context, options) {
       var inverse = options.inverse,
-          fn = options.fn;
+        fn = options.fn;
 
       if (context === true) {
         return fn(this);
@@ -23,7 +23,10 @@ define(['exports', 'module', '../utils'], function (exports, module, _utils) {
       } else {
         if (options.data && options.ids) {
           var data = _utils.createFrame(options.data);
-          data.contextPath = _utils.appendContextPath(options.data.contextPath, options.name);
+          data.contextPath = _utils.appendContextPath(
+            options.data.contextPath,
+            options.name
+          );
           options = { data: data };
         }
 

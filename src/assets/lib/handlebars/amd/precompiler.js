@@ -1,10 +1,19 @@
-define(['exports', 'async', 'fs', './handlebars', 'path', 'source-map'], function (exports, _async, _fs, _handlebars, _path, _sourceMap) {
+define([
+  "exports",
+  "async",
+  "fs",
+  "./handlebars",
+  "path",
+  "source-map",
+], function (exports, _async, _fs, _handlebars, _path, _sourceMap) {
   /* eslint-disable no-console */
-  'use strict';
+  "use strict";
 
   // istanbul ignore next
 
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { default: obj };
+  }
 
   var _Async = _interopRequireDefault(_async);
 
@@ -29,120 +38,142 @@ define(['exports', 'async', 'fs', './handlebars', 'path', 'source-map'], functio
 
   function loadStrings(opts, callback) {
     var strings = arrayCast(opts.string),
-        names = arrayCast(opts.name);
+      names = arrayCast(opts.name);
 
     if (names.length !== strings.length && strings.length > 1) {
-      return callback(new _handlebars.Exception('Number of names did not match the number of string inputs'));
+      return callback(
+        new _handlebars.Exception(
+          "Number of names did not match the number of string inputs"
+        )
+      );
     }
 
-    _Async['default'].map(strings, function (string, callback) {
-      if (string !== '-') {
-        callback(undefined, string);
-      } else {
-        (function () {
-          // Load from stdin
-          var buffer = '';
-          process.stdin.setEncoding('utf8');
+    _Async["default"].map(
+      strings,
+      function (string, callback) {
+        if (string !== "-") {
+          callback(undefined, string);
+        } else {
+          (function () {
+            // Load from stdin
+            var buffer = "";
+            process.stdin.setEncoding("utf8");
 
-          process.stdin.on('data', function (chunk) {
-            buffer += chunk;
-          });
-          process.stdin.on('end', function () {
-            callback(undefined, buffer);
-          });
-        })();
+            process.stdin.on("data", function (chunk) {
+              buffer += chunk;
+            });
+            process.stdin.on("end", function () {
+              callback(undefined, buffer);
+            });
+          })();
+        }
+      },
+      function (err, strings) {
+        strings = strings.map(function (string, index) {
+          return {
+            name: names[index],
+            path: names[index],
+            source: string,
+          };
+        });
+        callback(err, strings);
       }
-    }, function (err, strings) {
-      strings = strings.map(function (string, index) {
-        return {
-          name: names[index],
-          path: names[index],
-          source: string
-        };
-      });
-      callback(err, strings);
-    });
+    );
   }
 
   function loadFiles(opts, callback) {
     // Build file extension pattern
-    var extension = (opts.extension || 'handlebars').replace(/[\\^$*+?.():=!|{}\-[\]]/g, function (arg) {
-      return '\\' + arg;
-    });
-    extension = new RegExp('\\.' + extension + '$');
+    var extension = (opts.extension || "handlebars").replace(
+      /[\\^$*+?.():=!|{}\-[\]]/g,
+      function (arg) {
+        return "\\" + arg;
+      }
+    );
+    extension = new RegExp("\\." + extension + "$");
 
     var ret = [],
-        queue = (opts.files || []).map(function (template) {
-      return { template: template, root: opts.root };
-    });
-    _Async['default'].whilst(function () {
-      return queue.length;
-    }, function (callback) {
-      var _queue$shift = queue.shift();
-
-      var path = _queue$shift.template;
-      var root = _queue$shift.root;
-
-      _fs2['default'].stat(path, function (err, stat) {
-        if (err) {
-          return callback(new _handlebars.Exception('Unable to open template file "' + path + '"'));
-        }
-
-        if (stat.isDirectory()) {
-          opts.hasDirectory = true;
-
-          _fs2['default'].readdir(path, function (err, children) {
-            /* istanbul ignore next : Race condition that being too lazy to test */
-            if (err) {
-              return callback(err);
-            }
-            children.forEach(function (file) {
-              var childPath = path + '/' + file;
-
-              if (extension.test(childPath) || _fs2['default'].statSync(childPath).isDirectory()) {
-                queue.push({ template: childPath, root: root || path });
-              }
-            });
-
-            callback();
-          });
-        } else {
-          _fs2['default'].readFile(path, 'utf8', function (err, data) {
-            /* istanbul ignore next : Race condition that being too lazy to test */
-            if (err) {
-              return callback(err);
-            }
-
-            if (opts.bom && data.indexOf('﻿') === 0) {
-              data = data.substring(1);
-            }
-
-            // Clean the template name
-            var name = path;
-            if (!root) {
-              name = _path.basename(name);
-            } else if (name.indexOf(root) === 0) {
-              name = name.substring(root.length + 1);
-            }
-            name = name.replace(extension, '');
-
-            ret.push({
-              path: path,
-              name: name,
-              source: data
-            });
-
-            callback();
-          });
-        }
+      queue = (opts.files || []).map(function (template) {
+        return { template: template, root: opts.root };
       });
-    }, function (err) {
-      if (err) {
-        callback(err);
-      } else {
-        callback(undefined, ret);
+    _Async["default"].whilst(
+      function () {
+        return queue.length;
+      },
+      function (callback) {
+        var _queue$shift = queue.shift();
+
+        var path = _queue$shift.template;
+        var root = _queue$shift.root;
+
+        _fs2["default"].stat(path, function (err, stat) {
+          if (err) {
+            return callback(
+              new _handlebars.Exception(
+                'Unable to open template file "' + path + '"'
+              )
+            );
+          }
+
+          if (stat.isDirectory()) {
+            opts.hasDirectory = true;
+
+            _fs2["default"].readdir(path, function (err, children) {
+              /* istanbul ignore next : Race condition that being too lazy to test */
+              if (err) {
+                return callback(err);
+              }
+              children.forEach(function (file) {
+                var childPath = path + "/" + file;
+
+                if (
+                  extension.test(childPath) ||
+                  _fs2["default"].statSync(childPath).isDirectory()
+                ) {
+                  queue.push({ template: childPath, root: root || path });
+                }
+              });
+
+              callback();
+            });
+          } else {
+            _fs2["default"].readFile(path, "utf8", function (err, data) {
+              /* istanbul ignore next : Race condition that being too lazy to test */
+              if (err) {
+                return callback(err);
+              }
+
+              if (opts.bom && data.indexOf("﻿") === 0) {
+                data = data.substring(1);
+              }
+
+              // Clean the template name
+              var name = path;
+              if (!root) {
+                name = _path.basename(name);
+              } else if (name.indexOf(root) === 0) {
+                name = name.substring(root.length + 1);
+              }
+              name = name.replace(extension, "");
+
+              ret.push({
+                path: path,
+                name: name,
+                source: data,
+              });
+
+              callback();
+            });
+          }
+        });
+      },
+      function (err) {
+        if (err) {
+          callback(err);
+        } else {
+          callback(undefined, ret);
+        }
       }
-    });
+    );
   }
 
   module.exports.cli = function (opts) {
@@ -152,20 +183,29 @@ define(['exports', 'async', 'fs', './handlebars', 'path', 'source-map'], functio
     }
 
     if (!opts.templates.length && !opts.hasDirectory) {
-      throw new _handlebars.Exception('Must define at least one template or directory.');
+      throw new _handlebars.Exception(
+        "Must define at least one template or directory."
+      );
     }
 
     if (opts.simple && opts.min) {
-      throw new _handlebars.Exception('Unable to minimize simple output');
+      throw new _handlebars.Exception("Unable to minimize simple output");
     }
 
     var multiple = opts.templates.length !== 1 || opts.hasDirectory;
     if (opts.simple && multiple) {
-      throw new _handlebars.Exception('Unable to output multiple templates in simple mode');
+      throw new _handlebars.Exception(
+        "Unable to output multiple templates in simple mode"
+      );
     }
 
     // Force simple mode if we have only one template and it's unnamed.
-    if (!opts.amd && !opts.commonjs && opts.templates.length === 1 && !opts.templates[0].name) {
+    if (
+      !opts.amd &&
+      !opts.commonjs &&
+      opts.templates.length === 1 &&
+      !opts.templates[0].name
+    ) {
       opts.simple = true;
     }
 
@@ -180,31 +220,35 @@ define(['exports', 'async', 'fs', './handlebars', 'path', 'source-map'], functio
       }
     }
 
-    var objectName = opts.partial ? 'Handlebars.partials' : 'templates';
+    var objectName = opts.partial ? "Handlebars.partials" : "templates";
 
     var output = new _sourceMap.SourceNode();
     if (!opts.simple) {
       if (opts.amd) {
-        output.add('define([\'' + opts.handlebarPath + 'handlebars.runtime\'], function(Handlebars) {\n  Handlebars = Handlebars["default"];');
+        output.add(
+          "define(['" +
+            opts.handlebarPath +
+            'handlebars.runtime\'], function(Handlebars) {\n  Handlebars = Handlebars["default"];'
+        );
       } else if (opts.commonjs) {
         output.add('var Handlebars = require("' + opts.commonjs + '");');
       } else {
-        output.add('(function() {\n');
+        output.add("(function() {\n");
       }
-      output.add('  var template = Handlebars.template, templates = ');
+      output.add("  var template = Handlebars.template, templates = ");
       if (opts.namespace) {
         output.add(opts.namespace);
-        output.add(' = ');
+        output.add(" = ");
         output.add(opts.namespace);
-        output.add(' || ');
+        output.add(" || ");
       }
-      output.add('{};\n');
+      output.add("{};\n");
     }
 
     opts.templates.forEach(function (template) {
       var options = {
         knownHelpers: known,
-        knownHelpersOnly: opts.o
+        knownHelpersOnly: opts.o,
       };
 
       if (opts.map) {
@@ -219,20 +263,30 @@ define(['exports', 'async', 'fs', './handlebars', 'path', 'source-map'], functio
       // If we are generating a source map, we have to reconstruct the SourceNode object
       if (opts.map) {
         var consumer = new _sourceMap.SourceMapConsumer(precompiled.map);
-        precompiled = _sourceMap.SourceNode.fromStringWithSourceMap(precompiled.code, consumer);
+        precompiled = _sourceMap.SourceNode.fromStringWithSourceMap(
+          precompiled.code,
+          consumer
+        );
       }
 
       if (opts.simple) {
-        output.add([precompiled, '\n']);
+        output.add([precompiled, "\n"]);
       } else {
         if (!template.name) {
-          throw new _handlebars.Exception('Name missing for template');
+          throw new _handlebars.Exception("Name missing for template");
         }
 
         if (opts.amd && !multiple) {
-          output.add('return ');
+          output.add("return ");
         }
-        output.add([objectName, '[\'', template.name, '\'] = template(', precompiled, ');\n']);
+        output.add([
+          objectName,
+          "['",
+          template.name,
+          "'] = template(",
+          precompiled,
+          ");\n",
+        ]);
       }
     });
 
@@ -240,32 +294,32 @@ define(['exports', 'async', 'fs', './handlebars', 'path', 'source-map'], functio
     if (!opts.simple) {
       if (opts.amd) {
         if (multiple) {
-          output.add(['return ', objectName, ';\n']);
+          output.add(["return ", objectName, ";\n"]);
         }
-        output.add('});');
+        output.add("});");
       } else if (!opts.commonjs) {
-        output.add('})();');
+        output.add("})();");
       }
     }
 
     if (opts.map) {
-      output.add('\n//# sourceMappingURL=' + opts.map + '\n');
+      output.add("\n//# sourceMappingURL=" + opts.map + "\n");
     }
 
     output = output.toStringWithSourceMap();
-    output.map = output.map + '';
+    output.map = output.map + "";
 
     if (opts.min) {
       output = minify(output, opts.map);
     }
 
     if (opts.map) {
-      _fs2['default'].writeFileSync(opts.map, output.map, 'utf8');
+      _fs2["default"].writeFileSync(opts.map, output.map, "utf8");
     }
     output = output.code;
 
     if (opts.output) {
-      _fs2['default'].writeFileSync(opts.output, output, 'utf8');
+      _fs2["default"].writeFileSync(opts.output, output, "utf8");
     } else {
       console.log(output);
     }
@@ -292,21 +346,23 @@ define(['exports', 'async', 'fs', './handlebars', 'path', 'source-map'], functio
   function minify(output, sourceMapFile) {
     try {
       // Try to resolve uglify-js in order to see if it does exist
-      require.resolve('uglify-js');
+      require.resolve("uglify-js");
     } catch (e) {
-      if (e.code !== 'MODULE_NOT_FOUND') {
+      if (e.code !== "MODULE_NOT_FOUND") {
         // Something else seems to be wrong
         throw e;
       }
       // it does not exist!
-      console.error('Code minimization is disabled due to missing uglify-js dependency');
+      console.error(
+        "Code minimization is disabled due to missing uglify-js dependency"
+      );
       return output;
     }
-    return require('uglify-js').minify(output.code, {
+    return require("uglify-js").minify(output.code, {
       sourceMap: {
         content: output.map,
-        url: sourceMapFile
-      }
+        url: sourceMapFile,
+      },
     });
   }
 });

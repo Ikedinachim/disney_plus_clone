@@ -2,16 +2,14 @@
 // Dutch (nl-nl) localization
 // https://github.com/bgrins/spectrum
 
-(function ( $ ) {
+(function ($) {
+  var localization = ($.spectrum.localization["nl-nl"] = {
+    cancelText: "Annuleer",
+    chooseText: "Kies",
+    clearText: "Wis kleur selectie",
+    togglePaletteMoreText: "Meer",
+    togglePaletteLessText: "Minder",
+  });
 
-    var localization = $.spectrum.localization["nl-nl"] = {
-        cancelText: "Annuleer",
-        chooseText: "Kies",
-        clearText: "Wis kleur selectie",
-        togglePaletteMoreText: 'Meer',
-        togglePaletteLessText: 'Minder'
-    };
-
-    $.extend($.fn.spectrum.defaults, localization);
-
-})( jQuery );
+  $.extend($.fn.spectrum.defaults, localization);
+})(jQuery);
