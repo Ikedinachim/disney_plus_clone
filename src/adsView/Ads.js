@@ -54,11 +54,7 @@ const ViewCampaign = () => {
                     <div>
                       {createShowAds.callToAction === "" ||
                       createShowAds.whatsappNumber === "" ? null : (
-<<<<<<< Updated upstream
-                        <a href="https://api.whatsapp.com/send?phone=23494344035">
-=======
                         <a href="https://api.whatsapp.com/send?phone=2348167696729">
->>>>>>> Stashed changes
                           <button className="btn btn-primary w-100 mg-b-15 round-5">
                             <i className="fa fa-whatsapp mg-r-5"> </i>
                             {createShowAds.callToAction} via WhatsApp
@@ -67,11 +63,7 @@ const ViewCampaign = () => {
                       )}
                       {createShowAds.callToAction === "" ||
                       createShowAds.phoneNumber === "" ? null : (
-<<<<<<< Updated upstream
-                        <a href="tel:+238167696729">
-=======
                         <a href="tel:+2348167696729">
->>>>>>> Stashed changes
                           <button className="btn btn-primary w-100 mg-b-15 round-5">
                             <i className="fa fa-phone mg-r-5" />
                             {createShowAds.callToAction} via Mobile
@@ -80,11 +72,7 @@ const ViewCampaign = () => {
                       )}
                       {createShowAds.callToAction === "" ||
                       createShowAds.ussd === "" ? null : (
-<<<<<<< Updated upstream
-                        <a href="tel:+238167696729">
-=======
                         <a href="tel:+2348167696729">
->>>>>>> Stashed changes
                           <button className="btn btn-primary w-100 mg-b-15 round-5">
                             <i className="fa fa-phone mg-r-5" />
                             {createShowAds.callToAction} USSD
@@ -93,11 +81,7 @@ const ViewCampaign = () => {
                       )}
                       {createShowAds.callToAction === "" ||
                       createShowAds.smsNumber === "" ? null : (
-<<<<<<< Updated upstream
                         <a href="sms:+2348167696729">
-=======
-                        <a href="sms://+2348167696729">
->>>>>>> Stashed changes
                           <button className="btn btn-primary w-100 mg-b-15 round-5">
                             <i className="fa fa-comment mg-r-10"> </i>
                             {createShowAds.callToAction} via Text
