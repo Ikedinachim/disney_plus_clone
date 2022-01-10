@@ -15,7 +15,7 @@ const TargetAudience = ({
   nextStep,
   handleChange,
   numbers,
-  filteredContact,
+  filterParameters,
   values,
 }) => {
   const alert = useAlert();
@@ -70,7 +70,7 @@ const TargetAudience = ({
 
   const Continue = (e) => {
     e.preventDefault();
-    dispatch(getFilteredContactList(filteredContact));
+    dispatch(getFilteredContactList(filterParameters));
     nextStep();
   };
   const Previous = (e) => {
@@ -88,7 +88,7 @@ const TargetAudience = ({
     }
   }, [dispatch, error, alert]);
 
-  const lga = NaijaStates.lgas(filteredContact.state);
+  const lga = NaijaStates.lgas(filterParameters.state);
 
   return (
     <Fragment>
@@ -129,8 +129,8 @@ const TargetAudience = ({
                           defaultChecked
                           checked={status === 1}
                           onClick={(e) => radioHandler(1)}
-                          value={"mysogi_db"}
-                          onChange={handleChange("targetAudienceType")}
+                          value={"mysogidb"}
+                          onChange={handleChange("targetAudienceOption")}
                         />
                         <label className="custom-control-label" htmlFor="db">
                           Use Mysogi Database
@@ -146,8 +146,8 @@ const TargetAudience = ({
                           className="custom-control-input"
                           checked={status === 2}
                           onClick={(e) => radioHandler(2)}
-                          value={"import_contact"}
-                          onChange={handleChange("targetAudienceType")}
+                          value={"manual_import"}
+                          onChange={handleChange("targetAudienceOption")}
                         />
                         <label
                           className="custom-control-label"
@@ -166,8 +166,8 @@ const TargetAudience = ({
                           className="custom-control-input"
                           checked={status === 3}
                           onClick={(e) => radioHandler(3)}
-                          defaultValue={"manual_contact"}
-                          onChange={handleChange("targetAudienceType")}
+                          defaultValue={"manual"}
+                          onChange={handleChange("targetAudienceOption")}
                         />
                         <label
                           className="custom-control-label"
@@ -186,7 +186,7 @@ const TargetAudience = ({
                             </label>
                             <select
                               className="form-control"
-                              defaultValue={filteredContact.ageRange}
+                              defaultValue={filterParameters.ageRange}
                               onChange={handleChange("ageRange")}
                             >
                               {selectAgeRanges.map((selectAgeRange) => (
@@ -202,7 +202,7 @@ const TargetAudience = ({
                             </label>
                             <select
                               className="form-control"
-                              defaultValue={filteredContact.gender}
+                              defaultValue={filterParameters.gender}
                               onChange={handleChange("gender")}
                             >
                               {selectGenders.map((selectGender) => (
@@ -218,7 +218,7 @@ const TargetAudience = ({
                             </label>
                             <select
                               className="custom-select"
-                              defaultValue={filteredContact.state}
+                              defaultValue={filterParameters.state}
                               onChange={handleChange("state")}
                             >
                               {NaijaStates.states().map((selectState) => (
@@ -234,7 +234,7 @@ const TargetAudience = ({
                             </label>
                             <select
                               className="custom-select"
-                              defaultValue={filteredContact.lga}
+                              defaultValue={filterParameters.lga}
                               onChange={handleChange("lga")}
                             >
                               <option value="">Select L.G.A</option>
@@ -320,7 +320,7 @@ const TargetAudience = ({
                       type="submit"
                       variant="contained"
                       disabled={
-                        numbers === "" && filteredContact.gender === ""
+                        numbers === "" && filterParameters.gender === ""
                           ? true
                           : false
                       }

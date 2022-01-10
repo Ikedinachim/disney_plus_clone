@@ -28,14 +28,15 @@ export default class FlierVideoStepForm extends Component {
     targetAudience: "",
     uploadedImage: "",
     campaignType: "flier_video",
-    targetAudienceType: "manual_contact",
+    targetAudienceOption: "manual",
     price: 0,
 
     ageRange: "",
     gender: "",
-    state: "abia",
+    state: "",
     lga: "",
-    location: "",
+    deviceType: "LG",
+    deviceBrand: "X210ZM",
   };
 
   // go back to previous step
@@ -138,7 +139,7 @@ export default class FlierVideoStepForm extends Component {
       attachment,
       attachmentPreview,
       campaignType,
-      targetAudienceType,
+      targetAudienceOption,
       // attachment,
       numbers,
 
@@ -146,6 +147,8 @@ export default class FlierVideoStepForm extends Component {
       gender,
       state,
       lga,
+      deviceType,
+      deviceBrand,
     } = this.state;
 
     const location = state;
@@ -172,16 +175,17 @@ export default class FlierVideoStepForm extends Component {
       attachment,
       targetAudience,
       campaignType,
-      targetAudienceType,
+      targetAudienceOption,
       // price
     };
 
-    const filteredContact = {
+    const filterParameters = {
       ageRange,
       gender,
       state,
       lga,
-      location,
+      deviceType,
+      deviceBrand,
     };
 
     console.log(values);
@@ -207,7 +211,7 @@ export default class FlierVideoStepForm extends Component {
             onChangeAttachment={this.onChangeAttachment}
             numbers={numbers}
             values={values}
-            filteredContact={filteredContact}
+            filterParameters={filterParameters}
           />
         );
       case 3:
@@ -220,7 +224,7 @@ export default class FlierVideoStepForm extends Component {
             audience={audience}
             price={price}
             attachmentPreview={attachmentPreview}
-            filteredContact={filteredContact}
+            filterParameters={filterParameters}
           />
         );
       case 4:
