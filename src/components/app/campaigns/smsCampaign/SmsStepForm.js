@@ -15,7 +15,7 @@ export default class SmsStepForm extends Component {
     location: ["Lagos"],
     interest: "business",
     phoneNumber: "",
-    campaignType: "sms",
+    campaignType: "general",
     price: 0,
   };
 
