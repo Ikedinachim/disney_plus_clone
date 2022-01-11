@@ -64,20 +64,12 @@ const FlierVideoCampaign = ({
       value: "select channel",
     },
     {
-      label: "Flash SMS",
-      value: "flash_sms",
-    },
-    {
       label: "Smart SMS",
       value: "smart_sms",
     },
     {
       label: "Display Ads",
       value: "display_ads",
-    },
-    {
-      label: "SMS",
-      value: "sms",
     },
   ];
 

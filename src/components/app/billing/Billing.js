@@ -19,19 +19,17 @@ const BillingOverview = () => {
   const { wallet, loading, error } = useSelector((state) => state.wallet);
   const { tnxHistory } = useSelector((state) => state.tnxHistory || {});
   const url = "https://mysogi.uat.com.ng/api/campaign/all-campaign";
-  const usageSummary = async () => {
-    try {
-      const response = await fetch(url);
-      const info = await response.json.data;
-      for (const detail in info) {
-        <tr>
-          <td>{detail.channel}</td>
-          <td className="tx-right">&#8358;{detail.price}</td>
-        </tr>;
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  const usageSummary = () => {
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+      headers: { Authentication: "Bearer" },
+    };
+
+    fetch(url, requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
   };
 
   useEffect(() => {
