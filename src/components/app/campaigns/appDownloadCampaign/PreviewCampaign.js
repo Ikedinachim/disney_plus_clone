@@ -24,10 +24,16 @@ const PreviewCampaign = ({
   audience,
   attachmentPreview,
   price,
+  filterOptions,
 }) => {
   const { error, createAppDownloadCampaign, loading } = useSelector(
     (state) => state.appDownload || []
   );
+
+  const { filteredContactList, fcError, fcLoading } = useSelector(
+    (state) => state.filteredContactList || []
+  );
+
   const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -43,7 +49,7 @@ const PreviewCampaign = ({
     prevStep();
   };
 
-  const submitFlierVideoCampaignHandler = async (e) => {
+  const submitAppDownloadCampaignHandler = async (e) => {
     e.preventDefault();
     dispatch(createAppDownloadCampaignAction(values));
   };
@@ -66,7 +72,7 @@ const PreviewCampaign = ({
 
   return (
     <Fragment>
-      {loading ? (
+      {loading || fcLoading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -176,113 +182,187 @@ const PreviewCampaign = ({
                           </div>
                         </div>
                         <hr />
-                        {/* <div className="mg-b-20 mg-md-b-10">
-                                                    <div className="d-flex justify-content-between">
-                                                    <div>
-                                                        <p className="tx-18 mb-0 tx-bold tx-com">Target Audience</p>
-                                                    </div>
-                                                    <div>
-                                                        <div className="d-flex pd-t-3">
-                                                        <div>
-                                                            <i className="fa fa-edit tx-primary mg-r-5" />
-                                                        </div>
-                                                        <p className="mb-0">Edit</p>
-                                                        </div>
-                                                    </div>
-                                                    </div>
-                                                    <div className="row mg-t-15">
-                                                    <div className="col-md-3 form-group">
-                                                        <label htmlFor className="tx-14 tx-gray mb-0 tx-medium d-block">Age Range</label>
-                                                        <span className="badge badge-pink tx-14 mg-5"> 13-24 years</span>
-                                                    </div>
-                                                    <div className="col-md-3 form-group">
-                                                        <label htmlFor className="tx-14 tx-gray mb-0 tx-medium d-block">Gender</label>
-                                                        <span className="badge badge-pink tx-14 mg-5"> Male</span>
-                                                    </div>
-                                                    <div className="col-md-6 form-group">
-                                                        <label htmlFor className="tx-14 tx-gray mb-0 tx-medium d-block">Location</label>
-                                                        <span className="badge badge-pink tx-14 mg-5"> Adamawa</span>
-                                                    </div>
-                                                    <div className="col-md-3 form-group">
-                                                        <label htmlFor className="tx-14 tx-gray mb-0 tx-medium d-block">ARPU Brand</label>
-                                                        <span className="badge badge-pink tx-14 mg-5"> 0-1000</span>
-                                                    </div>
-                                                    <div className="col-md-6 form-group">
-                                                        <label htmlFor className="tx-14 tx-gray mb-0 tx-medium d-block">Interest</label>
-                                                        <span className="badge badge-pink tx-14 mg-5"> Surfing Net</span>
-                                                    </div>
-                                                    </div>
-                                                </div> 
-                                                <hr /> */}
-                        {/* <div className="mg-b-20 mg-md-b-10">
-                                                    <p className="tx-18 tx-com tx-semibold mb-0">
-                                                    Pricing
-                                                    </p>
-                                                    <div className="form-group mg-t-15">
-                                                    <label htmlFor className="tx-14 tx-gray mb-0 tx-medium">Potential Audience Based on filter</label>
-                                                    <p className="tx-18 tx-com tx-bold mb-1">{audience}</p>
-                                                    </div>
-                                                    <div className="form-row mg-t-15">
-                                                    <div className="form-group col-md-9">
-                                                        <input type="text" className="form-control" placeholder="Enter your target audience number to get price" />
-                                                    </div>
-                                                    <div className="form-group col-md-3">
-                                                        <span className="badge badge-pink  tx-18 mg-5 tx-amt w-100 mt-0"> N50,000</span>
-                                                    </div>
-                                                    </div>
-                                                </div> */}
-                        <div className="mg-b-20 mg-md-b-10">
-                          <p className="tx-18 tx-com tx-semibold mb-0">
-                            Pricing
-                          </p>
-                          <div className="form-group mg-t-15">
-                            <label
-                              htmlFor
-                              className="tx-14 tx-gray mb-1 tx-medium"
-                            >
-                              Potential Audience Based on Manual Input
-                            </label>
-                            <p className="tx-18 tx-com tx-bold mb-0">
-                              {audience}{" "}
-                              <span className="tx-14 tx-gray tx-medium">
-                                number(s) loaded
-                              </span>
+                        {values.targetAudienceOption === "mysogidb" && (
+                          <>
+                            <div className="mg-b-20 mg-md-b-10">
+                              <div className="d-flex justify-content-between">
+                                <div>
+                                  <p className="tx-18 mb-0 tx-bold tx-com">
+                                    Target Audience
+                                  </p>
+                                </div>
+                                <div>
+                                  <div className="d-flex pd-t-3">
+                                    <div>
+                                      <i className="fa fa-edit tx-primary mg-r-5" />
+                                    </div>
+                                    <p className="mb-0">Edit</p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="row mg-t-15">
+                                <div className="col-md-3 form-group">
+                                  <label
+                                    htmlFor
+                                    className="tx-14 tx-gray mb-0 tx-medium d-block"
+                                  >
+                                    Age Range
+                                  </label>
+                                  <span className="badge badge-pink tx-14 mg-5">
+                                    {" "}
+                                    {filterOptions.ageRange} years
+                                  </span>
+                                </div>
+                                <div className="col-md-3 form-group">
+                                  <label
+                                    htmlFor
+                                    className="tx-14 tx-gray mb-0 tx-medium d-block"
+                                  >
+                                    Gender
+                                  </label>
+                                  <span className="badge badge-pink tx-14 mg-5">
+                                    {" "}
+                                    {filterOptions.gender}
+                                  </span>
+                                </div>
+                                <div className="col-md-6 form-group">
+                                  <label
+                                    htmlFor
+                                    className="tx-14 tx-gray mb-0 tx-medium d-block"
+                                  >
+                                    Location
+                                  </label>
+                                  <span className="badge badge-pink tx-14 mg-5">
+                                    {" "}
+                                    {filterOptions.state}
+                                  </span>
+                                  <span className="badge badge-pink tx-14 mg-5">
+                                    {" "}
+                                    {filterOptions.lga}
+                                  </span>
+                                </div>
+                                <div className="col-md-3 form-group">
+                                  <label
+                                    htmlFor
+                                    className="tx-14 tx-gray mb-0 tx-medium d-block"
+                                  >
+                                    ARPU Brand
+                                  </label>
+                                  <span className="badge badge-pink tx-14 mg-5">
+                                    {" "}
+                                    0-1000
+                                  </span>
+                                </div>
+                                <div className="col-md-6 form-group">
+                                  <label
+                                    htmlFor
+                                    className="tx-14 tx-gray mb-0 tx-medium d-block"
+                                  >
+                                    Interest
+                                  </label>
+                                  <span className="badge badge-pink tx-14 mg-5">
+                                    {" "}
+                                    Surfing Net
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                            <hr />
+                          </>
+                        )}
+                        {values.targetAudienceOption === "mysogidb" && (
+                          <div className="mg-b-20 mg-md-b-10">
+                            <p className="tx-18 tx-com tx-semibold mb-0">
+                              Pricing
                             </p>
-                            {/* <div className="form-group col-md-3">
+                            <div className="form-group mg-t-15">
+                              <label
+                                htmlFor
+                                className="tx-14 tx-gray mb-0 tx-medium"
+                              >
+                                Potential Audience Based on filter
+                              </label>
+                              <p className="tx-18 tx-com tx-bold mb-1">
+                                {filteredContactList.count}
+                              </p>
+                            </div>
+                            <div className="form-row mg-t-15">
+                              <div className="form-group col-md-9">
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Enter your target audience number to get price"
+                                />
+                              </div>
+                              <div className="form-group col-md-3">
+                                <NumberFormat
+                                  className="badge badge-pink  tx-18 mg-5 tx-amt w-100 mt-0"
+                                  value={parseInt(
+                                    filteredContactList.count * 5
+                                  )}
+                                  displayType={"text"}
+                                  thousandSeparator={true}
+                                  prefix={"₦"}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {values.targetAudienceOption !== "mysogidb" && (
+                          <div className="mg-b-20 mg-md-b-10">
+                            <p className="tx-18 tx-com tx-semibold mb-0">
+                              Pricing
+                            </p>
+                            <div className="form-group mg-t-15">
+                              <label
+                                htmlFor
+                                className="tx-14 tx-gray mb-1 tx-medium"
+                              >
+                                Potential Audience Based on Manual Input
+                              </label>
+                              <p className="tx-18 tx-com tx-bold mb-0">
+                                {audience}{" "}
+                                <span className="tx-14 tx-gray tx-medium">
+                                  number(s) loaded
+                                </span>
+                              </p>
+                              {/* <div className="form-group col-md-3">
                                                             <p className="tx-18 tx-com tx-bold mb-0">{audience}</p>
                                                             <span className="badge badge-pink  tx-18 mg-5 tx-amt w-100 mt-0">
                                                                 {" "}
                                                                 <NumberFormat value={values.price} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
                                                             </span>
                                                         </div> */}
-                          </div>
-                          <div className="form-row mg-t-15 pd-x-0">
-                            {/* <div className="form-group col-md-9">
+                            </div>
+                            <div className="form-row mg-t-15 pd-x-0">
+                              {/* <div className="form-group col-md-9">
                                                             <input
                                                                 type="text"
                                                                 className="form-control"
                                                                 placeholder="Enter your target audience number to get price"
                                                             />
                                                         </div> */}
-                            <div className=" col-md-2 d-flex">
-                              <p className="tx-18 tx-com tx-bold mb-0">
-                                Amount:
-                              </p>
-                              <span className="badge tx-green tx-bold tx-18 mg-5 tx-amt w-100 mt-0">
-                                {" "}
+                              <div className=" col-md-2 d-flex">
+                                <p className="tx-18 tx-com tx-bold mb-0">
+                                  Amount:
+                                </p>{" "}
                                 <NumberFormat
+                                  className="badge tx-green tx-bold tx-18 mg-5 tx-amt w-100 mt-0"
                                   value={parseInt(price)}
                                   displayType={"text"}
                                   thousandSeparator={true}
                                   prefix={"₦"}
                                 />
-                              </span>
+                              </div>
                             </div>
                           </div>
-                        </div>
+                        )}
                         <div className="col-md-5 pd-x-0 mg-y-40">
                           <div className="mg-t-20 d-flex">
-                            {parseInt(wallet.balance) < price ? (
+                            {parseInt(wallet.balance) < price ||
+                            parseInt(wallet.balance) <
+                              filteredContactList.count ? (
                               <button
                                 className="btn btn-primary w-100 tx-com mg-r-15"
                                 onClick={Continue}
@@ -295,7 +375,7 @@ const PreviewCampaign = ({
                             ) : (
                               <button
                                 className="btn btn-primary w-100 tx-com mg-r-15"
-                                onClick={submitFlierVideoCampaignHandler}
+                                onClick={submitAppDownloadCampaignHandler}
                                 disabled={loading ? true : false}
                                 type="submit"
                                 variant="contained"
