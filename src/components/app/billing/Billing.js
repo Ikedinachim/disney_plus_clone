@@ -7,8 +7,10 @@ import { useAlert } from "react-alert";
 import MetaData from "../../layout/MetaData";
 import Loader from "../../loader";
 import { getTransactionHistory } from "../../../actions/billingActions";
+import { getAllCampaign } from "../../../actions/billingActions";
 import { getSenderID } from "../../../actions/senderIDActions";
 import TransactionCard from "./TransactionCard";
+import CampaignCard from "./CampaignCard";
 import NumberFormat from "react-number-format";
 
 const BillingOverview = () => {
@@ -18,10 +20,12 @@ const BillingOverview = () => {
   const { user } = useSelector((state) => state.auth);
   const { wallet, loading, error } = useSelector((state) => state.wallet);
   const { tnxHistory } = useSelector((state) => state.tnxHistory || {});
+  const { allCampaign } = useSelector((state) => state.allCampaign || {});
 
   useEffect(() => {
     dispatch(getTransactionHistory());
     dispatch(getSenderID());
+    dispatch(getAllCampaign());
   }, [dispatch, alert, error, user, wallet]);
 
   function reverseArray(arr) {
@@ -33,6 +37,7 @@ const BillingOverview = () => {
   }
 
   const reverseTnxHistory = reverseArray(tnxHistory);
+  const reverseAllCampaign = reverseArray(allCampaign);
   return (
     <Fragment>
       {loading ? (
@@ -169,26 +174,18 @@ const BillingOverview = () => {
                             </tr>
                           </thead>
                           <tbody>
-                            <tr className="tx-medium">
+                            {reverseAllCampaign
+                              .slice(0, 3)
+                              .map((allCampaign) => (
+                                <CampaignCard
+                                  key={allCampaign.id}
+                                  campaign={allCampaign}
+                                />
+                              ))}
+                            {/* <tr className="tx-medium">
                               <td>Total</td>
                               <td className="tx-right">&#8358;250,000</td>
-                            </tr>
-                            <tr>
-                              <td>Enterprise Table</td>
-                              <td className="tx-right">&#8358;250,000</td>
-                            </tr>
-                            <tr>
-                              <td>HOR Campaign</td>
-                              <td className="tx-right">&#8358;250,000</td>
-                            </tr>
-                            <tr>
-                              <td>Art Campaign</td>
-                              <td className="tx-right">&#8358;250,000</td>
-                            </tr>
-                            <tr>
-                              <td>Art Campaign</td>
-                              <td className="tx-right">&#8358;250,000</td>
-                            </tr>
+                            </tr> */}
                           </tbody>
                         </table>
                       </div>
