@@ -2,33 +2,26 @@ import React, { Fragment } from "react";
 import NumberFormat from "react-number-format";
 import { DateTime } from "luxon";
 
-const TransactionCard = ({ transaction }) => {
+const CampaignCard = ({ campaign }) => {
   return (
     <Fragment>
       <div className="card tnx-card rounded bd-0 shadow-sm">
         <div className="card-body pd-y-5">
-          <div className="d-flex justify-content-between">
-            <div>
-              <p className="mb-0"> Funded Wallet </p>
-              <p className="tx-gray mb-0">
-                {DateTime.fromJSDate(new Date(transaction.timestamp)).toFormat(
-                  "dd MMM yyyy"
-                )}
-              </p>
-            </div>
-            <p className="tx-green-light pd-t-10">
+          <tr>
+            <td>{campaign.channel}</td>
+            <td className="tx-right">
               <NumberFormat
-                value={transaction.amount}
+                value={campaign.price}
                 displayType={"text"}
                 thousandSeparator={true}
                 prefix={"₦"}
               />
-            </p>
-          </div>
+            </td>
+          </tr>
         </div>
       </div>
     </Fragment>
   );
 };
 
-export default TransactionCard;
+export default CampaignCard;
