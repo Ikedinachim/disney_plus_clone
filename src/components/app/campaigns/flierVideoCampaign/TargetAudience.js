@@ -14,8 +14,9 @@ const TargetAudience = ({
   prevStep,
   nextStep,
   handleChange,
+  handleManualImport,
   numbers,
-  filterParameters,
+  filterOptions,
   values,
 }) => {
   const alert = useAlert();
@@ -70,8 +71,12 @@ const TargetAudience = ({
 
   const Continue = (e) => {
     e.preventDefault();
-    dispatch(getFilteredContactList(filterParameters));
-    nextStep();
+    if (values.targetAudienceOption === "mysogidb") {
+      dispatch(getFilteredContactList(filterOptions));
+      nextStep();
+    } else {
+      nextStep();
+    }
   };
   const Previous = (e) => {
     e.preventDefault();
@@ -79,16 +84,13 @@ const TargetAudience = ({
   };
 
   useEffect(() => {
-    // if(filteredContactList.status === "success") {
-    //     nextStep();
-    // }
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
   }, [dispatch, error, alert]);
 
-  const lga = NaijaStates.lgas(filterParameters.state);
+  const lga = NaijaStates.lgas(filterOptions.state);
 
   return (
     <Fragment>
@@ -186,7 +188,7 @@ const TargetAudience = ({
                             </label>
                             <select
                               className="form-control"
-                              defaultValue={filterParameters.ageRange}
+                              defaultValue={filterOptions.ageRange}
                               onChange={handleChange("ageRange")}
                             >
                               {selectAgeRanges.map((selectAgeRange) => (
@@ -202,7 +204,7 @@ const TargetAudience = ({
                             </label>
                             <select
                               className="form-control"
-                              defaultValue={filterParameters.gender}
+                              defaultValue={filterOptions.gender}
                               onChange={handleChange("gender")}
                             >
                               {selectGenders.map((selectGender) => (
@@ -218,7 +220,7 @@ const TargetAudience = ({
                             </label>
                             <select
                               className="custom-select"
-                              defaultValue={filterParameters.state}
+                              defaultValue={filterOptions.state}
                               onChange={handleChange("state")}
                             >
                               {NaijaStates.states().map((selectState) => (
@@ -234,7 +236,7 @@ const TargetAudience = ({
                             </label>
                             <select
                               className="custom-select"
-                              defaultValue={filterParameters.lga}
+                              defaultValue={filterOptions.lga}
                               onChange={handleChange("lga")}
                             >
                               <option value="">Select L.G.A</option>
@@ -289,8 +291,37 @@ const TargetAudience = ({
                         </div>
                       </div>
                     )}
-                    {status === 3 && (
+                    {status === 2 && (
                       <div className="hide" id="show_2">
+                        <div className="row justify-content-md-between">
+                          <div className="mg-t-20">
+                            <p className="tx-24 tx-bold mb-1 tx-com">
+                              Upload CSV Containing Phone NUmbers
+                            </p>
+                            <div className="form-group">
+                              <div className="custom-file">
+                                <input
+                                  type="file"
+                                  accept=".csv"
+                                  id="csvFile"
+                                  className="custom-file-input"
+                                  id="customFile"
+                                  onChange={handleChange("csvFile")}
+                                />
+                                <label
+                                  className="custom-file-label"
+                                  htmlFor="customFile"
+                                >
+                                  Click to upload desired icon (if needed)
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    {status === 3 && (
+                      <div className="hide" id="show_3">
                         <div className="row justify-content-md-between">
                           <div className="form-group col-md-6">
                             <label htmlFor className="mb-1 tx-com">
@@ -320,7 +351,7 @@ const TargetAudience = ({
                       type="submit"
                       variant="contained"
                       disabled={
-                        numbers === "" && filterParameters.gender === ""
+                        numbers === "" && filterOptions.gender === ""
                           ? true
                           : false
                       }

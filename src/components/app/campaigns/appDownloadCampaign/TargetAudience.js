@@ -1,21 +1,96 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 
+import { useDispatch, useSelector } from "react-redux";
+import { useAlert } from "react-alert";
+import NaijaStates from "naija-state-local-government";
 import MetaData from "../../../layout/MetaData";
 
-const TargetAudience = ({ prevStep, nextStep, handleChange, numbers }) => {
+import {
+  getFilteredContactList,
+  clearErrors,
+} from "../../../../actions/campaignActions";
+
+const TargetAudience = ({
+  prevStep,
+  nextStep,
+  handleChange,
+  numbers,
+  filterOptions,
+  values,
+}) => {
+  const alert = useAlert();
+  const dispatch = useDispatch();
+
+  const { filteredContactList, error, loading } = useSelector(
+    (state) => state.filteredContactList || []
+  );
+
   const [status, setStatus] = useState(3);
   const radioHandler = (status) => {
     setStatus(status);
   };
 
+  const selectGenders = [
+    {
+      label: "Select Gender",
+      value: "",
+    },
+    {
+      label: "Male",
+      value: "M",
+    },
+    {
+      label: "Female",
+      value: "F",
+    },
+    {
+      label: "Both",
+      value: "B",
+    },
+  ];
+
+  const selectAgeRanges = [
+    {
+      label: "Select Age Group",
+      value: "",
+    },
+    {
+      label: "13-24",
+      value: "13-24",
+    },
+    {
+      label: "25-34",
+      value: "25-34",
+    },
+    {
+      label: "35-44",
+      value: "35-44",
+    },
+  ];
+
   const Continue = (e) => {
     e.preventDefault();
-    nextStep();
+    if (values.targetAudienceOption === "mysogidb") {
+      dispatch(getFilteredContactList(filterOptions));
+      nextStep();
+    } else {
+      nextStep();
+    }
   };
+
   const Previous = (e) => {
     e.preventDefault();
     prevStep();
   };
+
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+  }, [dispatch, error, alert]);
+
+  const lga = NaijaStates.lgas(filterOptions.state);
 
   return (
     <Fragment>
@@ -56,6 +131,8 @@ const TargetAudience = ({ prevStep, nextStep, handleChange, numbers }) => {
                           defaultChecked
                           checked={status === 1}
                           onClick={(e) => radioHandler(1)}
+                          value={"mysogidb"}
+                          onChange={handleChange("targetAudienceOption")}
                         />
                         <label className="custom-control-label" htmlFor="db">
                           Use Mysogi Database
@@ -71,6 +148,8 @@ const TargetAudience = ({ prevStep, nextStep, handleChange, numbers }) => {
                           className="custom-control-input"
                           checked={status === 2}
                           onClick={(e) => radioHandler(2)}
+                          value={"manual_import"}
+                          onChange={handleChange("targetAudienceOption")}
                         />
                         <label
                           className="custom-control-label"
@@ -89,6 +168,8 @@ const TargetAudience = ({ prevStep, nextStep, handleChange, numbers }) => {
                           className="custom-control-input"
                           checked={status === 3}
                           onClick={(e) => radioHandler(3)}
+                          defaultValue={"manual"}
+                          onChange={handleChange("targetAudienceOption")}
                         />
                         <label
                           className="custom-control-label"
@@ -105,53 +186,63 @@ const TargetAudience = ({ prevStep, nextStep, handleChange, numbers }) => {
                             <label htmlFor className="mb-1 tx-com">
                               Age Group
                             </label>
-                            <select id="ageRange" className="form-control">
-                              <option value />
-                              <option value={13}>13-24</option>
-                              <option value={25}>25-34</option>
-                              <option value={35}>35-44</option>
+                            <select
+                              className="form-control"
+                              defaultValue={filterOptions.ageRange}
+                              onChange={handleChange("ageRange")}
+                            >
+                              {selectAgeRanges.map((selectAgeRange) => (
+                                <option value={selectAgeRange.value}>
+                                  {selectAgeRange.label}
+                                </option>
+                              ))}
                             </select>
-                            {/* <select class="custom-select">
-                                                            <option selected>Select Age Range</option>
-                                                            <option value="1">20-30</option>
-                                                            <option value="2">30-40</option>
-                                                            <option value="3">40-50</option>
-                                                            </select> */}
                           </div>
                           <div className="form-group col-md-6">
                             <label htmlFor className="mb-1 tx-com">
                               Gender
                             </label>
-                            <select id="gender" className="form-control">
-                              <option value />
-                              <option value="m">Male</option>
-                              <option value="f">Female</option>
-                              <option value="b">Both</option>
+                            <select
+                              className="form-control"
+                              defaultValue={filterOptions.gender}
+                              onChange={handleChange("gender")}
+                            >
+                              {selectGenders.map((selectGender) => (
+                                <option value={selectGender.value}>
+                                  {selectGender.label}
+                                </option>
+                              ))}
                             </select>
                           </div>
                           <div className="form-group col-md-6">
                             <label htmlFor className="mb-1 tx-com">
                               State
                             </label>
-                            <select className="custom-select">
-                              <option selected>Select Target State</option>
-                              <option value={1}>Ogun</option>
-                              <option value={2}>Lagos</option>
-                              <option value={2}>Lagos</option>
-                              <option value={2}>Lagos</option>
+                            <select
+                              className="custom-select"
+                              defaultValue={filterOptions.state}
+                              onChange={handleChange("state")}
+                            >
+                              {NaijaStates.states().map((selectState) => (
+                                <option value={selectState}>
+                                  {selectState}
+                                </option>
+                              ))}
                             </select>
                           </div>
                           <div className="form-group col-md-6">
                             <label htmlFor className="mb-1 tx-com">
                               LGA
                             </label>
-                            <select className="custom-select">
-                              <option selected>Select Target LGA</option>
-                              <option value={1}>Eti Osa</option>
-                              <option value={2}>Lekki</option>
-                              <option value={2}>Lekki</option>
-                              <option value={2}>Lekki</option>
-                              <option value={2}>Lekki</option>
+                            <select
+                              className="custom-select"
+                              defaultValue={filterOptions.lga}
+                              onChange={handleChange("lga")}
+                            >
+                              <option value="">Select L.G.A</option>
+                              {lga.lgas.map((selectLga) => (
+                                <option value={selectLga}>{selectLga}</option>
+                              ))}
                             </select>
                           </div>
                           <div className="form-group col-md-6">
@@ -200,8 +291,37 @@ const TargetAudience = ({ prevStep, nextStep, handleChange, numbers }) => {
                         </div>
                       </div>
                     )}
-                    {status === 3 && (
+                    {status === 2 && (
                       <div className="hide" id="show_2">
+                        <div className="row justify-content-md-between">
+                          <div className="mg-t-20">
+                            <p className="tx-24 tx-bold mb-1 tx-com">
+                              Upload CSV Containing Phone NUmbers
+                            </p>
+                            <div className="form-group">
+                              <div className="custom-file">
+                                <input
+                                  type="file"
+                                  accept=".csv"
+                                  id="csvFile"
+                                  className="custom-file-input"
+                                  id="customFile"
+                                  // onChange={handleChange("csvFile")}
+                                />
+                                <label
+                                  className="custom-file-label"
+                                  htmlFor="customFile"
+                                >
+                                  Click to upload desired icon (if needed)
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    {status === 3 && (
+                      <div className="hide" id="show_3">
                         <div className="row justify-content-md-between">
                           <div className="form-group col-md-6">
                             <label htmlFor className="mb-1 tx-com">
@@ -214,7 +334,7 @@ const TargetAudience = ({ prevStep, nextStep, handleChange, numbers }) => {
                               id
                               rows={4}
                               onChange={handleChange("numbers")}
-                              placeholder="Enter Number"
+                              placeholder="Enter Number +234080xxxxxxxx"
                               defaultValue={numbers}
                             />
                           </div>
@@ -230,7 +350,11 @@ const TargetAudience = ({ prevStep, nextStep, handleChange, numbers }) => {
                       onClick={Continue}
                       type="submit"
                       variant="contained"
-                      disabled={numbers === "" ? true : false}
+                      disabled={
+                        numbers === "" && filterOptions.gender === ""
+                          ? true
+                          : false
+                      }
                     >
                       Filter
                     </button>
