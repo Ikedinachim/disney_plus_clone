@@ -18,7 +18,16 @@ export default class AppDownloadStepForm extends Component {
     attachmentPreview: "",
     uploadedImage: "",
     campaignType: "app_download",
+    targetAudienceOption: "manual",
     price: 0,
+    csvFile: "",
+
+    ageRange: "",
+    gender: "",
+    state: "abia",
+    lga: "",
+    deviceType: "LG",
+    deviceBrand: "X210ZM",
   };
 
   // go back to previous step
@@ -93,12 +102,32 @@ export default class AppDownloadStepForm extends Component {
       androidStoreUrl,
       campaignType,
       numbers,
+
+      targetAudienceOption,
+      ageRange,
+      gender,
+      state,
+      lga,
+      deviceType,
+      deviceBrand,
     } = this.state;
 
     const targetAudience = numbers.split(",");
     const audience = targetAudience.length;
     const price = audience * 5;
     // const attachment = attachmentPreview
+
+    const filterOptions = {
+      ageRange,
+      gender,
+      state,
+      lga,
+      deviceType,
+      deviceBrand,
+    };
+
+    const filterParameters = [filterOptions];
+
     const values = {
       senderId,
       channel,
@@ -109,6 +138,8 @@ export default class AppDownloadStepForm extends Component {
       iosStoreUrl,
       androidStoreUrl,
       campaignType,
+      targetAudienceOption,
+      filterParameters,
       price,
     };
 
@@ -135,6 +166,7 @@ export default class AppDownloadStepForm extends Component {
             onChangeAttachment={this.onChangeAttachment}
             numbers={numbers}
             values={values}
+            filterOptions={filterOptions}
           />
         );
       case 3:
@@ -146,6 +178,7 @@ export default class AppDownloadStepForm extends Component {
             audience={audience}
             attachmentPreview={attachmentPreview}
             price={price}
+            filterOptions={filterOptions}
           />
         );
       case 4:

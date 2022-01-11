@@ -7,8 +7,10 @@ import { useAlert } from "react-alert";
 import MetaData from "../../layout/MetaData";
 import Loader from "../../loader";
 import { getTransactionHistory } from "../../../actions/billingActions";
+import { getAllCampaign } from "../../../actions/billingActions";
 import { getSenderID } from "../../../actions/senderIDActions";
 import TransactionCard from "./TransactionCard";
+import CampaignCard from "./CampaignCard";
 import NumberFormat from "react-number-format";
 
 const BillingOverview = () => {
@@ -18,23 +20,12 @@ const BillingOverview = () => {
   const { user } = useSelector((state) => state.auth);
   const { wallet, loading, error } = useSelector((state) => state.wallet);
   const { tnxHistory } = useSelector((state) => state.tnxHistory || {});
-  const url = "https://mysogi.uat.com.ng/api/campaign/all-campaign";
-  const usageSummary = () => {
-    var requestOptions = {
-      method: "GET",
-      redirect: "follow",
-      headers: { Authentication: "Bearer" },
-    };
-
-    fetch(url, requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
-  };
+  const { allCampaign } = useSelector((state) => state.allCampaign || {});
 
   useEffect(() => {
     dispatch(getTransactionHistory());
     dispatch(getSenderID());
+    dispatch(getAllCampaign());
   }, [dispatch, alert, error, user, wallet]);
 
   function reverseArray(arr) {
@@ -46,6 +37,7 @@ const BillingOverview = () => {
   }
 
   const reverseTnxHistory = reverseArray(tnxHistory);
+  const reverseAllCampaign = reverseArray(allCampaign);
   return (
     <Fragment>
       {loading ? (
@@ -169,7 +161,6 @@ const BillingOverview = () => {
                       </div>
                     </div>
                   </div>
-
                   <div className="card rounded bd-0 shadow-sm">
                     <div className="card-body">
                       <div className="table-responsive">
@@ -182,7 +173,20 @@ const BillingOverview = () => {
                               </th>
                             </tr>
                           </thead>
-                          <tbody>{usageSummary()}</tbody>
+                          <tbody>
+                            {reverseAllCampaign
+                              .slice(0, 3)
+                              .map((allCampaign) => (
+                                <CampaignCard
+                                  key={allCampaign.id}
+                                  campaign={allCampaign}
+                                />
+                              ))}
+                            {/* <tr className="tx-medium">
+                              <td>Total</td>
+                              <td className="tx-right">&#8358;250,000</td>
+                            </tr> */}
+                          </tbody>
                         </table>
                       </div>
                     </div>

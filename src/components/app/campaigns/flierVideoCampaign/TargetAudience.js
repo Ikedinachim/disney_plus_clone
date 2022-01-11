@@ -14,8 +14,9 @@ const TargetAudience = ({
   prevStep,
   nextStep,
   handleChange,
+  handleManualImport,
   numbers,
-  filteredContact,
+  filterOptions,
   values,
 }) => {
   const alert = useAlert();
@@ -70,8 +71,12 @@ const TargetAudience = ({
 
   const Continue = (e) => {
     e.preventDefault();
-    dispatch(getFilteredContactList(filteredContact));
-    nextStep();
+    if (values.targetAudienceOption === "mysogidb") {
+      dispatch(getFilteredContactList(filterOptions));
+      nextStep();
+    } else {
+      nextStep();
+    }
   };
   const Previous = (e) => {
     e.preventDefault();
@@ -79,16 +84,13 @@ const TargetAudience = ({
   };
 
   useEffect(() => {
-    // if(filteredContactList.status === "success") {
-    //     nextStep();
-    // }
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
   }, [dispatch, error, alert]);
 
-  const lga = NaijaStates.lgas(filteredContact.state);
+  const lga = NaijaStates.lgas(filterOptions.state);
 
   return (
     <Fragment>
@@ -129,8 +131,8 @@ const TargetAudience = ({
                           defaultChecked
                           checked={status === 1}
                           onClick={(e) => radioHandler(1)}
-                          value={"mysogi_db"}
-                          onChange={handleChange("targetAudienceType")}
+                          value={"mysogidb"}
+                          onChange={handleChange("targetAudienceOption")}
                         />
                         <label className="custom-control-label" htmlFor="db">
                           Use Mysogi Database
@@ -146,8 +148,8 @@ const TargetAudience = ({
                           className="custom-control-input"
                           checked={status === 2}
                           onClick={(e) => radioHandler(2)}
-                          value={"import_contact"}
-                          onChange={handleChange("targetAudienceType")}
+                          value={"manual_import"}
+                          onChange={handleChange("targetAudienceOption")}
                         />
                         <label
                           className="custom-control-label"
@@ -166,8 +168,8 @@ const TargetAudience = ({
                           className="custom-control-input"
                           checked={status === 3}
                           onClick={(e) => radioHandler(3)}
-                          defaultValue={"manual_contact"}
-                          onChange={handleChange("targetAudienceType")}
+                          defaultValue={"manual"}
+                          onChange={handleChange("targetAudienceOption")}
                         />
                         <label
                           className="custom-control-label"
@@ -186,7 +188,7 @@ const TargetAudience = ({
                             </label>
                             <select
                               className="form-control"
-                              defaultValue={filteredContact.ageRange}
+                              defaultValue={filterOptions.ageRange}
                               onChange={handleChange("ageRange")}
                             >
                               {selectAgeRanges.map((selectAgeRange) => (
@@ -202,7 +204,7 @@ const TargetAudience = ({
                             </label>
                             <select
                               className="form-control"
-                              defaultValue={filteredContact.gender}
+                              defaultValue={filterOptions.gender}
                               onChange={handleChange("gender")}
                             >
                               {selectGenders.map((selectGender) => (
@@ -218,7 +220,7 @@ const TargetAudience = ({
                             </label>
                             <select
                               className="custom-select"
-                              defaultValue={filteredContact.state}
+                              defaultValue={filterOptions.state}
                               onChange={handleChange("state")}
                             >
                               {NaijaStates.states().map((selectState) => (
@@ -234,7 +236,7 @@ const TargetAudience = ({
                             </label>
                             <select
                               className="custom-select"
-                              defaultValue={filteredContact.lga}
+                              defaultValue={filterOptions.lga}
                               onChange={handleChange("lga")}
                             >
                               <option value="">Select L.G.A</option>
@@ -289,8 +291,37 @@ const TargetAudience = ({
                         </div>
                       </div>
                     )}
-                    {status === 3 && (
+                    {status === 2 && (
                       <div className="hide" id="show_2">
+                        <div className="row justify-content-md-between">
+                          <div className="mg-t-20">
+                            <p className="tx-24 tx-bold mb-1 tx-com">
+                              Upload CSV Containing Phone NUmbers
+                            </p>
+                            <div className="form-group">
+                              <div className="custom-file">
+                                <input
+                                  type="file"
+                                  accept=".csv"
+                                  id="csvFile"
+                                  className="custom-file-input"
+                                  id="customFile"
+                                  onChange={handleChange("csvFile")}
+                                />
+                                <label
+                                  className="custom-file-label"
+                                  htmlFor="customFile"
+                                >
+                                  Click to upload desired icon (if needed)
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    {status === 3 && (
+                      <div className="hide" id="show_3">
                         <div className="row justify-content-md-between">
                           <div className="form-group col-md-6">
                             <label htmlFor className="mb-1 tx-com">
@@ -320,7 +351,7 @@ const TargetAudience = ({
                       type="submit"
                       variant="contained"
                       disabled={
-                        numbers === "" && filteredContact.gender === ""
+                        numbers === "" && filterOptions.gender === ""
                           ? true
                           : false
                       }

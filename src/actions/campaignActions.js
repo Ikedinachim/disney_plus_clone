@@ -13,7 +13,9 @@ import {
   SHOW_ADS_REQUEST,
   SHOW_ADS_SUCCESS,
   SHOW_ADS_FAIL,
-  // SHOW_ADS_RESET,
+  GET_ALL_INFLUENCERS_REQUEST,
+  GET_ALL_INFLUENCERS_SUCCESS,
+  GET_ALL_INFLUENCERS_FAIL,
   GET_SMS_CAMPAIGN_REQUEST,
   GET_SMS_CAMPAIGN_SUCCESS,
   GET_SMS_CAMPAIGN_FAIL,
@@ -299,18 +301,47 @@ export const getFilteredContactList =
     }
   };
 
+// Get All Influencers
+export const getAllInfluencers = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_ALL_INFLUENCERS_REQUEST });
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      "/api/campaign/influencer/all-influencers",
+      config
+    );
+
+    if (data.status === "success") {
+      dispatch({
+        type: GET_ALL_INFLUENCERS_SUCCESS,
+        payload: data.data,
+      });
+    } else {
+      dispatch({
+        type: GET_ALL_INFLUENCERS_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: GET_ALL_INFLUENCERS_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
 // Get Ads
 export const showAds = (id, campaignType, slug) => async (dispatch) => {
   try {
     dispatch({ type: SHOW_ADS_REQUEST });
-    // let user = JSON.parse(sessionStorage.getItem('user'));
-    // const token = user.user.token;
-
-    // const config = {
-    //     headers: {
-    //         "Authorization" : `Bearer ${token}`
-    //     }
-    // }
 
     const { data } = await axios.get(
       `/api/campaign/get-data/${id}/${campaignType}/${slug}`

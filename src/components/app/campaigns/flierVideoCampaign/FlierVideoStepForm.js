@@ -28,14 +28,16 @@ export default class FlierVideoStepForm extends Component {
     targetAudience: "",
     uploadedImage: "",
     campaignType: "flier_video",
-    targetAudienceType: "manual_contact",
+    targetAudienceOption: "manual",
     price: 0,
+    csvFile: "",
 
     ageRange: "",
     gender: "",
     state: "abia",
     lga: "",
-    location: "",
+    deviceType: "LG",
+    deviceBrand: "X210ZM",
   };
 
   // go back to previous step
@@ -68,6 +70,19 @@ export default class FlierVideoStepForm extends Component {
     };
 
     reader.readAsDataURL(e.target.files[0]);
+  };
+
+  handleManualImport = (e) => {
+    // e.preventDefault();
+    const file = this.state.csvFile;
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+      const text = e.target.result;
+      console.log(text);
+    };
+
+    reader.readAsText(file);
   };
 
   handleImageUpload = async () => {
@@ -123,10 +138,6 @@ export default class FlierVideoStepForm extends Component {
       senderId,
       channel,
       campaignMessage,
-      // gender,
-      // targetAge,
-      // location,
-      // interest,
       url,
       whatsAppNumber,
       phoneNumber,
@@ -138,14 +149,16 @@ export default class FlierVideoStepForm extends Component {
       attachment,
       attachmentPreview,
       campaignType,
-      targetAudienceType,
-      // attachment,
+      targetAudienceOption,
       numbers,
 
       ageRange,
       gender,
       state,
       lga,
+      deviceType,
+      deviceBrand,
+      csvFile,
     } = this.state;
 
     const location = state;
@@ -154,15 +167,23 @@ export default class FlierVideoStepForm extends Component {
     const price = audience * 5;
     const timeRange = timeRangeFrom + " - " + timeRangeTo;
     // const attachment = attachmentPreview
+
+    const filterOptions = {
+      ageRange,
+      gender,
+      state,
+      lga,
+      deviceType,
+      deviceBrand,
+    };
+
+    const filterParameters = [filterOptions];
+
     const values = {
       senderId,
       channel,
       campaignMessage,
       timeRange,
-      // gender,
-      // targetAge,
-      // location,
-      // interest,
       url,
       whatsAppNumber,
       phoneNumber,
@@ -172,16 +193,8 @@ export default class FlierVideoStepForm extends Component {
       attachment,
       targetAudience,
       campaignType,
-      targetAudienceType,
-      // price
-    };
-
-    const filteredContact = {
-      ageRange,
-      gender,
-      state,
-      lga,
-      location,
+      targetAudienceOption,
+      filterParameters,
     };
 
     console.log(values);
@@ -205,9 +218,10 @@ export default class FlierVideoStepForm extends Component {
             nextStep={this.nextStep}
             handleChange={this.handleChange}
             onChangeAttachment={this.onChangeAttachment}
+            handleManualImport={this.handleManualImport}
             numbers={numbers}
             values={values}
-            filteredContact={filteredContact}
+            filterOptions={filterOptions}
           />
         );
       case 3:
@@ -220,7 +234,7 @@ export default class FlierVideoStepForm extends Component {
             audience={audience}
             price={price}
             attachmentPreview={attachmentPreview}
-            filteredContact={filteredContact}
+            filterOptions={filterOptions}
           />
         );
       case 4:

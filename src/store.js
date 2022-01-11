@@ -19,6 +19,7 @@ import {
   transactionHistoryReducer,
   fundWalletReducer,
   confirmFundingReducer,
+  AllCampaignReducer,
 } from "./reducers/billingReducers";
 import {
   createSmsCampaignReducer,
@@ -29,6 +30,7 @@ import {
   viewFlierVideosCampaignsReducer,
   viewAppDownloadCampaignsReducer,
   getFilteredContactListReducer,
+  getAllInfluencersReducer,
 } from "./reducers/campaignReducers";
 
 const appReducer = combineReducers({
@@ -36,6 +38,7 @@ const appReducer = combineReducers({
   createSenderId: createSenderIdReducer,
   wallet: walletReducer,
   tnxHistory: transactionHistoryReducer,
+  allCampaign: AllCampaignReducer,
   senderID: senderIDReducer,
   fundWallet: fundWalletReducer,
   confirmFund: confirmFundingReducer,
@@ -47,6 +50,7 @@ const appReducer = combineReducers({
   viewFlierVideosCampaign: viewFlierVideosCampaignsReducer,
   viewAppDownloadCampaign: viewAppDownloadCampaignsReducer,
   filteredContactList: getFilteredContactListReducer,
+  allInfluencers: getAllInfluencersReducer,
 });
 
 const reducer = (state, action) => {
