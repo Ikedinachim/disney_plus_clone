@@ -72,7 +72,7 @@ const ViewCampaign = () => {
                       )}
                       {createShowAds.callToAction === "" ||
                       createShowAds.ussd === "" ? null : (
-                        <a href="tel:%2A945%2A1%23">
+                        <a href="tel:*945*1 %23">
                           <button className="btn btn-primary w-100 mg-b-15 round-5">
                             <i className="fa fa-phone mg-r-5" />
                             {createShowAds.callToAction} USSD
