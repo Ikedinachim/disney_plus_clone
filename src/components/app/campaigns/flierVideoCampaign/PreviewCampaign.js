@@ -25,7 +25,7 @@ const PreviewCampaign = ({
   attachmentPreview,
   price,
   numbers,
-  filteredContact,
+  filterOptions,
 }) => {
   const { error, createFlierVideoCampaign, loading } = useSelector(
     (state) => state.flierVideoCampaign || []
@@ -191,7 +191,7 @@ const PreviewCampaign = ({
                           </div>
                         </div>
                         <hr />
-                        {values.targetAudienceType === "mysogi_db" && (
+                        {values.targetAudienceOption === "mysogidb" && (
                           <>
                             <div className="mg-b-20 mg-md-b-10">
                               <div className="d-flex justify-content-between">
@@ -219,16 +219,16 @@ const PreviewCampaign = ({
                                   </label>
                                   <span className="badge badge-pink tx-14 mg-5">
                                     {" "}
-                                    {filteredContact.ageRange} years
+                                    {filterOptions.ageRange} years
                                   </span>
                                 </div>
-                                <div className="col-md-1 form-group">
+                                <div className="col-md-3 form-group">
                                   <label className="tx-14 tx-gray mb-0 tx-medium d-block">
                                     Gender
                                   </label>
                                   <span className="badge badge-pink tx-14 mg-5">
                                     {" "}
-                                    {filteredContact.gender}
+                                    {filterOptions.gender}
                                   </span>
                                 </div>
                                 <div className="form-group">
@@ -241,11 +241,11 @@ const PreviewCampaign = ({
                                   <div class="d-flex">
                                     <span className="badge badge-pink tx-14 mg-5">
                                       {" "}
-                                      {filteredContact.state}
+                                      {filterOptions.state}
                                     </span>
                                     <span className="badge badge-pink tx-14 mg-5">
                                       {" "}
-                                      {filteredContact.lga}
+                                      {filterOptions.lga}
                                     </span>
                                   </div>
                                 </div>
@@ -278,7 +278,7 @@ const PreviewCampaign = ({
                             <hr />
                           </>
                         )}
-                        {values.targetAudienceType === "mysogi_db" && (
+                        {values.targetAudienceOption === "mysogidb" && (
                           <div className="mg-b-20 mg-md-b-10">
                             <p className="tx-18 tx-com tx-semibold mb-0">
                               Pricing
@@ -316,7 +316,7 @@ const PreviewCampaign = ({
                             </div>
                           </div>
                         )}
-                        {values.targetAudienceType !== "mysogi_db" && (
+                        {values.targetAudienceOption !== "mysogidb" && (
                           <div className="mg-b-20 mg-md-b-10">
                             <p className="tx-18 tx-com tx-semibold mb-0">
                               Pricing

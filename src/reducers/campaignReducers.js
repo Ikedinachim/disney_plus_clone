@@ -15,6 +15,9 @@ import {
   SHOW_ADS_SUCCESS,
   SHOW_ADS_FAIL,
   SHOW_ADS_RESET,
+  GET_ALL_INFLUENCERS_REQUEST,
+  GET_ALL_INFLUENCERS_SUCCESS,
+  GET_ALL_INFLUENCERS_FAIL,
   GET_SMS_CAMPAIGN_REQUEST,
   GET_SMS_CAMPAIGN_SUCCESS,
   GET_SMS_CAMPAIGN_FAIL,
@@ -139,6 +142,7 @@ export const createAppDownloadCampaignReducer = (
     case CLEAR_ERRORS:
       return {
         ...state,
+        loading: false,
         error: null,
       };
 
@@ -273,6 +277,39 @@ export const getFilteredContactListReducer = (
       return {
         ...state,
         fcError: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const getAllInfluencersReducer = (
+  state = { Influencers: [] },
+  action
+) => {
+  switch (action.type) {
+    case GET_ALL_INFLUENCERS_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case GET_ALL_INFLUENCERS_SUCCESS:
+      return {
+        loading: false,
+        Influencers: action.payload,
+      };
+
+    case GET_ALL_INFLUENCERS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
       };
 
     default:

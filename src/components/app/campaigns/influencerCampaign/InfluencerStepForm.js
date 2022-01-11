@@ -11,9 +11,6 @@ export default class InfluencerStepForm extends Component {
     channel: "",
     url: "",
     campaignMessage: "",
-    // gender: 'male',
-    targetAge: "21",
-    location: ["Lagos"],
     interest: "business",
     phoneNumber: "",
     whatsAppNumber: "",
@@ -29,6 +26,9 @@ export default class InfluencerStepForm extends Component {
     targetAudience: "",
     uploadedImage: "",
     price: 0,
+
+    selectedInfluencers: [],
+    checkedInfluencers: new Map(),
   };
 
   // go back to previous step
@@ -47,6 +47,15 @@ export default class InfluencerStepForm extends Component {
   handleChange = (input) => (e) => {
     this.setState({ [input]: e.target.value });
   };
+
+  // handleInfluencerChange(e) {
+  //   const isChecked = e.target.checked;
+  //   const influencer = e.target.value;
+
+  //   this.setState((prevState) => ({
+  //     checkedItems: prevState.checkedItems.set(influencer, isChecked),
+  //   }));
+  // }
 
   // Handle image change
   onChangeAttachment = (input) => (e) => {
@@ -121,10 +130,6 @@ export default class InfluencerStepForm extends Component {
       // location,
       // interest,
       url,
-      whatsAppNumber,
-      phoneNumber,
-      ussd,
-      smsNumber,
       callToAction,
       timeRangeFrom,
       timeRangeTo,
@@ -149,13 +154,8 @@ export default class InfluencerStepForm extends Component {
       // location,
       // interest,
       url,
-      whatsAppNumber,
-      phoneNumber,
-      ussd,
-      smsNumber,
       callToAction,
       attachment,
-      targetAudience,
       // price
     };
     // const payLoad = [values.senderId, values.channel, values.campaignMessage, values.whatsAppNumber, values.targetAudience, values.attachment, price];
@@ -168,6 +168,7 @@ export default class InfluencerStepForm extends Component {
           <InfluencerCampaign
             nextStep={this.nextStep}
             handleChange={this.handleChange}
+            handleInfluencerChange={this.handleInfluencerChange}
             onChangeAttachment={this.onChangeAttachment}
             values={values}
             attachmentPreview={attachmentPreview}
@@ -181,7 +182,6 @@ export default class InfluencerStepForm extends Component {
             nextStep={this.nextStep}
             handleChange={this.handleChange}
             onChangeAttachment={this.onChangeAttachment}
-            numbers={numbers}
             values={values}
           />
         );
@@ -191,7 +191,6 @@ export default class InfluencerStepForm extends Component {
             prevStep={this.prevStep}
             nextStep={this.nextStep}
             values={values}
-            audience={audience}
             price={price}
             attachmentPreview={attachmentPreview}
           />
