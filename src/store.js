@@ -29,6 +29,7 @@ import {
   viewFlierVideosCampaignsReducer,
   viewAppDownloadCampaignsReducer,
   getFilteredContactListReducer,
+  getAllInfluencersReducer,
 } from "./reducers/campaignReducers";
 
 const appReducer = combineReducers({
@@ -47,6 +48,7 @@ const appReducer = combineReducers({
   viewFlierVideosCampaign: viewFlierVideosCampaignsReducer,
   viewAppDownloadCampaign: viewAppDownloadCampaignsReducer,
   filteredContactList: getFilteredContactListReducer,
+  allInfluencers: getAllInfluencersReducer,
 });
 
 const reducer = (state, action) => {
