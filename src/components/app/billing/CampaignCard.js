@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import NumberFormat from "react-number-format";
-import { DateTime } from "luxon";
 
 const CampaignCard = ({ campaign }) => {
   return (
