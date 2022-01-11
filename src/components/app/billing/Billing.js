@@ -18,21 +18,6 @@ const BillingOverview = () => {
   const { user } = useSelector((state) => state.auth);
   const { wallet, loading, error } = useSelector((state) => state.wallet);
   const { tnxHistory } = useSelector((state) => state.tnxHistory || {});
-  const url = "https://mysogi.uat.com.ng/api/campaign/all-campaign";
-  const usageSummary = async () => {
-    try {
-      const response = await fetch(url);
-      const info = await response.json.data;
-      for (const detail in info) {
-        <tr>
-          <td>{detail.channel}</td>
-          <td className="tx-right">&#8358;{detail.price}</td>
-        </tr>;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   useEffect(() => {
     dispatch(getTransactionHistory());
@@ -171,7 +156,6 @@ const BillingOverview = () => {
                       </div>
                     </div>
                   </div>
-
                   <div className="card rounded bd-0 shadow-sm">
                     <div className="card-body">
                       <div className="table-responsive">
@@ -184,7 +168,28 @@ const BillingOverview = () => {
                               </th>
                             </tr>
                           </thead>
-                          <tbody>{usageSummary()}</tbody>
+                          <tbody>
+                            <tr className="tx-medium">
+                              <td>Total</td>
+                              <td className="tx-right">&#8358;250,000</td>
+                            </tr>
+                            <tr>
+                              <td>Enterprise Table</td>
+                              <td className="tx-right">&#8358;250,000</td>
+                            </tr>
+                            <tr>
+                              <td>HOR Campaign</td>
+                              <td className="tx-right">&#8358;250,000</td>
+                            </tr>
+                            <tr>
+                              <td>Art Campaign</td>
+                              <td className="tx-right">&#8358;250,000</td>
+                            </tr>
+                            <tr>
+                              <td>Art Campaign</td>
+                              <td className="tx-right">&#8358;250,000</td>
+                            </tr>
+                          </tbody>
                         </table>
                       </div>
                     </div>
