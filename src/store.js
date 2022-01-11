@@ -19,6 +19,7 @@ import {
   transactionHistoryReducer,
   fundWalletReducer,
   confirmFundingReducer,
+  AllCampaignReducer,
 } from "./reducers/billingReducers";
 import {
   createSmsCampaignReducer,
@@ -37,6 +38,7 @@ const appReducer = combineReducers({
   createSenderId: createSenderIdReducer,
   wallet: walletReducer,
   tnxHistory: transactionHistoryReducer,
+  allCampaign: AllCampaignReducer,
   senderID: senderIDReducer,
   fundWallet: fundWalletReducer,
   confirmFund: confirmFundingReducer,
