@@ -417,7 +417,7 @@ const PreviewCampaign = ({
                         </div>
                         <div>
                           {values.callToAction === "" ||
-                          values.whatsappNumber === "" ? null : (
+                          values.whatsAppNumber === "" ? null : (
                             <button className="btn btn-primary w-100 mg-b-15 round-5">
                               <i className="fa fa-whatsapp mg-r-5"> </i>
                               {values.callToAction} via WhatsApp
