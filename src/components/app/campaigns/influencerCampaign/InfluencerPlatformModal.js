@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 
-const InfluencerPlatformModal = ({ influencerPlatformDetails }) => {
+const InfluencerPlatformModal = ({ platform }) => {
   return (
     <Fragment>
       <div
@@ -10,6 +10,7 @@ const InfluencerPlatformModal = ({ influencerPlatformDetails }) => {
         role="dialog"
         aria-labelledby="sideModalLabel"
         aria-hidden="true"
+        style={{ display: "inline-block" }}
       >
         <div className="modal-dialog" role="document">
           <div className="modal-content  modal-side">
