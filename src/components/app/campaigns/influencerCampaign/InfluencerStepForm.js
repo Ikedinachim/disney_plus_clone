@@ -27,8 +27,13 @@ export default class InfluencerStepForm extends Component {
     uploadedImage: "",
     price: 0,
 
-    selectedInfluencers: [],
+    selectedInfluencer: [],
+    influencers: [],
+    checked: false,
     checkedInfluencers: new Map(),
+
+    showModal: false,
+    activeItemId: "",
   };
 
   // go back to previous step
@@ -56,6 +61,54 @@ export default class InfluencerStepForm extends Component {
   //     checkedItems: prevState.checkedItems.set(influencer, isChecked),
   //   }));
   // }
+
+  handleCheck(e) {
+    this.setState({
+      checked: e.target.checked,
+    });
+  }
+
+  openModalWithItem(item) {
+    this.setState({
+      showModal: true,
+      // activeItemName: item.name,
+      activeItemId: item,
+    });
+    // console.log("modal" + this.state.showModal);
+  }
+
+  closePlatFormModal = (e) => {
+    this.setState({
+      showModal: e,
+    });
+  };
+
+  handleInfluencerChange = (input) => (e) => {
+    // console.log(e.target.checked);
+    const isChecked = e.target.checked;
+    if (isChecked) {
+      // this.setState({
+      //   [input]: [...this.state.influencers, e.target.value],
+      // });
+      this.setState({
+        [input]: [...this.state.selectedInfluencer, e.target.value],
+      });
+      console.log(this.state.selectedInfluencer);
+      // let modalId = (this.state.showModal = true);
+      this.openModalWithItem(e.target.checked);
+    } else {
+      let index = this.state.selectedInfluencer.indexOf(e.target.value + "");
+      console.log("index" + index);
+      let allSelectedInfluencers = [...this.state.selectedInfluencer];
+      allSelectedInfluencers.splice(index, 1);
+      this.setState({
+        [input]: allSelectedInfluencers,
+      });
+      console.log(this.state.selectedInfluencer);
+      // console.log(this.state.influencers);
+      // modalId = this.state.showModal = false;
+    }
+  };
 
   // Handle image change
   onChangeAttachment = (input) => (e) => {
@@ -137,6 +190,9 @@ export default class InfluencerStepForm extends Component {
       attachmentPreview,
       // attachment,
       numbers,
+      selectedInfluencer,
+      activeItemId,
+      showModal,
     } = this.state;
 
     const targetAudience = numbers.split(",");
@@ -160,7 +216,7 @@ export default class InfluencerStepForm extends Component {
     };
     // const payLoad = [values.senderId, values.channel, values.campaignMessage, values.whatsAppNumber, values.targetAudience, values.attachment, price];
 
-    console.log(values);
+    // console.log(values);
 
     switch (step) {
       case 1:
@@ -173,6 +229,11 @@ export default class InfluencerStepForm extends Component {
             values={values}
             attachmentPreview={attachmentPreview}
             handleImageUpload={this.handleImageUpload}
+            handleCheck={this.handleCheck}
+            selectedInfluencer={selectedInfluencer}
+            activeItemId={activeItemId}
+            showModal={showModal}
+            closePlatFormModal={this.closePlatFormModal}
           />
         );
       case 2:

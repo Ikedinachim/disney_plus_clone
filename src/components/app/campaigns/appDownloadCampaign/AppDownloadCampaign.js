@@ -103,7 +103,7 @@ const SmsCampaign = ({
                                 className="custom-select"
                                 // value="select channel"
                                 defaultValue={values.senderId}
-                                onChange={handleChange("senderId")}
+                                onBlur={handleChange("senderId")}
                               >
                                 <option value="">Select Sender ID</option>
                                 {senderID.map((senderids) => (
@@ -122,7 +122,7 @@ const SmsCampaign = ({
                                 className="form-control"
                                 placeholder="Enter URL here"
                                 defaultValue={values.iosStoreUrl}
-                                onChange={handleChange("iosStoreUrl")}
+                                onBlur={handleChange("iosStoreUrl")}
                               />
                             </div>
                             <div className="form-group">
@@ -134,7 +134,7 @@ const SmsCampaign = ({
                                 className="form-control"
                                 placeholder="Enter URL here"
                                 defaultValue={values.androidStoreUrl}
-                                onChange={handleChange("androidStoreUrl")}
+                                onBlur={handleChange("androidStoreUrl")}
                               />
                             </div>
                             <div className="form-group">
@@ -144,7 +144,7 @@ const SmsCampaign = ({
                               <select
                                 className="custom-select"
                                 defaultValue={values.channel}
-                                onChange={handleChange("channel")}
+                                onBlur={handleChange("channel")}
                               >
                                 {selectChannels.map((selectChannel) => (
                                   <option value={selectChannel.value}>
@@ -174,7 +174,7 @@ const SmsCampaign = ({
                                 rows={3}
                                 placeholder="Type your ad message here"
                                 defaultValue={values.campaignMessage}
-                                onChange={handleChange("campaignMessage")}
+                                onBlur={handleChange("campaignMessage")}
                               />
                             </div>
                           </div>
