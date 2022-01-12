@@ -34,10 +34,6 @@ const SmsCampaign = ({ nextStep, handleChange, values }) => {
       value: "flash_sms",
     },
     {
-      label: "Smart SMS",
-      value: "smart_sms",
-    },
-    {
       label: "SMS",
       value: "sms",
     },
