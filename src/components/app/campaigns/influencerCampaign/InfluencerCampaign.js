@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useRef } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
@@ -9,15 +9,46 @@ import Loader from "../../../loader";
 import MetaData from "../../../layout/MetaData";
 import InfluencerCard from "./InfluencerCard";
 import InfluencerPlatformModal from "./InfluencerPlatformModal";
+import InfluencerModal from "./InfluencerModal";
 
-const FlierVideoCampaign = ({ nextStep, values, handleImageUpload }) => {
+const InfluencerCampaign = ({
+  nextStep,
+  values,
+  handleImageUpload,
+  handleInfluencerChange,
+  handleCheck,
+  selectedInfluencer,
+  showModal,
+  activeItemId,
+  closePlatFormModal,
+}) => {
   const alert = useAlert();
   const dispatch = useDispatch();
   const { Influencers, loading } = useSelector(
     (state) => state.allInfluencers || []
   );
 
+  // console.log(Influencers);
+
+  let invalidEntries = 0;
+
+  function filterByID(item) {
+    if (Number.isFinite(item.id) && item.id !== 0) {
+      return true;
+    }
+    invalidEntries++;
+    return false;
+  }
+
+  // console.log(singleInfluencer);
+
   const [checkedInfluencer, setCheckedInfluencer] = useState({});
+
+  const ref = useRef();
+  // const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [closeModal, setCloseModal] = useState(false);
+  const [influencerId, setInfluencerId] = useState("");
+  // console.log(influencerId);
 
   const Continue = (e) => {
     e.preventDefault();
@@ -33,7 +64,15 @@ const FlierVideoCampaign = ({ nextStep, values, handleImageUpload }) => {
     }
   };
 
-  const toggleHandler = (item) => () => {
+  const toggleHandler = (item) => (e) => {
+    // console.log(item);
+    const isChecked = e.target.checked;
+    if (isChecked) {
+      setCloseModal(true);
+      setInfluencerId(e.target.value);
+    } else {
+      setCloseModal(false);
+    }
     setCheckedInfluencer((state) => ({
       ...state,
       [item.id]: state[item.id]
@@ -42,19 +81,183 @@ const FlierVideoCampaign = ({ nextStep, values, handleImageUpload }) => {
             id: item.id,
           },
     }));
+    // influencerPlatform(item);
   };
 
   useEffect(() => {
     dispatch(getAllInfluencers());
-    console.log(checkedInfluencer);
-  }, [dispatch, checkedInfluencer]);
+    // const singleInfluencer = Influencers.filter(filterByID);
+    // console.log("singleInfluencer" + " " + singleInfluencer);
+  }, [
+    dispatch,
+    // checkedInfluencer,
+    // isMenuOpen,
+  ]);
 
-  // console.log(checkedInfluencer);
+  // const influencerPlatform = (item) => {
+  //   Influencers.filter((influencer) => influencer.id === item.id).map(
+  //     (influencer) => influencer.costs
+  //   );
+  // };
+  // console.log(influencerPlatform);
+
+  // const influencerPlatform = (filter) => {
+  //   Influencers?.find((Influencers) => Influencers.id === filter.id);
+  // };
+
+  // function findById(source, id) {
+  //   return source.filter(function (obj) {
+  //     // coerce both obj.id and id to numbers
+  //     // for val & type comparison
+  //     return +obj.id === +id;
+  //   })[0];
+  // }
+
+  // var influencerPlatform = findById(Influencers, 2);
+
+  // console.log(influencerPlatform);
+
+  console.log(checkedInfluencer);
 
   // const influencerPlatformDetails = Influencers.map((influencer) =>
   //   influencer.costs.map((platform) => platform)
   // );
 
+  let data = [
+    {
+      id: 1,
+      name: "Yusuf Oguntola",
+      kind: "blogger",
+      reach: 200,
+      imageUrl: "1/excel_exploration.png",
+      imagePath: "https://mysogi.uat.com.ng/1/excel_exploration.png",
+      allCost: "3500.00",
+      createdAt: "2022-01-10T13:33:36.325Z",
+      updatedAt: "2022-01-10T13:37:32.145Z",
+      costs: [
+        {
+          id: 1,
+          influencerId: 1,
+          platform: "twitter",
+          cost: "1000.00",
+          createdAt: "2022-01-10T13:36:40.248Z",
+          updatedAt: "2022-01-10T13:36:40.248Z",
+        },
+        {
+          id: 2,
+          influencerId: 1,
+          platform: "instagram",
+          cost: "1000.00",
+          createdAt: "2022-01-10T13:36:49.534Z",
+          updatedAt: "2022-01-10T13:36:49.534Z",
+        },
+        {
+          id: 3,
+          influencerId: 1,
+          platform: "facebook",
+          cost: "1000.00",
+          createdAt: "2022-01-10T13:36:57.429Z",
+          updatedAt: "2022-01-10T13:36:57.429Z",
+        },
+        {
+          id: 4,
+          influencerId: 1,
+          platform: "snapchat",
+          cost: "1000.00",
+          createdAt: "2022-01-10T13:37:08.545Z",
+          updatedAt: "2022-01-10T13:37:08.545Z",
+        },
+      ],
+    },
+    {
+      id: 2,
+      name: "Ixoria",
+      kind: "blogger",
+      reach: 10000000,
+      imageUrl: "2/Blogger.PNG",
+      imagePath: "https://mysogi.uat.com.ng/2/Blogger.PNG",
+      allCost: "50000.00",
+      createdAt: "2022-01-10T19:49:55.990Z",
+      updatedAt: "2022-01-10T19:49:56.011Z",
+      costs: [
+        {
+          id: 5,
+          influencerId: 2,
+          platform: "instagram",
+          cost: "200000.00",
+          createdAt: "2022-01-10T23:00:45.097Z",
+          updatedAt: "2022-01-10T23:00:45.097Z",
+        },
+        {
+          id: 6,
+          influencerId: 2,
+          platform: "facebook",
+          cost: "20000.00",
+          createdAt: "2022-01-10T23:01:26.790Z",
+          updatedAt: "2022-01-10T23:01:26.790Z",
+        },
+      ],
+    },
+    {
+      id: 3,
+      name: "Lexy",
+      kind: "blogger",
+      reach: 9000000,
+      imageUrl: "3/Blogger.JPG",
+      imagePath: "https://mysogi.uat.com.ng/3/Blogger.JPG",
+      allCost: "23300.00",
+      createdAt: "2022-01-10T19:55:37.647Z",
+      updatedAt: "2022-01-10T19:55:37.658Z",
+      costs: [],
+    },
+  ];
+
+  // const influencerPlatform2 = data.filter(
+  //   (selectedInfluencerPlatform) =>
+  //     selectedInfluencerPlatform.id === parseInt(influencerId)
+  // );
+  //
+  // const influencerPlatform = data.filter((selectedInfluencerPlatform) =>
+  //   (selectedInfluencerPlatform.id === parseInt(influencerId)).map(
+  //     (selectedInfluencerPlatform) => selectedInfluencerPlatform.costs
+  //   )
+  // );
+
+  const influencerPlatform = data
+    .filter(function (selectedInfluencerPlatform) {
+      return selectedInfluencerPlatform.id === parseInt(influencerId);
+    })
+    .map(function (selectedInfluencerPlatform) {
+      return selectedInfluencerPlatform.costs;
+    });
+
+  console.log(influencerPlatform);
+
+  const singleInfluencer = data.find(function (influencer) {
+    return influencer.id == parseInt(influencerId);
+  });
+
+  const sortIcon = (icon) => {
+    if (icon.platform === "instagram") {
+      return (
+        <i className="fa fa-instagram mg-r-5 social-media" aria-hidden="true" />
+      );
+    } else if (icon.platform === "twitter") {
+      return (
+        <i className="fa fa-twitter mg-r-5 social-media" aria-hidden="true" />
+      );
+    } else if (icon.platform === "facebook") {
+      return (
+        <i className="fa fa-facebook mg-r-5 social-media" aria-hidden="true" />
+      );
+    } else if (icon.platform === "snapchat") {
+      return (
+        <i className="fa fa-snapchat mg-r-5 social-media" aria-hidden="true" />
+      );
+    }
+  };
+
+  console.log(singleInfluencer && singleInfluencer.costs);
   return (
     <Fragment>
       {loading ? (
@@ -124,14 +327,43 @@ const FlierVideoCampaign = ({ nextStep, values, handleImageUpload }) => {
                   <InfluencerCard
                     key={influencer.id}
                     influencer={influencer}
-                    checkedInfluencer={checkedInfluencer}
+                    // checkedInfluencer={checkedInfluencer}
                     toggleHandler={toggleHandler}
+                    // handleInfluencerChange={handleInfluencerChange}
+                    // handleCheck={handleCheck}
+                    show={selectedInfluencer}
+                    // setShow={setShow}
+                    // onClick={() => setShow(true)}
                   />
+                  // <div key={influencer.id}>
+                  //   <input
+                  //     name={influencer.name}
+                  //     value={influencer.name}
+                  //     checked={show}
+                  //     onChange={(e) => (e.target.checked = setShow(!show))}
+                  //     type="checkbox"
+                  //   />
+                  // </div>
                 ))}
               </div>
+              {/* <button onClick={() => setCloseModal(true)}>Show Modal</button> */}
               {/*side Modal */}
-              <InfluencerPlatformModal
+              {/* {influencer.cost.map((platform) => ( */}
+              {/* <InfluencerPlatformModal
+              // key={platform.id}
+              // platform={platform}
               // influencerPlatformDetails={influencerPlatformDetails}
+              /> */}
+              {/* ))} */}
+              <InfluencerModal
+                title="My Modal"
+                // onClose={closePlatFormModal(false)}
+                onClose={() => setCloseModal(false)}
+                show={closeModal}
+                influencerId={influencerId}
+                influencerPlatform={influencerPlatform}
+                singleInfluencer={singleInfluencer}
+                sortIcon={sortIcon}
               />
             </div>
           </div>
@@ -141,4 +373,4 @@ const FlierVideoCampaign = ({ nextStep, values, handleImageUpload }) => {
   );
 };
 
-export default FlierVideoCampaign;
+export default InfluencerCampaign;
