@@ -35,6 +35,7 @@ import "./style.css";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
+import CampaignDetails from "./components/app/campaigns/CampaignDetails";
 AOS.init();
 
 function App() {
@@ -69,6 +70,10 @@ function App() {
           <Route
             path="billing/fund-wallet"
             element={isAuthenticated ? <FundWallet /> : <Login />}
+          />
+          <Route
+            path="campaign/CampaignDetails"
+            element={isAuthenticated ? <CampaignDetails /> : <Login />}
           />
           <Route
             path="campaigns"
