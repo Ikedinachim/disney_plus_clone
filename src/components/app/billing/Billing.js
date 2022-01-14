@@ -28,16 +28,9 @@ const BillingOverview = () => {
     dispatch(getAllCampaign());
   }, [dispatch, alert, error, user, wallet]);
 
-  function reverseArray(arr) {
-    var newArray = [];
-    for (var i = arr.length - 1; i >= 0; i--) {
-      newArray.push(arr[i]);
-    }
-    return newArray;
-  }
+  const reverseTnxHistory = tnxHistory.reverse();
+  const reverseAllCampaign = allCampaign.reverse();
 
-  const reverseTnxHistory = reverseArray(tnxHistory);
-  const reverseAllCampaign = reverseArray(allCampaign);
   return (
     <Fragment>
       {loading ? (
@@ -144,7 +137,12 @@ const BillingOverview = () => {
                     </div>
                     <div className="col-md-5 col-12">
                       <div className="d-flex">
-                        <select className="col-8 custom-select col-7">
+                        <select
+                          className="col-8 custom-select col-7"
+                          onClick={() => {
+                            console.log("hello");
+                          }}
+                        >
                           <option selected>August 2021</option>
                           <option value={1}>August 2021</option>
                           <option value={2}>October 2021</option>
@@ -182,10 +180,6 @@ const BillingOverview = () => {
                                   campaign={allCampaign}
                                 />
                               ))}
-                            {/* <tr className="tx-medium">
-                              <td>Total</td>
-                              <td className="tx-right">&#8358;250,000</td>
-                            </tr> */}
                           </tbody>
                         </table>
                       </div>

@@ -202,7 +202,11 @@ export const getAllCampaign = () => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.get("/api/campaign/all-campaign", config);
+    const [{ flier }, { data }, { app }] = await Promise.all([
+      await axios.get("/api/campaign/all-flier-campaign", config),
+      await axios.get("/api/campaign/all-campaign", config),
+      await axios.get("/api/campaign/all-app-download-campaign", config),
+    ]);
 
     if (data.status === "success") {
       dispatch({
