@@ -36,6 +36,8 @@ import "./style.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import CampaignDetails from "./components/app/campaigns/CampaignDetails";
+import FlierDetails from "./components/app/campaigns/FlierDetails";
+import AppDownloadsDetails from "./components/app/campaigns/AppDownloadsDetails";
 AOS.init();
 
 function App() {
@@ -72,8 +74,16 @@ function App() {
             element={isAuthenticated ? <FundWallet /> : <Login />}
           />
           <Route
+            path="campaign/FlierDetails"
+            element={isAuthenticated ? <FlierDetails /> : <Login />}
+          />
+          <Route
             path="campaign/CampaignDetails"
             element={isAuthenticated ? <CampaignDetails /> : <Login />}
+          />
+          <Route
+            path="campaign/AppDownloadsDetails"
+            element={isAuthenticated ? <AppDownloadsDetails /> : <Login />}
           />
           <Route
             path="campaigns"

@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 
-const CampaignDetails = () => {
+const AppDownloadsDetails = () => {
   return (
     <Fragment>
       <div class="content-body">
@@ -14,6 +14,14 @@ const CampaignDetails = () => {
                   <span class="tx-28 tx-bold mb-0">Campaigns</span>
                 </div>
               </Link>
+            </div>
+            <div class="col-md-3 col-xl-2 pd-xl-l-0 mg-b-20">
+              <select class="custom-select">
+                <option selected>Actions</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
             </div>
           </div>
           <div class="card rounded bd-0 shadow-sm">
@@ -195,4 +203,4 @@ const CampaignDetails = () => {
   );
 };
 
-export default CampaignDetails;
+export default AppDownloadsDetails;

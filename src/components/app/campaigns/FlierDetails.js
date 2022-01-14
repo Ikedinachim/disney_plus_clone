@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 
-const CampaignDetails = () => {
+const FlierDetails = () => {
   return (
     <Fragment>
       <div class="content-body">
@@ -195,4 +195,4 @@ const CampaignDetails = () => {
   );
 };
 
-export default CampaignDetails;
+export default FlierDetails;
