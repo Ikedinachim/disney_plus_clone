@@ -184,7 +184,7 @@ const TargetAudience = ({
                         <div className="row justify-content-md-between">
                           <div className="form-group col-md-6">
                             <label htmlFor className="mb-1 tx-com">
-                              Age Group
+                              Age Group *
                             </label>
                             <select
                               className="form-control"
@@ -200,7 +200,7 @@ const TargetAudience = ({
                           </div>
                           <div className="form-group col-md-6">
                             <label htmlFor className="mb-1 tx-com">
-                              Gender
+                              Gender *
                             </label>
                             <select
                               className="form-control"
@@ -216,7 +216,7 @@ const TargetAudience = ({
                           </div>
                           <div className="form-group col-md-6">
                             <label htmlFor className="mb-1 tx-com">
-                              State
+                              State *
                             </label>
                             <select
                               className="custom-select"
@@ -232,7 +232,7 @@ const TargetAudience = ({
                           </div>
                           <div className="form-group col-md-6">
                             <label htmlFor className="mb-1 tx-com">
-                              LGA
+                              LGA *
                             </label>
                             <select
                               className="custom-select"
