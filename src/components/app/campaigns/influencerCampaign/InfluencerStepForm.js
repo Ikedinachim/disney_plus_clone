@@ -8,29 +8,31 @@ export default class InfluencerStepForm extends Component {
   state = {
     step: 1,
     senderId: "",
-    channel: "",
+    channel: "sms",
     url: "",
     campaignMessage: "",
-    interest: "business",
-    phoneNumber: "",
-    whatsAppNumber: "",
-    numbers: "",
-    ussd: "",
-    smsNumber: "",
-    callToAction: "",
-    timeRangeFrom: "",
-    timeRangeTo: "",
+    twitterHandle: "",
+    facebookHandle: "",
+    instagramHandle: "",
+    snapchatHandle: "",
     campaignImage: "",
     attachment: "",
     attachmentPreview: "",
-    targetAudience: "",
     uploadedImage: "",
     price: 0,
+    campaignType: "influencer_marketing",
 
     selectedInfluencer: [],
+    selectedInfluencers: [],
     influencers: [],
     checked: false,
-    checkedInfluencers: new Map(),
+
+    checkedInfluencers: [],
+    checkedPlatform: [],
+    closeModal: false,
+    influencerId: "",
+    platformId: "",
+    platform: [],
 
     showModal: false,
     activeItemId: "",
@@ -53,14 +55,26 @@ export default class InfluencerStepForm extends Component {
     this.setState({ [input]: e.target.value });
   };
 
-  // handleInfluencerChange(e) {
-  //   const isChecked = e.target.checked;
-  //   const influencer = e.target.value;
+  handleCheckedState = (input) => {
+    this.setState({ checkedInfluencers: input });
+    let mulInfluencers = this.state.selectedInfluencers;
+    let selectedIndex = mulInfluencers.findIndex((el) => el.id === input.id);
+    if (selectedIndex !== -1) {
+      mulInfluencers.splice(selectedIndex, 1);
+      mulInfluencers.push(input);
+    } else {
+      mulInfluencers.push(input);
+    }
 
-  //   this.setState((prevState) => ({
-  //     checkedItems: prevState.checkedItems.set(influencer, isChecked),
-  //   }));
-  // }
+    this.setState((state) => ({
+      ...state,
+      selectedInfluencers: mulInfluencers,
+    }));
+    // console.log(
+    //   "selected influencer and platforms",
+    //   this.state.selectedInfluencers
+    // );
+  };
 
   handleCheck(e) {
     this.setState({
@@ -79,35 +93,8 @@ export default class InfluencerStepForm extends Component {
 
   closePlatFormModal = (e) => {
     this.setState({
-      showModal: e,
+      closeModal: false,
     });
-  };
-
-  handleInfluencerChange = (input) => (e) => {
-    // console.log(e.target.checked);
-    const isChecked = e.target.checked;
-    if (isChecked) {
-      // this.setState({
-      //   [input]: [...this.state.influencers, e.target.value],
-      // });
-      this.setState({
-        [input]: [...this.state.selectedInfluencer, e.target.value],
-      });
-      console.log(this.state.selectedInfluencer);
-      // let modalId = (this.state.showModal = true);
-      this.openModalWithItem(e.target.checked);
-    } else {
-      let index = this.state.selectedInfluencer.indexOf(e.target.value + "");
-      console.log("index" + index);
-      let allSelectedInfluencers = [...this.state.selectedInfluencer];
-      allSelectedInfluencers.splice(index, 1);
-      this.setState({
-        [input]: allSelectedInfluencers,
-      });
-      console.log(this.state.selectedInfluencer);
-      // console.log(this.state.influencers);
-      // modalId = this.state.showModal = false;
-    }
   };
 
   // Handle image change
@@ -153,70 +140,132 @@ export default class InfluencerStepForm extends Component {
     }
   };
 
-  // openWidget = () => {
-  //   // create the widget
-  //   const widget = window.cloudinary.createUploadWidget(
-  //     {
-  //       cloudName: 'mysogi',
-  //       uploadPreset: 'mysogi',
-  //     },
-  //     (error, result) => {
-  //       if (result.event === 'success') {
-  //         this.setState({
-  //           imageUrl: result.info.secure_url,
-  //           imageAlt: `An image of ${result.info.original_filename}`
-  //         })
-  //       }
-  //     },
-  //   );
-  //   widget.open(); // open up the widget after creation
-  // };
-
   render() {
     const { step } = this.state;
     const {
-      senderId,
       channel,
       campaignMessage,
-      // gender,
-      // targetAge,
-      // location,
-      // interest,
-      url,
-      callToAction,
-      timeRangeFrom,
-      timeRangeTo,
+      twitterHandle,
+      facebookHandle,
+      instagramHandle,
+      snapchatHandle,
       attachment,
       attachmentPreview,
-      // attachment,
-      numbers,
       selectedInfluencer,
+      selectedInfluencers,
       activeItemId,
       showModal,
+      // price,
+      closeModal,
+      checkedInfluencers,
+      campaignType,
     } = this.state;
 
-    const targetAudience = numbers.split(",");
-    const audience = targetAudience.length;
-    const price = audience * 5;
-    const timeRange = timeRangeFrom + " - " + timeRangeTo;
-    // const attachment = attachmentPreview
-    const values = {
-      senderId,
-      channel,
-      campaignMessage,
-      timeRange,
-      // gender,
-      // targetAge,
-      // location,
-      // interest,
-      url,
-      callToAction,
-      attachment,
-      // price
-    };
-    // const payLoad = [values.senderId, values.channel, values.campaignMessage, values.whatsAppNumber, values.targetAudience, values.attachment, price];
+    // const filteredValue = Object.values(checkedInfluencers);
+    // // console.log(closeModal);
+    // console.log("This is checked Influencer", checkedInfluencers);
+    // console.log("This is checked filteredValue", filteredValue);
+    let totalAmount = 0;
+    // let b = 0;
+    // let platformCost = 0;
+    // for (let i = 0; i < filteredValue.length; i++) {
+    //   if (
+    //     filteredValue[i]
+    //     // filteredValue[i].platforms[0].allPlatform === true
+    //   ) {
+    //     console.log(filteredValue[i].platforms);
+    //     let eachTotal = !filteredValue[i] ? [] : filteredValue[i].platforms;
+    //     console.log(eachTotal);
+    //     b = eachTotal.reduce((total, current) => {
+    //       total += +parseInt(current.cost);
+    //       return total;
+    //     }, 0);
+    //     console.log(parseInt(b));
+    //     checkedInfluencers["influencer"]["cost"] = b;
 
-    // console.log(values);
+    //     console.log(filteredValue[i].platforms[0]);
+    //     if (
+    //       filteredValue[i].platforms[0] &&
+    //       filteredValue[i].platforms[0].allPlatform
+    //     ) {
+    //       totalAmount = parseInt(filteredValue[i].allCost);
+    //     } else {
+    //       totalAmount += b;
+    //     }
+    //   } else {
+    //     return;
+    //   }
+    // }
+
+    const price = totalAmount;
+    const platform = checkedInfluencers;
+    const values = {
+      channel,
+      twitterHandle,
+      facebookHandle,
+      instagramHandle,
+      snapchatHandle,
+      campaignMessage,
+      campaignType,
+      attachment,
+      platform,
+      price,
+    };
+
+    // console.log(values.price);
+
+    // console.log("this is platform", values.platform);
+    // const payloadPlatform = Object.values(values.platform)
+    //   .map((item) => item.platforms)
+    //   .map((item) => {
+    //     console.log(item);
+    //     const cost = item.reduce((acc, curr) => {
+    //       acc += +parseInt(curr.cost);
+    //       return acc;
+    //     }, 0);
+    //     const platform = item.map((i) => i.name).join(", ");
+    //     if (!item[0]) return null;
+    //     const influencer_id = item[0].influencer_Id;
+    //     const allPlatform = item[0].allPlatform;
+    //     return { cost, platform, influencer_id, allPlatform };
+    //   });
+
+    // console.log("this is platform2", payloadPlatform);
+
+    const payload = {
+      twitterHandle: values.twitterHandle,
+      facebookHandle: values.facebookHandle,
+      instagramHandle: values.instagramHandle,
+      snapchatHandle: values.snapchatHandle,
+      campaignMessage: values.campaignMessage,
+      campaignType: values.campaignType,
+      attachment: values.attachment,
+      // platform: payloadPlatform,
+    };
+
+    const payload2 = {
+      campaignType: "influencer_marketing",
+      twitterHandle: "twitter",
+      facebookHandle: "facebook",
+      instagramHandle: "instagram",
+      snapchatHandle: "snapchat",
+      campaignMessage: "Testing influencer Marketing",
+      attachment: "this is an attachment",
+      platform: [
+        {
+          influencer_id: 1,
+          cost: 500,
+          platform: "facebook, instagram",
+          allPlatform: false,
+        },
+        {
+          influencer_id: 2,
+          cost: 400,
+          platform: "facebook, snapchat",
+          allPlatform: false,
+        },
+      ],
+    };
 
     switch (step) {
       case 1:
@@ -225,15 +274,18 @@ export default class InfluencerStepForm extends Component {
             nextStep={this.nextStep}
             handleChange={this.handleChange}
             handleInfluencerChange={this.handleInfluencerChange}
-            onChangeAttachment={this.onChangeAttachment}
             values={values}
             attachmentPreview={attachmentPreview}
             handleImageUpload={this.handleImageUpload}
             handleCheck={this.handleCheck}
             selectedInfluencer={selectedInfluencer}
             activeItemId={activeItemId}
-            showModal={showModal}
+            closeModal={closeModal}
             closePlatFormModal={this.closePlatFormModal}
+            toggleHandler={this.toggleHandler}
+            handlePlatformOnChange={this.handlePlatformOnChange}
+            // checkedInfluencers={checkedInfluencers}
+            handleCheckedState={this.handleCheckedState}
           />
         );
       case 2:
@@ -242,7 +294,9 @@ export default class InfluencerStepForm extends Component {
             prevStep={this.prevStep}
             nextStep={this.nextStep}
             handleChange={this.handleChange}
+            handleImageUpload={this.handleImageUpload}
             onChangeAttachment={this.onChangeAttachment}
+            attachmentPreview={attachmentPreview}
             values={values}
           />
         );
@@ -254,6 +308,8 @@ export default class InfluencerStepForm extends Component {
             values={values}
             price={price}
             attachmentPreview={attachmentPreview}
+            checkedInfluencers={selectedInfluencers}
+            payload={payload}
           />
         );
       case 4:

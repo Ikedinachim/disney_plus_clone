@@ -159,7 +159,7 @@ const Dashboard = () => {
                 </div>
               </div>
               {/*Home Modal */}
-              <div
+              {/* <div
                 className="modal fade"
                 id="homeModal"
                 tabIndex={-1}
@@ -204,7 +204,7 @@ const Dashboard = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </Fragment>

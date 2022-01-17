@@ -11,6 +11,10 @@ import {
   APP_DOWNLOAD_CAMPAIGN_SUCCESS,
   APP_DOWNLOAD_CAMPAIGN_RESET,
   APP_DOWNLOAD_CAMPAIGN_FAIL,
+  INFLUENCER_CAMPAIGN_REQUEST,
+  INFLUENCER_CAMPAIGN_SUCCESS,
+  INFLUENCER_CAMPAIGN_RESET,
+  INFLUENCER_CAMPAIGN_FAIL,
   SHOW_ADS_REQUEST,
   SHOW_ADS_SUCCESS,
   SHOW_ADS_FAIL,
@@ -143,6 +147,45 @@ export const createAppDownloadCampaignReducer = (
       return {
         ...state,
         loading: false,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const createInfluencerCampaignReducer = (
+  state = { createInfluencerCampaign: [] },
+  action
+) => {
+  switch (action.type) {
+    case INFLUENCER_CAMPAIGN_REQUEST:
+      return {
+        loading: true,
+        createInfluencerCampaign: [],
+      };
+
+    case INFLUENCER_CAMPAIGN_SUCCESS:
+      return {
+        loading: false,
+        createInfluencerCampaign: action.payload,
+      };
+    case INFLUENCER_CAMPAIGN_FAIL:
+      return {
+        loading: false,
+        createInfluencerCampaign: null,
+        error: action.payload,
+      };
+    case INFLUENCER_CAMPAIGN_RESET:
+      return {
+        ...state,
+        createInfluencerCampaign: [],
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
         error: null,
       };
 

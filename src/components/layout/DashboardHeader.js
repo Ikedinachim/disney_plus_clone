@@ -68,7 +68,7 @@ const Header = () => {
               />
               Balance:{" "}
               <NumberFormat
-                value={wallet.balance}
+                value={wallet && wallet.balance}
                 displayType={"text"}
                 thousandSeparator={true}
                 prefix={"₦"}
@@ -118,7 +118,7 @@ const Header = () => {
                 <FeatherIcon icon="help-circle" /> Help Center
               </Link>
               <Link to="" className="dropdown-item">
-                <FeatherIcon icon="uslife-buoyer" /> Forum
+                <FeatherIcon icon="life-buoy" /> Forum
               </Link>
               <Link to="" className="dropdown-item">
                 <FeatherIcon icon="settings" /> Account Settings
