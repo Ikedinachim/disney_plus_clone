@@ -37,7 +37,7 @@ const FundWallet = () => {
   useEffect(() => {
     if (!isAuthenticated || user === null) {
       navigate("/login");
-    } else if (!loading && fundWallet.status === "success") {
+    } else if (!loading && fundWallet && fundWallet.status === "success") {
       alert.success(fundWallet.message);
       dispatch({ type: FUND_WALLET_RESET });
       navigate("/app/billing");
@@ -94,7 +94,7 @@ const FundWallet = () => {
                         <p className="tx-32 tx-semibold tx-green">
                           +{" "}
                           <NumberFormat
-                            value={parseInt(wallet.balance)}
+                            value={parseInt(wallet && wallet.balance)}
                             displayType={"text"}
                             thousandSeparator={true}
                             prefix={"₦"}

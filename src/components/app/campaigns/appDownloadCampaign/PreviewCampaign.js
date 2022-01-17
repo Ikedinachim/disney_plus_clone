@@ -283,7 +283,8 @@ const PreviewCampaign = ({
                                 Potential Audience Based on filter
                               </label>
                               <p className="tx-18 tx-com tx-bold mb-1">
-                                {filteredContactList.count}
+                                {filteredContactList.count &&
+                                  filteredContactList.count}
                               </p>
                             </div>
                             <div className="form-row mg-t-15">
