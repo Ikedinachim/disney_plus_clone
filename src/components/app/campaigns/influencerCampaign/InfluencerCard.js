@@ -9,10 +9,10 @@ const InfluencerCard = ({
   setShow,
   show,
 }) => {
-  const [active, setActive] = useState(show);
-  useEffect(() => {
-    // console.log(show.indexOf(influencer.id + ""), influencer.id);
-  }, [show]);
+  // const [active, setActive] = useState(show);
+  // useEffect(() => {
+  //   // console.log(show.indexOf(influencer.id + ""), influencer.id);
+  // }, [show]);
   return (
     <Fragment>
       <div className="col-md-3 col-12 mg-b-20">
@@ -24,18 +24,13 @@ const InfluencerCard = ({
               name={influencer.name}
               className="custom-control-input pd-l-0 mg-l-0"
               value={influencer.id}
-              //   onChange={handleInfluencerChange("selectedInfluencer")}
-              // checked={checkedInfluencer[influencer.id]}
-              //   checked={show.indexOf(influencer.id + "") === -1 ? false : true}
-              //   checked={checkedInfluencer.indexOf(influencer.id + "") === -1 ? false : true}
               onChange={toggleHandler(influencer)}
-              //   onClick={() => setActive(!active)}
-              id={influencer}
+              id={influencer.id}
             />
             {/* </div> */}
             <label
               className="custom-control-label d-inline"
-              htmlFor="customCheck1"
+              htmlFor={influencer.id}
               data-toggle="modal"
               data-target="#sideModal"
             >
