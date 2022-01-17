@@ -37,19 +37,21 @@ const ViewCampaign = () => {
       ) : (
         <Fragment>
           <MetaData title={"All Campaigns"} />
-          <div className="content-body">
+          <div className="content-body ads-body">
             <div className="container pd-x-0">
               <div className="col-md-5 col-12 mg-t-20">
                 <div className="card shadow-sm rounded bd-0">
                   <div className="card-body">
                     {/* <p className="tx-20 tx-bold tx-com">Preview</p> */}
-                    <div>
-                      <img
-                        src={createShowAds && createShowAds.attachment}
-                        className="img-fluid mg-b-10"
-                        alt=""
-                      />
-                      <p className="mb-4">
+                    <div className="card-image">
+                      <div className="image-holder">
+                        <img
+                          src={createShowAds && createShowAds.attachment}
+                          className="img-fluid mb-4"
+                          alt=""
+                        />
+                      </div>
+                      <p className="mb-2 text-center">
                         {createShowAds && createShowAds.campaignMessage}
                       </p>
                     </div>
