@@ -14,7 +14,7 @@ import {
 import NumberFormat from "react-number-format";
 import { FUND_WALLET_RESET } from "../../../../constants/billingConstants";
 
-const FundWalletFlierVideo = ({ prevStep, values, price }) => {
+const InfluencerFundWallet = ({ prevStep, values, price }) => {
   const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -152,4 +152,4 @@ const FundWalletFlierVideo = ({ prevStep, values, price }) => {
   );
 };
 
-export default FundWalletFlierVideo;
+export default InfluencerFundWallet;

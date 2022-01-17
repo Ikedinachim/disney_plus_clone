@@ -20,7 +20,12 @@ const InfluencerCampaign = ({
   selectedInfluencer,
   showModal,
   activeItemId,
-  closePlatFormModal,
+  handleCheckedState,
+  // closePlatFormModal,
+  // toggleHandler,
+  // handlePlatformOnChange,
+  // closeModal,
+  // checkedInfluencers,
 }) => {
   const alert = useAlert();
   const dispatch = useDispatch();
@@ -28,44 +33,31 @@ const InfluencerCampaign = ({
     (state) => state.allInfluencers || []
   );
 
-  // console.log(Influencers);
-
-  let invalidEntries = 0;
-
-  function filterByID(item) {
-    if (Number.isFinite(item.id) && item.id !== 0) {
-      return true;
-    }
-    invalidEntries++;
-    return false;
-  }
-
-  // console.log(singleInfluencer);
-
-  const [checkedInfluencer, setCheckedInfluencer] = useState({});
+  const [checkedInfluencer, setCheckedInfluencer] = useState(null);
+  const [payloadData, setPayloadData] = useState({});
+  const [platformId, setPlatformId] = useState("");
 
   const ref = useRef();
-  // const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [closeModal, setCloseModal] = useState(false);
   const [influencerId, setInfluencerId] = useState("");
-  // console.log(influencerId);
 
   const Continue = (e) => {
-    e.preventDefault();
-    if (values.callToAction === "") {
-      alert.error("Provide a call to action for users");
-    } else if (values.channel === "") {
-      alert.error("Choose a channel");
-    } else if (values.campaignMessage === "") {
-      alert.error("Create the campaign message");
-    } else {
-      nextStep();
-      handleImageUpload();
-    }
+    // e.preventDefault();
+    // if (values.callToAction === "") {
+    //   alert.error("Provide a call to action for users");
+    // } else if (values.channel === "") {
+    //   alert.error("Choose a channel");
+    // } else if (values.campaignMessage === "") {
+    //   alert.error("Create the campaign message");
+    // } else {
+    //   nextStep();
+    //   handleImageUpload();
+    // }
+    nextStep();
+    // handleImageUpload();
   };
 
   const toggleHandler = (item) => (e) => {
-    // console.log(item);
     const isChecked = e.target.checked;
     if (isChecked) {
       setCloseModal(true);
@@ -73,7 +65,11 @@ const InfluencerCampaign = ({
     } else {
       setCloseModal(false);
     }
-    setCheckedInfluencer((state) => ({
+    // console.log();
+    let singleInfluencer = Influencers.find((el) => el.id === item.id);
+    singleInfluencer.platforms = [];
+    setCheckedInfluencer(singleInfluencer);
+    setPayloadData((state) => ({
       ...state,
       [item.id]: state[item.id]
         ? null
@@ -81,161 +77,94 @@ const InfluencerCampaign = ({
             id: item.id,
           },
     }));
-    // influencerPlatform(item);
+    // handleCheckedState(checkedInfluencer);
+  };
+
+  // console.log("This is the inital data", checkedInfluencer);
+
+  const handlePlatformOnChange = (item) => (e) => {
+    // console.log(item);
+    const isChecked = e.target.checked;
+    const influencer = { ...checkedInfluencer };
+    let platforms = influencer.platforms;
+    // console.log("selection", item, isChecked);
+
+    if (!isChecked) {
+      if (item !== "all") {
+        const platformIndex = platforms.findIndex(
+          (x) => x.id === item.platform
+        );
+        platforms.splice(platformIndex, 1);
+        let allIndex = platforms.findIndex((el) => el.id == "all");
+        // console.log(allIndex);
+        if (allIndex !== -1) platforms.splice(allIndex, 1);
+      } else {
+        const platformIndex = platforms.findIndex((x) => x.id === item);
+        platforms.splice(platformIndex, 1);
+      }
+      setCheckedInfluencer((state) => ({
+        ...state,
+        ["platforms"]: [...platforms],
+      }));
+    } else {
+      platforms.push({
+        id: item !== "all" ? item.platform : item,
+
+        cost: item !== "all" ? item.cost : influencer.allCost,
+      });
+      if (item == "all") {
+        platforms = checkedInfluencer.costs.map((el) => {
+          return {
+            id: el.platform,
+            cost: el.cost,
+          };
+        });
+        platforms.push({
+          id: "all",
+          cost: checkedInfluencer.allCost,
+        });
+      }
+      // console.log(platforms);
+      setCheckedInfluencer((state) => ({
+        ...state,
+        ["platforms"]: [...platforms],
+      }));
+    }
   };
 
   useEffect(() => {
     dispatch(getAllInfluencers());
-    // const singleInfluencer = Influencers.filter(filterByID);
-    // console.log("singleInfluencer" + " " + singleInfluencer);
-  }, [
-    dispatch,
-    // checkedInfluencer,
-    // isMenuOpen,
-  ]);
+  }, [dispatch]);
 
-  // const influencerPlatform = (item) => {
-  //   Influencers.filter((influencer) => influencer.id === item.id).map(
-  //     (influencer) => influencer.costs
-  //   );
-  // };
-  // console.log(influencerPlatform);
+  useEffect(() => {
+    if (checkedInfluencer !== null) {
+      handleCheckedState(checkedInfluencer);
+    }
+  }, [checkedInfluencer]);
 
-  // const influencerPlatform = (filter) => {
-  //   Influencers?.find((Influencers) => Influencers.id === filter.id);
-  // };
+  const customFilter = (object, key, value) => {
+    if (Array.isArray(object)) {
+      for (const obj of object) {
+        const result = customFilter(obj, key, value);
+        if (result) {
+          return obj;
+        }
+      }
+    } else {
+      if (object.hasOwnProperty(key) && object[key] === value) {
+        return object;
+      }
 
-  // function findById(source, id) {
-  //   return source.filter(function (obj) {
-  //     // coerce both obj.id and id to numbers
-  //     // for val & type comparison
-  //     return +obj.id === +id;
-  //   })[0];
-  // }
+      for (const k of Object.keys(object)) {
+        if (typeof object[k] === "object") {
+          const o = customFilter(object[k], key, value);
+          if (o !== null && typeof o !== "undefined") return o;
+        }
+      }
 
-  // var influencerPlatform = findById(Influencers, 2);
-
-  // console.log(influencerPlatform);
-
-  console.log(checkedInfluencer);
-
-  // const influencerPlatformDetails = Influencers.map((influencer) =>
-  //   influencer.costs.map((platform) => platform)
-  // );
-
-  let data = [
-    {
-      id: 1,
-      name: "Yusuf Oguntola",
-      kind: "blogger",
-      reach: 200,
-      imageUrl: "1/excel_exploration.png",
-      imagePath: "https://mysogi.uat.com.ng/1/excel_exploration.png",
-      allCost: "3500.00",
-      createdAt: "2022-01-10T13:33:36.325Z",
-      updatedAt: "2022-01-10T13:37:32.145Z",
-      costs: [
-        {
-          id: 1,
-          influencerId: 1,
-          platform: "twitter",
-          cost: "1000.00",
-          createdAt: "2022-01-10T13:36:40.248Z",
-          updatedAt: "2022-01-10T13:36:40.248Z",
-        },
-        {
-          id: 2,
-          influencerId: 1,
-          platform: "instagram",
-          cost: "1000.00",
-          createdAt: "2022-01-10T13:36:49.534Z",
-          updatedAt: "2022-01-10T13:36:49.534Z",
-        },
-        {
-          id: 3,
-          influencerId: 1,
-          platform: "facebook",
-          cost: "1000.00",
-          createdAt: "2022-01-10T13:36:57.429Z",
-          updatedAt: "2022-01-10T13:36:57.429Z",
-        },
-        {
-          id: 4,
-          influencerId: 1,
-          platform: "snapchat",
-          cost: "1000.00",
-          createdAt: "2022-01-10T13:37:08.545Z",
-          updatedAt: "2022-01-10T13:37:08.545Z",
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: "Ixoria",
-      kind: "blogger",
-      reach: 10000000,
-      imageUrl: "2/Blogger.PNG",
-      imagePath: "https://mysogi.uat.com.ng/2/Blogger.PNG",
-      allCost: "50000.00",
-      createdAt: "2022-01-10T19:49:55.990Z",
-      updatedAt: "2022-01-10T19:49:56.011Z",
-      costs: [
-        {
-          id: 5,
-          influencerId: 2,
-          platform: "instagram",
-          cost: "200000.00",
-          createdAt: "2022-01-10T23:00:45.097Z",
-          updatedAt: "2022-01-10T23:00:45.097Z",
-        },
-        {
-          id: 6,
-          influencerId: 2,
-          platform: "facebook",
-          cost: "20000.00",
-          createdAt: "2022-01-10T23:01:26.790Z",
-          updatedAt: "2022-01-10T23:01:26.790Z",
-        },
-      ],
-    },
-    {
-      id: 3,
-      name: "Lexy",
-      kind: "blogger",
-      reach: 9000000,
-      imageUrl: "3/Blogger.JPG",
-      imagePath: "https://mysogi.uat.com.ng/3/Blogger.JPG",
-      allCost: "23300.00",
-      createdAt: "2022-01-10T19:55:37.647Z",
-      updatedAt: "2022-01-10T19:55:37.658Z",
-      costs: [],
-    },
-  ];
-
-  // const influencerPlatform2 = data.filter(
-  //   (selectedInfluencerPlatform) =>
-  //     selectedInfluencerPlatform.id === parseInt(influencerId)
-  // );
-  //
-  // const influencerPlatform = data.filter((selectedInfluencerPlatform) =>
-  //   (selectedInfluencerPlatform.id === parseInt(influencerId)).map(
-  //     (selectedInfluencerPlatform) => selectedInfluencerPlatform.costs
-  //   )
-  // );
-
-  const influencerPlatform = data
-    .filter(function (selectedInfluencerPlatform) {
-      return selectedInfluencerPlatform.id === parseInt(influencerId);
-    })
-    .map(function (selectedInfluencerPlatform) {
-      return selectedInfluencerPlatform.costs;
-    });
-
-  console.log(influencerPlatform);
-
-  const singleInfluencer = data.find(function (influencer) {
-    return influencer.id == parseInt(influencerId);
-  });
+      return null;
+    }
+  };
 
   const sortIcon = (icon) => {
     if (icon.platform === "instagram") {
@@ -248,7 +177,10 @@ const InfluencerCampaign = ({
       );
     } else if (icon.platform === "facebook") {
       return (
-        <i className="fa fa-facebook mg-r-5 social-media" aria-hidden="true" />
+        <i
+          className="fa fa-facebook-square  mg-r-5 social-media"
+          aria-hidden="true"
+        />
       );
     } else if (icon.platform === "snapchat") {
       return (
@@ -257,7 +189,19 @@ const InfluencerCampaign = ({
     }
   };
 
-  console.log(singleInfluencer && singleInfluencer.costs);
+  const convertToArray = (arr1) => {
+    Object.entries(arr1);
+  };
+
+  const mergeArrayObjects = (arr1, arr2) => {
+    return arr1.map((item, i) => {
+      if (item.id === arr2[i].influencerId) {
+        //merging two objects
+        return Object.assign({}, item, arr2[i]);
+      }
+    });
+  };
+
   return (
     <Fragment>
       {loading ? (
@@ -323,28 +267,29 @@ const InfluencerCampaign = ({
                 </div>
               </div>
               <div className="row">
-                {Influencers.map((influencer) => (
-                  <InfluencerCard
-                    key={influencer.id}
-                    influencer={influencer}
-                    // checkedInfluencer={checkedInfluencer}
-                    toggleHandler={toggleHandler}
-                    // handleInfluencerChange={handleInfluencerChange}
-                    // handleCheck={handleCheck}
-                    show={selectedInfluencer}
-                    // setShow={setShow}
-                    // onClick={() => setShow(true)}
-                  />
-                  // <div key={influencer.id}>
-                  //   <input
-                  //     name={influencer.name}
-                  //     value={influencer.name}
-                  //     checked={show}
-                  //     onChange={(e) => (e.target.checked = setShow(!show))}
-                  //     type="checkbox"
-                  //   />
-                  // </div>
-                ))}
+                {Influencers &&
+                  Influencers.map((influencer) => (
+                    <InfluencerCard
+                      key={influencer.id}
+                      influencer={influencer}
+                      // checkedInfluencer={checkedInfluencer}
+                      toggleHandler={toggleHandler}
+                      // handleInfluencerChange={handleInfluencerChange}
+                      // handleCheck={handleCheck}
+                      show={selectedInfluencer}
+                      // setShow={setShow}
+                      // onClick={() => setShow(true)}
+                    />
+                    // <div key={influencer.id}>
+                    //   <input
+                    //     name={influencer.name}
+                    //     value={influencer.name}
+                    //     checked={show}
+                    //     onChange={(e) => (e.target.checked = setShow(!show))}
+                    //     type="checkbox"
+                    //   />
+                    // </div>
+                  ))}
               </div>
               {/* <button onClick={() => setCloseModal(true)}>Show Modal</button> */}
               {/*side Modal */}
@@ -361,9 +306,10 @@ const InfluencerCampaign = ({
                 onClose={() => setCloseModal(false)}
                 show={closeModal}
                 influencerId={influencerId}
-                influencerPlatform={influencerPlatform}
-                singleInfluencer={singleInfluencer}
+                singleInfluencer={checkedInfluencer}
                 sortIcon={sortIcon}
+                handlePlatformOnChange={handlePlatformOnChange}
+                // handleAllCostSelection={handleAllCostSelection}
               />
             </div>
           </div>

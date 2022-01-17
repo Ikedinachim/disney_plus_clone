@@ -9,6 +9,11 @@ import Loader from "../../loader";
 import { getWallet, clearErrors } from "../../../actions/billingActions";
 import { getSenderID } from "../../../actions/senderIDActions";
 
+import FlashSms from "../../../assets/img/flashsms_sm.png";
+import Markerting from "../../../assets/img/Influencer_Marketing_sm.png";
+import Flier from "../../../assets/img/flier_campaign_sm.png";
+import Phone from "../../../assets/img/mysogi_phone_sm.png";
+
 const CreateCampaign = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
@@ -65,7 +70,7 @@ const CreateCampaign = () => {
                         <div className="card card-height rounded bd-0 shadow-sm">
                           <div className="card-body tx-center pd-x-12 pd-md-x-30">
                             <img
-                              src="../../../assets/img/Influencer_Marketing_sm.png"
+                              src={Markerting}
                               alt=""
                               className="img-fluid"
                             />
@@ -86,11 +91,7 @@ const CreateCampaign = () => {
                       <Link to="/app/campaign/sms" className="tx-dark">
                         <div className="card card-height rounded bd-0 shadow-sm">
                           <div className="card-body tx-center pd-x-12 pd-md-x-30">
-                            <img
-                              src="../../../assets/img/flashsms_sm.png"
-                              alt=""
-                              className="img-fluid"
-                            />
+                            <img src={FlashSms} alt="" className="img-fluid" />
                             <div className="pd-t-15">
                               <p className="tx-16 tx-bold">Flash SMS / SMS</p>
                               <p className="tx-14 tx-gray mb-0">
@@ -105,11 +106,7 @@ const CreateCampaign = () => {
                       <Link to="/app/campaign/flier-video" className="tx-dark">
                         <div className="card card-height rounded bd-0 shadow-sm">
                           <div className="card-body tx-center pd-x-12">
-                            <img
-                              src="../../../assets/img/flier_campaign_sm.png"
-                              alt=""
-                              className="img-fluid"
-                            />
+                            <img src={Flier} alt="" className="img-fluid" />
                             <div className="pd-t-15">
                               <p className="tx-16 tx-bold">
                                 Flier/Video Campaign
@@ -127,11 +124,7 @@ const CreateCampaign = () => {
                       <Link to="/app/campaign/app-download" className="tx-dark">
                         <div className="card card-height rounded bd-0 shadow-sm">
                           <div className="card-body tx-center pd-x-12">
-                            <img
-                              src="../../../assets/img/mysogi_phone_sm.png"
-                              alt=""
-                              className="img-fluid"
-                            />
+                            <img src={Phone} alt="" className="img-fluid" />
                             <div className="pd-t-15">
                               <p className="tx-16 tx-bold">
                                 APP Download Campaign

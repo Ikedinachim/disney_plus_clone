@@ -30,6 +30,8 @@ import Register from "./components/user/Register";
 import { useSelector } from "react-redux";
 
 import "./dashforge.css";
+// import "mdbreact/dist/css/mdb.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./main.css";
 import "./style.css";
 

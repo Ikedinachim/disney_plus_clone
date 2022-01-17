@@ -1,5 +1,6 @@
 import React from "react";
 import { Navlink } from "react-router-dom";
+import { NavLogo } from "../assets/img/logo.svg";
 
 import FeatherIcon from "feather-icons-react";
 
@@ -9,12 +10,7 @@ const Sidebar = () => {
       <div className="aside-header">
         <Navlink to="" className="aside-logo">
           <div className="pd-50">
-            <img
-              src="../assets/img/logo.svg"
-              className="img-fluid logo"
-              alt="logo"
-              srcSet
-            />
+            <img src={NavLogo} className="img-fluid logo" alt="logo" />
           </div>
         </Navlink>
         <button href="true" className="aside-menu-link">
