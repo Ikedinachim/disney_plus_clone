@@ -24,8 +24,10 @@
 .marine-borders {
   border-radius: 5px;
   box-shadow: 0 8px 6px -6px #ddd;
-  submitpadding-bottom: 10px;
 }
+/* .submit {
+  padding-bottom: 10px;
+} */
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.previous,
 .dataTables_wrapper .dataTables_paginate .paginate_button.next,
