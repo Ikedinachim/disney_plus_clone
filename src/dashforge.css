@@ -16941,7 +16941,7 @@ textarea.parsley-success:focus {
 .aside {
   width: 240px;
   height: 100%;
-  /* transform: translateX(-100%);  */
+  transform: translateX(-100%);
 }
 @media (min-width: 992px) {
   .aside {
@@ -17073,7 +17073,7 @@ textarea.parsley-success:focus {
   padding: 0 18px;
   border-right: 1px solid rgba(72, 94, 144, 0.16);
   background-color: #fff;
-  /* transform: translateX(54px);*/
+  transform: translateX(54px);
 }
 @media (min-width: 992px) {
   .aside-header {
