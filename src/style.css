@@ -123,11 +123,11 @@ input:checked + .slider:before {
   color: #b2b2b2 !important;
 }
 
-@media (min-width: 1600px) {
+/* @media (min-width: 1600px) {
   .container {
     max-width: none !important;
   }
-}
+} */
 .smsViewTab {
   justify-content: space-between;
   align-items: center;

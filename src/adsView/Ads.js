@@ -15,20 +15,20 @@ import { showAds, clearErrors } from "../actions/campaignActions";
 
 const ViewCampaign = () => {
   const { loading, error, createShowAds } = useSelector(
-    (state) => state.showAds || {}
+    (state) => state.showAds || []
   );
   const { id, campaignType, slug } = useParams();
   const dispatch = useDispatch();
   const alert = useAlert();
 
   useEffect(() => {
+    dispatch(showAds(id, campaignType, slug));
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-    dispatch(showAds(id, campaignType, slug));
     // dispatch(getWallet())
-  }, [dispatch, alert, error]);
+  }, [dispatch, showAds, alert, error]);
 
   return (
     <Fragment>
@@ -42,50 +42,71 @@ const ViewCampaign = () => {
               <div className="col-md-5 col-12 mg-t-20">
                 <div className="card shadow-sm rounded bd-0">
                   <div className="card-body">
-                    <p className="tx-20 tx-bold tx-com">Preview</p>
+                    {/* <p className="tx-20 tx-bold tx-com">Preview</p> */}
                     <div>
                       <img
-                        src={createShowAds.attachment}
+                        src={createShowAds && createShowAds.attachment}
                         className="img-fluid mg-b-10"
                         alt=""
                       />
-                      <p className="mb-4">{createShowAds.campaignMessage}</p>
+                      <p className="mb-4">
+                        {createShowAds && createShowAds.campaignMessage}
+                      </p>
                     </div>
                     <div>
-                      {createShowAds.callToAction === "" ||
-                      createShowAds.whatsappNumber === "" ? null : (
-                        <a href="https://api.whatsapp.com/send?phone=2348167696729">
-                          <button className="btn btn-primary w-100 mg-b-15 round-5">
-                            <i className="fa fa-whatsapp mg-r-5"> </i>
-                            {createShowAds.callToAction} via WhatsApp
-                          </button>
+                      {createShowAds &&
+                      createShowAds.whatsAppNumber === "" ? null : (
+                        <a
+                          className="btn btn-primary w-100 mg-b-15 round-5"
+                          href={`https://api.whatsapp.com/send?phone=${createShowAds.whatsAppNumber}`}
+                        >
+                          <i
+                            className="fa fa-whatsapp mg-r-5"
+                            aria-hidden="true"
+                          >
+                            {" "}
+                          </i>
+                          {createShowAds && createShowAds.callToAction} via
+                          WhatsApp
                         </a>
                       )}
-                      {createShowAds.callToAction === "" ||
+                      {createShowAds &&
                       createShowAds.phoneNumber === "" ? null : (
-                        <a href="tel:+2348167696729">
-                          <button className="btn btn-primary w-100 mg-b-15 round-5">
-                            <i className="fa fa-phone mg-r-5" />
-                            {createShowAds.callToAction} via Mobile
-                          </button>
+                        <a
+                          className="btn btn-primary w-100 mg-b-15 round-5"
+                          href={`tel:+${createShowAds.phoneNumber}`}
+                        >
+                          <i className="fa fa-phone mg-r-5" />
+                          {createShowAds && createShowAds.callToAction} via
+                          Mobile
                         </a>
                       )}
-                      {createShowAds.callToAction === "" ||
-                      createShowAds.ussd === "" ? null : (
-                        <a href="tel:*945*1%23">
-                          <button className="btn btn-primary w-100 mg-b-15 round-5">
-                            <i className="fa fa-phone mg-r-5" />
-                            {createShowAds.callToAction} USSD
-                          </button>
+                      {createShowAds && createShowAds.ussd === "" ? null : (
+                        <a
+                          className="btn btn-primary w-100 mg-b-15 round-5"
+                          href={`tel:${+createShowAds.ussd}`}
+                        >
+                          <i className="fa fa-phone mg-r-5" />
+                          {createShowAds && createShowAds.callToAction} USSD
                         </a>
                       )}
-                      {createShowAds.callToAction === "" ||
+                      {createShowAds &&
                       createShowAds.smsNumber === "" ? null : (
-                        <a href="sms://+2348167696729">
-                          <button className="btn btn-primary w-100 mg-b-15 round-5">
-                            <i className="fa fa-comment mg-r-10"> </i>
-                            {createShowAds.callToAction} via Text
-                          </button>
+                        <a
+                          className="btn btn-primary w-100 mg-b-15 round-5"
+                          href={`sms:${+createShowAds.smsNumber}?body="I will like to make an enquiry"`}
+                        >
+                          <i className="fa fa-comment mg-r-10"> </i>
+                          {createShowAds && createShowAds.callToAction} via Text
+                        </a>
+                      )}
+                      {createShowAds && createShowAds.url === "" ? null : (
+                        <a
+                          className="btn btn-primary w-100 mg-b-15 round-5"
+                          href={createShowAds.url}
+                        >
+                          <i className="fa fa-globe mg-r-10"> </i>
+                          {createShowAds && createShowAds.callToAction} via Web
                         </a>
                       )}
                     </div>
