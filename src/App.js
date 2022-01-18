@@ -75,18 +75,12 @@ function App() {
             path="billing/fund-wallet"
             element={isAuthenticated ? <FundWallet /> : <Login />}
           />
-          <Route
-            path="campaign/FlierDetails/:id"
-            element={isAuthenticated ? <FlierDetails /> : <Login />}
-          />
+
           <Route
             path="campaign/CampaignDetails/:id"
             element={isAuthenticated ? <CampaignDetails /> : <Login />}
           />
-          <Route
-            path="campaign/AppDownloadsDetails/"
-            element={isAuthenticated ? <AppDownloadsDetails /> : <Login />}
-          />
+
           <Route
             path="campaigns"
             element={isAuthenticated ? <ViewCampaignTabs /> : <Login />}

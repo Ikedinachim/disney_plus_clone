@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
+import { DateTime } from "luxon";
 
 import {
   displaySingleCampaign,
@@ -60,9 +61,21 @@ const CampaignDetails = () => {
                       />
                     </div>
                     <div>
-                      <p class="tx-20 tx-bold pd-t-20">
-                        Flash-SMS / SMS Details
-                      </p>
+                      {singleCampaign.campaignType === "general" ? (
+                        <p class="tx-20 tx-bold pd-t-20">
+                          Flash-SMS / SMS Details
+                        </p>
+                      ) : null}
+                      {singleCampaign.campaignType === "flier_video" ? (
+                        <p class="tx-20 tx-bold pd-t-20">
+                          Flier / Video Details
+                        </p>
+                      ) : null}
+                      {singleCampaign.campaignType === "app_download" ? (
+                        <p class="tx-20 tx-bold pd-t-20">
+                          App download Details
+                        </p>
+                      ) : null}
                     </div>
                   </div>
                   <hr />
@@ -76,21 +89,23 @@ const CampaignDetails = () => {
                             Campaign Name
                           </label>
                           <p class="tx-16 mb-0">
-                            {singleCampaign.campaignType}
+                            {singleCampaign && singleCampaign.campaignType}
                           </p>
                         </div>
                         <div class="form-group col-md-6">
                           <label for="" class="tx-14 tx-gray mb-0 tx-medium">
                             Sender-ID
                           </label>
-                          <p class="tx-16 mb-0">{singleCampaign.senderId}</p>
+                          <p class="tx-16 mb-0">
+                            {singleCampaign && singleCampaign.user_id}
+                          </p>
                         </div>
                         <div class="form-group col-md-6">
                           <label for="" class="tx-14 tx-gray mb-0 tx-medium">
-                            Contact
+                            Campaign-ID
                           </label>
                           <p class="tx-16 mb-0">
-                            {singleCampaign.contactNumber}
+                            {singleCampaign && singleCampaign.campaignId}
                           </p>
                         </div>
                       </div>
@@ -103,73 +118,22 @@ const CampaignDetails = () => {
                             Campaign message
                           </label>
                           <p class="tx-16 mb-0">
-                            {singleCampaign.campaignMessage}
+                            {singleCampaign && singleCampaign.campaignMessage}
                           </p>
                         </div>
                         <div class="form-group col-md-6">
                           <label for="" class="tx-14 tx-gray mb-0 tx-medium">
                             Channel
                           </label>
-                          <p class="tx-16 mb-0">{singleCampaign.channel}</p>
+                          <p class="tx-16 mb-0">
+                            {singleCampaign && singleCampaign.channel}
+                          </p>
                         </div>
                       </div>
                     </div>
                   </div>
                   <hr />
                   <div class="row justify-content-between">
-                    <div class="col-md-6 col-lg-6 mg-b-20 mg-md-b-10">
-                      <p class="tx-18 tx-semibold mb-0">Target Audience</p>
-                      <div class="mg-t-15">
-                        <div class="form-group">
-                          <label
-                            for=""
-                            class="tx-14 tx-gray mb-0 tx-medium d-block"
-                          >
-                            Age
-                          </label>
-                          <span class="badge badge-pink tx-14 mg-5">
-                            {" "}
-                            {singleCampaign.targetAge} years
-                          </span>
-                        </div>
-                        <div class="form-group">
-                          <label
-                            for=""
-                            class="tx-14 tx-gray mb-0 tx-medium d-block"
-                          >
-                            Gender
-                          </label>
-                          <span class="badge badge-pink tx-14 mg-5">
-                            {" "}
-                            {singleCampaign.gender}
-                          </span>
-                        </div>
-                        <div class="form-group">
-                          <label
-                            for=""
-                            class="tx-14 tx-gray mb-0 tx-medium d-block"
-                          >
-                            Location
-                          </label>
-                          <span class="badge badge-pink tx-14 mg-5">
-                            {" "}
-                            {singleCampaign.location}
-                          </span>
-                        </div>
-                        <div class="form-group">
-                          <label
-                            for=""
-                            class="tx-14 tx-gray mb-0 tx-medium d-block"
-                          >
-                            Interest
-                          </label>
-                          <span class="badge badge-pink tx-14 mg-5">
-                            {" "}
-                            {singleCampaign.interest}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
                     <div class="col-md-6 col-lg-5 mg-b-20 mg-md-b-10">
                       <p class="tx-18 tx-semibold mb-0">Budget and Timing</p>
                       <div class="row mg-t-15">
@@ -177,20 +141,34 @@ const CampaignDetails = () => {
                           <label for="" class="tx-14 tx-gray mb-0 tx-medium">
                             Price
                           </label>
-                          <p class="tx-16 mb-0">{singleCampaign.price}</p>
+                          <p class="tx-16 mb-0">
+                            {singleCampaign && singleCampaign.price}
+                          </p>
                         </div>
 
                         <div class="form-group col-md-6">
                           <label for="" class="tx-14 tx-gray mb-0 tx-medium">
                             From
                           </label>
-                          <p class="tx-16 mb-0">{singleCampaign.createdAt}</p>
+                          <p class="tx-16 mb-0">
+                            {DateTime.fromJSDate(
+                              new Date(
+                                singleCampaign && singleCampaign.createdAt
+                              )
+                            ).toFormat("dd MMM, yyyy")}
+                          </p>
                         </div>
                         <div class="form-group col-md-6">
                           <label for="" class="tx-14 tx-gray mb-0 tx-medium">
                             To
                           </label>
-                          <p class="tx-16 mb-0">{singleCampaign.updatedAt}</p>
+                          <p class="tx-16 mb-0">
+                            {DateTime.fromJSDate(
+                              new Date(
+                                singleCampaign && singleCampaign.updatedAt
+                              )
+                            ).toFormat("dd MMM, yyyy")}
+                          </p>
                         </div>
                       </div>
                     </div>
