@@ -21,6 +21,18 @@ const ViewCampaign = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
 
+  //   const getMobileOS = () => {
+  //   const ua = navigator.userAgent
+  //   if (/android/i.test(ua)) {
+  //     return "Android"
+  //   }
+  //   else if (/iPad|iPhone|iPod/.test(ua))
+  //      || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1){
+  //     return "iOS"
+  //   }
+  //   return "Other"
+  // }
+
   useEffect(() => {
     dispatch(showAds(id, campaignType, slug));
     if (error) {
@@ -55,63 +67,103 @@ const ViewCampaign = () => {
                         {createShowAds && createShowAds.campaignMessage}
                       </p>
                     </div>
-                    <div>
-                      {createShowAds &&
-                      createShowAds.whatsAppNumber === "" ? null : (
-                        <a
-                          className="btn btn-primary w-100 mg-b-15 round-5"
-                          href={`https://api.whatsapp.com/send?phone=${createShowAds.whatsAppNumber}`}
-                        >
-                          <i
-                            className="fa fa-whatsapp mg-r-5"
-                            aria-hidden="true"
+                    {campaignType === "flier_video" && (
+                      <div>
+                        {createShowAds &&
+                        createShowAds.whatsAppNumber === "" ? null : (
+                          <a
+                            className="btn btn-primary w-100 mg-b-15 round-5"
+                            href={`https://api.whatsapp.com/send?phone=${createShowAds.whatsAppNumber}`}
                           >
-                            {" "}
-                          </i>
-                          {createShowAds && createShowAds.callToAction} via
-                          WhatsApp
-                        </a>
-                      )}
-                      {createShowAds &&
-                      createShowAds.phoneNumber === "" ? null : (
-                        <a
-                          className="btn btn-primary w-100 mg-b-15 round-5"
-                          href={`tel:+${createShowAds.phoneNumber}`}
-                        >
-                          <i className="fa fa-phone mg-r-5" />
-                          {createShowAds && createShowAds.callToAction} via
-                          Mobile
-                        </a>
-                      )}
-                      {createShowAds && createShowAds.ussd === "" ? null : (
-                        <a
-                          className="btn btn-primary w-100 mg-b-15 round-5"
-                          href={`tel:${+createShowAds.ussd}`}
-                        >
-                          <i className="fa fa-phone mg-r-5" />
-                          {createShowAds && createShowAds.callToAction} USSD
-                        </a>
-                      )}
-                      {createShowAds &&
-                      createShowAds.smsNumber === "" ? null : (
-                        <a
-                          className="btn btn-primary w-100 mg-b-15 round-5"
-                          href={`sms:${+createShowAds.smsNumber}?body="I will like to make an enquiry"`}
-                        >
-                          <i className="fa fa-comment mg-r-10"> </i>
-                          {createShowAds && createShowAds.callToAction} via Text
-                        </a>
-                      )}
-                      {createShowAds && createShowAds.url === "" ? null : (
-                        <a
-                          className="btn btn-primary w-100 mg-b-15 round-5"
-                          href={createShowAds.url}
-                        >
-                          <i className="fa fa-globe mg-r-10"> </i>
-                          {createShowAds && createShowAds.callToAction} via Web
-                        </a>
-                      )}
-                    </div>
+                            <i
+                              className="fab fa-whatsapp mg-r-5"
+                              aria-hidden="true"
+                            >
+                              {" "}
+                            </i>
+                            {createShowAds && createShowAds.callToAction} via
+                            WhatsApp
+                          </a>
+                        )}
+                        {createShowAds &&
+                        createShowAds.phoneNumber === "" ? null : (
+                          <a
+                            className="btn btn-primary w-100 mg-b-15 round-5"
+                            href={`tel:+${createShowAds.phoneNumber}`}
+                          >
+                            <i className="fa fa-phone mg-r-5" />
+                            {createShowAds && createShowAds.callToAction} via
+                            Mobile
+                          </a>
+                        )}
+                        {createShowAds && createShowAds.ussd === "" ? null : (
+                          <a
+                            className="btn btn-primary w-100 mg-b-15 round-5"
+                            href={`tel:${+createShowAds.ussd}`}
+                          >
+                            <i className="fa fa-phone mg-r-5" />
+                            {createShowAds && createShowAds.callToAction} USSD
+                          </a>
+                        )}
+                        {createShowAds &&
+                        createShowAds.smsNumber === "" ? null : (
+                          <a
+                            className="btn btn-primary w-100 mg-b-15 round-5"
+                            href={`sms:${+createShowAds.smsNumber}?body="I will like to make an enquiry"`}
+                          >
+                            <i className="fa fa-comment mg-r-10"> </i>
+                            {createShowAds && createShowAds.callToAction} via
+                            Text
+                          </a>
+                        )}
+                        {createShowAds && createShowAds.url === "" ? null : (
+                          <a
+                            className="btn btn-primary w-100 mg-b-15 round-5"
+                            href={createShowAds.url}
+                          >
+                            <i className="fa fa-globe mg-r-10"> </i>
+                            {createShowAds && createShowAds.callToAction} via
+                            Web
+                          </a>
+                        )}
+                      </div>
+                    )}
+                    {campaignType === "app_download" && (
+                      <div>
+                        {createShowAds &&
+                        createShowAds.androidStoreUrl === "" ? null : (
+                          <a
+                            className="btn btn-primary w-100 mg-b-15 round-5"
+                            href={createShowAds.androidStoreUrl}
+                          >
+                            <i
+                              className="fab fa-google-play mg-r-5"
+                              aria-hidden="true"
+                            >
+                              {" "}
+                            </i>
+                            {createShowAds && createShowAds.callToAction} via
+                            PlayStore
+                          </a>
+                        )}
+                        {createShowAds &&
+                        createShowAds.iosStoreUrl === "" ? null : (
+                          <a
+                            className="btn btn-primary w-100 mg-b-15 round-5"
+                            href={createShowAds.iosStoreUrl}
+                          >
+                            <i
+                              className="fab fa-apple mg-r-5"
+                              aria-hidden="true"
+                            >
+                              {" "}
+                            </i>
+                            {createShowAds && createShowAds.callToAction} via
+                            AppStore
+                          </a>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
