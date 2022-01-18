@@ -27,6 +27,9 @@ import {
   VIEW_APP_DOWNLOAD_CAMPAIGN_REQUEST,
   VIEW_APP_DOWNLOAD_CAMPAIGN_SUCCESS,
   VIEW_APP_DOWNLOAD_CAMPAIGN_FAIL,
+  GET_ALL_CAMPAIGN_REQUEST,
+  GET_ALL_CAMPAIGN_SUCCESS,
+  GET_ALL_CAMPAIGN_FAIL,
   GET_SINGLE_CAMPAIGN_REQUEST,
   GET_SINGLE_CAMPAIGN_SUCCESS,
   GET_SINGLE_CAMPAIGN_FAIL,
@@ -239,6 +242,36 @@ export const viewAppDownloadCampaignsReducer = (
     case VIEW_APP_DOWNLOAD_CAMPAIGN_FAIL:
       return {
         adLoading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const AllCampaignReducer = (state = { allCampaign: [] }, action) => {
+  switch (action.type) {
+    case GET_ALL_CAMPAIGN_REQUEST:
+      return {
+        loading: true,
+        allCampaign: [],
+      };
+
+    case GET_ALL_CAMPAIGN_SUCCESS:
+      return {
+        loading: false,
+        allCampaign: action.payload,
+      };
+    case GET_ALL_CAMPAIGN_FAIL:
+      return {
+        loading: false,
         error: action.payload,
       };
 

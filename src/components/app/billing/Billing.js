@@ -7,7 +7,7 @@ import { useAlert } from "react-alert";
 import MetaData from "../../layout/MetaData";
 import Loader from "../../loader";
 import { getTransactionHistory } from "../../../actions/billingActions";
-import { getAllCampaign } from "../../../actions/billingActions";
+import { getAllCampaign } from "../../../actions/campaignActions";
 import { getSenderID } from "../../../actions/senderIDActions";
 import TransactionCard from "./TransactionCard";
 import CampaignCard from "./CampaignCard";

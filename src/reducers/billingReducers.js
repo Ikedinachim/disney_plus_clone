@@ -5,9 +5,6 @@ import {
   GET_TRANSACTION_HISTORY_REQUEST,
   GET_TRANSACTION_HISTORY_SUCCESS,
   GET_TRANSACTION_HISTORY_FAIL,
-  GET_ALL_CAMPAIGN_REQUEST,
-  GET_ALL_CAMPAIGN_SUCCESS,
-  GET_ALL_CAMPAIGN_FAIL,
   FUND_WALLET_REQUEST,
   FUND_WALLET_SUCCESS,
   FUND_WALLET_RESET,
@@ -133,36 +130,6 @@ export const confirmFundingReducer = (state = { confirmFund: [] }, action) => {
       };
 
     case CONFIRM_FUNDING_FAIL:
-      return {
-        loading: false,
-        error: action.payload,
-      };
-
-    case CLEAR_ERRORS:
-      return {
-        ...state,
-        error: null,
-      };
-
-    default:
-      return state;
-  }
-};
-
-export const AllCampaignReducer = (state = { allCampaign: [] }, action) => {
-  switch (action.type) {
-    case GET_ALL_CAMPAIGN_REQUEST:
-      return {
-        loading: true,
-        allCampaign: [],
-      };
-
-    case GET_ALL_CAMPAIGN_SUCCESS:
-      return {
-        loading: false,
-        allCampaign: action.payload,
-      };
-    case GET_ALL_CAMPAIGN_FAIL:
       return {
         loading: false,
         error: action.payload,

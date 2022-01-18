@@ -19,7 +19,6 @@ import {
   transactionHistoryReducer,
   fundWalletReducer,
   confirmFundingReducer,
-  AllCampaignReducer,
 } from "./reducers/billingReducers";
 import {
   createSmsCampaignReducer,
@@ -32,6 +31,7 @@ import {
   getFilteredContactListReducer,
   getAllInfluencersReducer,
   getSingleCampaignReducer,
+  AllCampaignReducer,
 } from "./reducers/campaignReducers";
 
 const appReducer = combineReducers({

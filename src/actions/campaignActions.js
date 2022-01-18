@@ -28,6 +28,9 @@ import {
   GET_SINGLE_CAMPAIGN_REQUEST,
   GET_SINGLE_CAMPAIGN_SUCCESS,
   GET_SINGLE_CAMPAIGN_FAIL,
+  GET_ALL_CAMPAIGN_REQUEST,
+  GET_ALL_CAMPAIGN_SUCCESS,
+  GET_ALL_CAMPAIGN_FAIL,
   GET_FILTERED_CONTACT_LIST_REQUEST,
   GET_FILTERED_CONTACT_LIST_SUCCESS,
   GET_FILTERED_CONTACT_LIST_FAIL,
@@ -191,6 +194,43 @@ export const getSmsCampaigns = () => async (dispatch) => {
   }
 };
 
+// Get all campaigns
+export const getAllCampaign = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_ALL_CAMPAIGN_REQUEST });
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      "/api/campaign/all-generic-campaign",
+      config
+    );
+
+    if (data.status === "success") {
+      dispatch({
+        type: GET_ALL_CAMPAIGN_SUCCESS,
+        payload: data.data,
+      });
+    } else {
+      dispatch({
+        type: GET_ALL_CAMPAIGN_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: GET_ALL_CAMPAIGN_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
 // Display Single Campaign
 export const displaySingleCampaign = (id) => async (dispatch) => {
   try {
@@ -205,7 +245,7 @@ export const displaySingleCampaign = (id) => async (dispatch) => {
     };
 
     const { data } = await axios.get(
-      `/api/campaign/single-campaign/${id}`,
+      `/api/campaign/single-generic-campaign/${id}`,
       config
     );
     console.log({ data });

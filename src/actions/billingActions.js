@@ -14,9 +14,6 @@ import {
   CONFIRM_FUNDING_SUCCESS,
   CONFIRM_FUNDING_FAIL,
   CLEAR_ERRORS,
-  GET_ALL_CAMPAIGN_REQUEST,
-  GET_ALL_CAMPAIGN_SUCCESS,
-  GET_ALL_CAMPAIGN_FAIL,
 } from "../constants/billingConstants";
 
 const baseURL = "https://mysogi.uat.com.ng/";
@@ -183,48 +180,6 @@ export const confirmFunding = (amount, reference) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: CONFIRM_FUNDING_FAIL,
-      payload: error.message,
-    });
-  }
-};
-
-// Get all campaigns
-export const getAllCampaign = () => async (dispatch) => {
-  try {
-    dispatch({ type: GET_ALL_CAMPAIGN_REQUEST });
-    let user = JSON.parse(sessionStorage.getItem("user"));
-    const token = user.user.token;
-
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
-    const data = await Promise.all([
-      await axios.get("/api/campaign/all-flier-campaign", config),
-      await axios.get("/api/campaign/all-campaign", config),
-      await axios.get("/api/campaign/all-app-download-campaign", config),
-    ]);
-
-    const individual_data = data.map((link) => {
-      if (link.status === 200) {
-        return link.data.data;
-      }
-      return;
-    });
-    const [data1, data2, data3] = individual_data;
-    const combinedData = data1.concat(data2, data3);
-    console.log(combinedData);
-
-    dispatch({
-      type: GET_ALL_CAMPAIGN_SUCCESS,
-      payload: combinedData,
-    });
-  } catch (error) {
-    dispatch({
-      type: GET_ALL_CAMPAIGN_FAIL,
       payload: error.message,
     });
   }
