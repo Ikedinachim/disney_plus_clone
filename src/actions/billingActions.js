@@ -22,7 +22,7 @@ const axios = Axios.create({
   baseURL,
 });
 
-// Get User Sender ID's
+// Get User Balance
 export const getWallet = () => async (dispatch) => {
   try {
     dispatch({ type: GET_WALLET_REQUEST });

@@ -22,12 +22,12 @@
   opacity: 0;
 }
 
-.modal-content {
+/* .modal-content {
   width: 500px;
   background-color: #fff;
   transition: all 0.3s ease-in-out;
   transform: translateY(-200px);
-}
+} */
 
 .modal.enter-done .modal-content {
   transform: translateY(0);
@@ -37,17 +37,17 @@
   transform: translateY(-200px);
 }
 
-.modal-header,
+/* .modal-header,
 .modal-footer {
   padding: 10px;
 }
 
 .modal-title {
   margin: 0;
-}
+} */
 
-.modal-body {
+/* .modal-body {
   padding: 10px;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
-}
+} */

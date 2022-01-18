@@ -6,9 +6,7 @@ import Loader from "../../components/loader";
 
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
-// import { getSenderID } from '../../actions/senderIDActions';
 import { registerUser, clearErrors } from "../../actions/authActions";
-// import { getTransactionHistory, getWallet, } from '../../actions/billingActions'
 import { REGISTER_USER_RESET } from "../../constants/authConstants";
 
 import { useForm } from "react-hook-form";
@@ -41,23 +39,7 @@ const Register = () => {
     businessEmail: "",
   });
 
-  const {
-    firstName,
-    lastName,
-    // middleName,
-    username,
-    userType,
-    email,
-    password,
-    confirmPassword,
-    phone,
-    businessName,
-    contactName,
-    businessFirstName,
-    businessLastName,
-    businessUsername,
-    businessEmail,
-  } = newUser;
+  const { firstName, lastName, username, userType, email, phone } = newUser;
 
   const schema = Yup.object().shape({
     firstName: Yup.string()
@@ -117,14 +99,11 @@ const Register = () => {
     mode: "onBlur",
   });
 
-  const { isAuthenticated, isRegistered, error, loading, user } = useSelector(
+  const { isAuthenticated, isRegistered, error, loading } = useSelector(
     (state) => state.auth
   );
 
   const submitIndividualHandler = (data) => {
-    // data.preventDefault();
-    // console.log(data);
-
     dispatch(registerUser(data));
     reset();
   };
@@ -132,9 +111,6 @@ const Register = () => {
   const onError = (errors, e) => console.log(errors, e);
 
   const submitBusinessHandler = (data) => {
-    // e.preventDefault();
-    // console.log(data);
-
     dispatch(registerUser(data));
     resetBusiness();
   };
@@ -244,7 +220,6 @@ const Register = () => {
                                 id="firstname"
                                 className="form-control new"
                                 placeholder="First Name"
-                                // name="firstName"
                                 required
                                 value={firstName}
                                 onChange={onChange}
@@ -257,7 +232,6 @@ const Register = () => {
                                 id="lastname"
                                 className="form-control new"
                                 placeholder="Last Name"
-                                // name="lastName"
                                 required
                                 value={lastName}
                                 onChange={onChange}
@@ -271,7 +245,6 @@ const Register = () => {
                               id="individualUsername"
                               className="form-control new"
                               placeholder="Username"
-                              // name="username"
                               required
                               value={username}
                               onChange={onChange}
@@ -283,7 +256,6 @@ const Register = () => {
                               type="hidden"
                               className="form-control new"
                               placeholder="User Type"
-                              // name="userType"
                               value={"individual"}
                               onChange={onChange}
                             />

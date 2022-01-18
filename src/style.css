@@ -24,8 +24,10 @@
 .marine-borders {
   border-radius: 5px;
   box-shadow: 0 8px 6px -6px #ddd;
-  submitpadding-bottom: 10px;
 }
+/* .submit {
+  padding-bottom: 10px;
+} */
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.previous,
 .dataTables_wrapper .dataTables_paginate .paginate_button.next,
@@ -123,15 +125,40 @@ input:checked + .slider:before {
   color: #b2b2b2 !important;
 }
 
-@media (min-width: 1600px) {
+/* @media (min-width: 1600px) {
   .container {
     max-width: none !important;
   }
-}
+} */
 .smsViewTab {
   justify-content: space-between;
   align-items: center;
   width: 60%;
   margin: 0 auto;
   justify-items: center;
+}
+
+tbody + thead {
+  display: none;
+}
+
+.card-image {
+  min-height: 300px;
+}
+
+.card-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.image-holder {
+  height: 100%;
+}
+
+.ads-body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -32,6 +32,7 @@ import {
   getAllInfluencersReducer,
   getSingleCampaignReducer,
   AllCampaignReducer,
+  createInfluencerCampaignReducer,
 } from "./reducers/campaignReducers";
 
 const appReducer = combineReducers({
@@ -53,6 +54,7 @@ const appReducer = combineReducers({
   viewAppDownloadCampaign: viewAppDownloadCampaignsReducer,
   filteredContactList: getFilteredContactListReducer,
   allInfluencers: getAllInfluencersReducer,
+  influencerCampaign: createInfluencerCampaignReducer,
 });
 
 const reducer = (state, action) => {

@@ -31,6 +31,9 @@ import {
   GET_ALL_CAMPAIGN_REQUEST,
   GET_ALL_CAMPAIGN_SUCCESS,
   GET_ALL_CAMPAIGN_FAIL,
+  INFLUENCER_CAMPAIGN_REQUEST,
+  INFLUENCER_CAMPAIGN_SUCCESS,
+  INFLUENCER_CAMPAIGN_FAIL,
   GET_FILTERED_CONTACT_LIST_REQUEST,
   GET_FILTERED_CONTACT_LIST_SUCCESS,
   GET_FILTERED_CONTACT_LIST_FAIL,
@@ -342,6 +345,45 @@ export const getAppDownloadCampaigns = () => async (dispatch) => {
     });
   }
 };
+
+// Create Influencer Campaign Action
+export const createInfluencerCampaignAction =
+  (influencerCampaignData) => async (dispatch) => {
+    try {
+      dispatch({ type: INFLUENCER_CAMPAIGN_REQUEST });
+      let user = JSON.parse(sessionStorage.getItem("user"));
+      const token = user.user.token;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await axios.post(
+        "api/campaign/influencer/create-marketing-campaign",
+        influencerCampaignData,
+        config
+      );
+
+      if (data.status === "success") {
+        dispatch({
+          type: INFLUENCER_CAMPAIGN_SUCCESS,
+          payload: data,
+        });
+      } else {
+        dispatch({
+          type: INFLUENCER_CAMPAIGN_FAIL,
+          payload: data.message,
+        });
+      }
+    } catch (data) {
+      dispatch({
+        type: INFLUENCER_CAMPAIGN_FAIL,
+        payload: data.message,
+      });
+    }
+  };
 
 // Get Filtered Contact List
 export const getFilteredContactList =

@@ -17,7 +17,7 @@ const BillingOverview = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
 
-  const { user } = useSelector((state) => state.auth);
+  // const { user } = useSelector((state) => state.auth);
   const { wallet, loading, error } = useSelector((state) => state.wallet);
   const { tnxHistory } = useSelector((state) => state.tnxHistory || {});
   const { allCampaign } = useSelector((state) => state.allCampaign || {});
@@ -27,9 +27,9 @@ const BillingOverview = () => {
     dispatch(getTransactionHistory());
     dispatch(getSenderID());
     dispatch(getAllCampaign());
-  }, [dispatch, alert, error, user, wallet]);
+  }, [dispatch, alert, error]);
 
-  const reverseTnxHistory = tnxHistory.reverse();
+  const reverseTnxHistory = tnxHistory && tnxHistory.reverse();
 
   const [reverseAllCampaign, useReverseAllCampaign] = useState(
     allCampaign ? allCampaign.reverse() : []
@@ -62,7 +62,7 @@ const BillingOverview = () => {
                           <p className="tx-32 tx-semibold tx-green">
                             +{" "}
                             <NumberFormat
-                              value={parseInt(wallet.balance)}
+                              value={parseInt(wallet && wallet.balance)}
                               displayType={"text"}
                               thousandSeparator={true}
                               prefix={"₦"}
@@ -171,14 +171,19 @@ const BillingOverview = () => {
                             </tr>
                           </thead>
                           <tbody>
-                            {reverseAllCampaign
-                              .slice(0, 3)
-                              .map((allCampaign) => (
-                                <CampaignCard
-                                  key={allCampaign.id}
-                                  campaign={allCampaign}
-                                />
-                              ))}
+                            {reverseAllCampaign &&
+                              reverseAllCampaign
+                                .slice(0, 3)
+                                .map((allCampaign) => (
+                                  <CampaignCard
+                                    key={allCampaign.id}
+                                    campaign={allCampaign}
+                                  />
+                                ))}
+                            {/* <tr className="tx-medium">
+                              <td>Total</td>
+                              <td className="tx-right">&#8358;250,000</td>
+                            </tr> */}
                           </tbody>
                         </table>
                       </div>
