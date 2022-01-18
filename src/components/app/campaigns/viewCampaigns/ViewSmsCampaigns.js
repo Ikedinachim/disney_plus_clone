@@ -80,42 +80,43 @@ const ViewSmsCampaign = () => {
       rows: [],
     };
 
-    smsCampaigns.forEach((campaign) => {
-      data.rows.push({
-        id: campaign.id,
-        campaignName: campaign.name,
-        adType: campaign.channel,
-        revenue: (
-          <NumberFormat
-            value={0}
-            displayType={"text"}
-            thousandSeparator={true}
-            prefix={"₦"}
-          />
-        ),
-        cost: (
-          <NumberFormat
-            value={campaign.price}
-            displayType={"text"}
-            thousandSeparator={true}
-            prefix={"₦"}
-          />
-        ),
-        dateCreated: DateTime.fromJSDate(new Date(campaign.createdAt)).toFormat(
-          "dd MMM, yyyy"
-        ),
-        status: (
-          <span
-            className={`{"badge" ${
-              !campaign.isApproved ? "badge-pink" : "badge-active"
-            }`}
-          >
-            {!campaign.isApproved ? "Pending" : "Approved"}
-          </span>
-        ),
-        actions: (
-          <Fragment>
-            {/* <div className="dropdown">
+    smsCampaigns &&
+      smsCampaigns.forEach((campaign) => {
+        data.rows.push({
+          id: campaign.id,
+          campaignName: campaign.name,
+          adType: campaign.channel,
+          revenue: (
+            <NumberFormat
+              value={0}
+              displayType={"text"}
+              thousandSeparator={true}
+              prefix={"₦"}
+            />
+          ),
+          cost: (
+            <NumberFormat
+              value={campaign.price}
+              displayType={"text"}
+              thousandSeparator={true}
+              prefix={"₦"}
+            />
+          ),
+          dateCreated: DateTime.fromJSDate(
+            new Date(campaign.createdAt)
+          ).toFormat("dd MMM, yyyy"),
+          status: (
+            <span
+              className={`{"badge" ${
+                !campaign.isApproved ? "badge-pink" : "badge-active"
+              }`}
+            >
+              {!campaign.isApproved ? "Pending" : "Approved"}
+            </span>
+          ),
+          actions: (
+            <Fragment>
+              {/* <div className="dropdown">
                         <span
                             className
                             type="button"
@@ -145,17 +146,17 @@ const ViewSmsCampaign = () => {
                             </a>
                         </div>
                     </div> */}
-            <div class="tx-black tx-14">
-              <div class="d-flex">
-                <Link to="../campaign/CampaignDetails">
-                  <i className="fa fa-eye tx-orange pd-t-4 mg-r-5" /> View{" "}
-                </Link>
+              <div class="tx-black tx-14">
+                <div class="d-flex">
+                  <Link to={`../campaign/CampaignDetails/${campaign.id}`}>
+                    <i className="fa fa-eye tx-orange pd-t-4 mg-r-5" /> View{" "}
+                  </Link>
+                </div>
               </div>
-            </div>
-          </Fragment>
-        ),
+            </Fragment>
+          ),
+        });
       });
-    });
     return data;
   };
 

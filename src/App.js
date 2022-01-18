@@ -1,8 +1,8 @@
-import React, { Fragment } from "react";
-import { Route, Routes, Navigate, Router } from "react-router-dom";
+import React from "react";
+import { Route, Routes } from "react-router-dom";
 
-import Header from "./components/layout/DashboardHeader";
-import Sidebar from "./components/layout/Sidebar";
+// import Header from "./components/layout/DashboardHeader";
+// import Sidebar from "./components/layout/Sidebar";
 import Loader from "./components/loader";
 
 import Home from "./components/Home";
@@ -74,15 +74,15 @@ function App() {
             element={isAuthenticated ? <FundWallet /> : <Login />}
           />
           <Route
-            path="campaign/FlierDetails"
+            path="campaign/FlierDetails/:id"
             element={isAuthenticated ? <FlierDetails /> : <Login />}
           />
           <Route
-            path="campaign/CampaignDetails"
+            path="campaign/CampaignDetails/:id"
             element={isAuthenticated ? <CampaignDetails /> : <Login />}
           />
           <Route
-            path="campaign/AppDownloadsDetails"
+            path="campaign/AppDownloadsDetails/"
             element={isAuthenticated ? <AppDownloadsDetails /> : <Login />}
           />
           <Route

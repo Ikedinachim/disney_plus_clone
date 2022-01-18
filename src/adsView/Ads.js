@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
@@ -54,7 +54,9 @@ const ViewCampaign = () => {
                     <div>
                       {createShowAds.callToAction === "" ||
                       createShowAds.whatsappNumber === "" ? null : (
-                        <a href="https://api.whatsapp.com/send?phone=2348167696729">
+                        <a
+                          href={`https://api.whatsapp.com/send?phone=${createShowAds.whatsappNumber}`}
+                        >
                           <button className="btn btn-primary w-100 mg-b-15 round-5">
                             <i className="fa fa-whatsapp mg-r-5"> </i>
                             {createShowAds.callToAction} via WhatsApp
@@ -63,7 +65,7 @@ const ViewCampaign = () => {
                       )}
                       {createShowAds.callToAction === "" ||
                       createShowAds.phoneNumber === "" ? null : (
-                        <a href="tel:+2348167696729">
+                        <a href={`${createShowAds.phoneNumber}}`}>
                           <button className="btn btn-primary w-100 mg-b-15 round-5">
                             <i className="fa fa-phone mg-r-5" />
                             {createShowAds.callToAction} via Mobile
@@ -72,7 +74,7 @@ const ViewCampaign = () => {
                       )}
                       {createShowAds.callToAction === "" ||
                       createShowAds.ussd === "" ? null : (
-                        <a href="tel:*945*1%23">
+                        <a href={`tel:*${createShowAds.ussd}%23`}>
                           <button className="btn btn-primary w-100 mg-b-15 round-5">
                             <i className="fa fa-phone mg-r-5" />
                             {createShowAds.callToAction} USSD
@@ -81,7 +83,7 @@ const ViewCampaign = () => {
                       )}
                       {createShowAds.callToAction === "" ||
                       createShowAds.smsNumber === "" ? null : (
-                        <a href="sms://+2348167696729">
+                        <a href={`sms:${createShowAds.smsNumber}`}>
                           <button className="btn btn-primary w-100 mg-b-15 round-5">
                             <i className="fa fa-comment mg-r-10"> </i>
                             {createShowAds.callToAction} via Text

@@ -31,6 +31,7 @@ import {
   viewAppDownloadCampaignsReducer,
   getFilteredContactListReducer,
   getAllInfluencersReducer,
+  getSingleCampaignReducer,
 } from "./reducers/campaignReducers";
 
 const appReducer = combineReducers({
@@ -45,6 +46,7 @@ const appReducer = combineReducers({
   smsCampaign: createSmsCampaignReducer,
   flierVideoCampaign: createFlierVideoCampaignReducer,
   getSmsCampaign: getSmsCampaignsReducer,
+  getSingleCampaign: getSingleCampaignReducer,
   showAds: createShowAdsReducer,
   appDownload: createAppDownloadCampaignReducer,
   viewFlierVideosCampaign: viewFlierVideosCampaignsReducer,

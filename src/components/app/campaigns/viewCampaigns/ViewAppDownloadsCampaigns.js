@@ -147,7 +147,7 @@ const ViewAppDownloadsCampaigns = () => {
                     </div> */}
             <div class="tx-black tx-14">
               <div class="d-flex">
-                <Link to="../campaign/AppDownloadsDetails">
+                <Link to={`../campaign/AppDownloadsDetails/:${campaign.id}`}>
                   <i className="fa fa-eye tx-orange pd-t-4 mg-r-5" /> View{" "}
                 </Link>
               </div>

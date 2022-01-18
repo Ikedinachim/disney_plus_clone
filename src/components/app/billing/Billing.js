@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -21,6 +21,7 @@ const BillingOverview = () => {
   const { wallet, loading, error } = useSelector((state) => state.wallet);
   const { tnxHistory } = useSelector((state) => state.tnxHistory || {});
   const { allCampaign } = useSelector((state) => state.allCampaign || {});
+  console.log(allCampaign);
 
   useEffect(() => {
     dispatch(getTransactionHistory());
@@ -29,7 +30,10 @@ const BillingOverview = () => {
   }, [dispatch, alert, error, user, wallet]);
 
   const reverseTnxHistory = tnxHistory.reverse();
-  const reverseAllCampaign = allCampaign.reverse();
+
+  const [reverseAllCampaign, useReverseAllCampaign] = useState(
+    allCampaign ? allCampaign.reverse() : []
+  );
 
   return (
     <Fragment>
@@ -137,12 +141,7 @@ const BillingOverview = () => {
                     </div>
                     <div className="col-md-5 col-12">
                       <div className="d-flex">
-                        <select
-                          className="col-8 custom-select col-7"
-                          onClick={() => {
-                            console.log("hello");
-                          }}
-                        >
+                        <select className="col-8 custom-select col-7">
                           <option selected>August 2021</option>
                           <option value={1}>August 2021</option>
                           <option value={2}>October 2021</option>

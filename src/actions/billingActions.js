@@ -202,23 +202,26 @@ export const getAllCampaign = () => async (dispatch) => {
       },
     };
 
-    const [{ flier }, { data }, { app }] = await Promise.all([
+    const data = await Promise.all([
       await axios.get("/api/campaign/all-flier-campaign", config),
       await axios.get("/api/campaign/all-campaign", config),
       await axios.get("/api/campaign/all-app-download-campaign", config),
     ]);
 
-    if (data.status === "success") {
-      dispatch({
-        type: GET_ALL_CAMPAIGN_SUCCESS,
-        payload: data.data,
-      });
-    } else {
-      dispatch({
-        type: GET_ALL_CAMPAIGN_FAIL,
-        payload: data.message,
-      });
-    }
+    const individual_data = data.map((link) => {
+      if (link.status === 200) {
+        return link.data.data;
+      }
+      return;
+    });
+    const [data1, data2, data3] = individual_data;
+    const combinedData = data1.concat(data2, data3);
+    console.log(combinedData);
+
+    dispatch({
+      type: GET_ALL_CAMPAIGN_SUCCESS,
+      payload: combinedData,
+    });
   } catch (error) {
     dispatch({
       type: GET_ALL_CAMPAIGN_FAIL,

@@ -15,14 +15,6 @@ const AppDownloadsDetails = () => {
                 </div>
               </Link>
             </div>
-            <div class="col-md-3 col-xl-2 pd-xl-l-0 mg-b-20">
-              <select class="custom-select">
-                <option selected>Actions</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-            </div>
           </div>
           <div class="card rounded bd-0 shadow-sm">
             <div class="card-body">
@@ -47,27 +39,9 @@ const AppDownloadsDetails = () => {
                   <div class="row mg-t-15">
                     <div class="form-group col-md-6">
                       <label for="" class="tx-14 tx-gray mb-0 tx-medium">
-                        Campaign Name
+                        Sender-ID
                       </label>
-                      <p class="tx-16 mb-0">Campaign X</p>
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="" class="tx-14 tx-gray mb-0 tx-medium">
-                        Industry
-                      </label>
-                      <p class="tx-16 mb-0">Information and Technology</p>
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="" class="tx-14 tx-gray mb-0 tx-medium">
-                        Brand Name
-                      </label>
-                      <p class="tx-16 mb-0">Oreos Energy</p>
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="" class="tx-14 tx-gray mb-0 tx-medium">
-                        Company Url
-                      </label>
-                      <p class="tx-16 mb-0">Oreosenergy.netX</p>
+                      <p class="tx-16 mb-0">(senderId)</p>
                     </div>
                   </div>
                 </div>
@@ -76,27 +50,34 @@ const AppDownloadsDetails = () => {
                   <div class="row mg-t-15">
                     <div class="form-group col-md-6">
                       <label for="" class="tx-14 tx-gray mb-0 tx-medium">
-                        USSD Code
+                        Campaign message
                       </label>
-                      <p class="tx-16 mb-0">*224#</p>
+                      <p class="tx-16 mb-0">(campaignMessage)</p>
                     </div>
                     <div class="form-group col-md-6">
                       <label for="" class="tx-14 tx-gray mb-0 tx-medium">
-                        Phone Call
+                        IOS URL
                       </label>
-                      <p class="tx-16 mb-0">123</p>
+                      <p class="tx-16 mb-0">(iosStoreUrl)</p>
                     </div>
                     <div class="form-group col-md-6">
                       <label for="" class="tx-14 tx-gray mb-0 tx-medium">
-                        WhatsApp Number
+                        Android URL
                       </label>
-                      <p class="tx-16 mb-0">+2348084637227</p>
+                      <p class="tx-16 mb-0">(androidStoreUrl)</p>
                     </div>
                     <div class="form-group col-md-6">
                       <label for="" class="tx-14 tx-gray mb-0 tx-medium">
-                        SMS Number
+                        Channel
                       </label>
-                      <p class="tx-16 mb-0">132</p>
+                      <p class="tx-16 mb-0">(channel)</p>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                      <label for="" class="tx-14 tx-gray mb-0 tx-medium">
+                        Attachment
+                      </label>
+                      <p class="tx-16 mb-0">(attachment)</p>
                     </div>
                   </div>
                 </div>
@@ -105,93 +86,25 @@ const AppDownloadsDetails = () => {
               <div class="row justify-content-between">
                 <div class="col-md-6 col-lg-6 mg-b-20 mg-md-b-10">
                   <p class="tx-18 tx-semibold mb-0">Target Audience</p>
-                  <div class="mg-t-15">
-                    <div class="form-group">
-                      <label
-                        for=""
-                        class="tx-14 tx-gray mb-0 tx-medium d-block"
-                      >
-                        Age Range
-                      </label>
-                      <span class="badge badge-pink tx-14 mg-5">
-                        {" "}
-                        13-24 years
-                      </span>
-                      <span class="badge badge-pink tx-14 mg-5">
-                        {" "}
-                        13-24 years
-                      </span>
-                    </div>
-                    <div class="form-group">
-                      <label
-                        for=""
-                        class="tx-14 tx-gray mb-0 tx-medium d-block"
-                      >
-                        Gender
-                      </label>
-                      <span class="badge badge-pink tx-14 mg-5"> Male</span>
-                    </div>
-                    <div class="form-group">
-                      <label
-                        for=""
-                        class="tx-14 tx-gray mb-0 tx-medium d-block"
-                      >
-                        Location
-                      </label>
-                      <span class="badge badge-pink tx-14 mg-5"> Adamawa</span>
-                    </div>
-                    <div class="form-group">
-                      <label
-                        for=""
-                        class="tx-14 tx-gray mb-0 tx-medium d-block"
-                      >
-                        Profession
-                      </label>
-                      <span class="badge badge-pink tx-14 mg-5">
-                        {" "}
-                        Self Employed
-                      </span>
-                      <span class="badge badge-pink tx-14 mg-5">
-                        {" "}
-                        Undergraduate
-                      </span>
-                    </div>
-                    <div class="form-group">
-                      <label
-                        for=""
-                        class="tx-14 tx-gray mb-0 tx-medium d-block"
-                      >
-                        Interest
-                      </label>
-                      <span class="badge badge-pink tx-14 mg-5">
-                        {" "}
-                        Surfing Net
-                      </span>
-                    </div>
+                  <div class="form-group">
+                    <label for="" class="tx-14 tx-gray mb-0 tx-medium d-block">
+                      Target database
+                    </label>
+                    <span class="badge badge-pink tx-14 mg-5">
+                      {" "}
+                      (targetAudience)
+                    </span>
                   </div>
                 </div>
                 <div class="col-md-6 col-lg-5 mg-b-20 mg-md-b-10">
                   <p class="tx-18 tx-semibold mb-0">Budget and Timing</p>
                   <div class="row mg-t-15">
-                    <div class="form-group col-md-12">
+                    {/* <div class="form-group col-md-12">
                       <label for="" class="tx-14 tx-gray mb-0 tx-medium">
                         Daily Limit
                       </label>
                       <p class="tx-16 mb-0">#5,000.00</p>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                      <label for="" class="tx-14 tx-gray mb-0 tx-medium">
-                        From
-                      </label>
-                      <p class="tx-16 mb-0">+2348084637227</p>
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="" class="tx-14 tx-gray mb-0 tx-medium">
-                        To
-                      </label>
-                      <p class="tx-16 mb-0">April 3, 2021</p>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
