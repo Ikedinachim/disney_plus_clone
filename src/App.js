@@ -38,8 +38,7 @@ import "./style.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import CampaignDetails from "./components/app/campaigns/CampaignDetails";
-import FlierDetails from "./components/app/campaigns/FlierDetails";
-import AppDownloadsDetails from "./components/app/campaigns/AppDownloadsDetails";
+
 AOS.init();
 
 function App() {
