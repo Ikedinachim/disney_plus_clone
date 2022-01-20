@@ -122,7 +122,7 @@ const PreviewInfluencerCampaign = ({
 
     let platforms = filteredValue.map((el) => {
       return {
-        influencerId: el.id,
+        influencer_id: el.id,
         cost: getTotal(el),
         platform: el.platforms.map((ele) => ele.id).join(", "),
         allPlatform:
