@@ -169,22 +169,25 @@ const InfluencerCampaign = ({
   const sortIcon = (icon) => {
     if (icon.platform === "instagram") {
       return (
-        <i className="fa fa-instagram mg-r-5 social-media" aria-hidden="true" />
+        <i
+          className="fab fa-instagram mg-r-5 social-media"
+          aria-hidden="true"
+        />
       );
     } else if (icon.platform === "twitter") {
       return (
-        <i className="fa fa-twitter mg-r-5 social-media" aria-hidden="true" />
+        <i className="fab fa-twitter mg-r-5 social-media" aria-hidden="true" />
       );
     } else if (icon.platform === "facebook") {
       return (
         <i
-          className="fa fa-facebook-square  mg-r-5 social-media"
+          className="fab fa-facebook-square  mg-r-5 social-media"
           aria-hidden="true"
         />
       );
     } else if (icon.platform === "snapchat") {
       return (
-        <i className="fa fa-snapchat mg-r-5 social-media" aria-hidden="true" />
+        <i className="fab fa-snapchat mg-r-5 social-media" aria-hidden="true" />
       );
     }
   };
