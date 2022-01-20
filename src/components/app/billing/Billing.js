@@ -37,7 +37,7 @@ const BillingOverview = () => {
   );
 
   const filterItem = (createdAt) => {
-    let newItem = allCampaign.filter(
+    let newItem = reverseAllCampaign.filter(
       (campaign) =>
         DateTime.fromJSDate(new Date(campaign.createdAt)).toFormat(
           "yyyy-MM"

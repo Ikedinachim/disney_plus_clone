@@ -100,7 +100,7 @@ const ViewFlierVideosCampaigns = () => {
             ),
             cost: (
               <NumberFormat
-                value={campaign.price}
+                value={campaign.cost}
                 displayType={"text"}
                 thousandSeparator={true}
                 prefix={"₦"}

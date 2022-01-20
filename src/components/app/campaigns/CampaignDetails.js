@@ -164,7 +164,7 @@ const CampaignDetails = () => {
                             Price
                           </label>
                           <p className="tx-16 mb-0">
-                            {singleCampaign && singleCampaign.price}
+                            {singleCampaign && singleCampaign.cost}
                           </p>
                         </div>
 
