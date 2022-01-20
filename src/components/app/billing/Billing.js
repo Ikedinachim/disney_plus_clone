@@ -9,6 +9,7 @@ import Loader from "../../loader";
 import { getTransactionHistory } from "../../../actions/billingActions";
 import { getAllCampaign } from "../../../actions/campaignActions";
 import { getSenderID } from "../../../actions/senderIDActions";
+import { DateTime } from "luxon";
 import TransactionCard from "./TransactionCard";
 import CampaignCard from "./CampaignCard";
 import NumberFormat from "react-number-format";
@@ -31,9 +32,19 @@ const BillingOverview = () => {
 
   const reverseTnxHistory = tnxHistory && tnxHistory.reverse();
 
-  const [reverseAllCampaign, useReverseAllCampaign] = useState(
+  const [reverseAllCampaign, setReverseAllCampaign] = useState(
     allCampaign ? allCampaign.reverse() : []
   );
+
+  const filterItem = (createdAt) => {
+    let newItem = allCampaign.filter(
+      (campaign) =>
+        DateTime.fromJSDate(new Date(campaign.createdAt)).toFormat(
+          "yyyy-MM"
+        ) === createdAt
+    );
+    setReverseAllCampaign(newItem);
+  };
 
   return (
     <Fragment>
@@ -141,12 +152,18 @@ const BillingOverview = () => {
                     </div>
                     <div className="col-md-5 col-12">
                       <div className="d-flex">
-                        <select className="col-8 custom-select col-7">
-                          <option selected>August 2021</option>
-                          <option value={1}>August 2021</option>
-                          <option value={2}>October 2021</option>
-                          <option value={3}>March 2021</option>
-                        </select>
+                        <input
+                          type={"month"}
+                          className="col-8 custom-select col-7"
+                          min="2021-03"
+                          value="2022-01"
+                          id="myCalendar"
+                          pattern="[0-9]{4}-[0-9]{2}"
+                          onChange={(e) => {
+                            filterItem(e.target.value);
+                          }}
+                        ></input>
+
                         <p className="mg-b-10 ml-auto pd-t-10">
                           <Link
                             to="/app/billing"

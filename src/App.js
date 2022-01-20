@@ -76,7 +76,7 @@ function App() {
           />
 
           <Route
-            path="campaign/CampaignDetails/:id"
+            path="campaigns/:id"
             element={isAuthenticated ? <CampaignDetails /> : <Login />}
           />
 

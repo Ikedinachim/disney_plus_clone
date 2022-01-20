@@ -37,42 +37,42 @@ const CampaignDetails = () => {
         <Loader />
       ) : (
         <Fragment>
-          <div class="content-body">
-            <div class="container pd-x-0">
-              <div class="row justify-content-between">
-                <div class="col-md-6 mg-b-20 mg-md-b-0">
-                  <Link to="../campaigns" class="tx-black">
+          <div className="content-body">
+            <div className="container pd-x-0">
+              <div className="row justify-content-between">
+                <div className="col-md-6 mg-b-20 mg-md-b-0">
+                  <Link to="../campaigns" className="tx-black">
                     <div>
-                      <i class="fa fa-angle-left mg-r-10 pd-t-15 tx-18"></i>
-                      <span class="tx-28 tx-bold mb-0">Campaigns</span>
+                      <i className="fa fa-angle-left mg-r-10 pd-t-15 tx-18"></i>
+                      <span className="tx-28 tx-bold mb-0">Campaigns</span>
                     </div>
                   </Link>
                 </div>
               </div>
-              <div class="card rounded bd-0 shadow-sm">
-                <div class="card-body">
-                  <div class="d-flex">
-                    <div class="mg-r-20">
+              <div className="card rounded bd-0 shadow-sm">
+                <div className="card-body">
+                  <div className="d-flex">
+                    <div className="mg-r-20">
                       <img
                         src="../../assets/img/Brand_Awareness.svg"
-                        class="tx-primary"
+                        className="tx-primary"
                         alt=""
                         srcset=""
                       />
                     </div>
                     <div>
                       {singleCampaign.campaignType === "general" ? (
-                        <p class="tx-20 tx-bold pd-t-20">
+                        <p className="tx-20 tx-bold pd-t-20">
                           Flash-SMS / SMS Details
                         </p>
                       ) : null}
                       {singleCampaign.campaignType === "flier_video" ? (
-                        <p class="tx-20 tx-bold pd-t-20">
+                        <p className="tx-20 tx-bold pd-t-20">
                           Flier / Video Details
                         </p>
                       ) : null}
                       {singleCampaign.campaignType === "app_download" ? (
-                        <p class="tx-20 tx-bold pd-t-20">
+                        <p className="tx-20 tx-bold pd-t-20">
                           App download Details
                         </p>
                       ) : null}
@@ -80,52 +80,69 @@ const CampaignDetails = () => {
                   </div>
                   <hr />
 
-                  <div class="row justify-content-between">
-                    <div class="col-md-6 col-lg-6 mg-b-20 mg-md-b-10">
-                      <p class="tx-18 tx-semibold mb-0">Basic Information</p>
-                      <div class="row mg-t-15">
-                        <div class="form-group col-md-6">
-                          <label for="" class="tx-14 tx-gray mb-0 tx-medium">
+                  <div className="row justify-content-between">
+                    <div className="col-md-6 col-lg-6 mg-b-20 mg-md-b-10">
+                      <p className="tx-18 tx-semibold mb-0">
+                        Basic Information
+                      </p>
+                      <div className="row mg-t-15">
+                        <div className="form-group col-md-6">
+                          <label
+                            for=""
+                            className="tx-14 tx-gray mb-0 tx-medium"
+                          >
                             Campaign Name
                           </label>
-                          <p class="tx-16 mb-0">
+                          <p className="tx-16 mb-0">
                             {singleCampaign && singleCampaign.campaignType}
                           </p>
                         </div>
-                        <div class="form-group col-md-6">
-                          <label for="" class="tx-14 tx-gray mb-0 tx-medium">
+                        <div className="form-group col-md-6">
+                          <label
+                            for=""
+                            className="tx-14 tx-gray mb-0 tx-medium"
+                          >
                             Sender-ID
                           </label>
-                          <p class="tx-16 mb-0">
+                          <p className="tx-16 mb-0">
                             {singleCampaign && singleCampaign.user_id}
                           </p>
                         </div>
-                        <div class="form-group col-md-6">
-                          <label for="" class="tx-14 tx-gray mb-0 tx-medium">
+                        <div className="form-group col-md-6">
+                          <label
+                            for=""
+                            className="tx-14 tx-gray mb-0 tx-medium"
+                          >
                             Campaign-ID
                           </label>
-                          <p class="tx-16 mb-0">
+                          <p className="tx-16 mb-0">
                             {singleCampaign && singleCampaign.campaignId}
                           </p>
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-6 col-lg-5 mg-b-20 mg-md-b-10">
-                      <p class="tx-18 tx-semibold mb-0">Campaign</p>
-                      <div class="row mg-t-15">
-                        <div class="form-group col-md-6">
-                          <label for="" class="tx-14 tx-gray mb-0 tx-medium">
+                    <div className="col-md-6 col-lg-5 mg-b-20 mg-md-b-10">
+                      <p className="tx-18 tx-semibold mb-0">Campaign</p>
+                      <div className="row mg-t-15">
+                        <div className="form-group col-md-6">
+                          <label
+                            for=""
+                            className="tx-14 tx-gray mb-0 tx-medium"
+                          >
                             Campaign message
                           </label>
-                          <p class="tx-16 mb-0">
+                          <p className="tx-16 mb-0">
                             {singleCampaign && singleCampaign.campaignMessage}
                           </p>
                         </div>
-                        <div class="form-group col-md-6">
-                          <label for="" class="tx-14 tx-gray mb-0 tx-medium">
+                        <div className="form-group col-md-6">
+                          <label
+                            for=""
+                            className="tx-14 tx-gray mb-0 tx-medium"
+                          >
                             Channel
                           </label>
-                          <p class="tx-16 mb-0">
+                          <p className="tx-16 mb-0">
                             {singleCampaign && singleCampaign.channel}
                           </p>
                         </div>
@@ -133,24 +150,32 @@ const CampaignDetails = () => {
                     </div>
                   </div>
                   <hr />
-                  <div class="row justify-content-between">
-                    <div class="col-md-6 col-lg-5 mg-b-20 mg-md-b-10">
-                      <p class="tx-18 tx-semibold mb-0">Budget and Timing</p>
-                      <div class="row mg-t-15">
-                        <div class="form-group col-md-12">
-                          <label for="" class="tx-14 tx-gray mb-0 tx-medium">
+                  <div className="row justify-content-between">
+                    <div className="col-md-6 col-lg-5 mg-b-20 mg-md-b-10">
+                      <p className="tx-18 tx-semibold mb-0">
+                        Budget and Timing
+                      </p>
+                      <div className="row mg-t-15">
+                        <div className="form-group col-md-12">
+                          <label
+                            for=""
+                            className="tx-14 tx-gray mb-0 tx-medium"
+                          >
                             Price
                           </label>
-                          <p class="tx-16 mb-0">
+                          <p className="tx-16 mb-0">
                             {singleCampaign && singleCampaign.price}
                           </p>
                         </div>
 
-                        <div class="form-group col-md-6">
-                          <label for="" class="tx-14 tx-gray mb-0 tx-medium">
+                        <div className="form-group col-md-6">
+                          <label
+                            for=""
+                            className="tx-14 tx-gray mb-0 tx-medium"
+                          >
                             From
                           </label>
-                          <p class="tx-16 mb-0">
+                          <p className="tx-16 mb-0">
                             {DateTime.fromJSDate(
                               new Date(
                                 singleCampaign && singleCampaign.createdAt
@@ -158,11 +183,14 @@ const CampaignDetails = () => {
                             ).toFormat("dd MMM, yyyy")}
                           </p>
                         </div>
-                        <div class="form-group col-md-6">
-                          <label for="" class="tx-14 tx-gray mb-0 tx-medium">
+                        <div className="form-group col-md-6">
+                          <label
+                            for=""
+                            className="tx-14 tx-gray mb-0 tx-medium"
+                          >
                             To
                           </label>
-                          <p class="tx-16 mb-0">
+                          <p className="tx-16 mb-0">
                             {DateTime.fromJSDate(
                               new Date(
                                 singleCampaign && singleCampaign.updatedAt
