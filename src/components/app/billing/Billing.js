@@ -22,19 +22,20 @@ const BillingOverview = () => {
   const { wallet, loading, error } = useSelector((state) => state.wallet);
   const { tnxHistory } = useSelector((state) => state.tnxHistory || {});
   const { allCampaign } = useSelector((state) => state.allCampaign || {});
-  console.log(allCampaign);
 
   useEffect(() => {
     dispatch(getTransactionHistory());
     dispatch(getSenderID());
     dispatch(getAllCampaign());
-  }, [dispatch, alert, error]);
+  }, [dispatch]);
 
   const reverseTnxHistory = tnxHistory && tnxHistory.reverse();
 
   const [reverseAllCampaign, setReverseAllCampaign] = useState(
-    allCampaign ? allCampaign.reverse() : []
+    allCampaign ? allCampaign.sort((a, b) => a.createdAt > b.createdAt) : []
   );
+
+  const [filterCampaign, setFilterCampaign] = useState([]);
 
   const filterItem = (createdAt) => {
     let newItem = reverseAllCampaign.filter(
@@ -43,7 +44,7 @@ const BillingOverview = () => {
           "yyyy-MM"
         ) === createdAt
     );
-    setReverseAllCampaign(newItem);
+    setFilterCampaign(newItem);
   };
 
   return (
@@ -156,7 +157,6 @@ const BillingOverview = () => {
                           type={"month"}
                           className="col-8 custom-select col-7"
                           min="2021-03"
-                          value="2022-01"
                           id="myCalendar"
                           pattern="[0-9]{4}-[0-9]{2}"
                           onChange={(e) => {
@@ -190,7 +190,7 @@ const BillingOverview = () => {
                           <tbody>
                             {reverseAllCampaign &&
                               reverseAllCampaign
-                                .slice(0, 3)
+                                .slice(0, 4)
                                 .map((allCampaign) => (
                                   <CampaignCard
                                     key={allCampaign.id}
