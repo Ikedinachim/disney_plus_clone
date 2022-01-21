@@ -8,7 +8,7 @@ const CampaignCard = ({ campaign }) => {
         <td>{campaign.channel}</td>
         <td className="tx-right">
           <NumberFormat
-            value={campaign.price}
+            value={campaign.cost}
             displayType={"text"}
             thousandSeparator={true}
             prefix={"₦"}

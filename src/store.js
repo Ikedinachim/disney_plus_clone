@@ -19,7 +19,6 @@ import {
   transactionHistoryReducer,
   fundWalletReducer,
   confirmFundingReducer,
-  AllCampaignReducer,
 } from "./reducers/billingReducers";
 import {
   createSmsCampaignReducer,
@@ -31,6 +30,8 @@ import {
   viewAppDownloadCampaignsReducer,
   getFilteredContactListReducer,
   getAllInfluencersReducer,
+  getSingleCampaignReducer,
+  AllCampaignReducer,
   createInfluencerCampaignReducer,
 } from "./reducers/campaignReducers";
 
@@ -46,6 +47,7 @@ const appReducer = combineReducers({
   smsCampaign: createSmsCampaignReducer,
   flierVideoCampaign: createFlierVideoCampaignReducer,
   getSmsCampaign: getSmsCampaignsReducer,
+  getSingleCampaign: getSingleCampaignReducer,
   showAds: createShowAdsReducer,
   appDownload: createAppDownloadCampaignReducer,
   viewFlierVideosCampaign: viewFlierVideosCampaignsReducer,

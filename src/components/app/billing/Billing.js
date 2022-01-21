@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -7,8 +7,9 @@ import { useAlert } from "react-alert";
 import MetaData from "../../layout/MetaData";
 import Loader from "../../loader";
 import { getTransactionHistory } from "../../../actions/billingActions";
-import { getAllCampaign } from "../../../actions/billingActions";
+import { getAllCampaign } from "../../../actions/campaignActions";
 import { getSenderID } from "../../../actions/senderIDActions";
+import { DateTime } from "luxon";
 import TransactionCard from "./TransactionCard";
 import CampaignCard from "./CampaignCard";
 import NumberFormat from "react-number-format";
@@ -26,18 +27,36 @@ const BillingOverview = () => {
     dispatch(getTransactionHistory());
     dispatch(getSenderID());
     dispatch(getAllCampaign());
-  }, [dispatch, alert, error]);
+  }, [dispatch]);
 
-  function reverseArray(arr) {
-    var newArray = [];
-    for (var i = arr.length - 1; i >= 0; i--) {
-      newArray.push(arr[i]);
+  const reverseTnxHistory = tnxHistory && tnxHistory.reverse();
+
+  const [reverseAllCampaign, setReverseAllCampaign] = useState(
+    allCampaign ? allCampaign.sort((a, b) => a.createdAt > b.createdAt) : []
+  );
+
+  const filterItem = (createdAt) => {
+    if (
+      reverseAllCampaign ===
+      allCampaign.sort((a, b) => a.createdAt > b.createdAt)
+    ) {
+      let newItem = reverseAllCampaign.filter(
+        (campaign) =>
+          DateTime.fromJSDate(new Date(campaign.createdAt)).toFormat(
+            "yyyy-MM"
+          ) === createdAt
+      );
+      newItem.map((allCampaign) => (
+        <CampaignCard key={allCampaign.id} campaign={allCampaign} />
+      ));
+      setReverseAllCampaign(newItem);
+    } else {
+      setReverseAllCampaign(
+        allCampaign.sort((a, b) => a.createdAt > b.createdAt)
+      );
     }
-    return newArray;
-  }
+  };
 
-  const reverseTnxHistory = tnxHistory && reverseArray(tnxHistory);
-  const reverseAllCampaign = allCampaign && reverseArray(allCampaign);
   return (
     <Fragment>
       {loading ? (
@@ -144,12 +163,17 @@ const BillingOverview = () => {
                     </div>
                     <div className="col-md-5 col-12">
                       <div className="d-flex">
-                        <select className="col-8 custom-select col-7">
-                          <option selected>August 2021</option>
-                          <option value={1}>August 2021</option>
-                          <option value={2}>October 2021</option>
-                          <option value={3}>March 2021</option>
-                        </select>
+                        <input
+                          type={"month"}
+                          className="col-8 custom-select col-7"
+                          min="2021-03"
+                          id="myCalendar"
+                          pattern="[0-9]{4}-[0-9]{2}"
+                          onChange={(e) => {
+                            filterItem(e.target.value);
+                          }}
+                        ></input>
+
                         <p className="mg-b-10 ml-auto pd-t-10">
                           <Link
                             to="/app/billing"
@@ -176,7 +200,7 @@ const BillingOverview = () => {
                           <tbody>
                             {reverseAllCampaign &&
                               reverseAllCampaign
-                                .slice(0, 3)
+                                .slice(0, 4)
                                 .map((allCampaign) => (
                                   <CampaignCard
                                     key={allCampaign.id}
