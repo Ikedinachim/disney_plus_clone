@@ -112,6 +112,13 @@ export default class InfluencerStepForm extends Component {
     reader.readAsDataURL(e.target.files[0]);
   };
 
+  // Handle price from child component
+  handlePrice = (amount) => {
+    this.setState({
+      price: amount,
+    });
+  };
+
   handleImageUpload = async () => {
     const { files } = document.querySelector('input[type="file"]');
     const formData = new FormData();
@@ -155,7 +162,7 @@ export default class InfluencerStepForm extends Component {
       selectedInfluencers,
       activeItemId,
       showModal,
-      // price,
+      price,
       closeModal,
       checkedInfluencers,
       campaignType,
@@ -197,7 +204,7 @@ export default class InfluencerStepForm extends Component {
     //   }
     // }
 
-    const price = totalAmount;
+    // const price = totalAmount;
     const platform = checkedInfluencers;
     const values = {
       channel,
@@ -306,10 +313,11 @@ export default class InfluencerStepForm extends Component {
             prevStep={this.prevStep}
             nextStep={this.nextStep}
             values={values}
-            price={price}
+            // price={price}
             attachmentPreview={attachmentPreview}
             checkedInfluencers={selectedInfluencers}
             payload={payload}
+            handlePrice={this.handlePrice}
           />
         );
       case 4:
@@ -319,6 +327,7 @@ export default class InfluencerStepForm extends Component {
             nextStep={this.nextStep}
             price={price}
             values={values}
+            checkedInfluencers={checkedInfluencers}
           />
         );
       default:

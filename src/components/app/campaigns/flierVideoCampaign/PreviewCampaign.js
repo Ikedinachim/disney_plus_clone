@@ -26,6 +26,7 @@ const PreviewCampaign = ({
   price,
   numbers,
   filterOptions,
+  csvArray,
 }) => {
   const { error, createFlierVideoCampaign, loading } = useSelector(
     (state) => state.flierVideoCampaign || []
@@ -68,6 +69,8 @@ const PreviewCampaign = ({
       dispatch(getWallet());
     }
   }, [dispatch, alert, error, createFlierVideoCampaign, navigate]);
+
+  console.log(csvArray);
 
   return (
     <Fragment>

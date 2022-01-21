@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
@@ -26,9 +26,12 @@ const ViewCampaign = () => {
   //   if (/android/i.test(ua)) {
   //     return "Android"
   //   }
-  //   else if (/iPad|iPhone|iPod/.test(ua))
-  //      || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1){
-  //     return "iOS"
+  //   else if (
+  //     /iPad|iPhone|iPod/.test(ua) ||
+  //     (navigator.userAgentData.platform === "MacIntel" &&
+  //       navigator.maxTouchPoints > 1)
+  //   ) {
+  //     return "iOS";
   //   }
   //   return "Other"
   // }

@@ -195,6 +195,7 @@ const SenderID = () => {
                 <div className="card-header bd-b-0 pd-b-0 pd-t-40 pd-md-x-30"></div>
                 <div className="card-body pd-md-x-30 pd-t- mg-t-20 mg-md-t-0">
                   <MDBDataTable
+                    responsive
                     data={setSenderID()}
                     className="px-3 scroll"
                     bordered

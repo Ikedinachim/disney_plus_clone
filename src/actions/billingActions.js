@@ -14,9 +14,6 @@ import {
   CONFIRM_FUNDING_SUCCESS,
   CONFIRM_FUNDING_FAIL,
   CLEAR_ERRORS,
-  GET_ALL_CAMPAIGN_REQUEST,
-  GET_ALL_CAMPAIGN_SUCCESS,
-  GET_ALL_CAMPAIGN_FAIL,
 } from "../constants/billingConstants";
 
 const baseURL = "https://mysogi.uat.com.ng/";
@@ -183,41 +180,6 @@ export const confirmFunding = (amount, reference) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: CONFIRM_FUNDING_FAIL,
-      payload: error.message,
-    });
-  }
-};
-
-// Get all campaigns
-export const getAllCampaign = () => async (dispatch) => {
-  try {
-    dispatch({ type: GET_ALL_CAMPAIGN_REQUEST });
-    let user = JSON.parse(sessionStorage.getItem("user"));
-    const token = user.user.token;
-
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
-    const { data } = await axios.get("/api/campaign/all-campaign", config);
-
-    if (data.status === "success") {
-      dispatch({
-        type: GET_ALL_CAMPAIGN_SUCCESS,
-        payload: data.data,
-      });
-    } else {
-      dispatch({
-        type: GET_ALL_CAMPAIGN_FAIL,
-        payload: data.message,
-      });
-    }
-  } catch (error) {
-    dispatch({
-      type: GET_ALL_CAMPAIGN_FAIL,
       payload: error.message,
     });
   }
