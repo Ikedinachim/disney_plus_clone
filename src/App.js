@@ -1,8 +1,8 @@
-import React, { Fragment } from "react";
-import { Route, Routes, Navigate, Router } from "react-router-dom";
+import React from "react";
+import { Route, Routes } from "react-router-dom";
 
-import Header from "./components/layout/DashboardHeader";
-import Sidebar from "./components/layout/Sidebar";
+// import Header from "./components/layout/DashboardHeader";
+// import Sidebar from "./components/layout/Sidebar";
 import Loader from "./components/loader";
 
 import Home from "./components/Home";
@@ -43,6 +43,8 @@ import "./style.css";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
+import CampaignDetails from "./components/app/campaigns/CampaignDetails";
+
 AOS.init();
 
 function App() {
@@ -116,6 +118,12 @@ function App() {
               )
             }
           />
+
+          <Route
+            path="campaigns/:id"
+            element={isAuthenticated ? <CampaignDetails /> : <Login />}
+          />
+
           <Route
             path="campaigns"
             element={
