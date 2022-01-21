@@ -25,6 +25,7 @@ const PreviewInfluencerCampaign = ({
   attachmentPreview,
   checkedInfluencers,
   price,
+  handlePrice,
   // payload,
 }) => {
   const { error, createInfluencerCampaign, loading } = useSelector(
@@ -119,6 +120,7 @@ const PreviewInfluencerCampaign = ({
     const total = allTotals.reduce((acc, curr) => acc + curr, 0);
     // console.log(total);
     setTotal(total);
+    handlePrice(total);
 
     let platforms = filteredValue.map((el) => {
       return {
@@ -193,7 +195,7 @@ const PreviewInfluencerCampaign = ({
 
   // console.log(getTotalAmount);
 
-  // console.log(filteredValue);
+  // console.log(filteredValue.map((p) => getTotal(p)));
 
   return (
     <Fragment>
@@ -352,7 +354,16 @@ const PreviewInfluencerCampaign = ({
                               {platform.platforms.find((p) => p.id === "all")
                                 ?.cost || "-"}
                             </td>
-                            <td className="tx-right">{getTotal(platform)}</td>
+                            <td className="tx-right">
+                              {
+                                <NumberFormat
+                                  value={parseInt(getTotal(platform))}
+                                  displayType={"text"}
+                                  thousandSeparator={true}
+                                  prefix={"₦"}
+                                />
+                              }
+                            </td>
                             {/* < */}
                             <td>
                               <div className="d-flex pd-t-3">
@@ -374,7 +385,14 @@ const PreviewInfluencerCampaign = ({
                           </div>
                           <div className="col-6">
                             <p className="mb-0 tx-right tx-medium">
-                              {walletTotal}
+                              {
+                                <NumberFormat
+                                  value={parseInt(walletTotal)}
+                                  displayType={"text"}
+                                  thousandSeparator={true}
+                                  prefix={"₦"}
+                                />
+                              }
                             </p>
                           </div>
                         </div>
@@ -382,7 +400,7 @@ const PreviewInfluencerCampaign = ({
                     </div>
                   </div>
                   <div className="card-footer mg-t-30 bd-t-0">
-                    {parseInt(wallet && wallet.balance) < values.price ? (
+                    {parseInt(wallet && wallet.balance) < walletTotal ? (
                       <button
                         className="btn btn-primary pd-x-40 tx-com mg-r-15"
                         onClick={Continue}

@@ -19,7 +19,6 @@ import {
   transactionHistoryReducer,
   fundWalletReducer,
   confirmFundingReducer,
-  AllCampaignReducer,
 } from "./reducers/billingReducers";
 import {
   createSmsCampaignReducer,
@@ -31,7 +30,12 @@ import {
   viewAppDownloadCampaignsReducer,
   getFilteredContactListReducer,
   getAllInfluencersReducer,
+  getSingleCampaignReducer,
+  AllCampaignReducer,
   createInfluencerCampaignReducer,
+  getAllInfluencerCampaignReducer,
+  updateInfluencerCampaignStatusReducer,
+  getInfluencerDetailsReducer,
 } from "./reducers/campaignReducers";
 
 const appReducer = combineReducers({
@@ -46,6 +50,7 @@ const appReducer = combineReducers({
   smsCampaign: createSmsCampaignReducer,
   flierVideoCampaign: createFlierVideoCampaignReducer,
   getSmsCampaign: getSmsCampaignsReducer,
+  getSingleCampaign: getSingleCampaignReducer,
   showAds: createShowAdsReducer,
   appDownload: createAppDownloadCampaignReducer,
   viewFlierVideosCampaign: viewFlierVideosCampaignsReducer,
@@ -53,6 +58,9 @@ const appReducer = combineReducers({
   filteredContactList: getFilteredContactListReducer,
   allInfluencers: getAllInfluencersReducer,
   influencerCampaign: createInfluencerCampaignReducer,
+  influencerCampaignList: getAllInfluencerCampaignReducer,
+  updateInfluencerCampaignStatus: updateInfluencerCampaignStatusReducer,
+  influencerDetails: getInfluencerDetailsReducer,
 });
 
 const reducer = (state, action) => {

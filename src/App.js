@@ -1,8 +1,8 @@
-import React, { Fragment } from "react";
-import { Route, Routes, Navigate, Router } from "react-router-dom";
+import React from "react";
+import { Route, Routes } from "react-router-dom";
 
-import Header from "./components/layout/DashboardHeader";
-import Sidebar from "./components/layout/Sidebar";
+// import Header from "./components/layout/DashboardHeader";
+// import Sidebar from "./components/layout/Sidebar";
 import Loader from "./components/loader";
 
 import Home from "./components/Home";
@@ -23,6 +23,12 @@ import AppDownloadStepForm from "./components/app/campaigns/appDownloadCampaign/
 import InfluencerStepForm from "./components/app/campaigns/influencerCampaign/InfluencerStepForm";
 import Ads from "./adsView/Ads";
 
+///////////////////////////////////////
+import InfluencerDashboardLayout from "./influencer/InfluencerDashboardLayout";
+import InfluencerDashboard from "./influencer/";
+import InfluencerCampaignDetails from "./influencer/ViewInfluencerCampaignDetails";
+import InfluencerSettings from "./influencer/settings";
+
 // Auth / User Imports
 import Login from "./components/user/Login";
 import Register from "./components/user/Register";
@@ -37,10 +43,12 @@ import "./style.css";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
+import CampaignDetails from "./components/app/campaigns/CampaignDetails";
+
 AOS.init();
 
 function App() {
-  const { loading, isAuthenticated } = useSelector((state) => state.auth);
+  const { loading, isAuthenticated, user } = useSelector((state) => state.auth);
 
   return (
     <div>
@@ -50,51 +58,131 @@ function App() {
           <Header />
         )} */}
       <Routes>
-        {/* <Route path="/" element={<Home />} /> */}
         <Route
           path="/app"
-          element={isAuthenticated ? <DashboardLayout /> : <Login />}
+          element={
+            isAuthenticated && user.user.role === "user" ? (
+              <DashboardLayout />
+            ) : (
+              <Login />
+            )
+          }
         >
-          <Route index element={isAuthenticated ? <Dashboard /> : <Login />} />
+          <Route
+            index
+            element={
+              isAuthenticated && user.user.role === "user" ? (
+                <Dashboard />
+              ) : (
+                <Login />
+              )
+            }
+          />
           <Route
             path="sender-id"
-            element={isAuthenticated ? <SenderID /> : <Login />}
+            element={
+              isAuthenticated && user.user.role === "user" ? (
+                <SenderID />
+              ) : (
+                <Login />
+              )
+            }
           />
           <Route
             path="request-sender-id"
-            element={isAuthenticated ? <RequestSenderID /> : <Login />}
+            element={
+              isAuthenticated && user.user.role === "user" ? (
+                <RequestSenderID />
+              ) : (
+                <Login />
+              )
+            }
           />
           <Route
             path="billing"
-            element={isAuthenticated ? <BillingOverview /> : <Login />}
+            element={
+              isAuthenticated && user.user.role === "user" ? (
+                <BillingOverview />
+              ) : (
+                <Login />
+              )
+            }
           />
           <Route
             path="billing/fund-wallet"
-            element={isAuthenticated ? <FundWallet /> : <Login />}
+            element={
+              isAuthenticated && user.user.role === "user" ? (
+                <FundWallet />
+              ) : (
+                <Login />
+              )
+            }
           />
+
+          <Route
+            path="campaigns/:id"
+            element={isAuthenticated ? <CampaignDetails /> : <Login />}
+          />
+
           <Route
             path="campaigns"
-            element={isAuthenticated ? <ViewCampaignTabs /> : <Login />}
+            element={
+              isAuthenticated && user.user.role === "user" ? (
+                <ViewCampaignTabs />
+              ) : (
+                <Login />
+              )
+            }
           />
           <Route
             path="campaign/create"
-            element={isAuthenticated ? <CreateCampaign /> : <Login />}
+            element={
+              isAuthenticated && user.user.role === "user" ? (
+                <CreateCampaign />
+              ) : (
+                <Login />
+              )
+            }
           />
           <Route
             path="campaign/sms"
-            element={isAuthenticated ? <SmsStepForm /> : <Login />}
+            element={
+              isAuthenticated && user.user.role === "user" ? (
+                <SmsStepForm />
+              ) : (
+                <Login />
+              )
+            }
           />
           <Route
             path="campaign/flier-video"
-            element={isAuthenticated ? <FlierVideoStepForm /> : <Login />}
+            element={
+              isAuthenticated && user.user.role === "user" ? (
+                <FlierVideoStepForm />
+              ) : (
+                <Login />
+              )
+            }
           />
           <Route
             path="campaign/app-download"
-            element={isAuthenticated ? <AppDownloadStepForm /> : <Login />}
+            element={
+              isAuthenticated && user.user.role === "user" ? (
+                <AppDownloadStepForm />
+              ) : (
+                <Login />
+              )
+            }
           />
           <Route
             path="campaign/influencer"
-            element={isAuthenticated ? <InfluencerStepForm /> : <Login />}
+            element={
+              isAuthenticated && user.user.role === "user" ? (
+                <InfluencerStepForm />
+              ) : (
+                <Login />
+              )
+            }
           />
         </Route>
         {/* <Route path="/app/campaign/preview" element={isAuthenticated ? <PreviewCampaign /> : <Login />} /> */}
@@ -118,6 +206,50 @@ function App() {
           <Route path="/login" element={<Login />} /> */}
         <Route path="/ad/:id/:campaignType/:slug" element={<Ads />} />
         {/* <Route path="*" element={isAuthenticated ? <Dashboard /> : <Login />} /> */}
+      </Routes>
+
+      <Routes>
+        <Route
+          path="/influencer"
+          element={
+            isAuthenticated && user.user.role === "influencer" ? (
+              <InfluencerDashboardLayout />
+            ) : (
+              <Login />
+            )
+          }
+        >
+          <Route
+            index
+            element={
+              isAuthenticated && user.user.role === "influencer" ? (
+                <InfluencerDashboard />
+              ) : (
+                <Login />
+              )
+            }
+          />
+          <Route
+            path="settings"
+            element={
+              isAuthenticated && user.user.role === "influencer" ? (
+                <InfluencerSettings />
+              ) : (
+                <Login />
+              )
+            }
+          />
+          <Route
+            path="view-campaign/:influenceMarketingId"
+            element={
+              isAuthenticated && user.user.role === "influencer" ? (
+                <InfluencerCampaignDetails />
+              ) : (
+                <Login />
+              )
+            }
+          />
+        </Route>
       </Routes>
       {loading ? <Loader /> : null}
       {/* </div> */}

@@ -3,6 +3,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MetaData from "../../../layout/MetaData";
 import { useAlert } from "react-alert";
+import { useCSVReader } from "react-papaparse";
 import NaijaStates from "naija-state-local-government";
 
 import {
@@ -18,9 +19,11 @@ const TargetAudience = ({
   numbers,
   filterOptions,
   values,
+  getCsvArray,
 }) => {
   const alert = useAlert();
   const dispatch = useDispatch();
+  const { CSVReader } = useCSVReader();
 
   const { filteredContactList, error, loading } = useSelector(
     (state) => state.filteredContactList || []
@@ -29,6 +32,40 @@ const TargetAudience = ({
   const [status, setStatus] = useState(3);
   const radioHandler = (status) => {
     setStatus(status);
+  };
+
+  const [csvFile, setCsvFile] = useState();
+  const [csvArray, setCsvArray] = useState([]);
+
+  const processCSV = (str, delim = ",") => {
+    const headers = str.slice(0, str.indexOf("\n")).split(delim);
+    const rows = str.slice(str.indexOf("\n") + 1).split("\n");
+
+    const newArray = rows.map((row) => {
+      const values = row.split(delim);
+      const eachObject = headers.reduce((obj, header, i) => {
+        obj[header] = values[i];
+        return obj;
+      }, {});
+      return eachObject;
+    });
+
+    setCsvArray(newArray);
+  };
+
+  const submit = () => {
+    const file = csvFile;
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+      const text = e.target.result;
+      console.log(text);
+      processCSV(text);
+    };
+
+    getCsvArray(csvArray);
+
+    reader.readAsText(file);
   };
 
   const selectGenders = [
@@ -74,6 +111,7 @@ const TargetAudience = ({
     if (values.targetAudienceOption === "mysogidb") {
       dispatch(getFilteredContactList(filterOptions));
       nextStep();
+      csvFile && submit();
     } else {
       nextStep();
     }
@@ -88,6 +126,7 @@ const TargetAudience = ({
       alert.error(error);
       dispatch(clearErrors());
     }
+    console.log(csvArray);
   }, [dispatch, error, alert]);
 
   const lga = NaijaStates.lgas(filterOptions.state);
@@ -128,7 +167,6 @@ const TargetAudience = ({
                           id="db"
                           name="customRadio"
                           className="custom-control-input"
-                          defaultChecked
                           checked={status === 1}
                           onClick={(e) => radioHandler(1)}
                           value={"mysogidb"}
@@ -300,20 +338,68 @@ const TargetAudience = ({
                             </p>
                             <div className="form-group">
                               <div className="custom-file">
-                                <input
+                                <CSVReader
+                                  config={{
+                                    header: true,
+                                    // delimiter: ";",
+                                  }}
+                                  onUploadAccepted={(results) => {
+                                    console.log("---------------------------");
+                                    console.log(results);
+                                    console.log("---------------------------");
+                                  }}
+                                >
+                                  {({
+                                    getRootProps,
+                                    acceptedFile,
+                                    ProgressBar,
+                                    getRemoveFileProps,
+                                  }) => (
+                                    <>
+                                      <div className="csvReader">
+                                        <button
+                                          type="button"
+                                          {...getRootProps()}
+                                          className="browseFile"
+                                        >
+                                          Browse file
+                                        </button>
+                                        <div className="acceptedFile">
+                                          {acceptedFile && acceptedFile.name}
+                                        </div>
+                                        <button
+                                          {...getRemoveFileProps()}
+                                          className="remove"
+                                        >
+                                          Remove
+                                        </button>
+                                      </div>
+                                      <ProgressBar className="progressBarBackgroundColor" />
+                                    </>
+                                  )}
+                                </CSVReader>
+                                {/* <input
                                   type="file"
                                   accept=".csv"
                                   id="csvFile"
                                   className="custom-file-input"
                                   id="customFile"
-                                  onChange={handleChange("csvFile")}
-                                />
-                                <label
+                                  onChange={(e) => {
+                                    setCsvFile(e.target.files[0]);
+                                  }}
+                                /> */}
+                                {/* <label
                                   className="custom-file-label"
                                   htmlFor="customFile"
                                 >
                                   Click to upload desired icon (if needed)
                                 </label>
+                                <button
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    if (csvFile) submit();
+                                  }}
+                                ></button> */}
                               </div>
                             </div>
                           </div>
@@ -331,7 +417,7 @@ const TargetAudience = ({
                             <textarea
                               name
                               className="form-control"
-                              id
+                              id="numbers"
                               rows={4}
                               onChange={handleChange("numbers")}
                               placeholder="Enter Number"
@@ -350,11 +436,13 @@ const TargetAudience = ({
                       onClick={Continue}
                       type="submit"
                       variant="contained"
-                      disabled={
-                        numbers === "" && filterOptions.gender === ""
-                          ? true
-                          : false
-                      }
+                      // disabled={
+                      //   numbers === "" ||
+                      //   filterOptions.gender === "" ||
+                      //   !csvFile
+                      //     ? true
+                      //     : false
+                      // }
                     >
                       Filter
                     </button>

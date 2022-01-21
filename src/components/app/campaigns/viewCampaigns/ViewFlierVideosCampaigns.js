@@ -14,6 +14,7 @@ import { MDBDataTable } from "mdbreact";
 import {
   getViewFlierVideosCampaigns,
   clearErrors,
+  getAllCampaign,
 } from "../../../../actions/campaignActions";
 
 const ViewFlierVideosCampaigns = () => {
@@ -32,6 +33,8 @@ const ViewFlierVideosCampaigns = () => {
   //     // dispatch(getWallet())
 
   // }, [dispatch, alert, error])
+
+  const { allCampaign } = useSelector((state) => state.allCampaign || {});
 
   const setViewFlierVideosCampaigns = () => {
     const data = {
@@ -80,42 +83,44 @@ const ViewFlierVideosCampaigns = () => {
       rows: [],
     };
 
-    viewFlierVideosCampaigns.forEach((campaign) => {
-      data.rows.push({
-        id: campaign.id,
-        campaignName: campaign.name,
-        adType: campaign.channel,
-        revenue: (
-          <NumberFormat
-            value={0}
-            displayType={"text"}
-            thousandSeparator={true}
-            prefix={"₦"}
-          />
-        ),
-        cost: (
-          <NumberFormat
-            value={campaign.price}
-            displayType={"text"}
-            thousandSeparator={true}
-            prefix={"₦"}
-          />
-        ),
-        dateCreated: DateTime.fromJSDate(new Date(campaign.createdAt)).toFormat(
-          "dd MMM, yyyy"
-        ),
-        status: (
-          <span
-            className={`{"badge" ${
-              !campaign.isApproved ? "badge-pink" : "badge-active"
-            }`}
-          >
-            {!campaign.isApproved ? "Pending" : "Approved"}
-          </span>
-        ),
-        actions: (
-          <Fragment>
-            {/* <div className="dropdown">
+    allCampaign &&
+      allCampaign.forEach((campaign) => {
+        if (campaign.campaignType === "flier_video") {
+          data.rows.push({
+            id: campaign.id,
+            campaignName: campaign.name,
+            adType: campaign.channel,
+            revenue: (
+              <NumberFormat
+                value={0}
+                displayType={"text"}
+                thousandSeparator={true}
+                prefix={"₦"}
+              />
+            ),
+            cost: (
+              <NumberFormat
+                value={campaign.cost}
+                displayType={"text"}
+                thousandSeparator={true}
+                prefix={"₦"}
+              />
+            ),
+            dateCreated: DateTime.fromJSDate(
+              new Date(campaign.createdAt)
+            ).toFormat("dd MMM, yyyy"),
+            status: (
+              <span
+                className={`{"badge" ${
+                  !campaign.isApproved ? "badge-pink" : "badge-active"
+                }`}
+              >
+                {!campaign.isApproved ? "Pending" : "Approved"}
+              </span>
+            ),
+            actions: (
+              <Fragment>
+                {/* <div className="dropdown">
                         <span
                             className
                             type="button"
@@ -145,16 +150,18 @@ const ViewFlierVideosCampaigns = () => {
                             </a>
                         </div>
                     </div> */}
-            <div class="tx-black tx-14">
-              <div class="d-flex">
-                <i class="fa fa-eye tx-orange pd-t-4 mg-r-5"></i>
-                View
-              </div>
-            </div>
-          </Fragment>
-        ),
+                <div class="tx-black tx-14">
+                  <div class="d-flex">
+                    <Link to={`../campaigns/${campaign.id}`}>
+                      <i className="fa fa-eye tx-orange pd-t-4 mg-r-5" /> View{" "}
+                    </Link>
+                  </div>
+                </div>
+              </Fragment>
+            ),
+          });
+        }
       });
-    });
     return data;
   };
 
@@ -165,6 +172,7 @@ const ViewFlierVideosCampaigns = () => {
         <Loader />
       ) : (
         <MDBDataTable
+          responsive
           data={setViewFlierVideosCampaigns()}
           className="px-3 scroll"
           bordered
