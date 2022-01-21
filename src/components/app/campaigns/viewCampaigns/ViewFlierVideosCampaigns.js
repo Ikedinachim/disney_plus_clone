@@ -165,6 +165,7 @@ const ViewFlierVideosCampaigns = () => {
         <Loader />
       ) : (
         <MDBDataTable
+          responsive
           data={setViewFlierVideosCampaigns()}
           className="px-3 scroll"
           bordered

@@ -31,6 +31,19 @@ import {
   GET_FILTERED_CONTACT_LIST_REQUEST,
   GET_FILTERED_CONTACT_LIST_SUCCESS,
   GET_FILTERED_CONTACT_LIST_FAIL,
+
+  /////////////// INFLUENCER CONSTANTS ////////////
+  GET_ALL_INFLUENCER_CAMPAIGN_REQUEST,
+  GET_ALL_INFLUENCER_CAMPAIGN_SUCCESS,
+  GET_ALL_INFLUENCER_CAMPAIGN_FAIL,
+  UPDATE_INFLUENCER_CAMPAIGN_STATUS_REQUEST,
+  UPDATE_INFLUENCER_CAMPAIGN_STATUS_SUCCESS,
+  UPDATE_INFLUENCER_CAMPAIGN_STATUS_FAIL,
+  GET_INFLUENCER_DETAILS_REQUEST,
+  GET_INFLUENCER_DETAILS_SUCCESS,
+  GET_INFLUENCER_DETAILS_FAIL,
+
+  ////////////// GENERIC CONSTANTS ///////////////
   CLEAR_ERRORS,
 } from "../constants/campaignConstants";
 
@@ -403,6 +416,122 @@ export const showAds = (id, campaignType, slug) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: SHOW_ADS_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+/////////////////// INFLUENCER DASHBOARD ACTION //////////////////
+
+// Get All Campaigns For Influencers
+export const getAllInfluencerCampaign = (params) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_ALL_INFLUENCER_CAMPAIGN_REQUEST });
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `/api/campaign/influencer/all-influencer-campaigns/${params}`,
+      config
+    );
+
+    if (data.status === "success") {
+      dispatch({
+        type: GET_ALL_INFLUENCER_CAMPAIGN_SUCCESS,
+        payload: data.data,
+      });
+    } else {
+      dispatch({
+        type: GET_ALL_INFLUENCER_CAMPAIGN_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: GET_ALL_INFLUENCER_CAMPAIGN_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+// Update Influencer Campaign Status Action
+export const updateInfluencerCampaignStatusAction =
+  (payload) => async (dispatch) => {
+    try {
+      dispatch({ type: UPDATE_INFLUENCER_CAMPAIGN_STATUS_REQUEST });
+      let user = JSON.parse(sessionStorage.getItem("user"));
+      const token = user.user.token;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await axios.put(
+        "api/campaign/influencer/update-status",
+        payload,
+        config
+      );
+
+      if (data.status === "success") {
+        dispatch({
+          type: UPDATE_INFLUENCER_CAMPAIGN_STATUS_SUCCESS,
+          payload: data,
+        });
+        console.log(data);
+      } else {
+        dispatch({
+          type: UPDATE_INFLUENCER_CAMPAIGN_STATUS_FAIL,
+          payload: data.message,
+        });
+      }
+    } catch (data) {
+      dispatch({
+        type: UPDATE_INFLUENCER_CAMPAIGN_STATUS_FAIL,
+        payload: data.message,
+      });
+    }
+  };
+
+// Get Influencer Details
+export const getInfluencerDetails = (params) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_INFLUENCER_DETAILS_REQUEST });
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `/api/campaign/influencer/get-influencer/${params}`,
+      config
+    );
+
+    if (data.status === "success") {
+      dispatch({
+        type: GET_INFLUENCER_DETAILS_SUCCESS,
+        payload: data.data,
+      });
+    } else {
+      dispatch({
+        type: GET_INFLUENCER_DETAILS_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: GET_INFLUENCER_DETAILS_FAIL,
       payload: error.message,
     });
   }

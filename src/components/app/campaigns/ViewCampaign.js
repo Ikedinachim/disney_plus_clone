@@ -186,6 +186,7 @@ const ViewCampaign = () => {
                 </div>
                 <div className="card-body pd-md-x-30 pd-t- mg-t-20 mg-md-t-0">
                   <MDBDataTable
+                    responsive
                     data={setAllCampaigns()}
                     className="px-3 scroll"
                     bordered

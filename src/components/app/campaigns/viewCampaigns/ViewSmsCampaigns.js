@@ -165,6 +165,7 @@ const ViewSmsCampaign = () => {
         ""
       ) : (
         <MDBDataTable
+          responsive
           data={setSmsCampaigns()}
           className="px-3 scroll"
           bordered
