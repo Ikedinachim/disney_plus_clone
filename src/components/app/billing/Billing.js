@@ -35,16 +35,26 @@ const BillingOverview = () => {
     allCampaign ? allCampaign.sort((a, b) => a.createdAt > b.createdAt) : []
   );
 
-  const [filterCampaign, setFilterCampaign] = useState([]);
-
   const filterItem = (createdAt) => {
-    let newItem = reverseAllCampaign.filter(
-      (campaign) =>
-        DateTime.fromJSDate(new Date(campaign.createdAt)).toFormat(
-          "yyyy-MM"
-        ) === createdAt
-    );
-    setFilterCampaign(newItem);
+    if (
+      reverseAllCampaign ===
+      allCampaign.sort((a, b) => a.createdAt > b.createdAt)
+    ) {
+      let newItem = reverseAllCampaign.filter(
+        (campaign) =>
+          DateTime.fromJSDate(new Date(campaign.createdAt)).toFormat(
+            "yyyy-MM"
+          ) === createdAt
+      );
+      newItem.map((allCampaign) => (
+        <CampaignCard key={allCampaign.id} campaign={allCampaign} />
+      ));
+      setReverseAllCampaign(newItem);
+    } else {
+      setReverseAllCampaign(
+        allCampaign.sort((a, b) => a.createdAt > b.createdAt)
+      );
+    }
   };
 
   return (
