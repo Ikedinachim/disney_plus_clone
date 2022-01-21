@@ -31,6 +31,7 @@ export default class FlierVideoStepForm extends Component {
     targetAudienceOption: "manual",
     price: 0,
     csvFile: "",
+    csvArray: "",
 
     ageRange: "",
     gender: "",
@@ -72,18 +73,55 @@ export default class FlierVideoStepForm extends Component {
     reader.readAsDataURL(e.target.files[0]);
   };
 
-  handleManualImport = (e) => {
-    // e.preventDefault();
-    const file = this.state.csvFile;
-    const reader = new FileReader();
-
-    reader.onload = function (e) {
-      const text = e.target.result;
-      console.log(text);
-    };
-
-    reader.readAsText(file);
+  setCsv = (input) => (e) => {
+    this.setState({ [input]: e.target.files[0] });
   };
+
+  // processCSV = (str, delim = ",") => {
+  //   const headers = str.slice(0, str.indexOf("\n")).split(delim);
+  //   const rows = str.slice(str.indexOf("\n") + 1).split("\n");
+
+  //   const newArray = rows.map((row) => {
+  //     const values = row.split(delim);
+  //     const eachObject = headers.reduce((obj, header, i) => {
+  //       obj[header] = values[i];
+  //       return obj;
+  //     }, {});
+  //     return eachObject;
+  //   });
+
+  //   this.setState({ csvArray: newArray });
+  // };
+
+  handleManualImport = (input) => (e) => {
+    // e.preventDefault();
+    // console.log(e.target.files[0]);
+    // // e.preventDefault();
+    // this.setState({ [input]: e.target.files[0] });
+    // console.log(this.state.csvFile);
+    // const file = this.state.csvFile;
+    // const reader = new FileReader();
+    // reader.onload = (e) => {
+    //   if (reader.readyState === 2) {
+    //     const text = e.target.result;
+    //     console.log(text);
+    //     this.processCSV(text);
+    //   }
+    // };
+    // reader.readAsText(file);
+  };
+
+  // submit = () => {
+  //   const file = csvFile;
+  //   const reader = new FileReader();
+
+  //   reader.onload = function (e) {
+  //     const text = e.target.result;
+  //     console.log(text);
+  //   };
+
+  //   reader.readAsText(file);
+  // };
 
   handleImageUpload = async () => {
     const { files } = document.querySelector('input[type="file"]');
@@ -132,6 +170,11 @@ export default class FlierVideoStepForm extends Component {
   //   widget.open(); // open up the widget after creation
   // };
 
+  getCsvArray = (data) => {
+    this.setState({ csvArray: data });
+    console.log(this.state.csvArray);
+  };
+
   render() {
     const { step } = this.state;
     const {
@@ -159,6 +202,7 @@ export default class FlierVideoStepForm extends Component {
       deviceType,
       deviceBrand,
       csvFile,
+      csvArray,
     } = this.state;
 
     const location = state;
@@ -195,6 +239,7 @@ export default class FlierVideoStepForm extends Component {
       campaignType,
       targetAudienceOption,
       filterParameters,
+      csvArray,
     };
 
     console.log(values);
@@ -222,6 +267,9 @@ export default class FlierVideoStepForm extends Component {
             numbers={numbers}
             values={values}
             filterOptions={filterOptions}
+            setCsv={this.setCsv}
+            ////////////////
+            getCsvArray={this.getCsvArray}
           />
         );
       case 3:
@@ -235,6 +283,7 @@ export default class FlierVideoStepForm extends Component {
             price={price}
             attachmentPreview={attachmentPreview}
             filterOptions={filterOptions}
+            csvArray={csvArray}
           />
         );
       case 4:

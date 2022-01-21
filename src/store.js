@@ -33,6 +33,9 @@ import {
   getSingleCampaignReducer,
   AllCampaignReducer,
   createInfluencerCampaignReducer,
+  getAllInfluencerCampaignReducer,
+  updateInfluencerCampaignStatusReducer,
+  getInfluencerDetailsReducer,
 } from "./reducers/campaignReducers";
 
 const appReducer = combineReducers({
@@ -55,6 +58,9 @@ const appReducer = combineReducers({
   filteredContactList: getFilteredContactListReducer,
   allInfluencers: getAllInfluencersReducer,
   influencerCampaign: createInfluencerCampaignReducer,
+  influencerCampaignList: getAllInfluencerCampaignReducer,
+  updateInfluencerCampaignStatus: updateInfluencerCampaignStatusReducer,
+  influencerDetails: getInfluencerDetailsReducer,
 });
 
 const reducer = (state, action) => {
