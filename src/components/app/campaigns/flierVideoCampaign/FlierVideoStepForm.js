@@ -4,6 +4,8 @@ import TargetAudience from "./TargetAudience";
 import PreviewCampaign from "./PreviewCampaign";
 import FundWalletFlierVideo from "./FundWalletFlierVideo";
 
+const buttonRef = React.createRef();
+
 export default class FlierVideoStepForm extends Component {
   state = {
     step: 1,
@@ -175,6 +177,40 @@ export default class FlierVideoStepForm extends Component {
     console.log(this.state.csvArray);
   };
 
+  handleOpenDialog = (e) => {
+    // Note that the ref is set async, so it might be null at some point
+    if (buttonRef.current) {
+      buttonRef.current.open(e);
+    }
+  };
+
+  handleOnFileLoad = (data) => {
+    console.log("---------------------------");
+    console.log(data);
+    console.log("---------------------------");
+  };
+
+  handleOnError = (err, file, inputElem, reason) => {
+    console.log(err);
+  };
+
+  handleOnRemoveFile = (data) => {
+    console.log("---------------------------");
+    console.log(data);
+    console.log("---------------------------");
+  };
+
+  handleRemoveFile = (e) => {
+    // Note that the ref is set async, so it might be null at some point
+    if (buttonRef.current) {
+      buttonRef.current.removeFile(e);
+    }
+  };
+
+  getButtonRef = () => {
+    return this.buttonRef;
+  };
+
   render() {
     const { step } = this.state;
     const {
@@ -270,6 +306,12 @@ export default class FlierVideoStepForm extends Component {
             setCsv={this.setCsv}
             ////////////////
             getCsvArray={this.getCsvArray}
+            handleOpenDialog={this.handleOpenDialog}
+            handleOnFileLoad={this.handleOnFileLoad}
+            handleOnError={this.handleOnError}
+            handleOnRemoveFile={this.handleOnRemoveFile}
+            handleRemoveFile={this.handleRemoveFile}
+            getButtonRef={this.getButtonRef}
           />
         );
       case 3:

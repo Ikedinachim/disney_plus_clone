@@ -3,11 +3,13 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
+import { saveAs } from "file-saver";
 
 import MetaData from "../components/layout/MetaData";
 import NumberFormat from "react-number-format";
 
 import { getWallet } from "../actions/billingActions";
+import check from "../assets/img/Check.svg";
 import {
   updateInfluencerCampaignStatusAction,
   clearErrors,
@@ -31,6 +33,8 @@ const ViewInfluencerCampaignDetails = () => {
   const { updateInfluencerCampaignStatus, error, loading } = useSelector(
     (state) => state.updateInfluencerCampaignStatus || []
   );
+
+  const [input, setInput] = useState("");
 
   const details = (arr, id) => {
     for (var i in arr) {
@@ -83,18 +87,104 @@ const ViewInfluencerCampaignDetails = () => {
     }
   };
 
-  console.log(checkPlatformCost("all"));
+  console.log(campaignDetails);
 
   const payload = {
-    campaignId: campaignDetails.marketingData.id,
-    marketingId: campaignDetails.influencerId,
+    campaignId: campaignDetails.influencerId,
+    marketingId: campaignDetails.marketingData.id,
     // isApproved: true,
+  };
+  const rejectPayload = {
+    campaignId: campaignDetails.influencerId,
+    marketingId: campaignDetails.marketingData.id,
+    approvalType: "rejected",
+    rejectionMessage: input,
+    // isApproved: true,
+  };
+  const publishPayload = {
+    campaignId: campaignDetails.influencerId,
+    marketingId: campaignDetails.marketingData.id,
+    // isApproved: true,
+  };
+
+  const setAsset = () => {
+    fetch(campaignDetails.marketingData.attachment)
+      .then((res) => res.blob())
+      .then((blob) => saveAs(blob, "fileName"));
   };
 
   const acceptCampaignHandler = (e) => {
     e.preventDefault();
 
     dispatch(updateInfluencerCampaignStatusAction(payload));
+  };
+
+  const rejectCampaignHandler = (e) => {
+    e.preventDefault();
+
+    dispatch(updateInfluencerCampaignStatusAction(rejectPayload));
+  };
+
+  const publishCampaignHandler = (e) => {
+    e.preventDefault();
+
+    dispatch(updateInfluencerCampaignStatusAction(payload));
+  };
+
+  const loadActionButtons = () => {
+    if (
+      !campaignDetails.marketingData.isApproved &&
+      !campaignDetails.marketingData.isPublished &&
+      !campaignDetails.marketingData.isRejected
+    ) {
+      return (
+        <>
+          <button
+            type="button"
+            onClick={acceptCampaignHandler}
+            className="btn btn-primary pd-x-40 tx-com mg-r-15"
+            data-toggle="modal"
+            data-dismiss="modal"
+          >
+            Approve
+          </button>
+          <button
+            // onclick={rejectCampaignHandler}
+            className="btn btn-outline-primary pd-x-30"
+            data-toggle="modal"
+            data-dismiss="modal"
+            data-target="#rejectModal"
+          >
+            Reject
+          </button>
+        </>
+      );
+    } else if (
+      campaignDetails.marketingData.isApproved &&
+      !campaignDetails.marketingData.isPublished &&
+      !campaignDetails.marketingData.isRejected
+    ) {
+      return (
+        <>
+          <button
+            type="button"
+            // onClick={publishCampaignHandler}
+            className="btn btn-primary pd-x-40 tx-com mg-r-15"
+            data-toggle="modal"
+            data-dismiss="modal"
+            data-target="#publishModal"
+          >
+            Confirm Publishing
+          </button>
+        </>
+      );
+    } else if (
+      campaignDetails.marketingData.isApproved &&
+      campaignDetails.marketingData.isPublished &&
+      !campaignDetails.marketingData.isRejected
+    ) {
+      return <p>Completed</p>;
+    }
   };
 
   useEffect(() => {
@@ -218,7 +308,7 @@ const ViewInfluencerCampaignDetails = () => {
                               <div>
                                 <i className="fa fa-download tx-primary mg-r-5" />
                               </div>
-                              <p className="mb-0">Download</p>
+                              <p className="mb-0 pointer">Download</p>
                             </div>
                           </button>
                         </div>
@@ -305,35 +395,28 @@ const ViewInfluencerCampaignDetails = () => {
                     </div>
                   </div>
                   <div className="card-footer mg-t-30 bd-t-0">
-                    {campaignDetails.marketingData.isPublished ? (
-                      <>
-                        <button
-                          type="button"
-                          //   onClick={acceptCampaignHandler}
-                          className="btn btn-primary pd-x-40 tx-com mg-r-15"
-                          data-toggle="modal"
-                          data-dismiss="modal"
-                        >
-                          Accept
-                        </button>
-                        <button className="btn btn-outline-primary pd-x-30">
-                          Reject
-                        </button>
-                      </>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={acceptCampaignHandler}
-                        className="btn btn-primary pd-x-40 tx-com mg-r-15"
-                        data-toggle="modal"
-                        data-dismiss="modal"
-                      >
-                        Confirm Publishing
-                      </button>
-                    )}
+                    {/* {campaignDetails.marketingData.isApproved ||
+                      campaignDetails.marketingData.isPublished ||
+                      (campaignDetails.marketingData.isRejected && (
+                        <>
+                          <button
+                            type="button"
+                            //   onClick={acceptCampaignHandler}
+                            className="btn btn-primary pd-x-40 tx-com mg-r-15"
+                            data-toggle="modal"
+                            data-dismiss="modal"
+                          >
+                            Accept
+                          </button>
+                          <button className="btn btn-outline-primary pd-x-30">
+                            Reject
+                          </button>
+                        </>
+                      ))} */}
+                    {loadActionButtons()}
                   </div>
                   {/*Download  Modal */}
-                  {/* <div
+                  <div
                     className="modal fade"
                     id="downloadModal"
                     tabIndex={-1}
@@ -359,18 +442,18 @@ const ViewInfluencerCampaignDetails = () => {
                         <div className="modal-body">
                           <div>
                             <img
-                              src="../assets/img/my6.png"
-                              alt=""
+                              src={campaignDetails.marketingData.attachment}
+                              alt="campaign asset"
                               className="img-fluid"
-                              srcSet
                             />
                           </div>
                         </div>
                         <div className="modal-footer bd-t-0 col-md-7 mx-auto">
                           <button
                             type="button"
+                            onClick={setAsset}
                             className="btn btn-primary w-100"
-                            data-dismiss="modal"
+                            // data-dismiss="modal"
                           >
                             <i className="fa fa-download mg-r-10" />
                             Download
@@ -378,9 +461,69 @@ const ViewInfluencerCampaignDetails = () => {
                         </div>
                       </div>
                     </div>
-                  </div> */}
+                  </div>
                   {/*Success  Modal */}
-                  {/* <div
+                  <div
+                    id="rejectModal"
+                    className="modal fadedownload"
+                    tabIndex={-1}
+                    aria-labelledby="assignModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div className="modal-dialog modal-dialog-centered modal-smm">
+                      <div className="modal-content pd-md-x-30 pd-x-20 pd-y-20">
+                        <div className="modal-header bd-b-0"></div>
+                        <div className="modal-body tx-center pd-x-10">
+                          <div className="form-group">
+                            {/* <img
+                              src="../assets/img/Check.svg"
+                              className="img-fluid wd-100 ht-100"
+                              alt=""
+                              srcSet
+                            /> */}
+                            <p className="tx-26 tx-com tx-bold">
+                              Reject Campaign
+                            </p>
+                            <p className="tx-16 mb-10">
+                              Please specify the reason for the rejection.
+                            </p>
+                            {/* <input
+                              value={input}
+                              onInput={(e) => setInput(e.target.value)}
+                            /> */}
+                            <textarea
+                              name
+                              className="form-control"
+                              rows={4}
+                              onChange={(e) => setInput(e.target.value)}
+                              placeholder="Enter Reasons"
+                              defaultValue={input}
+                            />
+                          </div>
+                        </div>
+                        <div className="tx-center modal-footer bd-t-0 pd-b-30">
+                          <button
+                            type="button"
+                            className="btn btn-primary w-45 mg-r-20"
+                            onClick={rejectCampaignHandler}
+                            data-dismiss="modal"
+                          >
+                            Reject
+                          </button>
+                          <button
+                            type="button"
+                            className="btn btn-outline-primary w-45"
+                            data-dismiss="modal"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {/*Confirm Publish Modal */}
+                  <div
+                    id="publishModal"
                     className="modal fadedownload"
                     tabIndex={-1}
                     aria-labelledby="assignModalLabel"
@@ -392,12 +535,12 @@ const ViewInfluencerCampaignDetails = () => {
                         <div className="modal-body tx-center pd-x-10">
                           <div className="form-group">
                             <img
-                              src="../assets/img/Check.svg"
+                              src={check}
                               className="img-fluid wd-100 ht-100"
                               alt=""
                               srcSet
                             />
-                            <p className="tx-26 tx-com tx-bold">Ad Accepted</p>
+                            <p className="tx-26 tx-com tx-bold">Ad Published</p>
                             <p className="tx-16 mb-0">
                               Please confirm that you have posted this campaign
                               on your social media pages.
@@ -405,25 +548,24 @@ const ViewInfluencerCampaignDetails = () => {
                           </div>
                         </div>
                         <div className="tx-center modal-footer bd-t-0 pd-b-30">
-                          <a
-                            href="./all-campaign.html"
-                            type="button"
-                            className="btn btn-primary w-50 mg-r-20"
-                            data-dismiss="modal"
-                          >
-                            Yes
-                          </a>
                           <button
                             type="button"
-                            className="btn btn-outline-primary w-50"
+                            className="btn btn-primary w-45 mg-r-20"
                             data-dismiss="modal"
                           >
-                            No
+                            Confirm
+                          </button>
+                          <button
+                            type="button"
+                            className="btn btn-outline-primary w-45"
+                            data-dismiss="modal"
+                          >
+                            Dismiss
                           </button>
                         </div>
                       </div>
                     </div>
-                  </div> */}
+                  </div>
                 </div>
               </div>
             </div>
