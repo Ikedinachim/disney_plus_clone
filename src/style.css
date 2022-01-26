@@ -156,7 +156,7 @@ tbody + thead {
   height: 100%;
 }
 
-.ads-body {
+.ads-content {
   height: 100vh;
   display: flex;
   align-items: center;
@@ -184,4 +184,13 @@ tbody + thead {
 }
 .progressBarBackgroundColor {
   background-color: red;
+}
+
+.modal.exit {
+  opacity: 0;
+}
+
+.modal.enter-done {
+  opacity: 1;
+  pointer-events: visible;
 }

@@ -57,11 +57,15 @@ const InfluencerCampaign = ({
     // handleImageUpload();
   };
 
+  // let d = document.createElement("div");
+  // let f = d.classList.add("backdrop");
+
   const toggleHandler = (item) => (e) => {
     const isChecked = e.target.checked;
     if (isChecked) {
       setCloseModal(true);
       setInfluencerId(e.target.value);
+      // document.body.appendChild(f);
     } else {
       setCloseModal(false);
     }
@@ -140,6 +144,7 @@ const InfluencerCampaign = ({
     if (checkedInfluencer !== null) {
       handleCheckedState(checkedInfluencer);
     }
+    console.log(closeModal);
   }, [checkedInfluencer]);
 
   const customFilter = (object, key, value) => {
