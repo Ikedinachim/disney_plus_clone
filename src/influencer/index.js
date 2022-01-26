@@ -90,11 +90,53 @@ const Dashboard = () => {
         ),
         status: (
           <span
-            className={`{"badge" ${
-              !campaign.marketingData.isApproved ? "badge-pink" : "badge-active"
+            className={`badge ${
+              campaign.marketingData.isApproved &&
+              !campaign.marketingData.isPublished &&
+              !campaign.marketingData.isRejected
+                ? "badge-pending"
+                : ""
+            } ${
+              campaign.marketingData.isApproved &&
+              campaign.marketingData.isPublished &&
+              !campaign.marketingData.isRejected
+                ? "badge-active"
+                : ""
+            } ${
+              !campaign.marketingData.isApproved &&
+              !campaign.marketingData.isPublished &&
+              !campaign.marketingData.isRejected
+                ? "badge-pink"
+                : ""
             }`}
           >
-            {!campaign.marketingData.isApproved ? "Pending" : "Approved"}
+            {
+              // (!campaign.marketingData.isApproved ? "Pending" : "Approved")
+              campaign.marketingData.isApproved &&
+              !campaign.marketingData.isPublished &&
+              !campaign.marketingData.isRejected
+                ? "Approved"
+                : null ||
+                  (campaign.marketingData.isApproved &&
+                    campaign.marketingData.isPublished &&
+                    !campaign.marketingData.isRejected)
+                ? "Published"
+                : null ||
+                  (!campaign.marketingData.isApproved &&
+                    !campaign.marketingData.isPublished &&
+                    campaign.marketingData.isRejected)
+                ? "Rejected"
+                : null ||
+                  (!campaign.marketingData.isApproved &&
+                    !campaign.marketingData.isPublished &&
+                    !campaign.marketingData.isRejected)
+                ? "Pending"
+                : null
+
+              // if (campaign.marketingData.isApproved && !campaign.marketingData.isPublished && !campaign.marketingData.isRejected) {
+              //   return "Approved"
+              // }
+            }
           </span>
         ),
         actions: (
