@@ -12,12 +12,16 @@ import { getWallet } from "../actions/billingActions";
 import check from "../assets/img/Check.svg";
 import {
   updateInfluencerCampaignStatusAction,
+  updateInfluencerPublishStatusAction,
   clearErrors,
 } from "../actions/campaignActions";
-import { UPDATE_INFLUENCER_CAMPAIGN_STATUS_RESET } from "../constants/campaignConstants";
+import {
+  UPDATE_INFLUENCER_CAMPAIGN_STATUS_RESET,
+  UPDATE_INFLUENCER_PUBLISHED_STATUS_RESET,
+} from "../constants/campaignConstants";
 import Loader from "../components/layout/Loader";
 
-import PreviewIcon from "../assets/img/Promote_Offers.svg";
+// import PreviewIcon from "../assets/img/Promote_Offers.svg";
 
 const ViewInfluencerCampaignDetails = () => {
   const { influencerCampaignList } = useSelector(
@@ -33,8 +37,12 @@ const ViewInfluencerCampaignDetails = () => {
   const { updateInfluencerCampaignStatus, error, loading } = useSelector(
     (state) => state.updateInfluencerCampaignStatus || []
   );
+  const { updateInfluencerPublishedStatus, publishError, publishLoading } =
+    useSelector((state) => state.updateInfluencerCampaignPublishStatus || []);
 
-  const [input, setInput] = useState("");
+  const [rejectInput, setRejectInput] = useState("");
+  const [publishInputUrl, setPublishInputUrl] = useState("");
+  const [publishInputMessage, setPublishInputMessage] = useState("");
 
   const details = (arr, id) => {
     for (var i in arr) {
@@ -89,22 +97,23 @@ const ViewInfluencerCampaignDetails = () => {
 
   console.log(campaignDetails);
 
-  const payload = {
-    campaignId: campaignDetails.influencerId,
+  const approvedPayload = {
+    influencerId: campaignDetails.influencerId,
     marketingId: campaignDetails.marketingData.id,
-    // isApproved: true,
+    approvalType: "approved",
+    rejectionMessage: "",
   };
   const rejectPayload = {
-    campaignId: campaignDetails.influencerId,
+    influencerId: campaignDetails.influencerId,
     marketingId: campaignDetails.marketingData.id,
     approvalType: "rejected",
-    rejectionMessage: input,
-    // isApproved: true,
+    rejectionMessage: rejectInput,
   };
   const publishPayload = {
-    campaignId: campaignDetails.influencerId,
+    influencerId: campaignDetails.influencerId,
     marketingId: campaignDetails.marketingData.id,
-    // isApproved: true,
+    publishUrl: publishInputUrl,
+    publishMessage: publishInputMessage,
   };
 
   const setAsset = () => {
@@ -116,7 +125,7 @@ const ViewInfluencerCampaignDetails = () => {
   const acceptCampaignHandler = (e) => {
     e.preventDefault();
 
-    dispatch(updateInfluencerCampaignStatusAction(payload));
+    dispatch(updateInfluencerCampaignStatusAction(approvedPayload));
   };
 
   const rejectCampaignHandler = (e) => {
@@ -128,7 +137,7 @@ const ViewInfluencerCampaignDetails = () => {
   const publishCampaignHandler = (e) => {
     e.preventDefault();
 
-    dispatch(updateInfluencerCampaignStatusAction(payload));
+    dispatch(updateInfluencerPublishStatusAction(publishPayload));
   };
 
   const loadActionButtons = () => {
@@ -195,15 +204,30 @@ const ViewInfluencerCampaignDetails = () => {
       alert.success(updateInfluencerCampaignStatus.message);
       dispatch({ type: UPDATE_INFLUENCER_CAMPAIGN_STATUS_RESET });
       navigate("/influencer");
-    } else if (error) {
-      alert.error(error);
+    } else if (
+      updateInfluencerPublishedStatus &&
+      updateInfluencerPublishedStatus.status === "success"
+    ) {
+      alert.success(updateInfluencerPublishedStatus.message);
+      dispatch({ type: UPDATE_INFLUENCER_PUBLISHED_STATUS_RESET });
+      navigate("/influencer");
+    } else if (error || publishError) {
+      alert.error(error || publishError);
       dispatch(clearErrors());
     }
-  }, [dispatch, alert, error, updateInfluencerCampaignStatus, navigate]);
+  }, [
+    dispatch,
+    alert,
+    error,
+    publishError,
+    updateInfluencerCampaignStatus,
+    updateInfluencerPublishedStatus,
+    navigate,
+  ]);
 
   return (
     <Fragment>
-      {loading ? (
+      {loading || publishLoading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -462,7 +486,7 @@ const ViewInfluencerCampaignDetails = () => {
                       </div>
                     </div>
                   </div>
-                  {/*Success  Modal */}
+                  {/*Reject  Modal */}
                   <div
                     id="rejectModal"
                     className="modal fadedownload"
@@ -489,15 +513,15 @@ const ViewInfluencerCampaignDetails = () => {
                             </p>
                             {/* <input
                               value={input}
-                              onInput={(e) => setInput(e.target.value)}
+                              onInput={(e) => setRejectInput(e.target.value)}
                             /> */}
                             <textarea
                               name
                               className="form-control"
                               rows={4}
-                              onChange={(e) => setInput(e.target.value)}
+                              onChange={(e) => setRejectInput(e.target.value)}
                               placeholder="Enter Reasons"
-                              defaultValue={input}
+                              defaultValue={rejectInput}
                             />
                           </div>
                         </div>
@@ -538,18 +562,38 @@ const ViewInfluencerCampaignDetails = () => {
                               src={check}
                               className="img-fluid wd-100 ht-100"
                               alt=""
-                              srcSet
                             />
                             <p className="tx-26 tx-com tx-bold">Ad Published</p>
-                            <p className="tx-16 mb-0">
+                            <p className="tx-16 mb-3">
                               Please confirm that you have posted this campaign
                               on your social media pages.
                             </p>
+                            <input
+                              // name
+                              className="form-control mb-4"
+                              rows={4}
+                              onChange={(e) =>
+                                setPublishInputUrl(e.target.value)
+                              }
+                              placeholder="Enter Url of the Published Campaign"
+                              defaultValue={publishInputUrl}
+                            />
+                            <textarea
+                              // name
+                              className="form-control"
+                              rows={4}
+                              onChange={(e) =>
+                                setPublishInputMessage(e.target.value)
+                              }
+                              placeholder="Optional Message For Advertiser"
+                              defaultValue={publishInputMessage}
+                            />
                           </div>
                         </div>
                         <div className="tx-center modal-footer bd-t-0 pd-b-30">
                           <button
                             type="button"
+                            onClick={publishCampaignHandler}
                             className="btn btn-primary w-45 mg-r-20"
                             data-dismiss="modal"
                           >

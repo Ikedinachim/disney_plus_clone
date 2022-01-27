@@ -1,10 +1,11 @@
-import React, { Component } from "react";
+import React, { Component, useCallback } from "react";
 import FlierVideoCampaign from "./FlierVideoCampaign";
 import TargetAudience from "./TargetAudience";
 import PreviewCampaign from "./PreviewCampaign";
 import FundWalletFlierVideo from "./FundWalletFlierVideo";
+import { useDropzone } from "react-dropzone";
 
-const buttonRef = React.createRef();
+// const buttonRef = React.createRef();
 
 export default class FlierVideoStepForm extends Component {
   state = {
@@ -32,8 +33,8 @@ export default class FlierVideoStepForm extends Component {
     campaignType: "flier_video",
     targetAudienceOption: "manual",
     price: 0,
-    csvFile: "",
-    csvArray: "",
+    // csvFile: "",
+    // csvArray: "",
 
     ageRange: "",
     gender: "",
@@ -41,6 +42,8 @@ export default class FlierVideoStepForm extends Component {
     lga: "",
     deviceType: "LG",
     deviceBrand: "X210ZM",
+
+    parsedCsvData: [],
   };
 
   // go back to previous step
@@ -75,54 +78,12 @@ export default class FlierVideoStepForm extends Component {
     reader.readAsDataURL(e.target.files[0]);
   };
 
-  setCsv = (input) => (e) => {
-    this.setState({ [input]: e.target.files[0] });
-  };
-
-  // processCSV = (str, delim = ",") => {
-  //   const headers = str.slice(0, str.indexOf("\n")).split(delim);
-  //   const rows = str.slice(str.indexOf("\n") + 1).split("\n");
-
-  //   const newArray = rows.map((row) => {
-  //     const values = row.split(delim);
-  //     const eachObject = headers.reduce((obj, header, i) => {
-  //       obj[header] = values[i];
-  //       return obj;
-  //     }, {});
-  //     return eachObject;
-  //   });
-
-  //   this.setState({ csvArray: newArray });
+  // setCsv = (input) => (e) => {
+  //   this.setState({ [input]: e.target.files[0] });
   // };
 
-  handleManualImport = (input) => (e) => {
-    // e.preventDefault();
-    // console.log(e.target.files[0]);
-    // // e.preventDefault();
-    // this.setState({ [input]: e.target.files[0] });
-    // console.log(this.state.csvFile);
-    // const file = this.state.csvFile;
-    // const reader = new FileReader();
-    // reader.onload = (e) => {
-    //   if (reader.readyState === 2) {
-    //     const text = e.target.result;
-    //     console.log(text);
-    //     this.processCSV(text);
-    //   }
-    // };
-    // reader.readAsText(file);
-  };
+  // handleManualImport = (input) => (e) => {
 
-  // submit = () => {
-  //   const file = csvFile;
-  //   const reader = new FileReader();
-
-  //   reader.onload = function (e) {
-  //     const text = e.target.result;
-  //     console.log(text);
-  //   };
-
-  //   reader.readAsText(file);
   // };
 
   handleImageUpload = async () => {
@@ -137,7 +98,6 @@ export default class FlierVideoStepForm extends Component {
       body: formData,
     };
 
-    // replace cloudname with your Cloudinary cloud_name
     try {
       const res = await fetch(
         "https://api.Cloudinary.com/v1_1/mysogi/image/upload",
@@ -172,48 +132,46 @@ export default class FlierVideoStepForm extends Component {
   //   widget.open(); // open up the widget after creation
   // };
 
-  getCsvArray = (data) => {
-    this.setState({ csvArray: data });
-    console.log(this.state.csvArray);
-  };
+  // getCsvArray = (data) => {
+  //   this.setState({ csvArray: data });
+  //   console.log(this.state.csvArray);
+  // };
 
-  handleOpenDialog = (e) => {
-    // Note that the ref is set async, so it might be null at some point
-    if (buttonRef.current) {
-      buttonRef.current.open(e);
-    }
-  };
+  // handleOpenDialog = (e) => {
+  //   // Note that the ref is set async, so it might be null at some point
+  //   if (buttonRef.current) {
+  //     buttonRef.current.open(e);
+  //   }
+  // };
 
-  handleOnFileLoad = (data) => {
-    console.log("---------------------------");
-    console.log(data);
-    console.log("---------------------------");
-  };
+  // handleOnFileLoad = (data) => {
+  //   console.log("---------------------------");
+  //   console.log(data);
+  //   console.log("---------------------------");
+  // };
 
-  handleOnError = (err, file, inputElem, reason) => {
-    console.log(err);
-  };
+  // handleOnError = (err, file, inputElem, reason) => {
+  //   console.log(err);
+  // };
 
-  handleOnRemoveFile = (data) => {
-    console.log("---------------------------");
-    console.log(data);
-    console.log("---------------------------");
-  };
+  // handleOnRemoveFile = (e) => (data) => {
+  //   e.preventDefault();
+  //   console.log("---------------------------");
+  //   console.log(data);
+  //   console.log("---------------------------");
+  // };
 
-  handleRemoveFile = (e) => {
-    // Note that the ref is set async, so it might be null at some point
-    if (buttonRef.current) {
-      buttonRef.current.removeFile(e);
-    }
-  };
-
-  getButtonRef = () => {
-    return this.buttonRef;
-  };
+  // handleRemoveFile = (e) => {
+  //   // Note that the ref is set async, so it might be null at some point
+  //   if (buttonRef.current) {
+  //     buttonRef.current.removeFile(e);
+  //   }
+  // };
 
   render() {
-    const { step } = this.state;
+    // const { step } = this.state;
     const {
+      step,
       senderId,
       channel,
       campaignMessage,
@@ -237,13 +195,37 @@ export default class FlierVideoStepForm extends Component {
       lga,
       deviceType,
       deviceBrand,
-      csvFile,
+      // csvFile,
       csvArray,
+      parsedCsvData,
     } = this.state;
 
+    /////////////////////////////
+
+    const getCsvRawData = (data) => {
+      this.setState({ parsedCsvData: data });
+    };
+
+    let personalUpload = parsedCsvData.map(({ Numbers }) => Numbers);
+
+    let targetAudience = [];
+
+    const getAudience = () => {
+      if (
+        personalUpload.length > 0 &&
+        targetAudienceOption === "manual_import"
+      ) {
+        return (targetAudience = personalUpload);
+      } else {
+        return (targetAudience = numbers.split(","));
+      }
+    };
+
+    /////////////////////////////
+
     const location = state;
-    const targetAudience = numbers.split(",");
-    const audience = targetAudience.length;
+    // const targetAudience = numbers.split(",");
+    const audience = getAudience().length;
     const price = audience * 5;
     const timeRange = timeRangeFrom + " - " + timeRangeTo;
     // const attachment = attachmentPreview
@@ -271,7 +253,7 @@ export default class FlierVideoStepForm extends Component {
       smsNumber,
       callToAction,
       attachment,
-      targetAudience,
+      targetAudience: getAudience(),
       campaignType,
       targetAudienceOption,
       filterParameters,
@@ -299,19 +281,25 @@ export default class FlierVideoStepForm extends Component {
             nextStep={this.nextStep}
             handleChange={this.handleChange}
             onChangeAttachment={this.onChangeAttachment}
-            handleManualImport={this.handleManualImport}
+            // handleManualImport={this.handleManualImport}
             numbers={numbers}
             values={values}
             filterOptions={filterOptions}
-            setCsv={this.setCsv}
+            // setCsv={this.setCsv}
             ////////////////
-            getCsvArray={this.getCsvArray}
-            handleOpenDialog={this.handleOpenDialog}
-            handleOnFileLoad={this.handleOnFileLoad}
-            handleOnError={this.handleOnError}
-            handleOnRemoveFile={this.handleOnRemoveFile}
-            handleRemoveFile={this.handleRemoveFile}
-            getButtonRef={this.getButtonRef}
+            // // getCsvArray={this.getCsvArray}
+            // // handleOpenDialog={this.handleOpenDialog}
+            // handleOnFileLoad={this.handleOnFileLoad}
+            // handleOnError={this.handleOnError}
+            // handleOnRemoveFile={this.handleOnRemoveFile}
+            // handleRemoveFile={this.handleRemoveFile}
+            ////////////////
+            // getRootProps={getRootProps}
+            // getInputProps={getInputProps}
+            // isDragActive={isDragActive}
+            // isDragAccept={isDragAccept}
+            // isDragReject={isDragReject}
+            getCsvRawData={getCsvRawData}
           />
         );
       case 3:

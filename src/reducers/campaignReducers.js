@@ -48,6 +48,10 @@ import {
   UPDATE_INFLUENCER_CAMPAIGN_STATUS_SUCCESS,
   UPDATE_INFLUENCER_CAMPAIGN_STATUS_FAIL,
   UPDATE_INFLUENCER_CAMPAIGN_STATUS_RESET,
+  UPDATE_INFLUENCER_PUBLISHED_STATUS_REQUEST,
+  UPDATE_INFLUENCER_PUBLISHED_STATUS_SUCCESS,
+  UPDATE_INFLUENCER_PUBLISHED_STATUS_FAIL,
+  UPDATE_INFLUENCER_PUBLISHED_STATUS_RESET,
   GET_INFLUENCER_DETAILS_REQUEST,
   GET_INFLUENCER_DETAILS_SUCCESS,
   GET_INFLUENCER_DETAILS_FAIL,
@@ -507,6 +511,45 @@ export const getAllInfluencerCampaignReducer = (
       return {
         ...state,
         error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const updateInfluencerPublishedStatusReducer = (
+  state = { updateInfluencerPublishedStatus: [] },
+  action
+) => {
+  switch (action.type) {
+    case UPDATE_INFLUENCER_PUBLISHED_STATUS_REQUEST:
+      return {
+        publishLoading: true,
+        updateInfluencerPublishedStatus: [],
+      };
+
+    case UPDATE_INFLUENCER_PUBLISHED_STATUS_SUCCESS:
+      return {
+        publishLoading: false,
+        updateInfluencerPublishedStatus: action.payload,
+      };
+    case UPDATE_INFLUENCER_PUBLISHED_STATUS_FAIL:
+      return {
+        publishLoading: false,
+        updateInfluencerPublishedStatus: null,
+        publishError: action.payload,
+      };
+    case UPDATE_INFLUENCER_PUBLISHED_STATUS_RESET:
+      return {
+        ...state,
+        updateInfluencerPublishedStatus: [],
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        publishError: null,
       };
 
     default:

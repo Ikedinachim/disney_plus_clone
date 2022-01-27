@@ -90,7 +90,7 @@ const Dashboard = () => {
         ),
         status: (
           <span
-            className={`badge ${
+            className={`badge d-flex-center ${
               campaign.marketingData.isApproved &&
               !campaign.marketingData.isPublished &&
               !campaign.marketingData.isRejected
@@ -105,10 +105,17 @@ const Dashboard = () => {
             } ${
               !campaign.marketingData.isApproved &&
               !campaign.marketingData.isPublished &&
-              !campaign.marketingData.isRejected
-                ? "badge-pink"
+              campaign.marketingData.isRejected
+                ? "badge-primary"
                 : ""
-            }`}
+            }
+             ${
+               !campaign.marketingData.isApproved &&
+               !campaign.marketingData.isPublished &&
+               !campaign.marketingData.isRejected
+                 ? "badge-pink"
+                 : ""
+             }`}
           >
             {
               // (!campaign.marketingData.isApproved ? "Pending" : "Approved")
