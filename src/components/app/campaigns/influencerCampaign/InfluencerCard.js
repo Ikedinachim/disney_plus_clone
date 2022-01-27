@@ -31,7 +31,7 @@ const InfluencerCard = ({
             <label
               className="custom-control-label d-inline"
               htmlFor={influencer.id}
-              data-toggle="modal"
+              data-toggle="modal2"
               data-target="#sideModal"
             >
               <div className="d-flex">

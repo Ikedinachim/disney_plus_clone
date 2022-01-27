@@ -19,14 +19,17 @@ const Login = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
 
-  const { isAuthenticated, error, loading } = useSelector(
+  const { isAuthenticated, error, loading, user } = useSelector(
     (state) => state.auth
   );
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && user.user.role !== "influencer") {
       dispatch(getWallet());
       navHistory("/app");
+    } else if (isAuthenticated && user.user.role === "influencer") {
+      dispatch(getWallet());
+      navHistory("/influencer");
     } else {
       navHistory("/login");
       setUsername("");

@@ -40,6 +40,19 @@ import {
   GET_FILTERED_CONTACT_LIST_REQUEST,
   GET_FILTERED_CONTACT_LIST_SUCCESS,
   GET_FILTERED_CONTACT_LIST_FAIL,
+  /////////////// INFLUENCER CONSTANTS ////////////
+  GET_ALL_INFLUENCER_CAMPAIGN_REQUEST,
+  GET_ALL_INFLUENCER_CAMPAIGN_SUCCESS,
+  GET_ALL_INFLUENCER_CAMPAIGN_FAIL,
+  UPDATE_INFLUENCER_CAMPAIGN_STATUS_REQUEST,
+  UPDATE_INFLUENCER_CAMPAIGN_STATUS_SUCCESS,
+  UPDATE_INFLUENCER_CAMPAIGN_STATUS_FAIL,
+  UPDATE_INFLUENCER_CAMPAIGN_STATUS_RESET,
+  GET_INFLUENCER_DETAILS_REQUEST,
+  GET_INFLUENCER_DETAILS_SUCCESS,
+  GET_INFLUENCER_DETAILS_FAIL,
+
+  ////////////// GENERIC CONSTANTS ///////////////
   CLEAR_ERRORS,
 } from "../constants/campaignConstants";
 
@@ -452,6 +465,115 @@ export const createShowAdsReducer = (state = { createShowAds: [] }, action) => {
       return {
         ...state,
         createShowAds: [],
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+/////////////////// INFLUENCER DASHBOARD REDUCER //////////////////
+
+export const getAllInfluencerCampaignReducer = (
+  state = { influencerCampaignList: [] },
+  action
+) => {
+  switch (action.type) {
+    case GET_ALL_INFLUENCER_CAMPAIGN_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case GET_ALL_INFLUENCER_CAMPAIGN_SUCCESS:
+      return {
+        loading: false,
+        influencerCampaignList: action.payload,
+      };
+
+    case GET_ALL_INFLUENCER_CAMPAIGN_FAIL:
+      return {
+        loading: false,
+        influencerCampaignList: null,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const updateInfluencerCampaignStatusReducer = (
+  state = { updateInfluencerCampaignStatus: [] },
+  action
+) => {
+  switch (action.type) {
+    case UPDATE_INFLUENCER_CAMPAIGN_STATUS_REQUEST:
+      return {
+        loading: true,
+        updateInfluencerCampaignStatus: [],
+      };
+
+    case UPDATE_INFLUENCER_CAMPAIGN_STATUS_SUCCESS:
+      return {
+        loading: false,
+        updateInfluencerCampaignStatus: action.payload,
+      };
+    case UPDATE_INFLUENCER_CAMPAIGN_STATUS_FAIL:
+      return {
+        loading: false,
+        updateInfluencerCampaignStatus: null,
+        error: action.payload,
+      };
+    case UPDATE_INFLUENCER_CAMPAIGN_STATUS_RESET:
+      return {
+        ...state,
+        updateInfluencerCampaignStatus: [],
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const getInfluencerDetailsReducer = (
+  state = { influencerDetails: [] },
+  action
+) => {
+  switch (action.type) {
+    case GET_INFLUENCER_DETAILS_REQUEST:
+      return {
+        idLoading: true,
+      };
+
+    case GET_INFLUENCER_DETAILS_SUCCESS:
+      return {
+        idLoading: false,
+        influencerDetails: action.payload,
+      };
+
+    case GET_INFLUENCER_DETAILS_FAIL:
+      return {
+        idLoading: false,
+        influencerDetails: null,
+        error: action.payload,
       };
 
     case CLEAR_ERRORS:

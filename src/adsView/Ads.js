@@ -26,9 +26,12 @@ const ViewCampaign = () => {
   //   if (/android/i.test(ua)) {
   //     return "Android"
   //   }
-  //   else if (/iPad|iPhone|iPod/.test(ua))
-  //      || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1){
-  //     return "iOS"
+  //   else if (
+  //     /iPad|iPhone|iPod/.test(ua) ||
+  //     (navigator.userAgentData.platform === "MacIntel" &&
+  //       navigator.maxTouchPoints > 1)
+  //   ) {
+  //     return "iOS";
   //   }
   //   return "Other"
   // }
@@ -49,7 +52,7 @@ const ViewCampaign = () => {
       ) : (
         <Fragment>
           <MetaData title={"All Campaigns"} />
-          <div className="content-body ads-body">
+          <div className="content-body ads-content">
             <div className="container pd-x-0">
               <div className="col-md-5 col-12 mg-t-20">
                 <div className="card shadow-sm rounded bd-0">

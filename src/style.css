@@ -156,9 +156,41 @@ tbody + thead {
   height: 100%;
 }
 
-.ads-body {
+.ads-content {
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.csvReader {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+.browseFile {
+  width: 20%;
+}
+.acceptedFile {
+  border: 1px solid #ccc;
+  height: 45;
+  line-height: 2.5;
+  padding-left: 10px;
+  width: 80%;
+}
+.remove {
+  border-radius: 0;
+  padding: 0 20px;
+}
+.progressBarBackgroundColor {
+  background-color: red;
+}
+
+.modal.exit {
+  opacity: 0;
+}
+
+.modal.enter-done {
+  opacity: 1;
+  pointer-events: visible;
 }

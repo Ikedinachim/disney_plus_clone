@@ -1,8 +1,13 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useRef } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import MetaData from "../../../layout/MetaData";
 import { useAlert } from "react-alert";
+import {
+  useCSVReader,
+  lightenDarkenColor,
+  formatFileSize,
+} from "react-papaparse";
 import NaijaStates from "naija-state-local-government";
 
 import {
@@ -18,9 +23,99 @@ const TargetAudience = ({
   numbers,
   filterOptions,
   values,
+  getCsvArray,
+
+  handleOpenDialog,
+  handleOnFileLoad,
+  handleOnError,
+  handleOnRemoveFile,
+  handleRemoveFile,
+  getButtonRef,
 }) => {
+  const GREY = "#CCC";
+  const GREY_LIGHT = "rgba(255, 255, 255, 0.4)";
+  const DEFAULT_REMOVE_HOVER_COLOR = "#A01919";
+  const REMOVE_HOVER_COLOR_LIGHT = lightenDarkenColor(
+    DEFAULT_REMOVE_HOVER_COLOR,
+    40
+  );
+  const GREY_DIM = "#686868";
+
+  const styles = {
+    zone: {
+      alignItems: "center",
+      border: `2px dashed ${GREY}`,
+      borderRadius: 20,
+      display: "flex",
+      flexDirection: "column",
+      height: "100%",
+      justifyContent: "center",
+      padding: 20,
+    },
+    file: {
+      background: "linear-gradient(to bottom, #EEE, #DDD)",
+      borderRadius: 20,
+      display: "flex",
+      height: 120,
+      width: 120,
+      position: "relative",
+      zIndex: 10,
+      flexDirection: "column",
+      justifyContent: "center",
+    },
+    info: {
+      alignItems: "center",
+      display: "flex",
+      flexDirection: "column",
+      paddingLeft: 10,
+      paddingRight: 10,
+    },
+    size: {
+      backgroundColor: GREY_LIGHT,
+      borderRadius: 3,
+      marginBottom: "0.5em",
+      justifyContent: "center",
+      display: "flex",
+    },
+    name: {
+      backgroundColor: GREY_LIGHT,
+      borderRadius: 3,
+      fontSize: 12,
+      marginBottom: "0.5em",
+    },
+    progressBar: {
+      bottom: 14,
+      position: "absolute",
+      width: "100%",
+      paddingLeft: 10,
+      paddingRight: 10,
+    },
+    zoneHover: {
+      borderColor: GREY_DIM,
+    },
+    default: {
+      borderColor: GREY,
+    },
+    remove: {
+      height: 23,
+      position: "absolute",
+      right: 6,
+      top: 6,
+      width: 23,
+    },
+  };
+
+  const ref = useRef();
+  const { CSVReader } = useCSVReader();
+  const [zoneHover, setZoneHover] = useState(false);
+  const [csvData, setCsvData] = useState({});
+  const [removeHoverColor, setRemoveHoverColor] = useState(
+    DEFAULT_REMOVE_HOVER_COLOR
+  );
+
   const alert = useAlert();
   const dispatch = useDispatch();
+  // const { CSVReader } = useCSVReader();
 
   const { filteredContactList, error, loading } = useSelector(
     (state) => state.filteredContactList || []
@@ -29,6 +124,40 @@ const TargetAudience = ({
   const [status, setStatus] = useState(3);
   const radioHandler = (status) => {
     setStatus(status);
+  };
+
+  const [csvFile, setCsvFile] = useState();
+  const [csvArray, setCsvArray] = useState([]);
+
+  const processCSV = (str, delim = ",") => {
+    const headers = str.slice(0, str.indexOf("\n")).split(delim);
+    const rows = str.slice(str.indexOf("\n") + 1).split("\n");
+
+    const newArray = rows.map((row) => {
+      const values = row.split(delim);
+      const eachObject = headers.reduce((obj, header, i) => {
+        obj[header] = values[i];
+        return obj;
+      }, {});
+      return eachObject;
+    });
+
+    setCsvArray(newArray);
+  };
+
+  const submit = () => {
+    const file = csvFile;
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+      const text = e.target.result;
+      console.log(text);
+      processCSV(text);
+    };
+
+    getCsvArray(csvArray);
+
+    reader.readAsText(file);
   };
 
   const selectGenders = [
@@ -69,11 +198,28 @@ const TargetAudience = ({
     },
   ];
 
+  // const handleOnDrop = (data) => {
+  //   console.log("---------------------------");
+  //   console.log(data);
+  //   console.log("---------------------------");
+  // };
+
+  // const handleOnError = (err, file, inputElem, reason) => {
+  //   console.log(err);
+  // };
+
+  // const handleOnRemoveFile = (data) => {
+  //   console.log("---------------------------");
+  //   console.log(data);
+  //   console.log("---------------------------");
+  // };
+
   const Continue = (e) => {
     e.preventDefault();
     if (values.targetAudienceOption === "mysogidb") {
       dispatch(getFilteredContactList(filterOptions));
       nextStep();
+      csvFile && submit();
     } else {
       nextStep();
     }
@@ -88,6 +234,8 @@ const TargetAudience = ({
       alert.error(error);
       dispatch(clearErrors());
     }
+    // console.log(csvArray);
+    console.log(csvData);
   }, [dispatch, error, alert]);
 
   const lga = NaijaStates.lgas(filterOptions.state);
@@ -128,7 +276,6 @@ const TargetAudience = ({
                           id="db"
                           name="customRadio"
                           className="custom-control-input"
-                          defaultChecked
                           checked={status === 1}
                           onClick={(e) => radioHandler(1)}
                           value={"mysogidb"}
@@ -299,22 +446,167 @@ const TargetAudience = ({
                               Upload CSV Containing Phone NUmbers
                             </p>
                             <div className="form-group">
-                              <div className="custom-file">
-                                <input
+                              <CSVReader
+                                ref={getButtonRef}
+                                onFileLoad={handleOnFileLoad}
+                                onError={handleOnError}
+                                noClick
+                                noDrag
+                                onRemoveFile={handleOnRemoveFile}
+                              >
+                                {({ file }) => (
+                                  <aside
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "row",
+                                      marginBottom: 10,
+                                    }}
+                                  >
+                                    <button
+                                      type="button"
+                                      onClick={handleOpenDialog}
+                                      style={{
+                                        borderRadius: 0,
+                                        marginLeft: 0,
+                                        marginRight: 0,
+                                        width: "40%",
+                                        paddingLeft: 0,
+                                        paddingRight: 0,
+                                      }}
+                                    >
+                                      Browe file
+                                    </button>
+                                    <div
+                                      style={{
+                                        borderWidth: 1,
+                                        borderStyle: "solid",
+                                        borderColor: "#ccc",
+                                        height: 45,
+                                        lineHeight: 2.5,
+                                        marginTop: 5,
+                                        marginBottom: 5,
+                                        paddingLeft: 13,
+                                        paddingTop: 3,
+                                        width: "60%",
+                                      }}
+                                    >
+                                      {file && file.name}
+                                    </div>
+                                    <button
+                                      style={{
+                                        borderRadius: 0,
+                                        marginLeft: 0,
+                                        marginRight: 0,
+                                        paddingLeft: 20,
+                                        paddingRight: 20,
+                                      }}
+                                      onClick={handleRemoveFile}
+                                    >
+                                      Remove
+                                    </button>
+                                  </aside>
+                                )}
+                              </CSVReader>
+                              {/* <CSVReader
+                                onUploadAccepted={(results) => {
+                                  console.log("---------------------------");
+                                  console.log(results);
+                                  console.log("---------------------------");
+                                  setZoneHover(false);
+                                }}
+                                onDragOver={(event) => {
+                                  event.preventDefault();
+                                  setZoneHover(true);
+                                }}
+                                onDragLeave={(event) => {
+                                  event.preventDefault();
+                                  setZoneHover(false);
+                                }}
+                              >
+                                {({
+                                  getRootProps,
+                                  acceptedFile,
+                                  ProgressBar,
+                                  getRemoveFileProps,
+                                  Remove,
+                                }) => (
+                                  <>
+                                    <div
+                                      {...getRootProps()}
+                                      style={Object.assign(
+                                        {},
+                                        styles.zone,
+                                        zoneHover && styles.zoneHover
+                                      )}
+                                    >
+                                      {acceptedFile ? (
+                                        <>
+                                          <div style={styles.file}>
+                                            <div style={styles.info}>
+                                              <span style={styles.size}>
+                                                {formatFileSize(
+                                                  acceptedFile.size
+                                                )}
+                                              </span>
+                                              <span style={styles.name}>
+                                                {acceptedFile.name}
+                                              </span>
+                                            </div>
+                                            <div style={styles.progressBar}>
+                                              <ProgressBar />
+                                            </div>
+                                            <div
+                                              {...getRemoveFileProps()}
+                                              style={styles.remove}
+                                              onMouseOver={(event) => {
+                                                event.preventDefault();
+                                                setRemoveHoverColor(
+                                                  REMOVE_HOVER_COLOR_LIGHT
+                                                );
+                                              }}
+                                              onMouseOut={(event) => {
+                                                event.preventDefault();
+                                                setRemoveHoverColor(
+                                                  DEFAULT_REMOVE_HOVER_COLOR
+                                                );
+                                              }}
+                                            >
+                                              <Remove
+                                                color={removeHoverColor}
+                                              />
+                                            </div>
+                                          </div>
+                                        </>
+                                      ) : (
+                                        "Drop CSV file here or click to upload"
+                                      )}
+                                    </div>
+                                  </>
+                                )}
+                              </CSVReader> */}
+
+                              {/* <input
                                   type="file"
                                   accept=".csv"
                                   id="csvFile"
                                   className="custom-file-input"
                                   id="customFile"
-                                  onChange={handleChange("csvFile")}
-                                />
-                                <label
+                                  onChange={(e) => {
+                                    setCsvFile(e.target.files[0]);
+                                  }}
+                                /> */}
+                              {/* <label
                                   className="custom-file-label"
                                   htmlFor="customFile"
                                 >
                                   Click to upload desired icon (if needed)
                                 </label>
-                              </div>
+                                <button
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    if (csvFile) submit();
+                                  }}
+                                ></button> */}
                             </div>
                           </div>
                         </div>
@@ -331,7 +623,7 @@ const TargetAudience = ({
                             <textarea
                               name
                               className="form-control"
-                              id
+                              id="numbers"
                               rows={4}
                               onChange={handleChange("numbers")}
                               placeholder="Enter Number"
@@ -350,11 +642,13 @@ const TargetAudience = ({
                       onClick={Continue}
                       type="submit"
                       variant="contained"
-                      disabled={
-                        numbers === "" && filterOptions.gender === ""
-                          ? true
-                          : false
-                      }
+                      // disabled={
+                      //   numbers === "" ||
+                      //   filterOptions.gender === "" ||
+                      //   !csvFile
+                      //     ? true
+                      //     : false
+                      // }
                     >
                       Filter
                     </button>

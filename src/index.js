@@ -8,7 +8,7 @@ import App from "./App";
 // import "mdbreact/dist/css/mdb.css";
 
 import { Provider } from "react-redux";
-import { store, persistor } from "./store";
+import store, { persistor } from "./store";
 // import persistor from './store'
 
 import { PersistGate } from "redux-persist/integration/react";

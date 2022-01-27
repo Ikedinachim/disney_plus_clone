@@ -166,6 +166,7 @@ const ViewAppDownloadsCampaigns = () => {
         <Loader />
       ) : (
         <MDBDataTable
+          responsive
           data={setViewAppDownloadCampaigns()}
           className="px-3 scroll"
           bordered

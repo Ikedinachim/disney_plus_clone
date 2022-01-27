@@ -123,11 +123,12 @@ const FlierVideoCampaign = ({
                               onChange={handleChange("senderId")}
                             >
                               <option value="">Select Sender ID</option>
-                              {senderID.map((senderids) => (
-                                <option value={senderids.senderId}>
-                                  {senderids.senderId}
-                                </option>
-                              ))}
+                              {senderID &&
+                                senderID.map((senderids) => (
+                                  <option value={senderids.senderId}>
+                                    {senderids.senderId}
+                                  </option>
+                                ))}
                             </select>
                           </div>
                           <div className="form-group">
