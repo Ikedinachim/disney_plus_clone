@@ -21,6 +21,7 @@ import SmsStepForm from "./components/app/campaigns/smsCampaign/SmsStepForm";
 import FlierVideoStepForm from "./components/app/campaigns/flierVideoCampaign/FlierVideoStepForm";
 import AppDownloadStepForm from "./components/app/campaigns/appDownloadCampaign/AppDownloadStepForm";
 import InfluencerStepForm from "./components/app/campaigns/influencerCampaign/InfluencerStepForm";
+import Analytics from "./components/app/analytics/analytics";
 import Ads from "./adsView/Ads";
 
 // Auth / User Imports
@@ -103,6 +104,10 @@ function App() {
           <Route
             path="campaign/influencer"
             element={isAuthenticated ? <InfluencerStepForm /> : <Login />}
+          />
+          <Route
+            path="analytics"
+            element={isAuthenticated ? <Analytics /> : <Login />}
           />
         </Route>
         {/* <Route path="/app/campaign/preview" element={isAuthenticated ? <PreviewCampaign /> : <Login />} /> */}
