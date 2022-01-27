@@ -66,7 +66,7 @@ const PreviewCampaign = ({
     } else if (error) {
       alert.error(error);
       dispatch(clearErrors());
-      dispatch(getWallet());
+      // dispatch(getWallet());
     }
   }, [dispatch, alert, error, createFlierVideoCampaign, navigate]);
 
@@ -241,7 +241,7 @@ const PreviewCampaign = ({
                                   >
                                     Location
                                   </label>
-                                  <div class="d-flex">
+                                  <div className="d-flex">
                                     <span className="badge badge-pink tx-14 mg-5">
                                       {" "}
                                       {filterOptions.state}
@@ -338,21 +338,21 @@ const PreviewCampaign = ({
                                 </span>
                               </p>
                               {/* <div className="form-group col-md-3">
-                                                                <p className="tx-18 tx-com tx-bold mb-0">{audience}</p>
-                                                                <span className="badge badge-pink  tx-18 mg-5 tx-amt w-100 mt-0">
-                                                                    {" "}
-                                                                    <NumberFormat value={values.price} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
-                                                                </span>
-                                                            </div> */}
+                                    <p className="tx-18 tx-com tx-bold mb-0">{audience}</p>
+                                    <span className="badge badge-pink  tx-18 mg-5 tx-amt w-100 mt-0">
+                                        {" "}
+                                        <NumberFormat value={values.price} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
+                                    </span>
+                                </div> */}
                             </div>
                             <div className="form-row mg-t-15 pd-x-0">
                               {/* <div className="form-group col-md-9">
-                                                                <input
-                                                                    type="text"
-                                                                    className="form-control"
-                                                                    placeholder="Enter your target audience number to get price"
-                                                                />
-                                                            </div> */}
+                                      <input
+                                          type="text"
+                                          className="form-control"
+                                          placeholder="Enter your target audience number to get price"
+                                      />
+                                  </div> */}
                               <div className=" col-md-2 d-flex">
                                 <p className="tx-18 tx-com tx-bold mb-0">
                                   Amount:
