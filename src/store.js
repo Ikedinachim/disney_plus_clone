@@ -37,6 +37,7 @@ import {
   getAllInfluencerCampaignReducer,
   updateInfluencerCampaignStatusReducer,
   getInfluencerDetailsReducer,
+  updateInfluencerPublishedStatusReducer,
 } from "./reducers/campaignReducers";
 
 const appReducer = combineReducers({
@@ -61,6 +62,7 @@ const appReducer = combineReducers({
   influencerCampaign: createInfluencerCampaignReducer,
   influencerCampaignList: getAllInfluencerCampaignReducer,
   updateInfluencerCampaignStatus: updateInfluencerCampaignStatusReducer,
+  updateInfluencerCampaignPublishStatus: updateInfluencerPublishedStatusReducer,
   influencerDetails: getInfluencerDetailsReducer,
 });
 

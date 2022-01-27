@@ -1,19 +1,28 @@
-import React, { Fragment, useEffect, useState, useRef } from "react";
+import React, {
+  Fragment,
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+} from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import MetaData from "../../../layout/MetaData";
 import { useAlert } from "react-alert";
-import {
-  useCSVReader,
-  lightenDarkenColor,
-  formatFileSize,
-} from "react-papaparse";
+// import {
+//   useCSVReader,
+//   lightenDarkenColor,
+//   formatFileSize,
+// } from "react-papaparse";
 import NaijaStates from "naija-state-local-government";
 
 import {
   getFilteredContactList,
   clearErrors,
 } from "../../../../actions/campaignActions";
+
+import { useDropzone } from "react-dropzone";
+import Papa from "papaparse";
 
 const TargetAudience = ({
   prevStep,
@@ -31,87 +40,94 @@ const TargetAudience = ({
   handleOnRemoveFile,
   handleRemoveFile,
   getButtonRef,
+  ///////
+  // getRootProps,
+  // getInputProps,
+  // isDragActive,
+  // isDragAccept,
+  // isDragReject,
+  getCsvRawData,
 }) => {
-  const GREY = "#CCC";
-  const GREY_LIGHT = "rgba(255, 255, 255, 0.4)";
-  const DEFAULT_REMOVE_HOVER_COLOR = "#A01919";
-  const REMOVE_HOVER_COLOR_LIGHT = lightenDarkenColor(
-    DEFAULT_REMOVE_HOVER_COLOR,
-    40
-  );
-  const GREY_DIM = "#686868";
+  // const GREY = "#CCC";
+  // const GREY_LIGHT = "rgba(255, 255, 255, 0.4)";
+  // const DEFAULT_REMOVE_HOVER_COLOR = "#A01919";
+  // const REMOVE_HOVER_COLOR_LIGHT = lightenDarkenColor(
+  //   DEFAULT_REMOVE_HOVER_COLOR,
+  //   40
+  // );
+  // const GREY_DIM = "#686868";
 
-  const styles = {
-    zone: {
-      alignItems: "center",
-      border: `2px dashed ${GREY}`,
-      borderRadius: 20,
-      display: "flex",
-      flexDirection: "column",
-      height: "100%",
-      justifyContent: "center",
-      padding: 20,
-    },
-    file: {
-      background: "linear-gradient(to bottom, #EEE, #DDD)",
-      borderRadius: 20,
-      display: "flex",
-      height: 120,
-      width: 120,
-      position: "relative",
-      zIndex: 10,
-      flexDirection: "column",
-      justifyContent: "center",
-    },
-    info: {
-      alignItems: "center",
-      display: "flex",
-      flexDirection: "column",
-      paddingLeft: 10,
-      paddingRight: 10,
-    },
-    size: {
-      backgroundColor: GREY_LIGHT,
-      borderRadius: 3,
-      marginBottom: "0.5em",
-      justifyContent: "center",
-      display: "flex",
-    },
-    name: {
-      backgroundColor: GREY_LIGHT,
-      borderRadius: 3,
-      fontSize: 12,
-      marginBottom: "0.5em",
-    },
-    progressBar: {
-      bottom: 14,
-      position: "absolute",
-      width: "100%",
-      paddingLeft: 10,
-      paddingRight: 10,
-    },
-    zoneHover: {
-      borderColor: GREY_DIM,
-    },
-    default: {
-      borderColor: GREY,
-    },
-    remove: {
-      height: 23,
-      position: "absolute",
-      right: 6,
-      top: 6,
-      width: 23,
-    },
-  };
+  // const styles = {
+  //   zone: {
+  //     alignItems: "center",
+  //     border: `2px dashed ${GREY}`,
+  //     borderRadius: 20,
+  //     display: "flex",
+  //     flexDirection: "column",
+  //     height: "100%",
+  //     justifyContent: "center",
+  //     padding: 20,
+  //   },
+  //   file: {
+  //     background: "linear-gradient(to bottom, #EEE, #DDD)",
+  //     borderRadius: 20,
+  //     display: "flex",
+  //     height: 120,
+  //     width: 120,
+  //     position: "relative",
+  //     zIndex: 10,
+  //     flexDirection: "column",
+  //     justifyContent: "center",
+  //   },
+  //   info: {
+  //     alignItems: "center",
+  //     display: "flex",
+  //     flexDirection: "column",
+  //     paddingLeft: 10,
+  //     paddingRight: 10,
+  //   },
+  //   size: {
+  //     backgroundColor: GREY_LIGHT,
+  //     borderRadius: 3,
+  //     marginBottom: "0.5em",
+  //     justifyContent: "center",
+  //     display: "flex",
+  //   },
+  //   name: {
+  //     backgroundColor: GREY_LIGHT,
+  //     borderRadius: 3,
+  //     fontSize: 12,
+  //     marginBottom: "0.5em",
+  //   },
+  //   progressBar: {
+  //     bottom: 14,
+  //     position: "absolute",
+  //     width: "100%",
+  //     paddingLeft: 10,
+  //     paddingRight: 10,
+  //   },
+  //   zoneHover: {
+  //     borderColor: GREY_DIM,
+  //   },
+  //   default: {
+  //     borderColor: GREY,
+  //   },
+  //   remove: {
+  //     height: 23,
+  //     position: "absolute",
+  //     right: 6,
+  //     top: 6,
+  //     width: 23,
+  //   },
+  // };
 
-  const ref = useRef();
-  const { CSVReader } = useCSVReader();
-  const [zoneHover, setZoneHover] = useState(false);
-  const [csvData, setCsvData] = useState({});
-  const [removeHoverColor, setRemoveHoverColor] = useState(
-    DEFAULT_REMOVE_HOVER_COLOR
-  );
+  // const ref = useRef();
+  // const { CSVReader } = useCSVReader();
+  // const [zoneHover, setZoneHover] = useState(false);
+  // const [csvData, setCsvData] = useState({});
+  // const [removeHoverColor, setRemoveHoverColor] = useState(
+  //   DEFAULT_REMOVE_HOVER_COLOR
+  // );
 
   const alert = useAlert();
   const dispatch = useDispatch();
@@ -229,16 +245,50 @@ const TargetAudience = ({
     prevStep();
   };
 
+  const lga = NaijaStates.lgas(filterOptions.state);
+
+  ////
+  const [parsedCsvData, setParsedCsvData] = useState([]);
+
+  const parseFile = (file) => {
+    Papa.parse(file, {
+      header: true,
+      complete: (results) => {
+        setParsedCsvData(results.data);
+        // console.log(parsedCsvData);
+      },
+    });
+    console.log(parsedCsvData);
+  };
+
+  const onDrop = useCallback((acceptedFiles) => {
+    if (acceptedFiles.length) {
+      parseFile(acceptedFiles[0]);
+    }
+  }, []);
+
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    isDragAccept,
+    isDragReject,
+  } = useDropzone({
+    onDrop,
+    accept: ".csv, application/vnd.ms-excel, text/csv",
+    skipEmptyLines: "greedy",
+  });
+
   useEffect(() => {
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
     // console.log(csvArray);
-    console.log(csvData);
-  }, [dispatch, error, alert]);
-
-  const lga = NaijaStates.lgas(filterOptions.state);
+    // console.log(csvData);
+    console.log(parsedCsvData);
+    getCsvRawData(parsedCsvData);
+  }, [dispatch, error, alert, parsedCsvData]);
 
   return (
     <Fragment>
@@ -443,10 +493,27 @@ const TargetAudience = ({
                         <div className="row justify-content-md-between">
                           <div className="mg-t-20">
                             <p className="tx-24 tx-bold mb-1 tx-com">
-                              Upload CSV Containing Phone NUmbers
+                              Upload CSV Containing Phone Numbers
                             </p>
                             <div className="form-group">
-                              <CSVReader
+                              <div
+                                {...getRootProps({
+                                  className: `dropzone 
+                                  ${isDragAccept && "dropzoneAccept"} 
+                                  ${isDragReject && "dropzoneReject"}`,
+                                })}
+                              >
+                                <input {...getInputProps()} />
+                                {isDragActive ? (
+                                  <p>Drop the files here ...</p>
+                                ) : (
+                                  <p>
+                                    Drag 'n' drop some files here, or click to
+                                    select files
+                                  </p>
+                                )}
+                              </div>
+                              {/* <CSVReader
                                 ref={getButtonRef}
                                 onFileLoad={handleOnFileLoad}
                                 onError={handleOnError}
@@ -506,7 +573,7 @@ const TargetAudience = ({
                                     </button>
                                   </aside>
                                 )}
-                              </CSVReader>
+                              </CSVReader> */}
                               {/* <CSVReader
                                 onUploadAccepted={(results) => {
                                   console.log("---------------------------");
