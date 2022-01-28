@@ -18,13 +18,6 @@ const Analytics = () => {
     chartArea: { width: "50%" },
     legend: { position: "bottom" },
     isStacked: true,
-    hAxis: {
-      title: "Total Population",
-      minValue: 0,
-    },
-    vAxis: {
-      title: "City",
-    },
   };
   return (
     <Fragment>
@@ -115,7 +108,7 @@ const Analytics = () => {
                     <Chart
                       chartType="LineChart"
                       data={[
-                        ["Month", "Sales", "Expenses"],
+                        ["Month", "Number of clicks", "Number of actions"],
                         ["Jan", 20000, 15000],
                         ["Feb", 15000, 12000],
                         ["March", 7170, 10460],
