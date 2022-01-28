@@ -191,9 +191,10 @@ const AllCampaigns = () => {
                       </thead>
                       <tbody>
                         {/* body of campaign all campaign */}
-                        {allCampaign.map((allCampaign) => (
-                          <AllCampaignCard campaign={allCampaign} />
-                        ))}
+                        {allCampaign &&
+                          allCampaign.map((allCampaign) => (
+                            <AllCampaignCard campaign={allCampaign} />
+                          ))}
                       </tbody>
                     </table>
                   </div>
