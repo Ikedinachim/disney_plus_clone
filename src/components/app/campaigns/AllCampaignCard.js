@@ -29,15 +29,6 @@ const AllCampaignCard = ({ campaign }) => {
           <span className="badge badge-pink tx-14"> Pending</span>
         )}
       </td>
-      <td>
-        <a href="./view-campaign" className="tx-black tx-14">
-          <div className="d-flex">
-            <Link to={`../campaigns/${campaign.id}`}>
-              <i className="fa fa-eye tx-orange pd-t-4 mg-r-5" /> View{" "}
-            </Link>
-          </div>
-        </a>
-      </td>
     </tr>
   );
 };

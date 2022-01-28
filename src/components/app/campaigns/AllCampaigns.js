@@ -186,7 +186,6 @@ const AllCampaigns = () => {
                           <th scope="col">Cost</th>
                           <th scope="col">Date Generated</th>
                           <th scope="col">Status</th>
-                          <th scope="col">Actions</th>
                         </tr>
                       </thead>
                       <tbody>
