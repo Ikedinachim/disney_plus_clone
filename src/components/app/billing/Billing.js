@@ -31,9 +31,7 @@ const BillingOverview = () => {
 
   const reverseTnxHistory = tnxHistory && tnxHistory.reverse();
 
-  const [reverseAllCampaign, setReverseAllCampaign] = useState(
-    allCampaign ? allCampaign.sort((a, b) => a.createdAt > b.createdAt) : []
-  );
+  const [reverseAllCampaign, setReverseAllCampaign] = useState([]);
 
   const filterItem = (createdAt) => {
     if (
