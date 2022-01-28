@@ -1,6 +1,8 @@
 import React, { Fragment, useEffect } from "react";
 import { getAllCampaign } from "../../../actions/campaignActions";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import AllCampaignCard from "./AllCampaignCard";
 
 const AllCampaigns = () => {
   const dispatch = useDispatch();
@@ -16,7 +18,12 @@ const AllCampaigns = () => {
         <div className="container pd-x-0">
           <div className="row justify-content-between">
             <div className="col-md-6 col-6">
-              <p className="mg-b-0 tx-26 tx-bold">Campaigns</p>
+              <Link to="../billing" className="tx-black">
+                <div className="mg-b-0 tx-26 tx-bold">
+                  <i className="fa fa-angle-left mg-r-10 pd-t-15 tx-18"></i>
+                  <span>Campaigns</span>
+                </div>
+              </Link>
             </div>
             <div className="col-md-2 col-6">
               <p>
@@ -176,7 +183,6 @@ const AllCampaigns = () => {
                           <th scope="col"></th>
                           <th scope="col">Campaign Name</th>
                           <th scope="col">AD Type</th>
-                          <th scope="col">Revenue</th>
                           <th scope="col">Cost</th>
                           <th scope="col">Date Generated</th>
                           <th scope="col">Status</th>
@@ -185,43 +191,9 @@ const AllCampaigns = () => {
                       </thead>
                       <tbody>
                         {/* body of campaign all campaign */}
-                        <tr>
-                          <th scope="row">
-                            <div className="custom-control custom-checkbox">
-                              <input
-                                type="checkbox"
-                                className="custom-control-input"
-                                id="customCheck1"
-                              />
-                              <label
-                                className="custom-control-label"
-                                for="customCheck1"
-                              ></label>
-                            </div>
-                          </th>
-                          <td>Art Campaign</td>
-                          <td>Video</td>
-                          <td>#0.00</td>
-                          <td>#0.00</td>
-                          <td>01 Mar, 2021</td>
-                          <td>
-                            <span className="badge badge-active tx-14">
-                              {" "}
-                              Approved
-                            </span>{" "}
-                          </td>
-                          <td>
-                            <a
-                              href="./view-campaign"
-                              className="tx-black tx-14"
-                            >
-                              <div className="d-flex">
-                                <i className="fa fa-eye tx-orange pd-t-4 mg-r-5"></i>
-                                View
-                              </div>
-                            </a>
-                          </td>
-                        </tr>
+                        {allCampaign.map((allCampaign) => (
+                          <AllCampaignCard campaign={allCampaign} />
+                        ))}
                       </tbody>
                     </table>
                   </div>
