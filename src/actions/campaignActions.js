@@ -45,6 +45,9 @@ import {
   UPDATE_INFLUENCER_CAMPAIGN_STATUS_REQUEST,
   UPDATE_INFLUENCER_CAMPAIGN_STATUS_SUCCESS,
   UPDATE_INFLUENCER_CAMPAIGN_STATUS_FAIL,
+  UPDATE_INFLUENCER_PUBLISHED_STATUS_REQUEST,
+  UPDATE_INFLUENCER_PUBLISHED_STATUS_SUCCESS,
+  UPDATE_INFLUENCER_PUBLISHED_STATUS_FAIL,
   GET_INFLUENCER_DETAILS_REQUEST,
   GET_INFLUENCER_DETAILS_SUCCESS,
   GET_INFLUENCER_DETAILS_FAIL,
@@ -556,7 +559,7 @@ export const updateInfluencerCampaignStatusAction =
         },
       };
       const { data } = await axios.put(
-        "api/campaign/influencer/update-status",
+        "api/campaign/influencer/update-approval-status",
         payload,
         config
       );
@@ -576,6 +579,46 @@ export const updateInfluencerCampaignStatusAction =
     } catch (data) {
       dispatch({
         type: UPDATE_INFLUENCER_CAMPAIGN_STATUS_FAIL,
+        payload: data.message,
+      });
+    }
+  };
+
+// Update Influencer Campaign Publish Status Action
+export const updateInfluencerPublishStatusAction =
+  (payload) => async (dispatch) => {
+    try {
+      dispatch({ type: UPDATE_INFLUENCER_PUBLISHED_STATUS_REQUEST });
+      let user = JSON.parse(sessionStorage.getItem("user"));
+      const token = user.user.token;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await axios.put(
+        "api/campaign/influencer/update-status",
+        payload,
+        config
+      );
+
+      if (data.status === "success") {
+        dispatch({
+          type: UPDATE_INFLUENCER_PUBLISHED_STATUS_SUCCESS,
+          payload: data,
+        });
+        console.log(data);
+      } else {
+        dispatch({
+          type: UPDATE_INFLUENCER_PUBLISHED_STATUS_FAIL,
+          payload: data.message,
+        });
+      }
+    } catch (data) {
+      dispatch({
+        type: UPDATE_INFLUENCER_PUBLISHED_STATUS_FAIL,
         payload: data.message,
       });
     }
