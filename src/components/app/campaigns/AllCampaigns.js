@@ -2,16 +2,92 @@ import React, { Fragment, useEffect } from "react";
 import { getAllCampaign } from "../../../actions/campaignActions";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import AllCampaignCard from "./AllCampaignCard";
+import NumberFormat from "react-number-format";
+import { DateTime } from "luxon";
+import { MDBDataTable } from "mdbreact";
 
 const AllCampaigns = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const { allCampaign } = useSelector((state) => state.allCampaign || {});
+  const setAllCampaigns = () => {
+    const data = {
+      columns: [
+        {
+          label: "CAMPAIGN NAME",
+          field: "campaignName",
+          sort: "asc",
+        },
+        {
+          label: "AD TYPE",
+          field: "adType",
+          sort: "asc",
+        },
+        {
+          label: "REVENUE",
+          field: "revenue",
+          sort: "asc",
+        },
+        {
+          label: "COST",
+          field: "cost",
+          sort: "asc",
+        },
+        {
+          label: "DATE CREATED",
+          field: "dateCreated",
+          sort: "asc",
+        },
+        {
+          label: "STATUS",
+          field: "status",
+          sort: "asc",
+        },
+      ],
+      rows: [],
+    };
 
-  useEffect(() => {
-    dispatch(getAllCampaign());
-  }, [dispatch]);
-  console.log(allCampaign);
+    allCampaign &&
+      allCampaign.forEach((campaign) => {
+        data.rows.push({
+          campaignName: campaign.campaignType,
+          adType: campaign.channel,
+          revenue: (
+            <NumberFormat
+              value={0}
+              displayType={"text"}
+              thousandSeparator={true}
+              prefix={"₦"}
+            />
+          ),
+          cost: (
+            <NumberFormat
+              value={campaign.cost}
+              displayType={"text"}
+              thousandSeparator={true}
+              prefix={"₦"}
+            />
+          ),
+          dateCreated: DateTime.fromJSDate(
+            new Date(campaign.createdAt)
+          ).toFormat("dd MMM, yyyy"),
+          status: (
+            <span
+              className={`{"badge" ${
+                !campaign.isApproved ? "badge-pink" : "badge-active"
+              }`}
+            >
+              {!campaign.isApproved ? "Pending" : "Approved"}
+            </span>
+          ),
+        });
+      });
+    return data;
+  };
+
+  // useEffect(() => {
+  //   dispatch(getAllCampaign());
+  // }, [dispatch]);
+  // console.log(allCampaign);
   return (
     <Fragment>
       <div className="content-body">
@@ -177,493 +253,15 @@ const AllCampaigns = () => {
                   aria-labelledby="home-tab"
                 >
                   <div className="pd-y-20">
-                    <table className="table display table-hover">
-                      <thead className="tx-uppercase">
-                        <tr>
-                          <th scope="col"></th>
-                          <th scope="col">Campaign Name</th>
-                          <th scope="col">AD Type</th>
-                          <th scope="col">Cost</th>
-                          <th scope="col">Date Generated</th>
-                          <th scope="col">Status</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {/* body of campaign all campaign */}
-                        {allCampaign &&
-                          allCampaign.map((allCampaign) => (
-                            <AllCampaignCard campaign={allCampaign} />
-                          ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <div
-                  className="tab-pane fade"
-                  id="profile"
-                  role="tabpanel"
-                  aria-labelledby="profile-tab"
-                >
-                  <div className="card-body">
-                    <table className="table display table-hover">
-                      <thead className="tx-uppercase">
-                        <tr>
-                          <th scope="col"></th>
-                          <th scope="col">NAME</th>
-                          <th scope="col">EMAIL ADDRESS</th>
-                          <th scope="col">PHONE NUMBER</th>
-                          <th scope="col">WALLET BALANCE</th>
-                          <th scope="col">Status</th>
-                          <th scope="col"></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <th scope="row">
-                            <div className="custom-control custom-checkbox">
-                              <input
-                                type="checkbox"
-                                className="custom-control-input"
-                                id="customCheck11"
-                              />
-                              <label
-                                className="custom-control-label"
-                                for="customCheck11"
-                              >
-                                <div className="avatar avatar-sm">
-                                  <img
-                                    src="./assets/img/staff.png"
-                                    className="rounded-circle"
-                                    alt=""
-                                  />
-                                </div>
-                              </label>
-                            </div>
-                          </th>
-                          <td>Segun Bakare</td>
-                          <td>Lanrekosoko@gmail.com</td>
-                          <td>08135627364</td>
-                          <td>#0.00</td>
-                          <td>
-                            <span className="badge badge-active tx-14">
-                              {" "}
-                              Active
-                            </span>{" "}
-                          </td>
-                          <td>
-                            <div className="dropdown">
-                              <span
-                                className=""
-                                type="button"
-                                id="dropdownMenuButton"
-                                data-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                              >
-                                <span className="dot"></span>
-                                <span className="dot"></span>
-                                <span className="dot"></span>
-                              </span>
-                              <div
-                                className="dropdown-menu"
-                                aria-labelledby="dropdownMenuButton"
-                              >
-                                <a className="dropdown-item" href="">
-                                  {" "}
-                                  <i
-                                    data-feather="edit"
-                                    className="favourite-icon mr-2 wd-15 ht-15"
-                                  ></i>
-                                  Edit
-                                </a>
-                                <a className="dropdown-item" href="#">
-                                  <i
-                                    data-feather="trash-2"
-                                    className="favourite-icon mr-2 wd-15 ht-15"
-                                  ></i>
-                                  Delete
-                                </a>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <th scope="row">
-                            <div className="custom-control custom-checkbox">
-                              <input
-                                type="checkbox"
-                                className="custom-control-input"
-                                id="customCheck12"
-                              />
-                              <label
-                                className="custom-control-label"
-                                for="customCheck12"
-                              >
-                                <div className="avatar avatar-sm">
-                                  <img
-                                    src="./assets/img/staff.png"
-                                    className="rounded-circle"
-                                    alt=""
-                                  />
-                                </div>
-                              </label>
-                            </div>
-                          </th>
-                          <td>Segun Bakare</td>
-                          <td>Lanrekosoko@gmail.com</td>
-                          <td>08135627364</td>
-                          <td>#0.00</td>
-                          <td>
-                            <span className="badge badge-pink tx-14">
-                              {" "}
-                              Inactive
-                            </span>{" "}
-                          </td>
-                          <td>
-                            <div className="dropdown">
-                              <span
-                                className=""
-                                type="button"
-                                id="dropdownMenuButton"
-                                data-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                              >
-                                <span className="dot"></span>
-                                <span className="dot"></span>
-                                <span className="dot"></span>
-                              </span>
-                              <div
-                                className="dropdown-menu"
-                                aria-labelledby="dropdownMenuButton"
-                              >
-                                <a className="dropdown-item" href="">
-                                  {" "}
-                                  <i
-                                    data-feather="edit"
-                                    className="favourite-icon mr-2 wd-15 ht-15"
-                                  ></i>
-                                  Edit
-                                </a>
-                                <a className="dropdown-item" href="#">
-                                  <i
-                                    data-feather="trash-2"
-                                    className="favourite-icon mr-2 wd-15 ht-15"
-                                  ></i>
-                                  Delete
-                                </a>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <th scope="row">
-                            <div className="custom-control custom-checkbox">
-                              <input
-                                type="checkbox"
-                                className="custom-control-input"
-                                id="customCheck13"
-                              />
-                              <label
-                                className="custom-control-label"
-                                for="customCheck13"
-                              >
-                                <div className="avatar avatar-sm">
-                                  <img
-                                    src="./assets/img/staff.png"
-                                    className="rounded-circle"
-                                    alt=""
-                                  />
-                                </div>
-                              </label>
-                            </div>
-                          </th>
-                          <td>Segun Bakare</td>
-                          <td>Lanrekosoko@gmail.com</td>
-                          <td>08135627364</td>
-                          <td>#0.00</td>
-                          <td>
-                            <span className="badge badge-active tx-14">
-                              {" "}
-                              Active
-                            </span>{" "}
-                          </td>
-                          <td>
-                            <div className="dropdown">
-                              <span
-                                className=""
-                                type="button"
-                                id="dropdownMenuButton"
-                                data-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                              >
-                                <span className="dot"></span>
-                                <span className="dot"></span>
-                                <span className="dot"></span>
-                              </span>
-                              <div
-                                className="dropdown-menu"
-                                aria-labelledby="dropdownMenuButton"
-                              >
-                                <a className="dropdown-item" href="">
-                                  {" "}
-                                  <i
-                                    data-feather="edit"
-                                    className="favourite-icon mr-2 wd-15 ht-15"
-                                  ></i>
-                                  Edit
-                                </a>
-                                <a className="dropdown-item" href="#">
-                                  <i
-                                    data-feather="trash-2"
-                                    className="favourite-icon mr-2 wd-15 ht-15"
-                                  ></i>
-                                  Delete
-                                </a>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <div
-                  className="tab-pane fade"
-                  id="prof"
-                  role="tabpanel"
-                  aria-labelledby="prof-tab"
-                >
-                  <div className="card-body">
-                    <table className="table display table-hover">
-                      <thead className="tx-uppercase">
-                        <tr>
-                          <th scope="col"></th>
-                          <th scope="col">NAME</th>
-                          <th scope="col">OCCUPATION</th>
-                          <th scope="col">AVAILABLE ON</th>
-                          <th scope="col" className="tx-right">
-                            CAMPAIGN
-                          </th>
-                          <th scope="col">REVENUE</th>
-                          <th scope="col">Status</th>
-                          <th scope="col"></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <th scope="row">
-                            <div className="custom-control custom-checkbox">
-                              <input
-                                type="checkbox"
-                                className="custom-control-input"
-                                id="customCheck11"
-                              />
-                              <label
-                                className="custom-control-label"
-                                for="customCheck11"
-                              >
-                                <div className="avatar avatar-sm">
-                                  <img
-                                    src="./assets/img/staff.png"
-                                    className="rounded-circle"
-                                    alt=""
-                                  />
-                                </div>
-                              </label>
-                            </div>
-                          </th>
-                          <td>Sydney Talker</td>
-                          <td>Content Creator</td>
-                          <td>Instagram, Twitter, Snapchat</td>
-                          <td className="tx-right">45</td>
-                          <td className="">₦2,500.00</td>
-                          <td>
-                            <span className="badge badge-active tx-14">
-                              {" "}
-                              Active
-                            </span>{" "}
-                          </td>
-                          <td>
-                            <div className="dropdown">
-                              <span
-                                className=""
-                                type="button"
-                                id="dropdownMenuButton"
-                                data-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                              >
-                                <span className="dot"></span>
-                                <span className="dot"></span>
-                                <span className="dot"></span>
-                              </span>
-                              <div
-                                className="dropdown-menu"
-                                aria-labelledby="dropdownMenuButton"
-                              >
-                                <a className="dropdown-item" href="">
-                                  {" "}
-                                  <i
-                                    data-feather="edit"
-                                    className="favourite-icon mr-2 wd-15 ht-15"
-                                  ></i>
-                                  Edit
-                                </a>
-                                <a className="dropdown-item" href="#">
-                                  <i
-                                    data-feather="trash-2"
-                                    className="favourite-icon mr-2 wd-15 ht-15"
-                                  ></i>
-                                  Delete
-                                </a>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <th scope="row">
-                            <div className="custom-control custom-checkbox">
-                              <input
-                                type="checkbox"
-                                className="custom-control-input"
-                                id="customCheck12"
-                              />
-                              <label
-                                className="custom-control-label"
-                                for="customCheck12"
-                              >
-                                <div className="avatar avatar-sm">
-                                  <img
-                                    src="./assets/img/staff.png"
-                                    className="rounded-circle"
-                                    alt=""
-                                  />
-                                </div>
-                              </label>
-                            </div>
-                          </th>
-                          <td>Sydney Talker</td>
-                          <td>Content Creator</td>
-                          <td>Instagram, Twitter, Snapchat</td>
-                          <td className="tx-right">45</td>
-                          <td className="">₦2,500.00</td>
-                          <td>
-                            <span className="badge badge-pink tx-14">
-                              {" "}
-                              Inactive
-                            </span>{" "}
-                          </td>
-                          <td>
-                            <div className="dropdown">
-                              <span
-                                className=""
-                                type="button"
-                                id="dropdownMenuButton"
-                                data-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                              >
-                                <span className="dot"></span>
-                                <span className="dot"></span>
-                                <span className="dot"></span>
-                              </span>
-                              <div
-                                className="dropdown-menu"
-                                aria-labelledby="dropdownMenuButton"
-                              >
-                                <a className="dropdown-item" href="">
-                                  {" "}
-                                  <i
-                                    data-feather="edit"
-                                    className="favourite-icon mr-2 wd-15 ht-15"
-                                  ></i>
-                                  Edit
-                                </a>
-                                <a className="dropdown-item" href="#">
-                                  <i
-                                    data-feather="trash-2"
-                                    className="favourite-icon mr-2 wd-15 ht-15"
-                                  ></i>
-                                  Delete
-                                </a>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <th scope="row">
-                            <div className="custom-control custom-checkbox">
-                              <input
-                                type="checkbox"
-                                className="custom-control-input"
-                                id="customCheck13"
-                              />
-                              <label
-                                className="custom-control-label"
-                                for="customCheck13"
-                              >
-                                <div className="avatar avatar-sm">
-                                  <img
-                                    src="./assets/img/staff.png"
-                                    className="rounded-circle"
-                                    alt=""
-                                  />
-                                </div>
-                              </label>
-                            </div>
-                          </th>
-                          <td>Sydney Talker</td>
-                          <td>Content Creator</td>
-                          <td>Instagram, Twitter, Snapchat</td>
-                          <td className="tx-right">45</td>
-                          <td className="">₦2,500.00</td>
-                          <td>
-                            <span className="badge badge-active tx-14">
-                              {" "}
-                              Active
-                            </span>{" "}
-                          </td>
-                          <td>
-                            <div className="dropdown">
-                              <span
-                                className=""
-                                type="button"
-                                id="dropdownMenuButton"
-                                data-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                              >
-                                <span className="dot"></span>
-                                <span className="dot"></span>
-                                <span className="dot"></span>
-                              </span>
-                              <div
-                                className="dropdown-menu"
-                                aria-labelledby="dropdownMenuButton"
-                              >
-                                <a className="dropdown-item" href="">
-                                  {" "}
-                                  <i
-                                    data-feather="edit"
-                                    className="favourite-icon mr-2 wd-15 ht-15"
-                                  ></i>
-                                  Edit
-                                </a>
-                                <a className="dropdown-item" href="#">
-                                  <i
-                                    data-feather="trash-2"
-                                    className="favourite-icon mr-2 wd-15 ht-15"
-                                  ></i>
-                                  Delete
-                                </a>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    <MDBDataTable
+                      responsive
+                      data={setAllCampaigns()}
+                      className="px-3 scroll"
+                      bordered
+                      striped
+                      hover
+                      checkboxFirstColumn
+                    />
                   </div>
                 </div>
               </div>
