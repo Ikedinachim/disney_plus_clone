@@ -137,6 +137,11 @@ input:checked + .slider:before {
   margin: 0 auto;
   justify-items: center;
 }
+@media screen and (max-width: 600px) {
+  .smsViewTab {
+    justify-content: center;
+  }
+}
 
 tbody + thead {
   display: none;
