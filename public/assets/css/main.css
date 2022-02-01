@@ -130,6 +130,7 @@ a {
 .nav-aside .nav-link {
   padding: 1.5rem 0rem;
   color: #f0f1fa;
+  opacity: 1;
 }
 .bg-blue {
   background-color: #4847e0;

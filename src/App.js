@@ -15,7 +15,6 @@ import RequestSenderID from "./components/app/SenderID/RequestSenderID";
 import CreateCampaign from "./components/app/campaigns/CreateCampaign";
 // import TargetAudience from "./components/app/campaigns/TargetAudience"
 // import ViewCampaign from "./components/app/campaigns/ViewCampaign"
-import ViewCampaignTabs from "./components/app/campaigns/viewCampaigns/ViewCampaignTabs";
 import AllCampaigns from "./components/app/campaigns/AllCampaigns";
 // import PreviewCampaign from "./components/app/campaigns/PreviewCampaign"
 import SmsStepForm from "./components/app/campaigns/smsCampaign/SmsStepForm";
@@ -136,7 +135,7 @@ function App() {
             path="campaigns"
             element={
               isAuthenticated && user.user.role === "user" ? (
-                <ViewCampaignTabs />
+                <AllCampaigns />
               ) : (
                 <Login />
               )
@@ -192,16 +191,7 @@ function App() {
               )
             }
           />
-          <Route
-            path="campaign/all-campaign"
-            element={
-              isAuthenticated && user.user.role === "user" ? (
-                <AllCampaigns />
-              ) : (
-                <Login />
-              )
-            }
-          />
+
           <Route
             path="analytics"
             element={

@@ -26,95 +26,100 @@ const Sidebar = () => {
   }, [isMenuOpen]);
 
   return (
-    <aside
-      className={`aside aside-fixed ${!isMenuOpen ? "minimize" : ""}`}
-      // ref={ref}
-    >
-      <div className={`aside-header ${isMenuOpen ? "" : ""}`}>
-        <NavLink to="/app" className="aside-logo">
-          <div className="pd-50">
-            <img src={NavLogo} className="img-fluid logo" alt="logo" srcSet />
+    <div className={`aside-fixed ${isMenuOpen ? null : "show-aside"}`}>
+      <aside
+        className={`aside aside-fixed `}
+        // ref={ref}
+      >
+        <div className={`aside-header ${isMenuOpen ? "" : ""}`}>
+          <NavLink to="/app" className="aside-logo">
+            <div className="pd-50">
+              <img src={NavLogo} className="img-fluid logo" alt="logo" srcSet />
+            </div>
+          </NavLink>
+          <div className="aside-menu-link">
+            <FeatherIcon
+              icon="menu"
+              onClick={() => setIsMenuOpen((oldState) => !oldState)}
+            />
+            <FeatherIcon
+              icon="x"
+              onClick={() => setIsMenuOpen((oldState) => !oldState)}
+            />
           </div>
-        </NavLink>
-        <div className="aside-menu-link">
-          <FeatherIcon
-            icon="menu"
-            onClick={() => setIsMenuOpen((oldState) => !oldState)}
-          />
-          <FeatherIcon icon="x" />
         </div>
-      </div>
-      <div className="aside-body">
-        <ul className="nav nav-aside">
-          <li className="nav-item active">
-            <NavLink
-              to="/app"
-              className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
-              }
-            >
-              <i className="fa fa-home mr-3" />
-              <span>Home</span>
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink
-              to="/app/campaigns"
-              className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
-              }
-            >
-              <i className="fa fa-archive mr-3" />
-              <span>Campaigns</span>
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink
-              to="/app/billing"
-              className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
-              }
-            >
-              <i className="fas fa-money-bill mr-3" />
-              <span>Billing</span>
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink
-              to="/app/sender-id"
-              className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
-              }
-            >
-              <i className="fa fa-user mr-3 tx-muted" />
-              <span>Sender ID</span>
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink
-              to="/app/setting"
-              className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
-              }
-            >
-              <i className="fa fa-cog mr-3" />
-              <span>Settings</span>
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink
-              to="/app/analytics"
-              className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
-              }
-            >
-              <i className="fa fa-chart-bar mr-3" />{" "}
-              <span className="marine-active-menu">Analytics</span>
-            </NavLink>
-          </li>
-        </ul>
-      </div>
-    </aside>
+        <div className="aside-body">
+          <ul className="nav nav-aside">
+            <li className="nav-item active">
+              <NavLink
+                to="/app"
+                className={({ isActive }) =>
+                  isActive ? "nav-link active" : "nav-link"
+                }
+              >
+                <i className="fa fa-home mr-3" />
+                <span>Home</span>
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                to="/app/campaigns"
+                className={({ isActive }) =>
+                  isActive ? "nav-link active" : "nav-link"
+                }
+              >
+                <i className="fa fa-archive mr-3" />
+                <span>Campaigns</span>
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                to="/app/billing"
+                className={({ isActive }) =>
+                  isActive ? "nav-link active" : "nav-link"
+                }
+              >
+                <i className="fas fa-money-bill mr-3" />
+                <span>Billing</span>
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                to="/app/sender-id"
+                className={({ isActive }) =>
+                  isActive ? "nav-link active" : "nav-link"
+                }
+              >
+                <i className="fa fa-user mr-3 tx-muted" />
+                <span>Sender ID</span>
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                to="/app/setting"
+                className={({ isActive }) =>
+                  isActive ? "nav-link active" : "nav-link"
+                }
+              >
+                <i className="fa fa-cog mr-3" />
+                <span>Settings</span>
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                to="/app/analytics"
+                className={({ isActive }) =>
+                  isActive ? "nav-link active" : "nav-link"
+                }
+              >
+                <i className="fa fa-chart-bar mr-3" />{" "}
+                <span className="marine-active-menu">Analytics</span>
+              </NavLink>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
   );
 };
 
