@@ -64,7 +64,7 @@ const Dashboard = () => {
         {
           label: "DATE CREATED",
           field: "dateCreated",
-          sort: "asc",
+          sort: "desc",
         },
         {
           label: "STATUS",
@@ -613,6 +613,7 @@ const Dashboard = () => {
                     responsive
                     data={setAllCampaigns()}
                     className="px-3 scroll"
+                    order={["dateCreated", "desc"]}
                     bordered
                     striped
                     hover

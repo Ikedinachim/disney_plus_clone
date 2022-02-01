@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useCallback } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
@@ -10,6 +10,9 @@ import {
   clearErrors,
 } from "../../../../actions/campaignActions";
 
+import { useDropzone } from "react-dropzone";
+import Papa from "papaparse";
+
 const TargetAudience = ({
   prevStep,
   nextStep,
@@ -17,6 +20,7 @@ const TargetAudience = ({
   numbers,
   filterOptions,
   values,
+  getCsvRawData,
 }) => {
   const alert = useAlert();
   const dispatch = useDispatch();
@@ -83,14 +87,48 @@ const TargetAudience = ({
     prevStep();
   };
 
+  const lga = NaijaStates.lgas(filterOptions.state);
+
+  ////
+  const [parsedCsvData, setParsedCsvData] = useState([]);
+
+  const parseFile = (file) => {
+    Papa.parse(file, {
+      header: true,
+      complete: (results) => {
+        setParsedCsvData(results.data);
+        // console.log(parsedCsvData);
+      },
+    });
+    console.log(parsedCsvData);
+  };
+
+  const onDrop = useCallback((acceptedFiles) => {
+    if (acceptedFiles.length) {
+      parseFile(acceptedFiles[0]);
+    }
+  }, []);
+
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    isDragAccept,
+    isDragReject,
+  } = useDropzone({
+    onDrop,
+    accept: ".csv, application/vnd.ms-excel, text/csv",
+    skipEmptyLines: "greedy",
+  });
+
   useEffect(() => {
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, error, alert]);
-
-  const lga = NaijaStates.lgas(filterOptions.state);
+    console.log(parsedCsvData);
+    getCsvRawData(parsedCsvData);
+  }, [dispatch, error, alert, parsedCsvData]);
 
   return (
     <Fragment>
@@ -299,21 +337,22 @@ const TargetAudience = ({
                               Upload CSV Containing Phone NUmbers
                             </p>
                             <div className="form-group">
-                              <div className="custom-file">
-                                <input
-                                  type="file"
-                                  accept=".csv"
-                                  id="csvFile"
-                                  className="custom-file-input"
-                                  id="customFile"
-                                  // onChange={handleChange("csvFile")}
-                                />
-                                <label
-                                  className="custom-file-label"
-                                  htmlFor="customFile"
-                                >
-                                  Click to upload desired icon (if needed)
-                                </label>
+                              <div
+                                {...getRootProps({
+                                  className: `dropzone 
+                                  ${isDragAccept && "dropzoneAccept"} 
+                                  ${isDragReject && "dropzoneReject"}`,
+                                })}
+                              >
+                                <input {...getInputProps()} />
+                                {isDragActive ? (
+                                  <p>Drop the files here ...</p>
+                                ) : (
+                                  <p>
+                                    Drag 'n' drop some files here, or click to
+                                    select files
+                                  </p>
+                                )}
                               </div>
                             </div>
                           </div>
@@ -350,11 +389,11 @@ const TargetAudience = ({
                       onClick={Continue}
                       type="submit"
                       variant="contained"
-                      disabled={
-                        numbers === "" && filterOptions.gender === ""
-                          ? true
-                          : false
-                      }
+                      // disabled={
+                      //   numbers === "" && filterOptions.gender === ""
+                      //     ? true
+                      //     : false
+                      // }
                     >
                       Filter
                     </button>

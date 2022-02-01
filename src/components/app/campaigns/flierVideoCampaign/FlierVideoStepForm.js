@@ -33,6 +33,7 @@ export default class FlierVideoStepForm extends Component {
     campaignType: "flier_video",
     targetAudienceOption: "manual",
     price: 0,
+    limit: "",
     // csvFile: "",
     // csvArray: "",
 
@@ -78,7 +79,7 @@ export default class FlierVideoStepForm extends Component {
     reader.readAsDataURL(e.target.files[0]);
   };
 
-  // setCsv = (input) => (e) => {
+  // setLimit = (input) => (e) => {
   //   this.setState({ [input]: e.target.files[0] });
   // };
 
@@ -188,6 +189,7 @@ export default class FlierVideoStepForm extends Component {
       campaignType,
       targetAudienceOption,
       numbers,
+      limit,
 
       ageRange,
       gender,
@@ -223,7 +225,7 @@ export default class FlierVideoStepForm extends Component {
 
     /////////////////////////////
 
-    const location = state;
+    // const location = state;
     // const targetAudience = numbers.split(",");
     const audience = getAudience().length;
     const price = audience * 5;
@@ -258,6 +260,7 @@ export default class FlierVideoStepForm extends Component {
       targetAudienceOption,
       filterParameters,
       csvArray,
+      limit,
     };
 
     console.log(values);
@@ -281,24 +284,9 @@ export default class FlierVideoStepForm extends Component {
             nextStep={this.nextStep}
             handleChange={this.handleChange}
             onChangeAttachment={this.onChangeAttachment}
-            // handleManualImport={this.handleManualImport}
             numbers={numbers}
             values={values}
             filterOptions={filterOptions}
-            // setCsv={this.setCsv}
-            ////////////////
-            // // getCsvArray={this.getCsvArray}
-            // // handleOpenDialog={this.handleOpenDialog}
-            // handleOnFileLoad={this.handleOnFileLoad}
-            // handleOnError={this.handleOnError}
-            // handleOnRemoveFile={this.handleOnRemoveFile}
-            // handleRemoveFile={this.handleRemoveFile}
-            ////////////////
-            // getRootProps={getRootProps}
-            // getInputProps={getInputProps}
-            // isDragActive={isDragActive}
-            // isDragAccept={isDragAccept}
-            // isDragReject={isDragReject}
             getCsvRawData={getCsvRawData}
           />
         );
@@ -314,6 +302,7 @@ export default class FlierVideoStepForm extends Component {
             attachmentPreview={attachmentPreview}
             filterOptions={filterOptions}
             csvArray={csvArray}
+            handleChange={this.handleChange}
           />
         );
       case 4:
