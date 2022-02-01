@@ -174,7 +174,7 @@ const BillingOverview = () => {
 
                         <p className="mg-b-10 ml-auto pd-t-10">
                           <Link
-                            to="/app/billing"
+                            to="../campaigns"
                             className="tx-primary tx-medium"
                           >
                             View All
