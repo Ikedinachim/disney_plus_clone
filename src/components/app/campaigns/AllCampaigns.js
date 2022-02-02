@@ -12,6 +12,8 @@ const AllCampaigns = () => {
   const { loading, allCampaign } = useSelector(
     (state) => state.allCampaign || {}
   );
+
+  console.log(allCampaign.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1)));
   const setAllCampaigns = () => {
     const data = {
       columns: [
@@ -135,22 +137,15 @@ const AllCampaigns = () => {
             <div className="container pd-x-0">
               <div className="row justify-content-between">
                 <div className="col-md-6 col-6">
-                  <Link to="../billing" className="tx-black">
-                    <div className="mg-b-0 tx-26 tx-bold">
-                      <i className="fa fa-angle-left mg-r-10 pd-t-15 tx-18"></i>
-                      <span>Campaigns</span>
-                    </div>
-                  </Link>
+                  <div className="mg-b-0 tx-26 tx-bold">
+                    <span>Campaigns</span>
+                  </div>
                 </div>
                 <div className="col-md-2 col-6">
                   <p>
-                    <a
-                      href="./create-campaign.html"
-                      className="btn btn-primary"
-                    >
-                      {" "}
+                    <Link to="../campaign/create" className="btn btn-primary">
                       New Campaign
-                    </a>
+                    </Link>
                   </p>
                 </div>
               </div>

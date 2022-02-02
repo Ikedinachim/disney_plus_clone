@@ -5,7 +5,7 @@ const CampaignCard = ({ campaign }) => {
   return (
     <Fragment>
       <tr>
-        <td>{campaign.channel}</td>
+        <td>{campaign.campaignType}</td>
         <td className="tx-right">
           <NumberFormat
             value={campaign.cost}
