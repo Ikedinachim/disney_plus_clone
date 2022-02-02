@@ -46,25 +46,31 @@ export const walletReducer = (state = { wallet: [] }, action) => {
   }
 };
 
-export const transactionHistoryReducer = (
-  state = { tnxHistory: [] },
-  action
-) => {
+const initialState = {
+  loading: false,
+  tnxHistory: [],
+  reverseTnxHistory: [],
+  error: null,
+};
+export const transactionHistoryReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_TRANSACTION_HISTORY_REQUEST:
       return {
+        ...initialState,
         loading: true,
-        tnxHistory: [],
       };
 
     case GET_TRANSACTION_HISTORY_SUCCESS:
       return {
+        ...state,
         loading: false,
         tnxHistory: action.payload,
+        reverseTnxHistory: action.payload.reverse(),
       };
 
     case GET_TRANSACTION_HISTORY_FAIL:
       return {
+        ...state,
         loading: false,
         error: action.payload,
       };

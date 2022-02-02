@@ -24,9 +24,8 @@ const PreviewCampaign = ({
   audience,
   attachmentPreview,
   price,
-  numbers,
   filterOptions,
-  csvArray,
+  handleChange,
 }) => {
   const { error, createFlierVideoCampaign, loading } = useSelector(
     (state) => state.flierVideoCampaign || []
@@ -54,6 +53,15 @@ const PreviewCampaign = ({
 
     dispatch(createFlierVideoCampaignAction(values));
   };
+
+  const setPrice = () => {
+    if (values.limit !== "") {
+      return parseInt(values.limit) * 5;
+    } else {
+      return filteredContactList.count * 5;
+    }
+  };
+
   useEffect(() => {
     if (
       createFlierVideoCampaign &&
@@ -70,7 +78,7 @@ const PreviewCampaign = ({
     }
   }, [dispatch, alert, error, createFlierVideoCampaign, navigate]);
 
-  console.log(csvArray);
+  // console.log(csvArray);
 
   return (
     <Fragment>
@@ -300,7 +308,9 @@ const PreviewCampaign = ({
                             <div className="form-row mg-t-15">
                               <div className="form-group col-md-9">
                                 <input
-                                  type="text"
+                                  type="number"
+                                  onChange={handleChange("limit")}
+                                  value={values.limit}
                                   className="form-control"
                                   placeholder="Enter your target audience number to get price"
                                 />
@@ -308,9 +318,7 @@ const PreviewCampaign = ({
                               <div className="form-group col-md-3">
                                 <NumberFormat
                                   className="badge badge-pink  tx-18 mg-5 tx-amt w-100 mt-0"
-                                  value={parseInt(
-                                    filteredContactList.count * 5
-                                  )}
+                                  value={parseInt(setPrice())}
                                   displayType={"text"}
                                   thousandSeparator={true}
                                   prefix={"₦"}

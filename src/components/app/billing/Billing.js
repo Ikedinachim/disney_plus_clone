@@ -18,10 +18,9 @@ const BillingOverview = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
 
-  // const { user } = useSelector((state) => state.auth);
-  const { wallet, loading, error } = useSelector((state) => state.wallet);
-  const { tnxHistory } = useSelector((state) => state.tnxHistory || {});
-  const { allCampaign } = useSelector((state) => state.allCampaign || {});
+  // const { user } = useSelector((state) => state.auth)
+
+  const { allCampaign, wallet, tnxHistory } = useSelector((state) => state);
 
   useEffect(() => {
     dispatch(getTransactionHistory());
@@ -29,35 +28,32 @@ const BillingOverview = () => {
     dispatch(getAllCampaign());
   }, [dispatch]);
 
-  const reverseTnxHistory = tnxHistory && tnxHistory.reverse();
+  const reverseTnxHistory = tnxHistory.reverseTnxHistory;
 
-  const [reverseAllCampaign, setReverseAllCampaign] = useState([]);
+  const reverseAllCampaign = allCampaign.reverseAllCampaign;
+
+  const [filteredItems, setfilteredItems] = useState(reverseAllCampaign);
+  console.log(reverseAllCampaign);
 
   const filterItem = (createdAt) => {
-    if (
-      reverseAllCampaign ===
-      allCampaign.sort((a, b) => a.createdAt > b.createdAt)
-    ) {
-      let newItem = reverseAllCampaign.filter(
-        (campaign) =>
-          DateTime.fromJSDate(new Date(campaign.createdAt)).toFormat(
-            "yyyy-MM"
-          ) === createdAt
-      );
-      newItem.map((allCampaign) => (
-        <CampaignCard key={allCampaign.id} campaign={allCampaign} />
-      ));
-      setReverseAllCampaign(newItem);
-    } else {
-      setReverseAllCampaign(
-        allCampaign.sort((a, b) => a.createdAt > b.createdAt)
-      );
+    console.log(createdAt, typeof createdAt);
+    if (!createdAt) {
+      console.log("lol");
+      return setfilteredItems(reverseAllCampaign);
     }
-  };
+    let newItem = reverseAllCampaign.filter(
+      (campaign) =>
+        DateTime.fromJSDate(new Date(campaign.createdAt)).toFormat(
+          "yyyy-MM"
+        ) === createdAt
+    );
 
+    setfilteredItems(newItem);
+  };
+  console.log(filteredItems);
   return (
     <Fragment>
-      {loading ? (
+      {wallet.loading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -174,7 +170,7 @@ const BillingOverview = () => {
 
                         <p className="mg-b-10 ml-auto pd-t-10">
                           <Link
-                            to="/app/billing"
+                            to="../campaigns"
                             className="tx-primary tx-medium"
                           >
                             View All
@@ -196,8 +192,8 @@ const BillingOverview = () => {
                             </tr>
                           </thead>
                           <tbody>
-                            {reverseAllCampaign &&
-                              reverseAllCampaign
+                            {filteredItems &&
+                              filteredItems
                                 .slice(0, 4)
                                 .map((allCampaign) => (
                                   <CampaignCard
@@ -226,12 +222,15 @@ const BillingOverview = () => {
                     </Link>
                   </div>
                   <div className="card bg-transparent card-height  bd-0">
-                    {reverseTnxHistory.slice(0, 5).map((transaction) => (
-                      <TransactionCard
-                        key={transaction.id}
-                        transaction={transaction}
-                      />
-                    ))}
+                    {reverseTnxHistory &&
+                      reverseTnxHistory
+                        .slice(0, 5)
+                        .map((transaction) => (
+                          <TransactionCard
+                            key={transaction.id}
+                            transaction={transaction}
+                          />
+                        ))}
                   </div>
                 </div>
               </div>
