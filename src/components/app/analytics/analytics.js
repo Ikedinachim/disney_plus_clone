@@ -71,6 +71,7 @@ const Analytics = () => {
                     <div>
                       <p className="tx-24 tx-bold">9,320</p>
                       <p className="tx-15 tx-blac">Total number of clicks</p>
+                      <br></br>
                     </div>
                   </div>
                 </div>
@@ -91,7 +92,9 @@ const Analytics = () => {
                     </div>
                     <div>
                       <p className="tx-24 tx-bold">3,231</p>
-                      <p className="tx-18">Total number of actions performed</p>
+                      <p className="tx-15 tx-blac">
+                        Total number of actions performed
+                      </p>
                     </div>
                   </div>
                 </div>

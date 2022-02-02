@@ -316,21 +316,32 @@ export const viewAppDownloadCampaignsReducer = (
   }
 };
 
-export const AllCampaignReducer = (state = { allCampaign: [] }, action) => {
+const initialState = {
+  loading: false,
+  allCampaign: [],
+  reverseAllCampaign: [],
+  error: null,
+};
+export const AllCampaignReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_CAMPAIGN_REQUEST:
       return {
+        ...state,
         loading: true,
-        allCampaign: [],
       };
 
     case GET_ALL_CAMPAIGN_SUCCESS:
       return {
+        ...state,
         loading: false,
         allCampaign: action.payload,
+        reverseAllCampaign: action.payload.sort((a, b) =>
+          a.createdAt > b.createdAt ? -1 : 1
+        ),
       };
     case GET_ALL_CAMPAIGN_FAIL:
       return {
+        ...state,
         loading: false,
         error: action.payload,
       };

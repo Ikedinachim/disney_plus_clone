@@ -130,6 +130,7 @@ a {
 .nav-aside .nav-link {
   padding: 1.5rem 0rem;
   color: #f0f1fa;
+  opacity: 1;
 }
 .bg-blue {
   background-color: #4847e0;
@@ -354,11 +355,21 @@ thead,
 }
 .table {
   width: 100% !important;
+  table-layout: fixed;
 }
 /* X-Small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) {
   .started-btn {
     width: 100%;
+  }
+  .table {
+    table-layout: fixed;
+    max-width: 400px !important;
+    width: 100%;
+  }
+  th,
+  td {
+    word-wrap: break-word;
   }
   .vert-center {
     position: static;

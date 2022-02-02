@@ -1,19 +1,8 @@
-import React, {
-  Fragment,
-  useEffect,
-  useState,
-  useRef,
-  useCallback,
-} from "react";
+import React, { Fragment, useEffect, useState, useCallback } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import MetaData from "../../../layout/MetaData";
 import { useAlert } from "react-alert";
-// import {
-//   useCSVReader,
-//   lightenDarkenColor,
-//   formatFileSize,
-// } from "react-papaparse";
 import NaijaStates from "naija-state-local-government";
 
 import {
@@ -32,106 +21,11 @@ const TargetAudience = ({
   numbers,
   filterOptions,
   values,
-  getCsvArray,
 
-  handleOpenDialog,
-  handleOnFileLoad,
-  handleOnError,
-  handleOnRemoveFile,
-  handleRemoveFile,
-  getButtonRef,
-  ///////
-  // getRootProps,
-  // getInputProps,
-  // isDragActive,
-  // isDragAccept,
-  // isDragReject,
   getCsvRawData,
 }) => {
-  // const GREY = "#CCC";
-  // const GREY_LIGHT = "rgba(255, 255, 255, 0.4)";
-  // const DEFAULT_REMOVE_HOVER_COLOR = "#A01919";
-  // const REMOVE_HOVER_COLOR_LIGHT = lightenDarkenColor(
-  //   DEFAULT_REMOVE_HOVER_COLOR,
-  //   40
-  // );
-  // const GREY_DIM = "#686868";
-
-  // const styles = {
-  //   zone: {
-  //     alignItems: "center",
-  //     border: `2px dashed ${GREY}`,
-  //     borderRadius: 20,
-  //     display: "flex",
-  //     flexDirection: "column",
-  //     height: "100%",
-  //     justifyContent: "center",
-  //     padding: 20,
-  //   },
-  //   file: {
-  //     background: "linear-gradient(to bottom, #EEE, #DDD)",
-  //     borderRadius: 20,
-  //     display: "flex",
-  //     height: 120,
-  //     width: 120,
-  //     position: "relative",
-  //     zIndex: 10,
-  //     flexDirection: "column",
-  //     justifyContent: "center",
-  //   },
-  //   info: {
-  //     alignItems: "center",
-  //     display: "flex",
-  //     flexDirection: "column",
-  //     paddingLeft: 10,
-  //     paddingRight: 10,
-  //   },
-  //   size: {
-  //     backgroundColor: GREY_LIGHT,
-  //     borderRadius: 3,
-  //     marginBottom: "0.5em",
-  //     justifyContent: "center",
-  //     display: "flex",
-  //   },
-  //   name: {
-  //     backgroundColor: GREY_LIGHT,
-  //     borderRadius: 3,
-  //     fontSize: 12,
-  //     marginBottom: "0.5em",
-  //   },
-  //   progressBar: {
-  //     bottom: 14,
-  //     position: "absolute",
-  //     width: "100%",
-  //     paddingLeft: 10,
-  //     paddingRight: 10,
-  //   },
-  //   zoneHover: {
-  //     borderColor: GREY_DIM,
-  //   },
-  //   default: {
-  //     borderColor: GREY,
-  //   },
-  //   remove: {
-  //     height: 23,
-  //     position: "absolute",
-  //     right: 6,
-  //     top: 6,
-  //     width: 23,
-  //   },
-  // };
-
-  // const ref = useRef();
-  // const { CSVReader } = useCSVReader();
-  // const [zoneHover, setZoneHover] = useState(false);
-  // const [csvData, setCsvData] = useState({});
-  // const [removeHoverColor, setRemoveHoverColor] = useState(
-  //   DEFAULT_REMOVE_HOVER_COLOR
-  // );
-
   const alert = useAlert();
   const dispatch = useDispatch();
-  // const { CSVReader } = useCSVReader();
 
   const { filteredContactList, error, loading } = useSelector(
     (state) => state.filteredContactList || []
@@ -142,39 +36,39 @@ const TargetAudience = ({
     setStatus(status);
   };
 
-  const [csvFile, setCsvFile] = useState();
-  const [csvArray, setCsvArray] = useState([]);
+  // const [csvFile, setCsvFile] = useState();
+  // const [csvArray, setCsvArray] = useState([]);
 
-  const processCSV = (str, delim = ",") => {
-    const headers = str.slice(0, str.indexOf("\n")).split(delim);
-    const rows = str.slice(str.indexOf("\n") + 1).split("\n");
+  // const processCSV = (str, delim = ",") => {
+  //   const headers = str.slice(0, str.indexOf("\n")).split(delim);
+  //   const rows = str.slice(str.indexOf("\n") + 1).split("\n");
 
-    const newArray = rows.map((row) => {
-      const values = row.split(delim);
-      const eachObject = headers.reduce((obj, header, i) => {
-        obj[header] = values[i];
-        return obj;
-      }, {});
-      return eachObject;
-    });
+  //   const newArray = rows.map((row) => {
+  //     const values = row.split(delim);
+  //     const eachObject = headers.reduce((obj, header, i) => {
+  //       obj[header] = values[i];
+  //       return obj;
+  //     }, {});
+  //     return eachObject;
+  //   });
 
-    setCsvArray(newArray);
-  };
+  //   setCsvArray(newArray);
+  // };
 
-  const submit = () => {
-    const file = csvFile;
-    const reader = new FileReader();
+  // const submit = () => {
+  //   const file = csvFile;
+  //   const reader = new FileReader();
 
-    reader.onload = function (e) {
-      const text = e.target.result;
-      console.log(text);
-      processCSV(text);
-    };
+  //   reader.onload = function (e) {
+  //     const text = e.target.result;
+  //     console.log(text);
+  //     processCSV(text);
+  //   };
 
-    getCsvArray(csvArray);
+  //   getCsvArray(csvArray);
 
-    reader.readAsText(file);
-  };
+  //   reader.readAsText(file);
+  // };
 
   const selectGenders = [
     {
@@ -235,7 +129,6 @@ const TargetAudience = ({
     if (values.targetAudienceOption === "mysogidb") {
       dispatch(getFilteredContactList(filterOptions));
       nextStep();
-      csvFile && submit();
     } else {
       nextStep();
     }
@@ -284,8 +177,6 @@ const TargetAudience = ({
       alert.error(error);
       dispatch(clearErrors());
     }
-    // console.log(csvArray);
-    // console.log(csvData);
     console.log(parsedCsvData);
     getCsvRawData(parsedCsvData);
   }, [dispatch, error, alert, parsedCsvData]);
@@ -693,7 +584,7 @@ const TargetAudience = ({
                               id="numbers"
                               rows={4}
                               onChange={handleChange("numbers")}
-                              placeholder="Enter Number"
+                              placeholder="Enter Number +234080xxxxxxxx"
                               defaultValue={numbers}
                             />
                           </div>

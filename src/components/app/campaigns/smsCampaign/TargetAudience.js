@@ -1,21 +1,133 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useCallback, useEffect } from "react";
 
 import MetaData from "../../../layout/MetaData";
+import { useDispatch, useSelector } from "react-redux";
+import { useAlert } from "react-alert";
+import NaijaStates from "naija-state-local-government";
 
-const TargetAudience = ({ prevStep, nextStep, handleChange, phoneNumber }) => {
+import {
+  getFilteredContactList,
+  clearErrors,
+} from "../../../../actions/campaignActions";
+
+import { useDropzone } from "react-dropzone";
+import Papa from "papaparse";
+
+const TargetAudience = ({
+  prevStep,
+  nextStep,
+  handleChange,
+  phoneNumber,
+  filterOptions,
+  values,
+  getCsvRawData,
+}) => {
+  const alert = useAlert();
+  const dispatch = useDispatch();
+
+  const { filteredContactList, error, loading } = useSelector(
+    (state) => state.filteredContactList || []
+  );
+
   const [status, setStatus] = useState(3);
   const radioHandler = (status) => {
     setStatus(status);
   };
 
+  const selectGenders = [
+    {
+      label: "Select Gender",
+      value: "",
+    },
+    {
+      label: "Male",
+      value: "M",
+    },
+    {
+      label: "Female",
+      value: "F",
+    },
+    {
+      label: "Both",
+      value: "B",
+    },
+  ];
+
+  const selectAgeRanges = [
+    {
+      label: "Select Age Group",
+      value: "",
+    },
+    {
+      label: "13-24",
+      value: "13-24",
+    },
+    {
+      label: "25-34",
+      value: "25-34",
+    },
+    {
+      label: "35-44",
+      value: "35-44",
+    },
+  ];
+
   const Continue = (e) => {
     e.preventDefault();
-    nextStep();
+    if (values.targetAudienceOption === "mysogidb") {
+      dispatch(getFilteredContactList(filterOptions));
+      nextStep();
+    } else {
+      nextStep();
+    }
   };
   const Previous = (e) => {
     e.preventDefault();
     prevStep();
   };
+
+  const lga = NaijaStates.lgas(filterOptions.state);
+
+  ////
+  const [parsedCsvData, setParsedCsvData] = useState([]);
+
+  const parseFile = (file) => {
+    Papa.parse(file, {
+      header: true,
+      complete: (results) => {
+        setParsedCsvData(results.data);
+        // console.log(parsedCsvData);
+      },
+    });
+    console.log(parsedCsvData);
+  };
+
+  const onDrop = useCallback((acceptedFiles) => {
+    if (acceptedFiles.length) {
+      parseFile(acceptedFiles[0]);
+    }
+  }, []);
+
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    isDragAccept,
+    isDragReject,
+  } = useDropzone({
+    onDrop,
+    accept: ".csv, application/vnd.ms-excel, text/csv",
+    skipEmptyLines: "greedy",
+  });
+
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+    console.log(parsedCsvData);
+    getCsvRawData(parsedCsvData);
+  }, [dispatch, error, alert, parsedCsvData]);
 
   return (
     <Fragment>

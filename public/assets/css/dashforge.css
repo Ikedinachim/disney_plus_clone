@@ -17102,6 +17102,10 @@ textarea.parsley-success:focus {
   letter-spacing: -1px;
   margin-top: -3px;
 }
+
+.aside-body{
+  display: block;
+}
 @media (min-width: 992px) {
   .aside-logo {
     font-size: 24px;
@@ -17137,7 +17141,7 @@ textarea.parsley-success:focus {
 .aside-menu-link svg:last-child {
   width: 20px;
   height: 20px;
-  display: none;
+  display: block;
   margin-top: 0;
 }
 
@@ -17148,6 +17152,7 @@ textarea.parsley-success:focus {
   border-top: 1px solid rgba(72, 94, 144, 0.16);
   border-right: 1px solid rgba(72, 94, 144, 0.16);
   background-color: #fff;
+  display: block;
 }
 
 .aside-loggedin {

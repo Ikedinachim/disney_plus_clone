@@ -14,6 +14,8 @@ export default class AppDownloadStepForm extends Component {
     androidStoreUrl: "",
     numbers: "",
     callToAction: "",
+    timeRangeFrom: "",
+    timeRangeTo: "",
     attachment: "",
     attachmentPreview: "",
     uploadedImage: "",
@@ -21,6 +23,7 @@ export default class AppDownloadStepForm extends Component {
     targetAudienceOption: "manual",
     price: 0,
     csvFile: "",
+    limit: "",
 
     ageRange: "",
     gender: "",
@@ -28,6 +31,8 @@ export default class AppDownloadStepForm extends Component {
     lga: "",
     deviceType: "LG",
     deviceBrand: "X210ZM",
+
+    parsedCsvData: [],
   };
 
   // go back to previous step
@@ -90,18 +95,22 @@ export default class AppDownloadStepForm extends Component {
   };
 
   render() {
-    const { step } = this.state;
+    // const { step } = this.state;
     const {
+      step,
       senderId,
       channel,
       campaignMessage,
       callToAction,
+      timeRangeFrom,
+      timeRangeTo,
       attachment,
       attachmentPreview,
       iosStoreUrl,
       androidStoreUrl,
       campaignType,
       numbers,
+      limit,
 
       targetAudienceOption,
       ageRange,
@@ -110,11 +119,36 @@ export default class AppDownloadStepForm extends Component {
       lga,
       deviceType,
       deviceBrand,
+      parsedCsvData,
     } = this.state;
 
-    const targetAudience = numbers.split(",");
-    const audience = targetAudience.length;
+    /////////////////////////////
+
+    const getCsvRawData = (data) => {
+      this.setState({ parsedCsvData: data });
+    };
+
+    let personalUpload = parsedCsvData.map(({ Numbers }) => Numbers);
+
+    let targetAudience = [];
+
+    const getAudience = () => {
+      if (
+        personalUpload.length > 0 &&
+        targetAudienceOption === "manual_import"
+      ) {
+        return (targetAudience = personalUpload);
+      } else {
+        return (targetAudience = numbers.split(","));
+      }
+    };
+
+    /////////////////////////////
+
+    // const targetAudience = numbers.split(",");
+    const audience = getAudience().length;
     const price = audience * 5;
+    const timeRange = timeRangeFrom + " - " + timeRangeTo;
     // const attachment = attachmentPreview
 
     const filterOptions = {
@@ -132,15 +166,18 @@ export default class AppDownloadStepForm extends Component {
       senderId,
       channel,
       campaignMessage,
+      timeRange,
       targetAudience,
       callToAction,
       attachment,
       iosStoreUrl,
       androidStoreUrl,
       campaignType,
+      targetAudience: getAudience(),
       targetAudienceOption,
       filterParameters,
       price,
+      limit,
     };
 
     console.log(values);
@@ -167,6 +204,7 @@ export default class AppDownloadStepForm extends Component {
             numbers={numbers}
             values={values}
             filterOptions={filterOptions}
+            getCsvRawData={getCsvRawData}
           />
         );
       case 3:
@@ -179,6 +217,7 @@ export default class AppDownloadStepForm extends Component {
             attachmentPreview={attachmentPreview}
             price={price}
             filterOptions={filterOptions}
+            handleChange={this.handleChange}
           />
         );
       case 4:
