@@ -222,12 +222,15 @@ const BillingOverview = () => {
                     </Link>
                   </div>
                   <div className="card bg-transparent card-height  bd-0">
-                    {reverseTnxHistory.slice(0, 5).map((transaction) => (
-                      <TransactionCard
-                        key={transaction.id}
-                        transaction={transaction}
-                      />
-                    ))}
+                    {reverseTnxHistory &&
+                      reverseTnxHistory
+                        .slice(0, 5)
+                        .map((transaction) => (
+                          <TransactionCard
+                            key={transaction.id}
+                            transaction={transaction}
+                          />
+                        ))}
                   </div>
                 </div>
               </div>
