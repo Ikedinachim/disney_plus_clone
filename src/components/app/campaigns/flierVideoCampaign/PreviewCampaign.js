@@ -14,6 +14,7 @@ import {
 } from "../../../../actions/campaignActions";
 import { VIDEO_FLIER_CAMPAIGN_RESET } from "../../../../constants/campaignConstants";
 import Loader from "../../../loader";
+import MediaPlayer from "../../../../_helpers/reactPlayer/ReactPlayer";
 
 import PreviewIcon from "../../../../assets/img/Promote_Offers.svg";
 
@@ -361,7 +362,7 @@ const PreviewCampaign = ({
                                           placeholder="Enter your target audience number to get price"
                                       />
                                   </div> */}
-                              <div className=" col-md-2 d-flex">
+                              <div className=" col-md-2 d-flex align-items-center">
                                 <p className="tx-18 tx-com tx-bold mb-0">
                                   Amount:
                                 </p>{" "}
@@ -418,14 +419,23 @@ const PreviewCampaign = ({
                     <div className="card shadow-sm rounded bd-0">
                       <div className="card-body">
                         <p className="tx-20 tx-bold tx-com">Preview</p>
-                        <div>
-                          <img
-                            src={attachmentPreview}
-                            className="img-fluid mg-b-10"
-                            alt=""
-                          />
-                          <p className="mb-4">{values.campaignMessage}</p>
-                        </div>
+                        {values.assetType === "image" ? (
+                          <div>
+                            <img
+                              src={attachmentPreview}
+                              className="img-fluid mg-b-10"
+                              alt=""
+                            />
+                            <p className="mb-4">{values.campaignMessage}</p>
+                          </div>
+                        ) : (
+                          <>
+                            <div className="mg-b-10">
+                              <MediaPlayer url={values.attachment} />
+                            </div>
+                            <p className="mb-4">{values.campaignMessage}</p>
+                          </>
+                        )}
                         <div>
                           {values.callToAction === "" ||
                           values.whatsAppNumber === "" ? null : (

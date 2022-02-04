@@ -12,6 +12,7 @@ const InfluencerTargetAudience = ({
   numbers,
   handleImageUpload,
   values,
+  selectedFileName,
 }) => {
   const alert = useAlert();
   const [status, setStatus] = useState(3);
@@ -21,11 +22,7 @@ const InfluencerTargetAudience = ({
 
   const Continue = (e) => {
     e.preventDefault();
-    if (values.instagramHandle === "") {
-      alert.error("Provide a call to action for users");
-    } else if (values.facebookHandle === "") {
-      alert.error("Choose a channel");
-    } else if (values.twitterHandle === "") {
+    if (values.campaignMessage === "") {
       alert.error("Create the campaign message");
     } else {
       nextStep();
@@ -86,6 +83,7 @@ const InfluencerTargetAudience = ({
                       placeholder="@tomeewer"
                       defaultValue={values.twitterHandle}
                       onChange={handleChange("twitterHandle")}
+                      // disabled="true"
                     />
                   </div>
                   <div className="form-group col-md-6">
@@ -113,8 +111,12 @@ const InfluencerTargetAudience = ({
                   <label className="mb-1">Campaign Message</label>
                   <textarea
                     className="form-control"
-                    rows={4}
-                    placeholder="Enter Message you want influencer to post e.g get 10% discount on your subscription to Tizeti"
+                    rows={6}
+                    placeholder="Indulge in any of our yummy treat for just 4500 naira per loaf... Get all three for 12,500. Contact us now
+                    IG: @xxxx
+                    Twitter: @xxxx
+                    FB: @xxxx
+                    Snapchat: @xxxx"
                     defaultValue={values.campaignMessage}
                     onChange={handleChange("campaignMessage")}
                   />
@@ -125,13 +127,16 @@ const InfluencerTargetAudience = ({
                     <div className="custom-file">
                       <input
                         type="file"
+                        name="file"
                         className="custom-file-input"
                         id="customFile"
                         onChange={onChangeAttachment("uploadedImage")}
+                        // placeholder="Click to upload desired icon (if needed)"
                       />
                       <label className="custom-file-label" htmlFor="customFile">
-                        Click to upload desired icon (if needed)
+                        {selectedFileName}
                       </label>
+                      {/* <p>{selectedFileName}</p> */}
                     </div>
                   </div>
                 </div>

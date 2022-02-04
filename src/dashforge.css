@@ -47474,6 +47474,14 @@ button.bg-twitter:focus,
   font-size: 0.875rem;
 }
 
+.tx-6 {
+  font-size: 6px;
+}
+
+.tx-46-f {
+  font-size: 6px !important;
+}
+
 .tx-8 {
   font-size: 8px;
 }

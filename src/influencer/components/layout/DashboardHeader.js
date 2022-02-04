@@ -26,7 +26,7 @@ const Header = () => {
   const { wallet } = useSelector((state) => state.wallet);
 
   useEffect(() => {
-    dispatch(getWallet());
+    // dispatch(getWallet());
     const checkIfClickedOutside = (e) => {
       // If the menu is open and the clicked target is not within the menu,
       // then close the menu
