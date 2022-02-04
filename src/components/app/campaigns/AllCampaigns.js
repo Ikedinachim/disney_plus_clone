@@ -8,7 +8,7 @@ import { DateTime } from "luxon";
 import { MDBDataTable } from "mdbreact";
 
 const AllCampaigns = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { loading, allCampaign } = useSelector(
     (state) => state.allCampaign || {}
   );
@@ -123,10 +123,10 @@ const AllCampaigns = () => {
     return data;
   };
 
-  // useEffect(() => {
-  //   dispatch(getAllCampaign());
-  // }, [dispatch]);
-  // console.log(allCampaign);
+  useEffect(() => {
+    dispatch(getAllCampaign());
+  }, [dispatch]);
+  console.log(allCampaign);
   return (
     <Fragment>
       {loading ? (

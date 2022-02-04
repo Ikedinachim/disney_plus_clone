@@ -26,6 +26,8 @@ const BillingOverview = () => {
     dispatch(getTransactionHistory());
     dispatch(getSenderID());
     dispatch(getAllCampaign());
+    if (allCampaign !== {}) {
+    }
   }, [dispatch]);
 
   const reverseTnxHistory = tnxHistory.reverseTnxHistory;
@@ -35,25 +37,30 @@ const BillingOverview = () => {
   const [filteredItems, setfilteredItems] = useState(reverseAllCampaign);
   console.log(reverseAllCampaign);
 
-  const filterItem = (createdAt) => {
-    console.log(createdAt, typeof createdAt);
-    if (!createdAt) {
-      console.log("lol");
-      return setfilteredItems(reverseAllCampaign);
-    }
-    let newItem = reverseAllCampaign.filter(
-      (campaign) =>
-        DateTime.fromJSDate(new Date(campaign.createdAt)).toFormat(
-          "yyyy-MM"
-        ) === createdAt
-    );
+  let filterItem;
 
-    setfilteredItems(newItem);
-  };
+  useEffect(() => {
+    filterItem = (createdAt) => {
+      console.log(createdAt, typeof createdAt);
+      if (!createdAt) {
+        console.log("lol");
+        return setfilteredItems(reverseAllCampaign);
+      }
+      let newItem = reverseAllCampaign.filter(
+        (campaign) =>
+          DateTime.fromJSDate(new Date(campaign.createdAt)).toFormat(
+            "yyyy-MM"
+          ) === createdAt
+      );
+
+      setfilteredItems(newItem);
+    };
+  }, [filterItem]);
+
   console.log(filteredItems);
   return (
     <Fragment>
-      {wallet.loading ? (
+      {wallet.loading || allCampaign.loading || tnxHistory.loading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -78,7 +85,7 @@ const BillingOverview = () => {
                           <p className="tx-32 tx-semibold tx-green">
                             +{" "}
                             <NumberFormat
-                              value={parseInt(wallet && wallet.balance)}
+                              value={parseInt(wallet && wallet.wallet.balance)}
                               displayType={"text"}
                               thousandSeparator={true}
                               prefix={"₦"}

@@ -36,6 +36,8 @@ export default class InfluencerStepForm extends Component {
 
     showModal: false,
     activeItemId: "",
+
+    selectedFileName: "Click to upload desired asset (if needed)",
   };
 
   // go back to previous step
@@ -59,6 +61,7 @@ export default class InfluencerStepForm extends Component {
     this.setState({ checkedInfluencers: input });
     let mulInfluencers = this.state.selectedInfluencers;
     let selectedIndex = mulInfluencers.findIndex((el) => el.id === input.id);
+    console.log(selectedIndex);
     if (selectedIndex !== -1) {
       mulInfluencers.splice(selectedIndex, 1);
       mulInfluencers.push(input);
@@ -70,10 +73,10 @@ export default class InfluencerStepForm extends Component {
       ...state,
       selectedInfluencers: mulInfluencers,
     }));
-    // console.log(
-    //   "selected influencer and platforms",
-    //   this.state.selectedInfluencers
-    // );
+    console.log(
+      "selected influencer and platforms",
+      this.state.selectedInfluencers
+    );
   };
 
   handleCheck(e) {
@@ -100,6 +103,7 @@ export default class InfluencerStepForm extends Component {
   // Handle image change
   onChangeAttachment = (input) => (e) => {
     const reader = new FileReader();
+    let file = e.target.files[0];
 
     reader.onload = () => {
       if (reader.readyState === 2) {
@@ -109,7 +113,12 @@ export default class InfluencerStepForm extends Component {
       this.setState({ attachmentPreview: reader.result });
     };
 
-    reader.readAsDataURL(e.target.files[0]);
+    if (file) {
+      reader.readAsDataURL(file);
+      this.setState({
+        selectedFileName: file.name,
+      });
+    }
   };
 
   // Handle price from child component
@@ -166,6 +175,7 @@ export default class InfluencerStepForm extends Component {
       closeModal,
       checkedInfluencers,
       campaignType,
+      selectedFileName,
     } = this.state;
 
     // const filteredValue = Object.values(checkedInfluencers);
@@ -305,6 +315,7 @@ export default class InfluencerStepForm extends Component {
             onChangeAttachment={this.onChangeAttachment}
             attachmentPreview={attachmentPreview}
             values={values}
+            selectedFileName={selectedFileName}
           />
         );
       case 3:
