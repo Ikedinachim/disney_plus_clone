@@ -15,10 +15,24 @@ import {
 import { SMS_CAMPAIGN_RESET } from "../../../../constants/campaignConstants";
 import Loader from "../../../loader";
 
-const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
+import PreviewIcon from "../../../../assets/img/Brand_Awareness.svg";
+
+const PreviewCampaign = ({
+  nextStep,
+  prevStep,
+  values,
+  audience,
+  filterOptions,
+  handleChange,
+}) => {
   const { error, createSmsCampaign, loading } = useSelector(
     (state) => state.smsCampaign || []
   );
+
+  const { filteredContactList, fcError, fcLoading } = useSelector(
+    (state) => state.filteredContactList || []
+  );
+
   const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -39,6 +53,14 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
     dispatch(createSmsCampaignAction(values));
   };
 
+  const setPrice = () => {
+    if (values.limit !== "") {
+      return parseInt(values.limit) * 5;
+    } else {
+      return filteredContactList.count * 5;
+    }
+  };
+
   useEffect(() => {
     if (createSmsCampaign && createSmsCampaign.status === "success") {
       alert.success(createSmsCampaign.message);
@@ -48,13 +70,13 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
     } else if (error) {
       alert.error(error);
       dispatch(clearErrors());
-      dispatch(getWallet());
+      // dispatch(getWallet());
     }
   }, [dispatch, alert, error, createSmsCampaign, navigate]);
 
   return (
     <Fragment>
-      {loading ? (
+      {loading || fcLoading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -82,7 +104,7 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
                       <div className="d-flex">
                         <div className="mg-r-20">
                           <img
-                            src="../../../../assets/img/Brand_Awareness.svg"
+                            src={PreviewIcon}
                             className="img-fluid wd-50 ht-50"
                             alt=""
                           />
@@ -131,74 +153,169 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
                         </div>
                       </div>
                     </div>
-                    {/* <hr />
-                                        <div className="mg-b-20 mg-md-b-10">
-                                            <div className="d-flex justify-content-between">
-                                                <div>
-                                                <p className="tx-18 mb-0 tx-bold tx-com">Target Audience</p>
-                                                </div>
-                                                <div>
-                                                <div className="d-flex pd-t-3">
-                                                    <div>
-                                                    <i className="fa fa-edit tx-primary mg-r-5" />
-                                                    </div>
-                                                    <p className="mb-0">Edit</p>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            <div className="form-row mg-t-15">
-                                                <div className="col-md-3 form-group">
-                                                <label
-                                                    htmlFor
-                                                    className="tx-14 tx-gray mb-0 tx-medium d-block"
-                                                >
-                                                    Age Range
-                                                </label>
-                                                <div className="d-flex">
-                                                    <span className="badge badge-pink tx-14 mg-5">
-                                                    {" "}
-                                                    13-24 years
-                                                    </span>
-                                                    <span className="badge badge-pink tx-14 mg-5">
-                                                    {" "}
-                                                    13-24 years
-                                                    </span>
-                                                </div>
-                                                </div>
-                                                <div className="col-md-1 form-group">
-                                                <label
-                                                    htmlFor
-                                                    className="tx-14 tx-gray mb-0 tx-medium d-block"
-                                                >
-                                                    Gender
-                                                </label>
-                                                <span className="badge badge-pink tx-14 mg-5"> Male</span>
-                                                </div>
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor className="tx-14 tx-gray mb-0 tx-medium d-block">
-                                                Location
-                                                </label>
-                                                <div className="d-flex">
-                                                <span className="badge badge-pink tx-14 mg-5"> Adamawa</span>
-                                                <span className="badge badge-pink tx-14 mg-5">
-                                                    {" "}
-                                                    Maidugairi
-                                                </span>
-                                                </div>
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor className="tx-14 tx-gray mb-0 tx-medium d-block">
-                                                Interest
-                                                </label>
-                                                <span className="badge badge-pink tx-14 mg-5">
-                                                {" "}
-                                                Surfing Net
-                                                </span>
-                                            </div>
-                                        </div> */}
+                    {values.targetAudienceOption === "mysogidb" && (
+                      <>
+                        <hr />
+                        <div className="mg-b-20 mg-md-b-10">
+                          <div className="d-flex justify-content-between">
+                            <div>
+                              <p className="tx-18 mb-0 tx-bold tx-com">
+                                Target Audience
+                              </p>
+                            </div>
+                            <div>
+                              <div className="d-flex pd-t-3">
+                                <div>
+                                  <i className="fa fa-edit tx-primary mg-r-5" />
+                                </div>
+                                <p className="mb-0">Edit</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="form-row mg-t-15">
+                            <div className="col-md-3 form-group">
+                              <label
+                                htmlFor
+                                className="tx-14 tx-gray mb-0 tx-medium d-block"
+                              >
+                                Age Range
+                              </label>
+                              <div className="d-flex">
+                                <span className="badge badge-pink tx-14 mg-5">
+                                  {" "}
+                                  {filterOptions.ageRange} years
+                                </span>
+                              </div>
+                            </div>
+                            <div className="col-md-1 form-group">
+                              <label
+                                htmlFor
+                                className="tx-14 tx-gray mb-0 tx-medium d-block"
+                              >
+                                Gender
+                              </label>
+                              <span className="badge badge-pink tx-14 mg-5">
+                                {" "}
+                                {filterOptions.gender}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="form-group">
+                            <label
+                              htmlFor
+                              className="tx-14 tx-gray mb-0 tx-medium d-block"
+                            >
+                              Location
+                            </label>
+                            <div className="d-flex">
+                              <span className="badge badge-pink tx-14 mg-5">
+                                {" "}
+                                {filterOptions.state}
+                              </span>
+                              <span className="badge badge-pink tx-14 mg-5">
+                                {" "}
+                                {filterOptions.lga}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="form-group">
+                            <label
+                              htmlFor
+                              className="tx-14 tx-gray mb-0 tx-medium d-block"
+                            >
+                              Interest
+                            </label>
+                            <span className="badge badge-pink tx-14 mg-5">
+                              {" "}
+                              Surfing Net
+                            </span>
+                          </div>
+                        </div>
+                      </>
+                    )}
                     <hr />
-                    <div className="mg-b-20 mg-md-b-10">
+                    {values.targetAudienceOption === "mysogidb" && (
+                      <div className="mg-b-20 mg-md-b-10">
+                        <p className="tx-18 tx-com tx-semibold mb-0">Pricing</p>
+                        <div className="form-group mg-t-15">
+                          <label
+                            htmlFor
+                            className="tx-14 tx-gray mb-0 tx-medium"
+                          >
+                            Potential Audience Based on filter
+                          </label>
+                          <p className="tx-18 tx-com tx-bold mb-1">
+                            {filteredContactList.count}
+                          </p>
+                        </div>
+                        <div className="form-row mg-t-15">
+                          <div className="form-group col-md-4">
+                            <input
+                              type="number"
+                              onChange={handleChange("limit")}
+                              value={values.limit}
+                              className="form-control"
+                              placeholder="Enter your target audience number to get price"
+                            />
+                          </div>
+                          <div className="form-group">
+                            <NumberFormat
+                              className="badge badge-pink  tx-18 mg-5 tx-amt w-100 mt-0"
+                              value={parseInt(setPrice())}
+                              displayType={"text"}
+                              thousandSeparator={true}
+                              prefix={"₦"}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    {values.targetAudienceOption !== "mysogidb" && (
+                      <div className="mg-b-20 mg-md-b-10">
+                        <p className="tx-18 tx-com tx-semibold mb-0">Pricing</p>
+                        <div className="form-group mg-t-15">
+                          <label
+                            htmlFor
+                            className="tx-14 tx-gray mb-1 tx-medium"
+                          >
+                            Potential Audience Based on Manual Input
+                          </label>
+                          <p className="tx-18 tx-com tx-bold mb-0">
+                            {audience}{" "}
+                            <span className="tx-14 tx-gray tx-medium">
+                              number(s) loaded
+                            </span>
+                          </p>
+                          {/* <div className="form-group col-md-3">
+                                    <p className="tx-18 tx-com tx-bold mb-0">{audience}</p>
+                                    <span className="badge badge-pink  tx-18 mg-5 tx-amt w-100 mt-0">
+                                        {" "}
+                                        <NumberFormat value={values.price} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
+                                    </span>
+                                </div> */}
+                        </div>
+                        <div className="form-row mg-t-15 pd-x-0">
+                          {/* <div className="form-group col-md-9">
+                                      <input
+                                          type="text"
+                                          className="form-control"
+                                          placeholder="Enter your target audience number to get price"
+                                      />
+                                  </div> */}
+                          <div className=" col-md-2 d-flex align-items-center">
+                            <p className="tx-18 tx-com tx-bold mb-0">Amount:</p>{" "}
+                            <NumberFormat
+                              className="badge tx-green tx-bold tx-18 tx-amt w-100 mt-0"
+                              value={parseInt(values.price)}
+                              displayType={"text"}
+                              thousandSeparator={true}
+                              prefix={"₦"}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    {/* <div className="mg-b-20 mg-md-b-10">
                       <p className="tx-18 tx-com tx-semibold mb-0">Pricing</p>
                       <div className="form-group mg-t-15">
                         <label htmlFor className="tx-14 tx-gray mb-1 tx-medium">
@@ -225,10 +342,11 @@ const PreviewCampaign = ({ nextStep, prevStep, values, audience }) => {
                           </span>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                     <div className="col-md-5 pd-x-0 mg-y-40">
                       <div className="mg-t-20 d-flex">
-                        {wallet.balance < values.price ? (
+                        {parseInt(wallet.balance) < values.price ||
+                        parseInt(wallet.balance) < filteredContactList.count ? (
                           <button
                             className="btn btn-primary w-100 tx-com mg-r-15"
                             onClick={Continue}

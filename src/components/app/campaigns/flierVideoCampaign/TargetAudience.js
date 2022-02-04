@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import MetaData from "../../../layout/MetaData";
 import { useAlert } from "react-alert";
 import NaijaStates from "naija-state-local-government";
+import { saveAs } from "file-saver";
 
 import {
   getFilteredContactList,
@@ -35,6 +36,11 @@ const TargetAudience = ({
   const radioHandler = (status) => {
     setStatus(status);
   };
+
+  // const [assetType, setAssetType] = useState("image");
+  // const assetTypeHandler = (asset) => {
+  //   setStatus(asset);
+  // };
 
   // const [csvFile, setCsvFile] = useState();
   // const [csvArray, setCsvArray] = useState([]);
@@ -172,6 +178,12 @@ const TargetAudience = ({
     skipEmptyLines: "greedy",
   });
 
+  const setCsvAsset = () => {
+    fetch("#")
+      .then((res) => res.blob())
+      .then((blob) => saveAs(blob, "fileName"));
+  };
+
   useEffect(() => {
     if (error) {
       alert.error(error);
@@ -271,8 +283,12 @@ const TargetAudience = ({
                       <div id="show_1">
                         <div className="row justify-content-md-between">
                           <div className="form-group col-md-6">
-                            <label htmlFor className="mb-1 tx-com">
-                              Age Group *
+                            <label
+                              htmlFor
+                              className="mb-1 tx-com d-flex align-items-center"
+                            >
+                              Age Group
+                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                             </label>
                             <select
                               className="form-control"
@@ -287,8 +303,12 @@ const TargetAudience = ({
                             </select>
                           </div>
                           <div className="form-group col-md-6">
-                            <label htmlFor className="mb-1 tx-com">
-                              Gender *
+                            <label
+                              htmlFor
+                              className="mb-1 tx-com d-flex align-items-center"
+                            >
+                              Gender
+                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                             </label>
                             <select
                               className="form-control"
@@ -303,8 +323,12 @@ const TargetAudience = ({
                             </select>
                           </div>
                           <div className="form-group col-md-6">
-                            <label htmlFor className="mb-1 tx-com">
-                              State *
+                            <label
+                              htmlFor
+                              className="mb-1 tx-com d-flex align-items-center"
+                            >
+                              State
+                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                             </label>
                             <select
                               className="custom-select"
@@ -319,8 +343,12 @@ const TargetAudience = ({
                             </select>
                           </div>
                           <div className="form-group col-md-6">
-                            <label htmlFor className="mb-1 tx-com">
-                              LGA *
+                            <label
+                              htmlFor
+                              className="mb-1 tx-com d-flex align-items-center"
+                            >
+                              LGA
+                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                             </label>
                             <select
                               className="custom-select"
@@ -382,10 +410,21 @@ const TargetAudience = ({
                     {status === 2 && (
                       <div className="hide" id="show_2">
                         <div className="row justify-content-md-between">
-                          <div className="mg-t-20">
-                            <p className="tx-24 tx-bold mb-1 tx-com">
+                          <div className="form-group col-md-6 d-flex flex-column">
+                            <label htmlFor className="mb-1 tx-com">
                               Upload CSV Containing Phone Numbers
-                            </p>
+                            </label>
+                            <button
+                              className="btn tx-primary pd-x-0 pd-t-0"
+                              onClick={setCsvAsset}
+                            >
+                              <div className="d-flex pd-t-3">
+                                <div>
+                                  <i className="fa fa-download tx-primary mg-r-5" />
+                                </div>
+                                <p className="mb-0 pointer">Download Sample</p>
+                              </div>
+                            </button>
                             <div className="form-group">
                               <div
                                 {...getRootProps({
@@ -584,7 +623,7 @@ const TargetAudience = ({
                               id="numbers"
                               rows={4}
                               onChange={handleChange("numbers")}
-                              placeholder="Enter Number +234080xxxxxxxx"
+                              placeholder="Enter Number(s) +234080xxxxxxxx, +234080xxxxxxxx"
                               defaultValue={numbers}
                             />
                           </div>

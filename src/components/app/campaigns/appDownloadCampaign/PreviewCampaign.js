@@ -14,6 +14,7 @@ import {
 } from "../../../../actions/campaignActions";
 import { APP_DOWNLOAD_CAMPAIGN_RESET } from "../../../../constants/campaignConstants";
 import Loader from "../../../loader";
+import MediaPlayer from "../../../../_helpers/reactPlayer/ReactPlayer";
 
 import PreviewIcon from "../../../../assets/img/Promote_Offers.svg";
 
@@ -409,14 +410,23 @@ const PreviewCampaign = ({
                     <div className="card shadow-sm rounded bd-0">
                       <div className="card-body">
                         <p className="tx-20 tx-bold tx-com">Preview</p>
-                        <div>
-                          <img
-                            src={attachmentPreview}
-                            className="img-fluid mg-b-10"
-                            alt=""
-                          />
-                          <p className="mb-4">{values.campaignMessage}</p>
-                        </div>
+                        {values.assetType === "image" ? (
+                          <div>
+                            <img
+                              src={attachmentPreview}
+                              className="img-fluid mg-b-10"
+                              alt=""
+                            />
+                            <p className="mb-4">{values.campaignMessage}</p>
+                          </div>
+                        ) : (
+                          <>
+                            <div className="mg-b-10">
+                              <MediaPlayer url={values.attachment} />
+                            </div>
+                            <p className="mb-4">{values.campaignMessage}</p>
+                          </>
+                        )}
                         <div>
                           {values.callToAction === "" ||
                           values.androidStoreUrl === "" ||

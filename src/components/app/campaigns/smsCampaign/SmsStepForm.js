@@ -17,7 +17,7 @@ export default class SmsStepForm extends Component {
     phoneNumber: "",
     campaignType: "general",
     price: 0,
-    targetAudienceOption: "manual",
+    targetAudienceOption: "",
     limit: "",
     parsedCsvData: [],
 
@@ -113,14 +113,18 @@ export default class SmsStepForm extends Component {
       channel,
       campaignMessage,
       contactNumber,
-      gender,
+      // gender,
       targetAge,
       location,
       interest,
       campaignType,
       price,
       filterParameters,
+      targetAudienceOption,
+      limit,
     };
+
+    console.log(values);
 
     switch (step) {
       case 1:
@@ -150,6 +154,7 @@ export default class SmsStepForm extends Component {
             nextStep={this.nextStep}
             values={values}
             audience={audience}
+            filterOptions={filterOptions}
             handleChange={this.handleChange}
           />
         );
