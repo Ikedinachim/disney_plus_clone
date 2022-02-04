@@ -16,11 +16,14 @@ export default class AppDownloadStepForm extends Component {
     callToAction: "",
     timeRangeFrom: "",
     timeRangeTo: "",
-    attachment: "",
+    // attachment: "",
     attachmentPreview: "",
     uploadedImage: "",
     campaignType: "app_download",
     targetAudienceOption: "manual",
+    assetType: "image",
+    imageUrl: "",
+    videoUrl: "",
     price: 0,
     csvFile: "",
     limit: "",
@@ -31,6 +34,8 @@ export default class AppDownloadStepForm extends Component {
     lga: "",
     deviceType: "LG",
     deviceBrand: "X210ZM",
+
+    selectedFileName: "Click to upload desired asset (if needed)",
 
     parsedCsvData: [],
   };
@@ -55,6 +60,7 @@ export default class AppDownloadStepForm extends Component {
   // Handle image change
   onChangeAttachment = (input) => (e) => {
     const reader = new FileReader();
+    let file = e.target.files[0];
 
     reader.onload = () => {
       if (reader.readyState === 2) {
@@ -63,7 +69,12 @@ export default class AppDownloadStepForm extends Component {
       this.setState({ attachmentPreview: reader.result });
     };
 
-    reader.readAsDataURL(e.target.files[0]);
+    if (file) {
+      reader.readAsDataURL(file);
+      this.setState({
+        selectedFileName: file.name,
+      });
+    }
   };
 
   handleImageUpload = async () => {
@@ -104,7 +115,10 @@ export default class AppDownloadStepForm extends Component {
       callToAction,
       timeRangeFrom,
       timeRangeTo,
-      attachment,
+      // attachment,
+      imageUrl,
+      videoUrl,
+      assetType,
       attachmentPreview,
       iosStoreUrl,
       androidStoreUrl,
@@ -120,6 +134,7 @@ export default class AppDownloadStepForm extends Component {
       deviceType,
       deviceBrand,
       parsedCsvData,
+      selectedFileName,
     } = this.state;
 
     /////////////////////////////
@@ -140,6 +155,16 @@ export default class AppDownloadStepForm extends Component {
         return (targetAudience = personalUpload);
       } else {
         return (targetAudience = numbers.split(","));
+      }
+    };
+
+    let attachment = "";
+
+    const setAssets = () => {
+      if (assetType === "image") {
+        return (attachment = imageUrl);
+      } else if (assetType === "video") {
+        return (attachment = videoUrl);
       }
     };
 
@@ -169,7 +194,7 @@ export default class AppDownloadStepForm extends Component {
       timeRange,
       targetAudience,
       callToAction,
-      attachment,
+      attachment: setAssets(),
       iosStoreUrl,
       androidStoreUrl,
       campaignType,
@@ -178,6 +203,7 @@ export default class AppDownloadStepForm extends Component {
       filterParameters,
       price,
       limit,
+      assetType,
     };
 
     console.log(values);
@@ -192,6 +218,7 @@ export default class AppDownloadStepForm extends Component {
             values={values}
             handleImageUpload={this.handleImageUpload}
             attachmentPreview={attachmentPreview}
+            selectedFileName={selectedFileName}
           />
         );
       case 2:

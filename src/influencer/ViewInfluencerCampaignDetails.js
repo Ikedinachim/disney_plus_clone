@@ -247,12 +247,16 @@ const ViewInfluencerCampaignDetails = () => {
                     </div>
                   </Link>
                 </div>
-                <div className="col-md-3 col-xl-2 pd-xl-l-0 mg-b-20">
+                {/* <div className="col-md-3 col-xl-2 pd-xl-l-0 mg-b-20">
                   <select className="custom-select">
                     <option selected>Actions</option>
                     <option value={1}>Accept</option>
                     <option value={2}>Reject</option>
                   </select>
+                  {loadActionButtons()}
+                </div> */}
+                <div className="col-md-5 col-xl-5 pd-xl-l-0 mg-b-20 bd-t-0 flex-basis-max">
+                  {loadActionButtons()}
                 </div>
               </div>
               <div className="card bd-0 rounded shadow-sm">
@@ -418,27 +422,9 @@ const ViewInfluencerCampaignDetails = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="card-footer mg-t-30 bd-t-0">
-                    {/* {campaignDetails.marketingData.isApproved ||
-                      campaignDetails.marketingData.isPublished ||
-                      (campaignDetails.marketingData.isRejected && (
-                        <>
-                          <button
-                            type="button"
-                            //   onClick={acceptCampaignHandler}
-                            className="btn btn-primary pd-x-40 tx-com mg-r-15"
-                            data-toggle="modal"
-                            data-dismiss="modal"
-                          >
-                            Accept
-                          </button>
-                          <button className="btn btn-outline-primary pd-x-30">
-                            Reject
-                          </button>
-                        </>
-                      ))} */}
+                  {/* <div className="card-footer mg-t-30 bd-t-0">
                     {loadActionButtons()}
-                  </div>
+                  </div> */}
                   {/*Download  Modal */}
                   <div
                     className="modal fade"

@@ -3,7 +3,7 @@ import FlierVideoCampaign from "./FlierVideoCampaign";
 import TargetAudience from "./TargetAudience";
 import PreviewCampaign from "./PreviewCampaign";
 import FundWalletFlierVideo from "./FundWalletFlierVideo";
-import { useDropzone } from "react-dropzone";
+// import { useDropzone } from "react-dropzone";
 
 // const buttonRef = React.createRef();
 
@@ -26,12 +26,15 @@ export default class FlierVideoStepForm extends Component {
     timeRangeFrom: "",
     timeRangeTo: "",
     campaignImage: "",
-    attachment: "",
+    // attachment: "",
     attachmentPreview: "",
     targetAudience: "",
     uploadedImage: "",
     campaignType: "flier_video",
     targetAudienceOption: "manual",
+    assetType: "image",
+    imageUrl: "",
+    videoUrl: "",
     price: 0,
     limit: "",
     // csvFile: "",
@@ -43,6 +46,8 @@ export default class FlierVideoStepForm extends Component {
     lga: "",
     deviceType: "LG",
     deviceBrand: "X210ZM",
+
+    selectedFileName: "Click to upload desired asset (if needed)",
 
     parsedCsvData: [],
   };
@@ -67,6 +72,7 @@ export default class FlierVideoStepForm extends Component {
   // Handle image change
   onChangeAttachment = (input) => (e) => {
     const reader = new FileReader();
+    let file = e.target.files[0];
 
     reader.onload = () => {
       if (reader.readyState === 2) {
@@ -76,7 +82,12 @@ export default class FlierVideoStepForm extends Component {
       this.setState({ attachmentPreview: reader.result });
     };
 
-    reader.readAsDataURL(e.target.files[0]);
+    if (file) {
+      reader.readAsDataURL(file);
+      this.setState({
+        selectedFileName: file.name,
+      });
+    }
   };
 
   // setLimit = (input) => (e) => {
@@ -106,7 +117,7 @@ export default class FlierVideoStepForm extends Component {
       );
       const res_1 = await res.json();
       this.setState({
-        attachment: res_1.secure_url,
+        imageUrl: res_1.secure_url,
         imageAlt: `An image of ${res_1.original_filename}`,
       });
     } catch (err) {
@@ -184,7 +195,9 @@ export default class FlierVideoStepForm extends Component {
       callToAction,
       timeRangeFrom,
       timeRangeTo,
-      attachment,
+      // attachment,
+      imageUrl,
+      videoUrl,
       attachmentPreview,
       campaignType,
       targetAudienceOption,
@@ -200,6 +213,8 @@ export default class FlierVideoStepForm extends Component {
       // csvFile,
       csvArray,
       parsedCsvData,
+      assetType,
+      selectedFileName,
     } = this.state;
 
     /////////////////////////////
@@ -220,6 +235,16 @@ export default class FlierVideoStepForm extends Component {
         return (targetAudience = personalUpload);
       } else {
         return (targetAudience = numbers.split(","));
+      }
+    };
+
+    let attachment = "";
+
+    const setAssets = () => {
+      if (assetType === "image") {
+        return (attachment = imageUrl);
+      } else if (assetType === "video") {
+        return (attachment = videoUrl);
       }
     };
 
@@ -254,13 +279,14 @@ export default class FlierVideoStepForm extends Component {
       ussd,
       smsNumber,
       callToAction,
-      attachment,
+      attachment: setAssets(),
       targetAudience: getAudience(),
       campaignType,
       targetAudienceOption,
       filterParameters,
       csvArray,
       limit,
+      assetType,
     };
 
     console.log(values);
@@ -275,6 +301,7 @@ export default class FlierVideoStepForm extends Component {
             values={values}
             attachmentPreview={attachmentPreview}
             handleImageUpload={this.handleImageUpload}
+            selectedFileName={selectedFileName}
           />
         );
       case 2:

@@ -221,8 +221,12 @@ const TargetAudience = ({
                       <div id="show_1">
                         <div className="row justify-content-md-between">
                           <div className="form-group col-md-6">
-                            <label htmlFor className="mb-1 tx-com">
-                              Age Group *
+                            <label
+                              htmlFor
+                              className="mb-1 tx-com d-flex align-items-center"
+                            >
+                              Age Group
+                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                             </label>
                             <select
                               className="form-control"
@@ -237,8 +241,12 @@ const TargetAudience = ({
                             </select>
                           </div>
                           <div className="form-group col-md-6">
-                            <label htmlFor className="mb-1 tx-com">
-                              Gender *
+                            <label
+                              htmlFor
+                              className="mb-1 tx-com d-flex align-items-center"
+                            >
+                              Gender
+                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                             </label>
                             <select
                               className="form-control"
@@ -253,8 +261,12 @@ const TargetAudience = ({
                             </select>
                           </div>
                           <div className="form-group col-md-6">
-                            <label htmlFor className="mb-1 tx-com">
-                              State *
+                            <label
+                              htmlFor
+                              className="mb-1 tx-com d-flex align-items-center"
+                            >
+                              State
+                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                             </label>
                             <select
                               className="custom-select"
@@ -269,8 +281,12 @@ const TargetAudience = ({
                             </select>
                           </div>
                           <div className="form-group col-md-6">
-                            <label htmlFor className="mb-1 tx-com">
-                              LGA *
+                            <label
+                              htmlFor
+                              className="mb-1 tx-com d-flex align-items-center"
+                            >
+                              LGA
+                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                             </label>
                             <select
                               className="custom-select"
@@ -332,10 +348,10 @@ const TargetAudience = ({
                     {status === 2 && (
                       <div className="hide" id="show_2">
                         <div className="row justify-content-md-between">
-                          <div className="mg-t-20">
-                            <p className="tx-24 tx-bold mb-1 tx-com">
-                              Upload CSV Containing Phone NUmbers
-                            </p>
+                          <div className="form-group col-md-6">
+                            <label htmlFor className="mb-1 tx-com">
+                              Upload CSV Containing Phone Numbers
+                            </label>
                             <div className="form-group">
                               <div
                                 {...getRootProps({
@@ -373,7 +389,7 @@ const TargetAudience = ({
                               id
                               rows={4}
                               onChange={handleChange("numbers")}
-                              placeholder="Enter Number +234080xxxxxxxx"
+                              placeholder="Enter Number(s) +234080xxxxxxxx, +234080xxxxxxxx"
                               defaultValue={numbers}
                             />
                           </div>

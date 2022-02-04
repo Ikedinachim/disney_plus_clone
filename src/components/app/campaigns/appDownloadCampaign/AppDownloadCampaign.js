@@ -1,10 +1,11 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
 import { getSenderID } from "../../../../actions/senderIDActions";
 import Loader from "../../../loader";
+import MediaPlayer from "../../../../_helpers/reactPlayer/ReactPlayer";
 
 import MetaData from "../../../layout/MetaData";
 
@@ -15,10 +16,17 @@ const SmsCampaign = ({
   onChangeAttachment,
   handleImageUpload,
   attachmentPreview,
+  selectedFileName,
 }) => {
   const alert = useAlert();
   const dispatch = useDispatch();
   const { senderID, loading } = useSelector((state) => state.senderID || []);
+
+  const [assetType, setAssetType] = useState("image");
+  const assetTypeHandler = (asset) => {
+    setAssetType(asset);
+  };
+
   const Continue = (e) => {
     e.preventDefault();
     if (values.senderId === "") {
@@ -27,9 +35,11 @@ const SmsCampaign = ({
       alert.error("Choose a channel");
     } else if (values.campaignMessage === "") {
       alert.error("Create the campaign message");
-    } else {
+    } else if (values.assetType === "image") {
       nextStep();
       handleImageUpload();
+    } else {
+      nextStep();
     }
   };
   const selectChannels = [
@@ -175,21 +185,83 @@ const SmsCampaign = ({
                               Attachment
                             </p>
                             <div className="form-group">
-                              <div className="custom-file">
+                              <div className="custom-control custom-radio">
                                 <input
-                                  type="file"
-                                  className="custom-file-input"
-                                  id="customFile"
-                                  onChange={onChangeAttachment("uploadedImage")}
+                                  type="radio"
+                                  id="image"
+                                  name="customRadio"
+                                  className="custom-control-input"
+                                  checked={assetType === "image"}
+                                  onClick={(e) => assetTypeHandler("image")}
+                                  value={"image"}
+                                  onChange={handleChange("assetType")}
                                 />
                                 <label
-                                  className="custom-file-label"
-                                  htmlFor="customFile"
+                                  className="custom-control-label"
+                                  htmlFor="image"
                                 >
-                                  Click to upload desired icon (if needed)
+                                  Image Asset
                                 </label>
                               </div>
                             </div>
+                            <div className="form-group">
+                              <div className="custom-control custom-radio">
+                                <input
+                                  type="radio"
+                                  id="video"
+                                  name="customRadio"
+                                  className="custom-control-input"
+                                  checked={assetType === "video"}
+                                  onClick={(e) => assetTypeHandler("video")}
+                                  value={"video"}
+                                  onChange={handleChange("assetType")}
+                                />
+                                <label
+                                  className="custom-control-label"
+                                  htmlFor="video"
+                                >
+                                  Video Asset
+                                </label>
+                              </div>
+                            </div>
+                            {assetType === "image" && (
+                              <div className="form-group">
+                                <div className="custom-file">
+                                  <input
+                                    type="file"
+                                    name="file"
+                                    className="custom-file-input"
+                                    id="customFile"
+                                    onChange={onChangeAttachment(
+                                      "uploadedImage"
+                                    )}
+                                  />
+                                  <label
+                                    className="custom-file-label"
+                                    htmlFor="customFile"
+                                  >
+                                    {selectedFileName}
+                                  </label>
+                                </div>
+                              </div>
+                            )}
+                            {assetType === "video" && (
+                              <div className="form-group">
+                                <div className="custom-file">
+                                  <label htmlFor className="mb-1">
+                                    Youtube URL
+                                  </label>
+                                  <input
+                                    type="text"
+                                    id="videoAsset"
+                                    className="form-control"
+                                    value={values.attachment}
+                                    placeholder="https://www.youtube.com/watch?v=ysz5S6PUM-U"
+                                    onChange={handleChange("videoUrl")}
+                                  />
+                                </div>
+                              </div>
+                            )}
                           </div>
                         </form>
                         <div className="col-md-7 pd-x-0 mg-y-30">
@@ -215,15 +287,23 @@ const SmsCampaign = ({
                     <div className="col-md-5 col-12 mg-t-20">
                       <div className="card shadow-sm rounded bd-0">
                         <div className="card-body">
-                          <div>
-                            <img
-                              src={attachmentPreview}
-                              className="img-fluid mg-b-10"
-                              alt=""
-                              srcSet
-                            />
-                            <p className="mb-4">{values.campaignMessage}</p>
-                          </div>
+                          {assetType === "image" ? (
+                            <div>
+                              <img
+                                src={attachmentPreview}
+                                className="img-fluid mg-b-10"
+                                alt=""
+                              />
+                              <p className="mb-4">{values.campaignMessage}</p>
+                            </div>
+                          ) : (
+                            <>
+                              <div className="mg-b-10">
+                                <MediaPlayer url={values.attachment} />
+                              </div>
+                              <p className="mb-4">{values.campaignMessage}</p>
+                            </>
+                          )}
                           {values.callToAction === "" ||
                           values.androidStoreUrl === "" ||
                           values.iosStoreUrl === "" ? null : (

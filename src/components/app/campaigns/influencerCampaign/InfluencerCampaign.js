@@ -71,20 +71,18 @@ const InfluencerCampaign = ({
     }
     // console.log();
     let singleInfluencer = Influencers.find((el) => el.id === item.id);
+    console.log(singleInfluencer);
     singleInfluencer.platforms = [];
     setCheckedInfluencer(singleInfluencer);
     setPayloadData((state) => ({
       ...state,
-      [item.id]: state[item.id]
-        ? null
-        : {
-            id: item.id,
-          },
+      [item.id]: state[item.id] ? null : singleInfluencer,
     }));
     // handleCheckedState(checkedInfluencer);
   };
 
-  // console.log("This is the inital data", checkedInfluencer);
+  console.log("This is the payload data", payloadData);
+  console.log("This is the inital data", checkedInfluencer);
 
   const handlePlatformOnChange = (item) => (e) => {
     // console.log(item);
@@ -144,7 +142,6 @@ const InfluencerCampaign = ({
     if (checkedInfluencer !== null) {
       handleCheckedState(checkedInfluencer);
     }
-    console.log(closeModal);
   }, [checkedInfluencer]);
 
   const customFilter = (object, key, value) => {
