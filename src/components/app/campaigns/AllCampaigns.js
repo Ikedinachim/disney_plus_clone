@@ -6,14 +6,15 @@ import NumberFormat from "react-number-format";
 import Loader from "../../loader";
 import { DateTime } from "luxon";
 import { MDBDataTable } from "mdbreact";
+import MetaData from "../../layout/MetaData";
 
 const AllCampaigns = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { loading, allCampaign } = useSelector(
     (state) => state.allCampaign || {}
   );
 
-  console.log(allCampaign.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1)));
+  
   const setAllCampaigns = () => {
     const data = {
       columns: [
@@ -123,12 +124,13 @@ const AllCampaigns = () => {
     return data;
   };
 
-  // useEffect(() => {
-  //   dispatch(getAllCampaign());
-  // }, [dispatch]);
-  // console.log(allCampaign);
+  useEffect(() => {
+    dispatch(getAllCampaign());
+  }, [dispatch]);
+  
   return (
     <Fragment>
+    <MetaData title={"All Campaigns"} />
       {loading ? (
         <Loader />
       ) : (

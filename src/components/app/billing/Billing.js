@@ -30,15 +30,16 @@ const BillingOverview = () => {
 
   const reverseTnxHistory = tnxHistory.reverseTnxHistory;
 
+
   const reverseAllCampaign = allCampaign.reverseAllCampaign;
 
-  const [filteredItems, setfilteredItems] = useState(reverseAllCampaign);
-  console.log(reverseAllCampaign);
 
+  const [filteredItems, setfilteredItems] = useState(reverseAllCampaign);
+  console.log(filteredItems);
   const filterItem = (createdAt) => {
-    console.log(createdAt, typeof createdAt);
+    
     if (!createdAt) {
-      console.log("lol");
+      
       return setfilteredItems(reverseAllCampaign);
     }
     let newItem = reverseAllCampaign.filter(
@@ -53,7 +54,7 @@ const BillingOverview = () => {
   console.log(filteredItems);
   return (
     <Fragment>
-      {wallet.loading ? (
+      {allCampaign.loading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -61,15 +62,15 @@ const BillingOverview = () => {
           <div className="content-body">
             <div className="container pd-x-0">
               <div className="row justify-content-between">
-                <div className="col-md-6 col-12">
-                  <p className="tx-26 tx-bold">Billing Overview</p>
+                <div className="col-md-6 col-12 ">
+                  <p className="tx-28 tx-bold billing-info ">Billing Overview</p>
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-7 col-12">
+                <div className="col-md-7 col-12 billing-info">
                   <div className="card rounded bd-0 shadow-sm">
                     <div className="card-body">
-                      <p className="tx-18">Billing Information</p>
+                      <p className="tx-18 billing-info-bold">Billing Information</p>
                       <div className="row">
                         <div className="col-md-6 col-12">
                           <p className="tx-uppercase mb-0 tx-16">
@@ -78,7 +79,7 @@ const BillingOverview = () => {
                           <p className="tx-32 tx-semibold tx-green">
                             +{" "}
                             <NumberFormat
-                              value={parseInt(wallet && wallet.balance)}
+                              value={parseInt(wallet.wallet.balance)}
                               displayType={"text"}
                               thousandSeparator={true}
                               prefix={"₦"}
@@ -151,7 +152,7 @@ const BillingOverview = () => {
                 <div className="col-md-7 col-12">
                   <div className="row justify-content-between mg-b-5">
                     <div className="col-md-4 col-12">
-                      <p className="mg-md-b-0 pd-t-10 tx-medium">
+                      <p className="mg-md-b-0 pd-t-10 tx-medium billing-info-bold">
                         Usage Summary
                       </p>
                     </div>
