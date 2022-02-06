@@ -231,8 +231,10 @@ export const getAllCampaign = () => async (dispatch) => {
       "/api/campaign/all-generic-campaign",
       config
     );
-
-    if (data.status === "success") {
+    console.log(data);
+    console.log("before if", data.statusCode);
+    if (data.statusCode === 100) {
+      console.log("Before dispatch");
       dispatch({
         type: GET_ALL_CAMPAIGN_SUCCESS,
         payload: data.data,

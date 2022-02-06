@@ -20,26 +20,28 @@ const BillingOverview = () => {
 
   // const { user } = useSelector((state) => state.auth)
 
-  const { allCampaign, wallet, tnxHistory } = useSelector((state) => state);
+  const {
+    allCampaign: { reverseAllCampaign, loading: allCampaignLoading },
+    wallet,
+    tnxHistory: { reverseTnxHistory },
+  } = useSelector((state) => state);
 
   useEffect(() => {
     dispatch(getTransactionHistory());
     dispatch(getSenderID());
     dispatch(getAllCampaign());
-  }, [dispatch]);
-
-  const reverseTnxHistory = tnxHistory.reverseTnxHistory;
-
-
-  const reverseAllCampaign = allCampaign.reverseAllCampaign;
-
+  }, []);
 
   const [filteredItems, setfilteredItems] = useState(reverseAllCampaign);
-  console.log(filteredItems);
+
+  // to set filtereditems initially to reverseAllCampaign
+  useEffect(() => {
+    setfilteredItems(reverseAllCampaign);
+  }, [reverseAllCampaign]);
+
+  console.log(filteredItems, reverseAllCampaign);
   const filterItem = (createdAt) => {
-    
     if (!createdAt) {
-      
       return setfilteredItems(reverseAllCampaign);
     }
     let newItem = reverseAllCampaign.filter(
@@ -54,7 +56,7 @@ const BillingOverview = () => {
   console.log(filteredItems);
   return (
     <Fragment>
-      {allCampaign.loading ? (
+      {allCampaignLoading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -63,14 +65,18 @@ const BillingOverview = () => {
             <div className="container pd-x-0">
               <div className="row justify-content-between">
                 <div className="col-md-6 col-12 ">
-                  <p className="tx-28 tx-bold billing-info ">Billing Overview</p>
+                  <p className="tx-28 tx-bold billing-info ">
+                    Billing Overview
+                  </p>
                 </div>
               </div>
               <div className="row">
                 <div className="col-md-7 col-12 billing-info">
                   <div className="card rounded bd-0 shadow-sm">
                     <div className="card-body">
-                      <p className="tx-18 billing-info-bold">Billing Information</p>
+                      <p className="tx-18 billing-info-bold">
+                        Billing Information
+                      </p>
                       <div className="row">
                         <div className="col-md-6 col-12">
                           <p className="tx-uppercase mb-0 tx-16">
