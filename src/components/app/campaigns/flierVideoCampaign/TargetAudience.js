@@ -1,20 +1,10 @@
-import React, {
-  Fragment,
-  useEffect,
-  useState,
-  useRef,
-  useCallback,
-} from "react";
+import React, { Fragment, useEffect, useState, useCallback } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import MetaData from "../../../layout/MetaData";
 import { useAlert } from "react-alert";
-// import {
-//   useCSVReader,
-//   lightenDarkenColor,
-//   formatFileSize,
-// } from "react-papaparse";
 import NaijaStates from "naija-state-local-government";
+import { saveAs } from "file-saver";
 
 import {
   getFilteredContactList,
@@ -32,106 +22,11 @@ const TargetAudience = ({
   numbers,
   filterOptions,
   values,
-  getCsvArray,
 
-  handleOpenDialog,
-  handleOnFileLoad,
-  handleOnError,
-  handleOnRemoveFile,
-  handleRemoveFile,
-  getButtonRef,
-  ///////
-  // getRootProps,
-  // getInputProps,
-  // isDragActive,
-  // isDragAccept,
-  // isDragReject,
   getCsvRawData,
 }) => {
-  // const GREY = "#CCC";
-  // const GREY_LIGHT = "rgba(255, 255, 255, 0.4)";
-  // const DEFAULT_REMOVE_HOVER_COLOR = "#A01919";
-  // const REMOVE_HOVER_COLOR_LIGHT = lightenDarkenColor(
-  //   DEFAULT_REMOVE_HOVER_COLOR,
-  //   40
-  // );
-  // const GREY_DIM = "#686868";
-
-  // const styles = {
-  //   zone: {
-  //     alignItems: "center",
-  //     border: `2px dashed ${GREY}`,
-  //     borderRadius: 20,
-  //     display: "flex",
-  //     flexDirection: "column",
-  //     height: "100%",
-  //     justifyContent: "center",
-  //     padding: 20,
-  //   },
-  //   file: {
-  //     background: "linear-gradient(to bottom, #EEE, #DDD)",
-  //     borderRadius: 20,
-  //     display: "flex",
-  //     height: 120,
-  //     width: 120,
-  //     position: "relative",
-  //     zIndex: 10,
-  //     flexDirection: "column",
-  //     justifyContent: "center",
-  //   },
-  //   info: {
-  //     alignItems: "center",
-  //     display: "flex",
-  //     flexDirection: "column",
-  //     paddingLeft: 10,
-  //     paddingRight: 10,
-  //   },
-  //   size: {
-  //     backgroundColor: GREY_LIGHT,
-  //     borderRadius: 3,
-  //     marginBottom: "0.5em",
-  //     justifyContent: "center",
-  //     display: "flex",
-  //   },
-  //   name: {
-  //     backgroundColor: GREY_LIGHT,
-  //     borderRadius: 3,
-  //     fontSize: 12,
-  //     marginBottom: "0.5em",
-  //   },
-  //   progressBar: {
-  //     bottom: 14,
-  //     position: "absolute",
-  //     width: "100%",
-  //     paddingLeft: 10,
-  //     paddingRight: 10,
-  //   },
-  //   zoneHover: {
-  //     borderColor: GREY_DIM,
-  //   },
-  //   default: {
-  //     borderColor: GREY,
-  //   },
-  //   remove: {
-  //     height: 23,
-  //     position: "absolute",
-  //     right: 6,
-  //     top: 6,
-  //     width: 23,
-  //   },
-  // };
-
-  // const ref = useRef();
-  // const { CSVReader } = useCSVReader();
-  // const [zoneHover, setZoneHover] = useState(false);
-  // const [csvData, setCsvData] = useState({});
-  // const [removeHoverColor, setRemoveHoverColor] = useState(
-  //   DEFAULT_REMOVE_HOVER_COLOR
-  // );
-
   const alert = useAlert();
   const dispatch = useDispatch();
-  // const { CSVReader } = useCSVReader();
 
   const { filteredContactList, error, loading } = useSelector(
     (state) => state.filteredContactList || []
@@ -142,39 +37,44 @@ const TargetAudience = ({
     setStatus(status);
   };
 
-  const [csvFile, setCsvFile] = useState();
-  const [csvArray, setCsvArray] = useState([]);
+  // const [assetType, setAssetType] = useState("image");
+  // const assetTypeHandler = (asset) => {
+  //   setStatus(asset);
+  // };
 
-  const processCSV = (str, delim = ",") => {
-    const headers = str.slice(0, str.indexOf("\n")).split(delim);
-    const rows = str.slice(str.indexOf("\n") + 1).split("\n");
+  // const [csvFile, setCsvFile] = useState();
+  // const [csvArray, setCsvArray] = useState([]);
 
-    const newArray = rows.map((row) => {
-      const values = row.split(delim);
-      const eachObject = headers.reduce((obj, header, i) => {
-        obj[header] = values[i];
-        return obj;
-      }, {});
-      return eachObject;
-    });
+  // const processCSV = (str, delim = ",") => {
+  //   const headers = str.slice(0, str.indexOf("\n")).split(delim);
+  //   const rows = str.slice(str.indexOf("\n") + 1).split("\n");
 
-    setCsvArray(newArray);
-  };
+  //   const newArray = rows.map((row) => {
+  //     const values = row.split(delim);
+  //     const eachObject = headers.reduce((obj, header, i) => {
+  //       obj[header] = values[i];
+  //       return obj;
+  //     }, {});
+  //     return eachObject;
+  //   });
 
-  const submit = () => {
-    const file = csvFile;
-    const reader = new FileReader();
+  //   setCsvArray(newArray);
+  // };
 
-    reader.onload = function (e) {
-      const text = e.target.result;
-      console.log(text);
-      processCSV(text);
-    };
+  // const submit = () => {
+  //   const file = csvFile;
+  //   const reader = new FileReader();
 
-    getCsvArray(csvArray);
+  //   reader.onload = function (e) {
+  //     const text = e.target.result;
+  //     console.log(text);
+  //     processCSV(text);
+  //   };
 
-    reader.readAsText(file);
-  };
+  //   getCsvArray(csvArray);
+
+  //   reader.readAsText(file);
+  // };
 
   const selectGenders = [
     {
@@ -235,7 +135,6 @@ const TargetAudience = ({
     if (values.targetAudienceOption === "mysogidb") {
       dispatch(getFilteredContactList(filterOptions));
       nextStep();
-      csvFile && submit();
     } else {
       nextStep();
     }
@@ -279,13 +178,17 @@ const TargetAudience = ({
     skipEmptyLines: "greedy",
   });
 
+  const setCsvAsset = () => {
+    fetch("#")
+      .then((res) => res.blob())
+      .then((blob) => saveAs(blob, "fileName"));
+  };
+
   useEffect(() => {
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-    // console.log(csvArray);
-    // console.log(csvData);
     console.log(parsedCsvData);
     getCsvRawData(parsedCsvData);
   }, [dispatch, error, alert, parsedCsvData]);
@@ -380,8 +283,12 @@ const TargetAudience = ({
                       <div id="show_1">
                         <div className="row justify-content-md-between">
                           <div className="form-group col-md-6">
-                            <label htmlFor className="mb-1 tx-com">
-                              Age Group *
+                            <label
+                              htmlFor
+                              className="mb-1 tx-com d-flex align-items-center"
+                            >
+                              Age Group
+                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                             </label>
                             <select
                               className="form-control"
@@ -396,8 +303,12 @@ const TargetAudience = ({
                             </select>
                           </div>
                           <div className="form-group col-md-6">
-                            <label htmlFor className="mb-1 tx-com">
-                              Gender *
+                            <label
+                              htmlFor
+                              className="mb-1 tx-com d-flex align-items-center"
+                            >
+                              Gender
+                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                             </label>
                             <select
                               className="form-control"
@@ -412,8 +323,12 @@ const TargetAudience = ({
                             </select>
                           </div>
                           <div className="form-group col-md-6">
-                            <label htmlFor className="mb-1 tx-com">
-                              State *
+                            <label
+                              htmlFor
+                              className="mb-1 tx-com d-flex align-items-center"
+                            >
+                              State
+                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                             </label>
                             <select
                               className="custom-select"
@@ -428,8 +343,12 @@ const TargetAudience = ({
                             </select>
                           </div>
                           <div className="form-group col-md-6">
-                            <label htmlFor className="mb-1 tx-com">
-                              LGA *
+                            <label
+                              htmlFor
+                              className="mb-1 tx-com d-flex align-items-center"
+                            >
+                              LGA
+                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                             </label>
                             <select
                               className="custom-select"
@@ -491,10 +410,21 @@ const TargetAudience = ({
                     {status === 2 && (
                       <div className="hide" id="show_2">
                         <div className="row justify-content-md-between">
-                          <div className="mg-t-20">
-                            <p className="tx-24 tx-bold mb-1 tx-com">
+                          <div className="form-group col-md-6 d-flex flex-column">
+                            <label htmlFor className="mb-1 tx-com">
                               Upload CSV Containing Phone Numbers
-                            </p>
+                            </label>
+                            <button
+                              className="btn tx-primary pd-x-0 pd-t-0"
+                              onClick={setCsvAsset}
+                            >
+                              <div className="d-flex pd-t-3">
+                                <div>
+                                  <i className="fa fa-download tx-primary mg-r-5" />
+                                </div>
+                                <p className="mb-0 pointer">Download Sample</p>
+                              </div>
+                            </button>
                             <div className="form-group">
                               <div
                                 {...getRootProps({
@@ -693,7 +623,7 @@ const TargetAudience = ({
                               id="numbers"
                               rows={4}
                               onChange={handleChange("numbers")}
-                              placeholder="Enter Number"
+                              placeholder="Enter Number(s) +234080xxxxxxxx, +234080xxxxxxxx"
                               defaultValue={numbers}
                             />
                           </div>

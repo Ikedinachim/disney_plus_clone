@@ -14,13 +14,19 @@ export default class AppDownloadStepForm extends Component {
     androidStoreUrl: "",
     numbers: "",
     callToAction: "",
-    attachment: "",
+    timeRangeFrom: "",
+    timeRangeTo: "",
+    // attachment: "",
     attachmentPreview: "",
     uploadedImage: "",
     campaignType: "app_download",
     targetAudienceOption: "manual",
+    assetType: "image",
+    imageUrl: "",
+    videoUrl: "",
     price: 0,
     csvFile: "",
+    limit: "",
 
     ageRange: "",
     gender: "",
@@ -28,6 +34,10 @@ export default class AppDownloadStepForm extends Component {
     lga: "",
     deviceType: "LG",
     deviceBrand: "X210ZM",
+
+    selectedFileName: "Click to upload desired asset (if needed)",
+
+    parsedCsvData: [],
   };
 
   // go back to previous step
@@ -50,6 +60,7 @@ export default class AppDownloadStepForm extends Component {
   // Handle image change
   onChangeAttachment = (input) => (e) => {
     const reader = new FileReader();
+    let file = e.target.files[0];
 
     reader.onload = () => {
       if (reader.readyState === 2) {
@@ -58,7 +69,12 @@ export default class AppDownloadStepForm extends Component {
       this.setState({ attachmentPreview: reader.result });
     };
 
-    reader.readAsDataURL(e.target.files[0]);
+    if (file) {
+      reader.readAsDataURL(file);
+      this.setState({
+        selectedFileName: file.name,
+      });
+    }
   };
 
   handleImageUpload = async () => {
@@ -90,18 +106,25 @@ export default class AppDownloadStepForm extends Component {
   };
 
   render() {
-    const { step } = this.state;
+    // const { step } = this.state;
     const {
+      step,
       senderId,
       channel,
       campaignMessage,
       callToAction,
-      attachment,
+      timeRangeFrom,
+      timeRangeTo,
+      // attachment,
+      imageUrl,
+      videoUrl,
+      assetType,
       attachmentPreview,
       iosStoreUrl,
       androidStoreUrl,
       campaignType,
       numbers,
+      limit,
 
       targetAudienceOption,
       ageRange,
@@ -110,11 +133,47 @@ export default class AppDownloadStepForm extends Component {
       lga,
       deviceType,
       deviceBrand,
+      parsedCsvData,
+      selectedFileName,
     } = this.state;
 
-    const targetAudience = numbers.split(",");
-    const audience = targetAudience.length;
+    /////////////////////////////
+
+    const getCsvRawData = (data) => {
+      this.setState({ parsedCsvData: data });
+    };
+
+    let personalUpload = parsedCsvData.map(({ Numbers }) => Numbers);
+
+    let targetAudience = [];
+
+    const getAudience = () => {
+      if (
+        personalUpload.length > 0 &&
+        targetAudienceOption === "manual_import"
+      ) {
+        return (targetAudience = personalUpload);
+      } else {
+        return (targetAudience = numbers.split(","));
+      }
+    };
+
+    let attachment = "";
+
+    const setAssets = () => {
+      if (assetType === "image") {
+        return (attachment = imageUrl);
+      } else if (assetType === "video") {
+        return (attachment = videoUrl);
+      }
+    };
+
+    /////////////////////////////
+
+    // const targetAudience = numbers.split(",");
+    const audience = getAudience().length;
     const price = audience * 5;
+    const timeRange = timeRangeFrom + " - " + timeRangeTo;
     // const attachment = attachmentPreview
 
     const filterOptions = {
@@ -132,15 +191,19 @@ export default class AppDownloadStepForm extends Component {
       senderId,
       channel,
       campaignMessage,
+      timeRange,
       targetAudience,
       callToAction,
-      attachment,
+      attachment: setAssets(),
       iosStoreUrl,
       androidStoreUrl,
       campaignType,
+      targetAudience: getAudience(),
       targetAudienceOption,
       filterParameters,
       price,
+      limit,
+      assetType,
     };
 
     console.log(values);
@@ -155,6 +218,7 @@ export default class AppDownloadStepForm extends Component {
             values={values}
             handleImageUpload={this.handleImageUpload}
             attachmentPreview={attachmentPreview}
+            selectedFileName={selectedFileName}
           />
         );
       case 2:
@@ -167,6 +231,7 @@ export default class AppDownloadStepForm extends Component {
             numbers={numbers}
             values={values}
             filterOptions={filterOptions}
+            getCsvRawData={getCsvRawData}
           />
         );
       case 3:
@@ -179,6 +244,7 @@ export default class AppDownloadStepForm extends Component {
             attachmentPreview={attachmentPreview}
             price={price}
             filterOptions={filterOptions}
+            handleChange={this.handleChange}
           />
         );
       case 4:

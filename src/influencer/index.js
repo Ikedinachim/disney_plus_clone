@@ -49,38 +49,40 @@ const Dashboard = () => {
         {
           label: "ID",
           field: "id",
-          sort: "asc",
+          // sort: "desc",
         },
         {
           label: "CAMPAIGN NAME",
           field: "campaignName",
-          sort: "asc",
+          // sort: "desc",
         },
         {
           label: "CHANNEL",
           field: "channel",
-          sort: "asc",
+          // sort: "desc",
         },
         {
           label: "DATE CREATED",
           field: "dateCreated",
-          sort: "asc",
+          // sort: "desc",
         },
         {
           label: "STATUS",
           field: "status",
-          sort: "asc",
+          // sort: "desc",
         },
         {
           label: "ACTIONS",
           field: "actions",
-          sort: "asc",
+          // sort: "desc",
         },
       ],
       rows: [],
     };
 
-    influencerCampaignList.forEach((campaign) => {
+    let reverseInfluencerCampaignList = [...influencerCampaignList.reverse()];
+
+    reverseInfluencerCampaignList.forEach((campaign) => {
       data.rows.push({
         id: campaign.id,
         campaignName: campaign.name,
@@ -122,7 +124,7 @@ const Dashboard = () => {
               campaign.marketingData.isApproved &&
               !campaign.marketingData.isPublished &&
               !campaign.marketingData.isRejected
-                ? "Approved"
+                ? "Unpublished"
                 : null ||
                   (campaign.marketingData.isApproved &&
                     campaign.marketingData.isPublished &&
@@ -184,7 +186,11 @@ const Dashboard = () => {
                 class="d-flex"
               >
                 <i class="fa fa-eye tx-orange pd-t-4 mg-r-5"></i>
-                View
+                {campaign.marketingData.isApproved &&
+                !campaign.marketingData.isPublished &&
+                !campaign.marketingData.isRejected
+                  ? "Post"
+                  : "View"}
               </Link>
             </div>
           </Fragment>
@@ -220,7 +226,7 @@ const Dashboard = () => {
                 </div>
                 <div className="col-12 col-md-4 col-xl-3 pd-xl-l-0">
                   <div className="d-flex justify-content-end">
-                    <div>
+                    {/* <div>
                       <div className="d-flex justify-content-end">
                         <a
                           href="./all-campaign.html"
@@ -229,7 +235,7 @@ const Dashboard = () => {
                           View All Campaigns
                         </a>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
@@ -613,10 +619,12 @@ const Dashboard = () => {
                     responsive
                     data={setAllCampaigns()}
                     className="px-3 scroll"
+                    // onSort={(s) => console.log(s)}
+                    // order={["dateCreated", "desc"]}
                     bordered
                     striped
                     hover
-                    checkboxFirstColumn
+                    // checkboxFirstColumn
                     pagingTop
                     barReverse
                     searchTop

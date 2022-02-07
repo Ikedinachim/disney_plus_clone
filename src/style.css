@@ -226,3 +226,7 @@ tbody + thead {
   align-items: center;
   justify-content: center;
 }
+
+.flex-basis-max {
+  flex-basis: max-content;
+}

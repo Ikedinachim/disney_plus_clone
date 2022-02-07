@@ -14,7 +14,6 @@ const AllCampaigns = () => {
     (state) => state.allCampaign || {}
   );
 
-  
   const setAllCampaigns = () => {
     const data = {
       columns: [
@@ -127,10 +126,10 @@ const AllCampaigns = () => {
   useEffect(() => {
     dispatch(getAllCampaign());
   }, [dispatch]);
-  
+
   return (
     <Fragment>
-    <MetaData title={"All Campaigns"} />
+      <MetaData title={"All Campaigns"} />
       {loading ? (
         <Loader />
       ) : (

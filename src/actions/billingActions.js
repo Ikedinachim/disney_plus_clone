@@ -50,7 +50,7 @@ export const getWallet = () => async (dispatch) => {
       });
     }
 
-    console.log(data.data);
+    // console.log(data.data);
   } catch (error) {
     dispatch({
       type: GET_WALLET_FAIL,

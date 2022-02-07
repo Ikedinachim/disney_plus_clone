@@ -9814,7 +9814,7 @@ strong {
 }
 
 .badge {
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 500;
   font-family: "Montserrat", sans-serif !important;
 
@@ -47495,6 +47495,14 @@ button.bg-twitter:focus,
 
 .tx-base {
   font-size: 0.875rem;
+}
+
+.tx-6 {
+  font-size: 6px;
+}
+
+.tx-46-f {
+  font-size: 6px !important;
 }
 
 .tx-8 {

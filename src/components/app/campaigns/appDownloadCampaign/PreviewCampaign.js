@@ -14,6 +14,7 @@ import {
 } from "../../../../actions/campaignActions";
 import { APP_DOWNLOAD_CAMPAIGN_RESET } from "../../../../constants/campaignConstants";
 import Loader from "../../../loader";
+import MediaPlayer from "../../../../_helpers/reactPlayer/ReactPlayer";
 
 import PreviewIcon from "../../../../assets/img/Promote_Offers.svg";
 
@@ -25,6 +26,7 @@ const PreviewCampaign = ({
   attachmentPreview,
   price,
   filterOptions,
+  handleChange,
 }) => {
   const { error, createAppDownloadCampaign, loading } = useSelector(
     (state) => state.appDownload || []
@@ -54,6 +56,14 @@ const PreviewCampaign = ({
     dispatch(createAppDownloadCampaignAction(values));
   };
 
+  const setPrice = () => {
+    if (values.limit !== "") {
+      return parseInt(values.limit) * 5;
+    } else {
+      return filteredContactList.count * 5;
+    }
+  };
+
   useEffect(() => {
     if (
       createAppDownloadCampaign &&
@@ -66,7 +76,7 @@ const PreviewCampaign = ({
     } else if (error) {
       alert.error(error);
       dispatch(clearErrors());
-      dispatch(getWallet());
+      // dispatch(getWallet());
     }
   }, [dispatch, alert, error, createAppDownloadCampaign, navigate]);
 
@@ -283,14 +293,15 @@ const PreviewCampaign = ({
                                 Potential Audience Based on filter
                               </label>
                               <p className="tx-18 tx-com tx-bold mb-1">
-                                {filteredContactList.count &&
-                                  filteredContactList.count}
+                                {filteredContactList.count}
                               </p>
                             </div>
                             <div className="form-row mg-t-15">
                               <div className="form-group col-md-9">
                                 <input
-                                  type="text"
+                                  type="number"
+                                  onChange={handleChange("limit")}
+                                  value={values.limit}
                                   className="form-control"
                                   placeholder="Enter your target audience number to get price"
                                 />
@@ -298,9 +309,7 @@ const PreviewCampaign = ({
                               <div className="form-group col-md-3">
                                 <NumberFormat
                                   className="badge badge-pink  tx-18 mg-5 tx-amt w-100 mt-0"
-                                  value={parseInt(
-                                    filteredContactList.count * 5
-                                  )}
+                                  value={parseInt(setPrice())}
                                   displayType={"text"}
                                   thousandSeparator={true}
                                   prefix={"₦"}
@@ -401,14 +410,23 @@ const PreviewCampaign = ({
                     <div className="card shadow-sm rounded bd-0">
                       <div className="card-body">
                         <p className="tx-20 tx-bold tx-com">Preview</p>
-                        <div>
-                          <img
-                            src={attachmentPreview}
-                            className="img-fluid mg-b-10"
-                            alt=""
-                          />
-                          <p className="mb-4">{values.campaignMessage}</p>
-                        </div>
+                        {values.assetType === "image" ? (
+                          <div>
+                            <img
+                              src={attachmentPreview}
+                              className="img-fluid mg-b-10"
+                              alt=""
+                            />
+                            <p className="mb-4">{values.campaignMessage}</p>
+                          </div>
+                        ) : (
+                          <>
+                            <div className="mg-b-10">
+                              <MediaPlayer url={values.attachment} />
+                            </div>
+                            <p className="mb-4">{values.campaignMessage}</p>
+                          </>
+                        )}
                         <div>
                           {values.callToAction === "" ||
                           values.androidStoreUrl === "" ||

@@ -178,8 +178,8 @@ a {
   font-weight: 400;
 }
 .badge-active {
-  background-color: #e9f5ee;
-  color: #0f743a;
+  background-color: #0f743a;
+  color: #fff;
   border-radius: 4px;
   padding: 5px 8px;
   font-weight: 400;

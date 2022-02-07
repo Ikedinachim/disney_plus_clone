@@ -7,6 +7,7 @@ import { useAlert } from "react-alert";
 import { getSenderID } from "../../../../actions/senderIDActions";
 import MetaData from "../../../layout/MetaData";
 import Loader from "../../../loader";
+import MediaPlayer from "../../../../_helpers/reactPlayer/ReactPlayer";
 
 const FlierVideoCampaign = ({
   nextStep,
@@ -15,6 +16,7 @@ const FlierVideoCampaign = ({
   values,
   attachmentPreview,
   handleImageUpload,
+  selectedFileName,
 }) => {
   const alert = useAlert();
   const dispatch = useDispatch();
@@ -24,6 +26,11 @@ const FlierVideoCampaign = ({
   const [showSms, setShowSms] = useState(false);
   const [showUssd, setShowUssd] = useState(false);
 
+  const [assetType, setAssetType] = useState("image");
+  const assetTypeHandler = (asset) => {
+    setAssetType(asset);
+  };
+
   const Continue = (e) => {
     e.preventDefault();
     if (values.callToAction === "") {
@@ -32,9 +39,11 @@ const FlierVideoCampaign = ({
       alert.error("Choose a channel");
     } else if (values.campaignMessage === "") {
       alert.error("Create the campaign message");
-    } else {
+    } else if (values.assetType === "image") {
       nextStep();
       handleImageUpload();
+    } else {
+      nextStep();
     }
   };
 
@@ -305,22 +314,82 @@ const FlierVideoCampaign = ({
                             Attachment
                           </p>
                           <div className="form-group">
-                            <div className="custom-file">
+                            <div className="custom-control custom-radio">
                               <input
-                                type="file"
-                                className="custom-file-input"
-                                id="customFile"
-                                // defaultValue={values.attachment}
-                                onChange={onChangeAttachment("uploadedImage")}
+                                type="radio"
+                                id="image"
+                                name="customRadio"
+                                className="custom-control-input"
+                                checked={assetType === "image"}
+                                onClick={(e) => assetTypeHandler("image")}
+                                value={"image"}
+                                onChange={handleChange("assetType")}
                               />
                               <label
-                                className="custom-file-label"
-                                htmlFor="customFile"
+                                className="custom-control-label"
+                                htmlFor="image"
                               >
-                                Click to upload desired icon (if needed)
+                                Image Asset
                               </label>
                             </div>
                           </div>
+                          <div className="form-group">
+                            <div className="custom-control custom-radio">
+                              <input
+                                type="radio"
+                                id="video"
+                                name="customRadio"
+                                className="custom-control-input"
+                                checked={assetType === "video"}
+                                onClick={(e) => assetTypeHandler("video")}
+                                value={"video"}
+                                onChange={handleChange("assetType")}
+                              />
+                              <label
+                                className="custom-control-label"
+                                htmlFor="video"
+                              >
+                                Video Asset
+                              </label>
+                            </div>
+                          </div>
+                          {assetType === "image" && (
+                            <div className="form-group">
+                              <div className="custom-file">
+                                <input
+                                  type="file"
+                                  name="file"
+                                  className="custom-file-input"
+                                  id="customFile"
+                                  // defaultValue={values.attachment}
+                                  onChange={onChangeAttachment("uploadedImage")}
+                                />
+                                <label
+                                  className="custom-file-label"
+                                  htmlFor="customFile"
+                                >
+                                  {selectedFileName}
+                                </label>
+                              </div>
+                            </div>
+                          )}
+                          {assetType === "video" && (
+                            <div className="form-group">
+                              <div className="custom-file">
+                                <label htmlFor className="mb-1">
+                                  Youtube URL
+                                </label>
+                                <input
+                                  type="text"
+                                  id="videoAsset"
+                                  className="form-control"
+                                  value={values.attachment}
+                                  placeholder="https://www.youtube.com/watch?v=ysz5S6PUM-U"
+                                  onChange={handleChange("videoUrl")}
+                                />
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </form>
                       <div className="col-md-7 pd-x-0 mg-y-30">
@@ -346,14 +415,23 @@ const FlierVideoCampaign = ({
                   <div className="col-md-5 col-12 mg-t-20">
                     <div className="card shadow-sm rounded bd-0">
                       <div className="card-body">
-                        <div>
-                          <img
-                            src={attachmentPreview}
-                            className="img-fluid mg-b-10"
-                            alt=""
-                          />
-                          <p className="mb-4">{values.campaignMessage}</p>
-                        </div>
+                        {assetType === "image" ? (
+                          <div>
+                            <img
+                              src={attachmentPreview}
+                              className="img-fluid mg-b-10"
+                              alt=""
+                            />
+                            <p className="mb-4">{values.campaignMessage}</p>
+                          </div>
+                        ) : (
+                          <>
+                            <div className="mg-b-10">
+                              <MediaPlayer url={values.attachment} />
+                            </div>
+                            <p className="mb-4">{values.campaignMessage}</p>
+                          </>
+                        )}
                         <div>
                           {values.callToAction === "" ||
                           values.whatsAppNumber === "" ? null : (

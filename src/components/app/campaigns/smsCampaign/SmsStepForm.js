@@ -17,6 +17,16 @@ export default class SmsStepForm extends Component {
     phoneNumber: "",
     campaignType: "general",
     price: 0,
+    targetAudienceOption: "",
+    limit: "",
+    parsedCsvData: [],
+
+    ageRange: "",
+    gender: "",
+    state: "abia",
+    lga: "",
+    deviceType: "LG",
+    deviceBrand: "X210ZM",
   };
 
   // go back to previous step
@@ -37,44 +47,84 @@ export default class SmsStepForm extends Component {
   };
 
   render() {
-    const { step } = this.state;
     const {
+      step,
       senderId,
       channel,
       campaignMessage,
-      gender,
       targetAge,
       location,
       interest,
       campaignType,
       phoneNumber,
+      targetAudienceOption,
+      limit,
+
+      ageRange,
+      gender,
+      state,
+      lga,
+      deviceType,
+      deviceBrand,
+
+      parsedCsvData,
     } = this.state;
-    const contactNumber = phoneNumber.split(",");
-    const audience = contactNumber.length;
+
+    /////////////////////////////
+
+    const getCsvRawData = (data) => {
+      this.setState({ parsedCsvData: data });
+    };
+
+    let personalUpload = parsedCsvData.map(({ Numbers }) => Numbers);
+
+    let targetAudience = [];
+
+    const getAudience = () => {
+      if (
+        personalUpload.length > 0 &&
+        targetAudienceOption === "manual_import"
+      ) {
+        return (targetAudience = personalUpload);
+      } else {
+        return (targetAudience = phoneNumber.split(","));
+      }
+    };
+
+    /////////////////////////////
+
+    const contactNumber = getAudience();
+    const audience = getAudience().length;
     const price = audience * 5;
+
+    const filterOptions = {
+      ageRange,
+      gender,
+      state,
+      lga,
+      deviceType,
+      deviceBrand,
+    };
+
+    const filterParameters = [filterOptions];
+
     const values = {
       senderId,
       channel,
       campaignMessage,
       contactNumber,
-      gender,
+      // gender,
       targetAge,
       location,
       interest,
       campaignType,
       price,
+      filterParameters,
+      targetAudienceOption,
+      limit,
     };
-    const payLoad = [
-      values.senderId,
-      values.channel,
-      values.campaignMessage,
-      values.contactNumber,
-      gender,
-      targetAge,
-      location,
-      interest,
-      price,
-    ];
+
+    console.log(values);
 
     switch (step) {
       case 1:
@@ -93,6 +143,8 @@ export default class SmsStepForm extends Component {
             handleChange={this.handleChange}
             phoneNumber={phoneNumber}
             values={values}
+            filterOptions={filterOptions}
+            getCsvRawData={getCsvRawData}
           />
         );
       case 3:
@@ -102,7 +154,8 @@ export default class SmsStepForm extends Component {
             nextStep={this.nextStep}
             values={values}
             audience={audience}
-            payLoad={payLoad}
+            filterOptions={filterOptions}
+            handleChange={this.handleChange}
           />
         );
       case 4:

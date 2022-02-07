@@ -46,8 +46,6 @@ const BillingOverview = () => {
         ) === createdAt
     );
 
-    setfilteredItems(newItem);
-  };
   console.log(filteredItems);
   return (
     <Fragment>

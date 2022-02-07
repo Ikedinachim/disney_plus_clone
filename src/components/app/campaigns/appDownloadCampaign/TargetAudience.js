@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useCallback } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
@@ -10,6 +10,9 @@ import {
   clearErrors,
 } from "../../../../actions/campaignActions";
 
+import { useDropzone } from "react-dropzone";
+import Papa from "papaparse";
+
 const TargetAudience = ({
   prevStep,
   nextStep,
@@ -17,6 +20,7 @@ const TargetAudience = ({
   numbers,
   filterOptions,
   values,
+  getCsvRawData,
 }) => {
   const alert = useAlert();
   const dispatch = useDispatch();
@@ -83,14 +87,48 @@ const TargetAudience = ({
     prevStep();
   };
 
+  const lga = NaijaStates.lgas(filterOptions.state);
+
+  ////
+  const [parsedCsvData, setParsedCsvData] = useState([]);
+
+  const parseFile = (file) => {
+    Papa.parse(file, {
+      header: true,
+      complete: (results) => {
+        setParsedCsvData(results.data);
+        // console.log(parsedCsvData);
+      },
+    });
+    console.log(parsedCsvData);
+  };
+
+  const onDrop = useCallback((acceptedFiles) => {
+    if (acceptedFiles.length) {
+      parseFile(acceptedFiles[0]);
+    }
+  }, []);
+
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    isDragAccept,
+    isDragReject,
+  } = useDropzone({
+    onDrop,
+    accept: ".csv, application/vnd.ms-excel, text/csv",
+    skipEmptyLines: "greedy",
+  });
+
   useEffect(() => {
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, error, alert]);
-
-  const lga = NaijaStates.lgas(filterOptions.state);
+    console.log(parsedCsvData);
+    getCsvRawData(parsedCsvData);
+  }, [dispatch, error, alert, parsedCsvData]);
 
   return (
     <Fragment>
@@ -183,8 +221,12 @@ const TargetAudience = ({
                       <div id="show_1">
                         <div className="row justify-content-md-between">
                           <div className="form-group col-md-6">
-                            <label htmlFor className="mb-1 tx-com">
-                              Age Group *
+                            <label
+                              htmlFor
+                              className="mb-1 tx-com d-flex align-items-center"
+                            >
+                              Age Group
+                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                             </label>
                             <select
                               className="form-control"
@@ -199,8 +241,12 @@ const TargetAudience = ({
                             </select>
                           </div>
                           <div className="form-group col-md-6">
-                            <label htmlFor className="mb-1 tx-com">
-                              Gender *
+                            <label
+                              htmlFor
+                              className="mb-1 tx-com d-flex align-items-center"
+                            >
+                              Gender
+                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                             </label>
                             <select
                               className="form-control"
@@ -215,8 +261,12 @@ const TargetAudience = ({
                             </select>
                           </div>
                           <div className="form-group col-md-6">
-                            <label htmlFor className="mb-1 tx-com">
-                              State *
+                            <label
+                              htmlFor
+                              className="mb-1 tx-com d-flex align-items-center"
+                            >
+                              State
+                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                             </label>
                             <select
                               className="custom-select"
@@ -231,8 +281,12 @@ const TargetAudience = ({
                             </select>
                           </div>
                           <div className="form-group col-md-6">
-                            <label htmlFor className="mb-1 tx-com">
-                              LGA *
+                            <label
+                              htmlFor
+                              className="mb-1 tx-com d-flex align-items-center"
+                            >
+                              LGA
+                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                             </label>
                             <select
                               className="custom-select"
@@ -294,26 +348,27 @@ const TargetAudience = ({
                     {status === 2 && (
                       <div className="hide" id="show_2">
                         <div className="row justify-content-md-between">
-                          <div className="mg-t-20">
-                            <p className="tx-24 tx-bold mb-1 tx-com">
-                              Upload CSV Containing Phone NUmbers
-                            </p>
+                          <div className="form-group col-md-6">
+                            <label htmlFor className="mb-1 tx-com">
+                              Upload CSV Containing Phone Numbers
+                            </label>
                             <div className="form-group">
-                              <div className="custom-file">
-                                <input
-                                  type="file"
-                                  accept=".csv"
-                                  id="csvFile"
-                                  className="custom-file-input"
-                                  id="customFile"
-                                  // onChange={handleChange("csvFile")}
-                                />
-                                <label
-                                  className="custom-file-label"
-                                  htmlFor="customFile"
-                                >
-                                  Click to upload desired icon (if needed)
-                                </label>
+                              <div
+                                {...getRootProps({
+                                  className: `dropzone 
+                                  ${isDragAccept && "dropzoneAccept"} 
+                                  ${isDragReject && "dropzoneReject"}`,
+                                })}
+                              >
+                                <input {...getInputProps()} />
+                                {isDragActive ? (
+                                  <p>Drop the files here ...</p>
+                                ) : (
+                                  <p>
+                                    Drag 'n' drop some files here, or click to
+                                    select files
+                                  </p>
+                                )}
                               </div>
                             </div>
                           </div>
@@ -334,7 +389,7 @@ const TargetAudience = ({
                               id
                               rows={4}
                               onChange={handleChange("numbers")}
-                              placeholder="Enter Number +234080xxxxxxxx"
+                              placeholder="Enter Number(s) +234080xxxxxxxx, +234080xxxxxxxx"
                               defaultValue={numbers}
                             />
                           </div>
@@ -350,11 +405,11 @@ const TargetAudience = ({
                       onClick={Continue}
                       type="submit"
                       variant="contained"
-                      disabled={
-                        numbers === "" && filterOptions.gender === ""
-                          ? true
-                          : false
-                      }
+                      // disabled={
+                      //   numbers === "" && filterOptions.gender === ""
+                      //     ? true
+                      //     : false
+                      // }
                     >
                       Filter
                     </button>

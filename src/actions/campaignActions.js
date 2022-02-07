@@ -173,7 +173,7 @@ export const createAppDownloadCampaignAction =
       }
     } catch (data) {
       dispatch({
-        type: VIDEO_FLIER_CAMPAIGN_FAIL,
+        type: APP_DOWNLOAD_CAMPAIGN_FAIL,
         payload: data.message,
       });
     }
