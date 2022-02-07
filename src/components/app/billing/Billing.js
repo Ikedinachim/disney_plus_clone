@@ -6,13 +6,11 @@ import { useAlert } from "react-alert";
 
 import MetaData from "../../layout/MetaData";
 import Loader from "../../loader";
-import { getTransactionHistory } from "../../../actions/billingActions";
-import { getAllCampaign } from "../../../actions/campaignActions";
 import { getSenderID } from "../../../actions/senderIDActions";
 import { DateTime } from "luxon";
-import TransactionCard from "./TransactionCard";
-import CampaignCard from "./CampaignCard";
 import NumberFormat from "react-number-format";
+import TransactionHistory from "./TransactionHistory";
+import OrderSummary from "./OrderSummary";
 
 const BillingOverview = () => {
   const alert = useAlert();
@@ -21,15 +19,12 @@ const BillingOverview = () => {
   // const { user } = useSelector((state) => state.auth)
 
   const {
-    allCampaign: { reverseAllCampaign, loading: allCampaignLoading },
-    wallet,
-    tnxHistory: { reverseTnxHistory },
+    allCampaign: { reverseAllCampaign },
+    wallet: { wallet, loading: WalletLoading },
   } = useSelector((state) => state);
 
   useEffect(() => {
-    dispatch(getTransactionHistory());
     dispatch(getSenderID());
-    dispatch(getAllCampaign());
   }, []);
 
   const [filteredItems, setfilteredItems] = useState(reverseAllCampaign);
@@ -56,7 +51,7 @@ const BillingOverview = () => {
   console.log(filteredItems);
   return (
     <Fragment>
-      {allCampaignLoading ? (
+      {WalletLoading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -85,7 +80,7 @@ const BillingOverview = () => {
                           <p className="tx-32 tx-semibold tx-green">
                             +{" "}
                             <NumberFormat
-                              value={parseInt(wallet.wallet.balance)}
+                              value={parseInt(wallet.balance)}
                               displayType={"text"}
                               thousandSeparator={true}
                               prefix={"₦"}
@@ -187,55 +182,11 @@ const BillingOverview = () => {
                     </div>
                   </div>
                   <div className="card rounded bd-0 shadow-sm">
-                    <div className="card-body">
-                      <div className="table-responsive">
-                        <table className="table table-borderless" id="campaig">
-                          <thead className="tx-uppercase tx-medium">
-                            <tr>
-                              <th scope="col">Product</th>
-                              <th scope="col" className="tx-right">
-                                Cost
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {filteredItems &&
-                              filteredItems
-                                .slice(0, 4)
-                                .map((allCampaign) => (
-                                  <CampaignCard
-                                    key={allCampaign.id}
-                                    campaign={allCampaign}
-                                  />
-                                ))}
-                            {/* <tr className="tx-medium">
-                              <td>Total</td>
-                              <td className="tx-right">&#8358;250,000</td>
-                            </tr> */}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
+                    <OrderSummary />
                   </div>
                 </div>
                 <div className="col-md-5 col-12 mg-md-t-0 mg-t-20">
-                  <div className="d-flex justify-content-between mg-b-10">
-                    <p className="mg-b-0 pd-t-10 tx-medium">Payment History</p>
-                    <Link
-                      to="/app/billing"
-                      className="pd-t-10 tx-primary tx-medium"
-                    >
-                      View all transactions
-                    </Link>
-                  </div>
-                  <div className="card bg-transparent card-height  bd-0">
-                    {reverseTnxHistory.slice(0, 5).map((transaction) => (
-                      <TransactionCard
-                        key={transaction.id}
-                        transaction={transaction}
-                      />
-                    ))}
-                  </div>
+                  <TransactionHistory />
                 </div>
               </div>
             </div>
