@@ -59,7 +59,10 @@ const Settings = () => {
               <div className="d-flex justify-content-between my-4">
                 <div>View your setup details here</div>
                 <div className="mx-4 clickable" onClick={showButton}>
-                  <FeatherIcon icon="edit" className="wd-15 ht-20 mg-r-9 " />
+                  <FeatherIcon
+                    icon="edit"
+                    className="wd-15 ht-20 mg-r-9 tx-primary"
+                  />
                   {show === false ? "Edit" : "Stop Editing"}
                 </div>
               </div>
