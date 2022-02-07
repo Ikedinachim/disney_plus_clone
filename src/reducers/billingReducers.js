@@ -56,7 +56,7 @@ export const transactionHistoryReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_TRANSACTION_HISTORY_REQUEST:
       return {
-        ...initialState,
+        ...state,
         loading: true,
       };
 
