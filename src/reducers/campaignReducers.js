@@ -331,7 +331,6 @@ export const AllCampaignReducer = (state = initialState, action) => {
       };
 
     case GET_ALL_CAMPAIGN_SUCCESS:
-      console.log("test");
       return {
         ...state,
         loading: false,
