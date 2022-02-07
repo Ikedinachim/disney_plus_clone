@@ -7,10 +7,11 @@ import { useAlert } from "react-alert";
 import MetaData from "../../layout/MetaData";
 import Loader from "../../loader";
 import { getSenderID } from "../../../actions/senderIDActions";
+import { getAllCampaign } from "../../../actions/campaignActions";
 import { DateTime } from "luxon";
 import NumberFormat from "react-number-format";
 import TransactionHistory from "./TransactionHistory";
-import OrderSummary from "./OrderSummary";
+import CampaignCard from "./CampaignCard";
 
 const BillingOverview = () => {
   const alert = useAlert();
@@ -25,6 +26,7 @@ const BillingOverview = () => {
 
   useEffect(() => {
     dispatch(getSenderID());
+    dispatch(getAllCampaign());
   }, []);
 
   const [filteredItems, setfilteredItems] = useState(reverseAllCampaign);
@@ -45,6 +47,7 @@ const BillingOverview = () => {
           "yyyy-MM"
         ) === createdAt
     );
+    setfilteredItems(newItem);
   };
 
   console.log(filteredItems);
@@ -181,7 +184,35 @@ const BillingOverview = () => {
                     </div>
                   </div>
                   <div className="card rounded bd-0 shadow-sm">
-                    <OrderSummary />
+                    <div className="card-body">
+                      <div className="table-responsive">
+                        <table className="table table-borderless" id="campaig">
+                          <thead className="tx-uppercase tx-medium">
+                            <tr>
+                              <th scope="col">Product</th>
+                              <th scope="col" className="tx-right">
+                                Cost
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {filteredItems &&
+                              filteredItems
+                                .slice(0, 4)
+                                .map((allCampaign) => (
+                                  <CampaignCard
+                                    key={allCampaign.id}
+                                    campaign={allCampaign}
+                                  />
+                                ))}
+                            {/* <tr className="tx-medium">
+                              <td>Total</td>
+                              <td className="tx-right">&#8358;250,000</td>
+                            </tr> */}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div className="col-md-5 col-12 mg-md-t-0 mg-t-20">
