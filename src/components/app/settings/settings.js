@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import MetaData from "../../layout/MetaData";
 import { Link } from "react-router-dom";
 import FeatherIcon from "feather-icons-react";

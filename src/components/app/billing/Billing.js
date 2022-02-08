@@ -82,7 +82,7 @@ const BillingOverview = () => {
                           <p className="tx-32 tx-semibold tx-green">
                             +{" "}
                             <NumberFormat
-                              value={parseInt(wallet.balance)}
+                              value={parseInt(wallet && wallet.balance)}
                               displayType={"text"}
                               thousandSeparator={true}
                               prefix={"₦"}
