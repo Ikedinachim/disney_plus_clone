@@ -261,7 +261,14 @@ export const allUsersReducer = (state = { users: [] }, action) => {
   }
 };
 
-export const userDetailsReducer = (state = { user: {} }, action) => {
+const initialState = {
+  loading: false,
+  user: [],
+  error: null,
+  status: "",
+};
+
+export const userDetailsReducer = (state = initialState, action) => {
   switch (action.type) {
     case USER_DETAILS_REQUEST:
       return {
@@ -289,6 +296,42 @@ export const userDetailsReducer = (state = { user: {} }, action) => {
         error: null,
       };
 
+    default:
+      return state;
+  }
+};
+
+export const updateUserReducer = (state = { updateUser: [] }, action) => {
+  switch (action.type) {
+    case UPDATE_USER_REQUEST:
+      return {
+        loading: true,
+        updateUser: [],
+      };
+    case UPDATE_USER_SUCCESS:
+      return {
+        loading: false,
+        updateUser: action.payload,
+        status: action.payload.status,
+      };
+    case UPDATE_USER_FAIL:
+      return {
+        loading: false,
+        updateUser: null,
+        error: action.payload,
+        status: action.payload.status,
+      };
+    case UPDATE_USER_RESET:
+      return {
+        ...state,
+        updateUser: [],
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+      };
     default:
       return state;
   }

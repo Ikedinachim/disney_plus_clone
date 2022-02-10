@@ -174,8 +174,13 @@ const TargetAudience = ({
                             className="form-control"
                             placeholder="Enter Amount to Spend"
                             defaultValue={values.budget}
-                            onBlur={handleChange("budget")}
+                            onChange={handleChange("budget")}
                           />
+                          {values.budget < 10000 && (
+                            <p className="text-danger p-0 m-0 mt-2">
+                              insufficient budget
+                            </p>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -435,11 +440,7 @@ const TargetAudience = ({
                       onClick={Continue}
                       type="submit"
                       variant="contained"
-                      // disabled={
-                      //   numbers === "" && filterOptions.gender === ""
-                      //     ? true
-                      //     : false
-                      // }
+                      disabled={values.budget < 10000 ? true : false}
                     >
                       Filter
                     </button>
