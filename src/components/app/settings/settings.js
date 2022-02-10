@@ -1,18 +1,34 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import MetaData from "../../layout/MetaData";
+import { useAlert } from "react-alert";
+import { useSelector, useDispatch } from "react-redux";
+import { getUser, updateUserDetails } from "../../../actions/authActions";
 import { Link } from "react-router-dom";
 import FeatherIcon from "feather-icons-react";
+import { UPDATE_USER_RESET } from "../../../constants/authConstants";
+import { clearErrors } from "../../../actions/authActions";
 
 const Settings = () => {
+  const updateUser = useSelector((state) => state.updateUser || []);
+  const alert = useAlert();
+  const dispatch = useDispatch();
+
+  const { user } = useSelector((state) => state.userDetails || []);
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
+
   const [people, setPeople] = useState({
-    firstName: "John",
-    lastName: "Doe",
-    userName: "@John.Doe",
-    email: "JohnDoe@gmail.com",
-    password: "JohnDoethings",
-    phone: "+2348167696729",
+    firstName: user.firstName,
+    lastName: user.lastName,
+    userName: user.username,
+    email: user.email,
+    password: user.password,
+    phone: user.phone,
   });
 
+  console.log(people);
   const [show, setShow] = useState(false);
 
   const handleChange = (e) => {
@@ -21,9 +37,22 @@ const Settings = () => {
     setPeople({ ...people, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(updateUserDetails(people));
+    setShow(!show);
   };
+
+  useEffect(() => {
+    if (updateUser && updateUser.status === "success") {
+      alert.success(updateUser.message);
+      dispatch(getUser());
+      dispatch({ type: UPDATE_USER_RESET });
+    } else if (updateUser.error) {
+      alert.error(updateUser.error);
+      dispatch(clearErrors());
+    }
+  }, [alert, updateUser.status]);
 
   const showButton = (e) => {
     setShow(!show);
@@ -59,7 +88,10 @@ const Settings = () => {
               <div className="d-flex justify-content-between my-4">
                 <div>View your setup details here</div>
                 <div className="mx-4 clickable" onClick={showButton}>
-                  <FeatherIcon icon="edit" className="wd-15 ht-20 mg-r-9 " />
+                  <FeatherIcon
+                    icon="edit"
+                    className="wd-15 ht-20 mg-r-9 tx-primary"
+                  />
                   {show === false ? "Edit" : "Stop Editing"}
                 </div>
               </div>
@@ -144,7 +176,7 @@ const Settings = () => {
                         name="password"
                         value={people.password}
                         className="wd-90p p-2"
-                        disabled={show === false ? "disabled" : ""}
+                        disabled="disabled"
                         onChange={handleChange}
                       />
                     </div>

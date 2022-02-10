@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -74,6 +74,45 @@ const PreviewCampaign = ({
     }
   }, [dispatch, alert, error, createSmsCampaign, navigate]);
 
+  //Edit buttons
+
+  //campaign message
+  const [show, setShow] = useState(false);
+
+  const [val, setVal] = useState(values.campaignMessage);
+
+  const handleEdit = (e) => {
+    setVal(e.target.value);
+  };
+
+  const handleCampaignMessageSub = (e) => {
+    e.preventDefault();
+    values.campaignMessage = val;
+    setShow(!show);
+  };
+  const showButton = (e) => {
+    setShow(!show);
+  };
+
+  //campaign channel
+  const [view, setView] = useState(false);
+
+  const [chanl, setChanl] = useState(values.channel);
+
+  const viewButton = () => {
+    setView(!view);
+  };
+
+  const handleChanlChange = (e) => {
+    setChanl(e.target.value);
+  };
+
+  const handleCampaignChannelSub = (e) => {
+    e.preventDefault();
+    values.channel = chanl;
+    setView(!view);
+  };
+
   return (
     <Fragment>
       {loading || fcLoading ? (
@@ -111,12 +150,33 @@ const PreviewCampaign = ({
                         </div>
                         <div>
                           <p className="tx-20 tx-bold pd-t-15 tx-com capitalize">
-                            {values.channel}
+                            {view === false ? (
+                              values.channel
+                            ) : (
+                              <Fragment>
+                                <select
+                                  name="channels"
+                                  onClick={handleChanlChange}
+                                >
+                                  <option value="sms">Sms</option>
+                                  <option value="flash_sms">Flash_sms</option>
+                                </select>
+                                <button
+                                  className="btn btn-primary"
+                                  onClick={handleCampaignChannelSub}
+                                >
+                                  save
+                                </button>
+                              </Fragment>
+                            )}
                           </p>
                         </div>
                       </div>
                       <div>
-                        <div className="d-flex pd-t-25">
+                        <div
+                          className="d-flex pd-t-25 clickable"
+                          onClick={viewButton}
+                        >
                           <div>
                             <i className="fa fa-edit tx-primary mg-r-5" />
                           </div>
@@ -133,7 +193,10 @@ const PreviewCampaign = ({
                           </p>
                         </div>
                         <div>
-                          <div className="d-flex pd-t-3">
+                          <div
+                            className="d-flex pd-t-3 clickable"
+                            onClick={showButton}
+                          >
                             <div>
                               <i className="fa fa-edit tx-primary mg-r-5" />
                             </div>
@@ -149,7 +212,27 @@ const PreviewCampaign = ({
                           >
                             Campaign Message
                           </label>
-                          <p className="tx-15 mb-0">{values.campaignMessage}</p>
+
+                          <p className="tx-15 mb-0">
+                            {show === false ? (
+                              values.campaignMessage
+                            ) : (
+                              <Fragment>
+                                <input
+                                  type="text"
+                                  value={val}
+                                  className="p-1"
+                                  onChange={handleEdit}
+                                />{" "}
+                                <button
+                                  className="btn btn-primary"
+                                  onClick={handleCampaignMessageSub}
+                                >
+                                  save
+                                </button>
+                              </Fragment>
+                            )}
+                          </p>
                         </div>
                       </div>
                     </div>
