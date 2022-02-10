@@ -53,6 +53,7 @@ const Sidebar = () => {
             <li className="nav-item active">
               <NavLink
                 to="/app"
+                end
                 className={({ isActive }) =>
                   isActive ? "nav-link active" : "nav-link"
                 }
@@ -61,9 +62,10 @@ const Sidebar = () => {
                 <span>Home</span>
               </NavLink>
             </li>
-            <li className="nav-item">
+            <li className="nav-item active">
               <NavLink
                 to="/app/campaigns"
+                end
                 className={({ isActive }) =>
                   isActive ? "nav-link active" : "nav-link"
                 }
@@ -72,7 +74,7 @@ const Sidebar = () => {
                 <span>Campaigns</span>
               </NavLink>
             </li>
-            <li className="nav-item">
+            <li className="nav-item active">
               <NavLink
                 to="/app/billing"
                 className={({ isActive }) =>
@@ -83,7 +85,7 @@ const Sidebar = () => {
                 <span>Billing</span>
               </NavLink>
             </li>
-            <li className="nav-item">
+            <li className="nav-item active">
               <NavLink
                 to="/app/sender-id"
                 className={({ isActive }) =>
@@ -94,9 +96,10 @@ const Sidebar = () => {
                 <span>Sender ID</span>
               </NavLink>
             </li>
-            <li className="nav-item">
+            <li className="nav-item active">
               <NavLink
                 to="/app/setting"
+                end
                 className={({ isActive }) =>
                   isActive ? "nav-link active" : "nav-link"
                 }
@@ -105,7 +108,7 @@ const Sidebar = () => {
                 <span>Settings</span>
               </NavLink>
             </li>
-            <li className="nav-item">
+            <li className="nav-item active">
               <NavLink
                 to="/app/analytics"
                 className={({ isActive }) =>

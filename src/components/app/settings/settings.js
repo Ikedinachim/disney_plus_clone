@@ -13,6 +13,8 @@ const Settings = () => {
     phone: "+2348167696729",
   });
 
+  console.log(people);
+
   const [show, setShow] = useState(false);
 
   const handleChange = (e) => {

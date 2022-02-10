@@ -81,9 +81,6 @@ const InfluencerCampaign = ({
     // handleCheckedState(checkedInfluencer);
   };
 
-  console.log("This is the payload data", payloadData);
-  console.log("This is the inital data", checkedInfluencer);
-
   const handlePlatformOnChange = (item) => (e) => {
     // console.log(item);
     const isChecked = e.target.checked;
@@ -142,7 +139,10 @@ const InfluencerCampaign = ({
     if (checkedInfluencer !== null) {
       handleCheckedState(checkedInfluencer);
     }
-  }, [checkedInfluencer]);
+  }, [handleCheckedState, checkedInfluencer]);
+
+  console.log("This is the payload data", payloadData);
+  console.log("This is the checkedInfluencer data", checkedInfluencer);
 
   const customFilter = (object, key, value) => {
     if (Array.isArray(object)) {

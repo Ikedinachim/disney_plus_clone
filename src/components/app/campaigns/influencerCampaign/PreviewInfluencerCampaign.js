@@ -102,6 +102,8 @@ const PreviewInfluencerCampaign = ({
 
   const filteredValue = checkedInfluencers;
 
+  console.log(filteredValue?.map((platform) => platform));
+
   // const total = filteredValue.reduce(
   //   (accumulator, platform, currentIndex, array) => {
   //     accumulator = accumulator + platform.cost;
