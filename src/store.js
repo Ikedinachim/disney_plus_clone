@@ -8,6 +8,8 @@ import autoMergeLevel1 from "redux-persist/lib/stateReconciler/autoMergeLevel1";
 
 import {
   authReducer,
+  userDetailsReducer,
+  updateUserReducer,
   // userDetailsReducer
 } from "./reducers/authReducers";
 
@@ -42,6 +44,8 @@ import {
 
 const appReducer = combineReducers({
   auth: authReducer,
+  userDetails: userDetailsReducer,
+  updateUser: updateUserReducer,
   createSenderId: createSenderIdReducer,
   wallet: walletReducer,
   tnxHistory: transactionHistoryReducer,

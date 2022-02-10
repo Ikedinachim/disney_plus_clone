@@ -6,13 +6,12 @@ import { useAlert } from "react-alert";
 
 import MetaData from "../../layout/MetaData";
 import Loader from "../../loader";
-import { getTransactionHistory } from "../../../actions/billingActions";
-import { getAllCampaign } from "../../../actions/campaignActions";
 import { getSenderID } from "../../../actions/senderIDActions";
+import { getAllCampaign } from "../../../actions/campaignActions";
 import { DateTime } from "luxon";
-import TransactionCard from "./TransactionCard";
-import CampaignCard from "./CampaignCard";
 import NumberFormat from "react-number-format";
+import TransactionHistory from "./TransactionHistory";
+import CampaignCard from "./CampaignCard";
 
 const BillingOverview = () => {
   const alert = useAlert();
@@ -20,47 +19,41 @@ const BillingOverview = () => {
 
   // const { user } = useSelector((state) => state.auth)
 
-  const { allCampaign, wallet, tnxHistory } = useSelector((state) => state);
+  const {
+    allCampaign: { reverseAllCampaign },
+    wallet: { wallet, loading: WalletLoading },
+  } = useSelector((state) => state);
 
   useEffect(() => {
-    dispatch(getTransactionHistory());
     dispatch(getSenderID());
     dispatch(getAllCampaign());
-    if (allCampaign !== {}) {
-    }
-  }, [dispatch]);
-
-  const reverseTnxHistory = tnxHistory.reverseTnxHistory;
-
-  const reverseAllCampaign = allCampaign.reverseAllCampaign;
+  }, []);
 
   const [filteredItems, setfilteredItems] = useState(reverseAllCampaign);
-  console.log(reverseAllCampaign);
 
-  let filterItem;
-
+  // to set filtereditems initially to reverseAllCampaign
   useEffect(() => {
-    filterItem = (createdAt) => {
-      console.log(createdAt, typeof createdAt);
-      if (!createdAt) {
-        console.log("lol");
-        return setfilteredItems(reverseAllCampaign);
-      }
-      let newItem = reverseAllCampaign.filter(
-        (campaign) =>
-          DateTime.fromJSDate(new Date(campaign.createdAt)).toFormat(
-            "yyyy-MM"
-          ) === createdAt
-      );
+    setfilteredItems(reverseAllCampaign);
+  }, [reverseAllCampaign]);
 
-      setfilteredItems(newItem);
-    };
-  }, [filterItem]);
+  console.log(filteredItems, reverseAllCampaign);
+  const filterItem = (createdAt) => {
+    if (!createdAt) {
+      return setfilteredItems(reverseAllCampaign);
+    }
+    let newItem = reverseAllCampaign.filter(
+      (campaign) =>
+        DateTime.fromJSDate(new Date(campaign.createdAt)).toFormat(
+          "yyyy-MM"
+        ) === createdAt
+    );
+    setfilteredItems(newItem);
+  };
 
   console.log(filteredItems);
   return (
     <Fragment>
-      {wallet.loading || allCampaign.loading || tnxHistory.loading ? (
+      {WalletLoading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -68,15 +61,19 @@ const BillingOverview = () => {
           <div className="content-body">
             <div className="container pd-x-0">
               <div className="row justify-content-between">
-                <div className="col-md-6 col-12">
-                  <p className="tx-26 tx-bold">Billing Overview</p>
+                <div className="col-md-6 col-12 ">
+                  <p className="tx-28 tx-bold billing-info ">
+                    Billing Overview
+                  </p>
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-7 col-12">
+                <div className="col-md-7 col-12 billing-info">
                   <div className="card rounded bd-0 shadow-sm">
                     <div className="card-body">
-                      <p className="tx-18">Billing Information</p>
+                      <p className="tx-18 billing-info-bold">
+                        Billing Information
+                      </p>
                       <div className="row">
                         <div className="col-md-6 col-12">
                           <p className="tx-uppercase mb-0 tx-16">
@@ -85,7 +82,7 @@ const BillingOverview = () => {
                           <p className="tx-32 tx-semibold tx-green">
                             +{" "}
                             <NumberFormat
-                              value={parseInt(wallet && wallet.wallet.balance)}
+                              value={parseInt(wallet && wallet.balance)}
                               displayType={"text"}
                               thousandSeparator={true}
                               prefix={"₦"}
@@ -158,7 +155,7 @@ const BillingOverview = () => {
                 <div className="col-md-7 col-12">
                   <div className="row justify-content-between mg-b-5">
                     <div className="col-md-4 col-12">
-                      <p className="mg-md-b-0 pd-t-10 tx-medium">
+                      <p className="mg-md-b-0 pd-t-10 tx-medium billing-info-bold">
                         Usage Summary
                       </p>
                     </div>
@@ -219,26 +216,7 @@ const BillingOverview = () => {
                   </div>
                 </div>
                 <div className="col-md-5 col-12 mg-md-t-0 mg-t-20">
-                  <div className="d-flex justify-content-between mg-b-10">
-                    <p className="mg-b-0 pd-t-10 tx-medium">Payment History</p>
-                    <Link
-                      to="/app/billing"
-                      className="pd-t-10 tx-primary tx-medium"
-                    >
-                      View all transactions
-                    </Link>
-                  </div>
-                  <div className="card bg-transparent card-height  bd-0">
-                    {reverseTnxHistory &&
-                      reverseTnxHistory
-                        .slice(0, 5)
-                        .map((transaction) => (
-                          <TransactionCard
-                            key={transaction.id}
-                            transaction={transaction}
-                          />
-                        ))}
-                  </div>
+                  <TransactionHistory />
                 </div>
               </div>
             </div>

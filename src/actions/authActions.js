@@ -10,6 +10,13 @@ import {
   LOGOUT_FAIL,
   CLEAR_ERRORS,
   USER_LOGOUT,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
+  USER_DETAILS_FAIL,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_RESET,
+  UPDATE_USER_FAIL,
 } from "../constants/authConstants";
 
 const baseURL = "https://mysogi.uat.com.ng/";
@@ -100,6 +107,78 @@ export const logout = () => async (dispatch) => {
     dispatch({
       type: LOGOUT_FAIL,
       payload: error.response.data.message,
+    });
+  }
+};
+
+//get User
+export const getUser = () => async (dispatch) => {
+  try {
+    dispatch({ type: USER_DETAILS_REQUEST });
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get("/api/user/get-user", config);
+
+    if (data.status === "success") {
+      dispatch({
+        type: USER_DETAILS_SUCCESS,
+        payload: data.data,
+      });
+    } else {
+      dispatch({
+        type: USER_DETAILS_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: USER_DETAILS_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+//Update user
+export const updateUserDetails = (payload) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_USER_REQUEST });
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const { data } = await axios.put(
+      "api/user/update/profile",
+      payload,
+      config
+    );
+
+    if (data.status === "success") {
+      dispatch({
+        type: UPDATE_USER_SUCCESS,
+        payload: data,
+      });
+    } else {
+      dispatch({
+        type: UPDATE_USER_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (data) {
+    dispatch({
+      type: UPDATE_USER_FAIL,
+      payload: data.message,
     });
   }
 };
