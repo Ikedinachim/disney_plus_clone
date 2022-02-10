@@ -102,6 +102,8 @@ const PreviewInfluencerCampaign = ({
 
   const filteredValue = checkedInfluencers;
 
+  console.log(filteredValue?.map((platform) => platform));
+
   // const total = filteredValue.reduce(
   //   (accumulator, platform, currentIndex, array) => {
   //     accumulator = accumulator + platform.cost;
@@ -197,6 +199,36 @@ const PreviewInfluencerCampaign = ({
 
   // console.log(filteredValue.map((p) => getTotal(p)));
 
+  //Edit functionality
+  const [show, setShow] = useState(false);
+
+  const [val, setVal] = useState({
+    instagramHandle: values.instagramHandle,
+    twitterHandle: values.twitterHandle,
+    facebookHandle: values.facebookHandle,
+    snapchatHandle: values.snapchatHandle,
+    campaignMessage: values.campaignMessage,
+  });
+
+  const handleEdit = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setVal({ ...val, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    values.instagramHandle = val.instagramHandle;
+    values.twitterHandle = val.twitterHandle;
+    values.facebookHandle = val.facebookHandle;
+    values.snapchatHandle = val.snapchatHandle;
+    values.campaignMessage = val.campaignMessage;
+    setShow(!show);
+  };
+  const showButton = () => {
+    setShow(!show);
+  };
+
   return (
     <Fragment>
       {loading ? (
@@ -219,7 +251,10 @@ const PreviewInfluencerCampaign = ({
                             </p>
                           </div>
                           <div>
-                            <div className="d-flex pd-t-3">
+                            <div
+                              className="d-flex pd-t-3 clickable"
+                              onClick={showButton}
+                            >
                               <div>
                                 <i className="fa fa-edit tx-primary mg-r-5" />
                               </div>
@@ -236,7 +271,18 @@ const PreviewInfluencerCampaign = ({
                               Instagram
                             </label>
                             <p className="tx-14 mb-0">
-                              {values.instagramHandle}
+                              {show === false ? (
+                                values.instagramHandle
+                              ) : (
+                                <Fragment>
+                                  <input
+                                    type="text"
+                                    name="instagramHandle"
+                                    value={val.instagramHandle}
+                                    onChange={handleEdit}
+                                  />{" "}
+                                </Fragment>
+                              )}
                             </p>
                           </div>
                           <div className="form-group col-md-3">
@@ -246,7 +292,20 @@ const PreviewInfluencerCampaign = ({
                             >
                               Twitter
                             </label>
-                            <p className="tx-14 mb-0">{values.twitterHandle}</p>
+                            <p className="tx-14 mb-0">
+                              {show === false ? (
+                                values.twitterHandle
+                              ) : (
+                                <Fragment>
+                                  <input
+                                    type="text"
+                                    name="twitterHandle"
+                                    value={val.twitterHandle}
+                                    onChange={handleEdit}
+                                  />{" "}
+                                </Fragment>
+                              )}
+                            </p>
                           </div>
                           <div className="form-group col-md-6">
                             <label
@@ -256,7 +315,18 @@ const PreviewInfluencerCampaign = ({
                               Campaign Message
                             </label>
                             <p className="tx-14 mb-0">
-                              {values.campaignMessage}
+                              {show === false ? (
+                                values.campaignMessage
+                              ) : (
+                                <Fragment>
+                                  <input
+                                    type="text"
+                                    name="campaignMessage"
+                                    value={val.campaignMessage}
+                                    onChange={handleEdit}
+                                  />{" "}
+                                </Fragment>
+                              )}
                             </p>
                           </div>
                           <div className="form-group col-md-3">
@@ -267,7 +337,18 @@ const PreviewInfluencerCampaign = ({
                               Facebook
                             </label>
                             <p className="tx-14 mb-0">
-                              {values.facebookHandle}
+                              {show === false ? (
+                                values.facebookHandle
+                              ) : (
+                                <Fragment>
+                                  <input
+                                    type="text"
+                                    name="facebookHandle"
+                                    value={val.facebookHandle}
+                                    onChange={handleEdit}
+                                  />{" "}
+                                </Fragment>
+                              )}
                             </p>
                           </div>
                           <div className="form-group col-md-3">
@@ -278,9 +359,31 @@ const PreviewInfluencerCampaign = ({
                               Snapchat
                             </label>
                             <p className="tx-14 mb-0">
-                              {values.snapchatHandle}
+                              {show === false ? (
+                                values.snapchatHandle
+                              ) : (
+                                <Fragment>
+                                  <input
+                                    type="text"
+                                    name="snapchatHandle"
+                                    value={val.snapchatHandle}
+                                    onChange={handleEdit}
+                                  />{" "}
+                                </Fragment>
+                              )}
                             </p>
                           </div>
+
+                          {show === false ? null : (
+                            <div className="form-group col-md-12">
+                              <button
+                                className="btn btn-primary"
+                                onClick={handleSubmit}
+                              >
+                                save
+                              </button>
+                            </div>
+                          )}
                         </div>
                       </div>
                       <div className="col-md-3">

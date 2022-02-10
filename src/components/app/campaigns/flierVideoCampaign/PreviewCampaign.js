@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -81,6 +81,57 @@ const PreviewCampaign = ({
 
   // console.log(csvArray);
 
+  //Edit functionality
+  const [show, setShow] = useState(false);
+
+  const [val, setVal] = useState({
+    campaignMessage: values.campaignMessage,
+    callToAction: values.callToAction,
+    ussd: values.ussd,
+    phoneNumber: values.phoneNumber,
+    whatsAppNumber: values.whatsAppNumber,
+    smsNumber: values.smsNumber,
+  });
+
+  const handleEdit = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setVal({ ...val, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    values.campaignMessage = val.campaignMessage;
+    values.callToAction = val.callToAction;
+    values.ussd = val.ussd;
+    values.phoneNumber = val.phoneNumber;
+    values.whatsAppNumber = val.whatsAppNumber;
+    values.smsNumber = val.smsNumber;
+    setShow(!show);
+  };
+  const showButton = (e) => {
+    setShow(!show);
+  };
+
+  //Campaign channel
+  const [view, setView] = useState(false);
+
+  const [chanl, setChanl] = useState(values.channel);
+
+  const viewButton = () => {
+    setView(!view);
+  };
+
+  const handleChanlChange = (e) => {
+    setChanl(e.target.value);
+  };
+
+  const handleCampaignChannelSub = (e) => {
+    e.preventDefault();
+    values.channel = chanl;
+    setView(!view);
+  };
+
   return (
     <Fragment>
       {loading || fcLoading ? (
@@ -120,12 +171,37 @@ const PreviewCampaign = ({
                             </div>
                             <div>
                               <p className="tx-20 tx-bold pd-t-15 tx-com capitalize">
-                                {values.channel}
+                                {view === false ? (
+                                  values.channel
+                                ) : (
+                                  <Fragment>
+                                    <select
+                                      name="channels"
+                                      onClick={handleChanlChange}
+                                    >
+                                      <option value="smart_sms">
+                                        smart_sms
+                                      </option>
+                                      <option value="display_ads">
+                                        display_ads
+                                      </option>
+                                    </select>
+                                    <button
+                                      className="btn btn-primary"
+                                      onClick={handleCampaignChannelSub}
+                                    >
+                                      save
+                                    </button>
+                                  </Fragment>
+                                )}
                               </p>
                             </div>
                           </div>
                           <div>
-                            <div className="d-flex pd-t-25">
+                            <div
+                              className="d-flex pd-t-25 clickable"
+                              onClick={viewButton}
+                            >
                               <div>
                                 <i className="fa fa-edit tx-primary mg-r-5" />
                               </div>
@@ -142,7 +218,10 @@ const PreviewCampaign = ({
                               </p>
                             </div>
                             <div>
-                              <div className="d-flex pd-t-3">
+                              <div
+                                className="d-flex pd-t-3 clickable"
+                                onClick={showButton}
+                              >
                                 <div>
                                   <i className="fa fa-edit tx-primary mg-r-5" />
                                 </div>
@@ -158,7 +237,23 @@ const PreviewCampaign = ({
                               >
                                 USSD Code
                               </label>
-                              <p className="tx-16 mb-0">*{values.ussd}#</p>
+                              <p className="tx-16 mb-0">
+                                *
+                                {show === false ? (
+                                  values.ussd
+                                ) : (
+                                  <Fragment>
+                                    <input
+                                      type="text"
+                                      name="ussd"
+                                      value={val.ussd}
+                                      className="p-1"
+                                      onChange={handleEdit}
+                                    />{" "}
+                                  </Fragment>
+                                )}
+                                #
+                              </p>
                             </div>
                             <div className="form-group col-md-6">
                               <label
@@ -167,7 +262,21 @@ const PreviewCampaign = ({
                               >
                                 Phone Call
                               </label>
-                              <p className="tx-16 mb-0">{values.phoneNumber}</p>
+                              <p className="tx-16 mb-0">
+                                {show === false ? (
+                                  values.phoneNumber
+                                ) : (
+                                  <Fragment>
+                                    <input
+                                      type="text"
+                                      name="phoneNumber"
+                                      value={val.phoneNumber}
+                                      className="p-1"
+                                      onChange={handleEdit}
+                                    />{" "}
+                                  </Fragment>
+                                )}
+                              </p>
                             </div>
                             <div className="form-group col-md-6">
                               <label
@@ -177,7 +286,19 @@ const PreviewCampaign = ({
                                 WhatsApp Number
                               </label>
                               <p className="tx-16 mb-0">
-                                {values.whatsAppNumber}
+                                {show === false ? (
+                                  values.whatsAppNumber
+                                ) : (
+                                  <Fragment>
+                                    <input
+                                      type="text"
+                                      name="whatsAppNumber"
+                                      value={val.whatsAppNumber}
+                                      className="p-1"
+                                      onChange={handleEdit}
+                                    />{" "}
+                                  </Fragment>
+                                )}
                               </p>
                             </div>
                             <div className="form-group col-md-6">
@@ -187,7 +308,21 @@ const PreviewCampaign = ({
                               >
                                 SMS Number
                               </label>
-                              <p className="tx-16 mb-0">{values.smsNumber}</p>
+                              <p className="tx-16 mb-0">
+                                {show === false ? (
+                                  values.smsNumber
+                                ) : (
+                                  <Fragment>
+                                    <input
+                                      type="text"
+                                      name="smsNumber"
+                                      value={val.smsNumber}
+                                      className="p-1"
+                                      onChange={handleEdit}
+                                    />{" "}
+                                  </Fragment>
+                                )}
+                              </p>
                             </div>
                             <div className="form-group col-md-12">
                               <label
@@ -197,9 +332,31 @@ const PreviewCampaign = ({
                                 Campaign Message
                               </label>
                               <p className="tx-15 mb-0">
-                                {values.campaignMessage}
+                                {show === false ? (
+                                  values.campaignMessage
+                                ) : (
+                                  <Fragment>
+                                    <input
+                                      type="text"
+                                      name="campaignMessage"
+                                      value={val.campaignMessage}
+                                      className="p-1"
+                                      onChange={handleEdit}
+                                    />{" "}
+                                  </Fragment>
+                                )}
                               </p>
                             </div>
+                            {show === false ? null : (
+                              <div className="form-group col-md-6">
+                                <button
+                                  className="btn btn-primary"
+                                  onClick={handleSubmit}
+                                >
+                                  save
+                                </button>
+                              </div>
+                            )}
                           </div>
                         </div>
                         <hr />
@@ -328,43 +485,101 @@ const PreviewCampaign = ({
                             </div>
                           </div>
                         )}
-                        {values.targetAudienceOption !== "mysogidb" && (
-                          <div className="mg-b-20 mg-md-b-10">
-                            <p className="tx-18 tx-com tx-semibold mb-0">
-                              Pricing
-                            </p>
-                            <div className="form-group mg-t-15">
-                              <label
-                                htmlFor
-                                className="tx-14 tx-gray mb-1 tx-medium"
-                              >
-                                Potential Audience Based on Manual Input
-                              </label>
-                              <p className="tx-18 tx-com tx-bold mb-0">
-                                {audience}{" "}
-                                <span className="tx-14 tx-gray tx-medium">
-                                  number(s) loaded
-                                </span>
+                        {(values.targetAudienceOption === "manual" ||
+                          values.targetAudienceOption === "manual_import") &&
+                          values.channel !== "display_ads" && (
+                            <div className="mg-b-20 mg-md-b-10">
+                              <p className="tx-18 tx-com tx-semibold mb-0">
+                                Pricing
                               </p>
-                              {/* <div className="form-group col-md-3">
+                              <div className="form-group mg-t-15">
+                                <label
+                                  htmlFor
+                                  className="tx-14 tx-gray mb-1 tx-medium"
+                                >
+                                  Potential Audience Based on Manual Input
+                                </label>
+                                <p className="tx-18 tx-com tx-bold mb-0">
+                                  {audience}{" "}
+                                  <span className="tx-14 tx-gray tx-medium">
+                                    number(s) loaded
+                                  </span>
+                                </p>
+                                {/* <div className="form-group col-md-3">
                                     <p className="tx-18 tx-com tx-bold mb-0">{audience}</p>
                                     <span className="badge badge-pink  tx-18 mg-5 tx-amt w-100 mt-0">
                                         {" "}
                                         <NumberFormat value={values.price} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
                                     </span>
                                 </div> */}
-                            </div>
-                            <div className="form-row mg-t-15 pd-x-0">
-                              {/* <div className="form-group col-md-9">
+                              </div>
+                              <div className="form-row mg-t-15 pd-x-0">
+                                {/* <div className="form-group col-md-9">
                                       <input
                                           type="text"
                                           className="form-control"
                                           placeholder="Enter your target audience number to get price"
                                       />
                                   </div> */}
-                              <div className=" col-md-2 d-flex align-items-center">
+                                <div className=" col-md-2 d-flex align-items-center">
+                                  <p className="tx-18 tx-com tx-bold mb-0">
+                                    Amount:
+                                  </p>{" "}
+                                  <NumberFormat
+                                    className="badge tx-green tx-bold tx-18 mg-5 tx-amt w-100 mt-0"
+                                    value={parseInt(price)}
+                                    displayType={"text"}
+                                    thousandSeparator={true}
+                                    prefix={"₦"}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        {values.channel === "display_ads" && (
+                          <div className="mg-b-20 mg-md-b-10">
+                            <p className="tx-18 tx-com tx-semibold mb-0">
+                              Reach
+                            </p>
+                            <div className="form-group mg-t-15">
+                              <label
+                                htmlFor
+                                className="tx-14 tx-gray mb-1 tx-medium"
+                              >
+                                Potential Reach Based on Budget
+                              </label>
+                              <p className="tx-18 tx-com tx-bold mb-0">
+                                {audience}{" "}
+                                <span className="tx-14 tx-gray tx-medium">
+                                  Total Reach
+                                </span>
+                              </p>
+                              {/* <div className="form-group col-md-3">
                                 <p className="tx-18 tx-com tx-bold mb-0">
-                                  Amount:
+                                  {audience}
+                                </p>
+                                <span className="badge badge-pink  tx-18 mg-5 tx-amt w-100 mt-0">
+                                  {" "}
+                                  <NumberFormat
+                                    value={values.price}
+                                    displayType={"text"}
+                                    thousandSeparator={true}
+                                    prefix={"₦"}
+                                  />
+                                </span>
+                              </div> */}
+                            </div>
+                            <div className="form-row mg-t-15 pd-x-0">
+                              {/* <div className="form-group col-md-9">
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Enter your target audience number to get price"
+                                />
+                              </div> */}
+                              <div className=" col-md-2 d-flex">
+                                <p className="tx-18 tx-com tx-bold mb-0">
+                                  Budget:
                                 </p>{" "}
                                 <NumberFormat
                                   className="badge tx-green tx-bold tx-18 mg-5 tx-amt w-100 mt-0"
@@ -422,7 +637,7 @@ const PreviewCampaign = ({
                         {values.assetType === "image" ? (
                           <div>
                             <img
-                              src={attachmentPreview}
+                              src={values.attachment}
                               className="img-fluid mg-b-10"
                               alt=""
                             />

@@ -222,6 +222,7 @@ export const getAllCampaign = () => async (dispatch) => {
 
     const config = {
       headers: {
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     };
@@ -230,8 +231,7 @@ export const getAllCampaign = () => async (dispatch) => {
       "/api/campaign/all-generic-campaign",
       config
     );
-
-    if (data.status === "success") {
+    if (data.statusCode === 100) {
       dispatch({
         type: GET_ALL_CAMPAIGN_SUCCESS,
         payload: data.data,

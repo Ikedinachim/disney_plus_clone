@@ -3,6 +3,7 @@ import AppDownloadCampaign from "./AppDownloadCampaign";
 import TargetAudience from "./TargetAudience";
 import PreviewCampaign from "./PreviewCampaign";
 import FundWalletAppDownlaod from "./FundWalletAppDownlaod";
+import axios from "axios";
 
 export default class AppDownloadStepForm extends Component {
   state = {
@@ -22,11 +23,14 @@ export default class AppDownloadStepForm extends Component {
     campaignType: "app_download",
     targetAudienceOption: "manual",
     assetType: "image",
-    imageUrl: "",
+    imageUrl: null,
+    imageAlt: "",
+    uploadPercentage: 0,
     videoUrl: "",
     price: 0,
     csvFile: "",
     limit: "",
+    budget: 10000,
 
     ageRange: "",
     gender: "",
@@ -35,7 +39,7 @@ export default class AppDownloadStepForm extends Component {
     deviceType: "LG",
     deviceBrand: "X210ZM",
 
-    selectedFileName: "Click to upload desired asset (if needed)",
+    selectedFileName: "Upload Asset *png, *jpg, *gif",
 
     parsedCsvData: [],
   };
@@ -77,31 +81,51 @@ export default class AppDownloadStepForm extends Component {
     }
   };
 
-  handleImageUpload = async () => {
-    const { files } = document.querySelector('input[type="file"]');
+  handleImageUpload = async (e) => {
+    // console.log(e);
+    let files = e.target.files[0];
+    // console.log(files);
     const formData = new FormData();
-    formData.append("file", files[0]);
-    // replace this with your upload preset name
+    formData.append("file", files);
     formData.append("upload_preset", "mysogi");
+
     const options = {
-      method: "POST",
-      // mode: "no-cors",
-      body: formData,
+      onUploadProgress: (progressEvent) => {
+        const { loaded, total } = progressEvent;
+        let percent = Math.floor((loaded * 100) / total);
+        // console.log(`${loaded}kb of ${total}kb | ${percent}%`);
+
+        if (percent < 100) {
+          this.setState({ uploadPercentage: percent });
+        }
+      },
     };
 
-    // replace cloudname with your Cloudinary cloud_name
     try {
-      const res = await fetch(
-        "https://api.Cloudinary.com/v1_1/mysogi/image/upload",
-        options
-      );
-      const res_1 = await res.json();
-      this.setState({
-        attachment: res_1.secure_url,
-        imageAlt: `An image of ${res_1.original_filename}`,
-      });
+      await axios
+        .post(
+          "https://api.Cloudinary.com/v1_1/mysogi/image/upload",
+          formData,
+          options
+        )
+        .then((res) => {
+          // console.log(res);
+          this.setState(
+            {
+              imageUrl: res.data.secure_url,
+              uploadPercentage: 100,
+              selectedFileName: files.name,
+              imageAlt: `An image of ${res.original_filename}`,
+            },
+            () => {
+              setTimeout(() => {
+                this.setState({ uploadPercentage: 0 });
+              }, 1000);
+            }
+          );
+        });
     } catch (err) {
-      return console.log(err);
+      // return console.log(err);
     }
   };
 
@@ -125,6 +149,7 @@ export default class AppDownloadStepForm extends Component {
       campaignType,
       numbers,
       limit,
+      budget,
 
       targetAudienceOption,
       ageRange,
@@ -135,8 +160,10 @@ export default class AppDownloadStepForm extends Component {
       deviceBrand,
       parsedCsvData,
       selectedFileName,
+      uploadPercentage,
     } = this.state;
 
+    console.log(imageUrl);
     /////////////////////////////
 
     const getCsvRawData = (data) => {
@@ -158,6 +185,14 @@ export default class AppDownloadStepForm extends Component {
       }
     };
 
+    const setAudience = () => {
+      if (channel === "display_ads") {
+        return (targetAudience = budget / 5);
+      } else {
+        return getAudience().length;
+      }
+    };
+
     let attachment = "";
 
     const setAssets = () => {
@@ -171,7 +206,7 @@ export default class AppDownloadStepForm extends Component {
     /////////////////////////////
 
     // const targetAudience = numbers.split(",");
-    const audience = getAudience().length;
+    const audience = setAudience();
     const price = audience * 5;
     const timeRange = timeRangeFrom + " - " + timeRangeTo;
     // const attachment = attachmentPreview
@@ -203,6 +238,7 @@ export default class AppDownloadStepForm extends Component {
       filterParameters,
       price,
       limit,
+      budget,
       assetType,
     };
 
@@ -219,6 +255,7 @@ export default class AppDownloadStepForm extends Component {
             handleImageUpload={this.handleImageUpload}
             attachmentPreview={attachmentPreview}
             selectedFileName={selectedFileName}
+            uploadPercentage={uploadPercentage}
           />
         );
       case 2:
