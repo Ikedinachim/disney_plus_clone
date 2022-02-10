@@ -43,7 +43,7 @@ const InfluencerFundWallet = ({ prevStep, values, price }) => {
   useEffect(() => {
     if (!isAuthenticated || user === null) {
       navigate("/login");
-    } else if (!loading && fundWallet.status === "success") {
+    } else if (!loading && fundWallet && fundWallet.status === "success") {
       dispatch(getWallet());
       alert.success(fundWallet.message);
       dispatch({ type: FUND_WALLET_RESET });

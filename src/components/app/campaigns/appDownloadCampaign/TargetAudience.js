@@ -29,10 +29,10 @@ const TargetAudience = ({
     (state) => state.filteredContactList || []
   );
 
-  const [status, setStatus] = useState(3);
-  const radioHandler = (status) => {
-    setStatus(status);
-  };
+  // const [status, setStatus] = useState(3);
+  // const radioHandler = (status) => {
+  //   setStatus(status);
+  // };
 
   const selectGenders = [
     {
@@ -200,9 +200,9 @@ const TargetAudience = ({
                             id="db"
                             name="customRadio"
                             className="custom-control-input"
-                            defaultChecked
-                            checked={status === 1}
-                            onClick={(e) => radioHandler(1)}
+                            // defaultChecked
+                            checked={values.targetAudienceOption === "mysogidb"}
+                            // onClick={(e) => radioHandler(1)}
                             value={"mysogidb"}
                             onChange={handleChange("targetAudienceOption")}
                           />
@@ -218,8 +218,10 @@ const TargetAudience = ({
                             id="import"
                             name="customRadio"
                             className="custom-control-input"
-                            checked={status === 2}
-                            onClick={(e) => radioHandler(2)}
+                            checked={
+                              values.targetAudienceOption === "manual_import"
+                            }
+                            // onClick={(e) => radioHandler(2)}
                             value={"manual_import"}
                             onChange={handleChange("targetAudienceOption")}
                           />
@@ -238,8 +240,8 @@ const TargetAudience = ({
                             id="manual"
                             name="customRadio"
                             className="custom-control-input"
-                            checked={status === 3}
-                            onClick={(e) => radioHandler(3)}
+                            checked={values.targetAudienceOption === "manual"}
+                            // onClick={(e) => radioHandler(3)}
                             defaultValue={"manual"}
                             onChange={handleChange("targetAudienceOption")}
                           />
@@ -251,12 +253,12 @@ const TargetAudience = ({
                           </label>
                         </div>
                       </div>
-                      {status === 1 && (
+                      {values.targetAudienceOption === "mysogidb" && (
                         <div id="show_1">
                           <div className="row justify-content-md-between">
                             <div className="form-group col-md-6">
                               <label
-                                htmlFor
+                                // htmlFor
                                 className="mb-1 tx-com d-flex align-items-center"
                               >
                                 Age Group
@@ -267,8 +269,8 @@ const TargetAudience = ({
                                 defaultValue={filterOptions.ageRange}
                                 onChange={handleChange("ageRange")}
                               >
-                                {selectAgeRanges.map((selectAgeRange) => (
-                                  <option value={selectAgeRange.value}>
+                                {selectAgeRanges.map((selectAgeRange, i) => (
+                                  <option value={selectAgeRange.value} key={i}>
                                     {selectAgeRange.label}
                                   </option>
                                 ))}
@@ -276,7 +278,7 @@ const TargetAudience = ({
                             </div>
                             <div className="form-group col-md-6">
                               <label
-                                htmlFor
+                                // htmlFor
                                 className="mb-1 tx-com d-flex align-items-center"
                               >
                                 Gender
@@ -287,8 +289,8 @@ const TargetAudience = ({
                                 defaultValue={filterOptions.gender}
                                 onChange={handleChange("gender")}
                               >
-                                {selectGenders.map((selectGender) => (
-                                  <option value={selectGender.value}>
+                                {selectGenders.map((selectGender, i) => (
+                                  <option value={selectGender.value} key={i}>
                                     {selectGender.label}
                                   </option>
                                 ))}
@@ -296,7 +298,7 @@ const TargetAudience = ({
                             </div>
                             <div className="form-group col-md-6">
                               <label
-                                htmlFor
+                                // htmlFor
                                 className="mb-1 tx-com d-flex align-items-center"
                               >
                                 State
@@ -307,8 +309,8 @@ const TargetAudience = ({
                                 defaultValue={filterOptions.state}
                                 onChange={handleChange("state")}
                               >
-                                {NaijaStates.states().map((selectState) => (
-                                  <option value={selectState}>
+                                {NaijaStates.states().map((selectState, i) => (
+                                  <option value={selectState} key={i}>
                                     {selectState}
                                   </option>
                                 ))}
@@ -316,7 +318,7 @@ const TargetAudience = ({
                             </div>
                             <div className="form-group col-md-6">
                               <label
-                                htmlFor
+                                // htmlFor
                                 className="mb-1 tx-com d-flex align-items-center"
                               >
                                 LGA
@@ -328,15 +330,15 @@ const TargetAudience = ({
                                 onChange={handleChange("lga")}
                               >
                                 <option value="">Select L.G.A</option>
-                                {lga.lgas.map((selectLga) => (
-                                  <option value={selectLga}>{selectLga}</option>
+                                {lga.lgas.map((selectLga, i) => (
+                                  <option value={selectLga} key={i}>
+                                    {selectLga}
+                                  </option>
                                 ))}
                               </select>
                             </div>
                             <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                ARPU Band
-                              </label>
+                              <label className="mb-1 tx-com">ARPU Band</label>
                               <select id="band" className="form-control">
                                 <option value />
                                 <option value="m">0-1000</option>
@@ -355,9 +357,7 @@ const TargetAudience = ({
                               </select>
                             </div>
                             <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                Device Type
-                              </label>
+                              <label className="mb-1 tx-com">Device Type</label>
                               <select className="custom-select">
                                 <option selected>
                                   Select the kind of device
@@ -367,7 +367,7 @@ const TargetAudience = ({
                               </select>
                             </div>
                             <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
+                              <label className="mb-1 tx-com">
                                 Device Brand
                               </label>
                               <select className="custom-select">
@@ -379,7 +379,7 @@ const TargetAudience = ({
                           </div>
                         </div>
                       )}
-                      {status === 2 && (
+                      {values.targetAudienceOption === "manual_import" && (
                         <div className="hide" id="show_2">
                           <div className="row justify-content-md-between">
                             <div className="form-group col-md-6">
@@ -409,7 +409,7 @@ const TargetAudience = ({
                           </div>
                         </div>
                       )}
-                      {status === 3 && (
+                      {values.targetAudienceOption === "manual" && (
                         <div className="hide" id="show_3">
                           <div className="row justify-content-md-between">
                             <div className="form-group col-md-6">
