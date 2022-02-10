@@ -3,6 +3,7 @@ import InfluencerCampaign from "./InfluencerCampaign";
 import InfluencerTargetAudience from "./InfluencerTargetAudience";
 import PreviewInfluencerCampaign from "./PreviewInfluencerCampaign";
 import InfluencerFundWallet from "./InfluencerFundWallet";
+import axios from "axios";
 
 export default class InfluencerStepForm extends Component {
   state = {
@@ -16,7 +17,9 @@ export default class InfluencerStepForm extends Component {
     instagramHandle: "",
     snapchatHandle: "",
     campaignImage: "",
-    attachment: "",
+    attachment: null,
+    imageAlt: "",
+    uploadPercentage: 0,
     attachmentPreview: "",
     uploadedImage: "",
     price: 0,
@@ -37,7 +40,7 @@ export default class InfluencerStepForm extends Component {
     showModal: false,
     activeItemId: "",
 
-    selectedFileName: "Click to upload desired asset (if needed)",
+    selectedFileName: "Upload Asset *png, *jpg, *gif",
   };
 
   // go back to previous step
@@ -65,7 +68,9 @@ export default class InfluencerStepForm extends Component {
     if (selectedIndex !== -1) {
       mulInfluencers.splice(selectedIndex, 1);
       mulInfluencers.push(input);
+      console.log(mulInfluencers);
     } else {
+      // mulInfluencers.splice(selectedIndex, 1);
       mulInfluencers.push(input);
     }
 
@@ -73,10 +78,10 @@ export default class InfluencerStepForm extends Component {
       ...state,
       selectedInfluencers: mulInfluencers,
     }));
-    console.log(
-      "selected influencer and platforms",
-      this.state.selectedInfluencers
-    );
+    // console.log(
+    //   "selected influencer and platforms",
+    //   this.state.selectedInfluencers
+    // );
   };
 
   handleCheck(e) {
@@ -128,31 +133,51 @@ export default class InfluencerStepForm extends Component {
     });
   };
 
-  handleImageUpload = async () => {
-    const { files } = document.querySelector('input[type="file"]');
+  handleImageUpload = async (e) => {
+    // console.log(e);
+    let files = e.target.files[0];
+    // console.log(files);
     const formData = new FormData();
-    formData.append("file", files[0]);
-    // replace this with your upload preset name
+    formData.append("file", files);
     formData.append("upload_preset", "mysogi");
+
     const options = {
-      method: "POST",
-      // mode: "no-cors",
-      body: formData,
+      onUploadProgress: (progressEvent) => {
+        const { loaded, total } = progressEvent;
+        let percent = Math.floor((loaded * 100) / total);
+        // console.log(`${loaded}kb of ${total}kb | ${percent}%`);
+
+        if (percent < 100) {
+          this.setState({ uploadPercentage: percent });
+        }
+      },
     };
 
-    // replace cloudname with your Cloudinary cloud_name
     try {
-      const res = await fetch(
-        "https://api.Cloudinary.com/v1_1/mysogi/image/upload",
-        options
-      );
-      const res_1 = await res.json();
-      this.setState({
-        attachment: res_1.secure_url,
-        imageAlt: `An image of ${res_1.original_filename}`,
-      });
+      await axios
+        .post(
+          "https://api.Cloudinary.com/v1_1/mysogi/image/upload",
+          formData,
+          options
+        )
+        .then((res) => {
+          // console.log(res);
+          this.setState(
+            {
+              attachment: res.data.secure_url,
+              uploadPercentage: 100,
+              selectedFileName: files.name,
+              imageAlt: `An image of ${res.original_filename}`,
+            },
+            () => {
+              setTimeout(() => {
+                this.setState({ uploadPercentage: 0 });
+              }, 1000);
+            }
+          );
+        });
     } catch (err) {
-      return console.log(err);
+      // return console.log(err);
     }
   };
 
@@ -176,6 +201,7 @@ export default class InfluencerStepForm extends Component {
       checkedInfluencers,
       campaignType,
       selectedFileName,
+      uploadPercentage,
     } = this.state;
 
     // const filteredValue = Object.values(checkedInfluencers);
@@ -316,6 +342,7 @@ export default class InfluencerStepForm extends Component {
             attachmentPreview={attachmentPreview}
             values={values}
             selectedFileName={selectedFileName}
+            uploadPercentage={uploadPercentage}
           />
         );
       case 3:

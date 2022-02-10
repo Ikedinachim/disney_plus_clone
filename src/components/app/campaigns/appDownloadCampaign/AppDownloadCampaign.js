@@ -6,6 +6,7 @@ import { useAlert } from "react-alert";
 import { getSenderID } from "../../../../actions/senderIDActions";
 import Loader from "../../../loader";
 import MediaPlayer from "../../../../_helpers/reactPlayer/ReactPlayer";
+import { ProgressBar } from "react-bootstrap";
 
 import MetaData from "../../../layout/MetaData";
 
@@ -17,6 +18,7 @@ const SmsCampaign = ({
   handleImageUpload,
   attachmentPreview,
   selectedFileName,
+  uploadPercentage,
 }) => {
   const alert = useAlert();
   const dispatch = useDispatch();
@@ -35,7 +37,7 @@ const SmsCampaign = ({
       alert.error("Choose a channel");
     } else if (values.campaignMessage === "") {
       alert.error("Create the campaign message");
-    } else if (values.assetType === "image") {
+    } else if (values.assetType === "image" && values.attachment === null) {
       nextStep();
       handleImageUpload();
     } else {
@@ -231,11 +233,10 @@ const SmsCampaign = ({
                                   <input
                                     type="file"
                                     name="file"
+                                    accept="image/png, image/jpeg, image/gif, image/jpg"
                                     className="custom-file-input"
                                     id="customFile"
-                                    onChange={onChangeAttachment(
-                                      "uploadedImage"
-                                    )}
+                                    onChange={handleImageUpload}
                                   />
                                   <label
                                     className="custom-file-label"
@@ -243,6 +244,15 @@ const SmsCampaign = ({
                                   >
                                     {selectedFileName}
                                   </label>
+                                  {uploadPercentage > 0 && (
+                                    <span className="mt-2">
+                                      <ProgressBar
+                                        now={uploadPercentage}
+                                        // active
+                                        label={`${uploadPercentage}%`}
+                                      />
+                                    </span>
+                                  )}
                                 </div>
                               </div>
                             )}
@@ -272,6 +282,12 @@ const SmsCampaign = ({
                               onClick={Continue}
                               type="submit"
                               variant="contained"
+                              disabled={
+                                uploadPercentage !== 100 &&
+                                values.attachment === null
+                                  ? true
+                                  : false
+                              }
                             >
                               Proceed
                             </button>
@@ -291,7 +307,7 @@ const SmsCampaign = ({
                           {assetType === "image" ? (
                             <div>
                               <img
-                                src={attachmentPreview}
+                                src={values.attachment}
                                 className="img-fluid mg-b-10"
                                 alt=""
                               />

@@ -17,7 +17,7 @@ export default class SmsStepForm extends Component {
     phoneNumber: "",
     campaignType: "general",
     price: 0,
-    targetAudienceOption: "",
+    targetAudienceOption: "manual",
     limit: "",
     parsedCsvData: [],
 

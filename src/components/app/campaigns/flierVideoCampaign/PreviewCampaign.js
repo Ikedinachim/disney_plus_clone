@@ -485,43 +485,101 @@ const PreviewCampaign = ({
                             </div>
                           </div>
                         )}
-                        {values.targetAudienceOption !== "mysogidb" && (
-                          <div className="mg-b-20 mg-md-b-10">
-                            <p className="tx-18 tx-com tx-semibold mb-0">
-                              Pricing
-                            </p>
-                            <div className="form-group mg-t-15">
-                              <label
-                                htmlFor
-                                className="tx-14 tx-gray mb-1 tx-medium"
-                              >
-                                Potential Audience Based on Manual Input
-                              </label>
-                              <p className="tx-18 tx-com tx-bold mb-0">
-                                {audience}{" "}
-                                <span className="tx-14 tx-gray tx-medium">
-                                  number(s) loaded
-                                </span>
+                        {(values.targetAudienceOption === "manual" ||
+                          values.targetAudienceOption === "manual_import") &&
+                          values.channel !== "display_ads" && (
+                            <div className="mg-b-20 mg-md-b-10">
+                              <p className="tx-18 tx-com tx-semibold mb-0">
+                                Pricing
                               </p>
-                              {/* <div className="form-group col-md-3">
+                              <div className="form-group mg-t-15">
+                                <label
+                                  htmlFor
+                                  className="tx-14 tx-gray mb-1 tx-medium"
+                                >
+                                  Potential Audience Based on Manual Input
+                                </label>
+                                <p className="tx-18 tx-com tx-bold mb-0">
+                                  {audience}{" "}
+                                  <span className="tx-14 tx-gray tx-medium">
+                                    number(s) loaded
+                                  </span>
+                                </p>
+                                {/* <div className="form-group col-md-3">
                                     <p className="tx-18 tx-com tx-bold mb-0">{audience}</p>
                                     <span className="badge badge-pink  tx-18 mg-5 tx-amt w-100 mt-0">
                                         {" "}
                                         <NumberFormat value={values.price} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
                                     </span>
                                 </div> */}
-                            </div>
-                            <div className="form-row mg-t-15 pd-x-0">
-                              {/* <div className="form-group col-md-9">
+                              </div>
+                              <div className="form-row mg-t-15 pd-x-0">
+                                {/* <div className="form-group col-md-9">
                                       <input
                                           type="text"
                                           className="form-control"
                                           placeholder="Enter your target audience number to get price"
                                       />
                                   </div> */}
-                              <div className=" col-md-2 d-flex align-items-center">
+                                <div className=" col-md-2 d-flex align-items-center">
+                                  <p className="tx-18 tx-com tx-bold mb-0">
+                                    Amount:
+                                  </p>{" "}
+                                  <NumberFormat
+                                    className="badge tx-green tx-bold tx-18 mg-5 tx-amt w-100 mt-0"
+                                    value={parseInt(price)}
+                                    displayType={"text"}
+                                    thousandSeparator={true}
+                                    prefix={"₦"}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        {values.channel === "display_ads" && (
+                          <div className="mg-b-20 mg-md-b-10">
+                            <p className="tx-18 tx-com tx-semibold mb-0">
+                              Reach
+                            </p>
+                            <div className="form-group mg-t-15">
+                              <label
+                                htmlFor
+                                className="tx-14 tx-gray mb-1 tx-medium"
+                              >
+                                Potential Reach Based on Budget
+                              </label>
+                              <p className="tx-18 tx-com tx-bold mb-0">
+                                {audience}{" "}
+                                <span className="tx-14 tx-gray tx-medium">
+                                  Total Reach
+                                </span>
+                              </p>
+                              {/* <div className="form-group col-md-3">
                                 <p className="tx-18 tx-com tx-bold mb-0">
-                                  Amount:
+                                  {audience}
+                                </p>
+                                <span className="badge badge-pink  tx-18 mg-5 tx-amt w-100 mt-0">
+                                  {" "}
+                                  <NumberFormat
+                                    value={values.price}
+                                    displayType={"text"}
+                                    thousandSeparator={true}
+                                    prefix={"₦"}
+                                  />
+                                </span>
+                              </div> */}
+                            </div>
+                            <div className="form-row mg-t-15 pd-x-0">
+                              {/* <div className="form-group col-md-9">
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Enter your target audience number to get price"
+                                />
+                              </div> */}
+                              <div className=" col-md-2 d-flex">
+                                <p className="tx-18 tx-com tx-bold mb-0">
+                                  Budget:
                                 </p>{" "}
                                 <NumberFormat
                                   className="badge tx-green tx-bold tx-18 mg-5 tx-amt w-100 mt-0"
@@ -579,7 +637,7 @@ const PreviewCampaign = ({
                         {values.assetType === "image" ? (
                           <div>
                             <img
-                              src={attachmentPreview}
+                              src={values.attachment}
                               className="img-fluid mg-b-10"
                               alt=""
                             />

@@ -153,9 +153,9 @@ const InfluencerModal = ({
                 </div>
               </div>
             </div>
-            <div class="backdrop"></div>
-            <div class="aside-backdrop"></div>
-            <div class="modal-backdrop fade show"></div>
+            <div className="backdrop"></div>
+            <div className="aside-backdrop"></div>
+            <div className="modal-backdrop fade show"></div>
           </>
         )}
       </>

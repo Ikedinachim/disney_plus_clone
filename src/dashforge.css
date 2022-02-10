@@ -50,7 +50,7 @@
   box-sizing: border-box;
 }
 
-.clickable{
+.clickable {
   cursor: pointer;
 }
 html {
@@ -1737,7 +1737,7 @@ pre code {
   .table-responsive-sm > .table-bordered {
     border: 0;
   }
-  .display-content{
+  .display-content {
     display: contents !important;
   }
 
@@ -17258,12 +17258,12 @@ textarea.parsley-success:focus {
 .nav-aside .nav-item {
   position: relative;
 }
-.nav-aside .nav-item.active .nav-link {
+.nav-aside .nav-item .nav-link.active {
   opacity: 1;
   color: #ff1f00;
   font-weight: 500;
 }
-.nav-aside .nav-item.active .nav-link::before {
+.nav-aside .nav-item .nav-link.active::before {
   opacity: 1;
   visibility: visible;
   border-left-color: #ff1f00;
@@ -17353,7 +17353,7 @@ textarea.parsley-success:focus {
 }
 .nav-aside .nav-link:hover,
 .nav-aside .nav-link:focus {
-  color: #1b2e4b;
+  color: #ff1f00;
 }
 .nav-aside svg {
   width: 18px;
@@ -17424,14 +17424,13 @@ textarea.parsley-success:focus {
     line-height: normal;
   }
 
-  .billing-info{
+  .billing-info {
     text-align: center;
   }
 
-  .billing-info-bold{
+  .billing-info-bold {
     text-align: center;
     font-size: 26px !important;
-    
   }
 }
 .content-header .nav-link {
