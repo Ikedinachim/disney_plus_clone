@@ -28,10 +28,10 @@ const FlierVideoCampaign = ({
   const [showSms, setShowSms] = useState(false);
   const [showUssd, setShowUssd] = useState(false);
 
-  const [assetType, setAssetType] = useState("image");
-  const assetTypeHandler = (asset) => {
-    setAssetType(asset);
-  };
+  // const [assetType, setAssetType] = useState("image");
+  // const assetTypeHandler = (asset) => {
+  //   setAssetType(asset);
+  // };
 
   const Continue = (e) => {
     e.preventDefault();
@@ -335,8 +335,8 @@ const FlierVideoCampaign = ({
                                 id="image"
                                 name="customRadio"
                                 className="custom-control-input"
-                                checked={assetType === "image"}
-                                onClick={(e) => assetTypeHandler("image")}
+                                checked={values.assetType === "image"}
+                                // onClick={(e) => assetTypeHandler("image")}
                                 value={"image"}
                                 onChange={handleChange("assetType")}
                               />
@@ -355,8 +355,8 @@ const FlierVideoCampaign = ({
                                 id="video"
                                 name="customRadio"
                                 className="custom-control-input"
-                                checked={assetType === "video"}
-                                onClick={(e) => assetTypeHandler("video")}
+                                checked={values.assetType === "video"}
+                                // onClick={(e) => assetTypeHandler("video")}
                                 value={"video"}
                                 onChange={handleChange("assetType")}
                               />
@@ -368,7 +368,7 @@ const FlierVideoCampaign = ({
                               </label>
                             </div>
                           </div>
-                          {assetType === "image" && (
+                          {values.assetType === "image" && (
                             <div className="form-group">
                               <div className="custom-file">
                                 <input
@@ -406,7 +406,7 @@ const FlierVideoCampaign = ({
                               </div>
                             </div>
                           )}
-                          {assetType === "video" && (
+                          {values.assetType === "video" && (
                             <div className="form-group">
                               <div className="custom-file">
                                 <label htmlFor className="mb-1">
@@ -454,7 +454,7 @@ const FlierVideoCampaign = ({
                   <div className="col-md-5 col-12 mg-t-20">
                     <div className="card shadow-sm rounded bd-0">
                       <div className="card-body">
-                        {assetType === "image" ? (
+                        {values.assetType === "image" ? (
                           <div>
                             <img
                               src={values.attachment}

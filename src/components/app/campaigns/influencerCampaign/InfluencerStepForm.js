@@ -352,7 +352,7 @@ export default class InfluencerStepForm extends Component {
             nextStep={this.nextStep}
             values={values}
             // price={price}
-            attachmentPreview={attachmentPreview}
+            attachment={attachment}
             checkedInfluencers={selectedInfluencers}
             payload={payload}
             handlePrice={this.handlePrice}

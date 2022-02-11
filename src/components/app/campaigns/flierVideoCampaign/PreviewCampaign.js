@@ -198,7 +198,7 @@ const PreviewCampaign = ({
                             </div>
                           </div>
                           <div>
-                            <div
+                            {/* <div
                               className="d-flex pd-t-25 clickable"
                               onClick={viewButton}
                             >
@@ -206,7 +206,7 @@ const PreviewCampaign = ({
                                 <i className="fa fa-edit tx-primary mg-r-5" />
                               </div>
                               <p className="mb-0">Edit</p>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                         <hr />
@@ -217,7 +217,7 @@ const PreviewCampaign = ({
                                 Campaign Information
                               </p>
                             </div>
-                            <div>
+                            {/* <div>
                               <div
                                 className="d-flex pd-t-3 clickable"
                                 onClick={showButton}
@@ -227,7 +227,7 @@ const PreviewCampaign = ({
                                 </div>
                                 <p className="mb-0">Edit</p>
                               </div>
-                            </div>
+                            </div> */}
                           </div>
                           <div className="row mg-t-15">
                             <div className="form-group col-md-6">
@@ -369,14 +369,14 @@ const PreviewCampaign = ({
                                     Target Audience
                                   </p>
                                 </div>
-                                <div>
+                                {/* <div>
                                   <div className="d-flex pd-t-3">
                                     <div>
                                       <i className="fa fa-edit tx-primary mg-r-5" />
                                     </div>
                                     <p className="mb-0">Edit</p>
                                   </div>
-                                </div>
+                                </div> */}
                               </div>
                               <div className="row mg-t-15">
                                 <div className="col-md-3 form-group">
@@ -526,7 +526,7 @@ const PreviewCampaign = ({
                                     Amount:
                                   </p>{" "}
                                   <NumberFormat
-                                    className="badge tx-green tx-bold tx-18 mg-5 tx-amt w-100 mt-0"
+                                    className="badge tx-green tx-bold tx-18 mg-0 tx-amt w-100 mt-0"
                                     value={parseInt(price)}
                                     displayType={"text"}
                                     thousandSeparator={true}
@@ -577,12 +577,12 @@ const PreviewCampaign = ({
                                   placeholder="Enter your target audience number to get price"
                                 />
                               </div> */}
-                              <div className=" col-md-2 d-flex">
+                              <div className=" col-md-2 d-flex align-items-center">
                                 <p className="tx-18 tx-com tx-bold mb-0">
                                   Budget:
                                 </p>{" "}
                                 <NumberFormat
-                                  className="badge tx-green tx-bold tx-18 mg-5 tx-amt w-100 mt-0"
+                                  className="badge tx-green tx-bold tx-18 mg-0 tx-amt w-100 mt-0"
                                   value={parseInt(price)}
                                   displayType={"text"}
                                   thousandSeparator={true}
