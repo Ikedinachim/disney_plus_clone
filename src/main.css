@@ -492,7 +492,7 @@ table.dataTable thead th {
   font-weight: 700 !important;
   color: #ff0000 !important;
   padding: 0.6rem 0.5rem !important;
-  text-align: left;
+  text-align: center;
 }
 .list-group-item.prima.active {
   background-color: #ff6600 !important;

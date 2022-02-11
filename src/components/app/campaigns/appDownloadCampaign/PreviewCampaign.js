@@ -189,7 +189,7 @@ const PreviewCampaign = ({
                             </div>
                           </div>
                           <div>
-                            <div
+                            {/* <div
                               className="d-flex pd-t-25 clickable"
                               onClick={viewButton}
                             >
@@ -197,7 +197,7 @@ const PreviewCampaign = ({
                                 <i className="fa fa-edit tx-primary mg-r-5" />
                               </div>
                               <p className="mb-0">Edit</p>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                         <hr />
@@ -208,7 +208,7 @@ const PreviewCampaign = ({
                                 Campaign Information
                               </p>
                             </div>
-                            <div>
+                            {/* <div>
                               <div
                                 className="d-flex pd-t-3 clickable"
                                 onClick={showButton}
@@ -218,7 +218,7 @@ const PreviewCampaign = ({
                                 </div>
                                 <p className="mb-0">Edit</p>
                               </div>
-                            </div>
+                            </div> */}
                           </div>
                           <div className="row mg-t-15">
                             <div className="form-group col-md-6">
@@ -254,13 +254,25 @@ const PreviewCampaign = ({
                               </p>
                             </div>
                             {/* <div className="form-group col-md-6">
-                                                            <label htmlFor className="tx-14 tx-gray mb-0 tx-medium">WhatsApp Number</label>
-                                                            <p className="tx-16 mb-0">{values.whatsAppNumber}</p>
-                                                        </div>
-                                                        <div className="form-group col-md-6">
-                                                            <label htmlFor className="tx-14 tx-gray mb-0 tx-medium">SMS Number</label>
-                                                            <p className="tx-16 mb-0">{values.smsNumber}</p>
-                                                        </div> */}
+                              <label
+                                htmlFor
+                                className="tx-14 tx-gray mb-0 tx-medium"
+                              >
+                                WhatsApp Number
+                              </label>
+                              <p className="tx-16 mb-0">
+                                {values.whatsAppNumber}
+                              </p>
+                            </div>
+                            <div className="form-group col-md-6">
+                              <label
+                                htmlFor
+                                className="tx-14 tx-gray mb-0 tx-medium"
+                              >
+                                SMS Number
+                              </label>
+                              <p className="tx-16 mb-0">{values.smsNumber}</p>
+                            </div> */}
                             <div className="form-group col-md-12">
                               <label
                                 htmlFor
@@ -306,14 +318,14 @@ const PreviewCampaign = ({
                                     Target Audience
                                   </p>
                                 </div>
-                                <div>
+                                {/* <div>
                                   <div className="d-flex pd-t-3">
                                     <div>
                                       <i className="fa fa-edit tx-primary mg-r-5" />
                                     </div>
                                     <p className="mb-0">Edit</p>
                                   </div>
-                                </div>
+                                </div> */}
                               </div>
                               <div className="row mg-t-15">
                                 <div className="col-md-3 form-group">
@@ -445,27 +457,34 @@ const PreviewCampaign = ({
                                   </span>
                                 </p>
                                 {/* <div className="form-group col-md-3">
-                                                            <p className="tx-18 tx-com tx-bold mb-0">{audience}</p>
-                                                            <span className="badge badge-pink  tx-18 mg-5 tx-amt w-100 mt-0">
-                                                                {" "}
-                                                                <NumberFormat value={values.price} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
-                                                            </span>
-                                                        </div> */}
+                                  <p className="tx-18 tx-com tx-bold mb-0">
+                                    {audience}
+                                  </p>
+                                  <span className="badge badge-pink  tx-18 mg-5 tx-amt w-100 mt-0">
+                                    {" "}
+                                    <NumberFormat
+                                      value={values.price}
+                                      displayType={"text"}
+                                      thousandSeparator={true}
+                                      prefix={"₦"}
+                                    />
+                                  </span>
+                                </div> */}
                               </div>
                               <div className="form-row mg-t-15 pd-x-0">
                                 {/* <div className="form-group col-md-9">
-                                                            <input
-                                                                type="text"
-                                                                className="form-control"
-                                                                placeholder="Enter your target audience number to get price"
-                                                            />
-                                                        </div> */}
-                                <div className=" col-md-2 d-flex">
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Enter your target audience number to get price"
+                                  />
+                                </div> */}
+                                <div className=" col-md-2 d-flex align-items-center">
                                   <p className="tx-18 tx-com tx-bold mb-0">
                                     Amount:
                                   </p>{" "}
                                   <NumberFormat
-                                    className="badge tx-green tx-bold tx-18 mg-5 tx-amt w-100 mt-0"
+                                    className="badge tx-green tx-bold tx-18 mg-0 tx-amt w-100 mt-0"
                                     value={parseInt(price)}
                                     displayType={"text"}
                                     thousandSeparator={true}
@@ -494,27 +513,34 @@ const PreviewCampaign = ({
                                 </span>
                               </p>
                               {/* <div className="form-group col-md-3">
-                                                            <p className="tx-18 tx-com tx-bold mb-0">{audience}</p>
-                                                            <span className="badge badge-pink  tx-18 mg-5 tx-amt w-100 mt-0">
-                                                                {" "}
-                                                                <NumberFormat value={values.price} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
-                                                            </span>
-                                                        </div> */}
+                                <p className="tx-18 tx-com tx-bold mb-0">
+                                  {audience}
+                                </p>
+                                <span className="badge badge-pink  tx-18 mg-5 tx-amt w-100 mt-0">
+                                  {" "}
+                                  <NumberFormat
+                                    value={values.price}
+                                    displayType={"text"}
+                                    thousandSeparator={true}
+                                    prefix={"₦"}
+                                  />
+                                </span>
+                              </div> */}
                             </div>
                             <div className="form-row mg-t-15 pd-x-0">
                               {/* <div className="form-group col-md-9">
-                                                            <input
-                                                                type="text"
-                                                                className="form-control"
-                                                                placeholder="Enter your target audience number to get price"
-                                                            />
-                                                        </div> */}
-                              <div className=" col-md-2 d-flex">
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Enter your target audience number to get price"
+                                />
+                              </div> */}
+                              <div className=" col-md-2 d-flex align-items-center">
                                 <p className="tx-18 tx-com tx-bold mb-0">
                                   Budget:
                                 </p>{" "}
                                 <NumberFormat
-                                  className="badge tx-green tx-bold tx-18 mg-5 tx-amt w-100 mt-0"
+                                  className="badge tx-green tx-bold tx-18 mg-0 tx-amt w-100 mt-0"
                                   value={parseInt(price)}
                                   displayType={"text"}
                                   thousandSeparator={true}
