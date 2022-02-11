@@ -129,7 +129,7 @@ const AllCampaigns = () => {
 
   return (
     <Fragment>
-      <MetaData title={"All Campaigns"} />
+      <MetaData title={"Campaigns"} />
       {loading ? (
         <Loader />
       ) : (

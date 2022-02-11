@@ -15,10 +15,39 @@ const Settings = () => {
 
   const { user } = useSelector((state) => state.userDetails || []);
 
+  const [imageUrl, setImageUrl] = useState("");
+  const [imageAlt, setImageAlt] = useState("");
+
   useEffect(() => {
     dispatch(getUser());
   }, []);
 
+  const handleImageUpload = async () => {
+    const { files } = document.querySelector('input[type="file"]');
+    const formData = new FormData();
+    formData.append("file", files[0]);
+    // replace this with your upload preset name
+    formData.append("upload_preset", "mysogi");
+    const options = {
+      method: "POST",
+      // mode: "no-cors",
+      body: formData,
+    };
+
+    try {
+      const res = await fetch(
+        "https://api.Cloudinary.com/v1_1/mysogi/image/upload",
+        options
+      );
+      const res_1 = await res.json();
+      setImageUrl(res_1.secure_url);
+      setImageAlt(`An image of ${res_1.original_filename}`);
+    } catch (err) {
+      return console.log(err);
+    }
+  };
+
+  console.log(imageUrl);
   const [people, setPeople] = useState({
     firstName: user.firstName,
     lastName: user.lastName,
@@ -26,6 +55,7 @@ const Settings = () => {
     email: user.email,
     password: user.password,
     phone: user.phone,
+    image: imageUrl,
   });
 
   console.log(people);
@@ -34,6 +64,7 @@ const Settings = () => {
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
+    handleImageUpload();
     setPeople({ ...people, [name]: value });
   };
 
@@ -45,7 +76,7 @@ const Settings = () => {
 
   useEffect(() => {
     if (updateUser && updateUser.status === "success") {
-      alert.success(updateUser.message);
+      alert.success(`update ${updateUser.status}`);
       dispatch(getUser());
       dispatch({ type: UPDATE_USER_RESET });
     } else if (updateUser.error) {
@@ -95,16 +126,28 @@ const Settings = () => {
                   {show === false ? "Edit" : "Stop Editing"}
                 </div>
               </div>
-              <div className="wd-150 wdm-55 d-flex">
+              <div className=" wdm-55 d-flex">
                 <img
                   src="../../../assets/img/baba.jpeg"
-                  className="img-thumbnail"
+                  className="img-thumbnail w-25"
                   alt=""
                 />
-                <div>
-                  Click here to change Photo
-                  <br />
-                  (Not more than 1mb)
+                <div className="custom-file">
+                  <input
+                    type="file"
+                    name="image"
+                    id="custom-file"
+                    className="custom-file-input"
+                    accept="image/*"
+                    onChange={handleChange}
+                    disabled={show === false ? "disabled" : ""}
+                    value={people.image}
+                  />
+                  <label for="custom-file" className="w-15 nav-link clickable">
+                    Click here to change Photo
+                    <br />
+                    (Not more than 1mb)
+                  </label>
                 </div>
               </div>
               <div>
