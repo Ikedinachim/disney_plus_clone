@@ -189,7 +189,7 @@ const PreviewCampaign = ({
                             </div>
                           </div>
                           <div>
-                            <div
+                            {/* <div
                               className="d-flex pd-t-25 clickable"
                               onClick={viewButton}
                             >
@@ -197,7 +197,7 @@ const PreviewCampaign = ({
                                 <i className="fa fa-edit tx-primary mg-r-5" />
                               </div>
                               <p className="mb-0">Edit</p>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                         <hr />
@@ -208,7 +208,7 @@ const PreviewCampaign = ({
                                 Campaign Information
                               </p>
                             </div>
-                            <div>
+                            {/* <div>
                               <div
                                 className="d-flex pd-t-3 clickable"
                                 onClick={showButton}
@@ -218,7 +218,7 @@ const PreviewCampaign = ({
                                 </div>
                                 <p className="mb-0">Edit</p>
                               </div>
-                            </div>
+                            </div> */}
                           </div>
                           <div className="row mg-t-15">
                             <div className="form-group col-md-6">
@@ -254,13 +254,25 @@ const PreviewCampaign = ({
                               </p>
                             </div>
                             {/* <div className="form-group col-md-6">
-                                                            <label htmlFor className="tx-14 tx-gray mb-0 tx-medium">WhatsApp Number</label>
-                                                            <p className="tx-16 mb-0">{values.whatsAppNumber}</p>
-                                                        </div>
-                                                        <div className="form-group col-md-6">
-                                                            <label htmlFor className="tx-14 tx-gray mb-0 tx-medium">SMS Number</label>
-                                                            <p className="tx-16 mb-0">{values.smsNumber}</p>
-                                                        </div> */}
+                              <label
+                                htmlFor
+                                className="tx-14 tx-gray mb-0 tx-medium"
+                              >
+                                WhatsApp Number
+                              </label>
+                              <p className="tx-16 mb-0">
+                                {values.whatsAppNumber}
+                              </p>
+                            </div>
+                            <div className="form-group col-md-6">
+                              <label
+                                htmlFor
+                                className="tx-14 tx-gray mb-0 tx-medium"
+                              >
+                                SMS Number
+                              </label>
+                              <p className="tx-16 mb-0">{values.smsNumber}</p>
+                            </div> */}
                             <div className="form-group col-md-12">
                               <label
                                 htmlFor
@@ -306,14 +318,14 @@ const PreviewCampaign = ({
                                     Target Audience
                                   </p>
                                 </div>
-                                <div>
+                                {/* <div>
                                   <div className="d-flex pd-t-3">
                                     <div>
                                       <i className="fa fa-edit tx-primary mg-r-5" />
                                     </div>
                                     <p className="mb-0">Edit</p>
                                   </div>
-                                </div>
+                                </div> */}
                               </div>
                               <div className="row mg-t-15">
                                 <div className="col-md-3 form-group">
@@ -424,46 +436,111 @@ const PreviewCampaign = ({
                           </div>
                         )}
 
-                        {values.targetAudienceOption !== "mysogidb" && (
+                        {(values.targetAudienceOption === "manual" ||
+                          values.targetAudienceOption === "manual_import") &&
+                          values.channel !== "display_ads" && (
+                            <div className="mg-b-20 mg-md-b-10">
+                              <p className="tx-18 tx-com tx-semibold mb-0">
+                                Pricing
+                              </p>
+                              <div className="form-group mg-t-15">
+                                <label
+                                  htmlFor
+                                  className="tx-14 tx-gray mb-1 tx-medium"
+                                >
+                                  Potential Audience Based on Manual Input
+                                </label>
+                                <p className="tx-18 tx-com tx-bold mb-0">
+                                  {audience}{" "}
+                                  <span className="tx-14 tx-gray tx-medium">
+                                    number(s) loaded
+                                  </span>
+                                </p>
+                                {/* <div className="form-group col-md-3">
+                                  <p className="tx-18 tx-com tx-bold mb-0">
+                                    {audience}
+                                  </p>
+                                  <span className="badge badge-pink  tx-18 mg-5 tx-amt w-100 mt-0">
+                                    {" "}
+                                    <NumberFormat
+                                      value={values.price}
+                                      displayType={"text"}
+                                      thousandSeparator={true}
+                                      prefix={"₦"}
+                                    />
+                                  </span>
+                                </div> */}
+                              </div>
+                              <div className="form-row mg-t-15 pd-x-0">
+                                {/* <div className="form-group col-md-9">
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Enter your target audience number to get price"
+                                  />
+                                </div> */}
+                                <div className=" col-md-2 d-flex align-items-center">
+                                  <p className="tx-18 tx-com tx-bold mb-0">
+                                    Amount:
+                                  </p>{" "}
+                                  <NumberFormat
+                                    className="badge tx-green tx-bold tx-18 mg-0 tx-amt w-100 mt-0"
+                                    value={parseInt(price)}
+                                    displayType={"text"}
+                                    thousandSeparator={true}
+                                    prefix={"₦"}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        {values.channel === "display_ads" && (
                           <div className="mg-b-20 mg-md-b-10">
                             <p className="tx-18 tx-com tx-semibold mb-0">
-                              Pricing
+                              Reach
                             </p>
                             <div className="form-group mg-t-15">
                               <label
                                 htmlFor
                                 className="tx-14 tx-gray mb-1 tx-medium"
                               >
-                                Potential Audience Based on Manual Input
+                                Potential Reach Based on Budget
                               </label>
                               <p className="tx-18 tx-com tx-bold mb-0">
                                 {audience}{" "}
                                 <span className="tx-14 tx-gray tx-medium">
-                                  number(s) loaded
+                                  Total Reach
                                 </span>
                               </p>
                               {/* <div className="form-group col-md-3">
-                                                            <p className="tx-18 tx-com tx-bold mb-0">{audience}</p>
-                                                            <span className="badge badge-pink  tx-18 mg-5 tx-amt w-100 mt-0">
-                                                                {" "}
-                                                                <NumberFormat value={values.price} displayType={'text'} thousandSeparator={true} prefix={'₦'} />
-                                                            </span>
-                                                        </div> */}
+                                <p className="tx-18 tx-com tx-bold mb-0">
+                                  {audience}
+                                </p>
+                                <span className="badge badge-pink  tx-18 mg-5 tx-amt w-100 mt-0">
+                                  {" "}
+                                  <NumberFormat
+                                    value={values.price}
+                                    displayType={"text"}
+                                    thousandSeparator={true}
+                                    prefix={"₦"}
+                                  />
+                                </span>
+                              </div> */}
                             </div>
                             <div className="form-row mg-t-15 pd-x-0">
                               {/* <div className="form-group col-md-9">
-                                                            <input
-                                                                type="text"
-                                                                className="form-control"
-                                                                placeholder="Enter your target audience number to get price"
-                                                            />
-                                                        </div> */}
-                              <div className=" col-md-2 d-flex">
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="Enter your target audience number to get price"
+                                />
+                              </div> */}
+                              <div className=" col-md-2 d-flex align-items-center">
                                 <p className="tx-18 tx-com tx-bold mb-0">
-                                  Amount:
+                                  Budget:
                                 </p>{" "}
                                 <NumberFormat
-                                  className="badge tx-green tx-bold tx-18 mg-5 tx-amt w-100 mt-0"
+                                  className="badge tx-green tx-bold tx-18 mg-0 tx-amt w-100 mt-0"
                                   value={parseInt(price)}
                                   displayType={"text"}
                                   thousandSeparator={true}
@@ -477,7 +554,8 @@ const PreviewCampaign = ({
                           <div className="mg-t-20 d-flex">
                             {parseInt(wallet.balance) < price ||
                             parseInt(wallet.balance) <
-                              filteredContactList.count ? (
+                              filteredContactList.count ||
+                            parseInt(wallet.balance) < values.budget ? (
                               <button
                                 className="btn btn-primary w-100 tx-com mg-r-15"
                                 onClick={Continue}
@@ -518,7 +596,7 @@ const PreviewCampaign = ({
                         {values.assetType === "image" ? (
                           <div>
                             <img
-                              src={attachmentPreview}
+                              src={values.attachment}
                               className="img-fluid mg-b-10"
                               alt=""
                             />
@@ -542,24 +620,27 @@ const PreviewCampaign = ({
                               </button>
                             </div>
                           )}
-                          {/* {values.callToAction === "" || values.phoneNumber === "" ? null :
-                                                        <button className="btn btn-primary w-100 mg-b-15 round-5">
-                                                            <i className="fa fa-phone mg-r-5" />
-                                                            {values.callToAction} via Mobile
-                                                        </button>
-                                                    }
-                                                    {values.callToAction === "" || values.ussd === "" ? null :
-                                                        <button className="btn btn-primary w-100 mg-b-15 round-5">
-                                                            <i className="fa fa-phone mg-r-5" />
-                                                            {values.callToAction} USSD
-                                                        </button>
-                                                    }
-                                                    {values.callToAction === "" || values.smsNumber === "" ? null :
-                                                        <button className="btn btn-primary w-100 mg-b-15 round-5">
-                                                            <i className="fa fa-comment mg-r-10"> </i>
-                                                            {values.callToAction} via Text
-                                                        </button>
-                                                    } */}
+                          {/* {values.callToAction === "" ||
+                          values.phoneNumber === "" ? null : (
+                            <button className="btn btn-primary w-100 mg-b-15 round-5">
+                              <i className="fa fa-phone mg-r-5" />
+                              {values.callToAction} via Mobile
+                            </button>
+                          )}
+                          {values.callToAction === "" ||
+                          values.ussd === "" ? null : (
+                            <button className="btn btn-primary w-100 mg-b-15 round-5">
+                              <i className="fa fa-phone mg-r-5" />
+                              {values.callToAction} USSD
+                            </button>
+                          )}
+                          {values.callToAction === "" ||
+                          values.smsNumber === "" ? null : (
+                            <button className="btn btn-primary w-100 mg-b-15 round-5">
+                              <i className="fa fa-comment mg-r-10"> </i>
+                              {values.callToAction} via Text
+                            </button>
+                          )} */}
                         </div>
                       </div>
                     </div>

@@ -3,6 +3,7 @@ import FlierVideoCampaign from "./FlierVideoCampaign";
 import TargetAudience from "./TargetAudience";
 import PreviewCampaign from "./PreviewCampaign";
 import FundWalletFlierVideo from "./FundWalletFlierVideo";
+import axios from "axios";
 // import { useDropzone } from "react-dropzone";
 
 // const buttonRef = React.createRef();
@@ -33,10 +34,13 @@ export default class FlierVideoStepForm extends Component {
     campaignType: "flier_video",
     targetAudienceOption: "manual",
     assetType: "image",
-    imageUrl: "",
+    imageUrl: null,
+    imageAlt: "",
+    uploadPercentage: 0,
     videoUrl: "",
     price: 0,
     limit: "",
+    budget: 10000,
     // csvFile: "",
     // csvArray: "",
 
@@ -47,7 +51,7 @@ export default class FlierVideoStepForm extends Component {
     deviceType: "LG",
     deviceBrand: "X210ZM",
 
-    selectedFileName: "Click to upload desired asset (if needed)",
+    selectedFileName: "Upload Asset *png, *jpg, *gif",
 
     parsedCsvData: [],
   };
@@ -98,30 +102,51 @@ export default class FlierVideoStepForm extends Component {
 
   // };
 
-  handleImageUpload = async () => {
-    const { files } = document.querySelector('input[type="file"]');
+  handleImageUpload = async (e) => {
+    // console.log(e);
+    let files = e.target.files[0];
+    // console.log(files);
     const formData = new FormData();
-    formData.append("file", files[0]);
-    // replace this with your upload preset name
+    formData.append("file", files);
     formData.append("upload_preset", "mysogi");
+
     const options = {
-      method: "POST",
-      // mode: "no-cors",
-      body: formData,
+      onUploadProgress: (progressEvent) => {
+        const { loaded, total } = progressEvent;
+        let percent = Math.floor((loaded * 100) / total);
+        // console.log(`${loaded}kb of ${total}kb | ${percent}%`);
+
+        if (percent < 100) {
+          this.setState({ uploadPercentage: percent });
+        }
+      },
     };
 
     try {
-      const res = await fetch(
-        "https://api.Cloudinary.com/v1_1/mysogi/image/upload",
-        options
-      );
-      const res_1 = await res.json();
-      this.setState({
-        imageUrl: res_1.secure_url,
-        imageAlt: `An image of ${res_1.original_filename}`,
-      });
+      await axios
+        .post(
+          "https://api.Cloudinary.com/v1_1/mysogi/image/upload",
+          formData,
+          options
+        )
+        .then((res) => {
+          // console.log(res);
+          this.setState(
+            {
+              imageUrl: res.data.secure_url,
+              uploadPercentage: 100,
+              selectedFileName: files.name,
+              imageAlt: `An image of ${res.original_filename}`,
+            },
+            () => {
+              setTimeout(() => {
+                this.setState({ uploadPercentage: 0 });
+              }, 1000);
+            }
+          );
+        });
     } catch (err) {
-      return console.log(err);
+      // return console.log(err);
     }
   };
 
@@ -203,6 +228,7 @@ export default class FlierVideoStepForm extends Component {
       targetAudienceOption,
       numbers,
       limit,
+      budget,
 
       ageRange,
       gender,
@@ -215,6 +241,7 @@ export default class FlierVideoStepForm extends Component {
       parsedCsvData,
       assetType,
       selectedFileName,
+      uploadPercentage,
     } = this.state;
 
     /////////////////////////////
@@ -238,6 +265,14 @@ export default class FlierVideoStepForm extends Component {
       }
     };
 
+    const setAudience = () => {
+      if (channel === "display_ads") {
+        return (targetAudience = budget / 5);
+      } else {
+        return getAudience().length;
+      }
+    };
+
     let attachment = "";
 
     const setAssets = () => {
@@ -252,7 +287,7 @@ export default class FlierVideoStepForm extends Component {
 
     // const location = state;
     // const targetAudience = numbers.split(",");
-    const audience = getAudience().length;
+    const audience = setAudience();
     const price = audience * 5;
     const timeRange = timeRangeFrom + " - " + timeRangeTo;
     // const attachment = attachmentPreview
@@ -286,6 +321,7 @@ export default class FlierVideoStepForm extends Component {
       filterParameters,
       csvArray,
       limit,
+      budget,
       assetType,
     };
 
@@ -302,6 +338,7 @@ export default class FlierVideoStepForm extends Component {
             attachmentPreview={attachmentPreview}
             handleImageUpload={this.handleImageUpload}
             selectedFileName={selectedFileName}
+            uploadPercentage={uploadPercentage}
           />
         );
       case 2:

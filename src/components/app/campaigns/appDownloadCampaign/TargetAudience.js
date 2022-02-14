@@ -29,10 +29,10 @@ const TargetAudience = ({
     (state) => state.filteredContactList || []
   );
 
-  const [status, setStatus] = useState(3);
-  const radioHandler = (status) => {
-    setStatus(status);
-  };
+  // const [status, setStatus] = useState(3);
+  // const radioHandler = (status) => {
+  //   setStatus(status);
+  // };
 
   const selectGenders = [
     {
@@ -152,251 +152,286 @@ const TargetAudience = ({
             <div className="pd-md-y-20">
               <div className>
                 <form>
-                  <div>
-                    <p className="tx-22 tx-com tx-bold mb-1">
-                      Select Target Audience
-                    </p>
-                    <p className="tx-14 tx-blac">
-                      Let’s narrow down your target audience to help boost sales
-                    </p>
-                    <div className="form-group">
-                      <div className="custom-control custom-radio">
-                        <input
-                          type="radio"
-                          id="db"
-                          name="customRadio"
-                          className="custom-control-input"
-                          defaultChecked
-                          checked={status === 1}
-                          onClick={(e) => radioHandler(1)}
-                          value={"mysogidb"}
-                          onChange={handleChange("targetAudienceOption")}
-                        />
-                        <label className="custom-control-label" htmlFor="db">
-                          Use Mysogi Database
-                        </label>
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <div className="custom-control custom-radio">
-                        <input
-                          type="radio"
-                          id="import"
-                          name="customRadio"
-                          className="custom-control-input"
-                          checked={status === 2}
-                          onClick={(e) => radioHandler(2)}
-                          value={"manual_import"}
-                          onChange={handleChange("targetAudienceOption")}
-                        />
-                        <label
-                          className="custom-control-label"
-                          htmlFor="import"
-                        >
-                          Import my own database
-                        </label>
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <div className="custom-control custom-radio">
-                        <input
-                          type="radio"
-                          id="manual"
-                          name="customRadio"
-                          className="custom-control-input"
-                          checked={status === 3}
-                          onClick={(e) => radioHandler(3)}
-                          defaultValue={"manual"}
-                          onChange={handleChange("targetAudienceOption")}
-                        />
-                        <label
-                          className="custom-control-label"
-                          htmlFor="manual"
-                        >
-                          Enter Contacts Manually
-                        </label>
-                      </div>
-                    </div>
-                    {status === 1 && (
-                      <div id="show_1">
-                        <div className="row justify-content-md-between">
-                          <div className="form-group col-md-6">
-                            <label
-                              htmlFor
-                              className="mb-1 tx-com d-flex align-items-center"
-                            >
-                              Age Group
-                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
-                            </label>
-                            <select
-                              className="form-control"
-                              defaultValue={filterOptions.ageRange}
-                              onChange={handleChange("ageRange")}
-                            >
-                              {selectAgeRanges.map((selectAgeRange) => (
-                                <option value={selectAgeRange.value}>
-                                  {selectAgeRange.label}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                          <div className="form-group col-md-6">
-                            <label
-                              htmlFor
-                              className="mb-1 tx-com d-flex align-items-center"
-                            >
-                              Gender
-                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
-                            </label>
-                            <select
-                              className="form-control"
-                              defaultValue={filterOptions.gender}
-                              onChange={handleChange("gender")}
-                            >
-                              {selectGenders.map((selectGender) => (
-                                <option value={selectGender.value}>
-                                  {selectGender.label}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                          <div className="form-group col-md-6">
-                            <label
-                              htmlFor
-                              className="mb-1 tx-com d-flex align-items-center"
-                            >
-                              State
-                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
-                            </label>
-                            <select
-                              className="custom-select"
-                              defaultValue={filterOptions.state}
-                              onChange={handleChange("state")}
-                            >
-                              {NaijaStates.states().map((selectState) => (
-                                <option value={selectState}>
-                                  {selectState}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                          <div className="form-group col-md-6">
-                            <label
-                              htmlFor
-                              className="mb-1 tx-com d-flex align-items-center"
-                            >
-                              LGA
-                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
-                            </label>
-                            <select
-                              className="custom-select"
-                              defaultValue={filterOptions.lga}
-                              onChange={handleChange("lga")}
-                            >
-                              <option value="">Select L.G.A</option>
-                              {lga.lgas.map((selectLga) => (
-                                <option value={selectLga}>{selectLga}</option>
-                              ))}
-                            </select>
-                          </div>
-                          <div className="form-group col-md-6">
-                            <label htmlFor className="mb-1 tx-com">
-                              ARPU Band
-                            </label>
-                            <select id="band" className="form-control">
-                              <option value />
-                              <option value="m">0-1000</option>
-                              <option value="f">1001-5000</option>
-                              <option value="b">5001-10000</option>
-                            </select>
-                          </div>
-                          <div className="form-group col-md-6">
-                            <label htmlFor className="mb-1 tx-com">
-                              Interest
-                            </label>
-                            <select className="custom-select">
-                              <option selected>Select Interest</option>
-                              <option value={1}>Music</option>
-                              <option value={2}>Comedy</option>
-                            </select>
-                          </div>
-                          <div className="form-group col-md-6">
-                            <label htmlFor className="mb-1 tx-com">
-                              Device Type
-                            </label>
-                            <select className="custom-select">
-                              <option selected>
-                                Select the kind of device
-                              </option>
-                              <option value={1}>Android</option>
-                              <option value={2}>IOS</option>
-                            </select>
-                          </div>
-                          <div className="form-group col-md-6">
-                            <label htmlFor className="mb-1 tx-com">
-                              Device Brand
-                            </label>
-                            <select className="custom-select">
-                              <option selected>Select Device Brand</option>
-                              <option value={1}>Nokia</option>
-                              <option value={2}>Iphone</option>
-                            </select>
-                          </div>
+                  {values.channel === "display_ads" ? (
+                    <div>
+                      <p className="tx-22 tx-com tx-bold mb-1">
+                        Select Campaign Budget
+                      </p>
+                      <p className="tx-14 tx-blac">
+                        Minimum amount to spend is ₦10,000
+                      </p>
+                      <div className="row justify-content-md-between">
+                        <div className="form-group col-md-6">
+                          <label
+                            htmlFor
+                            className="mb-1 tx-com d-flex align-items-center"
+                          >
+                            Budget
+                            <i className="tx-6 fa fa-star tx-primary mg-l-2" />
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Enter Amount to Spend"
+                            defaultValue={values.budget}
+                            onChange={handleChange("budget")}
+                          />
+                          {values.budget < 10000 && (
+                            <p className="text-danger p-0 m-0 mt-2">
+                              insufficient budget
+                            </p>
+                          )}
                         </div>
                       </div>
-                    )}
-                    {status === 2 && (
-                      <div className="hide" id="show_2">
-                        <div className="row justify-content-md-between">
-                          <div className="form-group col-md-6">
-                            <label htmlFor className="mb-1 tx-com">
-                              Upload CSV Containing Phone Numbers
-                            </label>
-                            <div className="form-group">
-                              <div
-                                {...getRootProps({
-                                  className: `dropzone 
+                    </div>
+                  ) : (
+                    <div>
+                      <p className="tx-22 tx-com tx-bold mb-1">
+                        Select Target Audience
+                      </p>
+                      <p className="tx-14 tx-blac">
+                        Let’s narrow down your target audience to help boost
+                        sales
+                      </p>
+                      <div className="form-group">
+                        <div className="custom-control custom-radio">
+                          <input
+                            type="radio"
+                            id="db"
+                            name="customRadio"
+                            className="custom-control-input"
+                            // defaultChecked
+                            checked={values.targetAudienceOption === "mysogidb"}
+                            // onClick={(e) => radioHandler(1)}
+                            value={"mysogidb"}
+                            onChange={handleChange("targetAudienceOption")}
+                          />
+                          <label className="custom-control-label" htmlFor="db">
+                            Use Mysogi Database
+                          </label>
+                        </div>
+                      </div>
+                      <div className="form-group">
+                        <div className="custom-control custom-radio">
+                          <input
+                            type="radio"
+                            id="import"
+                            name="customRadio"
+                            className="custom-control-input"
+                            checked={
+                              values.targetAudienceOption === "manual_import"
+                            }
+                            // onClick={(e) => radioHandler(2)}
+                            value={"manual_import"}
+                            onChange={handleChange("targetAudienceOption")}
+                          />
+                          <label
+                            className="custom-control-label"
+                            htmlFor="import"
+                          >
+                            Import My Own Database
+                          </label>
+                        </div>
+                      </div>
+                      <div className="form-group">
+                        <div className="custom-control custom-radio">
+                          <input
+                            type="radio"
+                            id="manual"
+                            name="customRadio"
+                            className="custom-control-input"
+                            checked={values.targetAudienceOption === "manual"}
+                            // onClick={(e) => radioHandler(3)}
+                            defaultValue={"manual"}
+                            onChange={handleChange("targetAudienceOption")}
+                          />
+                          <label
+                            className="custom-control-label"
+                            htmlFor="manual"
+                          >
+                            Enter Contacts Manually
+                          </label>
+                        </div>
+                      </div>
+                      {values.targetAudienceOption === "mysogidb" && (
+                        <div id="show_1">
+                          <div className="row justify-content-md-between">
+                            <div className="form-group col-md-6">
+                              <label
+                                // htmlFor
+                                className="mb-1 tx-com d-flex align-items-center"
+                              >
+                                Age Group
+                                <i className="tx-6 fa fa-star tx-primary mg-l-2" />
+                              </label>
+                              <select
+                                className="form-control"
+                                defaultValue={filterOptions.ageRange}
+                                onChange={handleChange("ageRange")}
+                              >
+                                {selectAgeRanges.map((selectAgeRange, i) => (
+                                  <option value={selectAgeRange.value} key={i}>
+                                    {selectAgeRange.label}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                            <div className="form-group col-md-6">
+                              <label
+                                // htmlFor
+                                className="mb-1 tx-com d-flex align-items-center"
+                              >
+                                Gender
+                                <i className="tx-6 fa fa-star tx-primary mg-l-2" />
+                              </label>
+                              <select
+                                className="form-control"
+                                defaultValue={filterOptions.gender}
+                                onChange={handleChange("gender")}
+                              >
+                                {selectGenders.map((selectGender, i) => (
+                                  <option value={selectGender.value} key={i}>
+                                    {selectGender.label}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                            <div className="form-group col-md-6">
+                              <label
+                                // htmlFor
+                                className="mb-1 tx-com d-flex align-items-center"
+                              >
+                                State
+                                <i className="tx-6 fa fa-star tx-primary mg-l-2" />
+                              </label>
+                              <select
+                                className="custom-select"
+                                defaultValue={filterOptions.state}
+                                onChange={handleChange("state")}
+                              >
+                                {NaijaStates.states().map((selectState, i) => (
+                                  <option value={selectState} key={i}>
+                                    {selectState}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                            <div className="form-group col-md-6">
+                              <label
+                                // htmlFor
+                                className="mb-1 tx-com d-flex align-items-center"
+                              >
+                                LGA
+                                <i className="tx-6 fa fa-star tx-primary mg-l-2" />
+                              </label>
+                              <select
+                                className="custom-select"
+                                defaultValue={filterOptions.lga}
+                                onChange={handleChange("lga")}
+                              >
+                                <option value="">Select L.G.A</option>
+                                {lga.lgas.map((selectLga, i) => (
+                                  <option value={selectLga} key={i}>
+                                    {selectLga}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                            <div className="form-group col-md-6">
+                              <label className="mb-1 tx-com">ARPU Band</label>
+                              <select id="band" className="form-control">
+                                <option value />
+                                <option value="m">0-1000</option>
+                                <option value="f">1001-5000</option>
+                                <option value="b">5001-10000</option>
+                              </select>
+                            </div>
+                            <div className="form-group col-md-6">
+                              <label htmlFor className="mb-1 tx-com">
+                                Interest
+                              </label>
+                              <select className="custom-select">
+                                <option selected>Select Interest</option>
+                                <option value={1}>Music</option>
+                                <option value={2}>Comedy</option>
+                              </select>
+                            </div>
+                            <div className="form-group col-md-6">
+                              <label className="mb-1 tx-com">Device Type</label>
+                              <select className="custom-select">
+                                <option selected>
+                                  Select the kind of device
+                                </option>
+                                <option value={1}>Android</option>
+                                <option value={2}>IOS</option>
+                              </select>
+                            </div>
+                            <div className="form-group col-md-6">
+                              <label className="mb-1 tx-com">
+                                Device Brand
+                              </label>
+                              <select className="custom-select">
+                                <option selected>Select Device Brand</option>
+                                <option value={1}>Nokia</option>
+                                <option value={2}>Iphone</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      {values.targetAudienceOption === "manual_import" && (
+                        <div className="hide" id="show_2">
+                          <div className="row justify-content-md-between">
+                            <div className="form-group col-md-6">
+                              <label htmlFor className="mb-1 tx-com">
+                                Upload CSV Containing Phone Numbers
+                              </label>
+                              <div className="form-group">
+                                <div
+                                  {...getRootProps({
+                                    className: `dropzone 
                                   ${isDragAccept && "dropzoneAccept"} 
                                   ${isDragReject && "dropzoneReject"}`,
-                                })}
-                              >
-                                <input {...getInputProps()} />
-                                {isDragActive ? (
-                                  <p>Drop the files here ...</p>
-                                ) : (
-                                  <p>
-                                    Drag 'n' drop some files here, or click to
-                                    select files
-                                  </p>
-                                )}
+                                  })}
+                                >
+                                  <input {...getInputProps()} />
+                                  {isDragActive ? (
+                                    <p>Drop the files here ...</p>
+                                  ) : (
+                                    <p>
+                                      Drag 'n' drop some files here, or click to
+                                      select files
+                                    </p>
+                                  )}
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    )}
-                    {status === 3 && (
-                      <div className="hide" id="show_3">
-                        <div className="row justify-content-md-between">
-                          <div className="form-group col-md-6">
-                            <label htmlFor className="mb-1 tx-com">
-                              Enter Number (you can separate your contact with
-                              comma (,)
-                            </label>
-                            <textarea
-                              name
-                              className="form-control"
-                              id
-                              rows={4}
-                              onChange={handleChange("numbers")}
-                              placeholder="Enter Number(s) +234080xxxxxxxx, +234080xxxxxxxx"
-                              defaultValue={numbers}
-                            />
+                      )}
+                      {values.targetAudienceOption === "manual" && (
+                        <div className="hide" id="show_3">
+                          <div className="row justify-content-md-between">
+                            <div className="form-group col-md-6">
+                              <label htmlFor className="mb-1 tx-com">
+                                Enter Number (you can separate your contact with
+                                comma (,)
+                              </label>
+                              <textarea
+                                name
+                                className="form-control"
+                                id
+                                rows={4}
+                                onChange={handleChange("numbers")}
+                                placeholder="Enter Number(s) +234080xxxxxxxx, +234080xxxxxxxx"
+                                defaultValue={numbers}
+                              />
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    )}
-                  </div>
+                      )}
+                    </div>
+                  )}
                 </form>
                 <div className="col-md-5 pd-x-0 mg-y-40">
                   <div className="d-flex">
@@ -405,11 +440,7 @@ const TargetAudience = ({
                       onClick={Continue}
                       type="submit"
                       variant="contained"
-                      // disabled={
-                      //   numbers === "" && filterOptions.gender === ""
-                      //     ? true
-                      //     : false
-                      // }
+                      disabled={values.budget < 10000 ? true : false}
                     >
                       Filter
                     </button>

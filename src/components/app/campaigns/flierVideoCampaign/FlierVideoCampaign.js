@@ -8,6 +8,7 @@ import { getSenderID } from "../../../../actions/senderIDActions";
 import MetaData from "../../../layout/MetaData";
 import Loader from "../../../loader";
 import MediaPlayer from "../../../../_helpers/reactPlayer/ReactPlayer";
+import { ProgressBar } from "react-bootstrap";
 
 const FlierVideoCampaign = ({
   nextStep,
@@ -17,6 +18,7 @@ const FlierVideoCampaign = ({
   attachmentPreview,
   handleImageUpload,
   selectedFileName,
+  uploadPercentage,
 }) => {
   const alert = useAlert();
   const dispatch = useDispatch();
@@ -26,10 +28,10 @@ const FlierVideoCampaign = ({
   const [showSms, setShowSms] = useState(false);
   const [showUssd, setShowUssd] = useState(false);
 
-  const [assetType, setAssetType] = useState("image");
-  const assetTypeHandler = (asset) => {
-    setAssetType(asset);
-  };
+  // const [assetType, setAssetType] = useState("image");
+  // const assetTypeHandler = (asset) => {
+  //   setAssetType(asset);
+  // };
 
   const Continue = (e) => {
     e.preventDefault();
@@ -39,7 +41,7 @@ const FlierVideoCampaign = ({
       alert.error("Choose a channel");
     } else if (values.campaignMessage === "") {
       alert.error("Create the campaign message");
-    } else if (values.assetType === "image") {
+    } else if (values.assetType === "image" && values.attachment === null) {
       nextStep();
       handleImageUpload();
     } else {
@@ -175,33 +177,44 @@ const FlierVideoCampaign = ({
                             <label htmlFor className="mb-1">
                               Phone Number
                             </label>
-                            <input
-                              type="number"
-                              className="form-control"
-                              placeholder="Enter customer care number customers can reach you on"
-                              defaultValue={values.phoneNumber}
-                              onChange={handleChange("phoneNumber")}
-                            />
-                            <button onClick={handleAddClick}>Add</button>
+                            <div className="d-flex">
+                              <input
+                                type="number"
+                                className="form-control"
+                                placeholder="Enter customer care number customers can reach you on"
+                                defaultValue={values.phoneNumber}
+                                onChange={handleChange("phoneNumber")}
+                              />
+                              {/* <button onClick={handleAddClick}>Add</button> */}
+                              <button
+                                class="btn btn-success ml-2 col-md-3 text-center"
+                                onClick={handleAddClick}
+                              >
+                                More Options
+                                {/* <i class="fa fa-plus"></i> */}
+                              </button>
+                            </div>
                           </div>
                           {showWhatsapp && (
                             <div className="form-group">
                               <label htmlFor className="mb-1">
                                 WhatsApp Number
                               </label>
-                              <input
-                                type="number"
-                                className="form-control"
-                                placeholder="WhatsApp Number"
-                                defaultValue={values.whatsAppNumber}
-                                onChange={handleChange("whatsAppNumber")}
-                              />
-                              <button
-                                className="mr10"
-                                onClick={handleRemoveClick("whatsapp")}
-                              >
-                                Remove
-                              </button>
+                              <div className="d-flex">
+                                <input
+                                  type="number"
+                                  className="form-control"
+                                  placeholder="WhatsApp Number"
+                                  defaultValue={values.whatsAppNumber}
+                                  onChange={handleChange("whatsAppNumber")}
+                                />
+                                <button
+                                  class="btn btn-danger ml-2"
+                                  onClick={handleRemoveClick("whatsapp")}
+                                >
+                                  <i class="fa fa-trash"></i>
+                                </button>
+                              </div>
                             </div>
                           )}
                           {showUssd && (
@@ -209,19 +222,21 @@ const FlierVideoCampaign = ({
                               <label htmlFor className="mb-1">
                                 USSD
                               </label>
-                              <input
-                                type="number"
-                                className="form-control"
-                                placeholder="Enter preferred code"
-                                defaultValue={values.ussd}
-                                onChange={handleChange("ussd")}
-                              />
-                              <button
-                                className="mr10"
-                                onClick={handleRemoveClick("showUssd")}
-                              >
-                                Remove
-                              </button>
+                              <div className="d-flex">
+                                <input
+                                  type="number"
+                                  className="form-control"
+                                  placeholder="Enter preferred code"
+                                  defaultValue={values.ussd}
+                                  onChange={handleChange("ussd")}
+                                />
+                                <button
+                                  class="btn btn-danger ml-2"
+                                  onClick={handleRemoveClick("showUssd")}
+                                >
+                                  <i class="fa fa-trash"></i>
+                                </button>
+                              </div>
                             </div>
                           )}
                           {showSms && (
@@ -229,19 +244,21 @@ const FlierVideoCampaign = ({
                               <label htmlFor className="mb-1">
                                 SMS Number
                               </label>
-                              <input
-                                type="number"
-                                className="form-control"
-                                placeholder="Enter number you want to be texted on by your customers"
-                                defaultValue={values.smsNumber}
-                                onChange={handleChange("smsNumber")}
-                              />
-                              <button
-                                className="mr10"
-                                onClick={handleRemoveClick("showSms")}
-                              >
-                                Remove
-                              </button>
+                              <div className="d-flex">
+                                <input
+                                  type="number"
+                                  className="form-control"
+                                  placeholder="Enter number you want to be texted on by your customers"
+                                  defaultValue={values.smsNumber}
+                                  onChange={handleChange("smsNumber")}
+                                />
+                                <button
+                                  class="btn btn-danger ml-2"
+                                  onClick={handleRemoveClick("showSms")}
+                                >
+                                  <i class="fa fa-trash"></i>
+                                </button>
+                              </div>
                             </div>
                           )}
                           <div className="form-group">
@@ -280,9 +297,7 @@ const FlierVideoCampaign = ({
                               <label htmlFor className />
                               <div className="input-group mg-b-10 mg-t-5">
                                 <div className="input-group-prepend">
-                                  <span className="input-group-text" id>
-                                    To
-                                  </span>
+                                  <span className="input-group-text">To</span>
                                 </div>
                                 <input
                                   type="date"
@@ -320,8 +335,8 @@ const FlierVideoCampaign = ({
                                 id="image"
                                 name="customRadio"
                                 className="custom-control-input"
-                                checked={assetType === "image"}
-                                onClick={(e) => assetTypeHandler("image")}
+                                checked={values.assetType === "image"}
+                                // onClick={(e) => assetTypeHandler("image")}
                                 value={"image"}
                                 onChange={handleChange("assetType")}
                               />
@@ -340,8 +355,8 @@ const FlierVideoCampaign = ({
                                 id="video"
                                 name="customRadio"
                                 className="custom-control-input"
-                                checked={assetType === "video"}
-                                onClick={(e) => assetTypeHandler("video")}
+                                checked={values.assetType === "video"}
+                                // onClick={(e) => assetTypeHandler("video")}
                                 value={"video"}
                                 onChange={handleChange("assetType")}
                               />
@@ -353,16 +368,20 @@ const FlierVideoCampaign = ({
                               </label>
                             </div>
                           </div>
-                          {assetType === "image" && (
+                          {values.assetType === "image" && (
                             <div className="form-group">
                               <div className="custom-file">
                                 <input
                                   type="file"
                                   name="file"
+                                  accept="image/png, image/jpeg, image/gif, image/jpg"
                                   className="custom-file-input"
                                   id="customFile"
                                   // defaultValue={values.attachment}
-                                  onChange={onChangeAttachment("uploadedImage")}
+                                  onChange={
+                                    // (onChangeAttachment("uploadedImage"),
+                                    handleImageUpload
+                                  }
                                 />
                                 <label
                                   className="custom-file-label"
@@ -370,10 +389,24 @@ const FlierVideoCampaign = ({
                                 >
                                   {selectedFileName}
                                 </label>
+                                {uploadPercentage > 0 && (
+                                  <span className="mt-2">
+                                    <ProgressBar
+                                      now={uploadPercentage}
+                                      // active
+                                      label={`${uploadPercentage}%`}
+                                    />
+                                  </span>
+                                )}
+                                {/* <ProgressBar
+                                  now={uploadPercentage}
+                                  // active
+                                  label={`${uploadPercentage}%`}
+                                /> */}
                               </div>
                             </div>
                           )}
-                          {assetType === "video" && (
+                          {values.assetType === "video" && (
                             <div className="form-group">
                               <div className="custom-file">
                                 <label htmlFor className="mb-1">
@@ -399,6 +432,12 @@ const FlierVideoCampaign = ({
                             onClick={Continue}
                             type="submit"
                             variant="contained"
+                            disabled={
+                              uploadPercentage !== 100 &&
+                              values.attachment === null
+                                ? true
+                                : false
+                            }
                           >
                             Proceed
                           </button>
@@ -415,10 +454,10 @@ const FlierVideoCampaign = ({
                   <div className="col-md-5 col-12 mg-t-20">
                     <div className="card shadow-sm rounded bd-0">
                       <div className="card-body">
-                        {assetType === "image" ? (
+                        {values.assetType === "image" ? (
                           <div>
                             <img
-                              src={attachmentPreview}
+                              src={values.attachment}
                               className="img-fluid mg-b-10"
                               alt=""
                             />

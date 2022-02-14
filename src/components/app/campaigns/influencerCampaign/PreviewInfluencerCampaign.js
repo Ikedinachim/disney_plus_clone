@@ -22,7 +22,7 @@ const PreviewInfluencerCampaign = ({
   prevStep,
   values,
   audience,
-  attachmentPreview,
+  attachment,
   checkedInfluencers,
   price,
   handlePrice,
@@ -101,6 +101,8 @@ const PreviewInfluencerCampaign = ({
   }, [dispatch, alert, error, createInfluencerCampaign, navigate]);
 
   const filteredValue = checkedInfluencers;
+
+  console.log(filteredValue?.map((platform) => platform));
 
   // const total = filteredValue.reduce(
   //   (accumulator, platform, currentIndex, array) => {
@@ -264,11 +266,7 @@ const PreviewInfluencerCampaign = ({
                       <div className="col-md-3">
                         <p className="tx-18 mb-0 tx-bold tx-com">Preview</p>
                         <div>
-                          <img
-                            src={attachmentPreview}
-                            className="img-fluid"
-                            alt=""
-                          />
+                          <img src={attachment} className="img-fluid" alt="" />
                         </div>
                       </div>
                     </div>
@@ -286,7 +284,7 @@ const PreviewInfluencerCampaign = ({
                           <th scope="col" className="tx-right">
                             Total Amount
                           </th>
-                          <th />
+                          {/* <th /> */}
                         </tr>
                       </thead>
                       <tbody>
@@ -343,14 +341,14 @@ const PreviewInfluencerCampaign = ({
                               }
                             </td>
                             {/* < */}
-                            <td>
+                            {/* <td>
                               <div className="d-flex pd-t-3">
                                 <div>
                                   <i className="fa fa-edit tx-primary mg-r-5 tx-semibold" />
                                 </div>
                                 <p className="mb-0">Edit</p>
                               </div>
-                            </td>
+                            </td> */}
                           </tr>
                         ))}
                       </tbody>

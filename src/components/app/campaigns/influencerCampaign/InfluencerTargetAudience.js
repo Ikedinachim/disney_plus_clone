@@ -3,16 +3,17 @@ import { useAlert } from "react-alert";
 // import { Link } from "react-router-dom";
 
 import MetaData from "../../../layout/MetaData";
+import { ProgressBar } from "react-bootstrap";
 
 const InfluencerTargetAudience = ({
   prevStep,
   nextStep,
   handleChange,
   onChangeAttachment,
-  numbers,
   handleImageUpload,
   values,
   selectedFileName,
+  uploadPercentage,
 }) => {
   const alert = useAlert();
   const [status, setStatus] = useState(3);
@@ -24,9 +25,11 @@ const InfluencerTargetAudience = ({
     e.preventDefault();
     if (values.campaignMessage === "") {
       alert.error("Create the campaign message");
-    } else {
+    } else if (values.attachment === null) {
       nextStep();
       handleImageUpload();
+    } else {
+      nextStep();
     }
   };
   const Previous = (e) => {
@@ -88,13 +91,22 @@ const InfluencerTargetAudience = ({
                         name="file"
                         className="custom-file-input"
                         id="customFile"
-                        onChange={onChangeAttachment("uploadedImage")}
+                        accept="image/png, image/jpeg, image/gif, image/jpg"
+                        onChange={handleImageUpload}
                         // placeholder="Click to upload desired icon (if needed)"
                       />
                       <label className="custom-file-label" htmlFor="customFile">
                         {selectedFileName}
                       </label>
-                      {/* <p>{selectedFileName}</p> */}
+                      {uploadPercentage > 0 && (
+                        <span className="mt-2">
+                          <ProgressBar
+                            now={uploadPercentage}
+                            // active
+                            label={`${uploadPercentage}%`}
+                          />
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -105,6 +117,11 @@ const InfluencerTargetAudience = ({
                       onClick={Continue}
                       type="submit"
                       variant="contained"
+                      disabled={
+                        uploadPercentage !== 100 && values.attachment === null
+                          ? true
+                          : false
+                      }
                     >
                       Proceed
                     </button>

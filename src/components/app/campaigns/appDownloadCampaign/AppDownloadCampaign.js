@@ -6,6 +6,7 @@ import { useAlert } from "react-alert";
 import { getSenderID } from "../../../../actions/senderIDActions";
 import Loader from "../../../loader";
 import MediaPlayer from "../../../../_helpers/reactPlayer/ReactPlayer";
+import { ProgressBar } from "react-bootstrap";
 
 import MetaData from "../../../layout/MetaData";
 
@@ -17,15 +18,16 @@ const SmsCampaign = ({
   handleImageUpload,
   attachmentPreview,
   selectedFileName,
+  uploadPercentage,
 }) => {
   const alert = useAlert();
   const dispatch = useDispatch();
   const { senderID, loading } = useSelector((state) => state.senderID || []);
 
-  const [assetType, setAssetType] = useState("image");
-  const assetTypeHandler = (asset) => {
-    setAssetType(asset);
-  };
+  // const [assetType, setAssetType] = useState("image");
+  // const assetTypeHandler = (asset) => {
+  //   setAssetType(asset);
+  // };
 
   const Continue = (e) => {
     e.preventDefault();
@@ -35,7 +37,7 @@ const SmsCampaign = ({
       alert.error("Choose a channel");
     } else if (values.campaignMessage === "") {
       alert.error("Create the campaign message");
-    } else if (values.assetType === "image") {
+    } else if (values.assetType === "image" && values.attachment === null) {
       nextStep();
       handleImageUpload();
     } else {
@@ -109,8 +111,8 @@ const SmsCampaign = ({
                               >
                                 <option value="">Select Sender ID</option>
                                 {senderID &&
-                                  senderID.map((senderids) => (
-                                    <option value={senderids.senderId}>
+                                  senderID.map((senderids, i) => (
+                                    <option value={senderids.senderId} key={i}>
                                       {senderids.senderId}
                                     </option>
                                   ))}
@@ -192,8 +194,8 @@ const SmsCampaign = ({
                                   id="image"
                                   name="customRadio"
                                   className="custom-control-input"
-                                  checked={assetType === "image"}
-                                  onClick={(e) => assetTypeHandler("image")}
+                                  checked={values.assetType === "image"}
+                                  // onClick={(e) => values.Handler("image")}
                                   value={"image"}
                                   onChange={handleChange("assetType")}
                                 />
@@ -212,8 +214,8 @@ const SmsCampaign = ({
                                   id="video"
                                   name="customRadio"
                                   className="custom-control-input"
-                                  checked={assetType === "video"}
-                                  onClick={(e) => assetTypeHandler("video")}
+                                  checked={values.assetType === "video"}
+                                  // onClick={(e) => assetTypeHandler("video")}
                                   value={"video"}
                                   onChange={handleChange("assetType")}
                                 />
@@ -225,17 +227,16 @@ const SmsCampaign = ({
                                 </label>
                               </div>
                             </div>
-                            {assetType === "image" && (
+                            {values.assetType === "image" && (
                               <div className="form-group">
                                 <div className="custom-file">
                                   <input
                                     type="file"
                                     name="file"
+                                    accept="image/png, image/jpeg, image/gif, image/jpg"
                                     className="custom-file-input"
                                     id="customFile"
-                                    onChange={onChangeAttachment(
-                                      "uploadedImage"
-                                    )}
+                                    onChange={handleImageUpload}
                                   />
                                   <label
                                     className="custom-file-label"
@@ -243,10 +244,19 @@ const SmsCampaign = ({
                                   >
                                     {selectedFileName}
                                   </label>
+                                  {uploadPercentage > 0 && (
+                                    <span className="mt-2">
+                                      <ProgressBar
+                                        now={uploadPercentage}
+                                        // active
+                                        label={`${uploadPercentage}%`}
+                                      />
+                                    </span>
+                                  )}
                                 </div>
                               </div>
                             )}
-                            {assetType === "video" && (
+                            {values.assetType === "video" && (
                               <div className="form-group">
                                 <div className="custom-file">
                                   <label htmlFor className="mb-1">
@@ -272,6 +282,12 @@ const SmsCampaign = ({
                               onClick={Continue}
                               type="submit"
                               variant="contained"
+                              disabled={
+                                uploadPercentage !== 100 &&
+                                values.attachment === null
+                                  ? true
+                                  : false
+                              }
                             >
                               Proceed
                             </button>
@@ -288,10 +304,10 @@ const SmsCampaign = ({
                     <div className="col-md-5 col-12 mg-t-20">
                       <div className="card shadow-sm rounded bd-0">
                         <div className="card-body">
-                          {assetType === "image" ? (
+                          {values.assetType === "image" ? (
                             <div>
                               <img
-                                src={attachmentPreview}
+                                src={values.attachment}
                                 className="img-fluid mg-b-10"
                                 alt=""
                               />
@@ -314,18 +330,20 @@ const SmsCampaign = ({
                               </button>
                             </div>
                           )}
-                          {/* {values.callToAction === "" || values.androidStoreUrl === "" || values.iosStoreUrl === "" ? null :
-                                                            <div className="pd-b-40">
-                                                                <button className="btn btn-primary w-100 mg-b-15 round-5">
-                                                                    Download
-                                                                </button>
-                                                            </div>
-                                                        } */}
-                          {/* <div className="pd-b-40">
-                                                            <button className="btn btn-primary w-100 mg-b-15 round-5">
-                                                                Download
-                                                            </button>
-                                                        </div> */}
+                          {/* {values.callToAction === "" ||
+                          values.androidStoreUrl === "" ||
+                          values.iosStoreUrl === "" ? null : (
+                            <div className="pd-b-40">
+                              <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                Download
+                              </button>
+                            </div>
+                          )}
+                          <div className="pd-b-40">
+                            <button className="btn btn-primary w-100 mg-b-15 round-5">
+                              Download
+                            </button>
+                          </div> */}
                         </div>
                       </div>
                     </div>
