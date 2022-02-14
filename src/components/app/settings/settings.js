@@ -126,11 +126,12 @@ const Settings = () => {
                   {show === false ? "Edit" : "Stop Editing"}
                 </div>
               </div>
-              <div className=" wdm-55 d-flex">
+              <div className=" wdm-55 d-flex ht-250">
                 <img
-                  src="../../../assets/img/baba.jpeg"
+                  src={imageUrl}
                   className="img-thumbnail w-25"
-                  alt=""
+                  alt="profile"
+                  onChange={handleChange}
                 />
                 <div className="custom-file">
                   <input

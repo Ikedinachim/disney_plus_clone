@@ -37,6 +37,9 @@ import {
   GET_SINGLE_CAMPAIGN_REQUEST,
   GET_SINGLE_CAMPAIGN_SUCCESS,
   GET_SINGLE_CAMPAIGN_FAIL,
+  GET_DIGITAL_CAMPAIGNS_REQUEST,
+  GET_DIGITAL_CAMPAIGNS_SUCCESS,
+  GET_DIGITAL_CAMPAIGNS_FAIL,
   GET_FILTERED_CONTACT_LIST_REQUEST,
   GET_FILTERED_CONTACT_LIST_SUCCESS,
   GET_FILTERED_CONTACT_LIST_FAIL,
@@ -636,6 +639,35 @@ export const getInfluencerDetailsReducer = (
         error: null,
       };
 
+    default:
+      return state;
+  }
+};
+
+export const getDigitalCampaignsReducer = (
+  state = { smsCampaigns: [] },
+  action
+) => {
+  switch (action.type) {
+    case GET_DIGITAL_CAMPAIGNS_REQUEST:
+      return {
+        loading: true,
+      };
+    case GET_DIGITAL_CAMPAIGNS_SUCCESS:
+      return {
+        loading: false,
+        digitalCampaigns: action.payload,
+      };
+    case GET_DIGITAL_CAMPAIGNS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
     default:
       return state;
   }

@@ -50,7 +50,7 @@
   box-sizing: border-box;
 }
 
-.clickable{
+.clickable {
   cursor: pointer;
 }
 html {
@@ -1737,7 +1737,7 @@ pre code {
   .table-responsive-sm > .table-bordered {
     border: 0;
   }
-  .display-content{
+  .display-content {
     display: contents !important;
   }
 
@@ -17424,14 +17424,13 @@ textarea.parsley-success:focus {
     line-height: normal;
   }
 
-  .billing-info{
+  .billing-info {
     text-align: center;
   }
 
-  .billing-info-bold{
+  .billing-info-bold {
     text-align: center;
     font-size: 26px !important;
-    
   }
 }
 .content-header .nav-link {

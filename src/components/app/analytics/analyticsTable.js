@@ -8,7 +8,7 @@ import { DateTime } from "luxon";
 import { MDBDataTable } from "mdbreact";
 import MetaData from "../../layout/MetaData";
 
-const AllCampaigns = () => {
+const AnalyticsTable = () => {
   const dispatch = useDispatch();
   const { loading, allCampaign } = useSelector(
     (state) => state.allCampaign || {}
@@ -54,7 +54,7 @@ const AllCampaigns = () => {
           sort: "asc",
         },
         {
-          label: "ACTIONS",
+          label: "",
           field: "actions",
           sort: "asc",
         },
@@ -104,15 +104,16 @@ const AllCampaigns = () => {
                 !campaign.isApproved ? "badge-pink" : "badge-active"
               }`}
             >
-              {!campaign.isApproved ? "Pending" : "Approved"}
+              {!campaign.isApproved ? "Closed" : "Open"}
             </span>
           ),
           actions: (
             <Fragment>
               <div class="tx-black tx-14">
                 <div class="d-flex">
-                  <Link to={`../campaigns/${campaign.id}`}>
-                    <i className="fa fa-eye tx-orange pd-t-4 mg-r-5" /> View{" "}
+                  <Link to={`../analytics/graph`}>
+                    <i className="fa fa-eye tx-orange pd-t-4 mg-r-5" /> View
+                    Analytics{" "}
                   </Link>
                 </div>
               </div>
@@ -139,7 +140,7 @@ const AllCampaigns = () => {
               <div className="row justify-content-between">
                 <div className="col-md-6 col-6">
                   <div className="mg-b-0 tx-26 tx-bold">
-                    <span>Campaigns</span>
+                    <span>Analytics</span>
                   </div>
                 </div>
                 <div className="col-md-2 col-6">
@@ -220,4 +221,4 @@ const AllCampaigns = () => {
   );
 };
 
-export default AllCampaigns;
+export default AnalyticsTable;
