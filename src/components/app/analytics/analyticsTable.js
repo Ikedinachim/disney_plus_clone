@@ -157,7 +157,6 @@ const AnalyticsTable = () => {
                   <div className="tab-content bd-t-0" id="myTabContent">
                     <div className="pd-y-20">
                       <MDBDataTable
-                        displayEntries={false}
                         responsive
                         data={setAllCampaigns()}
                         className="px-3 scroll"
