@@ -20,8 +20,8 @@ const BillingOverview = () => {
   // const { user } = useSelector((state) => state.auth)
 
   const {
-    allCampaign: { reverseAllCampaign },
-    wallet: { wallet, loading: WalletLoading },
+    allCampaign: { reverseAllCampaign, loading: campaignLoading },
+    wallet: { wallet },
   } = useSelector((state) => state);
 
   useEffect(() => {
@@ -53,7 +53,7 @@ const BillingOverview = () => {
   console.log(filteredItems);
   return (
     <Fragment>
-      {WalletLoading ? (
+      {campaignLoading ? (
         <Loader />
       ) : (
         <Fragment>

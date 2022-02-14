@@ -153,47 +153,11 @@ const AnalyticsTable = () => {
               </div>
 
               <div className="card">
-                <div className="card-header bd-b-0 pd-b-0 pd-t-40 pd-md-x-30">
-                  <div className="">
-                    <div className="row justify-content-between">
-                      <div className="col-12 col-lg-4 col-md-4 pd-r-5 mg-b-20 mg-md-b-0">
-                        <div className="d-flex">
-                          <div className="mg-t-10 mg-r-20">
-                            <div className="custom-control custom-checkbox">
-                              <input
-                                type="checkbox"
-                                className="custom-control-input "
-                                name="select-all"
-                                id="customCheck"
-                              />
-                              <label
-                                className="custom-control-label pd-y-10"
-                                for="customCheck"
-                              ></label>
-                            </div>
-                          </div>
-                          <div>
-                            <div className="search-form w-100">
-                              <input
-                                type="search"
-                                className="form-control bg-search"
-                                placeholder="Search"
-                              />
-                              <button className="btn" type="button">
-                                <i data-feather="search"></i>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
                 <div className="card-body pd-md-x-30 pd-t- mg-t-20 mg-md-t-0">
                   <div className="tab-content bd-t-0" id="myTabContent">
                     <div className="pd-y-20">
                       <MDBDataTable
+                        displayEntries={false}
                         responsive
                         data={setAllCampaigns()}
                         className="px-3 scroll"
