@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
 import NumberFormat from "react-number-format";
 
-import { logout } from "../../actions/authActions";
+import { logout, getUser } from "../../actions/authActions";
 import { getWallet } from "../../actions/billingActions";
 
 import FeatherIcon from "feather-icons-react";
@@ -23,6 +23,8 @@ const Header = () => {
   };
 
   const { user } = useSelector((state) => state.auth);
+  const { user: userDetails } = useSelector((state) => state.userDetails);
+
   const { wallet } = useSelector((state) => state.wallet);
 
   useEffect(() => {
@@ -85,10 +87,10 @@ const Header = () => {
             className="dropdown-link tx-dark tx-13 tx-medium"
             onClick={() => setIsMenuOpen((oldState) => !oldState)}
           >
-            {user.user.firstName}
+            {userDetails.firstName}
             <div className="avatar avatar-sm mg-l-10">
               <img
-                src="https://via.placeholder.com/500"
+                src={userDetails.imageUrl}
                 className="rounded-circle"
                 alt="asset"
               />
@@ -98,13 +100,13 @@ const Header = () => {
             <div className="dropdown-menu dropdown-menu-right dropdown-adjust tx-13 show">
               <div className="avatar avatar-lg mg-b-15">
                 <img
-                  src="https://via.placeholder.com/500"
+                  src={userDetails.imageUrl}
                   className="rounded-circle"
                   alt="asset"
                 />
               </div>
               <h6 className="tx-semibold mg-b-5">
-                {user.user.firstName + " " + user.user.LastName}
+                {userDetails.firstName + " " + userDetails.lastName}
               </h6>
               <p className="mg-b-25 tx-12 tx-color-03">Administrator</p>
               <Link to="admin" className="dropdown-item">

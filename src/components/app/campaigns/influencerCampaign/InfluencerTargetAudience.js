@@ -67,49 +67,7 @@ const InfluencerTargetAudience = ({
                   Provide all requested details to help complete the campaign
                   creation
                 </p>
-                <div className="row justify-content-between">
-                  <div className="form-group col-md-6">
-                    <label className="mb-1">Instagram Handle</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="@tomeewer"
-                      defaultValue={values.instagramHandle}
-                      onChange={handleChange("instagramHandle")}
-                    />
-                  </div>
-                  <div className="form-group col-md-6">
-                    <label className="mb-1">Twitter Handle</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="@tomeewer"
-                      defaultValue={values.twitterHandle}
-                      onChange={handleChange("twitterHandle")}
-                      // disabled="true"
-                    />
-                  </div>
-                  <div className="form-group col-md-6">
-                    <label className="mb-1">Snapchat Handle</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="@tomeewer"
-                      defaultValue={values.snapchatHandle}
-                      onChange={handleChange("snapchatHandle")}
-                    />
-                  </div>
-                  <div className="form-group col-md-6">
-                    <label className="mb-1">Facebook Handle</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Olawole Tomiwa"
-                      defaultValue={values.facebookHandle}
-                      onChange={handleChange("facebookHandle")}
-                    />
-                  </div>
-                </div>
+
                 <div className="form-group">
                   <label className="mb-1">Campaign Message</label>
                   <textarea

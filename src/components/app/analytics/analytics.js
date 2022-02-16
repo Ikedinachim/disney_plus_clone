@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import MetaData from "../../layout/MetaData";
 import { Chart } from "react-google-charts";
+import { Link } from "react-router-dom";
 
 const Analytics = () => {
   const MonthlyAds = {
@@ -26,7 +27,9 @@ const Analytics = () => {
         <div className="container pd-x-0">
           <div className="row justify-content-between">
             <div className="col-md-6 col-12">
-              <p className="tx-26 tx-bold">Overview</p>
+              <Link to="../analytics">
+                <p className="tx-26 tx-bold">Go back</p>
+              </Link>
             </div>
           </div>
 
