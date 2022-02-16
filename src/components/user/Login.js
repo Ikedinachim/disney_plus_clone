@@ -70,7 +70,7 @@ const Login = () => {
             <div className="col-md-6 login-side">
               <div className="container pd-lg-30 pd-10">
                 <Link
-                  to="home"
+                  to="../"
                   type="button"
                   className="close close-btn"
                   aria-label="Close"

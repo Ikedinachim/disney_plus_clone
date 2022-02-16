@@ -276,10 +276,6 @@ export default class InfluencerStepForm extends Component {
     // console.log("this is platform2", payloadPlatform);
 
     const payload = {
-      twitterHandle: values.twitterHandle,
-      facebookHandle: values.facebookHandle,
-      instagramHandle: values.instagramHandle,
-      snapchatHandle: values.snapchatHandle,
       campaignMessage: values.campaignMessage,
       campaignType: values.campaignType,
       attachment: values.attachment,
@@ -287,11 +283,6 @@ export default class InfluencerStepForm extends Component {
     };
 
     const payload2 = {
-      campaignType: "influencer_marketing",
-      twitterHandle: "twitter",
-      facebookHandle: "facebook",
-      instagramHandle: "instagram",
-      snapchatHandle: "snapchat",
       campaignMessage: "Testing influencer Marketing",
       attachment: "this is an attachment",
       platform: [
