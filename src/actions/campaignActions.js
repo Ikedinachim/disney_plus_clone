@@ -54,6 +54,9 @@ import {
 
   ////////////// GENERIC CONSTANTS ///////////////
   CLEAR_ERRORS,
+  GET_DIGITAL_CAMPAIGNS_REQUEST,
+  GET_DIGITAL_CAMPAIGNS_SUCCESS,
+  GET_DIGITAL_CAMPAIGNS_FAIL,
 } from "../constants/campaignConstants";
 
 const baseURL = "https://mysogi.uat.com.ng/";
@@ -656,6 +659,41 @@ export const getInfluencerDetails = (params) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_INFLUENCER_DETAILS_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+// /campaign/digital-campaigns
+
+export const getDigitalCampaigns = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_DIGITAL_CAMPAIGNS_REQUEST });
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(`api/campaign/digital-campaigns`, config);
+
+    if (data.status === "succes") {
+      dispatch({
+        type: GET_DIGITAL_CAMPAIGNS_SUCCESS,
+        payload: data.data,
+      });
+    } else {
+      dispatch({
+        type: GET_DIGITAL_CAMPAIGNS_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: GET_DIGITAL_CAMPAIGNS_FAIL,
       payload: error.message,
     });
   }

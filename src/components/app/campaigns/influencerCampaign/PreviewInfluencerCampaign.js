@@ -216,19 +216,6 @@ const PreviewInfluencerCampaign = ({
     setVal({ ...val, [name]: value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    values.instagramHandle = val.instagramHandle;
-    values.twitterHandle = val.twitterHandle;
-    values.facebookHandle = val.facebookHandle;
-    values.snapchatHandle = val.snapchatHandle;
-    values.campaignMessage = val.campaignMessage;
-    setShow(!show);
-  };
-  const showButton = () => {
-    setShow(!show);
-  };
-
   return (
     <Fragment>
       {loading ? (
@@ -250,63 +237,8 @@ const PreviewInfluencerCampaign = ({
                               Campaign Preview
                             </p>
                           </div>
-                          {/* <div>
-                            <div
-                              className="d-flex pd-t-3 clickable"
-                              onClick={showButton}
-                            >
-                              <div>
-                                <i className="fa fa-edit tx-primary mg-r-5" />
-                              </div>
-                              <p className="mb-0">Edit</p>
-                            </div>
-                          </div> */}
                         </div>
                         <div className="row mg-t-15">
-                          <div className="form-group col-md-3">
-                            <label
-                              htmlFor
-                              className="tx-14 tx-gray mb-0 tx-medium"
-                            >
-                              Instagram
-                            </label>
-                            <p className="tx-14 mb-0">
-                              {show === false ? (
-                                values.instagramHandle
-                              ) : (
-                                <Fragment>
-                                  <input
-                                    type="text"
-                                    name="instagramHandle"
-                                    value={val.instagramHandle}
-                                    onChange={handleEdit}
-                                  />{" "}
-                                </Fragment>
-                              )}
-                            </p>
-                          </div>
-                          <div className="form-group col-md-3">
-                            <label
-                              htmlFor
-                              className="tx-14 tx-gray mb-0 tx-medium"
-                            >
-                              Twitter
-                            </label>
-                            <p className="tx-14 mb-0">
-                              {show === false ? (
-                                values.twitterHandle
-                              ) : (
-                                <Fragment>
-                                  <input
-                                    type="text"
-                                    name="twitterHandle"
-                                    value={val.twitterHandle}
-                                    onChange={handleEdit}
-                                  />{" "}
-                                </Fragment>
-                              )}
-                            </p>
-                          </div>
                           <div className="form-group col-md-6">
                             <label
                               htmlFor
@@ -329,61 +261,6 @@ const PreviewInfluencerCampaign = ({
                               )}
                             </p>
                           </div>
-                          <div className="form-group col-md-3">
-                            <label
-                              htmlFor
-                              className="tx-14 tx-gray mb-0 tx-medium"
-                            >
-                              Facebook
-                            </label>
-                            <p className="tx-14 mb-0">
-                              {show === false ? (
-                                values.facebookHandle
-                              ) : (
-                                <Fragment>
-                                  <input
-                                    type="text"
-                                    name="facebookHandle"
-                                    value={val.facebookHandle}
-                                    onChange={handleEdit}
-                                  />{" "}
-                                </Fragment>
-                              )}
-                            </p>
-                          </div>
-                          <div className="form-group col-md-3">
-                            <label
-                              htmlFor
-                              className="tx-14 tx-gray mb-0 tx-medium"
-                            >
-                              Snapchat
-                            </label>
-                            <p className="tx-14 mb-0">
-                              {show === false ? (
-                                values.snapchatHandle
-                              ) : (
-                                <Fragment>
-                                  <input
-                                    type="text"
-                                    name="snapchatHandle"
-                                    value={val.snapchatHandle}
-                                    onChange={handleEdit}
-                                  />{" "}
-                                </Fragment>
-                              )}
-                            </p>
-                          </div>
-
-                          {show === false ? null : (
-                            <div className="form-group col-md-12">
-                              <button
-                                className="btn btn-primary"
-                                onClick={handleSubmit}
-                              >
-                                save
-                              </button>
-                            </div>
-                          )}
                         </div>
                       </div>
                       <div className="col-md-3">
