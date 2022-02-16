@@ -51,16 +51,16 @@ const Settings = () => {
   const [people, setPeople] = useState({
     firstName: user.firstName,
     lastName: user.lastName,
-    userName: user.username,
+    username: user.username,
     email: user.email,
-    password: user.password,
+    password: "null",
     phone: user.phone,
-    image: user.image,
+    imageUrl: user.imageUrl,
   });
 
   const handleImageChange = () => {
     handleImageUpload();
-    setPeople({ ...people, image: imageUrl });
+    setPeople({ ...people, imageUrl: imageUrl });
   };
 
   console.log(people);
@@ -69,6 +69,7 @@ const Settings = () => {
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
+
     setPeople({ ...people, [name]: value });
   };
 
@@ -86,6 +87,9 @@ const Settings = () => {
       dispatch(clearErrors());
     }
   };
+
+  console.log("imageUrl", imageUrl);
+  console.log("people.imageUrl", imageUrl);
 
   const showButton = (e) => {
     setShow(!show);
@@ -133,7 +137,7 @@ const Settings = () => {
                 </div>
                 <div className=" wdm-55 d-flex ht-250">
                   <img
-                    src={imageUrl}
+                    src={people.imageUrl}
                     className="img-thumbnail w-25"
                     alt="profile"
                     onChange={handleImageChange}
@@ -142,12 +146,10 @@ const Settings = () => {
                     <input
                       type="file"
                       id="custom-file"
-                      name="image"
                       className="custom-file-input"
                       accept="image/*"
                       onChange={handleImageChange}
                       disabled={show === false ? "disabled" : ""}
-                      value={people.image}
                     />
                     <label
                       for="custom-file"
@@ -197,8 +199,8 @@ const Settings = () => {
                         <input
                           type="text"
                           id="username"
-                          name="userName"
-                          value={people.userName}
+                          name="username"
+                          value={people.username}
                           className="wd-90p p-2"
                           disabled={show === false ? "disabled" : ""}
                           onChange={handleChange}
