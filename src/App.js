@@ -22,6 +22,7 @@ import FlierVideoStepForm from "./components/app/campaigns/flierVideoCampaign/Fl
 import AppDownloadStepForm from "./components/app/campaigns/appDownloadCampaign/AppDownloadStepForm";
 import InfluencerStepForm from "./components/app/campaigns/influencerCampaign/InfluencerStepForm";
 import Analytics from "./components/app/analytics/analytics";
+import AnalyticsTable from "./components/app/analytics/analyticsTable";
 import Settings from "./components/app/settings/settings";
 import Ads from "./adsView/Ads";
 
@@ -194,10 +195,21 @@ function App() {
           />
 
           <Route
-            path="analytics"
+            path="analytics/graph"
             element={
               isAuthenticated && user.user.role === "user" ? (
                 <Analytics />
+              ) : (
+                <Login />
+              )
+            }
+          />
+
+          <Route
+            path="analytics"
+            element={
+              isAuthenticated && user.user.role === "user" ? (
+                <AnalyticsTable />
               ) : (
                 <Login />
               )

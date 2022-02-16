@@ -74,7 +74,10 @@ const TargetAudience = ({
 
   const Continue = (e) => {
     e.preventDefault();
-    if (values.targetAudienceOption === "mysogidb") {
+    if (
+      values.targetAudienceOption === "mysogidb" &&
+      values.channel !== "display_ads"
+    ) {
       dispatch(getFilteredContactList(filterOptions));
       nextStep();
     } else {
@@ -161,6 +164,47 @@ const TargetAudience = ({
                         Minimum amount to spend is ₦10,000
                       </p>
                       <div className="row justify-content-md-between">
+                        <div className="form-group col-md-6">
+                          <label
+                            // htmlFor
+                            className="mb-1 tx-com d-flex align-items-center"
+                          >
+                            State
+                            <i className="tx-6 fa fa-star tx-primary mg-l-2" />
+                          </label>
+                          <select
+                            className="custom-select"
+                            defaultValue={filterOptions.state}
+                            onChange={handleChange("state")}
+                          >
+                            {NaijaStates.states().map((selectState, i) => (
+                              <option value={selectState} key={i}>
+                                {selectState}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="form-group col-md-6">
+                          <label
+                            // htmlFor
+                            className="mb-1 tx-com d-flex align-items-center"
+                          >
+                            LGA
+                            <i className="tx-6 fa fa-star tx-primary mg-l-2" />
+                          </label>
+                          <select
+                            className="custom-select"
+                            defaultValue={filterOptions.lga}
+                            onChange={handleChange("lga")}
+                          >
+                            <option value="">Select L.G.A</option>
+                            {lga.lgas.map((selectLga, i) => (
+                              <option value={selectLga} key={i}>
+                                {selectLga}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
                         <div className="form-group col-md-6">
                           <label
                             htmlFor
