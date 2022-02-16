@@ -74,7 +74,10 @@ const TargetAudience = ({
 
   const Continue = (e) => {
     e.preventDefault();
-    if (values.targetAudienceOption === "mysogidb") {
+    if (
+      values.targetAudienceOption === "mysogidb" &&
+      values.channel !== "display_ads"
+    ) {
       dispatch(getFilteredContactList(filterOptions));
       nextStep();
     } else {
