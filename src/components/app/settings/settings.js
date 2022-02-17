@@ -4,17 +4,18 @@ import { useAlert } from "react-alert";
 import { useSelector, useDispatch } from "react-redux";
 import { getUser, updateUserDetails } from "../../../actions/authActions";
 import { Link } from "react-router-dom";
-import FeatherIcon from "feather-icons-react";
 import { UPDATE_USER_RESET } from "../../../constants/authConstants";
 import { clearErrors } from "../../../actions/authActions";
 import Loader from "../../loader";
 
 const Settings = () => {
-  const updateUser = useSelector((state) => state.updateUser || []);
   const alert = useAlert();
   const dispatch = useDispatch();
 
-  const { user, loading } = useSelector((state) => state.userDetails || []);
+  const {
+    userDetails: { user, loading: userDetailsLoading },
+    updateUser: { updateUser },
+  } = useSelector((state) => state);
 
   const [imageUrl, setImageUrl] = useState("");
   const [imageAlt, setImageAlt] = useState("");
@@ -92,7 +93,7 @@ const Settings = () => {
   return (
     <Fragment>
       <MetaData title={"Settings"} />
-      {loading === true ? (
+      {userDetailsLoading === true ? (
         <Loader />
       ) : (
         <div className="content-body">
@@ -127,7 +128,7 @@ const Settings = () => {
                   <img
                     src={
                       people.imageUrl === null
-                        ? "../../../assets/img/placehold.jpg"
+                        ? "../../../../assets/img/placehold.jpg"
                         : people.imageUrl
                     }
                     className="img-thumbnail w-25"
@@ -147,8 +148,6 @@ const Settings = () => {
                       className="w-15 nav-link clickable"
                     >
                       Click here to change Photo
-                      <br />
-                      (Not more than 1mb)
                     </label>
                   </div>
                 </div>

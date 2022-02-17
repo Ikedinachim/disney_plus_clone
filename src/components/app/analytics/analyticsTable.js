@@ -24,13 +24,13 @@ const AnalyticsTable = () => {
         },
         // custom-control-label
         {
-          label: "CAMPAIGN NAME",
-          field: "campaignName",
+          label: "Propeller Id",
+          field: "propellerId",
           sort: "asc",
         },
         {
-          label: "AD TYPE",
-          field: "adType",
+          label: "Campaign TYPE",
+          field: "campaignType",
           sort: "asc",
         },
         {
@@ -67,8 +67,8 @@ const AnalyticsTable = () => {
       digitalCampaigns.forEach((campaign) => {
         data.rows.push({
           id: campaign.id,
-          campaignName: campaign.propellerId,
-          adType: campaign.channel,
+          propellerId: campaign.propellerId,
+          campaignType: campaign.campaignType,
           revenue: (
             <NumberFormat
               value={0}
