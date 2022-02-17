@@ -40,6 +40,7 @@ import {
   updateInfluencerCampaignStatusReducer,
   getInfluencerDetailsReducer,
   updateInfluencerPublishedStatusReducer,
+  getDigitalCampaignsReducer,
 } from "./reducers/campaignReducers";
 
 const appReducer = combineReducers({
@@ -68,6 +69,7 @@ const appReducer = combineReducers({
   updateInfluencerCampaignStatus: updateInfluencerCampaignStatusReducer,
   updateInfluencerCampaignPublishStatus: updateInfluencerPublishedStatusReducer,
   influencerDetails: getInfluencerDetailsReducer,
+  digitalCampaigns: getDigitalCampaignsReducer,
 });
 
 const reducer = (state, action) => {

@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from "react";
-import { getAllCampaign } from "../../../actions/campaignActions";
+import { getDigitalCampaigns } from "../../../actions/campaignActions";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import NumberFormat from "react-number-format";
@@ -10,16 +10,16 @@ import MetaData from "../../layout/MetaData";
 
 const AnalyticsTable = () => {
   const dispatch = useDispatch();
-  const { loading, allCampaign } = useSelector(
-    (state) => state.allCampaign || {}
+  const { loading, digitalCampaigns } = useSelector(
+    (state) => state.digitalCampaigns || {}
   );
 
   const setAllCampaigns = () => {
     const data = {
       columns: [
         {
-          label: "",
-          field: "checkBoxes",
+          label: "id",
+          field: "id",
           sort: "asc",
         },
         // custom-control-label
@@ -62,22 +62,12 @@ const AnalyticsTable = () => {
       rows: [],
     };
 
-    allCampaign &&
-      allCampaign.forEach((campaign) => {
+    console.log(digitalCampaigns);
+    digitalCampaigns &&
+      digitalCampaigns.forEach((campaign) => {
         data.rows.push({
-          checkBoxes: (
-            <Fragment>
-              <div class="custom-control custom-checkbox">
-                <input
-                  type="checkbox"
-                  class="custom-control-input"
-                  id="customCheck1"
-                />
-                <label class="custom-control-label" for="customCheck1"></label>
-              </div>
-            </Fragment>
-          ),
-          campaignName: campaign.campaignType,
+          id: campaign.id,
+          campaignName: campaign.propellerId,
           adType: campaign.channel,
           revenue: (
             <NumberFormat
@@ -125,7 +115,7 @@ const AnalyticsTable = () => {
   };
 
   useEffect(() => {
-    dispatch(getAllCampaign());
+    dispatch(getDigitalCampaigns());
   }, [dispatch]);
 
   return (

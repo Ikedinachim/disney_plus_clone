@@ -64,7 +64,6 @@ const Settings = () => {
   };
 
   console.log(people);
-  const [show, setShow] = useState(false);
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -76,7 +75,6 @@ const Settings = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(updateUserDetails(people));
-    setShow(!show);
 
     if (updateUser && updateUser.status === "success") {
       alert.success(`update ${updateUser.status}`);
@@ -91,9 +89,6 @@ const Settings = () => {
   console.log("imageUrl", imageUrl);
   console.log("people.imageUrl", imageUrl);
 
-  const showButton = (e) => {
-    setShow(!show);
-  };
   return (
     <Fragment>
       <MetaData title={"Settings"} />
@@ -127,17 +122,14 @@ const Settings = () => {
                 <div className="tx-22">Personal details</div>
                 <div className="d-flex justify-content-between my-4">
                   <div>View your setup details here</div>
-                  <div className="mx-4 clickable" onClick={showButton}>
-                    <FeatherIcon
-                      icon="edit"
-                      className="wd-15 ht-20 mg-r-9 tx-primary"
-                    />
-                    {show === false ? "Edit" : "Stop Editing"}
-                  </div>
                 </div>
                 <div className=" wdm-55 d-flex ht-250">
                   <img
-                    src={people.imageUrl}
+                    src={
+                      people.imageUrl === null
+                        ? "../../../assets/img/placehold.jpg"
+                        : people.imageUrl
+                    }
                     className="img-thumbnail w-25"
                     alt="profile"
                     onChange={handleImageChange}
@@ -149,7 +141,6 @@ const Settings = () => {
                       className="custom-file-input"
                       accept="image/*"
                       onChange={handleImageChange}
-                      disabled={show === false ? "disabled" : ""}
                     />
                     <label
                       for="custom-file"
@@ -174,7 +165,6 @@ const Settings = () => {
                           name="firstName"
                           value={people.firstName}
                           className="wd-90p p-2"
-                          disabled={show === false ? "disabled" : ""}
                           onChange={handleChange}
                         />
                       </div>
@@ -187,7 +177,6 @@ const Settings = () => {
                           name="lastName"
                           value={people.lastName}
                           className="wd-90p p-2"
-                          disabled={show === false ? "disabled" : ""}
                           onChange={handleChange}
                         />
                       </div>
@@ -202,8 +191,7 @@ const Settings = () => {
                           name="username"
                           value={people.username}
                           className="wd-90p p-2"
-                          disabled={show === false ? "disabled" : ""}
-                          onChange={handleChange}
+                          disabled="disabled"
                         />
                       </div>
                       <div className="col-md-6 p-2">
@@ -215,8 +203,7 @@ const Settings = () => {
                           name="email"
                           value={people.email}
                           className="wd-90p p-2"
-                          disabled={show === false ? "disabled" : ""}
-                          onChange={handleChange}
+                          disabled="disabled"
                         />
                       </div>
                     </div>
@@ -231,7 +218,6 @@ const Settings = () => {
                           value={people.password}
                           className="wd-90p p-2"
                           disabled="disabled"
-                          onChange={handleChange}
                         />
                       </div>
                       <div className="col-md-6 p-3">
@@ -243,35 +229,17 @@ const Settings = () => {
                           name="phone"
                           value={people.phone}
                           className="wd-90p p-2"
-                          disabled={show === false ? "disabled" : ""}
                           onChange={handleChange}
                         />
                       </div>
                     </div>
                   </form>
-                  <div className="custom-control custom-switch mg-t-10">
-                    <input
-                      type="checkbox"
-                      className="custom-control-input"
-                      id="customSwitch1"
-                    />
-                    <label
-                      className="custom-control-label tx-blac"
-                      htmlFor="customSwitch1"
-                    >
-                      Notification
-                    </label>
+
+                  <div className="mg-t-20">
+                    <button className="btn btn-primary" onClick={handleSubmit}>
+                      Save
+                    </button>
                   </div>
-                  {show === false ? null : (
-                    <div className="mg-t-20">
-                      <button
-                        className="btn btn-primary"
-                        onClick={handleSubmit}
-                      >
-                        Save
-                      </button>
-                    </div>
-                  )}
                 </div>
               </div>
             </div>

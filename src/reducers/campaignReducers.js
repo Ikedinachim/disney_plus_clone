@@ -644,8 +644,9 @@ export const getInfluencerDetailsReducer = (
   }
 };
 
+/////////////////////////////Digital Campaigns Reducer////////////////////////////
 export const getDigitalCampaignsReducer = (
-  state = { smsCampaigns: [] },
+  state = { digitalCampaigns: [] },
   action
 ) => {
   switch (action.type) {
