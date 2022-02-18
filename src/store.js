@@ -10,6 +10,7 @@ import {
   authReducer,
   userDetailsReducer,
   updateUserReducer,
+  updateInfluencerReducer,
   // userDetailsReducer
 } from "./reducers/authReducers";
 

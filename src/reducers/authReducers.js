@@ -13,6 +13,10 @@ import {
   UPDATE_PASSWORD_SUCCESS,
   UPDATE_PASSWORD_RESET,
   UPDATE_PASSWORD_FAIL,
+  UPDATE_INFLUENCER_PASSWORD_REQUEST,
+  UPDATE_INFLUENCER_PASSWORD_SUCCESS,
+  UPDATE_INFLUENCER_PASSWORD_RESET,
+  UPDATE_INFLUENCER_PASSWORD_FAIL,
   FORGOT_PASSWORD_REQUEST,
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_FAIL,
@@ -39,6 +43,10 @@ import {
   DELETE_USER_FAIL,
   LOGOUT_SUCCESS,
   LOGOUT_FAIL,
+  UPDATE_INFLUENCER_PROFILE_REQUEST,
+  UPDATE_INFLUENCER_PROFILE_SUCCESS,
+  UPDATE_INFLUENCER_PROFILE_RESET,
+  UPDATE_INFLUENCER_PROFILE_FAIL,
   CLEAR_ERRORS,
 } from "../constants/authConstants";
 
@@ -49,6 +57,12 @@ export const authReducer = (state = { user: {} }, action) => {
       return {
         loading: true,
         isAuthenticated: false,
+      };
+    case UPDATE_INFLUENCER_PASSWORD_REQUEST:
+      return {
+        loading: true,
+        isAuthenticated: false,
+        passwordUpdated: false,
       };
 
     case REGISTER_USER_REQUEST:
@@ -71,6 +85,13 @@ export const authReducer = (state = { user: {} }, action) => {
         ...state,
         loading: false,
         isRegistered: true,
+      };
+    case UPDATE_INFLUENCER_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        passwordUpdated: true,
+        isUpdated: action.payload,
       };
     case REGISTER_USER_RESET:
       return {
@@ -96,6 +117,15 @@ export const authReducer = (state = { user: {} }, action) => {
         error: action.payload,
       };
 
+    case UPDATE_INFLUENCER_PASSWORD_FAIL:
+      return {
+        loading: false,
+        isAuthenticated: false,
+        user: null,
+        passwordUpdated: false,
+        error: action.payload,
+      };
+
     case LOGOUT_FAIL:
       return {
         ...state,
@@ -104,6 +134,7 @@ export const authReducer = (state = { user: {} }, action) => {
 
     case LOGIN_FAIL:
     case REGISTER_USER_FAIL:
+    case UPDATE_INFLUENCER_PASSWORD_RESET:
       return {
         ...state,
         loading: false,
@@ -325,6 +356,45 @@ export const updateUserReducer = (state = { updateUser: [] }, action) => {
       return {
         ...state,
         updateUser: [],
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const updateInfluencerReducer = (
+  state = { updateInfluencer: [] },
+  action
+) => {
+  switch (action.type) {
+    case UPDATE_INFLUENCER_PROFILE_REQUEST:
+      return {
+        loading: true,
+        updateInfluencer: [],
+      };
+    case UPDATE_INFLUENCER_PROFILE_SUCCESS:
+      return {
+        loading: false,
+        updateInfluencer: action.payload,
+        status: action.payload.status,
+      };
+    case UPDATE_INFLUENCER_PROFILE_FAIL:
+      return {
+        loading: false,
+        updateInfluencer: null,
+        error: action.payload,
+        status: action.payload.status,
+      };
+    case UPDATE_INFLUENCER_PROFILE_RESET:
+      return {
+        ...state,
+        updateInfluencer: [],
       };
     case CLEAR_ERRORS:
       return {

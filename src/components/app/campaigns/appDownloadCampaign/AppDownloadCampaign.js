@@ -151,8 +151,8 @@ const SmsCampaign = ({
                                 defaultValue={values.channel}
                                 onBlur={handleChange("channel")}
                               >
-                                {selectChannels.map((selectChannel) => (
-                                  <option value={selectChannel.value}>
+                                {selectChannels.map((selectChannel, i) => (
+                                  <option value={selectChannel.value} key={i}>
                                     {selectChannel.label}
                                   </option>
                                 ))}
