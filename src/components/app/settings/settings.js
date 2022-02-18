@@ -17,14 +17,13 @@ const Settings = () => {
     updateUser: { updateUser },
   } = useSelector((state) => state);
 
-  const [imageUrl, setImageUrl] = useState("");
   const [imageAlt, setImageAlt] = useState("");
 
   useEffect(() => {
     dispatch(getUser());
   }, []);
 
-  const handleImageUpload = async () => {
+  const handleImageChange = async () => {
     const { files } = document.querySelector('input[type="file"]');
     const formData = new FormData();
     formData.append("file", files[0]);
@@ -42,8 +41,9 @@ const Settings = () => {
         options
       );
       const res_1 = await res.json();
-      setImageUrl(res_1.secure_url);
+
       setImageAlt(`An image of ${res_1.original_filename}`);
+      setPeople({ ...people, imageUrl: res_1.secure_url });
     } catch (err) {
       return console.log(err);
     }
@@ -59,11 +59,6 @@ const Settings = () => {
     imageUrl: user.imageUrl,
   });
 
-  const handleImageChange = () => {
-    handleImageUpload();
-    setPeople({ ...people, imageUrl: imageUrl });
-  };
-
   console.log(people);
 
   const handleChange = (e) => {
@@ -78,7 +73,7 @@ const Settings = () => {
     dispatch(updateUserDetails(people));
 
     if (updateUser && updateUser.status === "success") {
-      alert.success(`update ${updateUser.status}`);
+      alert.success(`${updateUser.message}`);
       dispatch(getUser());
       dispatch({ type: UPDATE_USER_RESET });
     } else if (updateUser.error) {
@@ -87,8 +82,7 @@ const Settings = () => {
     }
   };
 
-  console.log("imageUrl", imageUrl);
-  console.log("people.imageUrl", imageUrl);
+  console.log("people.imageUrl", people.imageUrl);
 
   return (
     <Fragment>
@@ -126,11 +120,7 @@ const Settings = () => {
                 </div>
                 <div className=" wdm-55 d-flex ht-250">
                   <img
-                    src={
-                      people.imageUrl === null
-                        ? "../../../../assets/img/placehold.jpg"
-                        : people.imageUrl
-                    }
+                    src={people.imageUrl}
                     className="img-thumbnail w-25"
                     alt="profile"
                     onChange={handleImageChange}
