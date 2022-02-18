@@ -35,6 +35,7 @@ import InfluencerSettings from "./influencer/settings";
 // Auth / User Imports
 import Login from "./components/user/Login";
 import Register from "./components/user/Register";
+import ForgotPassword from "./components/user/ForgotPassword";
 
 import { useSelector } from "react-redux";
 
@@ -51,7 +52,9 @@ import CampaignDetails from "./components/app/campaigns/CampaignDetails";
 AOS.init();
 
 function App() {
-  const { loading, isAuthenticated, user } = useSelector((state) => state.auth);
+  const { loading, isAuthenticated, user, error } = useSelector(
+    (state) => state.auth
+  );
 
   return (
     <div>
@@ -64,7 +67,7 @@ function App() {
         <Route
           path="/app"
           element={
-            isAuthenticated && user.user.role === "user" ? (
+            isAuthenticated && user && user.user.role === "user" ? (
               <DashboardLayout />
             ) : (
               <Login />
@@ -74,7 +77,7 @@ function App() {
           <Route
             index
             element={
-              isAuthenticated && user.user.role === "user" ? (
+              isAuthenticated && user && user.user.role === "user" ? (
                 <Dashboard />
               ) : (
                 <Login />
@@ -84,7 +87,7 @@ function App() {
           <Route
             path="sender-id"
             element={
-              isAuthenticated && user.user.role === "user" ? (
+              isAuthenticated && user && user.user.role === "user" ? (
                 <SenderID />
               ) : (
                 <Login />
@@ -94,7 +97,7 @@ function App() {
           <Route
             path="request-sender-id"
             element={
-              isAuthenticated && user.user.role === "user" ? (
+              isAuthenticated && user && user.user.role === "user" ? (
                 <RequestSenderID />
               ) : (
                 <Login />
@@ -104,7 +107,7 @@ function App() {
           <Route
             path="billing"
             element={
-              isAuthenticated && user.user.role === "user" ? (
+              isAuthenticated && user && user.user.role === "user" ? (
                 <BillingOverview />
               ) : (
                 <Login />
@@ -114,7 +117,7 @@ function App() {
           <Route
             path="billing/fund-wallet"
             element={
-              isAuthenticated && user.user.role === "user" ? (
+              isAuthenticated && user && user.user.role === "user" ? (
                 <FundWallet />
               ) : (
                 <Login />
@@ -125,7 +128,7 @@ function App() {
           <Route
             path="campaigns/:id"
             element={
-              isAuthenticated && user.user.role === "user" ? (
+              isAuthenticated && user && user.user.role === "user" ? (
                 <CampaignDetails />
               ) : (
                 <Login />
@@ -136,7 +139,7 @@ function App() {
           <Route
             path="campaigns"
             element={
-              isAuthenticated && user.user.role === "user" ? (
+              isAuthenticated && user && user.user.role === "user" ? (
                 <AllCampaigns />
               ) : (
                 <Login />
@@ -146,7 +149,7 @@ function App() {
           <Route
             path="campaign/create"
             element={
-              isAuthenticated && user.user.role === "user" ? (
+              isAuthenticated && user && user.user.role === "user" ? (
                 <CreateCampaign />
               ) : (
                 <Login />
@@ -156,7 +159,7 @@ function App() {
           <Route
             path="campaign/sms"
             element={
-              isAuthenticated && user.user.role === "user" ? (
+              isAuthenticated && user && user.user.role === "user" ? (
                 <SmsStepForm />
               ) : (
                 <Login />
@@ -166,7 +169,7 @@ function App() {
           <Route
             path="campaign/flier-video"
             element={
-              isAuthenticated && user.user.role === "user" ? (
+              isAuthenticated && user && user.user.role === "user" ? (
                 <FlierVideoStepForm />
               ) : (
                 <Login />
@@ -176,7 +179,7 @@ function App() {
           <Route
             path="campaign/app-download"
             element={
-              isAuthenticated && user.user.role === "user" ? (
+              isAuthenticated && user && user.user.role === "user" ? (
                 <AppDownloadStepForm />
               ) : (
                 <Login />
@@ -186,7 +189,7 @@ function App() {
           <Route
             path="campaign/influencer"
             element={
-              isAuthenticated && user.user.role === "user" ? (
+              isAuthenticated && user && user.user.role === "user" ? (
                 <InfluencerStepForm />
               ) : (
                 <Login />
@@ -197,7 +200,7 @@ function App() {
           <Route
             path="analytics/graph"
             element={
-              isAuthenticated && user.user.role === "user" ? (
+              isAuthenticated && user && user.user.role === "user" ? (
                 <Analytics />
               ) : (
                 <Login />
@@ -208,7 +211,7 @@ function App() {
           <Route
             path="analytics"
             element={
-              isAuthenticated && user.user.role === "user" ? (
+              isAuthenticated && user && user.user.role === "user" ? (
                 <AnalyticsTable />
               ) : (
                 <Login />
@@ -219,7 +222,7 @@ function App() {
           <Route
             path="setting"
             element={
-              isAuthenticated && user.user.role === "user" ? (
+              isAuthenticated && user && user.user.role === "user" ? (
                 <Settings />
               ) : (
                 <Login />
@@ -242,6 +245,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="forgotpassword" element={<ForgotPassword />} />
         {/* <Route path="/app/sender-id" element={isAuthenticated ? <SenderID /> : <Login />} /> */}
         {/* <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
@@ -254,7 +258,7 @@ function App() {
         <Route
           path="/influencer"
           element={
-            isAuthenticated && user.user.role === "influencer" ? (
+            isAuthenticated && user && user.user.role === "influencer" ? (
               <InfluencerDashboardLayout />
             ) : (
               <Login />
@@ -264,7 +268,7 @@ function App() {
           <Route
             index
             element={
-              isAuthenticated && user.user.role === "influencer" ? (
+              isAuthenticated && user && user.user.role === "influencer" ? (
                 <InfluencerDashboard />
               ) : (
                 <Login />
@@ -275,7 +279,7 @@ function App() {
           <Route
             path="settings"
             element={
-              isAuthenticated && user.user.role === "influencer" ? (
+              isAuthenticated && user && user.user.role === "influencer" ? (
                 <InfluencerSettings />
               ) : (
                 <Login />
@@ -285,7 +289,7 @@ function App() {
           <Route
             path="view-campaign/:influenceMarketingId"
             element={
-              isAuthenticated && user.user.role === "influencer" ? (
+              isAuthenticated && user && user.user.role === "influencer" ? (
                 <InfluencerCampaignDetails />
               ) : (
                 <Login />
