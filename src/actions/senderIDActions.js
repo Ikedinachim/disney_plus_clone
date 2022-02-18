@@ -77,13 +77,13 @@ export const createSenderId = (setCreateSenderId) => async (dispatch) => {
     } else {
       dispatch({
         type: CREATE_SENDERID_FAIL,
-        payload: data.message,
+        payload: data,
       });
     }
   } catch (data) {
     dispatch({
       type: CREATE_SENDERID_FAIL,
-      payload: data.message,
+      payload: data,
     });
   }
 };

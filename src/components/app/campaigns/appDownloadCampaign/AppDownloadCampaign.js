@@ -253,6 +253,9 @@ const SmsCampaign = ({
                                       />
                                     </span>
                                   )}
+                                  <p className="mt-2 tx-danger tx-italic">
+                                    Image dimension: 150 x 150
+                                  </p>
                                 </div>
                               </div>
                             )}

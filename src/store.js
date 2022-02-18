@@ -4,7 +4,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
-import autoMergeLevel1 from "redux-persist/lib/stateReconciler/autoMergeLevel1";
+import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
 
 import {
   authReducer,
@@ -86,7 +86,7 @@ let initialState = {};
 const persistConfig = {
   key: "root",
   storage,
-  stateReconciler: autoMergeLevel1,
+  stateReconciler: autoMergeLevel2,
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);

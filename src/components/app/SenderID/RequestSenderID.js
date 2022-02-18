@@ -24,13 +24,14 @@ const SenderID = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (loading && status !== null) {
+    if (status && status.status === "success") {
+      alert.success(status.message);
       navigate("/app/sender-id");
       dispatch({ type: CREATE_SENDERID_RESET });
     }
 
     if (error) {
-      alert.error(error);
+      alert.error(error.message);
       dispatch(clearErrors());
     }
   }, [dispatch, alert, status, error, loading, navigate]);
