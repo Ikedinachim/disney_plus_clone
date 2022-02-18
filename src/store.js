@@ -10,6 +10,7 @@ import {
   authReducer,
   userDetailsReducer,
   updateUserReducer,
+  updateInfluencerReducer,
   // userDetailsReducer
 } from "./reducers/authReducers";
 
@@ -68,6 +69,7 @@ const appReducer = combineReducers({
   updateInfluencerCampaignStatus: updateInfluencerCampaignStatusReducer,
   updateInfluencerCampaignPublishStatus: updateInfluencerPublishedStatusReducer,
   influencerDetails: getInfluencerDetailsReducer,
+  updateInfluencerProfile: updateInfluencerReducer,
 });
 
 const reducer = (state, action) => {

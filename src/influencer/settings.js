@@ -1,19 +1,21 @@
-import React, { Fragment, useEffect, useState, useRef } from "react";
-
+import React, { Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
 
-import { getAllInfluencers } from "../actions/campaignActions";
+import { updateInfluencerPassword } from "../actions/authActions";
 
 import Loader from "../influencer/components/layout/Loader";
 import MetaData from "../influencer/components/layout/MetaData";
+import axios from "axios";
 
 const InfluencerSettings = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
-  const { Influencers, loading } = useSelector(
-    (state) => state.allInfluencers || []
+  const { updateInfluencer, loading } = useSelector(
+    (state) => state.updateInfluencerProfile || []
   );
+  const { user } = useSelector((state) => state.auth || []);
+  console.log(user.user.email);
 
   //   const toggleHandler = (item) => (e) => {
   //     const isChecked = e.target.checked;
@@ -38,8 +40,118 @@ const InfluencerSettings = () => {
   //     // handleCheckedState(checkedInfluencer);
   //   };
 
+  const [influencerDetails, setInfluencerDetails] = useState({
+    firstName: user.user.firstName,
+    lastName: user.user.lastName,
+    username: user.user.userName,
+    email: user.user.email,
+    password: "",
+    occupation: "",
+    selectedFileName: "",
+    imageUrl: null,
+    imageAlt: "",
+    uploadPercentage: 0,
+    updatedCosts: [],
+  });
+
+  const [updateCost, setUpdateCost] = useState([]);
+
+  const [platformCost, setPlatformCost] = useState([]);
+
+  const handleImageUpload = async (e) => {
+    let files = e.target.files[0];
+    // console.log(files);
+    const formData = new FormData();
+    formData.append("file", files);
+    formData.append("upload_preset", "mysogi");
+
+    const options = {
+      onUploadProgress: (progressEvent) => {
+        const { loaded, total } = progressEvent;
+        let percent = Math.floor((loaded * 100) / total);
+        // console.log(`${loaded}kb of ${total}kb | ${percent}%`);
+
+        if (percent < 100) {
+          setInfluencerDetails({
+            ...influencerDetails,
+            uploadPercentage: percent,
+          });
+        }
+      },
+    };
+
+    try {
+      await axios
+        .post(
+          "https://api.Cloudinary.com/v1_1/mysogi/image/upload",
+          formData,
+          options
+        )
+        .then((res) => {
+          // console.log(res);
+          setInfluencerDetails(
+            {
+              ...influencerDetails,
+              imageUrl: res.data.secure_url,
+              uploadPercentage: 100,
+              selectedFileName: files.name,
+              imageAlt: `An image of ${res.original_filename}`,
+            },
+            () => {
+              setTimeout(() => {
+                setInfluencerDetails({
+                  ...influencerDetails,
+                  uploadPercentage: 0,
+                });
+              }, 1000);
+            }
+          );
+        });
+    } catch (err) {
+      // return console.log(err);
+    }
+  };
+
+  const occupations = [
+    {
+      label: "Choose Occupation",
+      value: "",
+    },
+    {
+      label: "Artist",
+      value: "artist",
+    },
+    {
+      label: "Comedian",
+      value: "comedian",
+    },
+    {
+      label: "Actor",
+      value: "actor",
+    },
+  ];
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUpdateCost((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleCostChange = (e) => {
+    const { name, value } = e.target;
+    setInfluencerDetails((prevState) => ({
+      ...prevState,
+      payload: { [name]: value },
+    }));
+  };
+
+  console.log(influencerDetails);
+
   useEffect(() => {
-    dispatch(getAllInfluencers());
+    // dispatch(getAllInfluencers());
+    console.log(influencerDetails.imageUrl);
   }, [dispatch]);
 
   return (
@@ -83,8 +195,12 @@ const InfluencerSettings = () => {
                                 </div>
                                 <input
                                   type="file"
-                                  name="myFile"
-                                  className="drop-zone__input"
+                                  name="file"
+                                  // className="drop-zone__input"
+                                  accept="image/png, image/jpeg, image/gif, image/jpg"
+                                  className="custom-file-input"
+                                  id="customFile"
+                                  onChange={(e) => handleImageUpload(e)}
                                 />
                               </div>
                             </div>
@@ -99,7 +215,10 @@ const InfluencerSettings = () => {
                               <input
                                 type="text"
                                 className="form-control"
-                                placeholder="John"
+                                placeholder={influencerDetails.firstName}
+                                name="firstName"
+                                defaultValue={influencerDetails.firstName}
+                                onChange={handleChange}
                               />
                             </div>
                             <div className="form-group col-md-6">
@@ -107,9 +226,12 @@ const InfluencerSettings = () => {
                                 Last Name
                               </label>
                               <input
+                                name="lastName"
                                 type="text"
                                 className="form-control"
-                                placeholder="John"
+                                placeholder={influencerDetails.lastName}
+                                defaultValue={influencerDetails.lastName}
+                                onChange={handleChange}
                               />
                             </div>
                             <div className="form-group col-md-6">
@@ -117,9 +239,13 @@ const InfluencerSettings = () => {
                                 User Name
                               </label>
                               <input
+                                name="username"
                                 type="text"
                                 className="form-control"
-                                placeholder="JohnDoe"
+                                placeholder={influencerDetails.username}
+                                defaultValue={influencerDetails.username}
+                                onChange={handleChange}
+                                disabled
                               />
                             </div>
                             <div className="form-group col-md-6">
@@ -127,9 +253,13 @@ const InfluencerSettings = () => {
                                 Email Address
                               </label>
                               <input
+                                name="email"
                                 type="text"
                                 className="form-control"
-                                placeholder="JohnDoe@gmail.com"
+                                placeholder={influencerDetails.email}
+                                defaultValue={influencerDetails.email}
+                                onChange={handleChange}
+                                disabled
                               />
                             </div>
                             <div className="form-group col-md-6">
@@ -137,20 +267,36 @@ const InfluencerSettings = () => {
                                 Password
                               </label>
                               <input
+                                name="password"
                                 type="password"
                                 className="form-control"
                                 placeholder="********"
+                                value={influencerDetails.password}
+                                onChange={handleChange}
                               />
                             </div>
                             <div className="form-group col-md-6">
                               <label htmlFor className="mb-1 tx-com">
                                 Occupation
                               </label>
-                              <select id="gender" className="form-control">
+                              {/* <select id="gender" className="form-control">
                                 <option value />
                                 <option value="m">Artiste</option>
                                 <option value="f">Comedian</option>
                                 <option value="b">Actor</option>
+                              </select> */}
+                              <select
+                                name="occupation"
+                                className="custom-select"
+                                // value="select channel"
+                                defaultValue={influencerDetails.occupation}
+                                onChange={handleChange}
+                              >
+                                {occupations.map((occupation, i) => (
+                                  <option value={occupation.value} key={i}>
+                                    {occupation.label}
+                                  </option>
+                                ))}
                               </select>
                             </div>
                           </div>
@@ -166,6 +312,7 @@ const InfluencerSettings = () => {
                                 type="text"
                                 className="form-control"
                                 placeholder="@tomedow"
+                                disabled
                               />
                             </div>
                             <div className="form-group col-md-6">
@@ -173,9 +320,12 @@ const InfluencerSettings = () => {
                                 Amount
                               </label>
                               <input
+                              name="instagram"
                                 type="text"
                                 className="form-control"
                                 placeholder="N500,000.00"
+                                value={}
+                                onChange={handleCostChange}
                               />
                             </div>
                             <div className="form-group col-md-6">
@@ -186,6 +336,7 @@ const InfluencerSettings = () => {
                                 type="text"
                                 className="form-control"
                                 placeholder="@Johndoe"
+                                disabled
                               />
                             </div>
                             <div className="form-group col-md-6">
@@ -206,6 +357,7 @@ const InfluencerSettings = () => {
                                 type="text"
                                 className="form-control"
                                 placeholder="@tomedow"
+                                disabled
                               />
                             </div>
                             <div className="form-group col-md-6">
@@ -226,6 +378,7 @@ const InfluencerSettings = () => {
                                 type="text"
                                 className="form-control"
                                 placeholder="@tomedow"
+                                disabled
                               />
                             </div>
                             <div className="form-group col-md-6">

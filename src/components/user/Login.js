@@ -27,20 +27,20 @@ const Login = () => {
     if (isAuthenticated && user.user.role !== "influencer") {
       dispatch(getWallet());
       navHistory("/app");
-    } else if (isAuthenticated && user.user.role === "influencer") {
+    } else if (!isAuthenticated && error && error.statusCode === 102) {
+      navHistory("/update-password");
+    } else if (isAuthenticated && user && user.user.role === "influencer") {
       dispatch(getWallet());
       navHistory("/influencer");
+    } else if (isAuthenticated && error) {
+      alert.error(error.message);
+      dispatch(clearErrors());
     } else {
       navHistory("/login");
       setUsername("");
       setPassword("");
     }
-
-    if (error) {
-      alert.error(error);
-      dispatch(clearErrors());
-    }
-  }, [dispatch, alert, isAuthenticated, error, navHistory]);
+  }, [dispatch, alert, user, isAuthenticated, error, navHistory]);
 
   const submitHandler = (e) => {
     e.preventDefault();
