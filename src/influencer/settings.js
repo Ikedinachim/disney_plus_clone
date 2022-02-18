@@ -320,11 +320,10 @@ const InfluencerSettings = () => {
                                 Amount
                               </label>
                               <input
-                              name="instagram"
+                                name="instagram"
                                 type="text"
                                 className="form-control"
                                 placeholder="N500,000.00"
-                                value={}
                                 onChange={handleCostChange}
                               />
                             </div>

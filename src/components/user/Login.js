@@ -121,7 +121,7 @@ const Login = () => {
                           </div>
                         </div>
                         <div className="form-group col-md-6 col-6">
-                          <Link to="#0">Forgot Password</Link>
+                          <Link to="../forgotpassword">Forgot Password</Link>
                         </div>
                       </div>
                       <div className="mg-y-30">

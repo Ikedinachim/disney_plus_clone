@@ -175,8 +175,8 @@ export const updateUserDetails = (payload) => async (dispatch) => {
         Authorization: `Bearer ${token}`,
       },
     };
-    const { data } = await axios.put(
-      "api/user/update/profile",
+    const { data } = await axios.post(
+      "api/auth/update-profile",
       payload,
       config
     );
