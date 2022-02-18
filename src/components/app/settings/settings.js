@@ -4,26 +4,26 @@ import { useAlert } from "react-alert";
 import { useSelector, useDispatch } from "react-redux";
 import { getUser, updateUserDetails } from "../../../actions/authActions";
 import { Link } from "react-router-dom";
-import FeatherIcon from "feather-icons-react";
 import { UPDATE_USER_RESET } from "../../../constants/authConstants";
 import { clearErrors } from "../../../actions/authActions";
 import Loader from "../../loader";
 
 const Settings = () => {
-  const updateUser = useSelector((state) => state.updateUser || []);
   const alert = useAlert();
   const dispatch = useDispatch();
 
-  const { user, loading } = useSelector((state) => state.userDetails || []);
+  const {
+    userDetails: { user, loading: userDetailsLoading },
+    updateUser: { updateUser },
+  } = useSelector((state) => state);
 
-  const [imageUrl, setImageUrl] = useState("");
   const [imageAlt, setImageAlt] = useState("");
 
   useEffect(() => {
     dispatch(getUser());
   }, []);
 
-  const handleImageUpload = async () => {
+  const handleImageChange = async () => {
     const { files } = document.querySelector('input[type="file"]');
     const formData = new FormData();
     formData.append("file", files[0]);
@@ -41,8 +41,9 @@ const Settings = () => {
         options
       );
       const res_1 = await res.json();
-      setImageUrl(res_1.secure_url);
+
       setImageAlt(`An image of ${res_1.original_filename}`);
+      setPeople({ ...people, imageUrl: res_1.secure_url });
     } catch (err) {
       return console.log(err);
     }
@@ -58,13 +59,7 @@ const Settings = () => {
     imageUrl: user.imageUrl,
   });
 
-  const handleImageChange = () => {
-    handleImageUpload();
-    setPeople({ ...people, imageUrl: imageUrl });
-  };
-
   console.log(people);
-  const [show, setShow] = useState(false);
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -76,10 +71,9 @@ const Settings = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(updateUserDetails(people));
-    setShow(!show);
 
     if (updateUser && updateUser.status === "success") {
-      alert.success(`update ${updateUser.status}`);
+      alert.success(`${updateUser.message}`);
       dispatch(getUser());
       dispatch({ type: UPDATE_USER_RESET });
     } else if (updateUser.error) {
@@ -88,16 +82,12 @@ const Settings = () => {
     }
   };
 
-  console.log("imageUrl", imageUrl);
-  console.log("people.imageUrl", imageUrl);
+  console.log("people.imageUrl", people.imageUrl);
 
-  const showButton = (e) => {
-    setShow(!show);
-  };
   return (
     <Fragment>
       <MetaData title={"Settings"} />
-      {loading === true ? (
+      {userDetailsLoading === true ? (
         <Loader />
       ) : (
         <div className="content-body">
@@ -127,13 +117,6 @@ const Settings = () => {
                 <div className="tx-22">Personal details</div>
                 <div className="d-flex justify-content-between my-4">
                   <div>View your setup details here</div>
-                  <div className="mx-4 clickable" onClick={showButton}>
-                    <FeatherIcon
-                      icon="edit"
-                      className="wd-15 ht-20 mg-r-9 tx-primary"
-                    />
-                    {show === false ? "Edit" : "Stop Editing"}
-                  </div>
                 </div>
                 <div className=" wdm-55 d-flex ht-250">
                   <img
@@ -149,15 +132,12 @@ const Settings = () => {
                       className="custom-file-input"
                       accept="image/*"
                       onChange={handleImageChange}
-                      disabled={show === false ? "disabled" : ""}
                     />
                     <label
                       for="custom-file"
                       className="w-15 nav-link clickable"
                     >
                       Click here to change Photo
-                      <br />
-                      (Not more than 1mb)
                     </label>
                   </div>
                 </div>
@@ -174,7 +154,6 @@ const Settings = () => {
                           name="firstName"
                           value={people.firstName}
                           className="wd-90p p-2"
-                          disabled={show === false ? "disabled" : ""}
                           onChange={handleChange}
                         />
                       </div>
@@ -187,7 +166,6 @@ const Settings = () => {
                           name="lastName"
                           value={people.lastName}
                           className="wd-90p p-2"
-                          disabled={show === false ? "disabled" : ""}
                           onChange={handleChange}
                         />
                       </div>
@@ -202,8 +180,7 @@ const Settings = () => {
                           name="username"
                           value={people.username}
                           className="wd-90p p-2"
-                          disabled={show === false ? "disabled" : ""}
-                          onChange={handleChange}
+                          disabled="disabled"
                         />
                       </div>
                       <div className="col-md-6 p-2">
@@ -215,8 +192,7 @@ const Settings = () => {
                           name="email"
                           value={people.email}
                           className="wd-90p p-2"
-                          disabled={show === false ? "disabled" : ""}
-                          onChange={handleChange}
+                          disabled="disabled"
                         />
                       </div>
                     </div>
@@ -231,7 +207,6 @@ const Settings = () => {
                           value={people.password}
                           className="wd-90p p-2"
                           disabled="disabled"
-                          onChange={handleChange}
                         />
                       </div>
                       <div className="col-md-6 p-3">
@@ -243,35 +218,17 @@ const Settings = () => {
                           name="phone"
                           value={people.phone}
                           className="wd-90p p-2"
-                          disabled={show === false ? "disabled" : ""}
                           onChange={handleChange}
                         />
                       </div>
                     </div>
                   </form>
-                  <div className="custom-control custom-switch mg-t-10">
-                    <input
-                      type="checkbox"
-                      className="custom-control-input"
-                      id="customSwitch1"
-                    />
-                    <label
-                      className="custom-control-label tx-blac"
-                      htmlFor="customSwitch1"
-                    >
-                      Notification
-                    </label>
+
+                  <div className="mg-t-20">
+                    <button className="btn btn-primary" onClick={handleSubmit}>
+                      Save
+                    </button>
                   </div>
-                  {show === false ? null : (
-                    <div className="mg-t-20">
-                      <button
-                        className="btn btn-primary"
-                        onClick={handleSubmit}
-                      >
-                        Save
-                      </button>
-                    </div>
-                  )}
                 </div>
               </div>
             </div>

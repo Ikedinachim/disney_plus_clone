@@ -35,6 +35,7 @@ import InfluencerSettings from "./influencer/settings";
 // Auth / User Imports
 import Login from "./components/user/Login";
 import Register from "./components/user/Register";
+import ForgotPassword from "./components/user/ForgotPassword";
 
 import { useSelector } from "react-redux";
 
@@ -242,6 +243,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="forgotpassword" element={<ForgotPassword />} />
         {/* <Route path="/app/sender-id" element={isAuthenticated ? <SenderID /> : <Login />} /> */}
         {/* <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
