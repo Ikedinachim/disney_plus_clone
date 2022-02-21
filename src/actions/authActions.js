@@ -202,6 +202,7 @@ export const updateUserDetails = (payload) => async (dispatch) => {
 
 //Update Influencer Profile
 export const updateInfluencerProfile = (payload) => async (dispatch) => {
+  console.log(payload.updatedCosts);
   try {
     dispatch({ type: UPDATE_INFLUENCER_PROFILE_REQUEST });
     let user = JSON.parse(sessionStorage.getItem("user"));
@@ -213,27 +214,83 @@ export const updateInfluencerProfile = (payload) => async (dispatch) => {
         Authorization: `Bearer ${token}`,
       },
     };
-    const { data } = await axios.post(
-      "api/auth/update-profile",
-      payload,
-      config
-    );
 
-    if (data.status === "success") {
+    const isEmpty = (object) => {
+      for (const property in object) {
+        return false;
+      }
+      return true;
+    };
+
+    const setPayloadData = async (payload) => {
+      let profileData;
+      let costData;
+      console.log(payload);
+
+      if (!isEmpty(payload.profile)) {
+        const { data } = await axios.post(
+          "api/auth/update-profile",
+          payload.profile,
+          config
+        );
+        // console.log(profileData);
+        const profileData = {
+          profileData: data,
+        };
+        // console.log(profileData);
+        return profileData;
+      }
+      if (isEmpty(payload.profile)) {
+        const profileData = {
+          profileData: null,
+        };
+        return profileData;
+      }
+
+      if (
+        // !isEmpty(payload.updatedCosts)
+        Array.isArray(payload.updatedCosts.updatedCosts) &&
+        payload.updatedCosts.updatedCosts.length
+      ) {
+        const { costData } = await axios.put(
+          `api/campaign/influencer/${payload.id}/update-costs`,
+          payload.updatedCosts,
+          config
+        );
+        return costData;
+      }
+      // return { profileData, costData };
+    };
+
+    // setPayloadData(payload);
+
+    console.log(setPayloadData(payload));
+    const { profileData, costData } = await setPayloadData(payload).then();
+    console.log(profileData, costData);
+
+    // const data = setPayloadData(payload);
+
+    if (profileData && profileData.status === "success") {
       dispatch({
         type: UPDATE_INFLUENCER_PROFILE_SUCCESS,
-        payload: data,
+        payload: profileData,
+      });
+    } else if (profileData && profileData.status === "success") {
+    } else if (!profileData) {
+      dispatch({
+        type: UPDATE_INFLUENCER_PROFILE_FAIL,
+        payload: "An error occured",
       });
     } else {
       dispatch({
         type: UPDATE_INFLUENCER_PROFILE_FAIL,
-        payload: data.message,
+        payload: profileData.message,
       });
     }
-  } catch (data) {
+  } catch (profileData) {
     dispatch({
       type: UPDATE_INFLUENCER_PROFILE_FAIL,
-      payload: data.message,
+      payload: profileData.message,
     });
   }
 };

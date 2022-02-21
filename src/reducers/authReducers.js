@@ -394,6 +394,7 @@ export const updateInfluencerReducer = (
     case UPDATE_INFLUENCER_PROFILE_RESET:
       return {
         ...state,
+        status: null,
         updateInfluencer: [],
       };
     case CLEAR_ERRORS:
