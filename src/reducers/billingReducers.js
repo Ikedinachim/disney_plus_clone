@@ -86,12 +86,12 @@ export const transactionHistoryReducer = (state = initialState, action) => {
   }
 };
 
-export const fundWalletReducer = (state = { fundWallet: [] }, action) => {
+export const fundWalletReducer = (state = { fundWallet: {} }, action) => {
   switch (action.type) {
     case FUND_WALLET_REQUEST:
       return {
         loading: true,
-        fundWallet: [],
+        fundWallet: {},
       };
 
     case FUND_WALLET_SUCCESS:
@@ -102,7 +102,7 @@ export const fundWalletReducer = (state = { fundWallet: [] }, action) => {
     case FUND_WALLET_RESET:
       return {
         ...state,
-        fundWallet: [],
+        fundWallet: {},
       };
     case FUND_WALLET_FAIL:
       return {

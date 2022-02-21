@@ -62,18 +62,17 @@ const InfluencerCampaign = ({
 
   const toggleHandler = (item) => (e) => {
     const isChecked = e.target.checked;
+    let singleInfluencer = Influencers.find((el) => el.id === item.id);
     if (isChecked) {
       setCloseModal(true);
       setInfluencerId(e.target.value);
-      // document.body.appendChild(f);
+      console.log(singleInfluencer);
+      singleInfluencer.platforms = [];
+      setCheckedInfluencer(singleInfluencer);
     } else {
       setCloseModal(false);
     }
-    // console.log();
-    let singleInfluencer = Influencers.find((el) => el.id === item.id);
-    console.log(singleInfluencer);
-    singleInfluencer.platforms = [];
-    setCheckedInfluencer(singleInfluencer);
+
     setPayloadData((state) => ({
       ...state,
       [item.id]: state[item.id] ? null : singleInfluencer,
@@ -86,7 +85,6 @@ const InfluencerCampaign = ({
     const isChecked = e.target.checked;
     const influencer = { ...checkedInfluencer };
     let platforms = influencer.platforms;
-    // console.log("selection", item, isChecked);
 
     if (!isChecked) {
       if (item !== "all") {
@@ -139,7 +137,7 @@ const InfluencerCampaign = ({
     if (checkedInfluencer !== null) {
       handleCheckedState(checkedInfluencer);
     }
-  }, [handleCheckedState, checkedInfluencer]);
+  }, [checkedInfluencer]);
 
   console.log("This is the payload data", payloadData);
   console.log("This is the checkedInfluencer data", checkedInfluencer);

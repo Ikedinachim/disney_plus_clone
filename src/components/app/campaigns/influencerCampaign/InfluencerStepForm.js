@@ -62,9 +62,11 @@ export default class InfluencerStepForm extends Component {
 
   handleCheckedState = (input) => {
     this.setState({ checkedInfluencers: input });
+
     let mulInfluencers = this.state.selectedInfluencers;
-    let selectedIndex = mulInfluencers.findIndex((el) => el.id === input.id);
-    console.log(selectedIndex);
+    let selectedIndex =
+      mulInfluencers && mulInfluencers.findIndex((el) => el.id === input.id);
+    console.log("Selected Index", selectedIndex);
     if (selectedIndex !== -1) {
       mulInfluencers.splice(selectedIndex, 1);
       mulInfluencers.push(input);
@@ -74,6 +76,8 @@ export default class InfluencerStepForm extends Component {
       mulInfluencers.push(input);
     }
 
+    console.log("mulInfluencers", mulInfluencers);
+
     this.setState((state) => ({
       ...state,
       selectedInfluencers: mulInfluencers,
@@ -82,6 +86,17 @@ export default class InfluencerStepForm extends Component {
     //   "selected influencer and platforms",
     //   this.state.selectedInfluencers
     // );
+  };
+
+  resetCheckedState = () => {
+    this.setState((state) => ({
+      ...state,
+      checkedInfluencers: [],
+    }));
+    this.setState((state) => ({
+      ...state,
+      selectedInfluencers: [],
+    }));
   };
 
   handleCheck(e) {
@@ -334,6 +349,7 @@ export default class InfluencerStepForm extends Component {
             values={values}
             selectedFileName={selectedFileName}
             uploadPercentage={uploadPercentage}
+            resetCheckedState={this.resetCheckedState}
           />
         );
       case 3:

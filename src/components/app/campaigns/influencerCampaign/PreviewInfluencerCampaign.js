@@ -146,7 +146,7 @@ const PreviewInfluencerCampaign = ({
     };
     setPayload(payload);
     // console.log(payload);
-  }, [filteredValue, payload]);
+  }, [filteredValue]);
 
   const submitInfluencerCampaignHandler = (e) => {
     e.preventDefault();

@@ -11,6 +11,7 @@ import DashboardLayout from "./components/app/DashboardLayout";
 import SenderID from "./components/app/SenderID/SenderID";
 import BillingOverview from "./components/app/billing/Billing";
 import FundWallet from "./components/app/billing/FundWallet";
+import MakePayment from "./components/app/billing/MakePayment";
 import RequestSenderID from "./components/app/SenderID/RequestSenderID";
 import CreateCampaign from "./components/app/campaigns/CreateCampaign";
 // import TargetAudience from "./components/app/campaigns/TargetAudience"
@@ -119,6 +120,17 @@ function App() {
             element={
               isAuthenticated && user && user.user.role === "user" ? (
                 <FundWallet />
+              ) : (
+                <Login />
+              )
+            }
+          />
+
+          <Route
+            path="billing/payment"
+            element={
+              isAuthenticated && user && user.user.role === "user" ? (
+                <MakePayment />
               ) : (
                 <Login />
               )

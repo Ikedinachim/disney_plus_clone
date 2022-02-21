@@ -71,6 +71,7 @@ const appReducer = combineReducers({
   updateInfluencerCampaignPublishStatus: updateInfluencerPublishedStatusReducer,
   influencerDetails: getInfluencerDetailsReducer,
   digitalCampaigns: getDigitalCampaignsReducer,
+  updateInfluencerProfile: updateInfluencerReducer,
 });
 
 const reducer = (state, action) => {
