@@ -1,14 +1,16 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useRef } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
 import { Link, useNavigate } from "react-router-dom";
+import { usePaystackPayment } from "react-paystack";
 
 import MetaData from "../../layout/MetaData";
 import Loader from "../../loader";
 import {
   fundUserWallet,
   getWallet,
+  confirmFunding,
   clearErrors,
 } from "../../../actions/billingActions";
 import NumberFormat from "react-number-format";
@@ -18,6 +20,7 @@ const FundWallet = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const paymentButton = useRef(null);
 
   const [amount, setAmountToPay] = useState("");
   const { fundWallet, loading, error } = useSelector(
@@ -34,13 +37,61 @@ const FundWallet = () => {
     setAmountToPay("");
   };
 
+  const config = {
+    reference:
+      Object.keys(fundWallet).length > 0 ? fundWallet.data.reference : "",
+    email: user.user.email,
+    amount:
+      Object.keys(fundWallet).length > 0
+        ? parseInt(fundWallet.data.amount) * 100
+        : 0,
+    publicKey: "pk_test_ede7f0b05b35161246f7bb41898a1d4342c12a7b",
+  };
+
+  // you can call this function anything
+  const onSuccess = (reference) => {
+    // Implementation for whatever you want to do with reference and after success call.
+    console.log(reference);
+  };
+
+  // you can call this function anything
+  const onClose = () => {
+    // implementation for  whatever you want to do when the Paystack dialog closed.
+    console.log("closed");
+  };
+
+  // const MakePayment = () => {
+  //   const initializePayment = usePaystackPayment(config);
+  //   initializePayment(onSuccess, onClose);
+  // };
+
+  const PaystackHookExample = () => {
+    const initializePayment = usePaystackPayment(config);
+    return (
+      <div>
+        <button
+          // ref={paymentButton}
+          id="payment-button"
+          onClick={() => {
+            initializePayment(onSuccess, onClose);
+          }}
+        >
+          Paystack Hooks Implementation
+        </button>
+      </div>
+    );
+  };
+
   useEffect(() => {
     if (!isAuthenticated || user === null) {
       navigate("/login");
     } else if (!loading && fundWallet && fundWallet.status === "success") {
-      alert.success(fundWallet.message);
-      dispatch({ type: FUND_WALLET_RESET });
-      navigate("/app/billing");
+      // alert.success(fundWallet.message);
+      // dispatch({ type: FUND_WALLET_RESET });
+      // navigate("/billing/payment");
+      // let button = document.getElementById("payment-button");
+      // button.click();
+      // MakePayment();
     }
 
     if (error) {
@@ -125,6 +176,8 @@ const FundWallet = () => {
                             {" "}
                             Fund Wallet{" "}
                           </button>
+
+                          <PaystackHookExample />
                         </form>
                       </div>
                       <div className="col-md-6 col-12 mg-t-20 mg-md-t-0">

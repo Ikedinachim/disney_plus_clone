@@ -230,3 +230,17 @@ tbody + thead {
 .flex-basis-max {
   flex-basis: max-content;
 }
+
+.custom-file-upload {
+  /* border-radius: 50%; */
+  display: inline-block;
+  position: relative;
+  padding: 6px;
+  cursor: pointer;
+  /* background: linear-gradient(270deg, #3fa1a9, #79f1a4); */
+  /* margin-bottom: 25px; */
+}
+
+.custom-file-upload input[type="file"] {
+  display: none;
+}

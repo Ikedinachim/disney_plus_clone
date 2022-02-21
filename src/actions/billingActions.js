@@ -111,30 +111,33 @@ export const fundUserWallet = (amount) => async (dispatch) => {
       },
     };
 
-    const [fundAcc] = await Promise.all([
+    const [data] = await Promise.all([
       await axios.post("/api/payment/initiate-payment", amount, config),
     ]);
 
-    const reference = fundAcc.data.data.reference;
-    amount = fundAcc.data.data.amount;
+    console.log(data);
 
-    const confirmFund = await axios.post(
-      "/api/payment/confirm-payment",
-      { amount, reference },
-      config
-    );
+    // const reference = fundAcc.data.data.reference;
+    // amount = fundAcc.data.data.amount;
+    // // const channel = {channel: "wallet"}
 
-    const data = confirmFund.data;
+    // const confirmFund = await axios.post(
+    //   "/api/payment/confirm-payment",
+    //   { amount, reference, channel: "wallet" },
+    //   config
+    // );
 
-    if (data.status === "success") {
+    // const data = confirmFund.data;
+
+    if (data.data.status === "success") {
       dispatch({
         type: FUND_WALLET_SUCCESS,
-        payload: data,
+        payload: data.data,
       });
     } else {
       dispatch({
         type: FUND_WALLET_FAIL,
-        payload: data.message,
+        payload: data.data.message,
       });
     }
   } catch (error) {
@@ -146,7 +149,7 @@ export const fundUserWallet = (amount) => async (dispatch) => {
 };
 
 // Confirm Wallet Funding
-export const confirmFunding = (amount, reference) => async (dispatch) => {
+export const confirmFunding = (reference) => async (dispatch) => {
   try {
     dispatch({ type: CONFIRM_FUNDING_REQUEST });
     let user = JSON.parse(sessionStorage.getItem("user"));
@@ -159,12 +162,24 @@ export const confirmFunding = (amount, reference) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post(
-      "/api/payment/confirm-payment",
-      amount,
-      reference,
+    // const { fundAcc } = await axios.post(
+    //   "/api/payment/confirm-payment",
+    //   amount,
+    //   reference,
+    //   config
+    // );
+
+    // const reference = fundAcc.data.data.reference;
+    // amount = fundAcc.data.data.amount;
+    // const channel = {channel: "wallet"}
+
+    const confirmFund = await axios.post(
+      "/api/payment/confirm-paystack-payment",
+      { reference, channel: "paystack" },
       config
     );
+
+    const data = confirmFund.data;
 
     if (data.status === "success") {
       dispatch({

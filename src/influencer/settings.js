@@ -2,45 +2,31 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
 
-import { updateInfluencerPassword } from "../actions/authActions";
+import { updateInfluencerProfile } from "../actions/authActions";
 
-import Loader from "../influencer/components/layout/Loader";
-import MetaData from "../influencer/components/layout/MetaData";
+import MetaData from "../components/layout/MetaData";
+import Loader from "../components/loader";
 import axios from "axios";
+import {
+  CLEAR_ERRORS,
+  UPDATE_INFLUENCER_PROFILE_RESET,
+} from "../constants/authConstants";
+import { getInfluencerDetails } from "../actions/campaignActions";
+import { ProgressBar } from "react-bootstrap";
 
 const InfluencerSettings = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
-  const { updateInfluencer, loading } = useSelector(
+  const { updateInfluencer, loading, error } = useSelector(
     (state) => state.updateInfluencerProfile || []
   );
+  const { influencerDetails } = useSelector(
+    (state) => state.influencerDetails || []
+  );
   const { user } = useSelector((state) => state.auth || []);
-  console.log(user.user.email);
 
-  //   const toggleHandler = (item) => (e) => {
-  //     const isChecked = e.target.checked;
-  //     if (isChecked) {
-  //       setCloseModal(true);
-  //       setInfluencerId(e.target.value);
-  //     } else {
-  //       setCloseModal(false);
-  //     }
-  //     // console.log();
-  //     let singleInfluencer = Influencers.find((el) => el.id === item.id);
-  //     singleInfluencer.platforms = [];
-  //     setCheckedInfluencer(singleInfluencer);
-  //     setPayloadData((state) => ({
-  //       ...state,
-  //       [item.id]: state[item.id]
-  //         ? null
-  //         : {
-  //             id: item.id,
-  //           },
-  //     }));
-  //     // handleCheckedState(checkedInfluencer);
-  //   };
-
-  const [influencerDetails, setInfluencerDetails] = useState({
+  const [influencer, setInfluencer] = useState({
+    id: user.user.influencer_id,
     firstName: user.user.firstName,
     lastName: user.user.lastName,
     username: user.user.userName,
@@ -54,9 +40,12 @@ const InfluencerSettings = () => {
     updatedCosts: [],
   });
 
-  const [updateCost, setUpdateCost] = useState([]);
+  const [updateCost, setUpdateCost] = useState({});
 
-  const [platformCost, setPlatformCost] = useState([]);
+  const [profile, setProfile] = useState({});
+
+  const [profileImage, setProfileImage] = useState({});
+  console.log(profileImage);
 
   const handleImageUpload = async (e) => {
     let files = e.target.files[0];
@@ -72,8 +61,8 @@ const InfluencerSettings = () => {
         // console.log(`${loaded}kb of ${total}kb | ${percent}%`);
 
         if (percent < 100) {
-          setInfluencerDetails({
-            ...influencerDetails,
+          setProfileImage({
+            ...profileImage,
             uploadPercentage: percent,
           });
         }
@@ -88,27 +77,56 @@ const InfluencerSettings = () => {
           options
         )
         .then((res) => {
-          // console.log(res);
-          setInfluencerDetails(
+          // setProfile((prevState) => ({
+          //   ...prevState,
+          //   imageUrl: res.data.secure_url,
+          // })),
+          setProfileImage(
             {
-              ...influencerDetails,
+              ...profileImage,
               imageUrl: res.data.secure_url,
               uploadPercentage: 100,
               selectedFileName: files.name,
-              imageAlt: `An image of ${res.original_filename}`,
+              imageAlt: `An image of ${files.name}`,
             },
             () => {
               setTimeout(() => {
-                setInfluencerDetails({
-                  ...influencerDetails,
+                setProfileImage({
+                  ...profileImage,
                   uploadPercentage: 0,
                 });
               }, 1000);
             }
           );
+          setProfile((prevState) => ({
+            ...prevState,
+            imageUrl: res.data.secure_url,
+          }));
         });
+      // .then((res) => {
+      //   setProfile((prevState) => ({
+      //     ...prevState,
+      //     imageUrl: profileImage.imageUrl,
+      //   }));
+      // });
     } catch (err) {
       // return console.log(err);
+    }
+  };
+
+  const isEmpty = (object) => {
+    for (const property in object) {
+      return false;
+    }
+    return true;
+  };
+
+  const setImage = (query) => {
+    if (isEmpty(query)) {
+      setProfile((prevState) => ({
+        ...prevState,
+        imageUrl: profileImage.imageUrl,
+      }));
     }
   };
 
@@ -133,7 +151,7 @@ const InfluencerSettings = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUpdateCost((prevState) => ({
+    setProfile((prevState) => ({
       ...prevState,
       [name]: value,
     }));
@@ -141,18 +159,46 @@ const InfluencerSettings = () => {
 
   const handleCostChange = (e) => {
     const { name, value } = e.target;
-    setInfluencerDetails((prevState) => ({
-      ...prevState,
-      payload: { [name]: value },
+    setUpdateCost((updateCost) => ({
+      ...updateCost,
+      [name]: value,
     }));
+    // let query = { [name]: value };
+    // setUpdateCost({ ...updateCost.updateCost, query });
+  };
+  let payload = {};
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(profileImage);
+    dispatch(updateInfluencerProfile(payload));
+    setProfile({});
+    setUpdateCost([]);
   };
 
-  console.log(influencerDetails);
+  console.log(updateCost);
 
   useEffect(() => {
-    // dispatch(getAllInfluencers());
-    console.log(influencerDetails.imageUrl);
-  }, [dispatch]);
+    let plaformCost;
+    plaformCost = Object.entries(updateCost).map(([k, v]) => ({ [k]: v }));
+
+    payload = {
+      id: influencer.id,
+      profile,
+      updatedCosts: { updatedCosts: plaformCost },
+    };
+
+    console.log(payload);
+    if (updateInfluencer && updateInfluencer.statusCode === 100) {
+      alert.success(updateInfluencer.message);
+      dispatch({ type: UPDATE_INFLUENCER_PROFILE_RESET });
+      dispatch(getInfluencerDetails(influencer.id));
+    }
+    if (error) {
+      alert.error(error);
+      dispatch({ type: CLEAR_ERRORS });
+    }
+  }, [dispatch, updateCost, profile, payload, profileImage, updateInfluencer]);
 
   return (
     <Fragment>
@@ -167,10 +213,13 @@ const InfluencerSettings = () => {
               <div className="card card-body rounded bd-0 shadow-sm pd-lg-x-0 pd-lg-y-30">
                 <div className="pd-md-y-20">
                   <div className>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                       <div>
                         <div id className="pd-md-x-30 pd-xl-x-50">
-                          <p className="tx-22 tx-com tx-bold mb-2">
+                          <p
+                            className="tx-22 tx-com tx-bold mb-2"
+                            htmlFor="customFile"
+                          >
                             Personal Details
                           </p>
                           <p className="tx-14 tx-blac">
@@ -179,31 +228,71 @@ const InfluencerSettings = () => {
                           <div className="form-drop col-md-4 pd-x-0 ">
                             <div className="drop-zone-form pd-b-40">
                               <div className="cell">
-                                <div className="drop-zone__prompt">
+                                <label
+                                  htmlFor="photo-upload"
+                                  className="custom-file-upload"
+                                >
                                   <div className="d-flex">
                                     <img
-                                      src="../assets/img/tiwa.jpeg"
+                                      htmlFor="photo-upload"
+                                      src={
+                                        influencerDetails &&
+                                        influencerDetails.imagePath
+                                      }
                                       className="img-fluid wd-100 ht-100 pro-image"
-                                      alt=""
-                                      srcSet
+                                      alt={`${influencer.firstName} display picture`}
                                     />
-                                    <p className="p-14 mg-t-20 tx-primary mg-l-15">
+                                    <p
+                                      htmlFor="photo-upload"
+                                      className="p-14 mg-t-20 tx-primary mg-l-15"
+                                    >
                                       Click to change photo <br /> (Not more
                                       than 1mb)
                                     </p>
                                   </div>
-                                </div>
-                                <input
+                                  <input
+                                    type="file"
+                                    name="file"
+                                    // className="drop-zone__input"
+                                    accept="image/png, image/jpeg, image/gif, image/jpg"
+                                    className="custom-file-input"
+                                    id="photo-upload"
+                                    onChange={(e) => handleImageUpload(e)}
+                                  />
+                                  {profileImage.uploadPercentage > 0 && (
+                                    <span className="mt-2">
+                                      <ProgressBar
+                                        now={profileImage.uploadPercentage}
+                                        // active
+                                        label={`${profileImage.uploadPercentage}%`}
+                                      />
+                                    </span>
+                                  )}
+                                </label>
+                                {/* <input
                                   type="file"
                                   name="file"
                                   // className="drop-zone__input"
                                   accept="image/png, image/jpeg, image/gif, image/jpg"
                                   className="custom-file-input"
-                                  id="customFile"
+                                  id="photo-upload"
                                   onChange={(e) => handleImageUpload(e)}
-                                />
+                                /> */}
                               </div>
                             </div>
+                            {/* <label
+                              htmlFor="photo-upload"
+                              className="custom-file-upload fas"
+                            >
+                              <div className="img-wrap img-upload">
+                                <img for="photo-upload" src={src} />
+                              </div>
+                              <input
+                                id="photo-upload"
+                                type="file"
+                                onChange={onChange}
+                              />
+                            </label> */}
                           </div>
                         </div>
                         <div id className="card-scroll pd-md-x-30 pd-xl-x-50">
@@ -215,9 +304,9 @@ const InfluencerSettings = () => {
                               <input
                                 type="text"
                                 className="form-control"
-                                placeholder={influencerDetails.firstName}
+                                placeholder={influencer.firstName}
                                 name="firstName"
-                                defaultValue={influencerDetails.firstName}
+                                defaultValue={influencer.firstName}
                                 onChange={handleChange}
                               />
                             </div>
@@ -229,8 +318,8 @@ const InfluencerSettings = () => {
                                 name="lastName"
                                 type="text"
                                 className="form-control"
-                                placeholder={influencerDetails.lastName}
-                                defaultValue={influencerDetails.lastName}
+                                placeholder={influencer.lastName}
+                                defaultValue={influencer.lastName}
                                 onChange={handleChange}
                               />
                             </div>
@@ -242,8 +331,8 @@ const InfluencerSettings = () => {
                                 name="username"
                                 type="text"
                                 className="form-control"
-                                placeholder={influencerDetails.username}
-                                defaultValue={influencerDetails.username}
+                                placeholder={influencer.username}
+                                defaultValue={influencer.username}
                                 onChange={handleChange}
                                 disabled
                               />
@@ -256,8 +345,8 @@ const InfluencerSettings = () => {
                                 name="email"
                                 type="text"
                                 className="form-control"
-                                placeholder={influencerDetails.email}
-                                defaultValue={influencerDetails.email}
+                                placeholder={influencer.email}
+                                defaultValue={influencer.email}
                                 onChange={handleChange}
                                 disabled
                               />
@@ -271,7 +360,7 @@ const InfluencerSettings = () => {
                                 type="password"
                                 className="form-control"
                                 placeholder="********"
-                                value={influencerDetails.password}
+                                value={influencer.password}
                                 onChange={handleChange}
                               />
                             </div>
@@ -279,17 +368,13 @@ const InfluencerSettings = () => {
                               <label htmlFor className="mb-1 tx-com">
                                 Occupation
                               </label>
-                              {/* <select id="gender" className="form-control">
-                                <option value />
-                                <option value="m">Artiste</option>
-                                <option value="f">Comedian</option>
-                                <option value="b">Actor</option>
-                              </select> */}
                               <select
-                                name="occupation"
+                                name="kind"
                                 className="custom-select"
                                 // value="select channel"
-                                defaultValue={influencerDetails.occupation}
+                                defaultValue={
+                                  influencerDetails && influencerDetails.kind
+                                }
                                 onChange={handleChange}
                               >
                                 {occupations.map((occupation, i) => (
@@ -324,7 +409,7 @@ const InfluencerSettings = () => {
                                 type="text"
                                 className="form-control"
                                 placeholder="N500,000.00"
-                                onChange={handleCostChange}
+                                onBlur={handleCostChange}
                               />
                             </div>
                             <div className="form-group col-md-6">
@@ -343,9 +428,11 @@ const InfluencerSettings = () => {
                                 Amount
                               </label>
                               <input
+                                name="twitter"
                                 type="text"
                                 className="form-control"
                                 placeholder="N500,000.00"
+                                onBlur={handleCostChange}
                               />
                             </div>
                             <div className="form-group col-md-6">
@@ -364,9 +451,11 @@ const InfluencerSettings = () => {
                                 Amount
                               </label>
                               <input
+                                name="snapchat"
                                 type="text"
                                 className="form-control"
                                 placeholder="N500,000.00"
+                                onBlur={handleCostChange}
                               />
                             </div>
                             <div className="form-group col-md-6">
@@ -385,9 +474,11 @@ const InfluencerSettings = () => {
                                 Amount
                               </label>
                               <input
+                                name="facebook"
                                 type="text"
                                 className="form-control"
                                 placeholder="N500,000.00"
+                                onBlur={handleCostChange}
                               />
                             </div>
                           </div>
@@ -396,8 +487,9 @@ const InfluencerSettings = () => {
                       <div className="col-md-4 pd-x-0 pd-md-l-30 pd-xl-l-50 mg-y-40">
                         <div className="d-flex">
                           <button
-                            type="button"
+                            type="submit"
                             className="btn btn-primary w-100 "
+                            // onSubmit={handleSubmit}
                           >
                             Save Changes
                           </button>
