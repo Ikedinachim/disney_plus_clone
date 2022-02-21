@@ -51,6 +51,14 @@ const SenderID = () => {
           field: "status",
         },
         {
+          label: "TELCO STATUS",
+          field: "telcoStatus",
+        },
+        {
+          label: "ADDITIONAL INFO",
+          field: "additionalInfo",
+        },
+        {
           label: "ACTION",
           field: "actions",
         },
@@ -79,6 +87,20 @@ const SenderID = () => {
               : "Approved"}
           </span>
         ),
+        telcoStatus: (
+          <span
+            className={`{"badge" ${
+              senderids.status === null || senderids.telcoStatus === "pending"
+                ? "badge-pink"
+                : "badge-active"
+            }`}
+          >
+            {senderids.status === null || senderids.telcoStatus === "pending"
+              ? "Pending"
+              : "Approved"}
+          </span>
+        ),
+        additionalInfo: senderids.additionalInfo,
         actions: (
           <Fragment>
             <div className="dropdown">

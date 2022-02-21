@@ -11,7 +11,7 @@ import Loader from "../../loader";
 import { useAlert } from "react-alert";
 
 const Analytics = () => {
-  const { loading, error, propellerCampaign } = useSelector(
+  const { loading, error, propellerCampaigns } = useSelector(
     (state) => state.getPropellerCampaign || {}
   );
 
@@ -27,7 +27,7 @@ const Analytics = () => {
     dispatch(getPropellerCampaign(propellerId));
   }, [dispatch, alert, error]);
 
-  console.log(propellerCampaign);
+  console.log(propellerCampaigns);
 
   const MonthlyAds = {
     title: "Monthly ads",

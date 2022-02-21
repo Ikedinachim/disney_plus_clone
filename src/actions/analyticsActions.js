@@ -24,8 +24,8 @@ export const getPropellerCampaign = (propellerId) => async (dispatch) => {
         "Content-type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: {
-        group_by: "os",
+      Request_body: {
+        group_by: "campaign_id",
         day_from: "2022-01-01 00:00:00",
         day_to: "2022-02-22 23:59:59",
         campaign_id: [propellerId],
