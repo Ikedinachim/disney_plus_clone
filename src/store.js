@@ -24,6 +24,7 @@ import {
   fundWalletReducer,
   confirmFundingReducer,
 } from "./reducers/billingReducers";
+import { getPropellerCampaignsReducer } from "./reducers/anayticsReducers";
 import {
   createSmsCampaignReducer,
   createFlierVideoCampaignReducer,
@@ -71,6 +72,7 @@ const appReducer = combineReducers({
   updateInfluencerCampaignPublishStatus: updateInfluencerPublishedStatusReducer,
   influencerDetails: getInfluencerDetailsReducer,
   digitalCampaigns: getDigitalCampaignsReducer,
+  getPropellerCampaigns: getPropellerCampaignsReducer,
 });
 
 const reducer = (state, action) => {

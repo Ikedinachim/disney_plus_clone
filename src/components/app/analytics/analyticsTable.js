@@ -101,7 +101,7 @@ const AnalyticsTable = () => {
             <Fragment>
               <div class="tx-black tx-14">
                 <div class="d-flex">
-                  <Link to={`../analytics/graph`}>
+                  <Link to={`../analytics/graph/${campaign.propellerId}`}>
                     <i className="fa fa-eye tx-orange pd-t-4 mg-r-5" /> View
                     Analytics{" "}
                   </Link>
