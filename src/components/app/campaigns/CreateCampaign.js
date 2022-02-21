@@ -76,7 +76,7 @@ const CreateCampaign = () => {
                             />
                             <div className="pd-t-15">
                               <p className="tx-16 tx-bold">
-                                Influential Marketing
+                                Influencer Marketing
                               </p>
                               <p className="tx-14 tx-gray mb-0">
                                 Tap from our unlimited network of top

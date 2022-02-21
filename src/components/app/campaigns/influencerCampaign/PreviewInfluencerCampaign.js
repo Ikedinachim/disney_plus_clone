@@ -135,10 +135,6 @@ const PreviewInfluencerCampaign = ({
     });
 
     const payload = {
-      twitterHandle: values.twitterHandle,
-      facebookHandle: values.facebookHandle,
-      instagramHandle: values.instagramHandle,
-      snapchatHandle: values.snapchatHandle,
       campaignMessage: values.campaignMessage,
       campaignType: values.campaignType,
       attachment: values.attachment,
@@ -146,7 +142,7 @@ const PreviewInfluencerCampaign = ({
     };
     setPayload(payload);
     // console.log(payload);
-  }, [filteredValue, payload]);
+  }, [filteredValue]);
 
   const submitInfluencerCampaignHandler = (e) => {
     e.preventDefault();

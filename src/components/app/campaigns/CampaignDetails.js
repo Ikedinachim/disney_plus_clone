@@ -1,9 +1,8 @@
 import React, { Fragment, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-
+import MetaData from "../../layout/MetaData";
 import { useSelector, useDispatch } from "react-redux";
 import { DateTime } from "luxon";
-
 import {
   displaySingleCampaign,
   clearErrors,
@@ -30,13 +29,14 @@ const CampaignDetails = () => {
   }, [dispatch, alert, error]);
 
   console.log(singleCampaign);
-  console.log(singleCampaign);
+
   return (
     <Fragment>
       {loading ? (
         <Loader />
       ) : (
         <Fragment>
+          <MetaData title={"Campaign Details"} />
           <div className="content-body">
             <div className="container pd-x-0">
               <div className="row justify-content-between">
