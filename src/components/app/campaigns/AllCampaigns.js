@@ -145,7 +145,7 @@ const AllCampaigns = () => {
                 <div className="col-md-2 col-6">
                   <p>
                     <Link to="../campaign/create" className="btn btn-primary">
-                      New Campaign
+                      Create New Campaign
                     </Link>
                   </p>
                 </div>

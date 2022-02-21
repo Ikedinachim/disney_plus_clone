@@ -210,7 +210,7 @@ function App() {
           />
 
           <Route
-            path="analytics/graph"
+            path="analytics/graph/:propellerId"
             element={
               isAuthenticated && user && user.user.role === "user" ? (
                 <Analytics />
