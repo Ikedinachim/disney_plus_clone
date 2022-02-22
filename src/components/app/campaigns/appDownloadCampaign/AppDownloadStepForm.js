@@ -36,8 +36,8 @@ export default class AppDownloadStepForm extends Component {
     gender: "",
     state: "abia",
     lga: "",
-    deviceType: "LG",
-    deviceBrand: "X210ZM",
+    deviceType: "",
+    deviceBrand: "",
 
     selectedFileName: "Upload Asset *png, *jpg, *gif",
 
