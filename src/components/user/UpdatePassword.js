@@ -11,13 +11,13 @@ import {
   clearErrors,
 } from "../../actions/authActions";
 import { getWallet } from "../../actions/billingActions";
-import { REGISTER_USER_RESET } from "../../constants/authConstants";
+import { UPDATE_INFLUENCER_PROFILE_RESET } from "../../constants/authConstants";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
-const UpdatePassword = () => {
+const UpdateInfluencerPassword = () => {
   const navigate = useNavigate();
   const alert = useAlert();
   const dispatch = useDispatch();
@@ -55,6 +55,9 @@ const UpdatePassword = () => {
 
   const { isAuthenticated, user, isUpdated, passwordUpdated, error, loading } =
     useSelector((state) => state.auth);
+  const { resetInfluencerPassword } = useSelector(
+    (state) => state.resetInfluencerPassword
+  );
 
   const submitIndividualHandler = (data) => {
     console.log(data);
@@ -94,6 +97,7 @@ const UpdatePassword = () => {
       navigate("/influencer");
     } else if (!isAuthenticated && !passwordUpdated && error) {
       alert.error(error.message);
+      dispatch({ type: UPDATE_INFLUENCER_PROFILE_RESET });
       dispatch(clearErrors());
     }
   }, [
@@ -216,4 +220,4 @@ const UpdatePassword = () => {
   );
 };
 
-export default UpdatePassword;
+export default UpdateInfluencerPassword;

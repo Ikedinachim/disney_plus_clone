@@ -33,7 +33,7 @@ const Sidebar = () => {
       <div className={`aside-header ${isMenuOpen ? "" : ""}`}>
         <NavLink to="/app" className="aside-logo">
           <div className="pd-50">
-            <img src={NavLogo} className="img-fluid logo" alt="logo" srcSet />
+            <img src={NavLogo} className="img-fluid logo" alt="logo" />
           </div>
         </NavLink>
         <div className="aside-menu-link">
@@ -46,20 +46,10 @@ const Sidebar = () => {
       </div>
       <div className="aside-body">
         <ul className="nav nav-aside">
-          {/* <li className="nav-item active">
-            <NavLink
-              to="/app"
-              className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
-              }
-            >
-              <i className="fa fa-home mr-3" />
-              <span>Home</span>
-            </NavLink>
-          </li> */}
           <li className="nav-item active">
             <NavLink
               to="/influencer"
+              end
               className={({ isActive }) =>
                 isActive ? "nav-link active" : "nav-link"
               }
@@ -68,9 +58,10 @@ const Sidebar = () => {
               <span>Campaigns</span>
             </NavLink>
           </li>
-          <li className="nav-item">
+          <li className="nav-item active">
             <NavLink
               to="/influencer/settings"
+              end
               className={({ isActive }) =>
                 isActive ? "nav-link active" : "nav-link"
               }
