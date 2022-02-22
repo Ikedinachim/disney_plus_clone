@@ -14,6 +14,7 @@ import { MDBDataTable } from "mdbreact";
 import {
   getAllInfluencerCampaign,
   getInfluencerDetails,
+  clearErrors,
 } from "../actions/campaignActions";
 
 const Dashboard = () => {
@@ -93,52 +94,52 @@ const Dashboard = () => {
         status: (
           <span
             className={`badge d-flex-center ${
-              campaign.marketingData.isApproved &&
-              !campaign.marketingData.isPublished &&
-              !campaign.marketingData.isRejected
+              campaign.isApproved &&
+              !campaign.isPublished &&
+              !campaign.isRejected
                 ? "badge-pending"
                 : ""
             } ${
-              campaign.marketingData.isApproved &&
-              campaign.marketingData.isPublished &&
-              !campaign.marketingData.isRejected
+              campaign.isApproved &&
+              campaign.isPublished &&
+              !campaign.isRejected
                 ? "badge-active"
                 : ""
             } ${
-              !campaign.marketingData.isApproved &&
-              !campaign.marketingData.isPublished &&
-              campaign.marketingData.isRejected
+              !campaign.isApproved &&
+              !campaign.isPublished &&
+              campaign.isRejected
                 ? "badge-primary"
                 : ""
             }
              ${
-               !campaign.marketingData.isApproved &&
-               !campaign.marketingData.isPublished &&
-               !campaign.marketingData.isRejected
+               !campaign.isApproved &&
+               !campaign.isPublished &&
+               !campaign.isRejected
                  ? "badge-pink"
                  : ""
              }`}
           >
             {
-              // (!campaign.marketingData.isApproved ? "Pending" : "Approved")
-              campaign.marketingData.isApproved &&
-              !campaign.marketingData.isPublished &&
-              !campaign.marketingData.isRejected
+              // (!campaign.isApproved ? "Pending" : "Approved")
+              campaign.isApproved &&
+              !campaign.isPublished &&
+              !campaign.isRejected
                 ? "Unpublished"
                 : null ||
-                  (campaign.marketingData.isApproved &&
-                    campaign.marketingData.isPublished &&
-                    !campaign.marketingData.isRejected)
+                  (campaign.isApproved &&
+                    campaign.isPublished &&
+                    !campaign.isRejected)
                 ? "Published"
                 : null ||
-                  (!campaign.marketingData.isApproved &&
-                    !campaign.marketingData.isPublished &&
-                    campaign.marketingData.isRejected)
+                  (!campaign.isApproved &&
+                    !campaign.isPublished &&
+                    campaign.isRejected)
                 ? "Rejected"
                 : null ||
-                  (!campaign.marketingData.isApproved &&
-                    !campaign.marketingData.isPublished &&
-                    !campaign.marketingData.isRejected)
+                  (!campaign.isApproved &&
+                    !campaign.isPublished &&
+                    !campaign.isRejected)
                 ? "Pending"
                 : null
 
@@ -207,7 +208,8 @@ const Dashboard = () => {
     }
 
     if (error) {
-      return alert.error(error);
+      alert.error(error);
+      dispatch(clearErrors());
     }
   }, [dispatch, error, alert]);
 

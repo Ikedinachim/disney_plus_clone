@@ -32,6 +32,7 @@ import InfluencerDashboardLayout from "./influencer/InfluencerDashboardLayout";
 import InfluencerDashboard from "./influencer/";
 import InfluencerCampaignDetails from "./influencer/ViewInfluencerCampaignDetails";
 import InfluencerSettings from "./influencer/settings";
+import UpdateInfluencerPassword from "./components/user/UpdatePassword";
 
 // Auth / User Imports
 import Login from "./components/user/Login";
@@ -53,7 +54,7 @@ import CampaignDetails from "./components/app/campaigns/CampaignDetails";
 AOS.init();
 
 function App() {
-  const { loading, isAuthenticated, user, error } = useSelector(
+  const { loading, isAuthenticated, user, error, resetPassword } = useSelector(
     (state) => state.auth
   );
 
@@ -264,6 +265,17 @@ function App() {
           <Route path="/login" element={<Login />} /> */}
         <Route path="/ad/:id/:campaignType/:slug" element={<Ads />} />
         {/* <Route path="*" element={isAuthenticated ? <Dashboard /> : <Login />} /> */}
+        <Route
+          path="update-password"
+          element={
+            (resetPassword && resetPassword.statusCode === 102) ||
+            (resetPassword && resetPassword.statusCode === 104) ? (
+              <UpdateInfluencerPassword />
+            ) : (
+              <Login />
+            )
+          }
+        />
       </Routes>
 
       <Routes>

@@ -14,7 +14,10 @@ import {
   clearErrors,
 } from "../../../actions/billingActions";
 import NumberFormat from "react-number-format";
-import { FUND_WALLET_RESET } from "../../../constants/billingConstants";
+import {
+  FUND_WALLET_RESET,
+  CONFIRM_FUNDING_RESET,
+} from "../../../constants/billingConstants";
 
 const FundWallet = () => {
   const alert = useAlert();
@@ -23,9 +26,11 @@ const FundWallet = () => {
   const paymentButton = useRef(null);
 
   const [amount, setAmountToPay] = useState("");
+  console.log(amount);
   const { fundWallet, loading, error } = useSelector(
     (state) => state.fundWallet
   );
+  const { confirmFund } = useSelector((state) => state.confirmFund);
   const { wallet } = useSelector((state) => state.wallet);
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
@@ -34,7 +39,6 @@ const FundWallet = () => {
     const obj = JSON.parse(`{"amount": ${amount}}`);
 
     dispatch(fundUserWallet(obj));
-    setAmountToPay("");
   };
 
   const config = {
@@ -52,6 +56,7 @@ const FundWallet = () => {
   const onSuccess = (reference) => {
     // Implementation for whatever you want to do with reference and after success call.
     console.log(reference);
+    dispatch(confirmFunding(reference.reference));
   };
 
   // you can call this function anything
@@ -60,23 +65,44 @@ const FundWallet = () => {
     console.log("closed");
   };
 
-  // const MakePayment = () => {
-  //   const initializePayment = usePaystackPayment(config);
-  //   initializePayment(onSuccess, onClose);
-  // };
+  const MakePayment = () => {
+    const initializePayment = usePaystackPayment(config);
+    initializePayment(onSuccess, onClose);
+  };
 
   const PaystackHookExample = () => {
     const initializePayment = usePaystackPayment(config);
+    // setAmountToPay("");
     return (
       <div>
+        <div className="form-group mg-t-40">
+          <label className="tx-blac mb-1">Complete Payment on Paystack</label>
+          <input
+            type="text"
+            className="form-control form-control-lg"
+            placeholder="Enter amount (NGN)"
+            id="confirmAmount"
+            name="confirmAmount"
+            defaultValue={fundWallet.data.amount}
+            disabled
+            onChange={(e) => setAmountToPay(e.target.value)}
+          />
+        </div>
         <button
-          // ref={paymentButton}
+          className="btn btn-primary mg-t-10 mg-md-t-30"
+          ref={paymentButton}
           id="payment-button"
           onClick={() => {
             initializePayment(onSuccess, onClose);
           }}
         >
-          Paystack Hooks Implementation
+          Pay{" "}
+          <NumberFormat
+            value={fundWallet.data.amount}
+            displayType={"text"}
+            thousandSeparator={true}
+            prefix={"₦"}
+          />
         </button>
       </div>
     );
@@ -87,11 +113,23 @@ const FundWallet = () => {
       navigate("/login");
     } else if (!loading && fundWallet && fundWallet.status === "success") {
       // alert.success(fundWallet.message);
-      // dispatch({ type: FUND_WALLET_RESET });
       // navigate("/billing/payment");
       // let button = document.getElementById("payment-button");
+      // setTimeout(() => {
+      //   // paymentButton.current.click();
+      //   button.click();
+      // }, 1000);
       // button.click();
+      // paymentButton.current.click();
       // MakePayment();
+    }
+
+    if (confirmFund && confirmFund.status === "success") {
+      console.log("working");
+      alert.success(confirmFund.message);
+      dispatch({ type: FUND_WALLET_RESET });
+      dispatch({ type: CONFIRM_FUNDING_RESET });
+      navigate("/app/billing");
     }
 
     if (error) {
@@ -108,6 +146,7 @@ const FundWallet = () => {
     isAuthenticated,
     user,
     navigate,
+    confirmFund,
   ]);
 
   return (
@@ -116,7 +155,7 @@ const FundWallet = () => {
         <Loader />
       ) : (
         <Fragment>
-          <MetaData title={"Sender ID"} />
+          <MetaData title={"Fund Wallet"} />
           <div className="content-body">
             <div className="container pd-x-0">
               <div className="row justify-content-between">
@@ -152,32 +191,43 @@ const FundWallet = () => {
                           />
                         </p>
                         <form onSubmit={makePaymentHandler}>
-                          <div className="form-group mg-t-40">
-                            <label className="tx-blac mb-1">
-                              How much would you like to fund your wallet with?
-                            </label>
+                          {Object.keys(fundWallet).length <= 0 && (
+                            <>
+                              <div className="form-group mg-t-40">
+                                <label className="tx-blac mb-1">
+                                  How much would you like to fund your wallet
+                                  with?
+                                </label>
 
-                            <input
-                              type="text"
-                              className="form-control form-control-lg"
-                              placeholder="Enter amount (NGN)"
-                              id="email_field"
-                              name="amount"
-                              value={amount}
-                              onChange={(e) => setAmountToPay(e.target.value)}
-                            />
-                          </div>
-                          <button
-                            className="btn btn-primary mg-t-10 mg-md-t-30"
-                            name=""
-                            type="submit"
-                            disabled={loading ? true : false}
-                          >
-                            {" "}
-                            Fund Wallet{" "}
-                          </button>
-
-                          <PaystackHookExample />
+                                <input
+                                  type="text"
+                                  className="form-control form-control-lg"
+                                  placeholder="Enter amount (NGN)"
+                                  id="email_field"
+                                  name="amount"
+                                  value={amount}
+                                  onChange={(e) =>
+                                    setAmountToPay(e.target.value)
+                                  }
+                                />
+                              </div>
+                              <button
+                                className="btn btn-primary mg-t-10 mg-md-t-30"
+                                name=""
+                                type="submit"
+                                disabled={loading ? true : false}
+                              >
+                                {" "}
+                                Fund Wallet{" "}
+                              </button>
+                            </>
+                          )}
+                          {Object.keys(fundWallet).length > 0 &&
+                            fundWallet.status === "success" && (
+                              <>
+                                <PaystackHookExample />
+                              </>
+                            )}
                         </form>
                       </div>
                       <div className="col-md-6 col-12 mg-t-20 mg-md-t-0">

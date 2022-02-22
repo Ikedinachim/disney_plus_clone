@@ -117,7 +117,7 @@ const ViewInfluencerCampaignDetails = () => {
   };
 
   const setAsset = () => {
-    fetch(campaignDetails.marketingData.attachment)
+    fetch(campaignDetails.attachment)
       .then((res) => res.blob())
       .then((blob) => saveAs(blob, "fileName"));
   };
@@ -142,9 +142,9 @@ const ViewInfluencerCampaignDetails = () => {
 
   const loadActionButtons = () => {
     if (
-      !campaignDetails.marketingData.isApproved &&
-      !campaignDetails.marketingData.isPublished &&
-      !campaignDetails.marketingData.isRejected
+      !campaignDetails.isApproved &&
+      !campaignDetails.isPublished &&
+      !campaignDetails.isRejected
     ) {
       return (
         <>
@@ -169,9 +169,9 @@ const ViewInfluencerCampaignDetails = () => {
         </>
       );
     } else if (
-      campaignDetails.marketingData.isApproved &&
-      !campaignDetails.marketingData.isPublished &&
-      !campaignDetails.marketingData.isRejected
+      campaignDetails.isApproved &&
+      !campaignDetails.isPublished &&
+      !campaignDetails.isRejected
     ) {
       return (
         <>
@@ -188,9 +188,9 @@ const ViewInfluencerCampaignDetails = () => {
         </>
       );
     } else if (
-      campaignDetails.marketingData.isApproved &&
-      campaignDetails.marketingData.isPublished &&
-      !campaignDetails.marketingData.isRejected
+      campaignDetails.isApproved &&
+      campaignDetails.isPublished &&
+      !campaignDetails.isRejected
     ) {
       return <p>Completed</p>;
     }
@@ -363,7 +363,7 @@ const ViewInfluencerCampaignDetails = () => {
                           {/* <th scope="col" className="tx-right">
                             Total Amount
                           </th> */}
-                          <th />
+                          {/* <th /> */}
                         </tr>
                       </thead>
                       <tbody>
@@ -391,14 +391,14 @@ const ViewInfluencerCampaignDetails = () => {
                           <td className>{checkPlatformCost("twitter")}</td>
                           <td className>{checkPlatformCost("facebook")}</td>
                           <td className>{checkPlatformCost("all")}</td>
-                          <td>
+                          {/* <td>
                             <div className="d-flex pd-t-3">
                               <div>
                                 <i className="fa fa-edit tx-primary mg-r-5 tx-semibold" />
                               </div>
                               <p className="mb-0">Edit</p>
                             </div>
-                          </td>
+                          </td> */}
                         </tr>
                       </tbody>
                     </table>
