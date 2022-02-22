@@ -25,8 +25,8 @@ export default class SmsStepForm extends Component {
     gender: "",
     state: "abia",
     lga: "",
-    deviceType: "LG",
-    deviceBrand: "X210ZM",
+    deviceType: "",
+    deviceBrand: "",
   };
 
   // go back to previous step
