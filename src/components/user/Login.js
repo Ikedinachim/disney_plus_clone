@@ -8,6 +8,7 @@ import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { login, clearErrors } from "../../actions/authActions";
 import { getWallet } from "../../actions/billingActions";
+import { UPDATE_INFLUENCER_PASSWORD_RESET } from "../../constants/authConstants";
 
 const Login = () => {
   const navHistory = useNavigate();
@@ -22,6 +23,9 @@ const Login = () => {
   const { isAuthenticated, error, loading, user, resetPassword } = useSelector(
     (state) => state.auth
   );
+  const { resetInfluencerPassword } = useSelector(
+    (state) => state.resetInfluencerPassword
+  );
   // const { isAuthenticated, error, loading, user, resetPassword } = useSelector(
   //   (state) => state.auth
   // );
@@ -32,17 +36,21 @@ const Login = () => {
       navHistory("/app");
     } else if (
       !isAuthenticated &&
-      resetPassword &&
-      resetPassword.statusCode === 102
+      error &&
+      error.statusCode === 102 &&
+      resetInfluencerPassword &&
+      resetInfluencerPassword.statusCode === 102
     ) {
       navHistory("/update-password");
-      alert.error(resetPassword.message);
+      alert.error(resetInfluencerPassword.message);
+      dispatch(clearErrors());
+      // dispatch({ type: UPDATE_INFLUENCER_PASSWORD_RESET });
     } else if (isAuthenticated && user && user.user.role === "influencer") {
       dispatch(getWallet());
       navHistory("/influencer");
-    } else if (!isAuthenticated && error && error.statusCode === 104) {
+    } else if (error) {
       alert.error(error.message);
-      // dispatch(clearErrors());
+      dispatch(clearErrors());
     } else {
       navHistory("/login");
       setUsername("");

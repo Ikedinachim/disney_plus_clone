@@ -45,8 +45,8 @@ const Dashboard = () => {
           <div className="content-body">
             <div className="container pd-x-0">
               <p className="mg-b-0 tx-26 tx-bold tx-com">
-                Hello <span className>{user.user.firstName},</span> what would
-                you like to do?
+                Hello <span>{user.user.firstName},</span> what would you like to
+                do?
               </p>
               <div className="row justify-content-between">
                 <div className="col-md-6 col-12">
@@ -68,7 +68,7 @@ const Dashboard = () => {
                           src="../../assets/img/Create_Campaign.svg"
                           className="img-fluid pd-md-t-40 pd-t-20"
                           alt="asset"
-                          srcSet
+                          // srcSet
                         />
                       </div>
                       <div
@@ -128,7 +128,7 @@ const Dashboard = () => {
                           src="../../assets/img/Become_partner.svg"
                           className="img-fluid pd-md-t-40 pd-t-20"
                           alt="asset"
-                          srcSet
+                          // srcSet
                         />
                       </div>
                       <div

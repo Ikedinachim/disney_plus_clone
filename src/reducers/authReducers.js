@@ -122,6 +122,7 @@ export const authReducer = (state = { user: {} }, action) => {
         isAuthenticated: false,
         user: null,
         error: action.payload,
+        // resetInfluencerPassword: action.payload,
       };
 
     // case UPDATE_INFLUENCER_PASSWORD_FAIL:
@@ -156,7 +157,7 @@ export const authReducer = (state = { user: {} }, action) => {
         isAuthenticated: false,
         isRegistered: false,
         user: null,
-        resetPassword: action.payload,
+        error: null,
       };
 
     // case UPDATE_INFLUENCER_PASSWORD_RESET:
@@ -195,9 +196,11 @@ export const resetInfluencerPasswordReducer = (
 
     case UPDATE_INFLUENCER_PASSWORD_ACTIVE:
       return {
-        ...state,
+        // ...state,
         loading: false,
-        isPasswrdUpdate: false,
+        toUpdatePasswrd: true,
+        passwordUpdated: false,
+        resetInfluencerPassword: action.payload,
       };
 
     case UPDATE_INFLUENCER_PASSWORD_SUCCESS:
@@ -206,13 +209,15 @@ export const resetInfluencerPasswordReducer = (
         loading: false,
         passwordUpdated: true,
         isUpdated: action.payload,
+        resetInfluencerPassword: null,
       };
 
     case UPDATE_INFLUENCER_PASSWORD_FAIL:
       return {
+        ...state,
         loading: false,
         isAuthenticated: false,
-        resetInfluencerPassword: null,
+        // resetInfluencerPassword: null,
         passwordUpdated: false,
         error: action.payload,
       };
@@ -224,7 +229,8 @@ export const resetInfluencerPasswordReducer = (
         isAuthenticated: false,
         isUpdated: false,
         resetInfluencerPassword: null,
-        isPasswrdUpdate: false,
+        passwordUpdated: false,
+        toUpdatePasswrd: false,
         error: null,
       };
 
