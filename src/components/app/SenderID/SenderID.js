@@ -76,15 +76,23 @@ const SenderID = () => {
         ).toFormat("dd MMM yyyy"),
         status: (
           <span
-            className={`{"badge" ${
-              senderids.status === null || senderids.status === "pending"
+            className={`badge d-flex-center ${
+              senderids.telcoStatus === null ||
+              senderids.telcoStatus === "pending"
                 ? "badge-pink"
-                : "badge-active"
+                : ""
+            } ${senderids.telcoStatus === "approved" ? "badge-active" : ""} ${
+              senderids.telcoStatus === "declined" ? "badge-primary" : ""
             }`}
           >
-            {senderids.status === null || senderids.status === "pending"
+            {senderids.telcoStatus === "pending" ||
+            senderids.telcoStatus === null
               ? "Pending"
-              : "Approved"}
+              : null || senderids.telcoStatus === "declined"
+              ? "Declined"
+              : null || senderids.telcoStatus === "approved"
+              ? "Approved"
+              : null}
           </span>
         ),
         telcoStatus: (

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
 import NaijaStates from "naija-state-local-government";
 import MetaData from "../../../layout/MetaData";
-
+import { saveAs } from "file-saver";
 import {
   getFilteredContactList,
   clearErrors,
@@ -124,6 +124,12 @@ const TargetAudience = ({
     skipEmptyLines: "greedy",
   });
 
+  const setCsvAsset = () => {
+    fetch("#")
+      .then((res) => res.blob())
+      .then((blob) => saveAs(blob, "fileName"));
+  };
+
   useEffect(() => {
     if (error) {
       alert.error(error);
@@ -226,6 +232,18 @@ const TargetAudience = ({
                             </p>
                           )}
                         </div>
+                        {values.budget >= 10000 && (
+                          <div className="form-group col-md-6 mb-0 align-items-center d-flex">
+                            <div>
+                              <span>{values.budget / 5}</span>
+                              {" - "}
+                              <span>
+                                {values.budget / 2} Estimated Reach{" "}
+                                <i className="tx-15 fa fa-users" />
+                              </span>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
                   ) : (
@@ -426,10 +444,23 @@ const TargetAudience = ({
                       {values.targetAudienceOption === "manual_import" && (
                         <div className="hide" id="show_2">
                           <div className="row justify-content-md-between">
-                            <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
+                            <div className="form-group col-md-6 d-flex flex-column">
+                              <label className="mb-1 tx-com">
                                 Upload CSV Containing Phone Numbers
                               </label>
+                              <button
+                                className="btn tx-primary pd-x-0 pd-t-0"
+                                onClick={setCsvAsset}
+                              >
+                                <div className="d-flex pd-t-3">
+                                  <div>
+                                    <i className="fa fa-download tx-primary mg-r-5" />
+                                  </div>
+                                  <p className="mb-0 pointer">
+                                    Download Sample
+                                  </p>
+                                </div>
+                              </button>
                               <div className="form-group">
                                 <div
                                   {...getRootProps({

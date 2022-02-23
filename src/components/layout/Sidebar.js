@@ -34,7 +34,7 @@ const Sidebar = () => {
         <div className={`aside-header ${isMenuOpen ? "" : ""}`}>
           <NavLink to="/app" className="aside-logo">
             <div className="pd-50">
-              <img src={NavLogo} className="img-fluid logo" alt="logo" srcSet />
+              <img src={NavLogo} className="img-fluid logo" alt="logo" />
             </div>
           </NavLink>
           <div className="aside-menu-link">

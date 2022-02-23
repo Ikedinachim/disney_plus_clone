@@ -25,24 +25,24 @@ export const getPropellerCampaign = (propellerId) => async (dispatch) => {
   try {
     dispatch({ type: PROPELLER_CAMPAIGN_REQUEST });
 
-    
-      const headers = {
-        Authorization: `Bearer ${token}`,
-        accept: "application/json",
-        "Content-type": "application/json",
-        crossdomain: true,
-      };
-      const params = {
-        group_by: "campaign_id",
-        day_from: "2022-01-01 00:00:00",
-        day_to: "2022-02-22 23:59:59",
-        campaign_id: [parseInt(propellerId)],
-        geo: ["NG"],
-        dept: ["nativeads"],
-      };
-    
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      accept: "application/json",
+      "Content-type": "application/json",
+      crossdomain: true,
+    };
+    const params = {
+      group_by: "campaign_id",
+      day_from: "2022-01-01 00:00:00",
+      day_to: "2022-02-22 23:59:59",
+      campaign_id: [parseInt(propellerId)],
+      geo: ["NG"],
+      dept: ["nativeads"],
+    };
 
-    const { data } = await axios.post("/adv/statistics", params,{headers: headers});
+    const { data } = await axios.post("/adv/statistics", params, {
+      headers: headers,
+    });
     if (data.statusCode === 200) {
       dispatch({
         type: PROPELLER_CAMPAIGN_SUCCESS,
