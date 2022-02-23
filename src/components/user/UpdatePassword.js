@@ -53,11 +53,11 @@ const UpdateInfluencerPassword = () => {
     mode: "onBlur",
   });
 
-  const { isAuthenticated, user, isUpdated, passwordUpdated, error, loading } =
-    useSelector((state) => state.auth);
-  const { resetInfluencerPassword } = useSelector(
-    (state) => state.resetInfluencerPassword
+  const { isAuthenticated, user, isUpdated } = useSelector(
+    (state) => state.auth
   );
+  const { resetInfluencerPassword, passwordUpdated, error, loading } =
+    useSelector((state) => state.resetInfluencerPassword);
 
   const submitIndividualHandler = (data) => {
     console.log(data);
@@ -74,30 +74,13 @@ const UpdateInfluencerPassword = () => {
     }
   };
 
-  //   useEffect(() => {
-  //     if (isRegistered) {
-  //       alert.success("User registered successfully");
-  //       navigate("/login");
-  //       dispatch({ type: REGISTER_USER_RESET });
-  //     }
-  //     if (error) {
-  //       alert.error(error);
-  //       dispatch(clearErrors());
-  //     }
-  //   }, [dispatch, isAuthenticated, isRegistered, error, alert, navigate]);
-
-  console.log(newUser);
-
   useEffect(() => {
-    if (passwordUpdated && isUpdated && isUpdated.status === "success") {
+    if (passwordUpdated && isUpdated && isUpdated.statusCode === 100) {
       alert.success(isUpdated.message);
       navigate("/login");
-    } else if (isAuthenticated && user && user.user.role === "influencer") {
-      dispatch(getWallet());
-      navigate("/influencer");
-    } else if (!isAuthenticated && !passwordUpdated && error) {
-      alert.error(error.message);
       dispatch({ type: UPDATE_INFLUENCER_PROFILE_RESET });
+    } else if (!isAuthenticated && error) {
+      alert.error(error.message);
       dispatch(clearErrors());
     }
   }, [
@@ -127,7 +110,7 @@ const UpdateInfluencerPassword = () => {
                 />
               </div>
             </div>
-            <div className="col-md-6 login-side">
+            <div className="col-md-6 login-side d-flex align-items-center">
               <div className="container pd-lg-30 pd-10">
                 <Link
                   to="/home"

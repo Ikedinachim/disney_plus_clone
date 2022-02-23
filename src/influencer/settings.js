@@ -52,6 +52,7 @@ const InfluencerSettings = () => {
   const [profile, setProfile] = useState({});
 
   const [profileImage, setProfileImage] = useState({});
+  console.log(profileImage);
 
   const handleImageUpload = async (e) => {
     let files = e.target.files[0];
@@ -81,10 +82,6 @@ const InfluencerSettings = () => {
           options
         )
         .then((res) => {
-          // setProfile((prevState) => ({
-          //   ...prevState,
-          //   imageUrl: res.data.secure_url,
-          // })),
           setProfileImage(
             {
               ...profileImage,
@@ -102,17 +99,15 @@ const InfluencerSettings = () => {
               }, 1000);
             }
           );
+          setProfileImage({
+            ...profileImage,
+            uploadPercentage: 0,
+          });
           setProfile((prevState) => ({
             ...prevState,
             imageUrl: res.data.secure_url,
           }));
         });
-      // .then((res) => {
-      //   setProfile((prevState) => ({
-      //     ...prevState,
-      //     imageUrl: profileImage.imageUrl,
-      //   }));
-      // });
     } catch (err) {}
   };
 
@@ -235,6 +230,8 @@ const InfluencerSettings = () => {
     profileImage,
     updateInfluencer,
   ]);
+
+  console.log(influencerDetails);
 
   return (
     <Fragment>
@@ -805,7 +802,7 @@ const InfluencerSettings = () => {
                                     influencerDetails.costs.find(
                                       (c) => c.platform === "facebook"
                                     )?.cost) ||
-                                  0
+                                  ""
                                 }
                                 className="form-control"
                                 placeholder="N500,000.00"
