@@ -9,11 +9,12 @@ const InfluencerTargetAudience = ({
   prevStep,
   nextStep,
   handleChange,
-  onChangeAttachment,
+  // onChangeAttachment,
   handleImageUpload,
   values,
   selectedFileName,
   uploadPercentage,
+  resetCheckedState,
 }) => {
   const alert = useAlert();
   const [status, setStatus] = useState(3);
@@ -34,6 +35,7 @@ const InfluencerTargetAudience = ({
   };
   const Previous = (e) => {
     e.preventDefault();
+    resetCheckedState();
     prevStep();
   };
 

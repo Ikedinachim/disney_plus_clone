@@ -49,7 +49,7 @@ const Header = () => {
         <FeatherIcon icon="search" />
         <input type="search" className="form-control" placeholder="Search..." />
       </div>
-      <nav className="nav">
+      <nav className="nav justify-content-end">
         {/* <div className=" ml-md-4 ml-2 mg-t-5">
           <div className="d-flex">
             <Link
@@ -107,10 +107,10 @@ const Header = () => {
                 {user.user.firstName + " " + user.user.LastName}
               </h6>
               <p className="mg-b-25 tx-12 tx-color-03">Administrator</p>
-              <Link to="admin" className="dropdown-item">
+              <Link to="settings" className="dropdown-item">
                 <FeatherIcon icon="edit-3" /> Edit Profile
               </Link>
-              <Link to="page-profile-view.html" className="dropdown-item">
+              <Link to="settings" className="dropdown-item">
                 <FeatherIcon icon="user" /> View Profile
               </Link>
               <div className="dropdown-divider" />
@@ -120,10 +120,10 @@ const Header = () => {
               <Link to="" className="dropdown-item">
                 <FeatherIcon icon="life-buoy" /> Forum
               </Link>
-              <Link to="" className="dropdown-item">
+              <Link to="settings" className="dropdown-item">
                 <FeatherIcon icon="settings" /> Account Settings
               </Link>
-              <Link to="" className="dropdown-item">
+              <Link to="settings" className="dropdown-item">
                 <FeatherIcon icon="settings" /> Privacy Settings
               </Link>
               <Link to="/" className="dropdown-item" onClick={logoutHandler}>

@@ -11,6 +11,7 @@ import DashboardLayout from "./components/app/DashboardLayout";
 import SenderID from "./components/app/SenderID/SenderID";
 import BillingOverview from "./components/app/billing/Billing";
 import FundWallet from "./components/app/billing/FundWallet";
+import MakePayment from "./components/app/billing/MakePayment";
 import RequestSenderID from "./components/app/SenderID/RequestSenderID";
 import CreateCampaign from "./components/app/campaigns/CreateCampaign";
 // import TargetAudience from "./components/app/campaigns/TargetAudience"
@@ -32,6 +33,7 @@ import InfluencerDashboardLayout from "./influencer/InfluencerDashboardLayout";
 import InfluencerDashboard from "./influencer/";
 import InfluencerCampaignDetails from "./influencer/ViewInfluencerCampaignDetails";
 import InfluencerSettings from "./influencer/settings";
+import UpdateInfluencerPassword from "./components/user/UpdatePassword";
 
 // Auth / User Imports
 import Login from "./components/user/Login";
@@ -53,7 +55,7 @@ import CampaignDetails from "./components/app/campaigns/CampaignDetails";
 AOS.init();
 
 function App() {
-  const { loading, isAuthenticated, user, error } = useSelector(
+  const { loading, isAuthenticated, user, error, resetPassword } = useSelector(
     (state) => state.auth
   );
 
@@ -120,6 +122,17 @@ function App() {
             element={
               isAuthenticated && user && user.user.role === "user" ? (
                 <FundWallet />
+              ) : (
+                <Login />
+              )
+            }
+          />
+
+          <Route
+            path="billing/payment"
+            element={
+              isAuthenticated && user && user.user.role === "user" ? (
+                <MakePayment />
               ) : (
                 <Login />
               )
@@ -263,6 +276,17 @@ function App() {
           <Route path="/login" element={<Login />} /> */}
         <Route path="/ad/:id/:campaignType/:slug" element={<Ads />} />
         {/* <Route path="*" element={isAuthenticated ? <Dashboard /> : <Login />} /> */}
+        <Route
+          path="update-password"
+          element={
+            (resetPassword && resetPassword.statusCode === 102) ||
+            (resetPassword && resetPassword.statusCode === 104) ? (
+              <UpdateInfluencerPassword />
+            ) : (
+              <Login />
+            )
+          }
+        />
       </Routes>
 
       <Routes>

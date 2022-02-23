@@ -11,6 +11,8 @@ import {
   userDetailsReducer,
   updateUserReducer,
   updateInfluencerReducer,
+  updateInfluencerCostReducer,
+  resetInfluencerPasswordReducer,
   // userDetailsReducer
 } from "./reducers/authReducers";
 
@@ -77,8 +79,9 @@ const appReducer = combineReducers({
   influencerDetails: getInfluencerDetailsReducer,
   digitalCampaigns: getDigitalCampaignsReducer,
   getPropellerCampaigns: getPropellerCampaignsReducer,
-  getMobileCampaigns: getMobileCampaignsReducer,
-  getOsCampaigns: getOsCampaignsReducer,
+  updateInfluencerProfile: updateInfluencerReducer,
+  updateInfluencerCost: updateInfluencerCostReducer,
+  resetInfluencerPassword: resetInfluencerPasswordReducer,
 });
 
 const reducer = (state, action) => {

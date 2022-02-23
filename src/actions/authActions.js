@@ -3,6 +3,7 @@ import Axios from "axios";
 import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
+  LOGIN_RESET,
   LOGIN_FAIL,
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
@@ -23,8 +24,12 @@ import {
   UPDATE_INFLUENCER_PASSWORD_FAIL,
   UPDATE_INFLUENCER_PROFILE_REQUEST,
   UPDATE_INFLUENCER_PROFILE_SUCCESS,
-  UPDATE_INFLUENCER_PROFILE_RESET,
+  // UPDATE_INFLUENCER_PROFILE_RESET,
   UPDATE_INFLUENCER_PROFILE_FAIL,
+  UPDATE_INFLUENCER_COST_REQUEST,
+  UPDATE_INFLUENCER_COST_SUCCESS,
+  UPDATE_INFLUENCER_COST_FAIL,
+  UPDATE_INFLUENCER_PASSWORD_ACTIVE,
 } from "../constants/authConstants";
 import { INFLUENCER_CAMPAIGN_REQUEST } from "../constants/campaignConstants";
 
@@ -52,8 +57,7 @@ export const login = (username, password) => async (dispatch) => {
     );
     sessionStorage.setItem("user", JSON.stringify(data.data));
 
-    let tester = data;
-    console.log(tester);
+    // let tester = data;
 
     if (data.status === "success" && data.statusCode !== 102) {
       dispatch({
@@ -62,7 +66,7 @@ export const login = (username, password) => async (dispatch) => {
       });
     } else if (data.status === "success" && data.statusCode === 102) {
       dispatch({
-        type: UPDATE_INFLUENCER_PASSWORD_RESET,
+        type: UPDATE_INFLUENCER_PASSWORD_ACTIVE,
         payload: data,
       });
     } else {
@@ -213,9 +217,10 @@ export const updateInfluencerProfile = (payload) => async (dispatch) => {
         Authorization: `Bearer ${token}`,
       },
     };
+
     const { data } = await axios.post(
       "api/auth/update-profile",
-      payload,
+      payload.profile,
       config
     );
 
@@ -230,10 +235,49 @@ export const updateInfluencerProfile = (payload) => async (dispatch) => {
         payload: data.message,
       });
     }
-  } catch (data) {
+  } catch (error) {
     dispatch({
       type: UPDATE_INFLUENCER_PROFILE_FAIL,
-      payload: data.message,
+      payload: error.message,
+    });
+  }
+};
+
+//Update Influencer Cost
+export const updateInfluencerCost = (payload) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_INFLUENCER_COST_REQUEST });
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `api/campaign/influencer/${payload.id}/update-costs`,
+      payload.updatedCosts,
+      config
+    );
+
+    if (data.status === "success") {
+      dispatch({
+        type: UPDATE_INFLUENCER_COST_SUCCESS,
+        payload: data,
+      });
+    } else {
+      dispatch({
+        type: UPDATE_INFLUENCER_COST_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: UPDATE_INFLUENCER_COST_FAIL,
+      payload: error.message,
     });
   }
 };

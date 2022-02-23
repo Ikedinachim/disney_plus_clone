@@ -12,6 +12,7 @@ import {
   CONFIRM_FUNDING_REQUEST,
   CONFIRM_FUNDING_SUCCESS,
   CONFIRM_FUNDING_FAIL,
+  CONFIRM_FUNDING_RESET,
   CLEAR_ERRORS,
 } from "../constants/billingConstants";
 
@@ -86,12 +87,12 @@ export const transactionHistoryReducer = (state = initialState, action) => {
   }
 };
 
-export const fundWalletReducer = (state = { fundWallet: [] }, action) => {
+export const fundWalletReducer = (state = { fundWallet: {} }, action) => {
   switch (action.type) {
     case FUND_WALLET_REQUEST:
       return {
         loading: true,
-        fundWallet: [],
+        fundWallet: {},
       };
 
     case FUND_WALLET_SUCCESS:
@@ -102,7 +103,7 @@ export const fundWalletReducer = (state = { fundWallet: [] }, action) => {
     case FUND_WALLET_RESET:
       return {
         ...state,
-        fundWallet: [],
+        fundWallet: {},
       };
     case FUND_WALLET_FAIL:
       return {
@@ -121,12 +122,12 @@ export const fundWalletReducer = (state = { fundWallet: [] }, action) => {
   }
 };
 
-export const confirmFundingReducer = (state = { confirmFund: [] }, action) => {
+export const confirmFundingReducer = (state = { confirmFund: {} }, action) => {
   switch (action.type) {
     case CONFIRM_FUNDING_REQUEST:
       return {
         loading: true,
-        confirmFund: [],
+        confirmFund: {},
       };
 
     case CONFIRM_FUNDING_SUCCESS:
@@ -139,6 +140,12 @@ export const confirmFundingReducer = (state = { confirmFund: [] }, action) => {
       return {
         loading: false,
         error: action.payload,
+      };
+
+    case CONFIRM_FUNDING_RESET:
+      return {
+        ...state,
+        confirmFund: null,
       };
 
     case CLEAR_ERRORS:

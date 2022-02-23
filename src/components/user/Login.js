@@ -19,28 +19,44 @@ const Login = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
 
-  const { isAuthenticated, error, loading, user } = useSelector(
+  const { isAuthenticated, error, loading, user, resetPassword } = useSelector(
     (state) => state.auth
   );
+  // const { isAuthenticated, error, loading, user, resetPassword } = useSelector(
+  //   (state) => state.auth
+  // );
 
   useEffect(() => {
     if (isAuthenticated && user.user.role !== "influencer") {
       dispatch(getWallet());
       navHistory("/app");
-    } else if (!isAuthenticated && error && error.statusCode === 102) {
+    } else if (
+      !isAuthenticated &&
+      resetPassword &&
+      resetPassword.statusCode === 102
+    ) {
       navHistory("/update-password");
+      alert.error(resetPassword.message);
     } else if (isAuthenticated && user && user.user.role === "influencer") {
       dispatch(getWallet());
       navHistory("/influencer");
-    } else if (isAuthenticated && error) {
+    } else if (!isAuthenticated && error && error.statusCode === 104) {
       alert.error(error.message);
-      dispatch(clearErrors());
+      // dispatch(clearErrors());
     } else {
       navHistory("/login");
       setUsername("");
       setPassword("");
     }
-  }, [dispatch, alert, user, isAuthenticated, error, navHistory]);
+  }, [
+    dispatch,
+    alert,
+    user,
+    isAuthenticated,
+    resetPassword,
+    error,
+    navHistory,
+  ]);
 
   const submitHandler = (e) => {
     e.preventDefault();

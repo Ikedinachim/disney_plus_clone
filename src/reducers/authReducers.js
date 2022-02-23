@@ -2,6 +2,7 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  LOGIN_RESET,
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_RESET,
@@ -47,7 +48,12 @@ import {
   UPDATE_INFLUENCER_PROFILE_SUCCESS,
   UPDATE_INFLUENCER_PROFILE_RESET,
   UPDATE_INFLUENCER_PROFILE_FAIL,
+  UPDATE_INFLUENCER_COST_REQUEST,
+  UPDATE_INFLUENCER_COST_SUCCESS,
+  UPDATE_INFLUENCER_COST_RESET,
+  UPDATE_INFLUENCER_COST_FAIL,
   CLEAR_ERRORS,
+  UPDATE_INFLUENCER_PASSWORD_ACTIVE,
 } from "../constants/authConstants";
 
 export const authReducer = (state = { user: {} }, action) => {
@@ -58,12 +64,13 @@ export const authReducer = (state = { user: {} }, action) => {
         loading: true,
         isAuthenticated: false,
       };
-    case UPDATE_INFLUENCER_PASSWORD_REQUEST:
-      return {
-        loading: true,
-        isAuthenticated: false,
-        passwordUpdated: false,
-      };
+    // case UPDATE_INFLUENCER_PASSWORD_REQUEST:
+    //   return {
+    //     ...state,
+    //     loading: true,
+    //     isAuthenticated: false,
+    //     passwordUpdated: false,
+    //   };
 
     case REGISTER_USER_REQUEST:
       return {
@@ -86,13 +93,13 @@ export const authReducer = (state = { user: {} }, action) => {
         loading: false,
         isRegistered: true,
       };
-    case UPDATE_INFLUENCER_PASSWORD_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        passwordUpdated: true,
-        isUpdated: action.payload,
-      };
+    // case UPDATE_INFLUENCER_PASSWORD_SUCCESS:
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     passwordUpdated: true,
+    //     isUpdated: action.payload,
+    //   };
     case REGISTER_USER_RESET:
       return {
         ...state,
@@ -117,14 +124,14 @@ export const authReducer = (state = { user: {} }, action) => {
         error: action.payload,
       };
 
-    case UPDATE_INFLUENCER_PASSWORD_FAIL:
-      return {
-        loading: false,
-        isAuthenticated: false,
-        user: null,
-        passwordUpdated: false,
-        error: action.payload,
-      };
+    // case UPDATE_INFLUENCER_PASSWORD_FAIL:
+    //   return {
+    //     loading: false,
+    //     isAuthenticated: false,
+    //     user: null,
+    //     passwordUpdated: false,
+    //     error: action.payload,
+    //   };
 
     case LOGOUT_FAIL:
       return {
@@ -134,7 +141,6 @@ export const authReducer = (state = { user: {} }, action) => {
 
     case LOGIN_FAIL:
     case REGISTER_USER_FAIL:
-    case UPDATE_INFLUENCER_PASSWORD_RESET:
       return {
         ...state,
         loading: false,
@@ -142,6 +148,84 @@ export const authReducer = (state = { user: {} }, action) => {
         isRegistered: false,
         user: null,
         error: action.payload,
+      };
+    case LOGIN_RESET:
+      return {
+        ...state,
+        loading: false,
+        isAuthenticated: false,
+        isRegistered: false,
+        user: null,
+        resetPassword: action.payload,
+      };
+
+    // case UPDATE_INFLUENCER_PASSWORD_RESET:
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     isAuthenticated: false,
+    //     isUpdated: false,
+    //     user: null,
+    //     error: null,
+    //   };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const resetInfluencerPasswordReducer = (
+  state = { resetInfluencerPassword: {} },
+  action
+) => {
+  switch (action.type) {
+    case UPDATE_INFLUENCER_PASSWORD_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        isAuthenticated: false,
+        passwordUpdated: false,
+      };
+
+    case UPDATE_INFLUENCER_PASSWORD_ACTIVE:
+      return {
+        ...state,
+        loading: false,
+        isPasswrdUpdate: false,
+      };
+
+    case UPDATE_INFLUENCER_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        passwordUpdated: true,
+        isUpdated: action.payload,
+      };
+
+    case UPDATE_INFLUENCER_PASSWORD_FAIL:
+      return {
+        loading: false,
+        isAuthenticated: false,
+        resetInfluencerPassword: null,
+        passwordUpdated: false,
+        error: action.payload,
+      };
+
+    case UPDATE_INFLUENCER_PASSWORD_RESET:
+      return {
+        ...state,
+        loading: false,
+        isAuthenticated: false,
+        isUpdated: false,
+        resetInfluencerPassword: null,
+        isPasswrdUpdate: false,
+        error: null,
       };
 
     case CLEAR_ERRORS:
@@ -394,7 +478,47 @@ export const updateInfluencerReducer = (
     case UPDATE_INFLUENCER_PROFILE_RESET:
       return {
         ...state,
+        status: null,
         updateInfluencer: [],
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+export const updateInfluencerCostReducer = (
+  state = { updateCosts: [] },
+  action
+) => {
+  switch (action.type) {
+    case UPDATE_INFLUENCER_COST_REQUEST:
+      return {
+        loading: true,
+        updateCosts: [],
+      };
+    case UPDATE_INFLUENCER_COST_SUCCESS:
+      return {
+        loading: false,
+        updateCosts: action.payload,
+        status: action.payload.status,
+      };
+    case UPDATE_INFLUENCER_COST_FAIL:
+      return {
+        loading: false,
+        updateCosts: null,
+        error: action.payload,
+        status: action.payload.status,
+      };
+    case UPDATE_INFLUENCER_COST_RESET:
+      return {
+        ...state,
+        status: null,
+        updateCosts: [],
       };
     case CLEAR_ERRORS:
       return {
