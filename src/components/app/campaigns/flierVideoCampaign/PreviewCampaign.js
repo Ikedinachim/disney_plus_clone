@@ -588,9 +588,12 @@ const PreviewCampaign = ({
                                 Potential Reach Based on Budget
                               </label>
                               <p className="tx-18 tx-com tx-bold mb-0">
-                                {audience}{" "}
+                                {audience} - {""}
+                                {audience * 5}
                                 <span className="tx-14 tx-gray tx-medium">
-                                  Total Reach
+                                  {" "}
+                                  Estimated Reach{" "}
+                                  <i className="tx-15 fa fa-users" />
                                 </span>
                               </p>
                               {/* <div className="form-group col-md-3">
