@@ -24,6 +24,7 @@ import InfluencerStepForm from "./components/app/campaigns/influencerCampaign/In
 import Analytics from "./components/app/analytics/analytics";
 import AnalyticsTable from "./components/app/analytics/analyticsTable";
 import Settings from "./components/app/settings/settings";
+import ChangePassword from "./components/app/settings/ChangePassword";
 import Ads from "./adsView/Ads";
 
 ///////////////////////////////////////
@@ -224,6 +225,16 @@ function App() {
             element={
               isAuthenticated && user && user.user.role === "user" ? (
                 <Settings />
+              ) : (
+                <Login />
+              )
+            }
+          />
+          <Route
+            path="setting/change-password"
+            element={
+              isAuthenticated && user && user.user.role === "user" ? (
+                <ChangePassword />
               ) : (
                 <Login />
               )

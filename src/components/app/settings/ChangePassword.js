@@ -3,49 +3,49 @@ import { Link, useNavigate } from "react-router-dom";
 
 import Loader from "../loader";
 import MetaData from "../layout/MetaData";
-
+import { getUser } from "../../../actions/authActions";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
-import { login, clearErrors } from "../../actions/authActions";
-import { getWallet } from "../../actions/billingActions";
 
-const ForgotPassword = () => {
-
-
-  const [email, setEmail] = useState("");
-  
-  // const [userStatus, setUserStatus] = useState()
-
+const ChangePassword = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
 
-  const {  loading} = useSelector(
-    (state) => state.auth
-  );
+  // const [userStatus, setUserStatus] = useState()
 
+  const { user, loading } = useSelector((state) => state.userDetails);
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
+
+  const [people, setPeople] = useState({
+    username: "",
+    oldPassword: "",
+    newPassword: "",
+  });
+
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    setPeople({ ...people, [name]: value });
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(getWallet());
+    dispatch(getUser());
   };
 
   return (
     <Fragment>
-      {loading ? <Loader /> : null}
-      <Fragment>
-        <MetaData title={"Forgot password"} />
-        <section className="ht-100v container-fluid">
-          <div className="row">
-            <div className="col-md-6 login-bg card-height d-none d-md-block d-lg-block d-xl-block">
-              <div className="pd-50">
-                <img
-                  src="./assets/img/logo.svg"
-                  className="img-fluid logo"
-                  alt=""
-                  srcSet=""
-                />
-              </div>
-            </div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <Fragment>
+          <MetaData title={"Change password"} />
+          <section className="ht-100v container-fluid">
             <div className="col-md-6 login-side">
               <div className="container pd-lg-30 pd-10">
                 <Link
@@ -67,13 +67,14 @@ const ForgotPassword = () => {
                         <input
                           className="form-control new"
                           placeholder="email"
-                          type="email"
+                          name="usernmae"
+                          type="text"
                           id="email_field"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
+                          value={people.username}
+                          onChange={handleChange}
                         />
                       </div>
-                      
+
                       <div className="mg-y-30">
                         <div className="form-group col-md-5 mx-auto">
                           <button
@@ -85,7 +86,7 @@ const ForgotPassword = () => {
                             SEND
                           </button>
                         </div>
-                        <Link to="../login">
+                        <Link to="../">
                           <span
                             className="tx-dark"
                             style={{
@@ -93,10 +94,10 @@ const ForgotPassword = () => {
                               textDecoration: "underline;",
                             }}
                           >
-                            Remember password?
+                            Changed your mind?
                           </span>
                           <span style={{ textDecoration: "underline;" }}>
-                            Sign In.
+                            Click here
                           </span>
                         </Link>
                       </div>
@@ -108,11 +109,11 @@ const ForgotPassword = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-      </Fragment>
+          </section>
+        </Fragment>
+      )}
     </Fragment>
   );
 };
 
-export default ForgotPassword;
+export default ChangePassword;

@@ -25,39 +25,39 @@ export const getPropellerCampaign = (propellerId) => async (dispatch) => {
   try {
     dispatch({ type: PROPELLER_CAMPAIGN_REQUEST });
 
-    const config = {
-      headers: {
+    
+      const headers = {
+        Authorization: `Bearer ${token}`,
         accept: "application/json",
         "Content-type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    };
+        crossdomain: true,
+      };
+      const params = {
+        group_by: "campaign_id",
+        day_from: "2022-01-01 00:00:00",
+        day_to: "2022-02-22 23:59:59",
+        campaign_id: [parseInt(propellerId)],
+        geo: ["NG"],
+        dept: ["nativeads"],
+      };
+    
 
-    const body = {
-      group_by: "campaign_id",
-      day_from: "2022-01-01 00:00:00",
-      day_to: "2022-02-22 23:59:59",
-      campaign_id: [propellerId],
-      geo: ["NG"],
-      dept: ["nativeads"],
-    };
-
-    const { data } = await axios.post("/adv/statistics", config, body);
-    if (data.status === "success") {
+    const { data } = await axios.post("/adv/statistics", params,{headers: headers});
+    if (data.statusCode === 200) {
       dispatch({
         type: PROPELLER_CAMPAIGN_SUCCESS,
-        payload: data.data,
+        payload: data,
       });
     } else {
       dispatch({
         type: PROPELLER_CAMPAIGN_FAIL,
-        payload: data.message,
+        payload: data,
       });
     }
   } catch (error) {
     dispatch({
       type: PROPELLER_CAMPAIGN_FAIL,
-      payload: error.message,
+      payload: error,
     });
   }
 };
@@ -73,18 +73,18 @@ export const getOsCampaign = (propellerId) => async (dispatch) => {
         "Content-type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+
+      data: {
+        group_by: "os",
+        day_from: "2022-01-01 00:00:00",
+        day_to: "2022-02-22 23:59:59",
+        campaign_id: [propellerId],
+        geo: ["NG"],
+        dept: ["nativeads"],
+      },
     };
 
-    const body = {
-      group_by: "os",
-      day_from: "2022-01-01 00:00:00",
-      day_to: "2022-02-22 23:59:59",
-      campaign_id: [propellerId],
-      geo: ["NG"],
-      dept: ["nativeads"],
-    };
-
-    const { data } = await axios.post("/adv/statistics", body, config);
+    const { data } = await axios.post("/adv/statistics", config);
     if (data.status === "success") {
       dispatch({
         type: PROPELLER_OS_CAMPAIGN_SUCCESS,
@@ -115,18 +115,17 @@ export const getMobileCampaign = (propellerId) => async (dispatch) => {
         "Content-type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      data: {
+        group_by: "mobile_isp",
+        day_from: "2022-01-01 00:00:00",
+        day_to: "2022-02-22 23:59:59",
+        campaign_id: [propellerId],
+        geo: ["NG"],
+        dept: ["nativeads"],
+      },
     };
 
-    const body = {
-      group_by: "os",
-      day_from: "2022-01-01 00:00:00",
-      day_to: "2022-02-22 23:59:59",
-      campaign_id: [propellerId],
-      geo: ["NG"],
-      dept: ["nativeads"],
-    };
-
-    const { data } = await axios.post("/adv/statistics", body, config);
+    const { data } = await axios.post("/adv/statistics", config);
     if (data.status === "success") {
       dispatch({
         type: PROPELLER_MOBILE_SUCCESS,

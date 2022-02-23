@@ -229,6 +229,22 @@ const Settings = () => {
                       Save
                     </button>
                   </div>
+                  <div className="mg-t-20">
+                    <Link to="change-password">
+                      <span
+                        className="tx-dark"
+                        style={{
+                          color: "#000;",
+                          textDecoration: "underline;",
+                        }}
+                      >
+                        Want to Change password?
+                      </span>
+                      <span style={{ textDecoration: "underline;" }}>
+                        Click here
+                      </span>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
