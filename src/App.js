@@ -11,7 +11,7 @@ import DashboardLayout from "./components/app/DashboardLayout";
 import SenderID from "./components/app/SenderID/SenderID";
 import BillingOverview from "./components/app/billing/Billing";
 import FundWallet from "./components/app/billing/FundWallet";
-import MakePayment from "./components/app/billing/MakePayment";
+// import MakePayment from "./components/app/billing/MakePayment";
 import RequestSenderID from "./components/app/SenderID/RequestSenderID";
 import CreateCampaign from "./components/app/campaigns/CreateCampaign";
 // import TargetAudience from "./components/app/campaigns/TargetAudience"
@@ -56,6 +56,9 @@ AOS.init();
 function App() {
   const { loading, isAuthenticated, user, error, resetPassword } = useSelector(
     (state) => state.auth
+  );
+  const { resetInfluencerPassword } = useSelector(
+    (state) => state.resetInfluencerPassword
   );
 
   return (
@@ -127,7 +130,7 @@ function App() {
             }
           />
 
-          <Route
+          {/* <Route
             path="billing/payment"
             element={
               isAuthenticated && user && user.user.role === "user" ? (
@@ -136,7 +139,7 @@ function App() {
                 <Login />
               )
             }
-          />
+          /> */}
 
           <Route
             path="campaigns/:id"
@@ -268,8 +271,10 @@ function App() {
         <Route
           path="update-password"
           element={
-            (resetPassword && resetPassword.statusCode === 102) ||
-            (resetPassword && resetPassword.statusCode === 104) ? (
+            (resetInfluencerPassword &&
+              resetInfluencerPassword.statusCode === 102) ||
+            (resetInfluencerPassword &&
+              resetInfluencerPassword.statusCode === 104) ? (
               <UpdateInfluencerPassword />
             ) : (
               <Login />

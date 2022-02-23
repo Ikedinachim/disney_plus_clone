@@ -290,6 +290,18 @@ const TargetAudience = ({
                             </p>
                           )}
                         </div>
+                        {values.budget >= 10000 && (
+                          <div className="form-group col-md-6 mb-0 align-items-center d-flex">
+                            <div>
+                              <span>{values.budget / 5}</span>
+                              {" - "}
+                              <span>
+                                {values.budget / 2} Estimated Reach{" "}
+                                <i className="tx-15 fa fa-users" />
+                              </span>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
                   ) : (

@@ -42,6 +42,7 @@ const axios = Axios.create({
 // Login
 export const login = (username, password) => async (dispatch) => {
   try {
+    // dispatch({ type: UPDATE_INFLUENCER_PASSWORD_RESET });
     dispatch({ type: LOGIN_REQUEST });
 
     const config = {
@@ -67,6 +68,10 @@ export const login = (username, password) => async (dispatch) => {
     } else if (data.status === "success" && data.statusCode === 102) {
       dispatch({
         type: UPDATE_INFLUENCER_PASSWORD_ACTIVE,
+        payload: data,
+      });
+      dispatch({
+        type: LOGIN_FAIL,
         payload: data,
       });
     } else {

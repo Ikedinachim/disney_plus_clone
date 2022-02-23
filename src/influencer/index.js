@@ -25,7 +25,7 @@ const Dashboard = () => {
   const { loading, influencerCampaignList } = useSelector(
     (state) => state.influencerCampaignList
   );
-
+  // console.log(influencerCampaignList);
   const { idLoading } = useSelector((state) => state.influencerDetails);
   const { user } = useSelector((state) => state.auth);
   const { error } = useSelector((state) => state.wallet);
@@ -181,12 +181,12 @@ const Dashboard = () => {
                             </a>
                         </div>
                     </div> */}
-            <div class="tx-black tx-14">
+            <div className="tx-black tx-14">
               <Link
                 to={`/influencer/view-campaign/${campaign.influenceMarketingId}`}
-                class="d-flex"
+                className="d-flex"
               >
-                <i class="fa fa-eye tx-orange pd-t-4 mg-r-5"></i>
+                <i className="fa fa-eye tx-orange pd-t-4 mg-r-5"></i>
                 {campaign.marketingData.isApproved &&
                 !campaign.marketingData.isPublished &&
                 !campaign.marketingData.isRejected
@@ -627,10 +627,10 @@ const Dashboard = () => {
                     striped
                     hover
                     // checkboxFirstColumn
-                    pagingTop
+                    // pagingTop
                     barReverse
-                    searchTop
-                    searchBottom={false}
+                    // searchTop
+                    // searchBottom={false}
                   />
                 </div>
               </div>
