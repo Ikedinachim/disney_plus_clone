@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
 import NaijaStates from "naija-state-local-government";
 import MetaData from "../../../layout/MetaData";
-import { saveAs } from "file-saver";
+// import { saveAs } from "file-saver";
 import {
   getFilteredContactList,
   clearErrors,
@@ -12,6 +12,7 @@ import {
 
 import { useDropzone } from "react-dropzone";
 import Papa from "papaparse";
+import { CSVLink } from "react-csv";
 
 const TargetAudience = ({
   prevStep,
@@ -29,10 +30,12 @@ const TargetAudience = ({
     (state) => state.filteredContactList || []
   );
 
-  // const [status, setStatus] = useState(3);
-  // const radioHandler = (status) => {
-  //   setStatus(status);
-  // };
+  const csvData = [
+    ["Numbers"],
+    ["234890xxxxxxxx"],
+    ["234890xxxxxxxx"],
+    ["234890xxxxxxxx"],
+  ];
 
   const selectGenders = [
     {
@@ -124,11 +127,11 @@ const TargetAudience = ({
     skipEmptyLines: "greedy",
   });
 
-  const setCsvAsset = () => {
-    fetch("#")
-      .then((res) => res.blob())
-      .then((blob) => saveAs(blob, "fileName"));
-  };
+  // const setCsvAsset = () => {
+  //   fetch("#")
+  //     .then((res) => res.blob())
+  //     .then((blob) => saveAs(blob, "fileName"));
+  // };
 
   useEffect(() => {
     if (error) {
@@ -450,15 +453,24 @@ const TargetAudience = ({
                               </label>
                               <button
                                 className="btn tx-primary pd-x-0 pd-t-0"
-                                onClick={setCsvAsset}
+                                // onClick={setCsvAsset}
                               >
                                 <div className="d-flex pd-t-3">
                                   <div>
                                     <i className="fa fa-download tx-primary mg-r-5" />
+                                    <CSVLink
+                                      filename={"mysogi-number-format"}
+                                      data={csvData}
+                                    >
+                                      Download Sample
+                                    </CSVLink>
                                   </div>
-                                  <p className="mb-0 pointer">
+                                  {/* <p className="mb-0 pointer">
                                     Download Sample
-                                  </p>
+                                    <CSVLink data={csvData}>
+                                      Download Sample
+                                    </CSVLink>
+                                  </p> */}
                                 </div>
                               </button>
                               <div className="form-group">
