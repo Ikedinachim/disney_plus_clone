@@ -1,8 +1,8 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import Loader from "../loader";
-import MetaData from "../layout/MetaData";
+import Loader from "../../loader";
+import MetaData from "../../layout/MetaData";
 import { getUser } from "../../../actions/authActions";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
@@ -46,10 +46,10 @@ const ChangePassword = () => {
         <Fragment>
           <MetaData title={"Change password"} />
           <section className="ht-100v container-fluid">
-            <div className="col-md-6 login-side">
+            <div className="col-md-12 login-side">
               <div className="container pd-lg-30 pd-10">
                 <Link
-                  to="../"
+                  to="/setting"
                   type="button"
                   className="close close-btn"
                   aria-label="Close"

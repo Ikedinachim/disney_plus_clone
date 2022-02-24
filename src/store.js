@@ -79,6 +79,8 @@ const appReducer = combineReducers({
   influencerDetails: getInfluencerDetailsReducer,
   digitalCampaigns: getDigitalCampaignsReducer,
   getPropellerCampaigns: getPropellerCampaignsReducer,
+  getOsCampaigns: getOsCampaignsReducer,
+  getMobileCampaign: getMobileCampaignsReducer,
   updateInfluencerProfile: updateInfluencerReducer,
   updateInfluencerCost: updateInfluencerCostReducer,
   resetInfluencerPassword: resetInfluencerPasswordReducer,
