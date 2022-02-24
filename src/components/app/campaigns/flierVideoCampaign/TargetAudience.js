@@ -13,6 +13,7 @@ import {
 
 import { useDropzone } from "react-dropzone";
 import Papa from "papaparse";
+import { CSVLink } from "react-csv";
 
 const TargetAudience = ({
   prevStep,
@@ -75,6 +76,13 @@ const TargetAudience = ({
 
   //   reader.readAsText(file);
   // };
+
+  const csvData = [
+    ["Numbers"],
+    ["234890xxxxxxxx"],
+    ["234890xxxxxxxx"],
+    ["234890xxxxxxxx"],
+  ];
 
   const selectGenders = [
     {
@@ -181,11 +189,11 @@ const TargetAudience = ({
     skipEmptyLines: "greedy",
   });
 
-  const setCsvAsset = () => {
-    fetch("#")
-      .then((res) => res.blob())
-      .then((blob) => saveAs(blob, "fileName"));
-  };
+  // const setCsvAsset = () => {
+  //   fetch("#")
+  //     .then((res) => res.blob())
+  //     .then((blob) => saveAs(blob, "fileName"));
+  // };
 
   useEffect(() => {
     if (error) {
@@ -505,17 +513,20 @@ const TargetAudience = ({
                               <label className="mb-1 tx-com">
                                 Upload CSV Containing Phone Numbers
                               </label>
-                              <button
-                                className="btn tx-primary pd-x-0 pd-t-0"
-                                onClick={setCsvAsset}
-                              >
+                              <button className="btn tx-primary pd-x-0 pd-t-0">
                                 <div className="d-flex pd-t-3">
                                   <div>
                                     <i className="fa fa-download tx-primary mg-r-5" />
+                                    <CSVLink
+                                      filename={"mysogi-number-format"}
+                                      data={csvData}
+                                    >
+                                      Download Sample
+                                    </CSVLink>
                                   </div>
-                                  <p className="mb-0 pointer">
+                                  {/* <p className="mb-0 pointer">
                                     Download Sample
-                                  </p>
+                                  </p> */}
                                 </div>
                               </button>
                               <div className="form-group">
