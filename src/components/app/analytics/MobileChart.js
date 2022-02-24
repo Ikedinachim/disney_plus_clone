@@ -18,8 +18,13 @@ const MobileChart = ({ mobileCampaigns }) => {
               <Chart
                 chartType="PieChart"
                 data={[
-                  ["Actions", "Sales", "Expenses"],
-                  ["Mobile", 20000, 15000],
+                  ["Mobile ISP", "Clicks", "Conversions"],
+                  // mobileCampaigns.map((campaign) => [
+                  //   campaign.mobile_isp,
+                  //   campaign.clicks,
+                  //   campaign.conversions,
+                  // ])
+                  [("Mobile", 20000, 15000)],
                   ["Whatsapp", 15000, 12000],
                   ["Text", 7170, 10460],
                 ]}

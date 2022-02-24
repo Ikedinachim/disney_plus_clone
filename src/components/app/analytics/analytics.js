@@ -33,7 +33,7 @@ const Analytics = () => {
     dispatch(getPropellerCampaign(propellerId));
     dispatch(getOsCampaign(propellerId));
     dispatch(getMobileCampaign(propellerId));
-  }, [dispatch, alert, error]);
+  }, [dispatch, alert, error, propellerId]);
 
   console.log(propellerCampaigns);
 
@@ -61,82 +61,84 @@ const Analytics = () => {
               </div>
 
               {/* numbers doing */}
-              <div className="row">
-                <div className="col-md-4 col-12 mg-t-20 mg-md-t-0">
-                  <div className="card rounded bd-0 shadow-sm">
-                    <div className="card-body">
-                      <div className="d-flex">
-                        <div className="mg-r-20">
-                          {" "}
-                          <img
-                            src="../../assets/img/Brand_Awareness.svg"
-                            className="tx-primary"
-                            alt=""
-                            srcset=""
-                          />
+              {propellerCampaigns.map((campaign) => (
+                <div className="row">
+                  <div className="col-md-4 col-12 mg-t-20 mg-md-t-0">
+                    <div className="card rounded bd-0 shadow-sm">
+                      <div className="card-body">
+                        <div className="d-flex">
+                          <div className="mg-r-20">
+                            {" "}
+                            <img
+                              src="../../assets/img/Brand_Awareness.svg"
+                              className="tx-primary"
+                              alt=""
+                              srcset=""
+                            />
+                          </div>
+                          <div>
+                            <p className="tx-24 tx-bold">
+                              {campaign.impressions}
+                            </p>
+                            <p className="tx-15 tx-blac">
+                              Total number of impressions
+                            </p>
+                          </div>
                         </div>
-                        <div>
-                          <p className="tx-24 tx-bold">
-                            246k {/*(propellerCampaigns.impressions)*/}
-                          </p>
-                          <p className="tx-15 tx-blac">
-                            Total number of impressions
-                          </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-4 col-12 mg-t-20 mg-md-t-0">
+                    <div className="card rounded bd-0 shadow-sm">
+                      <div className="card-body">
+                        <div className="d-flex">
+                          <div className="mg-r-20">
+                            {" "}
+                            <img
+                              src="../../assets/img/Brand_Awareness.svg"
+                              className="tx-primary"
+                              alt=""
+                              srcset=""
+                            />
+                          </div>
+                          <div>
+                            <p className="tx-24 tx-bold">{campaign.clicks}</p>
+                            <p className="tx-15 tx-blac">
+                              Total number of clicks
+                            </p>
+                            <br></br>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-4 col-12 mg-t-20 mg-md-t-0">
+                    <div className="card rounded bd-0 shadow-sm">
+                      <div className="card-body">
+                        <div className="d-flex">
+                          <div className="mg-r-20">
+                            {" "}
+                            <img
+                              src="../../assets/img/Brand_Awareness.svg"
+                              className="tx-primary"
+                              alt=""
+                              srcset=""
+                            />
+                          </div>
+                          <div>
+                            <p className="tx-24 tx-bold">
+                              {campaign.conversions}
+                            </p>
+                            <p className="tx-15 tx-blac">
+                              Total number of actions performed
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="col-md-4 col-12 mg-t-20 mg-md-t-0">
-                  <div className="card rounded bd-0 shadow-sm">
-                    <div className="card-body">
-                      <div className="d-flex">
-                        <div className="mg-r-20">
-                          {" "}
-                          <img
-                            src="../../assets/img/Brand_Awareness.svg"
-                            className="tx-primary"
-                            alt=""
-                            srcset=""
-                          />
-                        </div>
-                        <div>
-                          <p className="tx-24 tx-bold">
-                            9,320 {/*(propellerCampaigns.clicks)*/}
-                          </p>
-                          <p className="tx-15 tx-blac">
-                            Total number of clicks
-                          </p>
-                          <br></br>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-4 col-12 mg-t-20 mg-md-t-0">
-                  <div className="card rounded bd-0 shadow-sm">
-                    <div className="card-body">
-                      <div className="d-flex">
-                        <div className="mg-r-20">
-                          {" "}
-                          <img
-                            src="../../assets/img/Brand_Awareness.svg"
-                            className="tx-primary"
-                            alt=""
-                            srcset=""
-                          />
-                        </div>
-                        <div>
-                          <p className="tx-24 tx-bold">3,231</p>
-                          <p className="tx-15 tx-blac">
-                            Total number of actions performed
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              ))}
 
               {/* diagram of clicks and impressions  */}
               <div className="row mg-t-30">
