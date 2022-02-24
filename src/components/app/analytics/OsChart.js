@@ -9,6 +9,8 @@ const OsChart = ({ OsCampaigns }) => {
     legend: { position: "bottom" },
     isStacked: true,
   };
+
+  console.log(OsCampaigns);
   return (
     <div className="col-md-6 col-12 mg-t-20 mg-md-t-0">
       <div className="card rounded bd-0 shadow-sm">
