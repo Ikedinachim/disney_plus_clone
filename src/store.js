@@ -30,7 +30,7 @@ import {
   getMobileCampaignsReducer,
   getOsCampaignsReducer,
   getPropellerCampaignsReducer,
-} from "./reducers/anayticsReducers";
+} from "./reducers/analyticsReducers";
 import {
   createSmsCampaignReducer,
   createFlierVideoCampaignReducer,
@@ -80,7 +80,7 @@ const appReducer = combineReducers({
   digitalCampaigns: getDigitalCampaignsReducer,
   getPropellerCampaigns: getPropellerCampaignsReducer,
   getOsCampaigns: getOsCampaignsReducer,
-  getMobileCampaign: getMobileCampaignsReducer,
+  getMobileCampaigns: getMobileCampaignsReducer,
   updateInfluencerProfile: updateInfluencerReducer,
   updateInfluencerCost: updateInfluencerCostReducer,
   resetInfluencerPassword: resetInfluencerPasswordReducer,

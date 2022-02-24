@@ -13,9 +13,9 @@ import OsChart from "./OsChart";
 import MobileChart from "./MobileChart";
 
 const Analytics = () => {
-  const { loading, error, propellerCampaigns } = useSelector(
-    (state) => state.getPropellerCampaign || {}
-  );
+  const {
+    getPropellerCampaigns: { loading, error, propellerCampaigns },
+  } = useSelector((state) => state);
 
   const { propellerId } = useParams();
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const Analytics = () => {
       dispatch(clearErrors());
     }
     dispatch(getPropellerCampaign(propellerId));
-  }, [dispatch, alert, error]);
+  }, []);
 
   console.log(propellerCampaigns);
 
@@ -167,10 +167,10 @@ const Analytics = () => {
 
               <div className="row mg-t-30">
                 {/* ads performed & actions performed */}
-                <OsChart />
+                <OsChart propellerId={propellerId} />
 
                 {/* chartArea */}
-                <MobileChart />
+                <MobileChart propellerId={propellerId} />
               </div>
             </div>
           </div>

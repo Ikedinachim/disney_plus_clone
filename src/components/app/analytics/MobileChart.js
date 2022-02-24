@@ -2,22 +2,21 @@ import React, { useEffect } from "react";
 
 import { Chart } from "react-google-charts";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+
 import { getMobileCampaign } from "../../../actions/analyticsActions";
 
-const MobileChart = () => {
-  const { Mobilecampaign } = useSelector(
+const MobileChart = ({ propellerId }) => {
+  const { mobileCampaigns } = useSelector(
     (state) => state.getMobileCampaigns || {}
   );
 
-  const { propellerId } = useParams();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getMobileCampaign(propellerId));
   }, []);
 
-  console.log(Mobilecampaign);
+  console.log(mobileCampaigns);
 
   const ActionsPerformed = {
     title: "Actions performed",

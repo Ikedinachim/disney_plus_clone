@@ -42,22 +42,24 @@ export const getPropellerCampaign = (propellerId) => async (dispatch) => {
       dept: ["nativeads"],
     };
 
-    const { data } = await axios.post(
+    const data = await axios.post(
       "/api/campaign/propeller-statistics-data",
       params,
       {
         headers: headers,
       }
     );
-    if (data.statusCode === 200) {
+    const body = data.data;
+    console.log(body);
+    if (data.status === 200) {
       dispatch({
         type: PROPELLER_CAMPAIGN_SUCCESS,
-        payload: data.data,
+        payload: body.data,
       });
     } else {
       dispatch({
         type: PROPELLER_CAMPAIGN_FAIL,
-        payload: data.message,
+        payload: body.message,
       });
     }
   } catch (error) {
@@ -91,22 +93,25 @@ export const getOsCampaign = (propellerId) => async (dispatch) => {
       dept: ["nativeads"],
     };
 
-    const { data } = await axios.post(
+    const data = await axios.post(
       "/api/campaign/propeller-statistics-data",
       params,
       {
         headers: headers,
       }
     );
-    if (data.status === "success") {
+
+    const body = data.data;
+    console.log(body.data);
+    if (data.status === 200) {
       dispatch({
         type: PROPELLER_OS_CAMPAIGN_SUCCESS,
-        payload: data.data,
+        payload: body.data,
       });
     } else {
       dispatch({
         type: PROPELLER_OS_CAMPAIGN_FAIL,
-        payload: data.message,
+        payload: body.message,
       });
     }
   } catch (error) {
@@ -140,22 +145,23 @@ export const getMobileCampaign = (propellerId) => async (dispatch) => {
       dept: ["nativeads"],
     };
 
-    const { data } = await axios.post(
+    const data = await axios.post(
       "/api/campaign/propeller-statistics-data",
       params,
       {
         headers: headers,
       }
     );
-    if (data.status === "success") {
+    const body = data.data;
+    if (data.status === 200) {
       dispatch({
         type: PROPELLER_MOBILE_SUCCESS,
-        payload: data.data,
+        payload: body.data,
       });
     } else {
       dispatch({
         type: PROPELLER_MOBILE_FAIL,
-        payload: data.message,
+        payload: body.message,
       });
     }
   } catch (error) {

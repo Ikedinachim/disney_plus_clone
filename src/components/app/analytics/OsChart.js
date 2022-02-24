@@ -2,22 +2,20 @@ import React, { useEffect } from "react";
 
 import { Chart } from "react-google-charts";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
 import { getOsCampaign } from "../../../actions/analyticsActions";
 
-const OsChart = () => {
-  const { error, Oscampaign } = useSelector(
-    (state) => state.getOsCampaigns || {}
-  );
+const OsChart = ({ propellerId }) => {
+  const {
+    getOsCampaigns: { loading, OsCampaigns },
+  } = useSelector((state) => state);
 
-  const { propellerId } = useParams();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getOsCampaign(propellerId));
   }, []);
 
-  console.log(Oscampaign);
+  console.log(OsCampaigns);
 
   const Adsreport = {
     title: "Os report",
