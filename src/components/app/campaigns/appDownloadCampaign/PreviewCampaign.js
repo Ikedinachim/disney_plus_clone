@@ -597,7 +597,8 @@ const PreviewCampaign = ({
                             {parseInt(wallet.balance) < price ||
                             parseInt(wallet.balance) <
                               filteredContactList.count ||
-                            parseInt(wallet.balance) < values.budget ? (
+                            (values.channel === "display_ads" &&
+                              parseInt(wallet.balance) < values.budget) ? (
                               <button
                                 className="btn btn-primary w-100 tx-com mg-r-15"
                                 onClick={Continue}

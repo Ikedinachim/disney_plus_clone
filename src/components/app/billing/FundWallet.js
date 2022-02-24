@@ -23,10 +23,8 @@ const FundWallet = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const paymentButton = useRef(null);
 
   const [amount, setAmountToPay] = useState("");
-  console.log(amount);
   const { fundWallet, loading, error } = useSelector(
     (state) => state.fundWallet
   );
@@ -63,15 +61,17 @@ const FundWallet = () => {
   const onClose = () => {
     // implementation for  whatever you want to do when the Paystack dialog closed.
     console.log("closed");
-  };
-
-  const MakePayment = () => {
-    const initializePayment = usePaystackPayment(config);
-    initializePayment(onSuccess, onClose);
+    dispatch({ type: FUND_WALLET_RESET });
+    dispatch({ type: CONFIRM_FUNDING_RESET });
   };
 
   const PaystackHookExample = () => {
     const initializePayment = usePaystackPayment(config);
+    const cancelPayment = (e) => {
+      e.preventDefault();
+      dispatch({ type: FUND_WALLET_RESET });
+      dispatch({ type: CONFIRM_FUNDING_RESET });
+    };
     // setAmountToPay("");
     return (
       <div>
@@ -90,7 +90,7 @@ const FundWallet = () => {
         </div>
         <button
           className="btn btn-primary mg-t-10 mg-md-t-30"
-          ref={paymentButton}
+          // ref={paymentButton}
           id="payment-button"
           onClick={() => {
             initializePayment(onSuccess, onClose);
@@ -104,6 +104,12 @@ const FundWallet = () => {
             prefix={"₦"}
           />
         </button>
+        <button
+          className="btn btn-outline-primary mg-l-10 mg-t-10 mg-md-t-30"
+          onClick={cancelPayment}
+        >
+          Cancel Payment
+        </button>
       </div>
     );
   };
@@ -111,21 +117,9 @@ const FundWallet = () => {
   useEffect(() => {
     if (!isAuthenticated || user === null) {
       navigate("/login");
-    } else if (!loading && fundWallet && fundWallet.status === "success") {
-      // alert.success(fundWallet.message);
-      // navigate("/billing/payment");
-      // let button = document.getElementById("payment-button");
-      // setTimeout(() => {
-      //   // paymentButton.current.click();
-      //   button.click();
-      // }, 1000);
-      // button.click();
-      // paymentButton.current.click();
-      // MakePayment();
     }
 
     if (confirmFund && confirmFund.status === "success") {
-      console.log("working");
       alert.success(confirmFund.message);
       dispatch({ type: FUND_WALLET_RESET });
       dispatch({ type: CONFIRM_FUNDING_RESET });
@@ -140,9 +134,9 @@ const FundWallet = () => {
   }, [
     dispatch,
     alert,
-    loading,
+    // loading,
     error,
-    fundWallet,
+    // fundWallet,
     isAuthenticated,
     user,
     navigate,
