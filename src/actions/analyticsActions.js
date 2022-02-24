@@ -50,7 +50,6 @@ export const getPropellerCampaign = (propellerId) => async (dispatch) => {
       }
     );
     const body = data.data;
-    console.log(body);
     if (data.status === 200) {
       dispatch({
         type: PROPELLER_CAMPAIGN_SUCCESS,
@@ -102,7 +101,7 @@ export const getOsCampaign = (propellerId) => async (dispatch) => {
     );
 
     const body = data.data;
-    console.log(body.data);
+
     if (data.status === 200) {
       dispatch({
         type: PROPELLER_OS_CAMPAIGN_SUCCESS,

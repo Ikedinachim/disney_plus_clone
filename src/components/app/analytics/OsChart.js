@@ -1,22 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { Chart } from "react-google-charts";
-import { useSelector, useDispatch } from "react-redux";
-import { getOsCampaign } from "../../../actions/analyticsActions";
 
-const OsChart = ({ propellerId }) => {
-  const {
-    getOsCampaigns: { loading, OsCampaigns },
-  } = useSelector((state) => state);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getOsCampaign(propellerId));
-  }, []);
-
-  console.log(OsCampaigns);
-
+const OsChart = ({ OsCampaigns }) => {
   const Adsreport = {
     title: "Os report",
     chartArea: { width: "50%" },

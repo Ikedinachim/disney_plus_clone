@@ -6,6 +6,8 @@ import { Link, useParams } from "react-router-dom";
 import {
   clearErrors,
   getPropellerCampaign,
+  getMobileCampaign,
+  getOsCampaign,
 } from "../../../actions/analyticsActions";
 import Loader from "../../loader";
 import { useAlert } from "react-alert";
@@ -15,6 +17,8 @@ import MobileChart from "./MobileChart";
 const Analytics = () => {
   const {
     getPropellerCampaigns: { loading, error, propellerCampaigns },
+    getOsCampaigns: { OsCampaigns },
+    getMobileCampaigns: { mobileCampaigns },
   } = useSelector((state) => state);
 
   const { propellerId } = useParams();
@@ -27,7 +31,9 @@ const Analytics = () => {
       dispatch(clearErrors());
     }
     dispatch(getPropellerCampaign(propellerId));
-  }, []);
+    dispatch(getOsCampaign(propellerId));
+    dispatch(getMobileCampaign(propellerId));
+  }, [dispatch, alert, error]);
 
   console.log(propellerCampaigns);
 
@@ -167,10 +173,10 @@ const Analytics = () => {
 
               <div className="row mg-t-30">
                 {/* ads performed & actions performed */}
-                <OsChart propellerId={propellerId} />
+                <OsChart OsCampaigns={OsCampaigns} />
 
                 {/* chartArea */}
-                <MobileChart propellerId={propellerId} />
+                <MobileChart mobileCampaigns={mobileCampaigns} />
               </div>
             </div>
           </div>
