@@ -34,10 +34,10 @@ export const getPropellerCampaign = (propellerId) => async (dispatch) => {
       crossdomain: true,
     };
     const params = {
-      group_by: "campaign_id",
-      day_from: "2022-01-01 00:00:00",
-      day_to: "2022-02-22 23:59:59",
-      campaign_id: [parseInt(propellerId)],
+      groupBy: "campaign_id",
+      dayFrom: "2022-01-01 00:00:00",
+      dayTo: "2022-02-22 23:59:59",
+      campaignId: [parseInt(propellerId)],
       geo: ["NG"],
       dept: ["nativeads"],
     };
@@ -83,10 +83,10 @@ export const getOsCampaign = (propellerId) => async (dispatch) => {
       crossdomain: true,
     };
     const params = {
-      group_by: "os",
-      day_from: "2022-01-01 00:00:00",
-      day_to: "2022-02-22 23:59:59",
-      campaign_id: [parseInt(propellerId)],
+      groupBy: "os",
+      dayFrom: "2022-01-01 00:00:00",
+      dayTo: "2022-02-22 23:59:59",
+      campaignId: [parseInt(propellerId)],
       geo: ["NG"],
       dept: ["nativeads"],
     };
@@ -132,10 +132,10 @@ export const getMobileCampaign = (propellerId) => async (dispatch) => {
       crossdomain: true,
     };
     const params = {
-      group_by: "mobile_isp",
-      day_from: "2022-01-01 00:00:00",
-      day_to: "2022-02-22 23:59:59",
-      campaign_id: [parseInt(propellerId)],
+      groupBy: "mobile_isp",
+      dayFrom: "2022-01-01 00:00:00",
+      dayTo: "2022-02-22 23:59:59",
+      campaignId: [parseInt(propellerId)],
       geo: ["NG"],
       dept: ["nativeads"],
     };
