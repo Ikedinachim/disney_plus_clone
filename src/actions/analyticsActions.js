@@ -1,4 +1,5 @@
 import Axios from "axios";
+import { DateTime } from "luxon";
 
 import {
   PROPELLER_CAMPAIGN_REQUEST,
@@ -35,8 +36,8 @@ export const getPropellerCampaign = (propellerId) => async (dispatch) => {
     };
     const params = {
       groupBy: "campaign_id",
-      dayFrom: "2022-01-01 00:00:00",
-      dayTo: "2022-02-22 23:59:59",
+      dayFrom: "2022-01-01",
+      dayTo: DateTime.now().toFormat("yyyy-MM-dd"),
       campaignId: [parseInt(propellerId)],
       geo: ["NG"],
       dept: ["nativeads"],
@@ -85,8 +86,8 @@ export const getOsCampaign = (propellerId) => async (dispatch) => {
     };
     const params = {
       groupBy: "os",
-      dayFrom: "2022-01-01 00:00:00",
-      dayTo: "2022-02-22 23:59:59",
+      dayFrom: "2022-01-01",
+      dayTo: DateTime.now().toFormat("yyyy-MM-dd"),
       campaignId: [parseInt(propellerId)],
       geo: ["NG"],
       dept: ["nativeads"],
@@ -137,8 +138,8 @@ export const getMobileCampaign = (propellerId) => async (dispatch) => {
     };
     const params = {
       groupBy: "mobile_isp",
-      dayFrom: "2022-01-01 00:00:00",
-      dayTo: "2022-02-22 23:59:59",
+      dayFrom: "2022-01-01",
+      dayTo: DateTime.now().toFormat("yyyy-MM-dd"),
       campaignId: [parseInt(propellerId)],
       geo: ["NG"],
       dept: ["nativeads"],

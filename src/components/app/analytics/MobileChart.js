@@ -2,13 +2,19 @@ import React, { Fragment } from "react";
 
 import { Chart } from "react-google-charts";
 
-const MobileChart = ({ mobileCampaigns }) => {
-  console.log(mobileCampaigns);
+const MobileChart = () => {
   const ActionsPerformed = {
     title: "Actions performed",
     pieHole: 0.4,
     legend: { position: "bottom" },
   };
+
+  const data = [
+    ["Device", "Clicks", "Conversions"],
+    [("Mobile", 20000, 15000)],
+    ["Whatsapp", 15000, 12000],
+    ["Text", 7170, 10460],
+  ];
   return (
     <Fragment>
       <div className="col-md-6 col-12 mg-t-20 mg-md-t-0">
@@ -17,17 +23,7 @@ const MobileChart = ({ mobileCampaigns }) => {
             <div className="d-flex">
               <Chart
                 chartType="PieChart"
-                data={[
-                  ["Mobile ISP", "Clicks", "Conversions"],
-                  // mobileCampaigns.map((campaign) => [
-                  //   campaign.mobile_isp,
-                  //   campaign.clicks,
-                  //   campaign.conversions,
-                  // ])
-                  [("Mobile", 20000, 15000)],
-                  ["Whatsapp", 15000, 12000],
-                  ["Text", 7170, 10460],
-                ]}
+                data={data}
                 width="100%"
                 height="400px"
                 options={ActionsPerformed}
