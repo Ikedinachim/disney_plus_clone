@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import MetaData from "../layout/MetaData";
 import Loader from "../../components/loader";
 
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser, clearErrors } from "../../actions/authActions";
 import { REGISTER_USER_RESET } from "../../constants/authConstants";
@@ -15,7 +15,7 @@ import * as Yup from "yup";
 
 const Register = () => {
   const navigate = useNavigate();
-  const alert = useAlert();
+  // const alert = useAlert();
   const dispatch = useDispatch();
 
   const [newUser, setNewUser] = useState({
@@ -39,7 +39,7 @@ const Register = () => {
     businessEmail: "",
   });
 
-  const { firstName, lastName, username, userType, email, phone } = newUser;
+  const { firstName, lastName, username, email, phone } = newUser;
 
   const schema = Yup.object().shape({
     firstName: Yup.string()
@@ -124,15 +124,15 @@ const Register = () => {
 
   useEffect(() => {
     if (isRegistered) {
-      alert.success("User registered successfully");
+      toast.success("User registered successfully");
       navigate("/login");
       dispatch({ type: REGISTER_USER_RESET });
     }
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, isAuthenticated, isRegistered, error, alert, navigate]);
+  }, [dispatch, isAuthenticated, isRegistered, error, navigate]);
 
   return (
     <Fragment>

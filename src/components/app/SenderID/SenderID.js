@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import { DateTime } from "luxon";
-
+import { toast } from "react-toastify";
 import Loader from "../../loader";
 import MetaData from "../../layout/MetaData";
 import { MDBDataTable } from "mdbreact";
@@ -18,10 +18,10 @@ const SenderID = () => {
   useEffect(() => {
     dispatch(getSenderID());
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, error]);
+  }, [dispatch, error, toast]);
 
   const setSenderID = () => {
     const data = {

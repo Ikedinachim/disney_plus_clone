@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify";
 import { saveAs } from "file-saver";
 
 import MetaData from "../components/layout/MetaData";
@@ -31,7 +31,7 @@ const ViewInfluencerCampaignDetails = () => {
     (state) => state.influencerDetails || []
   );
   const { influenceMarketingId } = useParams();
-  const alert = useAlert();
+  // const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { updateInfluencerCampaignStatus, error, loading } = useSelector(
@@ -98,20 +98,20 @@ const ViewInfluencerCampaignDetails = () => {
   console.log(campaignDetails);
 
   const approvedPayload = {
-    influencerId: campaignDetails.influencerId,
-    marketingId: campaignDetails.marketingData.id,
+    influencerId: campaignDetails && campaignDetails.influencerId,
+    marketingId: campaignDetails && campaignDetails.marketingData.id,
     approvalType: "approved",
     rejectionMessage: "",
   };
   const rejectPayload = {
-    influencerId: campaignDetails.influencerId,
-    marketingId: campaignDetails.marketingData.id,
+    influencerId: campaignDetails && campaignDetails.influencerId,
+    marketingId: campaignDetails && campaignDetails.marketingData.id,
     approvalType: "rejected",
     rejectionMessage: rejectInput,
   };
   const publishPayload = {
-    influencerId: campaignDetails.influencerId,
-    marketingId: campaignDetails.marketingData.id,
+    influencerId: campaignDetails && campaignDetails.influencerId,
+    marketingId: campaignDetails && campaignDetails.marketingData.id,
     publishUrl: publishInputUrl,
     publishMessage: publishInputMessage,
   };
@@ -169,6 +169,7 @@ const ViewInfluencerCampaignDetails = () => {
         </>
       );
     } else if (
+      campaignDetails &&
       campaignDetails.isApproved &&
       !campaignDetails.isPublished &&
       !campaignDetails.isRejected
@@ -188,7 +189,9 @@ const ViewInfluencerCampaignDetails = () => {
         </>
       );
     } else if (
+      campaignDetails &&
       campaignDetails.isApproved &&
+      campaignDetails &&
       campaignDetails.isPublished &&
       !campaignDetails.isRejected
     ) {
@@ -201,23 +204,22 @@ const ViewInfluencerCampaignDetails = () => {
       updateInfluencerCampaignStatus &&
       updateInfluencerCampaignStatus.status === "success"
     ) {
-      alert.success(updateInfluencerCampaignStatus.message);
+      toast.success(updateInfluencerCampaignStatus.message);
       dispatch({ type: UPDATE_INFLUENCER_CAMPAIGN_STATUS_RESET });
       navigate("/influencer");
     } else if (
       updateInfluencerPublishedStatus &&
       updateInfluencerPublishedStatus.status === "success"
     ) {
-      alert.success(updateInfluencerPublishedStatus.message);
+      toast.success(updateInfluencerPublishedStatus.message);
       dispatch({ type: UPDATE_INFLUENCER_PUBLISHED_STATUS_RESET });
       navigate("/influencer");
     } else if (error || publishError) {
-      alert.error(error || publishError);
+      toast.error(error || publishError);
       dispatch(clearErrors());
     }
   }, [
     dispatch,
-    alert,
     error,
     publishError,
     updateInfluencerCampaignStatus,
@@ -270,9 +272,23 @@ const ViewInfluencerCampaignDetails = () => {
                               Campaign
                             </p>
                           </div>
+                          <button
+                            className="btn"
+                            onClick={
+                              () =>
+                                navigator.clipboard.writeText(
+                                  campaignDetails &&
+                                    campaignDetails.marketingData
+                                      .campaignMessage
+                                )
+                              // alert.success("Message Copied")
+                            }
+                          >
+                            <i className="copy-btn fa fa-copy" />
+                          </button>
                         </div>
                         <div className="row mg-t-15">
-                          <div className="form-group col-md-3">
+                          {/* <div className="form-group col-md-3">
                             <label
                               htmlFor
                               className="tx-14 tx-gray mb-0 tx-medium"
@@ -293,19 +309,17 @@ const ViewInfluencerCampaignDetails = () => {
                             <p className="tx-14 mb-0">
                               @{campaignDetails.marketingData.twitterHandle}
                             </p>
-                          </div>
+                          </div> */}
                           <div className="form-group col-md-6">
-                            <label
-                              htmlFor
-                              className="tx-14 tx-gray mb-0 tx-medium"
-                            >
+                            <label className="tx-14 tx-gray mb-0 tx-medium">
                               Campaign Message
                             </label>
                             <p className="tx-14 mb-0">
-                              {campaignDetails.marketingData.campaignMessage}
+                              {campaignDetails &&
+                                campaignDetails.marketingData.campaignMessage}
                             </p>
                           </div>
-                          <div className="form-group col-md-3">
+                          {/* <div className="form-group col-md-3">
                             <label className="tx-14 tx-gray mb-0 tx-medium">
                               Facebook
                             </label>
@@ -320,7 +334,7 @@ const ViewInfluencerCampaignDetails = () => {
                             <p className="tx-14 mb-0">
                               @{campaignDetails.marketingData.snapchatHandle}
                             </p>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                       <div className="col-md-4 pd-md-l-50">
@@ -342,7 +356,10 @@ const ViewInfluencerCampaignDetails = () => {
                         </div>
                         <div>
                           <img
-                            src={campaignDetails.marketingData.attachment}
+                            src={
+                              campaignDetails &&
+                              campaignDetails.marketingData.attachment
+                            }
                             className="img-fluid mg-b-20"
                             alt=""
                           />

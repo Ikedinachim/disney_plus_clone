@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify";
 
 import MetaData from "../../layout/MetaData";
 import Loader from "../../loader";
@@ -20,21 +20,21 @@ const SenderID = () => {
     (state) => state.createSenderId || []
   );
 
-  const alert = useAlert();
+  // const alert = useAlert();
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (status && status.status === "success") {
-      alert.success(status.message);
+      toast.success(status.message);
       navigate("/app/sender-id");
       dispatch({ type: CREATE_SENDERID_RESET });
     }
 
     if (error) {
-      alert.error(error.message);
+      toast.error(error.message);
       dispatch(clearErrors());
     }
-  }, [dispatch, alert, status, error, loading, navigate]);
+  }, [dispatch, toast, status, error, loading, navigate]);
 
   const submitSenderIdHandler = (e) => {
     e.preventDefault();

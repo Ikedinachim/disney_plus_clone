@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify";
 // import { Link } from "react-router-dom";
 
 import MetaData from "../../../layout/MetaData";
@@ -16,7 +16,7 @@ const InfluencerTargetAudience = ({
   uploadPercentage,
   resetCheckedState,
 }) => {
-  const alert = useAlert();
+  // const alert = useAlert();
   const [status, setStatus] = useState(3);
   const radioHandler = (status) => {
     setStatus(status);
@@ -25,7 +25,7 @@ const InfluencerTargetAudience = ({
   const Continue = (e) => {
     e.preventDefault();
     if (values.campaignMessage === "") {
-      alert.error("Create the campaign message");
+      toast.error("Create the campaign message");
     } else if (values.attachment === null) {
       nextStep();
       handleImageUpload();

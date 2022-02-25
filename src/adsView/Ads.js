@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
 // import { DateTime } from "luxon";
 // import NumberFormat from 'react-number-format'
-
+import { ToastContainer, toast } from "react-toastify";
 import Loader from "../components/loader";
 import MetaData from "../components/layout/MetaData";
 
@@ -19,7 +19,7 @@ const ViewCampaign = () => {
   );
   const { id, campaignType, slug } = useParams();
   const dispatch = useDispatch();
-  const alert = useAlert();
+  // const alert = useAlert();
 
   //   const getMobileOS = () => {
   //   const ua = navigator.userAgent
@@ -39,11 +39,11 @@ const ViewCampaign = () => {
   useEffect(() => {
     dispatch(showAds(id, campaignType, slug));
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
     // dispatch(getWallet())
-  }, [dispatch, showAds, alert, error]);
+  }, [dispatch, showAds, toast, error]);
 
   return (
     <Fragment>
