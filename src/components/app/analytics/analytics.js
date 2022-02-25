@@ -71,7 +71,7 @@ const Analytics = () => {
                             <div className="mg-r-20">
                               {" "}
                               <img
-                                src="../../assets/img/Brand_Awareness.svg"
+                                src="../../../assets/img/Brand_Awareness.svg"
                                 className="tx-primary"
                                 alt=""
                                 srcset=""
@@ -96,7 +96,7 @@ const Analytics = () => {
                             <div className="mg-r-20">
                               {" "}
                               <img
-                                src="../../assets/img/Brand_Awareness.svg"
+                                src="../../../assets/img/Brand_Awareness.svg"
                                 className="tx-primary"
                                 alt=""
                                 srcset=""
@@ -120,7 +120,7 @@ const Analytics = () => {
                             <div className="mg-r-20">
                               {" "}
                               <img
-                                src="../../assets/img/Brand_Awareness.svg"
+                                src="../../../assets/img/Brand_Awareness.svg"
                                 className="tx-primary"
                                 alt=""
                                 srcset=""
