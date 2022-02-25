@@ -14,6 +14,7 @@ import {
   updateInfluencerCostReducer,
   resetInfluencerPasswordReducer,
   updateUserPasswordReducer,
+
   // userDetailsReducer
 } from "./reducers/authReducers";
 
@@ -31,6 +32,7 @@ import {
   getMobileCampaignsReducer,
   getOsCampaignsReducer,
   getPropellerCampaignsReducer,
+  getCampaignByDateReducer,
 } from "./reducers/analyticsReducers";
 import {
   createSmsCampaignReducer,
@@ -83,6 +85,7 @@ const appReducer = combineReducers({
   getPropellerCampaigns: getPropellerCampaignsReducer,
   getOsCampaigns: getOsCampaignsReducer,
   getMobileCampaigns: getMobileCampaignsReducer,
+  getCampaignByDate: getCampaignByDateReducer,
   updateInfluencerProfile: updateInfluencerReducer,
   updateInfluencerCost: updateInfluencerCostReducer,
   resetInfluencerPassword: resetInfluencerPasswordReducer,

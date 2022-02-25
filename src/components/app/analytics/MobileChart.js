@@ -1,8 +1,20 @@
-import React, { Fragment } from "react";
-
+import React, { Fragment, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Chart } from "react-google-charts";
+import { getMobileCampaign } from "../../../actions/analyticsActions";
 
-const MobileChart = () => {
+const MobileChart = ({ propellerId }) => {
+  const {
+    getMobileCampaigns: { mobileCampaigns },
+  } = useSelector((state) => state);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getMobileCampaign(propellerId));
+  }, []);
+
+  console.log(mobileCampaigns);
   const ActionsPerformed = {
     title: "Actions performed",
     pieHole: 0.4,
@@ -11,7 +23,7 @@ const MobileChart = () => {
 
   const data = [
     ["Device", "Clicks", "Conversions"],
-    [("Mobile", 20000, 15000)],
+    ["Mobile", 20000, 15000],
     ["Whatsapp", 15000, 12000],
     ["Text", 7170, 10460],
   ];

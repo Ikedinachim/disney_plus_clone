@@ -12,6 +12,9 @@ import {
   PROPELLER_MOBILE_SUCCESS,
   PROPELLER_MOBILE_FAIL,
   CLEAR_ERRORS,
+  CAMPAIGN_DATE_REQUEST,
+  CAMPAIGN_DATE_SUCCESS,
+  CAMPAIGN_DATE_FAIL,
 } from "../constants/analyticsConstants";
 
 const baseURL = "https://mysogi.uat.com.ng/";
@@ -117,6 +120,56 @@ export const getOsCampaign = (propellerId) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PROPELLER_OS_CAMPAIGN_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+//Get day to day
+export const getCampaignByDate = (propellerId) => async (dispatch) => {
+  try {
+    dispatch({ type: CAMPAIGN_DATE_REQUEST });
+
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      accept: "application/json",
+      "Content-type": "application/json",
+      crossdomain: true,
+    };
+    const params = {
+      groupBy: "date_time",
+      dayFrom: "2022-01-01",
+      dayTo: DateTime.now().toFormat("yyyy-MM-dd"),
+      campaignId: [parseInt(propellerId)],
+      geo: ["NG"],
+      dept: ["nativeads"],
+    };
+
+    const data = await axios.post(
+      "/api/campaign/propeller-statistics-data",
+      params,
+      {
+        headers: headers,
+      }
+    );
+    const body = data.data;
+    if (data.status === 200) {
+      dispatch({
+        type: CAMPAIGN_DATE_SUCCESS,
+        payload: body.data,
+      });
+    } else {
+      dispatch({
+        type: CAMPAIGN_DATE_FAIL,
+        payload: body.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: CAMPAIGN_DATE_FAIL,
       payload: error.message,
     });
   }

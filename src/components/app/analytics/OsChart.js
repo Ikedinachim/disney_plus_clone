@@ -1,8 +1,19 @@
-import React, { Fragment } from "react";
-
+import React, { Fragment, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Chart } from "react-google-charts";
+import { getOsCampaign } from "../../../actions/analyticsActions";
 
-const OsChart = ({ OsCampaigns }) => {
+const OsChart = ({ propellerId }) => {
+  const {
+    getOsCampaigns: { OsCampaigns },
+  } = useSelector((state) => state);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getOsCampaign(propellerId));
+  }, []);
+
   const Adsreport = {
     title: "Os report",
     chartArea: { width: "50%" },
@@ -20,14 +31,10 @@ const OsChart = ({ OsCampaigns }) => {
               <Chart
                 chartType="ColumnChart"
                 data={[
-                  ["Month", "Android", "IOS", "Symbian"],
-                  ["Mon", 20000, 15000, 35000],
-                  ["Tue", 15000, 12000, 27000],
-                  ["Wed", 7170, 10460, 17630],
-                  ["Thu", 16600, 15120, 31720],
-                  ["Fri", 12530, 18240, 30770],
-                  ["Sat", 17530, 15540, 33070],
-                  ["Sun", 10000, 24040, 34040],
+                  ["OS", "impressions", "clicks", "conversions"],
+                  ["Android", 20000, 15000, 35000],
+                  ["IOS", 15000, 12000, 27000],
+                  ["Symbian", 7170, 10460, 17630],
                 ]}
                 width="100%"
                 height="400px"

@@ -8,6 +8,9 @@ import {
   PROPELLER_MOBILE_REQUEST,
   PROPELLER_MOBILE_SUCCESS,
   PROPELLER_MOBILE_FAIL,
+  CAMPAIGN_DATE_REQUEST,
+  CAMPAIGN_DATE_SUCCESS,
+  CAMPAIGN_DATE_FAIL,
   CLEAR_ERRORS,
 } from "../constants/analyticsConstants";
 
@@ -29,6 +32,40 @@ export const getPropellerCampaignsReducer = (
       };
 
     case PROPELLER_CAMPAIGN_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+/////Statistics details (impression, click, conversions)/////
+export const getCampaignByDateReducer = (
+  state = { dateCampaigns: [] },
+  action
+) => {
+  switch (action.type) {
+    case CAMPAIGN_DATE_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case CAMPAIGN_DATE_SUCCESS:
+      return {
+        loading: false,
+        dateCampaigns: action.payload,
+      };
+
+    case CAMPAIGN_DATE_FAIL:
       return {
         loading: false,
         error: action.payload,
