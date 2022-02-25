@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { usePaystackPayment } from "react-paystack";
 
@@ -20,7 +20,7 @@ import {
 } from "../../../../constants/billingConstants";
 
 const FundWalletFlierVideo = ({ prevStep, values, price }) => {
-  const alert = useAlert();
+  // const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -28,7 +28,9 @@ const FundWalletFlierVideo = ({ prevStep, values, price }) => {
   const { fundWallet, loading, error } = useSelector(
     (state) => state.fundWallet
   );
-  const { confirmFund } = useSelector((state) => state.confirmFund);
+  const { confirmFund, confirmFundloading } = useSelector(
+    (state) => state.confirmFund
+  );
   const [amount, setAmountToPay] = useState(price - parseInt(wallet.balance));
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
@@ -125,19 +127,19 @@ const FundWalletFlierVideo = ({ prevStep, values, price }) => {
       navigate("/login");
     } else if (confirmFund && confirmFund.status === "success") {
       dispatch(getWallet());
-      alert.success(confirmFund.message);
+      toast.success(confirmFund.message);
       dispatch({ type: FUND_WALLET_RESET });
       dispatch({ type: CONFIRM_FUNDING_RESET });
       prevStep();
     }
 
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
   }, [
     dispatch,
-    alert,
+    toast,
     loading,
     error,
     fundWallet,
@@ -150,7 +152,7 @@ const FundWalletFlierVideo = ({ prevStep, values, price }) => {
 
   return (
     <Fragment>
-      {loading ? (
+      {loading || confirmFundloading ? (
         <Loader />
       ) : (
         <Fragment>

@@ -1,21 +1,21 @@
 import React, { Fragment, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
+// import { useAlert } from "react-alert";
 import { Link, useNavigate } from "react-router-dom";
 
 import MetaData from "../../layout/MetaData";
 import Loader from "../../loader";
 import { getWallet, clearErrors } from "../../../actions/billingActions";
 import { getSenderID } from "../../../actions/senderIDActions";
-
+import { toast } from "react-toastify";
 import FlashSms from "../../../assets/img/flashsms_sm.png";
 import Markerting from "../../../assets/img/Influencer_Marketing_sm.png";
 import Flier from "../../../assets/img/flier_campaign_sm.png";
 import Phone from "../../../assets/img/mysogi_phone_sm.png";
 
 const CreateCampaign = () => {
-  const alert = useAlert();
+  // const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isAuthenticated, user, loading, error } = useSelector(
@@ -28,12 +28,12 @@ const CreateCampaign = () => {
     }
 
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
     dispatch(getWallet());
     dispatch(getSenderID());
-  }, [dispatch, alert, error, isAuthenticated, navigate, user]);
+  }, [dispatch, toast, error, isAuthenticated, navigate, user]);
 
   return (
     <Fragment>

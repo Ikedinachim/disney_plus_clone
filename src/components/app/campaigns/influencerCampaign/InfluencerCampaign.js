@@ -1,14 +1,14 @@
-import React, { Fragment, useEffect, useState, useRef } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
+// import { toast } from "react-toastify";
 
 import { getAllInfluencers } from "../../../../actions/campaignActions";
 
 import Loader from "../../../loader";
 import MetaData from "../../../layout/MetaData";
 import InfluencerCard from "./InfluencerCard";
-import InfluencerPlatformModal from "./InfluencerPlatformModal";
+// import InfluencerPlatformModal from "./InfluencerPlatformModal";
 import InfluencerModal from "./InfluencerModal";
 
 const InfluencerCampaign = ({
@@ -27,7 +27,7 @@ const InfluencerCampaign = ({
   // closeModal,
   // checkedInfluencers,
 }) => {
-  const alert = useAlert();
+  // const alert = useAlert();
   const dispatch = useDispatch();
   const { Influencers, loading } = useSelector(
     (state) => state.allInfluencers || []
@@ -35,9 +35,9 @@ const InfluencerCampaign = ({
 
   const [checkedInfluencer, setCheckedInfluencer] = useState(null);
   const [payloadData, setPayloadData] = useState({});
-  const [platformId, setPlatformId] = useState("");
+  // const [platformId, setPlatformId] = useState("");
 
-  const ref = useRef();
+  // const ref = useRef();
   const [closeModal, setCloseModal] = useState(false);
   const [influencerId, setInfluencerId] = useState("");
 
@@ -92,7 +92,7 @@ const InfluencerCampaign = ({
           (x) => x.id === item.platform
         );
         platforms.splice(platformIndex, 1);
-        let allIndex = platforms.findIndex((el) => el.id == "all");
+        let allIndex = platforms.findIndex((el) => el.id === "all");
         // console.log(allIndex);
         if (allIndex !== -1) platforms.splice(allIndex, 1);
       } else {
@@ -109,7 +109,7 @@ const InfluencerCampaign = ({
 
         cost: item !== "all" ? item.cost : influencer.allCost,
       });
-      if (item == "all") {
+      if (item === "all") {
         platforms = checkedInfluencer.costs.map((el) => {
           return {
             id: el.platform,

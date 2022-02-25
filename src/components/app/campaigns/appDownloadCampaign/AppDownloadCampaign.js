@@ -2,12 +2,12 @@ import React, { Fragment, useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
+// import { useAlert } from "react-alert";
 import { getSenderID } from "../../../../actions/senderIDActions";
 import Loader from "../../../loader";
 import MediaPlayer from "../../../../_helpers/reactPlayer/ReactPlayer";
 import { ProgressBar } from "react-bootstrap";
-
+import { toast } from "react-toastify";
 import MetaData from "../../../layout/MetaData";
 
 const SmsCampaign = ({
@@ -20,7 +20,7 @@ const SmsCampaign = ({
   selectedFileName,
   uploadPercentage,
 }) => {
-  const alert = useAlert();
+  // const alert = useAlert();
   const dispatch = useDispatch();
   const { senderID, loading } = useSelector((state) => state.senderID || []);
 
@@ -32,11 +32,11 @@ const SmsCampaign = ({
   const Continue = (e) => {
     e.preventDefault();
     if (values.senderId === "") {
-      alert.error("Select a Sender ID or request for one if not available");
+      toast.error("Select a Sender ID or request for one if not available");
     } else if (values.channel === "") {
-      alert.error("Choose a channel");
+      toast.error("Choose a channel");
     } else if (values.campaignMessage === "") {
-      alert.error("Create the campaign message");
+      toast.error("Create the campaign message");
     } else if (values.assetType === "image" && values.attachment === null) {
       nextStep();
       handleImageUpload();

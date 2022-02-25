@@ -36,7 +36,7 @@ const BillingOverview = () => {
     setfilteredItems(reverseAllCampaign);
   }, [reverseAllCampaign]);
 
-  console.log(filteredItems, reverseAllCampaign);
+  // console.log(filteredItems, reverseAllCampaign);
   const filterItem = (createdAt) => {
     if (!createdAt) {
       return setfilteredItems(reverseAllCampaign);
@@ -50,7 +50,7 @@ const BillingOverview = () => {
     setfilteredItems(newItem);
   };
 
-  console.log(filteredItems);
+  // console.log(filteredItems);
   return (
     <Fragment>
       {campaignLoading ? (

@@ -3,12 +3,13 @@ import { Link, useParams } from "react-router-dom";
 import MetaData from "../../layout/MetaData";
 import { useSelector, useDispatch } from "react-redux";
 import { DateTime } from "luxon";
+import { toast } from "react-toastify";
 import {
   displaySingleCampaign,
   clearErrors,
 } from "../../../actions/campaignActions";
 import Loader from "../../loader";
-import { useAlert } from "react-alert";
+// import { useAlert } from "react-alert";
 
 const CampaignDetails = () => {
   const { loading, error, singleCampaign } = useSelector(
@@ -17,16 +18,16 @@ const CampaignDetails = () => {
 
   const { id } = useParams();
   const dispatch = useDispatch();
-  const alert = useAlert();
+  // const alert = useAlert();
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
     dispatch(displaySingleCampaign(id));
     // dispatch(getWallet())
-  }, [dispatch, alert, error]);
+  }, [dispatch, toast, error]);
 
   console.log(singleCampaign);
 

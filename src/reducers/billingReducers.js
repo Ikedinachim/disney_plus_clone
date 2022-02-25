@@ -126,19 +126,19 @@ export const confirmFundingReducer = (state = { confirmFund: {} }, action) => {
   switch (action.type) {
     case CONFIRM_FUNDING_REQUEST:
       return {
-        loading: true,
+        confirmFundloading: true,
         confirmFund: {},
       };
 
     case CONFIRM_FUNDING_SUCCESS:
       return {
-        loading: false,
+        confirmFundloading: false,
         confirmFund: action.payload,
       };
 
     case CONFIRM_FUNDING_FAIL:
       return {
-        loading: false,
+        confirmFundloading: false,
         error: action.payload,
       };
 

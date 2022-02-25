@@ -4,13 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import MetaData from "../layout/MetaData";
 import Loader from "../../components/loader";
 
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import {
   updateInfluencerPassword,
   clearErrors,
 } from "../../actions/authActions";
-import { getWallet } from "../../actions/billingActions";
+// import { getWallet } from "../../actions/billingActions";
 import { UPDATE_INFLUENCER_PROFILE_RESET } from "../../constants/authConstants";
 
 import { useForm } from "react-hook-form";
@@ -19,7 +19,7 @@ import * as Yup from "yup";
 
 const UpdateInfluencerPassword = () => {
   const navigate = useNavigate();
-  const alert = useAlert();
+  // const alert = useAlert();
   const dispatch = useDispatch();
 
   const [newUser, setNewUser] = useState({
@@ -31,7 +31,7 @@ const UpdateInfluencerPassword = () => {
     confirmPassword: "",
   });
 
-  const { username, userType, email } = newUser;
+  const { username } = newUser;
 
   const schema = Yup.object().shape({
     // email: Yup.string().email().required(),
@@ -56,8 +56,9 @@ const UpdateInfluencerPassword = () => {
   const { isAuthenticated, user, isUpdated } = useSelector(
     (state) => state.auth
   );
-  const { resetInfluencerPassword, passwordUpdated, error, loading } =
-    useSelector((state) => state.resetInfluencerPassword);
+  const { passwordUpdated, error, loading } = useSelector(
+    (state) => state.resetInfluencerPassword
+  );
 
   const submitIndividualHandler = (data) => {
     console.log(data);
@@ -65,7 +66,7 @@ const UpdateInfluencerPassword = () => {
     reset();
   };
 
-  const onError = (errors, e) => console.log(errors, e);
+  // const onError = (errors, e) => console.log(errors, e);
 
   const onChange = (e) => {
     if (e.target.name === "avatar") {
@@ -76,16 +77,16 @@ const UpdateInfluencerPassword = () => {
 
   useEffect(() => {
     if (passwordUpdated && isUpdated && isUpdated.statusCode === 100) {
-      alert.success(isUpdated.message);
+      toast.success(isUpdated.message);
       navigate("/login");
       dispatch({ type: UPDATE_INFLUENCER_PROFILE_RESET });
     } else if (!isAuthenticated && error) {
-      alert.error(error.message);
+      toast.error(error.message);
       dispatch(clearErrors());
     }
   }, [
     dispatch,
-    alert,
+    // toast,
     user,
     isAuthenticated,
     passwordUpdated,

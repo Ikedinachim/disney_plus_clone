@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { logout } from "../../actions/authActions";
-
+import { toast } from "react-toastify";
 import FeatherIcon from "feather-icons-react";
 
 const Header = () => {
@@ -12,7 +12,7 @@ const Header = () => {
 
   const logoutHandler = () => {
     dispatch(logout());
-    alert.success("Logged out successfully");
+    toast.success("Logged out successfully");
   };
 
   return (

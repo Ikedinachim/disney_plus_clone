@@ -1,10 +1,11 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify";
 
 import {
   updateInfluencerProfile,
   updateInfluencerCost,
+  getUser,
 } from "../actions/authActions";
 
 import MetaData from "../components/layout/MetaData";
@@ -19,7 +20,7 @@ import { getInfluencerDetails } from "../actions/campaignActions";
 import { ProgressBar } from "react-bootstrap";
 
 const InfluencerSettings = () => {
-  const alert = useAlert();
+  // const alert = useAlert();
   const dispatch = useDispatch();
   const { updateInfluencer, loading, error } = useSelector(
     (state) => state.updateInfluencerProfile || []
@@ -30,9 +31,11 @@ const InfluencerSettings = () => {
   const { influencerDetails } = useSelector(
     (state) => state.influencerDetails || []
   );
+  const { userDetails } = useSelector((state) => state || []);
+  // console.log(userDetails);
   const { user } = useSelector((state) => state.auth || []);
 
-  const [influencer, setInfluencer] = useState({
+  const influencer = {
     id: user.user.influencer_id,
     firstName: user.user.firstName,
     lastName: user.user.lastName,
@@ -45,7 +48,7 @@ const InfluencerSettings = () => {
     imageAlt: "",
     uploadPercentage: 0,
     updatedCosts: [],
-  });
+  };
 
   const [updateCost, setUpdateCost] = useState({});
 
@@ -111,21 +114,21 @@ const InfluencerSettings = () => {
     } catch (err) {}
   };
 
-  const isEmpty = (object) => {
-    for (const property in object) {
-      return false;
-    }
-    return true;
-  };
+  // const isEmpty = (object) => {
+  //   for (const property in object) {
+  //     return false;
+  //   }
+  //   return true;
+  // };
 
-  const setImage = (query) => {
-    if (isEmpty(query)) {
-      setProfile((prevState) => ({
-        ...prevState,
-        imageUrl: profileImage.imageUrl,
-      }));
-    }
-  };
+  // const setImage = (query) => {
+  //   if (isEmpty(query)) {
+  //     setProfile((prevState) => ({
+  //       ...prevState,
+  //       imageUrl: profileImage.imageUrl,
+  //     }));
+  //   }
+  // };
 
   const occupations = [
     {
@@ -163,7 +166,6 @@ const InfluencerSettings = () => {
     // let query = { [name]: value };
     // setUpdateCost({ ...updateCost.updateCost, query });
   };
-  let payload = {};
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -197,6 +199,7 @@ const InfluencerSettings = () => {
   //     0;
   // };
 
+  let payload = {};
   useEffect(() => {
     let plaformCost;
     plaformCost = Object.entries(updateCost).map(([k, v]) => ({ [k]: v }));
@@ -208,17 +211,19 @@ const InfluencerSettings = () => {
     };
 
     if (updateInfluencer && updateInfluencer.statusCode === 100) {
-      alert.success(updateInfluencer.message);
+      toast.success(updateInfluencer.message);
       dispatch({ type: UPDATE_INFLUENCER_PROFILE_RESET });
       dispatch(getInfluencerDetails(influencer.id));
+      dispatch(getUser());
     }
     if (updateCosts && updateCosts.statusCode === 100) {
-      alert.success(updateCosts.message);
+      toast.success(updateCosts.message);
       dispatch({ type: UPDATE_INFLUENCER_COST_RESET });
       dispatch(getInfluencerDetails(influencer.id));
+      dispatch(getUser());
     }
     if (error || updateCosts.error) {
-      alert.error(error);
+      toast.error(error);
       dispatch({ type: CLEAR_ERRORS });
     }
   }, [
@@ -226,6 +231,7 @@ const InfluencerSettings = () => {
     updateCost,
     updateCosts,
     profile,
+    toast,
     payload,
     profileImage,
     updateInfluencer,
@@ -248,7 +254,7 @@ const InfluencerSettings = () => {
                   <div className>
                     <form onSubmit={handleSubmit}>
                       <div>
-                        <div id className="pd-md-x-30 pd-xl-x-50">
+                        <div className="pd-md-x-30 pd-xl-x-50">
                           <p
                             className="tx-22 tx-com tx-bold mb-2"
                             htmlFor="customFile"
@@ -269,11 +275,12 @@ const InfluencerSettings = () => {
                                     <img
                                       htmlFor="photo-upload"
                                       src={
-                                        influencerDetails &&
-                                        influencerDetails.imagePath
+                                        userDetails.user.imageUrl
+                                          ? userDetails.user.imageUrl
+                                          : influencerDetails.imagePath
                                       }
                                       className="img-fluid wd-100 ht-100 pro-image"
-                                      alt={`${influencer.firstName} display picture`}
+                                      alt={`${influencer.firstName} display`}
                                     />
                                     <p
                                       htmlFor="photo-upload"
@@ -328,7 +335,7 @@ const InfluencerSettings = () => {
                             </label> */}
                           </div>
                         </div>
-                        <div id className="card-scroll pd-md-x-30 pd-xl-x-50">
+                        <div className="card-scroll pd-md-x-30 pd-xl-x-50">
                           <div className="row justify-content-md-between">
                             <div className="form-group col-md-6">
                               <label htmlFor className="mb-1 tx-com">
@@ -595,7 +602,7 @@ const InfluencerSettings = () => {
                             </div>
                           </div>
                         </div> */}
-                        <div id className="card-scroll pd-md-x-30 pd-xl-x-50">
+                        <div className="card-scroll pd-md-x-30 pd-xl-x-50">
                           {/* <div className="row justify-content-md-between">
                             <div className="form-group col-md-6">
                               <label htmlFor className="mb-1 tx-com">

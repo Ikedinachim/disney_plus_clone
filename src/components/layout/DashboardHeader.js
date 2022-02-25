@@ -2,9 +2,9 @@ import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import { useAlert } from "react-alert";
+// import { useAlert } from "react-alert";
 import NumberFormat from "react-number-format";
-
+import { toast } from "react-toastify";
 import { logout, getUser } from "../../actions/authActions";
 import { getWallet } from "../../actions/billingActions";
 
@@ -15,14 +15,14 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const dispatch = useDispatch();
-  const alert = useAlert();
+  // const alert = useAlert();
 
   const logoutHandler = () => {
     dispatch(logout());
-    alert.success("Logged out successfully");
+    toast.success("Logged out successfully");
   };
 
-  const { user } = useSelector((state) => state.auth);
+  // const { user } = useSelector((state) => state.auth);
   const { user: userDetails } = useSelector((state) => state.userDetails);
 
   const { wallet } = useSelector((state) => state.wallet);

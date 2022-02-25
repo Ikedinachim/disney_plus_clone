@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
 import NaijaStates from "naija-state-local-government";
 import MetaData from "../../../layout/MetaData";
-// import { saveAs } from "file-saver";
+import { toast } from "react-toastify";
 import {
   getFilteredContactList,
   clearErrors,
@@ -23,7 +23,7 @@ const TargetAudience = ({
   values,
   getCsvRawData,
 }) => {
-  const alert = useAlert();
+  // const alert = useAlert();
   const dispatch = useDispatch();
 
   const { filteredContactList, error, loading } = useSelector(
@@ -97,12 +97,14 @@ const TargetAudience = ({
 
   ////
   const [parsedCsvData, setParsedCsvData] = useState([]);
+  const [csvName, setCsvName] = useState();
 
   const parseFile = (file) => {
     Papa.parse(file, {
       header: true,
       complete: (results) => {
         setParsedCsvData(results.data);
+        setCsvName(file.name);
         // console.log(parsedCsvData);
       },
     });
@@ -135,12 +137,12 @@ const TargetAudience = ({
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
     console.log(parsedCsvData);
     getCsvRawData(parsedCsvData);
-  }, [dispatch, error, alert, parsedCsvData]);
+  }, [dispatch, error, toast, parsedCsvData]);
 
   return (
     <Fragment>
@@ -491,6 +493,7 @@ const TargetAudience = ({
                                     </p>
                                   )}
                                 </div>
+                                <p className="mb-0">{csvName}</p>
                               </div>
                             </div>
                           </div>
