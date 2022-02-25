@@ -3,18 +3,23 @@ import { Link, useNavigate } from "react-router-dom";
 
 import Loader from "../../loader";
 import MetaData from "../../layout/MetaData";
-import { getUser } from "../../../actions/authActions";
+import { getUser, updateUserPassword } from "../../../actions/authActions";
 import { useAlert } from "react-alert";
+import { USER_PASSWORD_RESET } from "../../../constants/authConstants";
 import { useDispatch, useSelector } from "react-redux";
+import { clearErrors } from "../../../actions/authActions";
 
 const ChangePassword = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
+  const navHistory = useNavigate();
 
   // const [userStatus, setUserStatus] = useState()
 
-  const { user, loading } = useSelector((state) => state.userDetails);
+  const {
+    userDetails: { loading },
+    updateUserPassword: { updatePassword, error },
+  } = useSelector((state) => state);
 
   useEffect(() => {
     dispatch(getUser());
@@ -33,9 +38,18 @@ const ChangePassword = () => {
     setPeople({ ...people, [name]: value });
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    dispatch(getUser());
+    dispatch(updateUserPassword(people));
+
+    if (updatePassword && updatePassword.status === "success") {
+      alert.success(updatePassword.message);
+      dispatch({ type: USER_PASSWORD_RESET });
+      navHistory("/app/setting");
+    } else if (updatePassword.status === "error") {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
   };
 
   return (
@@ -62,15 +76,37 @@ const ChangePassword = () => {
                     <p className="tx-16 tx-gray">
                       Please input your email so we can send you a link.
                     </p>
-                    <form className="mg-y-50" onSubmit={submitHandler}>
+                    <form className="mg-y-50">
                       <div className="form-group">
                         <input
                           className="form-control new"
-                          placeholder="email"
-                          name="usernmae"
+                          placeholder="Username"
+                          name="username"
                           type="text"
-                          id="email_field"
+                          id="username"
                           value={people.username}
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <input
+                          className="form-control new"
+                          placeholder="Old password"
+                          name="oldPassword"
+                          type="password"
+                          id="old_password"
+                          value={people.oldPassword}
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <input
+                          className="form-control new"
+                          placeholder="New password"
+                          name="newPassword"
+                          type="password"
+                          id="new_password"
+                          value={people.newPassword}
                           onChange={handleChange}
                         />
                       </div>
@@ -78,10 +114,9 @@ const ChangePassword = () => {
                       <div className="mg-y-30">
                         <div className="form-group col-md-5 mx-auto">
                           <button
-                            id="login_button"
                             className="btn btn-primary btn-block btn-lg py-15"
                             type="submit"
-                            disabled={loading ? true : false}
+                            onClick={submitHandler}
                           >
                             SEND
                           </button>

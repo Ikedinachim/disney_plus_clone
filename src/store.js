@@ -13,6 +13,7 @@ import {
   updateInfluencerReducer,
   updateInfluencerCostReducer,
   resetInfluencerPasswordReducer,
+  updateUserPasswordReducer,
   // userDetailsReducer
 } from "./reducers/authReducers";
 
@@ -55,6 +56,7 @@ const appReducer = combineReducers({
   auth: authReducer,
   userDetails: userDetailsReducer,
   updateUser: updateUserReducer,
+  updateUserPassword: updateUserPasswordReducer,
   createSenderId: createSenderIdReducer,
   wallet: walletReducer,
   tnxHistory: transactionHistoryReducer,
