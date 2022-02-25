@@ -46,7 +46,7 @@ const ChangePassword = () => {
       alert.success(updatePassword.message);
       dispatch({ type: USER_PASSWORD_RESET });
       navHistory("/app/setting");
-    } else if (updatePassword.status === "error") {
+    } else if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
@@ -63,7 +63,7 @@ const ChangePassword = () => {
             <div className="col-md-12 login-side">
               <div className="container pd-lg-30 pd-10">
                 <Link
-                  to="/setting"
+                  to="../setting"
                   type="button"
                   className="close close-btn"
                   aria-label="Close"
@@ -72,9 +72,9 @@ const ChangePassword = () => {
                 </Link>
                 <div>
                   <div className="col-lg-10 col-xl-8 mx-auto pd-t-30 tx-center welcome-div">
-                    <p className="tx-36 tx-bold mb-2 tx-com">Forgot Password</p>
+                    <p className="tx-36 tx-bold mb-2 tx-com">Change Password</p>
                     <p className="tx-16 tx-gray">
-                      Please input your email so we can send you a link.
+                      Please input your details so we can change your password.
                     </p>
                     <form className="mg-y-50">
                       <div className="form-group">
