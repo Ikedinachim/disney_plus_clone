@@ -2,9 +2,9 @@ import React, { Fragment, useEffect, useState, useCallback } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import MetaData from "../../../layout/MetaData";
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify";
 import NaijaStates from "naija-state-local-government";
-import { saveAs } from "file-saver";
+// import { saveAs } from "file-saver";
 
 import {
   getFilteredContactList,
@@ -26,7 +26,7 @@ const TargetAudience = ({
 
   getCsvRawData,
 }) => {
-  const alert = useAlert();
+  // const alert = useAlert();
   const dispatch = useDispatch();
 
   const { filteredContactList, error, loading } = useSelector(
@@ -159,12 +159,14 @@ const TargetAudience = ({
 
   ////
   const [parsedCsvData, setParsedCsvData] = useState([]);
+  const [csvName, setCsvName] = useState();
 
   const parseFile = (file) => {
     Papa.parse(file, {
       header: true,
       complete: (results) => {
         setParsedCsvData(results.data);
+        setCsvName(file.name);
         // console.log(parsedCsvData);
       },
     });
@@ -197,12 +199,12 @@ const TargetAudience = ({
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
     console.log(parsedCsvData);
     getCsvRawData(parsedCsvData);
-  }, [dispatch, error, alert, parsedCsvData]);
+  }, [dispatch, error, toast, parsedCsvData]);
 
   return (
     <Fragment>
@@ -278,7 +280,7 @@ const TargetAudience = ({
                         </div>
                         <div className="form-group col-md-6">
                           <label
-                            htmlFor
+                            // htmlFor
                             className="mb-1 tx-com d-flex align-items-center"
                           >
                             Budget
@@ -547,6 +549,7 @@ const TargetAudience = ({
                                     </p>
                                   )}
                                 </div>
+                                <p className="mb-0">{csvName}</p>
                                 {/* <CSVReader
                                 ref={getButtonRef}
                                 onFileLoad={handleOnFileLoad}

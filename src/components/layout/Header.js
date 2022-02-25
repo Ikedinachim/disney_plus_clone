@@ -25,11 +25,7 @@ const Header = () => {
               className="navbar-brand tx-bold tx-spacing--2 order-1 pd-y-0"
               to="/"
             >
-              <img
-                src={Logo}
-                className="sec-logo img-fluid"
-                alt="pofile image"
-              />
+              <img src={Logo} className="sec-logo img-fluid" alt="pofile" />
             </Link>
             <button
               className="navbar-toggler order-2"

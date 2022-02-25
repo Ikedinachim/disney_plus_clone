@@ -3,6 +3,7 @@ import MetaData from "../../layout/MetaData";
 import { Chart } from "react-google-charts";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
   clearErrors,
   getPropellerCampaign,
@@ -17,15 +18,15 @@ const Analytics = () => {
 
   const { propellerId } = useParams();
   const dispatch = useDispatch();
-  const alert = useAlert();
+  // const alert = useAlert();
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
     dispatch(getPropellerCampaign(propellerId));
-  }, [dispatch, alert, error]);
+  }, [dispatch, toast, error]);
 
   console.log(propellerCampaign);
 

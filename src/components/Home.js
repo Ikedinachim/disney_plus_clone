@@ -3,6 +3,7 @@ import React, { Fragment, useState } from "react";
 import Axios from "axios";
 import { Link } from "react-router-dom";
 import { useAlert } from "react-alert";
+import { toast } from "react-toastify";
 import "rc-slider/assets/index.css";
 import Header from "./layout/Header";
 import Footer from "./layout/Footer";
@@ -19,7 +20,7 @@ const Home = () => {
     baseURL,
   });
   const { loading } = useSelector((state) => state.auth);
-  const alert = useAlert();
+  // const alert = useAlert();
 
   const [mailerState, setMailerState] = useState({
     name: "",
@@ -47,7 +48,7 @@ const Home = () => {
 
     const { data } = await axios.post("api/contact", mailerState);
     if (data.status === "success") {
-      alert.success(data.message);
+      toast.success(data.message);
       setMailerState({
         name: "",
         email: "",
@@ -59,7 +60,7 @@ const Home = () => {
         city: "",
       });
     } else {
-      alert.error("Mail Not Sent");
+      toast.error("Mail Not Sent");
     }
   };
 

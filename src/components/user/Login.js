@@ -4,11 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import Loader from "../loader";
 import MetaData from "../layout/MetaData";
 
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { login, clearErrors } from "../../actions/authActions";
 import { getWallet } from "../../actions/billingActions";
-import { UPDATE_INFLUENCER_PASSWORD_RESET } from "../../constants/authConstants";
+// import { UPDATE_INFLUENCER_PASSWORD_RESET } from "../../constants/authConstants";
 
 const Login = () => {
   const navHistory = useNavigate();
@@ -17,7 +17,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   // const [userStatus, setUserStatus] = useState()
 
-  const alert = useAlert();
+  // const alert = useAlert();
   const dispatch = useDispatch();
 
   const { isAuthenticated, error, loading, user, resetPassword } = useSelector(
@@ -42,14 +42,14 @@ const Login = () => {
       resetInfluencerPassword.statusCode === 102
     ) {
       navHistory("/update-password");
-      alert.error(resetInfluencerPassword.message);
+      toast.error(resetInfluencerPassword.message);
       dispatch(clearErrors());
       // dispatch({ type: UPDATE_INFLUENCER_PASSWORD_RESET });
     } else if (isAuthenticated && user && user.user.role === "influencer") {
       dispatch(getWallet());
       navHistory("/influencer");
     } else if (error) {
-      alert.error(error.message);
+      toast.error(error.message);
       dispatch(clearErrors());
     } else {
       navHistory("/login");
@@ -58,7 +58,8 @@ const Login = () => {
     }
   }, [
     dispatch,
-    alert,
+    // toast,
+    resetInfluencerPassword,
     user,
     isAuthenticated,
     resetPassword,
