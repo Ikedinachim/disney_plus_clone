@@ -36,6 +36,8 @@ const Analytics = () => {
   }, [dispatch, alert, error, propellerId]);
 
   console.log(propellerCampaigns);
+  console.log(OsCampaigns);
+  console.log(mobileCampaigns);
 
   const MonthlyAds = {
     title: "Monthly ads",
@@ -45,111 +47,108 @@ const Analytics = () => {
 
   return (
     <Fragment>
-      {loading ? (
-        <Loader />
-      ) : (
-        <Fragment>
-          <MetaData title={"Analytics"} />
-          <div className="content-body">
-            <div className="container pd-x-0">
-              <div className="row justify-content-between">
-                <div className="col-md-6 col-12">
-                  <Link to="../analytics">
-                    <p className="tx-26 tx-bold">Go back</p>
-                  </Link>
+      <Fragment>
+        <MetaData title={"Analytics"} />
+        <div className="content-body">
+          <div className="container pd-x-0">
+            <div className="row justify-content-between">
+              <div className="col-md-6 col-12">
+                <Link to="../analytics">
+                  <p className="tx-26 tx-bold">Go back</p>
+                </Link>
+              </div>
+            </div>
+
+            {/* numbers doing */}
+            {propellerCampaigns &&
+              propellerCampaigns.map((campaign) => (
+                <div className="row">
+                  <div className="col-md-4 col-12 mg-t-20 mg-md-t-0">
+                    <div className="card rounded bd-0 shadow-sm">
+                      <div className="card-body">
+                        <div className="d-flex">
+                          <div className="mg-r-20">
+                            {" "}
+                            <img
+                              src="../../../assets/img/Brand_Awareness.svg"
+                              className="tx-primary"
+                              alt=""
+                              srcset=""
+                            />
+                          </div>
+                          <div>
+                            <p className="tx-24 tx-bold">
+                              {campaign.impressions}
+                            </p>
+                            <p className="tx-15 tx-blac">
+                              Total number of impressions
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-4 col-12 mg-t-20 mg-md-t-0">
+                    <div className="card rounded bd-0 shadow-sm">
+                      <div className="card-body">
+                        <div className="d-flex">
+                          <div className="mg-r-20">
+                            {" "}
+                            <img
+                              src="../../../assets/img/Reach_Conversion_Goals.svg"
+                              className="tx-primary"
+                              alt=""
+                              srcset=""
+                            />
+                          </div>
+                          <div>
+                            <p className="tx-24 tx-bold">{campaign.clicks}</p>
+                            <p className="tx-15 tx-blac">
+                              Total number of clicks
+                            </p>
+                            <br></br>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-4 col-12 mg-t-20 mg-md-t-0">
+                    <div className="card rounded bd-0 shadow-sm">
+                      <div className="card-body">
+                        <div className="d-flex">
+                          <div className="mg-r-20">
+                            {" "}
+                            <img
+                              src="../../../assets/img/Revenue_Generated.svg"
+                              className="tx-primary"
+                              alt=""
+                              srcset=""
+                            />
+                          </div>
+                          <div>
+                            <p className="tx-24 tx-bold">
+                              {campaign.conversions}
+                            </p>
+                            <p className="tx-15 tx-blac">
+                              Total number of actions performed
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ))}
 
-              {/* numbers doing */}
-              <div className="row">
-                {propellerCampaigns.map((campaign) => (
-                  <Fragment>
-                    <div className="col-md-4 col-12 mg-t-20 mg-md-t-0">
-                      <div className="card rounded bd-0 shadow-sm">
-                        <div className="card-body">
-                          <div className="d-flex">
-                            <div className="mg-r-20">
-                              {" "}
-                              <img
-                                src="../../../assets/img/Brand_Awareness.svg"
-                                className="tx-primary"
-                                alt=""
-                                srcset=""
-                              />
-                            </div>
-                            <div>
-                              <p className="tx-24 tx-bold">
-                                {campaign.impressions}
-                              </p>
-                              <p className="tx-15 tx-blac">
-                                Total number of impressions
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-4 col-12 mg-t-20 mg-md-t-0">
-                      <div className="card rounded bd-0 shadow-sm">
-                        <div className="card-body">
-                          <div className="d-flex">
-                            <div className="mg-r-20">
-                              {" "}
-                              <img
-                                src="../../../assets/img/Brand_Awareness.svg"
-                                className="tx-primary"
-                                alt=""
-                                srcset=""
-                              />
-                            </div>
-                            <div>
-                              <p className="tx-24 tx-bold">{campaign.clicks}</p>
-                              <p className="tx-15 tx-blac">
-                                Total number of clicks
-                              </p>
-                              <br></br>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-4 col-12 mg-t-20 mg-md-t-0">
-                      <div className="card rounded bd-0 shadow-sm">
-                        <div className="card-body">
-                          <div className="d-flex">
-                            <div className="mg-r-20">
-                              {" "}
-                              <img
-                                src="../../../assets/img/Brand_Awareness.svg"
-                                className="tx-primary"
-                                alt=""
-                                srcset=""
-                              />
-                            </div>
-                            <div>
-                              <p className="tx-24 tx-bold">
-                                {campaign.conversions}
-                              </p>
-                              <p className="tx-15 tx-blac">
-                                Total number of actions performed
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </Fragment>
-                ))}
-              </div>
+            {/* diagram of clicks and impressions  */}
 
-              {/* diagram of clicks and impressions  */}
-              {propellerCampaigns.map((campaign) => (
-                <div className="row mg-t-30">
+            <div className="row mg-t-30">
+              {propellerCampaigns &&
+                propellerCampaigns.map((campaign) => (
                   <div className="col-12 mg-t-20 mg-md-t-0">
                     <div className="card rounded bd-0 shadow-sm">
                       <div className="card-body">
                         <div className="d-flex">
-                          <div>{campaign.impressions}</div>
                           <Chart
                             chartType="LineChart"
                             data={[
@@ -179,20 +178,19 @@ const Analytics = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+            </div>
 
-              <div className="row mg-t-30">
-                {/* ads performed & actions performed */}
-                <OsChart OsCampaigns={OsCampaigns} />
+            <div className="row mg-t-30">
+              {/* ads performed & actions performed */}
+              <OsChart />
 
-                {/* chartArea */}
-                <MobileChart mobileCampaigns={mobileCampaigns} />
-              </div>
+              {/* chartArea */}
+              <MobileChart />
             </div>
           </div>
-        </Fragment>
-      )}
+        </div>
+      </Fragment>
     </Fragment>
   );
 };
