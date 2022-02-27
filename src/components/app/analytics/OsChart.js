@@ -9,11 +9,11 @@ const OsChart = ({ propellerId }) => {
   } = useSelector((state) => state);
 
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(getOsCampaign(propellerId));
   }, []);
 
+  //specifying diagram design
   const Adsreport = {
     title: "Os report",
     chartArea: { width: "50%" },
@@ -21,7 +21,20 @@ const OsChart = ({ propellerId }) => {
     isStacked: true,
   };
 
-  console.log(OsCampaigns);
+  //specifying diagram data
+  const data = [["Month", "Impressions", "Clicks", "Conversions"]];
+
+  for (const i in OsCampaigns) {
+    data.push([
+      OsCampaigns[i].os,
+      OsCampaigns[i].impressions,
+      OsCampaigns[i].clicks,
+      OsCampaigns[i].conversions,
+    ]);
+  }
+
+  console.log(data);
+
   return (
     <Fragment>
       <div className="col-md-6 col-12 mg-t-20 mg-md-t-0">
@@ -30,12 +43,7 @@ const OsChart = ({ propellerId }) => {
             <div className="d-flex">
               <Chart
                 chartType="ColumnChart"
-                data={[
-                  ["OS", "impressions", "clicks", "conversions"],
-                  ["Android", 20000, 15000, 35000],
-                  ["IOS", 15000, 12000, 27000],
-                  ["Symbian", 7170, 10460, 17630],
-                ]}
+                data={data}
                 width="100%"
                 height="400px"
                 options={Adsreport}

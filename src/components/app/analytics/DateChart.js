@@ -13,7 +13,18 @@ const DateChart = ({ propellerId }) => {
     dispatch(getCampaignByDate(propellerId));
   }, []);
 
-  console.log(dateCampaigns);
+  const data = [["Month", "Number of clicks", "Number of actions"]];
+
+  for (const i in dateCampaigns) {
+    data.push([
+      dateCampaigns[i].date_time,
+      dateCampaigns[i].clicks,
+      dateCampaigns[i].conversions,
+    ]);
+  }
+
+  console.log(data);
+
   const MonthlyAds = {
     title: "Monthly ads",
     curveType: "function",
@@ -28,20 +39,7 @@ const DateChart = ({ propellerId }) => {
               <div className="d-flex">
                 <Chart
                   chartType="LineChart"
-                  data={[
-                    ["Month", "Number of clicks", "Number of actions"],
-                    ["Jan", 20000, 15000],
-                    ["Feb", 15000, 12000],
-                    ["March", 7170, 10460],
-                    ["April", 7170, 10460],
-                    ["May", 16600, 15120],
-                    ["June", 16600, 15120],
-                    ["July", 12530, 18240],
-                    ["Aug", 12530, 18240],
-
-                    ["Sept", 17530, 15540],
-                    ["Oct", 10000, 24040],
-                  ]}
+                  data={data}
                   width="100%"
                   height="400px"
                   options={MonthlyAds}

@@ -9,24 +9,25 @@ const MobileChart = ({ propellerId }) => {
   } = useSelector((state) => state);
 
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(getMobileCampaign(propellerId));
   }, []);
 
   console.log(mobileCampaigns);
+
   const ActionsPerformed = {
     title: "Actions performed",
     pieHole: 0.4,
     legend: { position: "bottom" },
   };
 
-  const data = [
-    ["Device", "Clicks", "Conversions"],
-    ["Mobile", 20000, 15000],
-    ["Whatsapp", 15000, 12000],
-    ["Text", 7170, 10460],
-  ];
+  const data = [["Device", "Clicks"]];
+
+  for (const i in mobileCampaigns) {
+    data.push([mobileCampaigns[i].mobile_isp, mobileCampaigns[i].clicks]);
+  }
+
+  console.log(data);
   return (
     <Fragment>
       <div className="col-md-6 col-12 mg-t-20 mg-md-t-0">
