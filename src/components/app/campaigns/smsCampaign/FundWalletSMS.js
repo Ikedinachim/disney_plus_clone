@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { usePaystackPayment } from "react-paystack";
 
@@ -20,7 +20,7 @@ import {
 } from "../../../../constants/billingConstants";
 
 const FundWalletSMS = ({ prevStep, values }) => {
-  const alert = useAlert();
+  // const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -126,19 +126,19 @@ const FundWalletSMS = ({ prevStep, values }) => {
       navigate("/login");
     } else if (confirmFund && confirmFund.status === "success") {
       dispatch(getWallet());
-      alert.success(confirmFund.message);
+      toast.success(confirmFund.message);
       dispatch({ type: FUND_WALLET_RESET });
       dispatch({ type: CONFIRM_FUNDING_RESET });
       prevStep();
     }
 
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
   }, [
     dispatch,
-    alert,
+    toast,
     loading,
     error,
     fundWallet,

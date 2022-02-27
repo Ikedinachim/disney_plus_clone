@@ -21,7 +21,7 @@ export default class AppDownloadStepForm extends Component {
     attachmentPreview: "",
     uploadedImage: "",
     campaignType: "app_download",
-    targetAudienceOption: "manual",
+    targetAudienceOption: "mysogidb",
     assetType: "image",
     imageUrl: null,
     imageAlt: "",

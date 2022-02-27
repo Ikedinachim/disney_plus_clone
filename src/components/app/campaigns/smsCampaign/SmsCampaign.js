@@ -2,24 +2,24 @@ import React, { Fragment, useEffect } from "react";
 
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify";
 import { getSenderID } from "../../../../actions/senderIDActions";
 import Loader from "../../../loader";
 
 import MetaData from "../../../layout/MetaData";
 
 const SmsCampaign = ({ nextStep, handleChange, values }) => {
-  const alert = useAlert();
+  // const alert = useAlert();
   const dispatch = useDispatch();
   const { senderID, loading } = useSelector((state) => state.senderID || []);
   const Continue = (e) => {
     e.preventDefault();
     if (values.senderId === "") {
-      alert.error("Select a Sender ID or request for one if not available");
+      toast.error("Select a Sender ID or request for one if not available");
     } else if (values.channel === "") {
-      alert.error("Choose a channel");
+      toast.error("Choose a channel");
     } else if (values.campaignMessage === "") {
-      alert.error("Create the campaign message");
+      toast.error("Create the campaign message");
     } else {
       nextStep();
     }

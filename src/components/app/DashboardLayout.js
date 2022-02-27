@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
-
+import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 
 import MetaData from "../layout/MetaData";
@@ -14,7 +14,7 @@ import Sidebar from "../layout/Sidebar";
 const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const alert = useAlert();
+  // const alert = useAlert();
 
   const { loading, user } = useSelector((state) => state.auth);
   const { error } = useSelector((state) => state.wallet);
@@ -33,9 +33,9 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (error) {
-      return alert.error(error);
+      return toast.error(error);
     }
-  }, [dispatch, error, alert]);
+  }, [dispatch, error, toast]);
 
   return (
     <Fragment>

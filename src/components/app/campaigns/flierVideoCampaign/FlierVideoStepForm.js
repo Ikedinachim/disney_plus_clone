@@ -32,7 +32,7 @@ export default class FlierVideoStepForm extends Component {
     targetAudience: "",
     uploadedImage: "",
     campaignType: "flier_video",
-    targetAudienceOption: "manual",
+    targetAudienceOption: "mysogidb",
     assetType: "image",
     imageUrl: null,
     imageAlt: "",

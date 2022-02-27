@@ -2,11 +2,11 @@ import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import { useAlert } from "react-alert";
-import NumberFormat from "react-number-format";
+import { toast } from "react-toastify";
+// import NumberFormat from "react-number-format";
 
 import { logout } from "../../../actions/authActions";
-import { getWallet } from "../../../actions/billingActions";
+// import { getWallet } from "../../../actions/billingActions";
 
 import FeatherIcon from "feather-icons-react";
 
@@ -15,15 +15,16 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const dispatch = useDispatch();
-  const alert = useAlert();
+
+  const { userDetails } = useSelector((state) => state || []);
 
   const logoutHandler = () => {
     dispatch(logout());
-    alert.success("Logged out successfully");
+    toast.success("Logged out successfully");
   };
 
   const { user } = useSelector((state) => state.auth);
-  const { wallet } = useSelector((state) => state.wallet);
+  // const { wallet } = useSelector((state) => state.wallet);
 
   useEffect(() => {
     // dispatch(getWallet());
@@ -88,7 +89,11 @@ const Header = () => {
             {user.user.firstName}
             <div className="avatar avatar-sm mg-l-10">
               <img
-                src="https://via.placeholder.com/500"
+                src={
+                  userDetails.user
+                    ? userDetails.user.imageUrl
+                    : "https://via.placeholder.com/500"
+                }
                 className="rounded-circle"
                 alt="asset"
               />
@@ -98,7 +103,11 @@ const Header = () => {
             <div className="dropdown-menu dropdown-menu-right dropdown-adjust tx-13 show">
               <div className="avatar avatar-lg mg-b-15">
                 <img
-                  src="https://via.placeholder.com/500"
+                  src={
+                    userDetails.user
+                      ? userDetails.user.imageUrl
+                      : "https://via.placeholder.com/500"
+                  }
                   className="rounded-circle"
                   alt="asset"
                 />

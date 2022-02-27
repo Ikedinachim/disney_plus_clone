@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify";
 
 import MetaData from "../../../layout/MetaData";
 import NumberFormat from "react-number-format";
@@ -31,7 +31,7 @@ const PreviewInfluencerCampaign = ({
   const { error, createInfluencerCampaign, loading } = useSelector(
     (state) => state.influencerCampaign || []
   );
-  const alert = useAlert();
+  // const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { wallet } = useSelector((state) => state.wallet);
@@ -89,16 +89,16 @@ const PreviewInfluencerCampaign = ({
       createInfluencerCampaign &&
       createInfluencerCampaign.status === "success"
     ) {
-      alert.success(createInfluencerCampaign.message);
+      toast.success(createInfluencerCampaign.message);
       dispatch(getWallet());
       navigate("/app/campaigns");
       dispatch({ type: INFLUENCER_CAMPAIGN_RESET });
     } else if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
       dispatch(getWallet());
     }
-  }, [dispatch, alert, error, createInfluencerCampaign, navigate]);
+  }, [dispatch, toast, error, createInfluencerCampaign, navigate]);
 
   const filteredValue = checkedInfluencers;
 
