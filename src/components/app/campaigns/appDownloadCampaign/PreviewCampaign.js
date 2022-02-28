@@ -57,7 +57,7 @@ const PreviewCampaign = ({
   };
 
   const setPrice = () => {
-    if (values.limit !== "") {
+    if ((values.limit === undefined || values.limit) !== "") {
       return parseInt(values.limit) * 5;
     } else {
       return filteredContactList.count * 5;
