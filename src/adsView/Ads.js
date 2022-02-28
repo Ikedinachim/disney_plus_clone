@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
+// import { useAlert } from "react-alert";
 // import { DateTime } from "luxon";
 // import NumberFormat from 'react-number-format'
 import { ToastContainer, toast } from "react-toastify";
@@ -42,8 +42,7 @@ const ViewCampaign = () => {
       toast.error(error);
       dispatch(clearErrors());
     }
-    // dispatch(getWallet())
-  }, [dispatch, showAds, toast, error]);
+  }, [dispatch, error]);
 
   return (
     <Fragment>
@@ -52,8 +51,9 @@ const ViewCampaign = () => {
       ) : (
         <Fragment>
           <MetaData title={"All Campaigns"} />
-          <div className="content-body ads-content">
-            <div className="container pd-x-0">
+          {/* <p>Hello</p> */}
+          <div className="content-body page-content">
+            <div className="container pd-x-0 d-flex justify-content-center">
               <div className="col-md-5 col-12 mg-t-20">
                 <div className="card shadow-sm rounded bd-0">
                   <div className="card-body">

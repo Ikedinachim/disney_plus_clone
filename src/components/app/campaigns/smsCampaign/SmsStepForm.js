@@ -27,6 +27,8 @@ export default class SmsStepForm extends Component {
     lga: "",
     deviceType: "",
     deviceBrand: "",
+    characterCount: 0,
+    smsCount: 0,
   };
 
   // go back to previous step
@@ -44,6 +46,11 @@ export default class SmsStepForm extends Component {
   // Handle fields change
   handleChange = (input) => (e) => {
     this.setState({ [input]: e.target.value });
+
+    if (input === "campaignMessage") {
+      this.setState({ characterCount: e.target.value.length });
+      this.setState({ smsCount: Math.ceil(e.target.value.length / 160) });
+    }
   };
 
   render() {
@@ -68,13 +75,20 @@ export default class SmsStepForm extends Component {
       deviceBrand,
 
       parsedCsvData,
+      characterCount,
+      smsCount,
     } = this.state;
 
+    // console.log(campaignMessage);
     /////////////////////////////
 
     const getCsvRawData = (data) => {
       this.setState({ parsedCsvData: data });
     };
+
+    // const setCharacterCount = () => {
+    //   this.setState({ characterCount: campaignMessage.length });
+    // };
 
     let personalUpload = parsedCsvData.map(({ Numbers }) => Numbers);
 
@@ -95,7 +109,7 @@ export default class SmsStepForm extends Component {
 
     const contactNumber = getAudience();
     const audience = getAudience().length;
-    const price = audience * 5;
+    const price = audience * 5 * smsCount;
 
     const filterOptions = {
       ageRange,
@@ -124,6 +138,8 @@ export default class SmsStepForm extends Component {
       limit,
     };
 
+    console.log(values);
+
     switch (step) {
       case 1:
         return (
@@ -131,6 +147,8 @@ export default class SmsStepForm extends Component {
             nextStep={this.nextStep}
             handleChange={this.handleChange}
             values={values}
+            characterCount={characterCount}
+            smsCount={smsCount}
           />
         );
       case 2:
