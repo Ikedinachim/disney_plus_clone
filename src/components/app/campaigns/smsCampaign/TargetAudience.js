@@ -2,7 +2,7 @@ import React, { Fragment, useState, useCallback, useEffect } from "react";
 
 import MetaData from "../../../layout/MetaData";
 import { useDispatch, useSelector } from "react-redux";
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify";
 import NaijaStates from "naija-state-local-government";
 // import { saveAs } from "file-saver";
 
@@ -24,17 +24,15 @@ const TargetAudience = ({
   values,
   getCsvRawData,
 }) => {
-  const alert = useAlert();
+  // const alert = useAlert();
   const dispatch = useDispatch();
 
-  const { filteredContactList, error, loading } = useSelector(
-    (state) => state.filteredContactList || []
-  );
+  const { error } = useSelector((state) => state.filteredContactList || []);
 
-  const [status, setStatus] = useState(3);
-  const radioHandler = (status) => {
-    setStatus(status);
-  };
+  // const [status, setStatus] = useState(3);
+  // const radioHandler = (status) => {
+  //   setStatus(status);
+  // };
 
   const csvData = [
     ["Numbers"],
@@ -100,12 +98,15 @@ const TargetAudience = ({
 
   ////
   const [parsedCsvData, setParsedCsvData] = useState([]);
+  const [csvName, setCsvName] = useState();
 
   const parseFile = (file) => {
     Papa.parse(file, {
       header: true,
       complete: (results) => {
+        console.log(file);
         setParsedCsvData(results.data);
+        setCsvName(file.name);
         // console.log(parsedCsvData);
       },
     });
@@ -138,12 +139,12 @@ const TargetAudience = ({
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
     console.log(parsedCsvData);
     getCsvRawData(parsedCsvData);
-  }, [dispatch, error, alert, parsedCsvData]);
+  }, [dispatch, error, parsedCsvData]);
 
   return (
     <Fragment>
@@ -396,6 +397,7 @@ const TargetAudience = ({
                                   </p>
                                 )}
                               </div>
+                              <p className="mb-0">{csvName}</p>
                               {/* <CSVReader
                                 ref={getButtonRef}
                                 onFileLoad={handleOnFileLoad}
@@ -571,7 +573,7 @@ const TargetAudience = ({
                               comma (,)
                             </label>
                             <textarea
-                              name
+                              name="phoneNumber"
                               className="form-control"
                               id="phoneNumber"
                               rows={4}

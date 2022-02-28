@@ -1,14 +1,14 @@
-import React, { Fragment, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { Fragment, useEffect } from "react";
+// import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import MetaData from "../components/layout/MetaData";
 import Loader from "../components/loader";
-import FeatherIcon from "feather-icons-react";
+// import FeatherIcon from "feather-icons-react";
 import { DateTime } from "luxon";
-import { useAlert } from "react-alert";
-import NumberFormat from "react-number-format";
+import { toast } from "react-toastify";
+// import NumberFormat from "react-number-format";
 
 import { MDBDataTable } from "mdbreact";
 import {
@@ -17,10 +17,12 @@ import {
   clearErrors,
 } from "../actions/campaignActions";
 
+import { getUser } from "../actions/authActions";
+
 const Dashboard = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
-  const alert = useAlert();
+  // const alert = useAlert();
 
   const { loading, influencerCampaignList } = useSelector(
     (state) => state.influencerCampaignList
@@ -30,19 +32,19 @@ const Dashboard = () => {
   const { user } = useSelector((state) => state.auth);
   const { error } = useSelector((state) => state.wallet);
 
-  const [isActive, setActive] = useState("false");
+  // const [isActive, setActive] = useState("false");
 
-  const ToggleClass = (e) => {
-    setActive(!isActive);
-    e.preventDefault();
-  };
+  // const ToggleClass = (e) => {
+  //   setActive(!isActive);
+  //   e.preventDefault();
+  // };
 
   // const resetPropagation = (e) => {
   //     e.stopPropagation()
   //     e.preventDefault()
   //  }
 
-  const [datatable, setDatatable] = useState();
+  // const [datatable, setDatatable] = useState();
 
   const setAllCampaigns = () => {
     const data = {
@@ -201,17 +203,24 @@ const Dashboard = () => {
     return data;
   };
 
+  const approvedStat =
+    influencerCampaignList &&
+    influencerCampaignList.filter((x) => x.isRejected === true).length;
+
   useEffect(() => {
     if (user) {
       dispatch(getAllInfluencerCampaign(user.user.influencer_id));
       dispatch(getInfluencerDetails(user.user.influencer_id));
+      dispatch(getUser());
     }
 
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, error, alert]);
+  }, [dispatch, error, user]);
+
+  console.log(approvedStat);
 
   return (
     <Fragment>
@@ -249,6 +258,7 @@ const Dashboard = () => {
                         <img
                           className="icon img-fluid"
                           src="../assets/img/Total_Ads_Played.svg"
+                          alt="Total Campaign"
                         />
                       </span>
                       <div className="ml-3">
@@ -274,14 +284,24 @@ const Dashboard = () => {
                         <img
                           className="icon img-fluid"
                           src="../assets/img/my2.svg"
+                          alt="Approved Campaign"
                         />
                       </span>
                       <div className="ml-3">
                         <p className="tx-bold tx-bold tx-28 mg-b-0 lh-1 white">
-                          9,320
+                          {influencerCampaignList
+                            ? influencerCampaignList &&
+                              influencerCampaignList.filter(
+                                (x) =>
+                                  x.isRejected === false &&
+                                  x.isApproved === true &&
+                                  x.isPublished === true
+                              ).length
+                            : 0}
+                          {influencerCampaignList.length > 1000 ? "k" : ""}
                         </p>
                         <p className="tx-gray tx-12 tx-14 mb-0">
-                          Approved Campaigns
+                          Published Campaigns
                         </p>
                       </div>
                     </div>
@@ -295,11 +315,21 @@ const Dashboard = () => {
                         <img
                           className="icon img-fluid"
                           src="../assets/img/my3.svg"
+                          alt="Pending Campaign"
                         />
                       </span>
                       <div className="ml-3">
                         <p className="tx-bold tx-bold tx-28 mg-b-0 lh-1 white">
-                          370,520
+                          {influencerCampaignList
+                            ? influencerCampaignList &&
+                              influencerCampaignList.filter(
+                                (x) =>
+                                  x.isRejected === false &&
+                                  x.isApproved === false &&
+                                  x.isPublished === false
+                              ).length
+                            : 0}
+                          {influencerCampaignList.length > 1000 ? "k" : ""}
                         </p>
                         <p className="tx-gray tx-12 tx-14 mb-0">
                           Pending Campaigns
@@ -316,11 +346,18 @@ const Dashboard = () => {
                         <img
                           className="icon img-fluid"
                           src="../assets/img/Reported_Ads.svg"
+                          alt="Rejected Campaign"
                         />
                       </span>
                       <div className="ml-3">
                         <p className="tx-bold tx-bold tx-28 mg-b-0 lh-1 white">
-                          246K
+                          {influencerCampaignList
+                            ? influencerCampaignList &&
+                              influencerCampaignList.filter(
+                                (x) => x.isRejected === true
+                              ).length
+                            : 0}
+                          {influencerCampaignList.length > 1000 ? "k" : ""}
                         </p>
                         <p className="tx-gray tx-12 tx-14 mb-0">
                           Rejected Campaigns

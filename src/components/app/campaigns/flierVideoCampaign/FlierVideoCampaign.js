@@ -2,9 +2,12 @@ import React, { Fragment, useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
-
-import { getSenderID } from "../../../../actions/senderIDActions";
+// import { useAlert } from "react-alert";
+import { toast } from "react-toastify";
+import {
+  getSenderID,
+  getDefaultSenderID,
+} from "../../../../actions/senderIDActions";
 import MetaData from "../../../layout/MetaData";
 import Loader from "../../../loader";
 import MediaPlayer from "../../../../_helpers/reactPlayer/ReactPlayer";
@@ -13,16 +16,18 @@ import { ProgressBar } from "react-bootstrap";
 const FlierVideoCampaign = ({
   nextStep,
   handleChange,
-  onChangeAttachment,
+  // onChangeAttachment,
   values,
-  attachmentPreview,
+  // attachmentPreview,
   handleImageUpload,
   selectedFileName,
   uploadPercentage,
+  characterCount,
+  smsCount,
 }) => {
-  const alert = useAlert();
+  // const alert = useAlert();
   const dispatch = useDispatch();
-  const { senderID, loading } = useSelector((state) => state.senderID || []);
+  const { senderID, defaultSenderID } = useSelector((state) => state || []);
 
   const [showWhatsapp, setShowWhatsapp] = useState(false);
   const [showSms, setShowSms] = useState(false);
@@ -36,11 +41,11 @@ const FlierVideoCampaign = ({
   const Continue = (e) => {
     e.preventDefault();
     if (values.callToAction === "") {
-      alert.error("Provide a call to action for users");
+      toast.error("Provide a call to action for users");
     } else if (values.channel === "") {
-      alert.error("Choose a channel");
+      toast.error("Choose a channel");
     } else if (values.campaignMessage === "") {
-      alert.error("Create the campaign message");
+      toast.error("Create the campaign message");
     } else if (values.assetType === "image" && values.attachment === null) {
       nextStep();
       handleImageUpload();
@@ -84,13 +89,26 @@ const FlierVideoCampaign = ({
     },
   ];
 
+  const getSenderIDs = () => {
+    const senders =
+      senderID.senderID &&
+      senderID.senderID
+        .map(
+          (senderId) => senderId.telcoStatus === "approved" && senderId.senderId
+        )
+        .filter((sender) => sender)
+        .concat(defaultSenderID.defaultSenderID);
+    return senders;
+  };
+
   useEffect(() => {
     dispatch(getSenderID());
+    dispatch(getDefaultSenderID());
   }, [dispatch]);
 
   return (
     <Fragment>
-      {loading ? (
+      {senderID.loading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -124,29 +142,8 @@ const FlierVideoCampaign = ({
                             campaign creation
                           </p>
                           <div className="form-group">
-                            <label htmlFor className="mb-1">
-                              Sender ID
-                            </label>
-                            <select
-                              className="custom-select"
-                              // value="select channel"
-                              defaultValue={values.senderId}
-                              onChange={handleChange("senderId")}
-                            >
-                              <option value="">Select Sender ID</option>
-                              {senderID &&
-                                senderID.map((senderids) => (
-                                  <option value={senderids.senderId}>
-                                    {senderids.senderId}
-                                  </option>
-                                ))}
-                            </select>
-                          </div>
-                          <div className="form-group">
                             <div className="form-group">
-                              <label htmlFor className="mb-1">
-                                Select Channel
-                              </label>
+                              <label className="mb-1">Select Channel</label>
                               <select
                                 className="custom-select"
                                 // value="select channel"
@@ -161,10 +158,26 @@ const FlierVideoCampaign = ({
                               </select>
                             </div>
                           </div>
+                          {values.channel === "smart_sms" && (
+                            <div className="form-group">
+                              <label className="mb-1">Sender ID</label>
+                              <select
+                                className="custom-select"
+                                // value="select channel"
+                                defaultValue={values.senderId}
+                                onChange={handleChange("senderId")}
+                              >
+                                <option value="">Select Sender ID</option>
+                                {getSenderIDs().map((senderids, i) => (
+                                  <option value={senderids} key={i}>
+                                    {senderids}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          )}
                           <div className="form-group">
-                            <label htmlFor className="mb-1">
-                              Input URL
-                            </label>
+                            <label className="mb-1">Input URL</label>
                             <input
                               type="text"
                               className="form-control"
@@ -174,9 +187,7 @@ const FlierVideoCampaign = ({
                             />
                           </div>
                           <div className="form-group">
-                            <label htmlFor className="mb-1">
-                              Phone Number
-                            </label>
+                            <label className="mb-1">Phone Number</label>
                             <div className="d-flex">
                               <input
                                 type="number"
@@ -187,7 +198,7 @@ const FlierVideoCampaign = ({
                               />
                               {/* <button onClick={handleAddClick}>Add</button> */}
                               <button
-                                class="btn btn-success ml-2 col-md-3 text-center"
+                                className="btn btn-success ml-2 col-md-3 text-center"
                                 onClick={handleAddClick}
                               >
                                 More Options
@@ -197,9 +208,7 @@ const FlierVideoCampaign = ({
                           </div>
                           {showWhatsapp && (
                             <div className="form-group">
-                              <label htmlFor className="mb-1">
-                                WhatsApp Number
-                              </label>
+                              <label className="mb-1">WhatsApp Number</label>
                               <div className="d-flex">
                                 <input
                                   type="number"
@@ -209,19 +218,17 @@ const FlierVideoCampaign = ({
                                   onChange={handleChange("whatsAppNumber")}
                                 />
                                 <button
-                                  class="btn btn-danger ml-2"
+                                  className="btn btn-danger ml-2"
                                   onClick={handleRemoveClick("whatsapp")}
                                 >
-                                  <i class="fa fa-trash"></i>
+                                  <i className="fa fa-trash"></i>
                                 </button>
                               </div>
                             </div>
                           )}
                           {showUssd && (
                             <div className="form-group">
-                              <label htmlFor className="mb-1">
-                                USSD
-                              </label>
+                              <label className="mb-1">USSD</label>
                               <div className="d-flex">
                                 <input
                                   type="number"
@@ -231,19 +238,17 @@ const FlierVideoCampaign = ({
                                   onChange={handleChange("ussd")}
                                 />
                                 <button
-                                  class="btn btn-danger ml-2"
+                                  className="btn btn-danger ml-2"
                                   onClick={handleRemoveClick("showUssd")}
                                 >
-                                  <i class="fa fa-trash"></i>
+                                  <i className="fa fa-trash"></i>
                                 </button>
                               </div>
                             </div>
                           )}
                           {showSms && (
                             <div className="form-group">
-                              <label htmlFor className="mb-1">
-                                SMS Number
-                              </label>
+                              <label className="mb-1">SMS Number</label>
                               <div className="d-flex">
                                 <input
                                   type="number"
@@ -253,18 +258,16 @@ const FlierVideoCampaign = ({
                                   onChange={handleChange("smsNumber")}
                                 />
                                 <button
-                                  class="btn btn-danger ml-2"
+                                  className="btn btn-danger ml-2"
                                   onClick={handleRemoveClick("showSms")}
                                 >
-                                  <i class="fa fa-trash"></i>
+                                  <i className="fa fa-trash"></i>
                                 </button>
                               </div>
                             </div>
                           )}
                           <div className="form-group">
-                            <label htmlFor className="mb-1">
-                              Call To Action
-                            </label>
+                            <label className="mb-1">Call To Action</label>
                             <input
                               type="text"
                               className="form-control"
@@ -275,9 +278,7 @@ const FlierVideoCampaign = ({
                           </div>
                           <div className="form-row">
                             <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1">
-                                Time Range
-                              </label>
+                              <label className="mb-1">Time Range</label>
                               <div className="input-group mg-b-10">
                                 <div className="input-group-prepend">
                                   <span className="input-group-text">From</span>
@@ -294,7 +295,7 @@ const FlierVideoCampaign = ({
                               </div>
                             </div>
                             <div className="form-group col-md-6">
-                              <label htmlFor className />
+                              <label />
                               <div className="input-group mg-b-10 mg-t-5">
                                 <div className="input-group-prepend">
                                   <span className="input-group-text">To</span>
@@ -312,17 +313,28 @@ const FlierVideoCampaign = ({
                             </div>
                           </div>
                           <div className="form-group">
-                            <label htmlFor className="mb-1">
-                              Campaign Message
-                            </label>
+                            <label className="mb-1">Campaign Message</label>
                             <textarea
                               className="form-control"
                               rows={3}
+                              maxLength={
+                                values.channel === "display_ads" ? 70 : false
+                              }
                               placeholder="Type your ad message here"
                               defaultValue={values.campaignMessage}
                               onChange={handleChange("campaignMessage")}
                             />
                           </div>
+                          {values.channel === "display_ads" ? (
+                            <div className="d-flex justify-content-between">
+                              <p>{70 - characterCount} Characters Left</p>
+                            </div>
+                          ) : (
+                            <div className="d-flex justify-content-between">
+                              <p>{characterCount} Characters</p>
+                              <p>{smsCount} SMS</p>
+                            </div>
+                          )}
                         </div>
                         <div className="mg-t-20">
                           <p className="tx-24 tx-bold mb-1 tx-com">
@@ -412,9 +424,7 @@ const FlierVideoCampaign = ({
                           {values.assetType === "video" && (
                             <div className="form-group">
                               <div className="custom-file">
-                                <label htmlFor className="mb-1">
-                                  Youtube URL
-                                </label>
+                                <label className="mb-1">Youtube URL</label>
                                 <input
                                   type="text"
                                   id="videoAsset"
@@ -460,9 +470,9 @@ const FlierVideoCampaign = ({
                         {values.assetType === "image" ? (
                           <div>
                             <img
-                              src={values.attachment}
+                              src={values && values.attachment}
                               className="img-fluid mg-b-10"
-                              alt=""
+                              // alt="attachment"
                             />
                             <p className="mb-4">{values.campaignMessage}</p>
                           </div>

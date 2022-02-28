@@ -10,19 +10,14 @@ import { login, clearErrors } from "../../actions/authActions";
 import { getWallet } from "../../actions/billingActions";
 
 const ForgotPassword = () => {
-
-
   const [email, setEmail] = useState("");
-  
+
   // const [userStatus, setUserStatus] = useState()
 
   const alert = useAlert();
   const dispatch = useDispatch();
 
-  const {  loading} = useSelector(
-    (state) => state.auth
-  );
-
+  const { loading } = useSelector((state) => state.auth);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -73,7 +68,7 @@ const ForgotPassword = () => {
                           onChange={(e) => setEmail(e.target.value)}
                         />
                       </div>
-                      
+
                       <div className="mg-y-30">
                         <div className="form-group col-md-5 mx-auto">
                           <button

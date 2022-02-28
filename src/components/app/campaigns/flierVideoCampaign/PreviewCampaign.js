@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify";
 
 import MetaData from "../../../layout/MetaData";
 import NumberFormat from "react-number-format";
@@ -31,10 +31,10 @@ const PreviewCampaign = ({
   const { error, createFlierVideoCampaign, loading } = useSelector(
     (state) => state.flierVideoCampaign || []
   );
-  const { filteredContactList, fcError, fcLoading } = useSelector(
+  const { filteredContactList, fcLoading } = useSelector(
     (state) => state.filteredContactList || []
   );
-  const alert = useAlert();
+  // const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { wallet } = useSelector((state) => state.wallet);
@@ -56,28 +56,31 @@ const PreviewCampaign = ({
   };
 
   const setPrice = () => {
-    if (values.limit !== "") {
+    console.log(values.limit === undefined);
+    if (values.limit === undefined || values.limit !== "") {
       return parseInt(values.limit) * 5;
     } else {
       return filteredContactList.count * 5;
     }
   };
 
+  // console.log(filteredContactList.count);
+
   useEffect(() => {
     if (
       createFlierVideoCampaign &&
       createFlierVideoCampaign.status === "success"
     ) {
-      alert.success(createFlierVideoCampaign.message);
+      toast.success(createFlierVideoCampaign.message);
       dispatch(getWallet());
       navigate("/app/campaigns");
       dispatch({ type: VIDEO_FLIER_CAMPAIGN_RESET });
     } else if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
       // dispatch(getWallet());
     }
-  }, [dispatch, alert, error, createFlierVideoCampaign, navigate]);
+  }, [dispatch, error, createFlierVideoCampaign, navigate]);
 
   // console.log(csvArray);
 

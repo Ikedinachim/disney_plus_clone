@@ -21,7 +21,7 @@ export default class AppDownloadStepForm extends Component {
     attachmentPreview: "",
     uploadedImage: "",
     campaignType: "app_download",
-    targetAudienceOption: "manual",
+    targetAudienceOption: "mysogidb",
     assetType: "image",
     imageUrl: null,
     imageAlt: "",
@@ -31,6 +31,8 @@ export default class AppDownloadStepForm extends Component {
     csvFile: "",
     limit: "",
     budget: 10000,
+    characterCount: 0,
+    smsCount: 0,
 
     ageRange: "",
     gender: "",
@@ -59,6 +61,11 @@ export default class AppDownloadStepForm extends Component {
   // Handle fields change
   handleChange = (input) => (e) => {
     this.setState({ [input]: e.target.value });
+
+    if (input === "campaignMessage") {
+      this.setState({ characterCount: e.target.value.length });
+      this.setState({ smsCount: Math.ceil(e.target.value.length / 160) });
+    }
   };
 
   // Handle image change
@@ -161,9 +168,11 @@ export default class AppDownloadStepForm extends Component {
       parsedCsvData,
       selectedFileName,
       uploadPercentage,
+      characterCount,
+      smsCount,
     } = this.state;
 
-    console.log(imageUrl);
+    // console.log(imageUrl);
     /////////////////////////////
 
     const getCsvRawData = (data) => {
@@ -207,7 +216,7 @@ export default class AppDownloadStepForm extends Component {
 
     // const targetAudience = numbers.split(",");
     const audience = setAudience();
-    const price = audience * 5;
+    const price = audience * 5 * smsCount;
     const timeRange = timeRangeFrom + " - " + timeRangeTo;
     // const attachment = attachmentPreview
 
@@ -242,7 +251,7 @@ export default class AppDownloadStepForm extends Component {
       assetType,
     };
 
-    console.log(values);
+    // console.log(values);
 
     switch (step) {
       case 1:
@@ -256,6 +265,8 @@ export default class AppDownloadStepForm extends Component {
             attachmentPreview={attachmentPreview}
             selectedFileName={selectedFileName}
             uploadPercentage={uploadPercentage}
+            characterCount={characterCount}
+            smsCount={smsCount}
           />
         );
       case 2:

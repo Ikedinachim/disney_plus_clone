@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import MetaData from "../../layout/MetaData";
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { getUser, updateUserDetails } from "../../../actions/authActions";
 import { Link } from "react-router-dom";
@@ -9,7 +9,7 @@ import { clearErrors } from "../../../actions/authActions";
 import Loader from "../../loader";
 
 const Settings = () => {
-  const alert = useAlert();
+  // const alert = useAlert();
   const dispatch = useDispatch();
 
   const {
@@ -19,7 +19,7 @@ const Settings = () => {
 
   useEffect(() => {
     dispatch(getUser());
-  }, []);
+  }, [dispatch]);
 
   const handleImageChange = async () => {
     const { files } = document.querySelector('input[type="file"]');
@@ -70,11 +70,11 @@ const Settings = () => {
     dispatch(updateUserDetails(people));
 
     if (updateUser && updateUser.status === "success") {
-      alert.success(`${updateUser.message}`);
+      toast.success(`${updateUser.message}`);
       dispatch(getUser());
       dispatch({ type: UPDATE_USER_RESET });
     } else if (updateUser.error) {
-      alert.error(updateUser.error);
+      toast.error(updateUser.error);
       dispatch(clearErrors());
     }
   };
@@ -119,7 +119,7 @@ const Settings = () => {
                   <img
                     src={people.imageUrl}
                     className="img-thumbnail w-25"
-                    alt="profile"
+                    alt={imageAlt}
                     onChange={handleImageChange}
                   />
                   <div className="custom-file">

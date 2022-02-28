@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import MetaData from "../../layout/MetaData";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
   clearErrors,
   getPropellerCampaign,
@@ -19,15 +20,21 @@ const Analytics = () => {
 
   const { propellerId } = useParams();
   const dispatch = useDispatch();
-  const alert = useAlert();
+  // const alert = useAlert();
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
     dispatch(getPropellerCampaign(propellerId));
+<<<<<<< HEAD
   }, []);
+=======
+  }, [dispatch, toast, error]);
+
+  console.log(propellerCampaign);
+>>>>>>> da752a6fc725d47ffde75ffd7fbb2c02fb627d7f
 
   console.log(propellerCampaigns);
   return (

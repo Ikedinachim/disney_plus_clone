@@ -17,7 +17,9 @@ export default class InfluencerStepForm extends Component {
     instagramHandle: "",
     snapchatHandle: "",
     campaignImage: "",
-    attachment: null,
+    // attachment: undefined,
+    imageUrl: undefined,
+    videoUrl: "",
     imageAlt: "",
     uploadPercentage: 0,
     attachmentPreview: "",
@@ -36,6 +38,7 @@ export default class InfluencerStepForm extends Component {
     influencerId: "",
     platformId: "",
     platform: [],
+    assetType: "image",
 
     showModal: false,
     activeItemId: "",
@@ -179,10 +182,58 @@ export default class InfluencerStepForm extends Component {
           // console.log(res);
           this.setState(
             {
-              attachment: res.data.secure_url,
+              imageUrl: res.data.secure_url,
               uploadPercentage: 100,
               selectedFileName: files.name,
               imageAlt: `An image of ${res.original_filename}`,
+            },
+            () => {
+              setTimeout(() => {
+                this.setState({ uploadPercentage: 0 });
+              }, 1000);
+            }
+          );
+        });
+    } catch (err) {
+      // return console.log(err);
+    }
+  };
+
+  handleVideoUpload = async (e) => {
+    // console.log(e);
+    let files = e.target.files[0];
+    // console.log(files);
+    const formData = new FormData();
+    formData.append("file", files);
+    formData.append("upload_preset", "mysogi");
+
+    const options = {
+      onUploadProgress: (progressEvent) => {
+        const { loaded, total } = progressEvent;
+        let percent = Math.floor((loaded * 100) / total);
+        // console.log(`${loaded}kb of ${total}kb | ${percent}%`);
+
+        if (percent < 100) {
+          this.setState({ uploadPercentage: percent });
+        }
+      },
+    };
+
+    try {
+      await axios
+        .post(
+          "https://api.Cloudinary.com/v1_1/mysogi/video/upload",
+          formData,
+          options
+        )
+        .then((res) => {
+          // console.log(res);
+          this.setState(
+            {
+              videoUrl: res.data.secure_url,
+              uploadPercentage: 100,
+              selectedFileName: files.name,
+              // imageAlt: `An image of ${res.original_filename}`,
             },
             () => {
               setTimeout(() => {
@@ -205,7 +256,9 @@ export default class InfluencerStepForm extends Component {
       facebookHandle,
       instagramHandle,
       snapchatHandle,
-      attachment,
+      // attachment,
+      imageUrl,
+      videoUrl,
       attachmentPreview,
       selectedInfluencer,
       selectedInfluencers,
@@ -217,6 +270,7 @@ export default class InfluencerStepForm extends Component {
       campaignType,
       selectedFileName,
       uploadPercentage,
+      assetType,
     } = this.state;
 
     // const filteredValue = Object.values(checkedInfluencers);
@@ -255,7 +309,16 @@ export default class InfluencerStepForm extends Component {
     //   }
     // }
 
-    // const price = totalAmount;
+    let attachment = "";
+
+    const setAssets = () => {
+      if (assetType === "image") {
+        return (attachment = imageUrl);
+      } else if (assetType === "video") {
+        return (attachment = videoUrl);
+      }
+    };
+
     const platform = checkedInfluencers;
     const values = {
       channel,
@@ -265,12 +328,13 @@ export default class InfluencerStepForm extends Component {
       snapchatHandle,
       campaignMessage,
       campaignType,
-      attachment,
+      attachment: setAssets(),
       platform,
+      assetType,
       price,
     };
 
-    // console.log(values.price);
+    console.log(values);
 
     // console.log("this is platform", values.platform);
     // const payloadPlatform = Object.values(values.platform)
@@ -344,6 +408,7 @@ export default class InfluencerStepForm extends Component {
             nextStep={this.nextStep}
             handleChange={this.handleChange}
             handleImageUpload={this.handleImageUpload}
+            handleVideoUpload={this.handleVideoUpload}
             onChangeAttachment={this.onChangeAttachment}
             attachmentPreview={attachmentPreview}
             values={values}

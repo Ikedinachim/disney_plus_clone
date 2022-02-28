@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify";
 // import { Link } from "react-router-dom";
 
 import MetaData from "../../../layout/MetaData";
@@ -11,12 +11,13 @@ const InfluencerTargetAudience = ({
   handleChange,
   // onChangeAttachment,
   handleImageUpload,
+  handleVideoUpload,
   values,
   selectedFileName,
   uploadPercentage,
   resetCheckedState,
 }) => {
-  const alert = useAlert();
+  // const alert = useAlert();
   const [status, setStatus] = useState(3);
   const radioHandler = (status) => {
     setStatus(status);
@@ -25,7 +26,7 @@ const InfluencerTargetAudience = ({
   const Continue = (e) => {
     e.preventDefault();
     if (values.campaignMessage === "") {
-      alert.error("Create the campaign message");
+      toast.error("Create the campaign message");
     } else if (values.attachment === null) {
       nextStep();
       handleImageUpload();
@@ -86,7 +87,41 @@ const InfluencerTargetAudience = ({
                 </div>
                 <div className="mg-t-40">
                   <p className="tx-22 tx-bold mb-1 tx-com">Attachment</p>
-                  <div className="form-group col-md-6 pd-md-l-0">
+                  <div className="form-group">
+                    <div className="custom-control custom-radio">
+                      <input
+                        type="radio"
+                        id="image"
+                        name="customRadio"
+                        className="custom-control-input"
+                        checked={values.assetType === "image"}
+                        // onClick={(e) => assetTypeHandler("image")}
+                        value={"image"}
+                        onChange={handleChange("assetType")}
+                      />
+                      <label className="custom-control-label" htmlFor="image">
+                        Image Asset
+                      </label>
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <div className="custom-control custom-radio">
+                      <input
+                        type="radio"
+                        id="video"
+                        name="customRadio"
+                        className="custom-control-input"
+                        checked={values.assetType === "video"}
+                        // onClick={(e) => assetTypeHandler("video")}
+                        value={"video"}
+                        onChange={handleChange("assetType")}
+                      />
+                      <label className="custom-control-label" htmlFor="video">
+                        Video Asset
+                      </label>
+                    </div>
+                  </div>
+                  {/* <div className="form-group col-md-6 pd-md-l-0">
                     <div className="custom-file">
                       <input
                         type="file"
@@ -110,7 +145,75 @@ const InfluencerTargetAudience = ({
                         </span>
                       )}
                     </div>
-                  </div>
+                  </div> */}
+                  {values.assetType === "image" && (
+                    <div className="form-group col-md-6 pd-md-l-0">
+                      <div className="custom-file">
+                        <input
+                          type="file"
+                          name="file"
+                          accept="image/png, image/jpeg, image/gif, image/jpg"
+                          className="custom-file-input"
+                          id="customFile"
+                          // defaultValue={values.attachment}
+                          onChange={
+                            // (onChangeAttachment("uploadedImage"),
+                            handleImageUpload
+                          }
+                        />
+                        <label
+                          className="custom-file-label"
+                          htmlFor="customFile"
+                        >
+                          {selectedFileName}
+                        </label>
+                        {uploadPercentage > 0 && (
+                          <span className="mt-2">
+                            <ProgressBar
+                              now={uploadPercentage}
+                              // active
+                              label={`${uploadPercentage}%`}
+                            />
+                          </span>
+                        )}
+                        <p className="mt-2 tx-danger tx-italic">
+                          Image dimension: 150 x 150
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  {values.assetType === "video" && (
+                    <div className="form-group col-md-6 pd-md-l-0">
+                      <div className="custom-file">
+                        <label className="mb-1">Youtube URL</label>
+                        <input
+                          type="file"
+                          name="file"
+                          id="videoAsset"
+                          className="custom-file-input"
+                          accept="video/mp4,video/x-m4v,video/*"
+                          // value={values.attachment}
+                          // placeholder="https://www.youtube.com/watch?v=ysz5S6PUM-U"
+                          onChange={handleVideoUpload}
+                        />
+                        <label
+                          className="custom-file-label"
+                          htmlFor="videoAsset"
+                        >
+                          {selectedFileName}
+                        </label>
+                        {uploadPercentage > 0 && (
+                          <span className="mt-2">
+                            <ProgressBar
+                              now={uploadPercentage}
+                              // active
+                              label={`${uploadPercentage}%`}
+                            />
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <div className="col-md-5 pd-x-0 mg-y-40">
                   <div className="d-flex">

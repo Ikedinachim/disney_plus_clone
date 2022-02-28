@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
+import { toast } from "react-toastify";
 
 import MetaData from "../../../layout/MetaData";
 import NumberFormat from "react-number-format";
@@ -29,11 +29,11 @@ const PreviewCampaign = ({
     (state) => state.smsCampaign || []
   );
 
-  const { filteredContactList, fcError, fcLoading } = useSelector(
+  const { filteredContactList, fcLoading } = useSelector(
     (state) => state.filteredContactList || []
   );
 
-  const alert = useAlert();
+  // const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { wallet } = useSelector((state) => state.wallet);
@@ -63,16 +63,16 @@ const PreviewCampaign = ({
 
   useEffect(() => {
     if (createSmsCampaign && createSmsCampaign.status === "success") {
-      alert.success(createSmsCampaign.message);
+      toast.success(createSmsCampaign.message);
       dispatch(getWallet());
       navigate("/app/campaigns");
       dispatch({ type: SMS_CAMPAIGN_RESET });
     } else if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
       // dispatch(getWallet());
     }
-  }, [dispatch, alert, error, createSmsCampaign, navigate]);
+  }, [dispatch, toast, error, createSmsCampaign, navigate]);
 
   //Edit buttons
 
@@ -436,7 +436,9 @@ const PreviewCampaign = ({
                     <div className="col-md-5 pd-x-0 mg-y-40">
                       <div className="mg-t-20 d-flex">
                         {parseInt(wallet.balance) < values.price ||
-                        parseInt(wallet.balance) < filteredContactList.count ? (
+                        (values.targetAudienceOption === "mysogidb" &&
+                          parseInt(wallet.balance) <
+                            filteredContactList.count) ? (
                           <button
                             className="btn btn-primary w-100 tx-com mg-r-15"
                             onClick={Continue}

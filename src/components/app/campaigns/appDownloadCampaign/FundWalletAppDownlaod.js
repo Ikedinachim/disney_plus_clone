@@ -1,10 +1,10 @@
 import React, { Fragment, useState, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
+// import { useAlert } from "react-alert";
 import { useNavigate } from "react-router-dom";
 import { usePaystackPayment } from "react-paystack";
-
+import { toast } from "react-toastify";
 import MetaData from "../../../layout/MetaData";
 import Loader from "../../../loader";
 import {
@@ -20,16 +20,24 @@ import {
 } from "../../../../constants/billingConstants";
 
 const FundWalletSMS = ({ prevStep, values }) => {
-  const alert = useAlert();
+  // const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { confirmFund, filteredContactList } = useSelector((state) => state);
   const { wallet } = useSelector((state) => state.wallet);
-  const [amount, setAmountToPay] = useState(values.price - wallet.balance);
+  const [amount, setAmountToPay] = useState(
+    values.targetAudienceOption === "mysogidb"
+      ? Math.ceil(
+          values.limit
+            ? values.limit * 5 - wallet.balance
+            : filteredContactList.filteredContactList.count * 5 - wallet.balance
+        )
+      : Math.ceil(values.price - wallet.balance)
+  );
   const { fundWallet, loading, error } = useSelector(
     (state) => state.fundWallet
   );
-  const { confirmFund } = useSelector((state) => state.confirmFund);
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   const makePaymentHandler = (e) => {
@@ -123,21 +131,24 @@ const FundWalletSMS = ({ prevStep, values }) => {
   useEffect(() => {
     if (!isAuthenticated || user === null) {
       navigate("/login");
-    } else if (confirmFund && confirmFund.status === "success") {
+    } else if (
+      confirmFund.confirmFund &&
+      confirmFund.confirmFund.status === "success"
+    ) {
       dispatch(getWallet());
-      alert.success(confirmFund.message);
+      toast.success(confirmFund.message);
       dispatch({ type: FUND_WALLET_RESET });
       dispatch({ type: CONFIRM_FUNDING_RESET });
       prevStep();
     }
 
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
   }, [
     dispatch,
-    alert,
+    toast,
     loading,
     error,
     fundWallet,
@@ -150,7 +161,7 @@ const FundWalletSMS = ({ prevStep, values }) => {
 
   return (
     <Fragment>
-      {loading ? (
+      {loading || confirmFund.confirmFund.confirmFundloading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -204,7 +215,7 @@ const FundWalletSMS = ({ prevStep, values }) => {
                                   placeholder="Enter amount (NGN)"
                                   id="email_field"
                                   name="amount"
-                                  value={amount}
+                                  value={amount < 50 ? 50 : amount}
                                   onChange={(e) =>
                                     setAmountToPay(e.target.value)
                                   }

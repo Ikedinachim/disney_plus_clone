@@ -21,6 +21,7 @@ import {
 import {
   senderIDReducer,
   createSenderIdReducer,
+  defaultSenderIDReducer,
 } from "./reducers/senderIDReducers";
 import {
   walletReducer,
@@ -60,10 +61,11 @@ const appReducer = combineReducers({
   updateUser: updateUserReducer,
   updateUserPassword: updateUserPasswordReducer,
   createSenderId: createSenderIdReducer,
+  senderID: senderIDReducer,
+  defaultSenderID: defaultSenderIDReducer,
   wallet: walletReducer,
   tnxHistory: transactionHistoryReducer,
   allCampaign: AllCampaignReducer,
-  senderID: senderIDReducer,
   fundWallet: fundWalletReducer,
   confirmFund: confirmFundingReducer,
   smsCampaign: createSmsCampaignReducer,
@@ -111,10 +113,14 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, reducer);
 
 const middleWare = [thunk];
+const composeEnhancers = composeWithDevTools({
+  trace: true,
+  traceLimit: 25,
+});
 const store = createStore(
   persistedReducer,
   initialState,
-  composeWithDevTools(applyMiddleware(...middleWare))
+  composeEnhancers(applyMiddleware(...middleWare))
 );
 
 const persistor = persistStore(store);

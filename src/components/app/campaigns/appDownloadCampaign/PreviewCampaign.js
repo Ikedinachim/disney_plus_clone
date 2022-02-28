@@ -2,8 +2,8 @@ import React, { Fragment, useEffect, useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
-
+// import { useAlert } from "react-alert";
+import { toast } from "react-toastify";
 import MetaData from "../../../layout/MetaData";
 import NumberFormat from "react-number-format";
 
@@ -36,7 +36,7 @@ const PreviewCampaign = ({
     (state) => state.filteredContactList || []
   );
 
-  const alert = useAlert();
+  // const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { wallet } = useSelector((state) => state.wallet);
@@ -57,7 +57,7 @@ const PreviewCampaign = ({
   };
 
   const setPrice = () => {
-    if (values.limit !== "") {
+    if ((values.limit === undefined || values.limit) !== "") {
       return parseInt(values.limit) * 5;
     } else {
       return filteredContactList.count * 5;
@@ -69,16 +69,16 @@ const PreviewCampaign = ({
       createAppDownloadCampaign &&
       createAppDownloadCampaign.status === "success"
     ) {
-      alert.success(createAppDownloadCampaign.message);
+      toast.success(createAppDownloadCampaign.message);
       dispatch(getWallet());
       navigate("/app/campaigns");
       dispatch({ type: APP_DOWNLOAD_CAMPAIGN_RESET });
     } else if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
       // dispatch(getWallet());
     }
-  }, [dispatch, alert, error, createAppDownloadCampaign, navigate]);
+  }, [dispatch, toast, error, createAppDownloadCampaign, navigate]);
 
   //Edit functionality
   const [show, setShow] = useState(false);

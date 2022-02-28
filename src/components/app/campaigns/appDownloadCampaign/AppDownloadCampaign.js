@@ -2,27 +2,33 @@ import React, { Fragment, useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
-import { getSenderID } from "../../../../actions/senderIDActions";
+// import { useAlert } from "react-alert";
+import {
+  getSenderID,
+  getDefaultSenderID,
+} from "../../../../actions/senderIDActions";
 import Loader from "../../../loader";
 import MediaPlayer from "../../../../_helpers/reactPlayer/ReactPlayer";
 import { ProgressBar } from "react-bootstrap";
-
+import { toast } from "react-toastify";
 import MetaData from "../../../layout/MetaData";
 
-const SmsCampaign = ({
+const AppDownloadCampaign = ({
   nextStep,
   handleChange,
   values,
-  onChangeAttachment,
+  // onChangeAttachment,
   handleImageUpload,
-  attachmentPreview,
+  // attachmentPreview,
   selectedFileName,
   uploadPercentage,
+  characterCount,
+  smsCount,
 }) => {
-  const alert = useAlert();
+  // const alert = useAlert();
   const dispatch = useDispatch();
-  const { senderID, loading } = useSelector((state) => state.senderID || []);
+  const { senderID, defaultSenderID } = useSelector((state) => state || []);
+  // const { defaultSenderID } = useSelector((state) => state || []);
 
   // const [assetType, setAssetType] = useState("image");
   // const assetTypeHandler = (asset) => {
@@ -32,11 +38,11 @@ const SmsCampaign = ({
   const Continue = (e) => {
     e.preventDefault();
     if (values.senderId === "") {
-      alert.error("Select a Sender ID or request for one if not available");
+      toast.error("Select a Sender ID or request for one if not available");
     } else if (values.channel === "") {
-      alert.error("Choose a channel");
+      toast.error("Choose a channel");
     } else if (values.campaignMessage === "") {
-      alert.error("Create the campaign message");
+      toast.error("Create the campaign message");
     } else if (values.assetType === "image" && values.attachment === null) {
       nextStep();
       handleImageUpload();
@@ -59,13 +65,26 @@ const SmsCampaign = ({
     },
   ];
 
+  const getSenderIDs = () => {
+    const senders =
+      senderID.senderID &&
+      senderID.senderID
+        .map(
+          (senderId) => senderId.telcoStatus === "approved" && senderId.senderId
+        )
+        .filter((sender) => sender)
+        .concat(defaultSenderID.defaultSenderID);
+    return senders;
+  };
+
   useEffect(() => {
     dispatch(getSenderID());
+    dispatch(getDefaultSenderID());
   }, [dispatch]);
 
   return (
     <Fragment>
-      {loading ? (
+      {senderID.loading || defaultSenderID.loading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -100,28 +119,39 @@ const SmsCampaign = ({
                               campaign creation
                             </p>
                             <div className="form-group">
-                              <label htmlFor className="mb-1">
-                                Sender ID
-                              </label>
+                              <label className="mb-1">Select Channel</label>
                               <select
                                 className="custom-select"
-                                // value="select channel"
-                                defaultValue={values.senderId}
-                                onBlur={handleChange("senderId")}
+                                defaultValue={values.channel}
+                                onChange={handleChange("channel")}
                               >
-                                <option value="">Select Sender ID</option>
-                                {senderID &&
-                                  senderID.map((senderids, i) => (
-                                    <option value={senderids.senderId} key={i}>
-                                      {senderids.senderId}
-                                    </option>
-                                  ))}
+                                {selectChannels.map((selectChannel, i) => (
+                                  <option value={selectChannel.value} key={i}>
+                                    {selectChannel.label}
+                                  </option>
+                                ))}
                               </select>
                             </div>
+                            {values.channel === "smart_sms" && (
+                              <div className="form-group">
+                                <label className="mb-1">Sender ID</label>
+                                <select
+                                  className="custom-select"
+                                  // value="select channel"
+                                  defaultValue={values.senderId}
+                                  onChange={handleChange("senderId")}
+                                >
+                                  <option value="">Select Sender ID</option>
+                                  {getSenderIDs().map((senderids, i) => (
+                                    <option value={senderids} key={i}>
+                                      {senderids}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            )}
                             <div className="form-group">
-                              <label htmlFor className="mb-1">
-                                IOS store URL
-                              </label>
+                              <label className="mb-1">IOS store URL</label>
                               <input
                                 type="text"
                                 className="form-control"
@@ -131,9 +161,7 @@ const SmsCampaign = ({
                               />
                             </div>
                             <div className="form-group">
-                              <label htmlFor className="mb-1">
-                                Android store URL
-                              </label>
+                              <label className="mb-1">Android store URL</label>
                               <input
                                 type="text"
                                 className="form-control"
@@ -143,25 +171,7 @@ const SmsCampaign = ({
                               />
                             </div>
                             <div className="form-group">
-                              <label htmlFor className="mb-1">
-                                Select Channel
-                              </label>
-                              <select
-                                className="custom-select"
-                                defaultValue={values.channel}
-                                onBlur={handleChange("channel")}
-                              >
-                                {selectChannels.map((selectChannel, i) => (
-                                  <option value={selectChannel.value} key={i}>
-                                    {selectChannel.label}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-                            <div className="form-group">
-                              <label htmlFor className="mb-1">
-                                Call to Action
-                              </label>
+                              <label className="mb-1">Call to Action</label>
                               <input
                                 type="text"
                                 className="form-control"
@@ -171,17 +181,28 @@ const SmsCampaign = ({
                               />
                             </div>
                             <div className="form-group">
-                              <label htmlFor className="mb-1">
-                                Campaign Message
-                              </label>
+                              <label className="mb-1">Campaign Message</label>
                               <textarea
                                 className="form-control"
                                 rows={3}
+                                maxLength={
+                                  values.channel === "display_ads" ? 70 : false
+                                }
                                 placeholder="Type your ad message here"
                                 defaultValue={values.campaignMessage}
-                                onBlur={handleChange("campaignMessage")}
+                                onChange={handleChange("campaignMessage")}
                               />
                             </div>
+                            {values.channel === "display_ads" ? (
+                              <div className="d-flex justify-content-between">
+                                <p>{70 - characterCount} Characters Left</p>
+                              </div>
+                            ) : (
+                              <div className="d-flex justify-content-between">
+                                <p>{characterCount} Characters</p>
+                                <p>{smsCount} SMS</p>
+                              </div>
+                            )}
                           </div>
                           <div className="mg-t-30">
                             <p className="tx-24 tx-bold mb-1 tx-com">
@@ -361,4 +382,4 @@ const SmsCampaign = ({
   );
 };
 
-export default SmsCampaign;
+export default AppDownloadCampaign;

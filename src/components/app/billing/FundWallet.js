@@ -1,7 +1,8 @@
 import React, { Fragment, useState, useEffect, useRef } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
+// import { useAlert } from "react-alert";
+import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { usePaystackPayment } from "react-paystack";
 
@@ -20,7 +21,7 @@ import {
 } from "../../../constants/billingConstants";
 
 const FundWallet = () => {
-  const alert = useAlert();
+  // const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -28,7 +29,9 @@ const FundWallet = () => {
   const { fundWallet, loading, error } = useSelector(
     (state) => state.fundWallet
   );
-  const { confirmFund } = useSelector((state) => state.confirmFund);
+  const { confirmFund, confirmFundloading } = useSelector(
+    (state) => state.confirmFund
+  );
   const { wallet } = useSelector((state) => state.wallet);
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
@@ -120,20 +123,20 @@ const FundWallet = () => {
     }
 
     if (confirmFund && confirmFund.status === "success") {
-      alert.success(confirmFund.message);
+      toast.success(confirmFund.message);
       dispatch({ type: FUND_WALLET_RESET });
       dispatch({ type: CONFIRM_FUNDING_RESET });
       navigate("/app/billing");
     }
 
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
     dispatch(getWallet());
   }, [
     dispatch,
-    alert,
+    toast,
     // loading,
     error,
     // fundWallet,
@@ -145,7 +148,7 @@ const FundWallet = () => {
 
   return (
     <Fragment>
-      {loading ? (
+      {loading || confirmFundloading ? (
         <Loader />
       ) : (
         <Fragment>
