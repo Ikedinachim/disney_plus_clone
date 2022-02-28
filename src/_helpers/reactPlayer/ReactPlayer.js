@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import ReactPlayer from "react-player/youtube";
+import ReactPlayer from "react-player/lazy";
 
 const MediaPlayer = (url) => {
   useEffect(() => {
@@ -9,6 +9,7 @@ const MediaPlayer = (url) => {
   return (
     <ReactPlayer
       url={Object.values(url)}
+      controls={true}
       playing={false}
       volume={1}
       width="100%"
