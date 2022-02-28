@@ -31,7 +31,7 @@ const PreviewCampaign = ({
   const { error, createFlierVideoCampaign, loading } = useSelector(
     (state) => state.flierVideoCampaign || []
   );
-  const { filteredContactList, fcError, fcLoading } = useSelector(
+  const { filteredContactList, fcLoading } = useSelector(
     (state) => state.filteredContactList || []
   );
   // const alert = useAlert();
@@ -56,12 +56,15 @@ const PreviewCampaign = ({
   };
 
   const setPrice = () => {
-    if (values.limit !== "") {
+    console.log(values.limit === undefined);
+    if (values.limit === undefined || values.limit !== "") {
       return parseInt(values.limit) * 5;
     } else {
       return filteredContactList.count * 5;
     }
   };
+
+  // console.log(filteredContactList.count);
 
   useEffect(() => {
     if (
@@ -77,7 +80,7 @@ const PreviewCampaign = ({
       dispatch(clearErrors());
       // dispatch(getWallet());
     }
-  }, [dispatch, toast, error, createFlierVideoCampaign, navigate]);
+  }, [dispatch, error, createFlierVideoCampaign, navigate]);
 
   // console.log(csvArray);
 

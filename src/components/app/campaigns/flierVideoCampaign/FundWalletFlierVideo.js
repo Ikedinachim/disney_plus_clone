@@ -28,11 +28,17 @@ const FundWalletFlierVideo = ({ prevStep, values, price }) => {
   const { fundWallet, loading, error } = useSelector(
     (state) => state.fundWallet
   );
-  const { confirmFund, confirmFundloading } = useSelector(
-    (state) => state.confirmFund
-  );
-  const [amount, setAmountToPay] = useState(price - parseInt(wallet.balance));
+  const { confirmFund, filteredContactList } = useSelector((state) => state);
   const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const [amount, setAmountToPay] = useState(
+    values.targetAudienceOption === "mysogidb"
+      ? Math.ceil(
+          values.limit
+            ? values.limit * 5 - wallet.balance
+            : filteredContactList.filteredContactList.count * 5 - wallet.balance
+        )
+      : Math.ceil(values.price - wallet.balance)
+  );
 
   const makePaymentHandler = (e) => {
     e.preventDefault();
@@ -125,9 +131,12 @@ const FundWalletFlierVideo = ({ prevStep, values, price }) => {
   useEffect(() => {
     if (!isAuthenticated || user === null) {
       navigate("/login");
-    } else if (confirmFund && confirmFund.status === "success") {
+    } else if (
+      confirmFund.confirmFund &&
+      confirmFund.confirmFund.status === "success"
+    ) {
       dispatch(getWallet());
-      toast.success(confirmFund.message);
+      toast.success(confirmFund.confirmFund.message);
       dispatch({ type: FUND_WALLET_RESET });
       dispatch({ type: CONFIRM_FUNDING_RESET });
       prevStep();
@@ -152,7 +161,7 @@ const FundWalletFlierVideo = ({ prevStep, values, price }) => {
 
   return (
     <Fragment>
-      {loading || confirmFundloading ? (
+      {loading || confirmFund.confirmFund.confirmFundloading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -206,7 +215,7 @@ const FundWalletFlierVideo = ({ prevStep, values, price }) => {
                                   placeholder="Enter amount (NGN)"
                                   id="email_field"
                                   name="amount"
-                                  value={amount}
+                                  value={amount < 50 ? 50 : amount}
                                   onChange={(e) =>
                                     setAmountToPay(e.target.value)
                                   }

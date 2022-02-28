@@ -135,6 +135,7 @@ export default class SmsStepForm extends Component {
       price,
       filterParameters,
       targetAudienceOption,
+      audience,
       limit,
     };
 
