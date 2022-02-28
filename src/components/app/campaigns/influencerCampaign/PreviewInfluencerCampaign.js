@@ -15,6 +15,8 @@ import {
 import { INFLUENCER_CAMPAIGN_RESET } from "../../../../constants/campaignConstants";
 import Loader from "../../../loader";
 
+import MediaPlayer from "../../../../_helpers/reactPlayer/ReactPlayer";
+
 import PreviewIcon from "../../../../assets/img/Promote_Offers.svg";
 
 const PreviewInfluencerCampaign = ({
@@ -226,7 +228,7 @@ const PreviewInfluencerCampaign = ({
                 <div className="card-body pd-md-x-30">
                   <div className="col-xl-11 mx-auto">
                     <div className="row justify-content-between">
-                      <div className="col-md-8">
+                      <div className="col-md-7">
                         <div className="d-flex justify-content-between">
                           <div>
                             <p className="tx-18 mb-0 tx-bold tx-com">
@@ -236,10 +238,7 @@ const PreviewInfluencerCampaign = ({
                         </div>
                         <div className="row mg-t-15">
                           <div className="form-group col-md-6">
-                            <label
-                              htmlFor
-                              className="tx-14 tx-gray mb-0 tx-medium"
-                            >
+                            <label className="tx-14 tx-gray mb-0 tx-medium">
                               Campaign Message
                             </label>
                             <p className="tx-14 mb-0">
@@ -259,11 +258,26 @@ const PreviewInfluencerCampaign = ({
                           </div>
                         </div>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-5">
                         <p className="tx-18 mb-0 tx-bold tx-com">Preview</p>
-                        <div>
+                        {values.assetType === "image" ? (
+                          <div>
+                            <img
+                              src={values.attachment}
+                              className="img-fluid"
+                              alt="logo"
+                            />
+                          </div>
+                        ) : (
+                          <>
+                            <div>
+                              <MediaPlayer url={attachment} />
+                            </div>
+                          </>
+                        )}
+                        {/* <div>
                           <img src={attachment} className="img-fluid" alt="" />
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>

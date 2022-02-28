@@ -66,7 +66,7 @@ const Header = () => {
               <img
                 src="../../assets/img/campaign.svg"
                 alt="asset"
-                srcSet
+                // srcSet
                 style={{ marginRight: "3px" }}
               />
               Balance:{" "}
