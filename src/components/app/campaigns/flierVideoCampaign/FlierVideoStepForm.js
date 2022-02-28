@@ -43,6 +43,8 @@ export default class FlierVideoStepForm extends Component {
     budget: 10000,
     // csvFile: "",
     // csvArray: "",
+    characterCount: 0,
+    smsCount: 0,
 
     ageRange: "",
     gender: "",
@@ -71,6 +73,11 @@ export default class FlierVideoStepForm extends Component {
   // Handle fields change
   handleChange = (input) => (e) => {
     this.setState({ [input]: e.target.value });
+
+    if (input === "campaignMessage") {
+      this.setState({ characterCount: e.target.value.length });
+      this.setState({ smsCount: Math.ceil(e.target.value.length / 160) });
+    }
   };
 
   // Handle image change
@@ -242,6 +249,8 @@ export default class FlierVideoStepForm extends Component {
       assetType,
       selectedFileName,
       uploadPercentage,
+      characterCount,
+      smsCount,
     } = this.state;
 
     /////////////////////////////
@@ -288,7 +297,7 @@ export default class FlierVideoStepForm extends Component {
     // const location = state;
     // const targetAudience = numbers.split(",");
     const audience = setAudience();
-    const price = audience * 5;
+    const price = audience * 5 * smsCount;
     const timeRange = timeRangeFrom + " - " + timeRangeTo;
     // const attachment = attachmentPreview
 
@@ -339,6 +348,8 @@ export default class FlierVideoStepForm extends Component {
             handleImageUpload={this.handleImageUpload}
             selectedFileName={selectedFileName}
             uploadPercentage={uploadPercentage}
+            characterCount={characterCount}
+            smsCount={smsCount}
           />
         );
       case 2:

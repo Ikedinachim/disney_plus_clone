@@ -3,15 +3,24 @@ import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { getSenderID } from "../../../../actions/senderIDActions";
+import {
+  getSenderID,
+  getDefaultSenderID,
+} from "../../../../actions/senderIDActions";
 import Loader from "../../../loader";
 
 import MetaData from "../../../layout/MetaData";
 
-const SmsCampaign = ({ nextStep, handleChange, values }) => {
+const SmsCampaign = ({
+  nextStep,
+  handleChange,
+  values,
+  characterCount,
+  smsCount,
+}) => {
   // const alert = useAlert();
   const dispatch = useDispatch();
-  const { senderID, loading } = useSelector((state) => state.senderID || []);
+  const { senderID, defaultSenderID } = useSelector((state) => state || []);
   const Continue = (e) => {
     e.preventDefault();
     if (values.senderId === "") {
@@ -39,13 +48,26 @@ const SmsCampaign = ({ nextStep, handleChange, values }) => {
     },
   ];
 
+  const getSenderIDs = () => {
+    const senders =
+      senderID.senderID &&
+      senderID.senderID
+        .map(
+          (senderId) => senderId.telcoStatus === "approved" && senderId.senderId
+        )
+        .filter((sender) => sender)
+        .concat(defaultSenderID.defaultSenderID);
+    return senders;
+  };
+
   useEffect(() => {
     dispatch(getSenderID());
+    dispatch(getDefaultSenderID());
   }, [dispatch]);
 
   return (
     <Fragment>
-      {loading ? (
+      {senderID.loading || getDefaultSenderID.loading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -88,9 +110,9 @@ const SmsCampaign = ({ nextStep, handleChange, values }) => {
                             onChange={handleChange("senderId")}
                           >
                             <option value="">Select Sender ID</option>
-                            {senderID.map((senderids) => (
-                              <option value={senderids.senderId}>
-                                {senderids.senderId}
+                            {getSenderIDs().map((senderids, i) => (
+                              <option value={senderids} key={i}>
+                                {senderids}
                               </option>
                             ))}
                           </select>
@@ -122,10 +144,15 @@ const SmsCampaign = ({ nextStep, handleChange, values }) => {
                         <textarea
                           className="form-control"
                           rows={3}
+                          // maxlength={150}
                           placeholder="Type your ad message here e.g Get up to 50% discount on first purchase"
                           onChange={handleChange("campaignMessage")}
                           defaultValue={values.campaignMessage}
                         />
+                      </div>
+                      <div className="d-flex justify-content-between">
+                        <p>{characterCount} Characters</p>
+                        <p>{smsCount} SMS</p>
                       </div>
                     </div>
                   </form>

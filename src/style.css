@@ -161,7 +161,7 @@ tbody + thead {
   height: 100%;
 }
 
-.ads-content {
+.page-content {
   height: 100vh;
   display: flex;
   align-items: center;
