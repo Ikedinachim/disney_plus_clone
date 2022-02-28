@@ -573,7 +573,7 @@ const TargetAudience = ({
                               comma (,)
                             </label>
                             <textarea
-                              name
+                              name="phoneNumber"
                               className="form-control"
                               id="phoneNumber"
                               rows={4}

@@ -39,7 +39,7 @@ export default class FlierVideoStepForm extends Component {
     uploadPercentage: 0,
     videoUrl: "",
     price: 0,
-    limit: "",
+    limit: undefined,
     budget: 10000,
     // csvFile: "",
     // csvArray: "",
@@ -330,6 +330,7 @@ export default class FlierVideoStepForm extends Component {
       filterParameters,
       csvArray,
       limit,
+      price,
       budget,
       assetType,
     };
