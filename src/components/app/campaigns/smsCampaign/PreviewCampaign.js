@@ -29,7 +29,7 @@ const PreviewCampaign = ({
     (state) => state.smsCampaign || []
   );
 
-  const { filteredContactList, fcError, fcLoading } = useSelector(
+  const { filteredContactList, fcLoading } = useSelector(
     (state) => state.filteredContactList || []
   );
 
@@ -436,7 +436,9 @@ const PreviewCampaign = ({
                     <div className="col-md-5 pd-x-0 mg-y-40">
                       <div className="mg-t-20 d-flex">
                         {parseInt(wallet.balance) < values.price ||
-                        parseInt(wallet.balance) < filteredContactList.count ? (
+                        (values.targetAudienceOption === "mysogidb" &&
+                          parseInt(wallet.balance) <
+                            filteredContactList.count) ? (
                           <button
                             className="btn btn-primary w-100 tx-com mg-r-15"
                             onClick={Continue}

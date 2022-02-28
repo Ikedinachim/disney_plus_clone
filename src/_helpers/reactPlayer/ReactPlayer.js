@@ -10,12 +10,12 @@ const MediaPlayer = (url) => {
     <ReactPlayer
       url={Object.values(url)}
       controls={true}
-      playing={false}
+      playing={true}
       volume={1}
       width="100%"
       height="400px"
       onReady={() => console.log("ready now")}
-      light={true}
+      light={"https://i.stack.imgur.com/zw9Iz.png"}
     />
   );
 };

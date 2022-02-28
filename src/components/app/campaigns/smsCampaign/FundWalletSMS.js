@@ -23,14 +23,22 @@ const FundWalletSMS = ({ prevStep, values }) => {
   // const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { confirmFund, filteredContactList } = useSelector((state) => state);
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   const { wallet } = useSelector((state) => state.wallet);
-  const [amount, setAmountToPay] = useState(values.price - wallet.balance);
+  const [amount, setAmountToPay] = useState(
+    values.targetAudienceOption === "mysogidb"
+      ? Math.ceil(
+          values.limit
+            ? values.limit * 5 - wallet.balance
+            : filteredContactList.filteredContactList.count * 5 - wallet.balance
+        )
+      : Math.ceil(values.price - wallet.balance)
+  );
   const { fundWallet, loading, error } = useSelector(
     (state) => state.fundWallet
   );
-  const { confirmFund } = useSelector((state) => state.confirmFund);
-  const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   const makePaymentHandler = (e) => {
     e.preventDefault();
@@ -124,9 +132,12 @@ const FundWalletSMS = ({ prevStep, values }) => {
   useEffect(() => {
     if (!isAuthenticated || user === null) {
       navigate("/login");
-    } else if (confirmFund && confirmFund.status === "success") {
+    } else if (
+      confirmFund.confirmFund &&
+      confirmFund.confirmFund.status === "success"
+    ) {
       dispatch(getWallet());
-      toast.success(confirmFund.message);
+      toast.success(confirmFund.confirmFund.message);
       dispatch({ type: FUND_WALLET_RESET });
       dispatch({ type: CONFIRM_FUNDING_RESET });
       prevStep();
@@ -205,7 +216,7 @@ const FundWalletSMS = ({ prevStep, values }) => {
                                   placeholder="Enter amount (NGN)"
                                   id="email_field"
                                   name="amount"
-                                  value={amount}
+                                  value={amount < 50 ? 50 : amount}
                                   onChange={(e) =>
                                     setAmountToPay(e.target.value)
                                   }
