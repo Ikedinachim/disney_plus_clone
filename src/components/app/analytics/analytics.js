@@ -28,13 +28,7 @@ const Analytics = () => {
       dispatch(clearErrors());
     }
     dispatch(getPropellerCampaign(propellerId));
-<<<<<<< HEAD
   }, []);
-=======
-  }, [dispatch, toast, error]);
-
-  console.log(propellerCampaign);
->>>>>>> da752a6fc725d47ffde75ffd7fbb2c02fb627d7f
 
   console.log(propellerCampaigns);
   return (
