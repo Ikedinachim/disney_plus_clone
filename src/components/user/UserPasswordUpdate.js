@@ -90,10 +90,10 @@ const UserPasswordUpdate = () => {
                     <input
                       className="form-control new"
                       placeholder="Confirm New password"
-                      name="newPassword"
+                      name="confirmPassword"
                       type="password"
                       id="new_password"
-                      value={password.newPassword}
+                      value={password.confirmPassword}
                       onChange={handleChange}
                     />
                   </div>
@@ -110,9 +110,7 @@ const UserPasswordUpdate = () => {
                     </div>
                   </div>
                 </form>
-                <p className="tx-blac tx-12 pd-t-50 mb-0">
-                  Term of use. Privacy policy
-                </p>
+                <p className="tx-blac tx-12 pd-t-50 mb-0">mysogi ads &copy;</p>
               </div>
             </div>
           </div>
