@@ -13,7 +13,7 @@ const DateChart = ({ propellerId }) => {
     dispatch(getCampaignByDate(propellerId));
   }, []);
 
-  const data = [["Month", "Number of clicks", "Number of actions"]];
+  const data = [["Day", "Number of clicks", "Number of actions"]];
 
   for (const i in dateCampaigns) {
     data.push([

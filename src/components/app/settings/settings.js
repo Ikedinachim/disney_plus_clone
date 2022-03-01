@@ -119,7 +119,7 @@ const Settings = () => {
                   <img
                     src={people.imageUrl}
                     className="img-thumbnail w-25"
-                    alt={imageAlt}
+                    alt=""
                     onChange={handleImageChange}
                   />
                   <div className="custom-file">

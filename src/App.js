@@ -51,6 +51,7 @@ import "./style.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import CampaignDetails from "./components/app/campaigns/CampaignDetails";
+import UserPasswordUpdate from "./components/user/UserPasswordUpdate";
 
 AOS.init();
 
@@ -272,7 +273,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="forgotpassword" element={<ForgotPassword />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/password-change" element={<UserPasswordUpdate />} />
         {/* <Route path="/app/sender-id" element={isAuthenticated ? <SenderID /> : <Login />} /> */}
         {/* <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />

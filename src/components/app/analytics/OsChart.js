@@ -22,7 +22,7 @@ const OsChart = ({ propellerId }) => {
   };
 
   //specifying diagram data
-  const data = [["Month", "Impressions", "Clicks", "Conversions"]];
+  const data = [["Os Type", "Impressions", "Clicks", "Conversions"]];
 
   for (const i in OsCampaigns) {
     data.push([

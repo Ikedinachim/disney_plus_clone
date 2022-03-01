@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import { toast } from "react-toastify";
 import Loader from "../../loader";
 import MetaData from "../../layout/MetaData";
 import { getUser, updateUserPassword } from "../../../actions/authActions";
@@ -17,7 +17,7 @@ const ChangePassword = () => {
   // const [userStatus, setUserStatus] = useState()
 
   const {
-    userDetails: { loading },
+    userDetails: { loading, user },
     updateUserPassword: { updatePassword, error },
   } = useSelector((state) => state);
 
@@ -26,11 +26,12 @@ const ChangePassword = () => {
   }, []);
 
   const [people, setPeople] = useState({
-    username: "",
+    username: user.username,
     oldPassword: "",
     newPassword: "",
   });
 
+  ///////////////// HANDLERS////////////////////////
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -43,11 +44,11 @@ const ChangePassword = () => {
     dispatch(updateUserPassword(people));
 
     if (updatePassword && updatePassword.status === "success") {
-      alert.success(updatePassword.message);
+      toast.success(updatePassword.message);
       dispatch({ type: USER_PASSWORD_RESET });
       navHistory("/app/setting");
     } else if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
   };
@@ -84,8 +85,8 @@ const ChangePassword = () => {
                           name="username"
                           type="text"
                           id="username"
-                          value={people.username}
-                          onChange={handleChange}
+                          value={user.username}
+                          disabled="disabled"
                         />
                       </div>
                       <div className="form-group">
