@@ -30,6 +30,10 @@ import {
   UPDATE_INFLUENCER_COST_SUCCESS,
   UPDATE_INFLUENCER_COST_FAIL,
   UPDATE_INFLUENCER_PASSWORD_ACTIVE,
+  USER_PASSWORD_REQUEST,
+  USER_PASSWORD_SUCCESS,
+  USER_PASSWORD_RESET,
+  USER_PASSWORD_FAIL,
 } from "../constants/authConstants";
 import { INFLUENCER_CAMPAIGN_REQUEST } from "../constants/campaignConstants";
 
@@ -204,6 +208,44 @@ export const updateUserDetails = (payload) => async (dispatch) => {
   } catch (data) {
     dispatch({
       type: UPDATE_USER_FAIL,
+      payload: data.message,
+    });
+  }
+};
+
+//Update password
+export const updateUserPassword = (payload) => async (dispatch) => {
+  try {
+    dispatch({ type: USER_PASSWORD_REQUEST });
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const { data } = await axios.post(
+      "api/auth/change-password",
+      payload,
+      config
+    );
+
+    if (data.status === "success") {
+      dispatch({
+        type: USER_PASSWORD_SUCCESS,
+        payload: data,
+      });
+    } else {
+      dispatch({
+        type: USER_PASSWORD_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (data) {
+    dispatch({
+      type: USER_PASSWORD_FAIL,
       payload: data.message,
     });
   }

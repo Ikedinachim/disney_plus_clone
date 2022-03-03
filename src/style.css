@@ -168,6 +168,27 @@ tbody + thead {
   justify-content: center;
 }
 
+.page-content p {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.page-content-card {
+  border-radius: 6px;
+  border: 1px solid gainsboro;
+  min-width: 300px;
+  max-width: 600px;
+  height: auto;
+  margin: 0 auto;
+  padding: 10px;
+  position: relative;
+}
+
+.page-content-card a {
+  width: 335px;
+}
+
 .csvReader {
   display: flex;
   flex-direction: row;

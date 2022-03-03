@@ -108,7 +108,7 @@ const TargetAudience = ({
         // console.log(parsedCsvData);
       },
     });
-    console.log(parsedCsvData);
+    // console.log(parsedCsvData);
   };
 
   const onDrop = useCallback((acceptedFiles) => {
@@ -140,7 +140,7 @@ const TargetAudience = ({
       toast.error(error);
       dispatch(clearErrors());
     }
-    console.log(parsedCsvData);
+    // console.log(parsedCsvData);
     getCsvRawData(parsedCsvData);
   }, [dispatch, error, toast, parsedCsvData]);
 

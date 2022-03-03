@@ -40,7 +40,16 @@ const FlierVideoCampaign = ({
 
   const Continue = (e) => {
     e.preventDefault();
-    if (values.callToAction === "") {
+    if (
+      values.channel === "smart_sms" &&
+      values.senderId === ""
+      // &&
+      // values.alternateSenderId === ""
+    ) {
+      toast.error("Select a Sender ID or request for one if not available");
+    } else if (values.senderId !== "" && values.alternateSenderId === "") {
+      toast.error("Choose an alternate ID");
+    } else if (values.callToAction === "") {
       toast.error("Provide a call to action for users");
     } else if (values.channel === "") {
       toast.error("Choose a channel");
@@ -48,7 +57,7 @@ const FlierVideoCampaign = ({
       toast.error("Create the campaign message");
     } else if (values.assetType === "image" && values.attachment === null) {
       nextStep();
-      handleImageUpload();
+      // handleImageUpload();
     } else {
       nextStep();
     }
@@ -150,8 +159,8 @@ const FlierVideoCampaign = ({
                                 defaultValue={values.channel}
                                 onChange={handleChange("channel")}
                               >
-                                {selectChannels.map((selectChannel) => (
-                                  <option value={selectChannel.value}>
+                                {selectChannels.map((selectChannel, i) => (
+                                  <option value={selectChannel.value} key={i}>
                                     {selectChannel.label}
                                   </option>
                                 ))}
@@ -159,22 +168,47 @@ const FlierVideoCampaign = ({
                             </div>
                           </div>
                           {values.channel === "smart_sms" && (
-                            <div className="form-group">
-                              <label className="mb-1">Sender ID</label>
-                              <select
-                                className="custom-select"
-                                // value="select channel"
-                                defaultValue={values.senderId}
-                                onChange={handleChange("senderId")}
-                              >
-                                <option value="">Select Sender ID</option>
-                                {getSenderIDs().map((senderids, i) => (
-                                  <option value={senderids} key={i}>
-                                    {senderids}
+                            <>
+                              <div className="form-group">
+                                <label className="mb-1">Sender ID</label>
+                                <select
+                                  className="custom-select"
+                                  // value="select channel"
+                                  defaultValue={values.senderId}
+                                  onChange={handleChange("senderId")}
+                                >
+                                  <option value="">Select Sender ID</option>
+                                  {getSenderIDs().map((senderids, i) => (
+                                    <option value={senderids} key={i}>
+                                      {senderids}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                              <div className="form-group">
+                                <label className="mb-1">
+                                  Alternate Sender ID
+                                </label>
+                                <select
+                                  className="custom-select"
+                                  // value="select channel"
+                                  defaultValue={values.alternateSenderId}
+                                  onChange={handleChange("alternateSenderId")}
+                                >
+                                  <option value="">
+                                    Select Alternate Sender ID
                                   </option>
-                                ))}
-                              </select>
-                            </div>
+                                  {defaultSenderID &&
+                                    defaultSenderID.defaultSenderID.map(
+                                      (senderids, i) => (
+                                        <option value={senderids} key={i}>
+                                          {senderids}
+                                        </option>
+                                      )
+                                    )}
+                                </select>
+                              </div>
+                            </>
                           )}
                           <div className="form-group">
                             <label className="mb-1">Input URL</label>
@@ -186,85 +220,91 @@ const FlierVideoCampaign = ({
                               onChange={handleChange("url")}
                             />
                           </div>
-                          <div className="form-group">
-                            <label className="mb-1">Phone Number</label>
-                            <div className="d-flex">
-                              <input
-                                type="number"
-                                className="form-control"
-                                placeholder="Enter customer care number customers can reach you on"
-                                defaultValue={values.phoneNumber}
-                                onChange={handleChange("phoneNumber")}
-                              />
-                              {/* <button onClick={handleAddClick}>Add</button> */}
-                              <button
-                                className="btn btn-success ml-2 col-md-3 text-center"
-                                onClick={handleAddClick}
-                              >
-                                More Options
-                                {/* <i class="fa fa-plus"></i> */}
-                              </button>
-                            </div>
-                          </div>
-                          {showWhatsapp && (
-                            <div className="form-group">
-                              <label className="mb-1">WhatsApp Number</label>
-                              <div className="d-flex">
-                                <input
-                                  type="number"
-                                  className="form-control"
-                                  placeholder="WhatsApp Number"
-                                  defaultValue={values.whatsAppNumber}
-                                  onChange={handleChange("whatsAppNumber")}
-                                />
-                                <button
-                                  className="btn btn-danger ml-2"
-                                  onClick={handleRemoveClick("whatsapp")}
-                                >
-                                  <i className="fa fa-trash"></i>
-                                </button>
+                          {values.channel === "smart_sms" && (
+                            <>
+                              <div className="form-group">
+                                <label className="mb-1">Phone Number</label>
+                                <div className="d-flex">
+                                  <input
+                                    type="number"
+                                    className="form-control"
+                                    placeholder="Enter customer care number customers can reach you on"
+                                    defaultValue={values.phoneNumber}
+                                    onChange={handleChange("phoneNumber")}
+                                  />
+                                  {/* <button onClick={handleAddClick}>Add</button> */}
+                                  <button
+                                    className="btn btn-success ml-2 col-md-3 text-center"
+                                    onClick={handleAddClick}
+                                  >
+                                    More Options
+                                    {/* <i class="fa fa-plus"></i> */}
+                                  </button>
+                                </div>
                               </div>
-                            </div>
-                          )}
-                          {showUssd && (
-                            <div className="form-group">
-                              <label className="mb-1">USSD</label>
-                              <div className="d-flex">
-                                <input
-                                  type="number"
-                                  className="form-control"
-                                  placeholder="Enter preferred code"
-                                  defaultValue={values.ussd}
-                                  onChange={handleChange("ussd")}
-                                />
-                                <button
-                                  className="btn btn-danger ml-2"
-                                  onClick={handleRemoveClick("showUssd")}
-                                >
-                                  <i className="fa fa-trash"></i>
-                                </button>
-                              </div>
-                            </div>
-                          )}
-                          {showSms && (
-                            <div className="form-group">
-                              <label className="mb-1">SMS Number</label>
-                              <div className="d-flex">
-                                <input
-                                  type="number"
-                                  className="form-control"
-                                  placeholder="Enter number you want to be texted on by your customers"
-                                  defaultValue={values.smsNumber}
-                                  onChange={handleChange("smsNumber")}
-                                />
-                                <button
-                                  className="btn btn-danger ml-2"
-                                  onClick={handleRemoveClick("showSms")}
-                                >
-                                  <i className="fa fa-trash"></i>
-                                </button>
-                              </div>
-                            </div>
+                              {showWhatsapp && (
+                                <div className="form-group">
+                                  <label className="mb-1">
+                                    WhatsApp Number
+                                  </label>
+                                  <div className="d-flex">
+                                    <input
+                                      type="number"
+                                      className="form-control"
+                                      placeholder="WhatsApp Number"
+                                      defaultValue={values.whatsAppNumber}
+                                      onChange={handleChange("whatsAppNumber")}
+                                    />
+                                    <button
+                                      className="btn btn-danger ml-2"
+                                      onClick={handleRemoveClick("whatsapp")}
+                                    >
+                                      <i className="fa fa-trash"></i>
+                                    </button>
+                                  </div>
+                                </div>
+                              )}
+                              {showUssd && (
+                                <div className="form-group">
+                                  <label className="mb-1">USSD</label>
+                                  <div className="d-flex">
+                                    <input
+                                      type="number"
+                                      className="form-control"
+                                      placeholder="Enter preferred code"
+                                      defaultValue={values.ussd}
+                                      onChange={handleChange("ussd")}
+                                    />
+                                    <button
+                                      className="btn btn-danger ml-2"
+                                      onClick={handleRemoveClick("showUssd")}
+                                    >
+                                      <i className="fa fa-trash"></i>
+                                    </button>
+                                  </div>
+                                </div>
+                              )}
+                              {showSms && (
+                                <div className="form-group">
+                                  <label className="mb-1">SMS Number</label>
+                                  <div className="d-flex">
+                                    <input
+                                      type="number"
+                                      className="form-control"
+                                      placeholder="Enter number you want to be texted on by your customers"
+                                      defaultValue={values.smsNumber}
+                                      onChange={handleChange("smsNumber")}
+                                    />
+                                    <button
+                                      className="btn btn-danger ml-2"
+                                      onClick={handleRemoveClick("showSms")}
+                                    >
+                                      <i className="fa fa-trash"></i>
+                                    </button>
+                                  </div>
+                                </div>
+                              )}
+                            </>
                           )}
                           <div className="form-group">
                             <label className="mb-1">Call To Action</label>
@@ -318,7 +358,9 @@ const FlierVideoCampaign = ({
                               className="form-control"
                               rows={3}
                               maxLength={
-                                values.channel === "display_ads" ? 70 : false
+                                values.channel === "display_ads"
+                                  ? 40
+                                  : undefined
                               }
                               placeholder="Type your ad message here"
                               defaultValue={values.campaignMessage}
@@ -327,7 +369,7 @@ const FlierVideoCampaign = ({
                           </div>
                           {values.channel === "display_ads" ? (
                             <div className="d-flex justify-content-between">
-                              <p>{70 - characterCount} Characters Left</p>
+                              <p>{40 - characterCount} Characters Left</p>
                             </div>
                           ) : (
                             <div className="d-flex justify-content-between">

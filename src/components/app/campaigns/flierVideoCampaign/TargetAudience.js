@@ -202,7 +202,7 @@ const TargetAudience = ({
       toast.error(error);
       dispatch(clearErrors());
     }
-    console.log(parsedCsvData);
+    // console.log(parsedCsvData);
     getCsvRawData(parsedCsvData);
   }, [dispatch, error, toast, parsedCsvData]);
 
@@ -226,7 +226,7 @@ const TargetAudience = ({
               />
             </div>
             <div className="pd-md-y-20">
-              <div className>
+              <div>
                 <form>
                   {values.channel === "display_ads" ? (
                     <div>
@@ -476,9 +476,7 @@ const TargetAudience = ({
                               </select>
                             </div>
                             <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                Interest
-                              </label>
+                              <label className="mb-1 tx-com">Interest</label>
                               <select className="custom-select">
                                 <option selected>Select Interest</option>
                                 <option value={1}>Music</option>
@@ -720,7 +718,7 @@ const TargetAudience = ({
                         <div className="hide" id="show_3">
                           <div className="row justify-content-md-between">
                             <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
+                              <label className="mb-1 tx-com">
                                 Enter Number (you can separate your contact with
                                 comma (,)
                               </label>

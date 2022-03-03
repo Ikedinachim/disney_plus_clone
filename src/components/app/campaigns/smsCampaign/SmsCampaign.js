@@ -23,8 +23,10 @@ const SmsCampaign = ({
   const { senderID, defaultSenderID } = useSelector((state) => state || []);
   const Continue = (e) => {
     e.preventDefault();
-    if (values.senderId === "") {
-      toast.error("Select a Sender ID or request for one if not available");
+    if (values.senderId === "" && values.alternateSenderId !== "") {
+      toast.error("Select a Sender ID or choose an alternate ID");
+    } else if (values.senderId !== "" && values.alternateSenderId === "") {
+      toast.error("Choose an alternate ID");
     } else if (values.channel === "") {
       toast.error("Choose a channel");
     } else if (values.campaignMessage === "") {
@@ -55,10 +57,11 @@ const SmsCampaign = ({
         .map(
           (senderId) => senderId.telcoStatus === "approved" && senderId.senderId
         )
-        .filter((sender) => sender)
-        .concat(defaultSenderID.defaultSenderID);
+        .filter((sender) => sender);
     return senders;
   };
+
+  // console.log(defaultSenderID.defaultSenderID.length);
 
   useEffect(() => {
     dispatch(getSenderID());
@@ -67,7 +70,7 @@ const SmsCampaign = ({
 
   return (
     <Fragment>
-      {senderID.loading || getDefaultSenderID.loading ? (
+      {senderID.loading || defaultSenderID.loading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -100,9 +103,7 @@ const SmsCampaign = ({
                       </p>
                       <div className="row">
                         <div className="form-group col-md-6">
-                          <label htmlFor className="mb-1">
-                            Sender ID
-                          </label>
+                          <label className="mb-1">Sender ID</label>
                           <select
                             className="custom-select"
                             // value="select channel"
@@ -110,26 +111,46 @@ const SmsCampaign = ({
                             onChange={handleChange("senderId")}
                           >
                             <option value="">Select Sender ID</option>
-                            {getSenderIDs().map((senderids, i) => (
-                              <option value={senderids} key={i}>
-                                {senderids}
-                              </option>
-                            ))}
+                            {senderID.senderID &&
+                              getSenderIDs().map((senderids, i) => (
+                                <option value={senderids} key={i}>
+                                  {senderids}
+                                </option>
+                              ))}
+                          </select>
+                        </div>
+                        <div className="form-group col-md-6">
+                          <label className="mb-1">Alternate Sender ID</label>
+                          <select
+                            className="custom-select"
+                            // value="select channel"
+                            defaultValue={values.alternateSenderId}
+                            onChange={handleChange("alternateSenderId")}
+                          >
+                            <option value="">
+                              Select Alternate SenderId Sender ID
+                            </option>
+                            {defaultSenderID &&
+                              defaultSenderID.defaultSenderID.map(
+                                (senderids, i) => (
+                                  <option value={senderids} key={i}>
+                                    {senderids}
+                                  </option>
+                                )
+                              )}
                           </select>
                         </div>
                         <div className="form-group col-md-6">
                           <div className="form-group">
-                            <label htmlFor className="mb-1">
-                              Select Channel
-                            </label>
+                            <label className="mb-1">Select Channel</label>
                             <select
                               className="custom-select"
                               // value="select channel"
                               defaultValue={values.channel}
                               onChange={handleChange("channel")}
                             >
-                              {selectChannels.map((selectChannel) => (
-                                <option value={selectChannel.value}>
+                              {selectChannels.map((selectChannel, i) => (
+                                <option value={selectChannel.value} key={i}>
                                   {selectChannel.label}
                                 </option>
                               ))}
@@ -138,9 +159,7 @@ const SmsCampaign = ({
                         </div>
                       </div>
                       <div className="form-group">
-                        <label htmlFor className="mb-1">
-                          Campaign Message
-                        </label>
+                        <label className="mb-1">Campaign Message</label>
                         <textarea
                           className="form-control"
                           rows={3}

@@ -37,15 +37,22 @@ const AppDownloadCampaign = ({
 
   const Continue = (e) => {
     e.preventDefault();
-    if (values.senderId === "") {
+    if (
+      values.channel === "smart_sms" &&
+      values.senderId === ""
+      // &&
+      // values.alternateSenderId === ""
+    ) {
       toast.error("Select a Sender ID or request for one if not available");
+    } else if (values.senderId !== "" && values.alternateSenderId === "") {
+      toast.error("Choose an alternate ID");
     } else if (values.channel === "") {
       toast.error("Choose a channel");
     } else if (values.campaignMessage === "") {
       toast.error("Create the campaign message");
     } else if (values.assetType === "image" && values.attachment === null) {
       nextStep();
-      handleImageUpload();
+      // handleImageUpload();
     } else {
       nextStep();
     }
@@ -72,10 +79,12 @@ const AppDownloadCampaign = ({
         .map(
           (senderId) => senderId.telcoStatus === "approved" && senderId.senderId
         )
-        .filter((sender) => sender)
-        .concat(defaultSenderID.defaultSenderID);
+        .filter((sender) => sender);
+    // .concat(defaultSenderID.defaultSenderID);
     return senders;
   };
+
+  console.log(values);
 
   useEffect(() => {
     dispatch(getSenderID());
@@ -133,22 +142,47 @@ const AppDownloadCampaign = ({
                               </select>
                             </div>
                             {values.channel === "smart_sms" && (
-                              <div className="form-group">
-                                <label className="mb-1">Sender ID</label>
-                                <select
-                                  className="custom-select"
-                                  // value="select channel"
-                                  defaultValue={values.senderId}
-                                  onChange={handleChange("senderId")}
-                                >
-                                  <option value="">Select Sender ID</option>
-                                  {getSenderIDs().map((senderids, i) => (
-                                    <option value={senderids} key={i}>
-                                      {senderids}
+                              <>
+                                <div className="form-group">
+                                  <label className="mb-1">Sender ID</label>
+                                  <select
+                                    className="custom-select"
+                                    // value="select channel"
+                                    defaultValue={values.senderId}
+                                    onChange={handleChange("senderId")}
+                                  >
+                                    <option value="">Select Sender ID</option>
+                                    {getSenderIDs().map((senderids, i) => (
+                                      <option value={senderids} key={i}>
+                                        {senderids}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                                <div className="form-group">
+                                  <label className="mb-1">
+                                    Alternate Sender ID
+                                  </label>
+                                  <select
+                                    className="custom-select"
+                                    // value="select channel"
+                                    defaultValue={values.alternateSenderId}
+                                    onChange={handleChange("alternateSenderId")}
+                                  >
+                                    <option value="">
+                                      Select Alternate Sender ID
                                     </option>
-                                  ))}
-                                </select>
-                              </div>
+                                    {defaultSenderID &&
+                                      defaultSenderID.defaultSenderID.map(
+                                        (senderids, i) => (
+                                          <option value={senderids} key={i}>
+                                            {senderids}
+                                          </option>
+                                        )
+                                      )}
+                                  </select>
+                                </div>
+                              </>
                             )}
                             <div className="form-group">
                               <label className="mb-1">IOS store URL</label>
@@ -186,7 +220,7 @@ const AppDownloadCampaign = ({
                                 className="form-control"
                                 rows={3}
                                 maxLength={
-                                  values.channel === "display_ads" ? 70 : false
+                                  values.channel === "display_ads" ? 40 : false
                                 }
                                 placeholder="Type your ad message here"
                                 defaultValue={values.campaignMessage}
@@ -195,7 +229,7 @@ const AppDownloadCampaign = ({
                             </div>
                             {values.channel === "display_ads" ? (
                               <div className="d-flex justify-content-between">
-                                <p>{70 - characterCount} Characters Left</p>
+                                <p>{40 - characterCount} Characters Left</p>
                               </div>
                             ) : (
                               <div className="d-flex justify-content-between">

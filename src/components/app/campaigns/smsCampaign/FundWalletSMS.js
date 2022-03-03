@@ -43,7 +43,7 @@ const FundWalletSMS = ({ prevStep, values }) => {
   const makePaymentHandler = (e) => {
     e.preventDefault();
 
-    const obj = JSON.parse(`{"amount": ${amount}}`);
+    const obj = JSON.parse(`{"amount": ${amount < 50 ? 50 : amount}}`);
 
     dispatch(fundUserWallet(obj));
     setAmountToPay("");
@@ -75,7 +75,8 @@ const FundWalletSMS = ({ prevStep, values }) => {
   // you can call this function anything
   const onClose = () => {
     // implementation for  whatever you want to do when the Paystack dialog closed.
-    console.log("closed");
+    // console.log("closed");
+    prevStep();
     dispatch({ type: FUND_WALLET_RESET });
     dispatch({ type: CONFIRM_FUNDING_RESET });
   };
@@ -84,6 +85,7 @@ const FundWalletSMS = ({ prevStep, values }) => {
     const initializePayment = usePaystackPayment(config);
     const cancelPayment = (e) => {
       e.preventDefault();
+      prevStep();
       dispatch({ type: FUND_WALLET_RESET });
       dispatch({ type: CONFIRM_FUNDING_RESET });
     };
@@ -162,7 +164,7 @@ const FundWalletSMS = ({ prevStep, values }) => {
 
   return (
     <Fragment>
-      {loading ? (
+      {loading || confirmFund.confirmFundloading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -216,7 +218,7 @@ const FundWalletSMS = ({ prevStep, values }) => {
                                   placeholder="Enter amount (NGN)"
                                   id="email_field"
                                   name="amount"
-                                  value={amount < 50 ? 50 : amount}
+                                  defaultValue={amount < 50 ? 50 : amount}
                                   onChange={(e) =>
                                     setAmountToPay(e.target.value)
                                   }

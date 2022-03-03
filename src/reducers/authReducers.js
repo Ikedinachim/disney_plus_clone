@@ -38,6 +38,10 @@ import {
   UPDATE_USER_SUCCESS,
   UPDATE_USER_RESET,
   UPDATE_USER_FAIL,
+  USER_PASSWORD_REQUEST,
+  USER_PASSWORD_SUCCESS,
+  USER_PASSWORD_RESET,
+  USER_PASSWORD_FAIL,
   DELETE_USER_REQUEST,
   DELETE_USER_SUCCESS,
   DELETE_USER_RESET,
@@ -446,6 +450,45 @@ export const updateUserReducer = (state = { updateUser: [] }, action) => {
       return {
         ...state,
         updateUser: [],
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const updateUserPasswordReducer = (
+  state = { updatePassword: [] },
+  action
+) => {
+  switch (action.type) {
+    case USER_PASSWORD_REQUEST:
+      return {
+        loading: true,
+        updatePassword: [],
+      };
+    case USER_PASSWORD_SUCCESS:
+      return {
+        loading: false,
+        updatePassword: action.payload,
+        status: action.payload.status,
+      };
+    case USER_PASSWORD_FAIL:
+      return {
+        loading: false,
+        updatePassword: [],
+        error: action.payload,
+        status: action.payload.status,
+      };
+    case USER_PASSWORD_RESET:
+      return {
+        ...state,
+        updatePassword: [],
       };
     case CLEAR_ERRORS:
       return {

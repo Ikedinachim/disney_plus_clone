@@ -680,6 +680,8 @@ export const getDigitalCampaigns = () => async (dispatch) => {
 
     const { data } = await axios.get(`api/campaign/digital-campaigns`, config);
 
+    console.log(data.data);
+
     if (data.status === "success") {
       console.log("works");
       dispatch({
