@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 // import { toast } from "react-toastify";
 
 import { getAllInfluencers } from "../../../../actions/campaignActions";
@@ -43,16 +44,6 @@ const InfluencerCampaign = ({
 
   const Continue = (e) => {
     // e.preventDefault();
-    // if (values.callToAction === "") {
-    //   alert.error("Provide a call to action for users");
-    // } else if (values.channel === "") {
-    //   alert.error("Choose a channel");
-    // } else if (values.campaignMessage === "") {
-    //   alert.error("Create the campaign message");
-    // } else {
-    //   nextStep();
-    //   handleImageUpload();
-    // }
     nextStep();
     // handleImageUpload();
   };
@@ -275,34 +266,21 @@ const InfluencerCampaign = ({
                     <InfluencerCard
                       key={influencer.id}
                       influencer={influencer}
-                      // checkedInfluencer={checkedInfluencer}
                       toggleHandler={toggleHandler}
-                      // handleInfluencerChange={handleInfluencerChange}
-                      // handleCheck={handleCheck}
                       show={selectedInfluencer}
-                      // setShow={setShow}
-                      // onClick={() => setShow(true)}
                     />
-                    // <div key={influencer.id}>
-                    //   <input
-                    //     name={influencer.name}
-                    //     value={influencer.name}
-                    //     checked={show}
-                    //     onChange={(e) => (e.target.checked = setShow(!show))}
-                    //     type="checkbox"
-                    //   />
-                    // </div>
                   ))}
               </div>
-              {/* <button onClick={() => setCloseModal(true)}>Show Modal</button> */}
-              {/*side Modal */}
-              {/* {influencer.cost.map((platform) => ( */}
-              {/* <InfluencerPlatformModal
-              // key={platform.id}
-              // platform={platform}
-              // influencerPlatformDetails={influencerPlatformDetails}
-              /> */}
-              {/* ))} */}
+              <div className="col-md-2 col-xl-2 col-sm-12 pd-x-0 mg-y-50">
+                <div className="d-flex">
+                  <Link
+                    to="/app/campaign/create"
+                    className="btn btn-outline-primary w-100 mg-b-15"
+                  >
+                    Go Back
+                  </Link>
+                </div>
+              </div>
               <InfluencerModal
                 title="My Modal"
                 // onClose={closePlatFormModal(false)}
