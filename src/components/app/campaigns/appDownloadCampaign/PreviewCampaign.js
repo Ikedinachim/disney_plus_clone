@@ -64,6 +64,8 @@ const PreviewCampaign = ({
     }
   };
 
+  // console.log(setPrice() < parseInt(wallet.balance));
+
   useEffect(() => {
     if (
       createAppDownloadCampaign &&
@@ -123,6 +125,7 @@ const PreviewCampaign = ({
     setView(!view);
   };
 
+  console.log(filteredContactList && parseInt(filteredContactList.count));
   return (
     <Fragment>
       {loading || fcLoading ? (
@@ -458,6 +461,7 @@ const PreviewCampaign = ({
                                     type="number"
                                     onChange={handleChange("limit")}
                                     value={values.limit}
+                                    max={parseInt(filteredContactList.count)}
                                     className="form-control"
                                     placeholder="Enter your target audience number to get price"
                                   />
@@ -595,8 +599,10 @@ const PreviewCampaign = ({
                         <div className="col-md-5 pd-x-0 mg-y-40">
                           <div className="mg-t-20 d-flex">
                             {parseInt(wallet.balance) < price ||
-                            parseInt(wallet.balance) <
-                              filteredContactList.count ||
+                            (values.targetAudienceOption === "mysogidb" &&
+                              parseInt(wallet.balance) < setPrice() &&
+                              parseInt(wallet.balance) <
+                                filteredContactList.count * 5) ||
                             (values.channel === "display_ads" &&
                               parseInt(wallet.balance) < values.budget) ? (
                               <button

@@ -56,15 +56,16 @@ const PreviewCampaign = ({
   };
 
   const setPrice = () => {
-    console.log(values.limit === undefined);
-    if (values.limit === undefined || values.limit !== "") {
+    if (values.limit !== undefined && values.limit !== "") {
+      // console.log("if");
       return parseInt(values.limit) * 5;
     } else {
+      // console.log("else");
       return filteredContactList.count * 5;
     }
   };
 
-  // console.log(filteredContactList.count);
+  // console.log(values);
 
   useEffect(() => {
     if (
@@ -640,8 +641,10 @@ const PreviewCampaign = ({
                         <div className="col-md-5 pd-x-0 mg-y-40">
                           <div className="mg-t-20 d-flex">
                             {parseInt(wallet.balance) < price ||
-                            parseInt(wallet.balance) <
-                              filteredContactList.count ||
+                            (values.targetAudienceOption === "mysogidb" &&
+                              parseInt(wallet.balance) < setPrice() &&
+                              parseInt(wallet.balance) <
+                                filteredContactList.count) ||
                             (values.channel === "display_ads" &&
                               parseInt(wallet.balance) < values.budget) ? (
                               <button

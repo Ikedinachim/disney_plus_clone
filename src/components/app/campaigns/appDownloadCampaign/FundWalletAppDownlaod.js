@@ -27,7 +27,8 @@ const FundWalletSMS = ({ prevStep, values }) => {
   const { confirmFund, filteredContactList } = useSelector((state) => state);
   const { wallet } = useSelector((state) => state.wallet);
   const [amount, setAmountToPay] = useState(
-    values.targetAudienceOption === "mysogidb"
+    values.targetAudienceOption === "mysogidb" &&
+      values.channel !== "display_ads"
       ? Math.ceil(
           values.limit
             ? values.limit * 5 - wallet.balance
@@ -42,7 +43,7 @@ const FundWalletSMS = ({ prevStep, values }) => {
 
   const makePaymentHandler = (e) => {
     e.preventDefault();
-    const obj = JSON.parse(`{"amount": ${amount}}`);
+    const obj = JSON.parse(`{"amount": ${amount < 50 ? 50 : amount}}`);
 
     dispatch(fundUserWallet(obj));
     setAmountToPay("");
@@ -67,14 +68,15 @@ const FundWalletSMS = ({ prevStep, values }) => {
   // you can call this function anything
   const onSuccess = (reference) => {
     // Implementation for whatever you want to do with reference and after success call.
-    console.log(reference);
+    // console.log(reference);
     dispatch(confirmFunding(reference.reference));
   };
 
   // you can call this function anything
   const onClose = () => {
     // implementation for  whatever you want to do when the Paystack dialog closed.
-    console.log("closed");
+    // console.log("closed");
+    prevStep();
     dispatch({ type: FUND_WALLET_RESET });
     dispatch({ type: CONFIRM_FUNDING_RESET });
   };
@@ -83,6 +85,7 @@ const FundWalletSMS = ({ prevStep, values }) => {
     const initializePayment = usePaystackPayment(config);
     const cancelPayment = (e) => {
       e.preventDefault();
+      prevStep();
       dispatch({ type: FUND_WALLET_RESET });
       dispatch({ type: CONFIRM_FUNDING_RESET });
     };
@@ -136,7 +139,7 @@ const FundWalletSMS = ({ prevStep, values }) => {
       confirmFund.confirmFund.status === "success"
     ) {
       dispatch(getWallet());
-      toast.success(confirmFund.message);
+      toast.success(confirmFund.confirmFund.message);
       dispatch({ type: FUND_WALLET_RESET });
       dispatch({ type: CONFIRM_FUNDING_RESET });
       prevStep();
@@ -161,7 +164,7 @@ const FundWalletSMS = ({ prevStep, values }) => {
 
   return (
     <Fragment>
-      {loading || confirmFund.confirmFund.confirmFundloading ? (
+      {loading || confirmFund.confirmFundloading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -215,7 +218,7 @@ const FundWalletSMS = ({ prevStep, values }) => {
                                   placeholder="Enter amount (NGN)"
                                   id="email_field"
                                   name="amount"
-                                  value={amount < 50 ? 50 : amount}
+                                  defaultValue={amount < 50 ? 50 : amount}
                                   onChange={(e) =>
                                     setAmountToPay(e.target.value)
                                   }
@@ -223,7 +226,7 @@ const FundWalletSMS = ({ prevStep, values }) => {
                               </div>
                               <button
                                 className="btn btn-primary mg-t-10 mg-md-t-30"
-                                name=""
+                                name="fundWallet"
                                 type="submit"
                                 disabled={loading ? true : false}
                               >

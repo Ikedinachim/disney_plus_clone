@@ -8,6 +8,7 @@ export default class SmsStepForm extends Component {
   state = {
     step: 1,
     senderId: "",
+    alternateSenderId: "",
     channel: "",
     campaignMessage: "",
     // gender: "Male",
@@ -57,6 +58,7 @@ export default class SmsStepForm extends Component {
     const {
       step,
       senderId,
+      alternateSenderId,
       channel,
       campaignMessage,
       targetAge,
@@ -124,6 +126,7 @@ export default class SmsStepForm extends Component {
 
     const values = {
       senderId,
+      alternateSenderId,
       channel,
       campaignMessage,
       contactNumber,
