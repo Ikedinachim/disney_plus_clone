@@ -202,7 +202,7 @@ const FundWallet = () => {
                                   placeholder="Enter amount (NGN)"
                                   id="email_field"
                                   name="amount"
-                                  value={amount}
+                                  defaultValue={amount}
                                   onChange={(e) =>
                                     setAmountToPay(e.target.value)
                                   }

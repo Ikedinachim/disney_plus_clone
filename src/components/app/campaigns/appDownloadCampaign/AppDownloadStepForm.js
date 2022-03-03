@@ -9,6 +9,7 @@ export default class AppDownloadStepForm extends Component {
   state = {
     step: 1,
     senderId: "",
+    alternateSenderId: "",
     channel: "",
     campaignMessage: "",
     iosStoreUrl: "",
@@ -141,6 +142,7 @@ export default class AppDownloadStepForm extends Component {
     const {
       step,
       senderId,
+      alternateSenderId,
       channel,
       campaignMessage,
       callToAction,
@@ -233,6 +235,7 @@ export default class AppDownloadStepForm extends Component {
 
     const values = {
       senderId,
+      alternateSenderId,
       channel,
       campaignMessage,
       timeRange,
