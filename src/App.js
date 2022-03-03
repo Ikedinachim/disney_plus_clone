@@ -25,6 +25,7 @@ import InfluencerStepForm from "./components/app/campaigns/influencerCampaign/In
 import Analytics from "./components/app/analytics/analytics";
 import AnalyticsTable from "./components/app/analytics/analyticsTable";
 import Settings from "./components/app/settings/settings";
+import ChangePassword from "./components/app/settings/ChangePassword";
 import Ads from "./adsView/Ads";
 
 ///////////////////////////////////////
@@ -50,6 +51,7 @@ import "./style.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import CampaignDetails from "./components/app/campaigns/CampaignDetails";
+import UserPasswordUpdate from "./components/user/UserPasswordUpdate";
 
 AOS.init();
 
@@ -245,6 +247,16 @@ function App() {
               )
             }
           />
+          <Route
+            path="setting/change-password"
+            element={
+              isAuthenticated && user && user.user.role === "user" ? (
+                <ChangePassword />
+              ) : (
+                <Login />
+              )
+            }
+          />
         </Route>
         {/* <Route path="/app/campaign/preview" element={isAuthenticated ? <PreviewCampaign /> : <Login />} /> */}
         {/* <Route path="/app/campaign/audience" element={isAuthenticated ? <TargetAudience /> : <Login />} /> */}
@@ -261,7 +273,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="forgotpassword" element={<ForgotPassword />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/password-change" element={<UserPasswordUpdate />} />
         {/* <Route path="/app/sender-id" element={isAuthenticated ? <SenderID /> : <Login />} /> */}
         {/* <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />

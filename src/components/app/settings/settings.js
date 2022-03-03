@@ -17,8 +17,6 @@ const Settings = () => {
     updateUser: { updateUser },
   } = useSelector((state) => state);
 
-  const [imageAlt, setImageAlt] = useState("");
-
   useEffect(() => {
     dispatch(getUser());
   }, [dispatch]);
@@ -42,7 +40,6 @@ const Settings = () => {
       );
       const res_1 = await res.json();
 
-      setImageAlt(`An image of ${res_1.original_filename}`);
       setPeople({ ...people, imageUrl: res_1.secure_url });
     } catch (err) {
       return console.log(err);
@@ -122,7 +119,7 @@ const Settings = () => {
                   <img
                     src={people.imageUrl}
                     className="img-thumbnail w-25"
-                    alt={imageAlt}
+                    alt=""
                     onChange={handleImageChange}
                   />
                   <div className="custom-file">
@@ -228,6 +225,22 @@ const Settings = () => {
                     <button className="btn btn-primary" onClick={handleSubmit}>
                       Save
                     </button>
+                  </div>
+                  <div className="mg-t-20">
+                    <Link to="change-password">
+                      <span
+                        className="tx-dark"
+                        style={{
+                          color: "#000;",
+                          textDecoration: "underline;",
+                        }}
+                      >
+                        Want to Change password?
+                      </span>
+                      <span style={{ textDecoration: "underline;" }}>
+                        Click here
+                      </span>
+                    </Link>
                   </div>
                 </div>
               </div>

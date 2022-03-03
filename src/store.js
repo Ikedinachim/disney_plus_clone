@@ -13,6 +13,8 @@ import {
   updateInfluencerReducer,
   updateInfluencerCostReducer,
   resetInfluencerPasswordReducer,
+  updateUserPasswordReducer,
+
   // userDetailsReducer
 } from "./reducers/authReducers";
 
@@ -27,7 +29,12 @@ import {
   fundWalletReducer,
   confirmFundingReducer,
 } from "./reducers/billingReducers";
-import { getPropellerCampaignsReducer } from "./reducers/anayticsReducers";
+import {
+  getMobileCampaignsReducer,
+  getOsCampaignsReducer,
+  getPropellerCampaignsReducer,
+  getCampaignByDateReducer,
+} from "./reducers/analyticsReducers";
 import {
   createSmsCampaignReducer,
   createFlierVideoCampaignReducer,
@@ -52,6 +59,7 @@ const appReducer = combineReducers({
   auth: authReducer,
   userDetails: userDetailsReducer,
   updateUser: updateUserReducer,
+  updateUserPassword: updateUserPasswordReducer,
   createSenderId: createSenderIdReducer,
   senderID: senderIDReducer,
   defaultSenderID: defaultSenderIDReducer,
@@ -77,6 +85,9 @@ const appReducer = combineReducers({
   influencerDetails: getInfluencerDetailsReducer,
   digitalCampaigns: getDigitalCampaignsReducer,
   getPropellerCampaigns: getPropellerCampaignsReducer,
+  getOsCampaigns: getOsCampaignsReducer,
+  getMobileCampaigns: getMobileCampaignsReducer,
+  getCampaignByDate: getCampaignByDateReducer,
   updateInfluencerProfile: updateInfluencerReducer,
   updateInfluencerCost: updateInfluencerCostReducer,
   resetInfluencerPassword: resetInfluencerPasswordReducer,
