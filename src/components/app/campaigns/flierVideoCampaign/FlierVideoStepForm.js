@@ -12,6 +12,7 @@ export default class FlierVideoStepForm extends Component {
   state = {
     step: 1,
     senderId: "",
+    alternateSenderId: "",
     channel: "",
     url: "",
     campaignMessage: "",
@@ -217,6 +218,7 @@ export default class FlierVideoStepForm extends Component {
     const {
       step,
       senderId,
+      alternateSenderId,
       channel,
       campaignMessage,
       url,
@@ -314,6 +316,7 @@ export default class FlierVideoStepForm extends Component {
 
     const values = {
       senderId,
+      alternateSenderId,
       channel,
       campaignMessage,
       timeRange,

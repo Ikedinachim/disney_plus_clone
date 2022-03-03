@@ -437,6 +437,7 @@ const PreviewCampaign = ({
                       <div className="mg-t-20 d-flex">
                         {parseInt(wallet.balance) < values.price ||
                         (values.targetAudienceOption === "mysogidb" &&
+                          parseInt(wallet.balance) < setPrice() &&
                           parseInt(wallet.balance) <
                             filteredContactList.count) ? (
                           <button

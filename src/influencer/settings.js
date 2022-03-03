@@ -54,65 +54,211 @@ const InfluencerSettings = () => {
 
   const [profile, setProfile] = useState({});
 
-  const [profileImage, setProfileImage] = useState({});
-  console.log(profileImage);
+  const [profileImage, setProfileImage] = useState(null);
+  const [progressIncrement, setProgress] = useState(null);
+  const [isUploading, setIsUploading] = useState(null);
+  console.log(progressIncrement && progressIncrement.uploadPercentage);
 
-  const handleImageUpload = async (e) => {
-    let files = e.target.files[0];
-    const formData = new FormData();
-    formData.append("file", files);
-    formData.append("upload_preset", "mysogi");
+  // const handleImageUpload = async (e) => {
+  //   let files = e.target.files[0];
+  //   const formData = new FormData();
+  //   formData.append("file", files);
+  //   formData.append("upload_preset", "mysogi");
 
-    const options = {
-      onUploadProgress: (progressEvent) => {
-        const { loaded, total } = progressEvent;
-        let percent = Math.floor((loaded * 100) / total);
+  //   const options = {
+  //     onUploadProgress: (progressEvent) => {
+  //       const { loaded, total } = progressEvent;
+  //       let percent = Math.floor((loaded * 100) / total);
 
-        if (percent < 100) {
-          setProfileImage({
-            ...profileImage,
-            uploadPercentage: percent,
-          });
+  //       if (percent < 100) {
+  //         setProfileImage({
+  //           ...profileImage,
+  //           uploadPercentage: percent,
+  //         });
+  //       }
+  //     },
+  //   };
+
+  //   // const config = {
+  //   //   onUploadProgress: function (progressEvent) {
+  //   //     const progress = Math.round(
+  //   //       (progressEvent.loaded * 100) / progressEvent.total
+  //   //     );
+  //   //     setProgress(progress);
+  //   //   },
+  //   // };
+
+  //   try {
+  //     await axios
+  //       .post(
+  //         "https://api.Cloudinary.com/v1_1/mysogi/image/upload",
+  //         formData,
+  //         options
+  //       )
+  //       .then((res) => {
+  //         setProfileImage(
+  //           {
+  //             ...profileImage,
+  //             imageUrl: res.data.secure_url,
+  //             uploadPercentage: 100,
+  //             selectedFileName: files.name,
+  //             imageAlt: `An image of ${files.name}`,
+  //           },
+  //           () => {
+  //             setTimeout(() => {
+  //               setProfileImage({
+  //                 ...profileImage,
+  //                 uploadPercentage: 0,
+  //               });
+  //               console.log("working");
+  //             }, 5000);
+  //           }
+  //         );
+  //         // setProfileImage({
+  //         //   ...profileImage,
+  //         //   uploadPercentage: 0,
+  //         // });
+  //         setProfile((prevState) => ({
+  //           ...prevState,
+  //           imageUrl: res.data.secure_url,
+  //         }));
+  //       });
+  //   } catch (err) {}
+  // };
+
+  const getBase64Image = (file, callback) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = (event) => {
+      let width = "";
+      let height = "";
+
+      const MAX_WIDTH = 1600;
+      const MAX_HEIGHT = 1600;
+
+      const img = new Image();
+
+      img.style.imageOrientation = "from-image";
+
+      img.src = event.target.result;
+
+      img.onload = () => {
+        width = img.width;
+        height = img.height;
+
+        if (width / MAX_WIDTH > height / MAX_HEIGHT) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height;
+            height = MAX_HEIGHT;
+          }
         }
-      },
-    };
 
-    try {
-      await axios
-        .post(
-          "https://api.Cloudinary.com/v1_1/mysogi/image/upload",
-          formData,
-          options
-        )
-        .then((res) => {
-          setProfileImage(
-            {
-              ...profileImage,
-              imageUrl: res.data.secure_url,
-              uploadPercentage: 100,
-              selectedFileName: files.name,
-              imageAlt: `An image of ${files.name}`,
-            },
-            () => {
-              setTimeout(() => {
-                setProfileImage({
-                  ...profileImage,
-                  uploadPercentage: 0,
-                });
-              }, 1000);
-            }
-          );
-          setProfileImage({
-            ...profileImage,
-            uploadPercentage: 0,
-          });
-          setProfile((prevState) => ({
-            ...prevState,
-            imageUrl: res.data.secure_url,
-          }));
-        });
-    } catch (err) {}
+        const canvas = document.createElement("canvas");
+        let ctx = canvas.getContext("2d");
+
+        canvas.width = width;
+        canvas.height = height;
+
+        canvas.style.imageOrientation = "from-image";
+        ctx.fillStyle = "rgba(255,255,255,0.0)";
+        ctx.fillRect(0, 0, 700, 600);
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const data = ctx.canvas.toDataURL("image/jpeg");
+        callback(data);
+      };
+    };
+    reader.onerror = function (error) {
+      console.log("Error: ", error);
+    };
   };
+
+  const onInputChange = (event) => {
+    setIsUploading(true);
+
+    for (const file of event.target.files) {
+      const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
+      const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
+      console.log(cloudName);
+      // const url = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
+      const url = `https://api.Cloudinary.com/v1_1/mysogi/image/upload`;
+
+      getBase64Image(file, (base64Value) => {
+        const data = {
+          // upload_preset: uploadPreset,
+          upload_preset: "mysogi",
+          file: base64Value,
+        };
+
+        const config = {
+          // onUploadProgress: function (progressEvent) {
+          //   const progress = Math.round(
+          //     (progressEvent.loaded * 100) / progressEvent.total
+          //   );
+          //   setProgress(progress);
+          // },
+          onUploadProgress: (progressEvent) => {
+            const { loaded, total } = progressEvent;
+            let percent = Math.floor((loaded * 100) / total);
+
+            if (percent < 100) {
+              setProgress({
+                uploadPercentage: percent,
+              });
+            }
+          },
+        };
+
+        axios
+          .post(url, data, config)
+          .then((response) => {
+            setIsUploading(false);
+            setProfileImage({
+              ...profileImage,
+              imageUrl: response.data.url,
+              selectedFileName: file.name,
+              imageAlt: `An image of ${file.name}`,
+            });
+            setProfile((prevState) => ({
+              ...prevState,
+              imageUrl: response.data.secure_url,
+            }));
+          })
+
+          .catch((error) => {
+            console.log(error);
+            setIsUploading(false);
+          });
+      });
+    }
+  };
+
+  const imagePosition = (url) => {
+    const arr = new URL(url).href.split("/");
+    const transformation = "w_1080,h_1080,c_thumb,g_face/w_1000";
+
+    arr.splice(6, 0, transformation);
+    const joinedArr = arr.join("/");
+
+    return joinedArr;
+  };
+
+  // useEffect(() => {
+  //   if (profileImage && profileImage.uploadPercentage === 100) {
+  //     setProfileImage({
+  //       ...profileImage,
+  //       uploadPercentage: 0,
+  //     });
+  //   }
+  //   console.log(profileImage);
+  // }, [profileImage]);
 
   // const isEmpty = (object) => {
   //   for (const property in object) {
@@ -199,6 +345,30 @@ const InfluencerSettings = () => {
   //     0;
   // };
 
+  // useEffect(() => {
+  //   const setImgaePreview = () => {
+  //     if (influencer.imageUrl) {
+  //       return influencer.imageUrl;
+  //     } else if (userDetails.user.imageUrl) {
+  //       return userDetails.user.imageUrl;
+  //     } else {
+  //       return influencerDetails.imagePath && influencerDetails.imagePath;
+  //     }
+  //   };
+  // }, [third])
+
+  const setImagePreview = () => {
+    if (profileImage && profileImage.imageUrl) {
+      return profileImage.imageUrl;
+    } else if (influencer.imageUrl) {
+      return influencer.imageUrl;
+    } else if (userDetails.user.imageUrl) {
+      return userDetails.user.imageUrl;
+    } else {
+      return influencerDetails.imagePath && influencerDetails.imagePath;
+    }
+  };
+
   let payload = {};
   useEffect(() => {
     let plaformCost;
@@ -235,9 +405,11 @@ const InfluencerSettings = () => {
     payload,
     profileImage,
     updateInfluencer,
+    user,
+    influencer,
   ]);
 
-  console.log(influencerDetails);
+  // console.log(influencerDetails);
 
   return (
     <Fragment>
@@ -251,7 +423,7 @@ const InfluencerSettings = () => {
               <p className="tx-28 tx-com tx-bold">Settings</p>
               <div className="card card-body rounded bd-0 shadow-sm pd-lg-x-0 pd-lg-y-30">
                 <div className="pd-md-y-20">
-                  <div className>
+                  <div>
                     <form onSubmit={handleSubmit}>
                       <div>
                         <div className="pd-md-x-30 pd-xl-x-50">
@@ -274,11 +446,7 @@ const InfluencerSettings = () => {
                                   <div className="d-flex">
                                     <img
                                       htmlFor="photo-upload"
-                                      src={
-                                        userDetails.user.imageUrl
-                                          ? userDetails.user.imageUrl
-                                          : influencerDetails.imagePath
-                                      }
+                                      src={setImagePreview()}
                                       className="img-fluid wd-100 ht-100 pro-image"
                                       alt={`${influencer.firstName} display`}
                                     />
@@ -297,17 +465,22 @@ const InfluencerSettings = () => {
                                     accept="image/png, image/jpeg, image/gif, image/jpg"
                                     className="custom-file-input"
                                     id="photo-upload"
-                                    onChange={(e) => handleImageUpload(e)}
+                                    // onChange={(e) => handleImageUpload(e)}
+                                    onChange={onInputChange}
                                   />
-                                  {profileImage.uploadPercentage > 0 && (
-                                    <span className="mt-2">
-                                      <ProgressBar
-                                        now={profileImage.uploadPercentage}
-                                        // active
-                                        label={`${profileImage.uploadPercentage}%`}
-                                      />
-                                    </span>
-                                  )}
+                                  {isUploading &&
+                                    progressIncrement &&
+                                    progressIncrement.uploadPercentage > 0 && (
+                                      <span className="mt-2">
+                                        <ProgressBar
+                                          now={
+                                            progressIncrement.uploadPercentage
+                                          }
+                                          // active
+                                          label={`${progressIncrement.uploadPercentage}%`}
+                                        />
+                                      </span>
+                                    )}
                                 </label>
                                 {/* <input
                                   type="file"
@@ -338,9 +511,7 @@ const InfluencerSettings = () => {
                         <div className="card-scroll pd-md-x-30 pd-xl-x-50">
                           <div className="row justify-content-md-between">
                             <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                First Name
-                              </label>
+                              <label className="mb-1 tx-com">First Name</label>
                               <input
                                 type="text"
                                 className="form-control"
@@ -351,9 +522,7 @@ const InfluencerSettings = () => {
                               />
                             </div>
                             <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                Last Name
-                              </label>
+                              <label className="mb-1 tx-com">Last Name</label>
                               <input
                                 name="lastName"
                                 type="text"
@@ -364,9 +533,7 @@ const InfluencerSettings = () => {
                               />
                             </div>
                             <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                User Name
-                              </label>
+                              <label className="mb-1 tx-com">User Name</label>
                               <input
                                 name="username"
                                 type="text"
@@ -378,7 +545,7 @@ const InfluencerSettings = () => {
                               />
                             </div>
                             <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
+                              <label className="mb-1 tx-com">
                                 Email Address
                               </label>
                               <input
@@ -392,9 +559,7 @@ const InfluencerSettings = () => {
                               />
                             </div>
                             <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                Password
-                              </label>
+                              <label className="mb-1 tx-com">Password</label>
                               <input
                                 name="password"
                                 type="password"
@@ -405,9 +570,7 @@ const InfluencerSettings = () => {
                               />
                             </div>
                             <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                Occupation
-                              </label>
+                              <label className="mb-1 tx-com">Occupation</label>
                               <select
                                 name="kind"
                                 className="custom-select"
@@ -697,7 +860,7 @@ const InfluencerSettings = () => {
                           </p>
                           <div className="row justify-content-md-between">
                             <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
+                              <label className="mb-1 tx-com">
                                 Instagram Handle
                               </label>
                               <input
@@ -708,9 +871,7 @@ const InfluencerSettings = () => {
                               />
                             </div>
                             <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                Amount
-                              </label>
+                              <label className="mb-1 tx-com">Amount</label>
                               <input
                                 name="instagram"
                                 type="text"
@@ -727,7 +888,7 @@ const InfluencerSettings = () => {
                               />
                             </div>
                             <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
+                              <label className="mb-1 tx-com">
                                 Twitter Handle
                               </label>
                               <input
@@ -738,9 +899,7 @@ const InfluencerSettings = () => {
                               />
                             </div>
                             <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                Amount
-                              </label>
+                              <label className="mb-1 tx-com">Amount</label>
                               <input
                                 name="twitter"
                                 type="text"
@@ -757,7 +916,7 @@ const InfluencerSettings = () => {
                               />
                             </div>
                             <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
+                              <label className="mb-1 tx-com">
                                 Snapchat Handle
                               </label>
                               <input
@@ -768,9 +927,7 @@ const InfluencerSettings = () => {
                               />
                             </div>
                             <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                Amount
-                              </label>
+                              <label className="mb-1 tx-com">Amount</label>
                               <input
                                 name="snapchat"
                                 type="text"
@@ -787,7 +944,7 @@ const InfluencerSettings = () => {
                               />
                             </div>
                             <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
+                              <label className="mb-1 tx-com">
                                 Facebook Handle
                               </label>
                               <input
@@ -798,9 +955,7 @@ const InfluencerSettings = () => {
                               />
                             </div>
                             <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                Amount
-                              </label>
+                              <label className="mb-1 tx-com">Amount</label>
                               <input
                                 name="facebook"
                                 type="text"

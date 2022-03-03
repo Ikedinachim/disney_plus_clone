@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import ReactPlayer from "react-player/lazy";
 
 const MediaPlayer = (url) => {
-  useEffect(() => {
-    console.log(url);
-  }, [url]);
+  // useEffect(() => {
+  //   // console.log(url);
+  // }, [url]);
 
   return (
     <ReactPlayer
@@ -14,7 +14,7 @@ const MediaPlayer = (url) => {
       volume={1}
       width="100%"
       height="400px"
-      onReady={() => console.log("ready now")}
+      // onReady={() => console.log("ready now")}
       light={"https://i.stack.imgur.com/zw9Iz.png"}
     />
   );

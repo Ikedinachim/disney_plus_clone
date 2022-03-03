@@ -55,27 +55,27 @@ const ViewCampaign = () => {
           <div className="content-body page-content">
             <div className="container pd-x-0 d-flex justify-content-center">
               <div className="col-md-5 col-12 mg-t-20">
-                <div className="card shadow-sm rounded bd-0">
+                <div className="card shadow-sm rounded bd-0 page-content-card">
                   <div className="card-body">
                     {/* <p className="tx-20 tx-bold tx-com">Preview</p> */}
                     <div className="card-image">
                       <div className="image-holder">
                         <img
                           src={createShowAds && createShowAds.attachment}
-                          className="img-fluid mb-4"
+                          className="img-fluid mb-2"
                           alt=""
                         />
                       </div>
-                      <p className="mb-2 text-center">
+                      <p className="mb-3 text-center">
                         {createShowAds && createShowAds.campaignMessage}
                       </p>
                     </div>
                     {campaignType === "flier_video" && (
-                      <div>
+                      <div className="d-flex flex-column align-items-center">
                         {createShowAds &&
                         createShowAds.whatsAppNumber === "" ? null : (
                           <a
-                            className="btn btn-primary w-100 mg-b-15 round-5"
+                            className="btn btn-primary mg-b-15 round-5"
                             href={`https://api.whatsapp.com/send?phone=${createShowAds.whatsAppNumber}`}
                           >
                             <i
@@ -91,7 +91,7 @@ const ViewCampaign = () => {
                         {createShowAds &&
                         createShowAds.phoneNumber === "" ? null : (
                           <a
-                            className="btn btn-primary w-100 mg-b-15 round-5"
+                            className="btn btn-primary mg-b-15 round-5"
                             href={`tel:+${createShowAds.phoneNumber}`}
                           >
                             <i className="fa fa-phone mg-r-5" />
@@ -101,7 +101,7 @@ const ViewCampaign = () => {
                         )}
                         {createShowAds && createShowAds.ussd === "" ? null : (
                           <a
-                            className="btn btn-primary w-100 mg-b-15 round-5"
+                            className="btn btn-primary mg-b-15 round-5"
                             href={`tel:${+createShowAds.ussd}`}
                           >
                             <i className="fa fa-phone mg-r-5" />
@@ -111,7 +111,7 @@ const ViewCampaign = () => {
                         {createShowAds &&
                         createShowAds.smsNumber === "" ? null : (
                           <a
-                            className="btn btn-primary w-100 mg-b-15 round-5"
+                            className="btn btn-primary mg-b-15 round-5"
                             href={`sms:${+createShowAds.smsNumber}?body="I will like to make an enquiry"`}
                           >
                             <i className="fa fa-comment mg-r-10"> </i>
@@ -121,7 +121,7 @@ const ViewCampaign = () => {
                         )}
                         {createShowAds && createShowAds.url === "" ? null : (
                           <a
-                            className="btn btn-primary w-100 mg-b-15 round-5"
+                            className="btn btn-primary mg-b-15 round-5"
                             href={createShowAds.url}
                           >
                             <i className="fa fa-globe mg-r-10"> </i>
@@ -132,11 +132,11 @@ const ViewCampaign = () => {
                       </div>
                     )}
                     {campaignType === "app_download" && (
-                      <div>
+                      <div className="d-flex flex-column align-items-center">
                         {createShowAds &&
                         createShowAds.androidStoreUrl === "" ? null : (
                           <a
-                            className="btn btn-primary w-100 mg-b-15 round-5"
+                            className="btn btn-primary mg-b-15 round-5"
                             href={createShowAds.androidStoreUrl}
                           >
                             <i
@@ -152,7 +152,7 @@ const ViewCampaign = () => {
                         {createShowAds &&
                         createShowAds.iosStoreUrl === "" ? null : (
                           <a
-                            className="btn btn-primary w-100 mg-b-15 round-5"
+                            className="btn btn-primary mg-b-15 round-5"
                             href={createShowAds.iosStoreUrl}
                           >
                             <i
