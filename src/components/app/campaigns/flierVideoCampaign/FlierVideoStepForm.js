@@ -302,6 +302,7 @@ export default class FlierVideoStepForm extends Component {
     const price = audience * 5 * smsCount;
     const timeRange = timeRangeFrom + " - " + timeRangeTo;
     // const attachment = attachmentPreview
+    // console.log(price);
 
     const filterOptions = {
       ageRange,
@@ -338,7 +339,7 @@ export default class FlierVideoStepForm extends Component {
       assetType,
     };
 
-    console.log(values);
+    // console.log(values);
 
     switch (step) {
       case 1:

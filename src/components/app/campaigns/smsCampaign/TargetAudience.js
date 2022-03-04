@@ -104,13 +104,13 @@ const TargetAudience = ({
     Papa.parse(file, {
       header: true,
       complete: (results) => {
-        console.log(file);
+        // console.log(file);
         setParsedCsvData(results.data);
         setCsvName(file.name);
         // console.log(parsedCsvData);
       },
     });
-    console.log(parsedCsvData);
+    // console.log(parsedCsvData);
   };
 
   const onDrop = useCallback((acceptedFiles) => {
@@ -142,7 +142,7 @@ const TargetAudience = ({
       toast.error(error);
       dispatch(clearErrors());
     }
-    console.log(parsedCsvData);
+    // console.log(parsedCsvData);
     getCsvRawData(parsedCsvData);
   }, [dispatch, error, parsedCsvData]);
 

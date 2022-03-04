@@ -54,11 +54,11 @@ const Dashboard = () => {
           field: "id",
           // sort: "desc",
         },
-        {
-          label: "CAMPAIGN NAME",
-          field: "campaignName",
-          // sort: "desc",
-        },
+        // {
+        //   label: "CAMPAIGN NAME",
+        //   field: "campaignName",
+        //   // sort: "desc",
+        // },
         {
           label: "CHANNEL",
           field: "channel",
@@ -88,7 +88,7 @@ const Dashboard = () => {
     reverseInfluencerCampaignList.forEach((campaign) => {
       data.rows.push({
         id: campaign.id,
-        campaignName: campaign.name,
+        // campaignName: campaign.name,
         channel: campaign.platforms,
         dateCreated: DateTime.fromJSDate(new Date(campaign.createdAt)).toFormat(
           "dd MMM, yyyy"
@@ -189,10 +189,10 @@ const Dashboard = () => {
                 className="d-flex"
               >
                 <i className="fa fa-eye tx-orange pd-t-4 mg-r-5"></i>
-                {campaign.marketingData.isApproved &&
-                !campaign.marketingData.isPublished &&
-                !campaign.marketingData.isRejected
-                  ? "Post"
+                {campaign.isApproved &&
+                !campaign.isPublished &&
+                !campaign.isRejected
+                  ? "Confirm"
                   : "View"}
               </Link>
             </div>
