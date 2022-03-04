@@ -26,16 +26,16 @@ const SenderID = () => {
   const setSenderID = () => {
     const data = {
       columns: [
-        {
-          label: "ID",
-          field: "id",
-          sort: "asc",
-        },
-        {
-          label: "USER",
-          field: "user",
-          sort: "asc",
-        },
+        // {
+        //   label: "ID",
+        //   field: "id",
+        //   sort: "asc",
+        // },
+        // {
+        //   label: "USER",
+        //   field: "user",
+        //   sort: "asc",
+        // },
         {
           label: "SENDER ID",
           field: "senderId",
@@ -50,10 +50,10 @@ const SenderID = () => {
           label: "STATUS",
           field: "status",
         },
-        {
-          label: "TELCO STATUS",
-          field: "telcoStatus",
-        },
+        // {
+        //   label: "TELCO STATUS",
+        //   field: "telcoStatus",
+        // },
         {
           label: "ADDITIONAL INFO",
           field: "additionalInfo",
@@ -68,8 +68,8 @@ const SenderID = () => {
 
     senderID.forEach((senderids) => {
       data.rows.push({
-        id: senderids._id,
-        name: senderids.name,
+        // id: senderids._id,
+        // name: senderids.name,
         senderId: senderids.senderId,
         dataRequested: DateTime.fromJSDate(
           new Date(senderids.createdAt)
@@ -95,20 +95,22 @@ const SenderID = () => {
               : null}
           </span>
         ),
-        telcoStatus: (
-          <span
-            className={`{"badge" ${
-              senderids.status === null || senderids.telcoStatus === "pending"
-                ? "badge-pink"
-                : "badge-active"
-            }`}
-          >
-            {senderids.status === null || senderids.telcoStatus === "pending"
-              ? "Pending"
-              : "Approved"}
-          </span>
-        ),
-        additionalInfo: senderids.additionalInfo,
+        // telcoStatus: (
+        //   <span
+        //     className={`{"badge" ${
+        //       senderids.status === null || senderids.telcoStatus === "pending"
+        //         ? "badge-pink"
+        //         : "badge-active"
+        //     }`}
+        //   >
+        //     {senderids.status === null || senderids.telcoStatus === "pending"
+        //       ? "Pending"
+        //       : "Approved"}
+        //   </span>
+        // ),
+        additionalInfo: senderids.additionalInfo
+          ? senderids.additionalInfo
+          : "-",
         actions: (
           <Fragment>
             <div className="dropdown">

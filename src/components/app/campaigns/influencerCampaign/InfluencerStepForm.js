@@ -69,17 +69,17 @@ export default class InfluencerStepForm extends Component {
     let mulInfluencers = this.state.selectedInfluencers;
     let selectedIndex =
       mulInfluencers && mulInfluencers.findIndex((el) => el.id === input.id);
-    console.log("Selected Index", selectedIndex);
+    // console.log("Selected Index", selectedIndex);
     if (selectedIndex !== -1) {
       mulInfluencers.splice(selectedIndex, 1);
       mulInfluencers.push(input);
-      console.log(mulInfluencers);
+      // console.log(mulInfluencers);
     } else {
       // mulInfluencers.splice(selectedIndex, 1);
       mulInfluencers.push(input);
     }
 
-    console.log("mulInfluencers", mulInfluencers);
+    // console.log("mulInfluencers", mulInfluencers);
 
     this.setState((state) => ({
       ...state,
@@ -334,7 +334,7 @@ export default class InfluencerStepForm extends Component {
       price,
     };
 
-    console.log(values);
+    // console.log(values);
 
     // console.log("this is platform", values.platform);
     // const payloadPlatform = Object.values(values.platform)

@@ -51,7 +51,6 @@ const PreviewCampaign = ({
 
   const submitFlierVideoCampaignHandler = (e) => {
     e.preventDefault();
-
     dispatch(createFlierVideoCampaignAction(values));
   };
 
@@ -64,8 +63,6 @@ const PreviewCampaign = ({
       return filteredContactList.count * 5;
     }
   };
-
-  // console.log(values);
 
   useEffect(() => {
     if (
@@ -82,8 +79,6 @@ const PreviewCampaign = ({
       // dispatch(getWallet());
     }
   }, [dispatch, error, createFlierVideoCampaign, navigate]);
-
-  // console.log(csvArray);
 
   //Edit functionality
   const [show, setShow] = useState(false);
@@ -644,7 +639,7 @@ const PreviewCampaign = ({
                             (values.targetAudienceOption === "mysogidb" &&
                               parseInt(wallet.balance) < setPrice() &&
                               parseInt(wallet.balance) <
-                                filteredContactList.count) ||
+                                filteredContactList.count * 5) ||
                             (values.channel === "display_ads" &&
                               parseInt(wallet.balance) < values.budget) ? (
                               <button

@@ -142,7 +142,7 @@ export default class SmsStepForm extends Component {
       limit,
     };
 
-    console.log(values);
+    // console.log(values);
 
     switch (step) {
       case 1:

@@ -33,7 +33,7 @@ const OsChart = ({ propellerId }) => {
     ]);
   }
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <Fragment>

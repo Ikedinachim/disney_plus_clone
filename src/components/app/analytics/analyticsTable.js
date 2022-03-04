@@ -62,7 +62,7 @@ const AnalyticsTable = () => {
       rows: [],
     };
 
-    console.log(digitalCampaigns);
+    // console.log(digitalCampaigns);
     digitalCampaigns &&
       digitalCampaigns.forEach((campaign) => {
         data.rows.push({

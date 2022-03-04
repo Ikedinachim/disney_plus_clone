@@ -130,8 +130,8 @@ const InfluencerCampaign = ({
     }
   }, [checkedInfluencer]);
 
-  console.log("This is the payload data", payloadData);
-  console.log("This is the checkedInfluencer data", checkedInfluencer);
+  // console.log("This is the payload data", payloadData);
+  // console.log("This is the checkedInfluencer data", checkedInfluencer);
 
   const customFilter = (object, key, value) => {
     if (Array.isArray(object)) {

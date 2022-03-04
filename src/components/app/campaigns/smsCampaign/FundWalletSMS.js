@@ -46,7 +46,7 @@ const FundWalletSMS = ({ prevStep, values }) => {
     const obj = JSON.parse(`{"amount": ${amount < 50 ? 50 : amount}}`);
 
     dispatch(fundUserWallet(obj));
-    setAmountToPay("");
+    // setAmountToPay("");
   };
 
   const Previous = (e) => {
@@ -68,7 +68,7 @@ const FundWalletSMS = ({ prevStep, values }) => {
   // you can call this function anything
   const onSuccess = (reference) => {
     // Implementation for whatever you want to do with reference and after success call.
-    console.log(reference);
+    // console.log(reference);
     dispatch(confirmFunding(reference.reference));
   };
 

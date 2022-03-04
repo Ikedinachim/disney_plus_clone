@@ -50,7 +50,7 @@ const Header = () => {
         <FeatherIcon icon="search" />
         <input type="search" className="form-control" placeholder="Search..." />
       </div>
-      <nav className="nav justify-content-end">
+      <nav className="nav justify-content-end col">
         {/* <div className=" ml-md-4 ml-2 mg-t-5">
           <div className="d-flex">
             <Link
