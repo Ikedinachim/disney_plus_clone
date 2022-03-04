@@ -35,6 +35,7 @@ const AppDownloadCampaign = ({
   //   setAssetType(asset);
   // };
 
+  // console.log(values);
   const Continue = (e) => {
     e.preventDefault();
     if (
@@ -48,8 +49,18 @@ const AppDownloadCampaign = ({
       toast.error("Choose an alternate ID");
     } else if (values.channel === "") {
       toast.error("Choose a channel");
+    } else if (values.channel === "display_ads" && values.url === "") {
+      toast.error("Input a URL");
+    } else if (
+      // (values.channel === "smart_sms" &&
+      values.androidStoreUrl === "" &&
+      values.iosStoreUrl === ""
+    ) {
+      toast.error("Input the URL to your app");
     } else if (values.campaignMessage === "") {
       toast.error("Create the campaign message");
+    } else if (values.callToAction === "") {
+      toast.error("Provide a call to action for users");
     } else if (values.assetType === "image" && values.attachment === null) {
       nextStep();
       // handleImageUpload();
@@ -380,13 +391,18 @@ const AppDownloadCampaign = ({
                             </>
                           )}
                           {values.callToAction === "" ||
-                          values.androidStoreUrl === "" ||
                           values.iosStoreUrl === "" ? null : (
-                            <div className="pd-b-40">
-                              <button className="btn btn-primary w-100 mg-b-15 round-5">
-                                {values.callToAction}
-                              </button>
-                            </div>
+                            <button className="btn btn-primary w-100 mg-b-15 round-5">
+                              <i className="fab fa-apple mg-r-10"> </i>
+                              {values.callToAction}
+                            </button>
+                          )}
+                          {values.callToAction === "" ||
+                          values.androidStoreUrl === "" ? null : (
+                            <button className="btn btn-primary w-100 mg-b-15 round-5">
+                              <i className="fab fa-google-play mg-r-10"> </i>
+                              {values.callToAction}
+                            </button>
                           )}
                           {/* {values.callToAction === "" ||
                           values.androidStoreUrl === "" ||

@@ -49,6 +49,8 @@ const FlierVideoCampaign = ({
       toast.error("Select a Sender ID or request for one if not available");
     } else if (values.senderId !== "" && values.alternateSenderId === "") {
       toast.error("Choose an alternate ID");
+    } else if (values.channel === "display_ads" && values.url === "") {
+      toast.error("Input a URL");
     } else if (values.callToAction === "") {
       toast.error("Provide a call to action for users");
     } else if (values.channel === "") {
@@ -57,7 +59,6 @@ const FlierVideoCampaign = ({
       toast.error("Create the campaign message");
     } else if (values.assetType === "image" && values.attachment === null) {
       nextStep();
-      // handleImageUpload();
     } else {
       nextStep();
     }
@@ -105,8 +106,8 @@ const FlierVideoCampaign = ({
         .map(
           (senderId) => senderId.telcoStatus === "approved" && senderId.senderId
         )
-        .filter((sender) => sender)
-        .concat(defaultSenderID.defaultSenderID);
+        .filter((sender) => sender);
+    // .concat(defaultSenderID.defaultSenderID);
     return senders;
   };
 
@@ -352,7 +353,7 @@ const FlierVideoCampaign = ({
                               </div>
                             </div>
                           </div>
-                          <div className="form-group">
+                          <div className="form-group mb-2">
                             <label className="mb-1">Campaign Message</label>
                             <textarea
                               className="form-control"
@@ -526,36 +527,55 @@ const FlierVideoCampaign = ({
                             <p className="mb-4">{values.campaignMessage}</p>
                           </>
                         )}
-                        <div>
-                          {values.callToAction === "" ||
-                          values.whatsAppNumber === "" ? null : (
-                            <button className="btn btn-primary w-100 mg-b-15 round-5">
-                              <i className="fa fa-whatsapp mg-r-5"> </i>
-                              {values.callToAction} via WhatsApp
-                            </button>
-                          )}
-                          {values.callToAction === "" ||
-                          values.phoneNumber === "" ? null : (
-                            <button className="btn btn-primary w-100 mg-b-15 round-5">
-                              <i className="fa fa-phone mg-r-5" />
-                              {values.callToAction} via Mobile
-                            </button>
-                          )}
-                          {values.callToAction === "" ||
-                          values.ussd === "" ? null : (
-                            <button className="btn btn-primary w-100 mg-b-15 round-5">
-                              <i className="fa fa-phone mg-r-5" />
-                              {values.callToAction} via USSD
-                            </button>
-                          )}
-                          {values.callToAction === "" ||
-                          values.smsNumber === "" ? null : (
-                            <button className="btn btn-primary w-100 mg-b-15 round-5">
-                              <i className="fa fa-comment mg-r-10"> </i>
-                              {values.callToAction} via Text
-                            </button>
-                          )}
-                        </div>
+                        {values.channel === "smart_sms" ? (
+                          <div>
+                            {values.callToAction === "" ||
+                            values.url === "" ? null : (
+                              <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                <i className="fa fa-globe mg-r-5"> </i>
+                                {values.callToAction} via web
+                              </button>
+                            )}
+                            {values.callToAction === "" ||
+                            values.whatsAppNumber === "" ? null : (
+                              <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                <i className="fa fa-whatsapp mg-r-5"> </i>
+                                {values.callToAction} via WhatsApp
+                              </button>
+                            )}
+                            {values.callToAction === "" ||
+                            values.phoneNumber === "" ? null : (
+                              <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                <i className="fa fa-phone mg-r-5" />
+                                {values.callToAction} via Mobile
+                              </button>
+                            )}
+                            {values.callToAction === "" ||
+                            values.ussd === "" ? null : (
+                              <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                <i className="fa fa-phone mg-r-5" />
+                                {values.callToAction} via USSD
+                              </button>
+                            )}
+                            {values.callToAction === "" ||
+                            values.smsNumber === "" ? null : (
+                              <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                <i className="fa fa-comment mg-r-10"> </i>
+                                {values.callToAction} via Text
+                              </button>
+                            )}
+                          </div>
+                        ) : (
+                          <div>
+                            {values.callToAction === "" ||
+                            values.url === "" ? null : (
+                              <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                <i className="fa fa-globe mg-r-10"> </i>
+                                {values.callToAction} - via web
+                              </button>
+                            )}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>

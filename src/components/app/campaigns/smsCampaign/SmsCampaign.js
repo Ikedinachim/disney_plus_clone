@@ -102,7 +102,7 @@ const SmsCampaign = ({
                         Provide all requested details to help complete the
                         campaign creation
                       </p>
-                      <div className="row">
+                      <div className="row d-flex flex-column">
                         <div className="form-group col-md-6">
                           <label className="mb-1">Sender ID</label>
                           <select
@@ -142,41 +142,39 @@ const SmsCampaign = ({
                           </select>
                         </div>
                         <div className="form-group col-md-6">
-                          <div className="form-group">
-                            <label className="mb-1">Select Channel</label>
-                            <select
-                              className="custom-select"
-                              // value="select channel"
-                              defaultValue={values.channel}
-                              onChange={handleChange("channel")}
-                            >
-                              {selectChannels.map((selectChannel, i) => (
-                                <option value={selectChannel.value} key={i}>
-                                  {selectChannel.label}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
+                          <label className="mb-1">Select Channel</label>
+                          <select
+                            className="custom-select"
+                            // value="select channel"
+                            defaultValue={values.channel}
+                            onChange={handleChange("channel")}
+                          >
+                            {selectChannels.map((selectChannel, i) => (
+                              <option value={selectChannel.value} key={i}>
+                                {selectChannel.label}
+                              </option>
+                            ))}
+                          </select>
                         </div>
-                      </div>
-                      <div className="form-group">
-                        <label className="mb-1">Campaign Message</label>
-                        <textarea
-                          className="form-control"
-                          rows={3}
-                          // maxlength={150}
-                          placeholder="Type your ad message here e.g Get up to 50% discount on first purchase"
-                          onChange={handleChange("campaignMessage")}
-                          defaultValue={values.campaignMessage}
-                        />
-                      </div>
-                      <div className="d-flex justify-content-between">
-                        <p>{characterCount} Characters</p>
-                        <p>{smsCount} SMS</p>
+                        <div className="form-group col-md-6 mb-2">
+                          <label className="mb-1">Campaign Message</label>
+                          <textarea
+                            className="form-control"
+                            rows={3}
+                            // maxlength={150}
+                            placeholder="Type your ad message here e.g Get up to 50% discount on first purchase"
+                            onChange={handleChange("campaignMessage")}
+                            defaultValue={values.campaignMessage}
+                          />
+                        </div>
+                        <div className="form-group col-md-6 mb-2 d-flex justify-content-between">
+                          <p>{characterCount} Characters</p>
+                          <p>{smsCount} SMS</p>
+                        </div>
                       </div>
                     </div>
                   </form>
-                  <div className="col-md-5 col-xl-4 pd-x-0 mg-y-50">
+                  <div className="col-md-5 col-xl-4 pd-x-0 mg-y-20">
                     <div className="d-flex">
                       <button
                         className="btn btn-primary w-100 mg-b-15"
