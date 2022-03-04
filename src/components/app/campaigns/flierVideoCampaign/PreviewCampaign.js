@@ -696,36 +696,55 @@ const PreviewCampaign = ({
                             <p className="mb-4">{values.campaignMessage}</p>
                           </>
                         )}
-                        <div>
-                          {values.callToAction === "" ||
-                          values.whatsAppNumber === "" ? null : (
-                            <button className="btn btn-primary w-100 mg-b-15 round-5">
-                              <i className="fa fa-whatsapp mg-r-5"> </i>
-                              {values.callToAction} via WhatsApp
-                            </button>
-                          )}
-                          {values.callToAction === "" ||
-                          values.phoneNumber === "" ? null : (
-                            <button className="btn btn-primary w-100 mg-b-15 round-5">
-                              <i className="fa fa-phone mg-r-5" />
-                              {values.callToAction} via Mobile
-                            </button>
-                          )}
-                          {values.callToAction === "" ||
-                          values.ussd === "" ? null : (
-                            <button className="btn btn-primary w-100 mg-b-15 round-5">
-                              <i className="fa fa-phone mg-r-5" />
-                              {values.callToAction} USSD
-                            </button>
-                          )}
-                          {values.callToAction === "" ||
-                          values.smsNumber === "" ? null : (
-                            <button className="btn btn-primary w-100 mg-b-15 round-5">
-                              <i className="fa fa-comment mg-r-10"> </i>
-                              {values.callToAction} via Text
-                            </button>
-                          )}
-                        </div>
+                        {values.channel === "smart_sms" ? (
+                          <div>
+                            {values.callToAction === "" ||
+                            values.url === "" ? null : (
+                              <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                <i className="fa fa-globe mg-r-5"> </i>
+                                {values.callToAction} via web
+                              </button>
+                            )}
+                            {values.callToAction === "" ||
+                            values.whatsAppNumber === "" ? null : (
+                              <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                <i className="fa fa-whatsapp mg-r-5"> </i>
+                                {values.callToAction} via WhatsApp
+                              </button>
+                            )}
+                            {values.callToAction === "" ||
+                            values.phoneNumber === "" ? null : (
+                              <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                <i className="fa fa-phone mg-r-5" />
+                                {values.callToAction} via Mobile
+                              </button>
+                            )}
+                            {values.callToAction === "" ||
+                            values.ussd === "" ? null : (
+                              <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                <i className="fa fa-phone mg-r-5" />
+                                {values.callToAction} via USSD
+                              </button>
+                            )}
+                            {values.callToAction === "" ||
+                            values.smsNumber === "" ? null : (
+                              <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                <i className="fa fa-comment mg-r-10"> </i>
+                                {values.callToAction} via Text
+                              </button>
+                            )}
+                          </div>
+                        ) : (
+                          <div>
+                            {values.callToAction === "" ||
+                            values.url === "" ? null : (
+                              <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                <i className="fa fa-globe mg-r-10"> </i>
+                                {values.callToAction} - via web
+                              </button>
+                            )}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>

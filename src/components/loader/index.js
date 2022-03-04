@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./loader.module.scss";
-import LoadingGIF from "../../assets/img/loader.gif";
+import LoadingGIF from "../../assets/img/eclipse.svg";
 
 const Loader = () => {
   return (

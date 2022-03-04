@@ -46,7 +46,7 @@ const FundWalletSMS = ({ prevStep, values }) => {
     const obj = JSON.parse(`{"amount": ${amount < 50 ? 50 : amount}}`);
 
     dispatch(fundUserWallet(obj));
-    setAmountToPay("");
+    // setAmountToPay("");
   };
 
   const Previous = (e) => {
