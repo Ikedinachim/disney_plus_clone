@@ -38,6 +38,17 @@ import {
   GET_FILTERED_CONTACT_LIST_SUCCESS,
   GET_FILTERED_CONTACT_LIST_FAIL,
 
+  ///////////SINGLE CAMAPIGNS CONSTANTS /////////
+  VIEW_SINGLE_APP_CAMPAIGN_REQUEST,
+  VIEW_SINGLE_APP_CAMPAIGN_SUCCESS,
+  VIEW_SINGLE_APP_CAMPAIGN_FAIL,
+  VIEW_SINGLE_FLIER_CAMPAIGN_REQUEST,
+  VIEW_SINGLE_FLIER_CAMPAIGN_SUCCESS,
+  VIEW_SINGLE_FLIER_CAMPAIGN_FAIL,
+  GET_SMS_SINGLE_CAMPAIGN_REQUEST,
+  GET_SMS_SINGLE_CAMPAIGN_SUCCESS,
+  GET_SMS_SINGLE_CAMPAIGN_FAIL,
+
   /////////////// INFLUENCER CONSTANTS ////////////
   GET_ALL_INFLUENCER_CAMPAIGN_REQUEST,
   GET_ALL_INFLUENCER_CAMPAIGN_SUCCESS,
@@ -215,6 +226,42 @@ export const getSmsCampaigns = () => async (dispatch) => {
     });
   }
 };
+// Get Single SMS Campaigns
+export const getSingleSmsCampaigns = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_SMS_SINGLE_CAMPAIGN_REQUEST });
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `/api/campaign/single-campaign/${id}`,
+      config
+    );
+
+    if (data.status === "success") {
+      dispatch({
+        type: GET_SMS_SINGLE_CAMPAIGN_SUCCESS,
+        payload: data.data,
+      });
+    } else {
+      dispatch({
+        type: GET_SMS_SINGLE_CAMPAIGN_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: GET_SMS_SINGLE_CAMPAIGN_FAIL,
+      payload: error.message,
+    });
+  }
+};
 
 // Get all campaigns
 export const getAllCampaign = () => async (dispatch) => {
@@ -291,7 +338,7 @@ export const displaySingleCampaign = (id) => async (dispatch) => {
   }
 };
 
-// Get Flier/Video Campaigns
+// Get all Flier/Video Campaigns
 export const getViewFlierVideosCampaigns = () => async (dispatch) => {
   try {
     dispatch({ type: VIEW_FLIER_VIDEO_CAMPAIGN_REQUEST });
@@ -328,6 +375,43 @@ export const getViewFlierVideosCampaigns = () => async (dispatch) => {
   }
 };
 
+// Get single Flier/Video Campaigns
+export const getSingleFlierVideosCampaigns = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: VIEW_SINGLE_FLIER_CAMPAIGN_REQUEST });
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `/api/campaign/single-flier-campaign/${id}`,
+      config
+    );
+
+    if (data.status === "success") {
+      dispatch({
+        type: VIEW_SINGLE_FLIER_CAMPAIGN_SUCCESS,
+        payload: data.data,
+      });
+    } else {
+      dispatch({
+        type: VIEW_SINGLE_FLIER_CAMPAIGN_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: VIEW_SINGLE_FLIER_CAMPAIGN_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
 // Get App Download Campaigns
 export const getAppDownloadCampaigns = () => async (dispatch) => {
   try {
@@ -347,6 +431,7 @@ export const getAppDownloadCampaigns = () => async (dispatch) => {
     );
 
     if (data.status === "success") {
+      console.log("app download");
       dispatch({
         type: VIEW_APP_DOWNLOAD_CAMPAIGN_SUCCESS,
         payload: data.data,
@@ -360,6 +445,44 @@ export const getAppDownloadCampaigns = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: VIEW_APP_DOWNLOAD_CAMPAIGN_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+// Get Single App Download Campaign
+export const getSingleAppDownloadCampaigns = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: VIEW_SINGLE_APP_CAMPAIGN_REQUEST });
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `/api/campaign/single-app-download-campaign/${id}`,
+      config
+    );
+
+    if (data.status === "success") {
+      console.log("app download");
+      dispatch({
+        type: VIEW_SINGLE_APP_CAMPAIGN_SUCCESS,
+        payload: data.data,
+      });
+    } else {
+      dispatch({
+        type: VIEW_SINGLE_FLIER_CAMPAIGN_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: VIEW_SINGLE_FLIER_CAMPAIGN_FAIL,
       payload: error.message,
     });
   }

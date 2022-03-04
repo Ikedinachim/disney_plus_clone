@@ -30,7 +30,7 @@ const Analytics = () => {
     dispatch(getPropellerCampaign(propellerId));
   }, []);
 
-  // console.log(propellerCampaigns);
+  console.log(propellerCampaigns);
   return (
     <Fragment>
       <Fragment>

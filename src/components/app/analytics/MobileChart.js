@@ -11,7 +11,7 @@ const MobileChart = ({ propellerId }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getMobileCampaign(propellerId));
-  }, []);
+  }, [mobileCampaigns]);
 
   // console.log(mobileCampaigns);
 
