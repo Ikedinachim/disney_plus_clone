@@ -170,7 +170,7 @@ const TargetAudience = ({
         // console.log(parsedCsvData);
       },
     });
-    console.log(parsedCsvData);
+    // console.log(parsedCsvData);
   };
 
   const onDrop = useCallback((acceptedFiles) => {

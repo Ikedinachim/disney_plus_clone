@@ -23,7 +23,7 @@ const DateChart = ({ propellerId }) => {
     ]);
   }
 
-  console.log(data);
+  // console.log(data);
 
   const MonthlyAds = {
     title: "Monthly ads",

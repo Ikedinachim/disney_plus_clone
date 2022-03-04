@@ -56,7 +56,7 @@ const Settings = () => {
     imageUrl: user.imageUrl,
   });
 
-  console.log(people);
+  // console.log(people);
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -79,7 +79,7 @@ const Settings = () => {
     }
   };
 
-  console.log("people.imageUrl", people.imageUrl);
+  // console.log("people.imageUrl", people.imageUrl);
 
   return (
     <Fragment>

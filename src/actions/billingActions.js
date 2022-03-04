@@ -115,7 +115,7 @@ export const fundUserWallet = (amount) => async (dispatch) => {
       await axios.post("/api/payment/initiate-payment", amount, config),
     ]);
 
-    console.log(data);
+    // console.log(data);
 
     // const reference = fundAcc.data.data.reference;
     // amount = fundAcc.data.data.amount;

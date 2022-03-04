@@ -270,7 +270,7 @@ export const displaySingleCampaign = (id) => async (dispatch) => {
       `/api/campaign/single-generic-campaign/${id}`,
       config
     );
-    console.log({ data });
+    // console.log({ data });
 
     if (data.status === "success") {
       dispatch({
@@ -572,7 +572,7 @@ export const updateInfluencerCampaignStatusAction =
           type: UPDATE_INFLUENCER_CAMPAIGN_STATUS_SUCCESS,
           payload: data,
         });
-        console.log(data);
+        // console.log(data);
       } else {
         dispatch({
           type: UPDATE_INFLUENCER_CAMPAIGN_STATUS_FAIL,
@@ -612,7 +612,7 @@ export const updateInfluencerPublishStatusAction =
           type: UPDATE_INFLUENCER_PUBLISHED_STATUS_SUCCESS,
           payload: data,
         });
-        console.log(data);
+        // console.log(data);
       } else {
         dispatch({
           type: UPDATE_INFLUENCER_PUBLISHED_STATUS_FAIL,
@@ -680,10 +680,10 @@ export const getDigitalCampaigns = () => async (dispatch) => {
 
     const { data } = await axios.get(`api/campaign/digital-campaigns`, config);
 
-    console.log(data.data);
+    // console.log(data.data);
 
     if (data.status === "success") {
-      console.log("works");
+      // console.log("works");
       dispatch({
         type: GET_DIGITAL_CAMPAIGNS_SUCCESS,
         payload: data.data,

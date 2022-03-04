@@ -30,7 +30,7 @@ export default class AppDownloadStepForm extends Component {
     videoUrl: "",
     price: 0,
     csvFile: "",
-    limit: "",
+    limit: undefined,
     budget: 10000,
     characterCount: 0,
     smsCount: 0,
@@ -221,6 +221,7 @@ export default class AppDownloadStepForm extends Component {
     const price = audience * 5 * smsCount;
     const timeRange = timeRangeFrom + " - " + timeRangeTo;
     // const attachment = attachmentPreview
+    // console.log(price);
 
     const filterOptions = {
       ageRange,

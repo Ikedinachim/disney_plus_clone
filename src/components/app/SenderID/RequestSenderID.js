@@ -121,14 +121,14 @@ const SenderID = () => {
                     <div className="modal-body tx-center pd-x-10">
                       <div className="form-group">
                         <img
-                          src="../../assets/img/logo.svg"
+                          src="../../assets/img/my4.svg"
                           className="img-fluid wd-100 ht-100"
                           alt=""
                         />
                         <p className="tx-26 tx-com tx-bold">Please Note</p>
                         <p className="tx-16 mb-0">
-                          Sender ID takes up to 48 hours to process, User will
-                          get a response within that period
+                          Sender ID takes 7 to 21 working days to process, you
+                          will get a response within this period
                         </p>
                       </div>
                     </div>

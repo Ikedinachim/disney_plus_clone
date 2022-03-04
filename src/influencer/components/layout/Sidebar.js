@@ -6,16 +6,43 @@ import FeatherIcon from "feather-icons-react";
 
 const Sidebar = () => {
   const ref = useRef();
-  const [isMenuOpen, setIsMenuOpen] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [width, setWindowWidth] = useState(0);
+  const [hovered, setHovered] = useState(false);
+  const toggleHover = () => setHovered(!hovered);
+
+  useEffect(() => {
+    updateDimensions();
+
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
+  }, []);
+
+  const updateDimensions = () => {
+    const width = window.innerWidth;
+    setWindowWidth(width);
+  };
 
   useEffect(() => {
     const checkIfClickedOutside = (e) => {
-      // If the menu is open and the clicked target is not within the menu,
-      // then close the menu
       if (isMenuOpen && ref.current && !ref.current.contains(e.target)) {
         setIsMenuOpen(false);
+        document.body.classList.remove("show-aside");
       }
     };
+
+    let backdrop = document.createElement("div");
+
+    if (isMenuOpen && width < 989) {
+      document.body.classList.add("show-aside");
+      backdrop.classList.add("aside-backdrop");
+      document.body.appendChild(backdrop);
+    }
+    if ((!isMenuOpen && width < 989) || (isMenuOpen && width > 989)) {
+      document.body.classList.remove("show-aside");
+      document.querySelector(".aside-backdrop") &&
+        document.body.removeChild(document.querySelector(".aside-backdrop"));
+    }
 
     document.addEventListener("mousedown", checkIfClickedOutside);
 
@@ -27,8 +54,14 @@ const Sidebar = () => {
 
   return (
     <aside
-      className={`aside aside-fixed ${!isMenuOpen ? "minimize" : ""}`}
-      // ref={ref}
+      className={`aside aside-fixed ${
+        !isMenuOpen ? (width > 989 ? "minimize" : "") : ""
+      }
+       ${!isMenuOpen && hovered ? "maximize" : ""}
+      `}
+      ref={ref}
+      onMouseEnter={toggleHover}
+      onMouseLeave={toggleHover}
     >
       <div className={`aside-header ${isMenuOpen ? "" : ""}`}>
         <NavLink to="/app" className="aside-logo">
@@ -41,10 +74,13 @@ const Sidebar = () => {
             icon="menu"
             onClick={() => setIsMenuOpen((oldState) => !oldState)}
           />
-          <FeatherIcon icon="x" />
+          <FeatherIcon
+            icon="x"
+            onClick={() => setIsMenuOpen((oldState) => !oldState)}
+          />
         </div>
       </div>
-      <div className="aside-body">
+      <div className="aside-body h-100">
         <ul className="nav nav-aside">
           <li className="nav-item active">
             <NavLink
@@ -70,39 +106,6 @@ const Sidebar = () => {
               <span>Settings</span>
             </NavLink>
           </li>
-          {/* <li className="nav-item">
-            <NavLink
-              to="/app/sender-id"
-              className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
-              }
-            >
-              <i className="fa fa-user mr-3 tx-muted" />
-              <span>Sender ID</span>
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink
-              to="/app/setting"
-              className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
-              }
-            >
-              <i className="fa fa-cog mr-3" />
-              <span>Settings</span>
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink
-              to="/app/analytics"
-              className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
-              }
-            >
-              <i className="fa fa-chart-bar mr-3" />{" "}
-              <span className="marine-active-menu">Analytics</span>
-            </NavLink>
-          </li> */}
         </ul>
       </div>
     </aside>

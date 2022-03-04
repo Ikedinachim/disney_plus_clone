@@ -60,14 +60,14 @@ const InfluencerFundWallet = ({ prevStep, values, price }) => {
   // you can call this function anything
   const onSuccess = (reference) => {
     // Implementation for whatever you want to do with reference and after success call.
-    console.log(reference);
+    // console.log(reference);
     dispatch(confirmFunding(reference.reference));
   };
 
   // you can call this function anything
   const onClose = () => {
     // implementation for  whatever you want to do when the Paystack dialog closed.
-    console.log("closed");
+    // console.log("closed");
     dispatch({ type: FUND_WALLET_RESET });
     dispatch({ type: CONFIRM_FUNDING_RESET });
   };

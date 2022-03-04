@@ -29,7 +29,7 @@ const CampaignDetails = () => {
     // dispatch(getWallet())
   }, [dispatch, toast, error]);
 
-  console.log(singleCampaign);
+  // console.log(singleCampaign);
 
   return (
     <Fragment>

@@ -57,7 +57,7 @@ const InfluencerSettings = () => {
   const [profileImage, setProfileImage] = useState(null);
   const [progressIncrement, setProgress] = useState(null);
   const [isUploading, setIsUploading] = useState(null);
-  console.log(progressIncrement && progressIncrement.uploadPercentage);
+  // console.log(progressIncrement && progressIncrement.uploadPercentage);
 
   // const handleImageUpload = async (e) => {
   //   let files = e.target.files[0];
@@ -176,7 +176,7 @@ const InfluencerSettings = () => {
       };
     };
     reader.onerror = function (error) {
-      console.log("Error: ", error);
+      // console.log("Error: ", error);
     };
   };
 
@@ -186,7 +186,7 @@ const InfluencerSettings = () => {
     for (const file of event.target.files) {
       const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
       const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
-      console.log(cloudName);
+      // console.log(cloudName);
       // const url = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
       const url = `https://api.Cloudinary.com/v1_1/mysogi/image/upload`;
 
@@ -233,7 +233,7 @@ const InfluencerSettings = () => {
           })
 
           .catch((error) => {
-            console.log(error);
+            // console.log(error);
             setIsUploading(false);
           });
       });
