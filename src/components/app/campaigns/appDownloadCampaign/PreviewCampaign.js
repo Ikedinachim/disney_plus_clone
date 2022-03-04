@@ -626,13 +626,18 @@ const PreviewCampaign = ({
                         )}
                         <div>
                           {values.callToAction === "" ||
-                          values.androidStoreUrl === "" ||
                           values.iosStoreUrl === "" ? null : (
-                            <div className="pd-b-40">
-                              <button className="btn btn-primary w-100 mg-b-15 round-5">
-                                {values.callToAction}
-                              </button>
-                            </div>
+                            <button className="btn btn-primary w-100 mg-b-15 round-5">
+                              <i className="fab fa-apple mg-r-10"> </i>
+                              {values.callToAction}
+                            </button>
+                          )}
+                          {values.callToAction === "" ||
+                          values.androidStoreUrl === "" ? null : (
+                            <button className="btn btn-primary w-100 mg-b-15 round-5">
+                              <i className="fab fa-google-play mg-r-10"> </i>
+                              {values.callToAction}
+                            </button>
                           )}
                           {/* {values.callToAction === "" ||
                           values.phoneNumber === "" ? null : (
