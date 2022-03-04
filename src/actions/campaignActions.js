@@ -476,13 +476,13 @@ export const getSingleAppDownloadCampaigns = (id) => async (dispatch) => {
       });
     } else {
       dispatch({
-        type: VIEW_SINGLE_FLIER_CAMPAIGN_FAIL,
+        type: VIEW_SINGLE_APP_CAMPAIGN_FAIL,
         payload: data.message,
       });
     }
   } catch (error) {
     dispatch({
-      type: VIEW_SINGLE_FLIER_CAMPAIGN_FAIL,
+      type: VIEW_SINGLE_APP_CAMPAIGN_FAIL,
       payload: error.message,
     });
   }
