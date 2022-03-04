@@ -61,7 +61,7 @@ const UpdateInfluencerPassword = () => {
   );
 
   const submitIndividualHandler = (data) => {
-    console.log(data);
+    // console.log(data);
     dispatch(updateInfluencerPassword(data));
     reset();
   };

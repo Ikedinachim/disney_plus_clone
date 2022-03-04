@@ -66,7 +66,7 @@ const ViewInfluencerCampaignDetails = () => {
 
   const platforms = campaignDetails.platforms.split(",");
 
-  console.log(platforms);
+  // console.log(platforms);
 
   const checkPlatformCost = (p) => {
     let findIndex = platforms.findIndex((el) => el === p);
@@ -95,7 +95,7 @@ const ViewInfluencerCampaignDetails = () => {
     }
   };
 
-  console.log(campaignDetails);
+  // console.log(campaignDetails);
 
   const approvedPayload = {
     influencerId: campaignDetails && campaignDetails.influencerId,

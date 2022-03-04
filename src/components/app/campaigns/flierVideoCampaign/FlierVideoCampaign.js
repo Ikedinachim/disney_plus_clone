@@ -117,7 +117,7 @@ const FlierVideoCampaign = ({
 
   return (
     <Fragment>
-      {senderID.loading ? (
+      {senderID.loading || defaultSenderID.loading ? (
         <Loader />
       ) : (
         <Fragment>

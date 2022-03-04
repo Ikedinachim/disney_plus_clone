@@ -57,14 +57,12 @@ const PreviewCampaign = ({
   };
 
   const setPrice = () => {
-    if ((values.limit === undefined || values.limit) !== "") {
+    if (values.limit !== undefined && values.limit !== "") {
       return parseInt(values.limit) * 5;
     } else {
       return filteredContactList.count * 5;
     }
   };
-
-  // console.log(setPrice() < parseInt(wallet.balance));
 
   useEffect(() => {
     if (
@@ -125,7 +123,6 @@ const PreviewCampaign = ({
     setView(!view);
   };
 
-  console.log(filteredContactList && parseInt(filteredContactList.count));
   return (
     <Fragment>
       {loading || fcLoading ? (
@@ -225,19 +222,13 @@ const PreviewCampaign = ({
                           </div>
                           <div className="row mg-t-15">
                             <div className="form-group col-md-6">
-                              <label
-                                htmlFor
-                                className="tx-14 tx-gray mb-0 tx-medium"
-                              >
+                              <label className="tx-14 tx-gray mb-0 tx-medium">
                                 Channel
                               </label>
                               <p className="tx-16 mb-0">{values.channel}</p>
                             </div>
                             <div className="form-group col-md-6">
-                              <label
-                                htmlFor
-                                className="tx-14 tx-gray mb-0 tx-medium"
-                              >
+                              <label className="tx-14 tx-gray mb-0 tx-medium">
                                 Call To Action
                               </label>
                               <p className="tx-16 mb-0">
@@ -258,7 +249,7 @@ const PreviewCampaign = ({
                             </div>
                             {/* <div className="form-group col-md-6">
                               <label
-                                htmlFor
+                                
                                 className="tx-14 tx-gray mb-0 tx-medium"
                               >
                                 WhatsApp Number
@@ -269,7 +260,7 @@ const PreviewCampaign = ({
                             </div>
                             <div className="form-group col-md-6">
                               <label
-                                htmlFor
+                                
                                 className="tx-14 tx-gray mb-0 tx-medium"
                               >
                                 SMS Number
@@ -277,10 +268,7 @@ const PreviewCampaign = ({
                               <p className="tx-16 mb-0">{values.smsNumber}</p>
                             </div> */}
                             <div className="form-group col-md-12">
-                              <label
-                                htmlFor
-                                className="tx-14 tx-gray mb-0 tx-medium"
-                              >
+                              <label className="tx-14 tx-gray mb-0 tx-medium">
                                 Campaign Message
                               </label>
                               <p className="tx-15 mb-0">
@@ -333,10 +321,7 @@ const PreviewCampaign = ({
                                 </div>
                                 <div className="row mg-t-15">
                                   <div className="col-md-3 form-group">
-                                    <label
-                                      htmlFor
-                                      className="tx-14 tx-gray mb-0 tx-medium d-block"
-                                    >
+                                    <label className="tx-14 tx-gray mb-0 tx-medium d-block">
                                       Age Range
                                     </label>
                                     <span className="badge badge-pink tx-14 mg-5">
@@ -345,10 +330,7 @@ const PreviewCampaign = ({
                                     </span>
                                   </div>
                                   <div className="col-md-3 form-group">
-                                    <label
-                                      htmlFor
-                                      className="tx-14 tx-gray mb-0 tx-medium d-block"
-                                    >
+                                    <label className="tx-14 tx-gray mb-0 tx-medium d-block">
                                       Gender
                                     </label>
                                     <span className="badge badge-pink tx-14 mg-5">
@@ -357,10 +339,7 @@ const PreviewCampaign = ({
                                     </span>
                                   </div>
                                   <div className="col-md-6 form-group">
-                                    <label
-                                      htmlFor
-                                      className="tx-14 tx-gray mb-0 tx-medium d-block"
-                                    >
+                                    <label className="tx-14 tx-gray mb-0 tx-medium d-block">
                                       Location
                                     </label>
                                     <span className="badge badge-pink tx-14 mg-5">
@@ -373,10 +352,7 @@ const PreviewCampaign = ({
                                     </span>
                                   </div>
                                   <div className="col-md-3 form-group">
-                                    <label
-                                      htmlFor
-                                      className="tx-14 tx-gray mb-0 tx-medium d-block"
-                                    >
+                                    <label className="tx-14 tx-gray mb-0 tx-medium d-block">
                                       ARPU Brand
                                     </label>
                                     <span className="badge badge-pink tx-14 mg-5">
@@ -385,10 +361,7 @@ const PreviewCampaign = ({
                                     </span>
                                   </div>
                                   <div className="col-md-6 form-group">
-                                    <label
-                                      htmlFor
-                                      className="tx-14 tx-gray mb-0 tx-medium d-block"
-                                    >
+                                    <label className="tx-14 tx-gray mb-0 tx-medium d-block">
                                       Interest
                                     </label>
                                     <span className="badge badge-pink tx-14 mg-5">
@@ -445,10 +418,7 @@ const PreviewCampaign = ({
                                 Pricing
                               </p>
                               <div className="form-group mg-t-15">
-                                <label
-                                  htmlFor
-                                  className="tx-14 tx-gray mb-0 tx-medium"
-                                >
+                                <label className="tx-14 tx-gray mb-0 tx-medium">
                                   Potential Audience Based on filter
                                 </label>
                                 <p className="tx-18 tx-com tx-bold mb-1">
@@ -487,10 +457,7 @@ const PreviewCampaign = ({
                                 Pricing
                               </p>
                               <div className="form-group mg-t-15">
-                                <label
-                                  htmlFor
-                                  className="tx-14 tx-gray mb-1 tx-medium"
-                                >
+                                <label className="tx-14 tx-gray mb-1 tx-medium">
                                   Potential Audience Based on Manual Input
                                 </label>
                                 <p className="tx-18 tx-com tx-bold mb-0">
@@ -543,10 +510,7 @@ const PreviewCampaign = ({
                               Reach
                             </p>
                             <div className="form-group mg-t-15">
-                              <label
-                                htmlFor
-                                className="tx-14 tx-gray mb-1 tx-medium"
-                              >
+                              <label className="tx-14 tx-gray mb-1 tx-medium">
                                 Potential Reach Based on Budget
                               </label>
                               <p className="tx-18 tx-com tx-bold mb-0">
@@ -600,6 +564,7 @@ const PreviewCampaign = ({
                           <div className="mg-t-20 d-flex">
                             {parseInt(wallet.balance) < price ||
                             (values.targetAudienceOption === "mysogidb" &&
+                              values.channel !== "display_ads" &&
                               parseInt(wallet.balance) < setPrice() &&
                               parseInt(wallet.balance) <
                                 filteredContactList.count * 5) ||

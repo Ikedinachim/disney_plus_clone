@@ -84,7 +84,7 @@ const AppDownloadCampaign = ({
     return senders;
   };
 
-  console.log(values);
+  // console.log(values);
 
   useEffect(() => {
     dispatch(getSenderID());

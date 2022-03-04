@@ -91,7 +91,11 @@ const Header = () => {
             {userDetails.firstName}
             <div className="avatar avatar-sm mg-l-10">
               <img
-                src={userDetails.imageUrl}
+                src={
+                  userDetails.user
+                    ? userDetails.user.imageUrl
+                    : "https://via.placeholder.com/500"
+                }
                 className="rounded-circle"
                 alt="asset"
               />
@@ -101,7 +105,11 @@ const Header = () => {
             <div className="dropdown-menu dropdown-menu-right dropdown-adjust tx-13 show">
               <div className="avatar avatar-lg mg-b-15">
                 <img
-                  src={userDetails.imageUrl}
+                  src={
+                    userDetails.user
+                      ? userDetails.user.imageUrl
+                      : "https://via.placeholder.com/500"
+                  }
                   className="rounded-circle"
                   alt="asset"
                 />

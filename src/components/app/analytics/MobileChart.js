@@ -13,7 +13,7 @@ const MobileChart = ({ propellerId }) => {
     dispatch(getMobileCampaign(propellerId));
   }, []);
 
-  console.log(mobileCampaigns);
+  // console.log(mobileCampaigns);
 
   const ActionsPerformed = {
     title: "Actions performed",
@@ -27,7 +27,7 @@ const MobileChart = ({ propellerId }) => {
     data.push([mobileCampaigns[i].mobile_isp, mobileCampaigns[i].clicks]);
   }
 
-  console.log(data);
+  // console.log(data);
   return (
     <Fragment>
       <div className="col-md-6 col-12 mg-t-20 mg-md-t-0">
