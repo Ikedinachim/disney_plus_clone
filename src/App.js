@@ -307,7 +307,10 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
-        <Route path="/password-change" element={<UserPasswordUpdate />} />
+        <Route
+          path="/password-change/:uuid/confirm"
+          element={<UserPasswordUpdate />}
+        />
         {/* <Route path="/app/sender-id" element={isAuthenticated ? <SenderID /> : <Login />} /> */}
         {/* <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
