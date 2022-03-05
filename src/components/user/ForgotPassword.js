@@ -1,27 +1,36 @@
-import React, { Fragment, useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { Fragment, useState } from "react";
+import { Link } from "react-router-dom";
 
 import Loader from "../loader";
 import MetaData from "../layout/MetaData";
 
-import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
-import { login, clearErrors } from "../../actions/authActions";
-import { getWallet } from "../../actions/billingActions";
+import { sendPasswordResetLink, clearErrors } from "../../actions/authActions";
+import { toast } from "react-toastify";
 
 const ForgotPassword = () => {
+  const {
+    forgotPassword: { message },
+  } = useSelector((state) => state);
   const [email, setEmail] = useState("");
 
   // const [userStatus, setUserStatus] = useState()
 
-  const alert = useAlert();
+  console.log(message);
   const dispatch = useDispatch();
 
   const { loading } = useSelector((state) => state.auth);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(getWallet());
+    dispatch(sendPasswordResetLink(email));
+
+    if (message && message.statusCode === 100) {
+      toast.success(message.message);
+    } else if (message.error) {
+      toast.error(message.error);
+      dispatch(clearErrors());
+    }
   };
 
   return (
@@ -57,7 +66,7 @@ const ForgotPassword = () => {
                     <p className="tx-16 tx-gray">
                       Please input your email so we can send you a link.
                     </p>
-                    <form className="mg-y-50" onSubmit={submitHandler}>
+                    <form className="mg-y-50">
                       <div className="form-group">
                         <input
                           className="form-control new"
@@ -75,7 +84,7 @@ const ForgotPassword = () => {
                             id="login_button"
                             className="btn btn-primary btn-block btn-lg py-15"
                             type="submit"
-                            disabled={loading ? true : false}
+                            onClick={submitHandler}
                           >
                             SEND
                           </button>

@@ -14,6 +14,7 @@ import {
   updateInfluencerCostReducer,
   resetInfluencerPasswordReducer,
   updateUserPasswordReducer,
+  forgotPasswordReducer,
 
   // userDetailsReducer
 } from "./reducers/authReducers";
@@ -97,6 +98,7 @@ const appReducer = combineReducers({
   updateInfluencerProfile: updateInfluencerReducer,
   updateInfluencerCost: updateInfluencerCostReducer,
   resetInfluencerPassword: resetInfluencerPasswordReducer,
+  forgotPassword: forgotPasswordReducer,
 });
 
 const reducer = (state, action) => {

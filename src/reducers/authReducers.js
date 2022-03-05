@@ -311,10 +311,9 @@ export const userReducer = (state = {}, action) => {
   }
 };
 
-export const forgotPasswordReducer = (state = {}, action) => {
+export const forgotPasswordReducer = (state = { message: [] }, action) => {
   switch (action.type) {
     case FORGOT_PASSWORD_REQUEST:
-    case NEW_PASSWORD_REQUEST:
       return {
         ...state,
         loading: true,
@@ -328,14 +327,7 @@ export const forgotPasswordReducer = (state = {}, action) => {
         message: action.payload,
       };
 
-    case NEW_PASSWORD_SUCCESS:
-      return {
-        ...state,
-        success: action.payload,
-      };
-
     case FORGOT_PASSWORD_FAIL:
-    case NEW_PASSWORD_FAIL:
       return {
         ...state,
         loading: false,
@@ -579,3 +571,5 @@ export const updateInfluencerCostReducer = (
       return state;
   }
 };
+
+/////////////forgot password////////////////

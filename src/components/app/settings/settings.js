@@ -118,7 +118,7 @@ const Settings = () => {
                 <div className=" wdm-55 d-flex ht-250">
                   <img
                     src={people.imageUrl}
-                    className="img-thumbnail w-25"
+                    className="img-thumbnail wd-250"
                     alt=""
                     onChange={handleImageChange}
                   />
@@ -130,10 +130,7 @@ const Settings = () => {
                       accept="image/*"
                       onChange={handleImageChange}
                     />
-                    <label
-                      for="custom-file"
-                      className="w-15 nav-link clickable"
-                    >
+                    <label for="custom-file" className="nav-link clickable">
                       Click here to change Photo
                     </label>
                   </div>
