@@ -242,7 +242,7 @@ export const getSmsCampaignsReducer = (
     case GET_SMS_CAMPAIGN_SUCCESS:
       return {
         loading: false,
-        smsCampaigns: action.payload,
+        smsCampaigns: action.payload.reverse(),
       };
 
     case GET_SMS_CAMPAIGN_FAIL:
@@ -275,7 +275,7 @@ export const viewFlierVideosCampaignsReducer = (
     case VIEW_FLIER_VIDEO_CAMPAIGN_SUCCESS:
       return {
         vfLoading: false,
-        viewFlierVideosCampaigns: action.payload,
+        viewFlierVideosCampaigns: action.payload.reverse(),
       };
 
     case VIEW_FLIER_VIDEO_CAMPAIGN_FAIL:
@@ -308,7 +308,7 @@ export const viewAppDownloadCampaignsReducer = (
     case VIEW_APP_DOWNLOAD_CAMPAIGN_SUCCESS:
       return {
         adLoading: false,
-        viewAppDownloadCampaigns: action.payload,
+        viewAppDownloadCampaigns: action.payload.reverse(),
       };
 
     case VIEW_APP_DOWNLOAD_CAMPAIGN_FAIL:
@@ -482,7 +482,7 @@ export const getSingleFlierCampaignReducer = (
     case VIEW_SINGLE_FLIER_CAMPAIGN_SUCCESS:
       return {
         loading: false,
-        singleFlierCampaign: action.payload,
+        singleFlierCampaign: action.payload.reverse(),
       };
 
     case VIEW_SINGLE_FLIER_CAMPAIGN_FAIL:
