@@ -3,7 +3,6 @@ import Axios from "axios";
 import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
-  LOGIN_RESET,
   LOGIN_FAIL,
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
@@ -16,10 +15,8 @@ import {
   USER_DETAILS_FAIL,
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
-  UPDATE_USER_RESET,
   UPDATE_USER_FAIL,
   UPDATE_INFLUENCER_PASSWORD_REQUEST,
-  UPDATE_INFLUENCER_PASSWORD_RESET,
   UPDATE_INFLUENCER_PASSWORD_SUCCESS,
   UPDATE_INFLUENCER_PASSWORD_FAIL,
   UPDATE_INFLUENCER_PROFILE_REQUEST,
@@ -30,12 +27,13 @@ import {
   UPDATE_INFLUENCER_COST_SUCCESS,
   UPDATE_INFLUENCER_COST_FAIL,
   UPDATE_INFLUENCER_PASSWORD_ACTIVE,
+  FORGOT_PASSWORD_REQUEST,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAIL,
   USER_PASSWORD_REQUEST,
   USER_PASSWORD_SUCCESS,
-  USER_PASSWORD_RESET,
   USER_PASSWORD_FAIL,
 } from "../constants/authConstants";
-import { INFLUENCER_CAMPAIGN_REQUEST } from "../constants/campaignConstants";
 
 const baseURL = "https://mysogi.uat.com.ng/";
 
@@ -339,16 +337,12 @@ export const updateInfluencerPassword = (userData) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    const { data } = await axios.post(
-      "api/auth/change-password",
-      userData,
-      config
-    );
+    const data = await axios.post("api/auth/change-password", userData, config);
 
     if (data.status === "success") {
       dispatch({
         type: UPDATE_INFLUENCER_PASSWORD_SUCCESS,
-        payload: data,
+        payload: data.message,
       });
     } else {
       dispatch({
@@ -359,10 +353,47 @@ export const updateInfluencerPassword = (userData) => async (dispatch) => {
   } catch (data) {
     dispatch({
       type: UPDATE_INFLUENCER_PASSWORD_FAIL,
+      payload: data.error,
+    });
+  }
+};
+
+////////////////Forgot password/////////////
+
+///send mail for reset via mail
+export const sendPasswordResetLink = (email) => async (dispatch) => {
+  try {
+    dispatch({ type: FORGOT_PASSWORD_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const data = await axios.put("api/auth/forgot-password", email, config);
+
+    console.log("seeing");
+
+    if (data.status === "success") {
+      dispatch({
+        type: FORGOT_PASSWORD_SUCCESS,
+        payload: data,
+      });
+    } else {
+      dispatch({
+        type: FORGOT_PASSWORD_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (data) {
+    dispatch({
+      type: FORGOT_PASSWORD_FAIL,
       payload: data.message,
     });
   }
 };
+
+/////////Update password //////////////////
 
 // Clear Errors
 export const clearErrors = () => async (dispatch) => {

@@ -130,10 +130,7 @@ const Settings = () => {
                       accept="image/*"
                       onChange={handleImageChange}
                     />
-                    <label
-                      for="custom-file"
-                      className="w-15 nav-link clickable"
-                    >
+                    <label for="custom-file" className="nav-link clickable">
                       Click here to change Photo
                     </label>
                   </div>
