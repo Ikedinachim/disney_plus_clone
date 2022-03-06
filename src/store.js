@@ -3,7 +3,8 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
+// import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
+import sessionStorage from "redux-persist/lib/storage/session";
 import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
 
 import {
@@ -95,7 +96,7 @@ const appReducer = combineReducers({
 
 const reducer = (state, action) => {
   if (action.type === "USER_LOGOUT") {
-    storage.removeItem("persist:root");
+    sessionStorage.removeItem("persist:root");
     return appReducer(undefined, action);
   }
 
@@ -106,7 +107,7 @@ let initialState = {};
 
 const persistConfig = {
   key: "root",
-  storage,
+  storage: sessionStorage,
   stateReconciler: autoMergeLevel2,
 };
 

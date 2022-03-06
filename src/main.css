@@ -72,9 +72,13 @@ a {
   background-size: cover;
   background-repeat: no-repeat;
   height: 100vh;
+  position: sticky;
+  top: 0;
 }
 .login-side {
-  height: 100vh;
+  /* height: 100vh; */
+  display: flex;
+  align-items: center;
 }
 .close-btn {
   color: #ff0000;
@@ -98,7 +102,7 @@ a {
   color: #fff;
 }
 .nav-tabs .nav-link.reg {
-  padding: 0 48px;
+  padding: 0 35px;
   margin-left: 5px;
   border-radius: 5px;
   background-color: transparent;
