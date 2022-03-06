@@ -279,3 +279,29 @@ tbody + thead {
 .copy-btn:hover {
   opacity: 0.5;
 }
+
+.login-close {
+  float: none;
+  display: flex;
+  align-self: end;
+  justify-content: center;
+}
+
+.login-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.w-48 {
+  width: 48%;
+}
+
+.reg-container {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+}

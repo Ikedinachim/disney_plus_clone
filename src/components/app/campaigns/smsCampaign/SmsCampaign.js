@@ -91,7 +91,7 @@ const SmsCampaign = ({
                   aria-valuemax={100}
                 />
               </div>
-              <div className="pd-md-y-20">
+              <div className="pd-y-30  pd-md-y-20">
                 <div className="col-lg-11 pd-x-0">
                   <form>
                     <div>
