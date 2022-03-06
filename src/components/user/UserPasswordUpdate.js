@@ -1,16 +1,13 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-
-import Loader from "../loader";
+import { useParams } from "react-router-dom";
 import MetaData from "../layout/MetaData";
 import {
   getUser,
-  updateUserPassword,
   clearErrors,
   sendNewPassword,
 } from "../../actions/authActions";
 import { useAlert } from "react-alert";
-import { USER_PASSWORD_RESET } from "../../constants/authConstants";
+import { NEW_PASSWORD_RESET } from "../../constants/authConstants";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -50,8 +47,9 @@ const UserPasswordUpdate = () => {
 
     if (message && message.statusCode === 100) {
       alert.success(updatePassword.message);
-    } else if (error) {
-      toast.error(error);
+      dispatch({ type: NEW_PASSWORD_RESET });
+    } else if (message.error) {
+      toast.error(message.error);
       dispatch(clearErrors());
     }
   };

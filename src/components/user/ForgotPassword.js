@@ -3,22 +3,20 @@ import { Link } from "react-router-dom";
 
 import Loader from "../loader";
 import MetaData from "../layout/MetaData";
-
+import { FORGOT_PASSWORD_RESET } from "../../constants/authConstants";
 import { useDispatch, useSelector } from "react-redux";
 import { sendPasswordResetLink, clearErrors } from "../../actions/authActions";
 import { toast } from "react-toastify";
 
 const ForgotPassword = () => {
   const {
-    forgotPassword: { message, error },
+    forgotPassword: { message, error, loading },
   } = useSelector((state) => state);
   const [email, setEmail] = useState("");
 
   // const [userStatus, setUserStatus] = useState()
 
   const dispatch = useDispatch();
-
-  const { loading } = useSelector((state) => state.auth);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -27,8 +25,9 @@ const ForgotPassword = () => {
 
     if (message && message.statusCode === 100) {
       toast.success(message.message);
-    } else if (error) {
-      toast.error(error);
+      dispatch({ type: FORGOT_PASSWORD_RESET });
+    } else if (message.error) {
+      toast.error(message.error);
       dispatch(clearErrors());
     }
   };
