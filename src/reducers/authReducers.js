@@ -315,28 +315,52 @@ export const forgotPasswordReducer = (state = { message: [] }, action) => {
   switch (action.type) {
     case FORGOT_PASSWORD_REQUEST:
       return {
-        ...state,
         loading: true,
-        error: null,
       };
 
     case FORGOT_PASSWORD_SUCCESS:
       return {
-        ...state,
         loading: false,
         message: action.payload,
       };
 
     case FORGOT_PASSWORD_FAIL:
       return {
-        ...state,
         loading: false,
         error: action.payload,
       };
 
     case CLEAR_ERRORS:
       return {
-        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const sendNewPasswordReducer = (state = { message: [] }, action) => {
+  switch (action.type) {
+    case NEW_PASSWORD_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case NEW_PASSWORD_SUCCESS:
+      return {
+        loading: false,
+        message: action.payload,
+      };
+
+    case NEW_PASSWORD_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
         error: null,
       };
 

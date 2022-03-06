@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import Loader from "../loader";
 import MetaData from "../layout/MetaData";
@@ -7,19 +7,21 @@ import {
   getUser,
   updateUserPassword,
   clearErrors,
+  sendNewPassword,
 } from "../../actions/authActions";
 import { useAlert } from "react-alert";
 import { USER_PASSWORD_RESET } from "../../constants/authConstants";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const UserPasswordUpdate = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
-  const navHistory = useNavigate();
 
-  // const [userStatus, setUserStatus] = useState()
+  const { uuid } = useParams();
 
   const {
+    sendNewPassword: { message },
     userDetails: { loading },
     updateUserPassword: { updatePassword, error },
   } = useSelector((state) => state);
@@ -28,10 +30,9 @@ const UserPasswordUpdate = () => {
     dispatch(getUser());
   }, []);
 
-  const [show, setShow] = useState(false);
-
   const [password, setPassword] = useState({
-    newPassword: "",
+    resetLink: uuid,
+    password: "",
     confirmPassword: "",
   });
 
@@ -43,21 +44,14 @@ const UserPasswordUpdate = () => {
     setPassword({ ...password, [name]: value });
   };
 
-  // const handlePasswordMatch = (e) => {
-  //   if (newPassword !== confirmPassword) {
-  //     setShow(!show);
-  //   }
-  // }
   const submitHandler = async (e) => {
     e.preventDefault();
-    dispatch(updateUserPassword(password));
+    dispatch(sendNewPassword(password));
 
-    if (updatePassword && updatePassword.status === "success") {
+    if (message && message.statusCode === 100) {
       alert.success(updatePassword.message);
-      dispatch({ type: USER_PASSWORD_RESET });
-      navHistory("/app/setting");
     } else if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
   };

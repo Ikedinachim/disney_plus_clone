@@ -10,13 +10,12 @@ import { toast } from "react-toastify";
 
 const ForgotPassword = () => {
   const {
-    forgotPassword: { message },
+    forgotPassword: { message, error },
   } = useSelector((state) => state);
   const [email, setEmail] = useState("");
 
   // const [userStatus, setUserStatus] = useState()
 
-  console.log(message);
   const dispatch = useDispatch();
 
   const { loading } = useSelector((state) => state.auth);
@@ -24,11 +23,12 @@ const ForgotPassword = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(sendPasswordResetLink(email));
+    console.log(message);
 
     if (message && message.statusCode === 100) {
       toast.success(message.message);
-    } else if (message.error) {
-      toast.error(message.error);
+    } else if (error) {
+      toast.error(error);
       dispatch(clearErrors());
     }
   };

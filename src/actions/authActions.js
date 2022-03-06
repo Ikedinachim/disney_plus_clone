@@ -33,6 +33,9 @@ import {
   USER_PASSWORD_REQUEST,
   USER_PASSWORD_SUCCESS,
   USER_PASSWORD_FAIL,
+  NEW_PASSWORD_REQUEST,
+  NEW_PASSWORD_SUCCESS,
+  NEW_PASSWORD_FAIL,
 } from "../constants/authConstants";
 
 const baseURL = "https://mysogi.uat.com.ng/";
@@ -361,7 +364,7 @@ export const updateInfluencerPassword = (userData) => async (dispatch) => {
 ////////////////Forgot password/////////////
 
 ///send mail for reset via mail
-export const sendPasswordResetLink = (email) => async (dispatch) => {
+export const sendPasswordResetLink = (params) => async (dispatch) => {
   try {
     dispatch({ type: FORGOT_PASSWORD_REQUEST });
 
@@ -370,9 +373,11 @@ export const sendPasswordResetLink = (email) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    const data = await axios.put("api/auth/forgot-password", email, config);
-
-    console.log("seeing");
+    const body = {
+      email: params,
+    };
+    const { data } = await axios.put("api/auth/forgot-password", body, config);
+    console.log(data);
 
     if (data.status === "success") {
       dispatch({
@@ -385,10 +390,41 @@ export const sendPasswordResetLink = (email) => async (dispatch) => {
         payload: data.message,
       });
     }
-  } catch (data) {
+  } catch (error) {
     dispatch({
       type: FORGOT_PASSWORD_FAIL,
-      payload: data.message,
+      payload: error.message,
+    });
+  }
+};
+
+//////////set new password///////////
+export const sendNewPassword = (params) => async (dispatch) => {
+  try {
+    dispatch({ type: NEW_PASSWORD_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const { data } = await axios.put("api/auth/reset-password", params, config);
+
+    if (data.status === "success") {
+      dispatch({
+        type: NEW_PASSWORD_SUCCESS,
+        payload: data,
+      });
+    } else {
+      dispatch({
+        type: NEW_PASSWORD_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: NEW_PASSWORD_FAIL,
+      payload: error.message,
     });
   }
 };
