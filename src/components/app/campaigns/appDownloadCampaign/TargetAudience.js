@@ -449,7 +449,7 @@ const TargetAudience = ({
                       {values.targetAudienceOption === "manual_import" && (
                         <div className="hide" id="show_2">
                           <div className="row justify-content-md-between">
-                            <div className="form-group col-md-6 d-flex flex-column">
+                            <div className="form-group col-sm-12 col-md-5 d-flex flex-column">
                               <label className="mb-1 tx-com">
                                 Upload CSV Containing Phone Numbers
                               </label>
@@ -478,7 +478,7 @@ const TargetAudience = ({
                               <div className="form-group">
                                 <div
                                   {...getRootProps({
-                                    className: `dropzone 
+                                    className: `dropzone w-100 tx-center
                                   ${isDragAccept && "dropzoneAccept"} 
                                   ${isDragReject && "dropzoneReject"}`,
                                   })}
@@ -523,7 +523,7 @@ const TargetAudience = ({
                     </div>
                   )}
                 </form>
-                <div className="col-md-5 pd-x-0 mg-y-40">
+                <div className="col-md-5 pd-x-0 mg-y-30">
                   <div className="d-flex">
                     <button
                       className="btn btn-primary w-100 "

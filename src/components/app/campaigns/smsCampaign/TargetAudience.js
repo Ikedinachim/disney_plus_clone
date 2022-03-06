@@ -361,7 +361,7 @@ const TargetAudience = ({
                     {values.targetAudienceOption === "manual_import" && (
                       <div className="hide" id="show_2">
                         <div className="row justify-content-md-between">
-                          <div className="form-group col-md-6 d-flex flex-column">
+                          <div className="form-group col-sm-12 col-md-5 d-flex flex-column">
                             <label htmlFor className="mb-1 tx-com">
                               Upload CSV Containing Phone Numbers
                             </label>
@@ -382,7 +382,7 @@ const TargetAudience = ({
                             <div className="form-group">
                               <div
                                 {...getRootProps({
-                                  className: `dropzone 
+                                  className: `dropzone w-100 tx-center
                                   ${isDragAccept && "dropzoneAccept"} 
                                   ${isDragReject && "dropzoneReject"}`,
                                 })}
@@ -398,167 +398,6 @@ const TargetAudience = ({
                                 )}
                               </div>
                               <p className="mb-0">{csvName}</p>
-                              {/* <CSVReader
-                                ref={getButtonRef}
-                                onFileLoad={handleOnFileLoad}
-                                onError={handleOnError}
-                                noClick
-                                noDrag
-                                onRemoveFile={handleOnRemoveFile}
-                              >
-                                {({ file }) => (
-                                  <aside
-                                    style={{
-                                      display: "flex",
-                                      flexDirection: "row",
-                                      marginBottom: 10,
-                                    }}
-                                  >
-                                    <button
-                                      type="button"
-                                      onClick={handleOpenDialog}
-                                      style={{
-                                        borderRadius: 0,
-                                        marginLeft: 0,
-                                        marginRight: 0,
-                                        width: "40%",
-                                        paddingLeft: 0,
-                                        paddingRight: 0,
-                                      }}
-                                    >
-                                      Browe file
-                                    </button>
-                                    <div
-                                      style={{
-                                        borderWidth: 1,
-                                        borderStyle: "solid",
-                                        borderColor: "#ccc",
-                                        height: 45,
-                                        lineHeight: 2.5,
-                                        marginTop: 5,
-                                        marginBottom: 5,
-                                        paddingLeft: 13,
-                                        paddingTop: 3,
-                                        width: "60%",
-                                      }}
-                                    >
-                                      {file && file.name}
-                                    </div>
-                                    <button
-                                      style={{
-                                        borderRadius: 0,
-                                        marginLeft: 0,
-                                        marginRight: 0,
-                                        paddingLeft: 20,
-                                        paddingRight: 20,
-                                      }}
-                                      onClick={handleRemoveFile}
-                                    >
-                                      Remove
-                                    </button>
-                                  </aside>
-                                )}
-                              </CSVReader> */}
-                              {/* <CSVReader
-                                onUploadAccepted={(results) => {
-                                  console.log("---------------------------");
-                                  console.log(results);
-                                  console.log("---------------------------");
-                                  setZoneHover(false);
-                                }}
-                                onDragOver={(event) => {
-                                  event.preventDefault();
-                                  setZoneHover(true);
-                                }}
-                                onDragLeave={(event) => {
-                                  event.preventDefault();
-                                  setZoneHover(false);
-                                }}
-                              >
-                                {({
-                                  getRootProps,
-                                  acceptedFile,
-                                  ProgressBar,
-                                  getRemoveFileProps,
-                                  Remove,
-                                }) => (
-                                  <>
-                                    <div
-                                      {...getRootProps()}
-                                      style={Object.assign(
-                                        {},
-                                        styles.zone,
-                                        zoneHover && styles.zoneHover
-                                      )}
-                                    >
-                                      {acceptedFile ? (
-                                        <>
-                                          <div style={styles.file}>
-                                            <div style={styles.info}>
-                                              <span style={styles.size}>
-                                                {formatFileSize(
-                                                  acceptedFile.size
-                                                )}
-                                              </span>
-                                              <span style={styles.name}>
-                                                {acceptedFile.name}
-                                              </span>
-                                            </div>
-                                            <div style={styles.progressBar}>
-                                              <ProgressBar />
-                                            </div>
-                                            <div
-                                              {...getRemoveFileProps()}
-                                              style={styles.remove}
-                                              onMouseOver={(event) => {
-                                                event.preventDefault();
-                                                setRemoveHoverColor(
-                                                  REMOVE_HOVER_COLOR_LIGHT
-                                                );
-                                              }}
-                                              onMouseOut={(event) => {
-                                                event.preventDefault();
-                                                setRemoveHoverColor(
-                                                  DEFAULT_REMOVE_HOVER_COLOR
-                                                );
-                                              }}
-                                            >
-                                              <Remove
-                                                color={removeHoverColor}
-                                              />
-                                            </div>
-                                          </div>
-                                        </>
-                                      ) : (
-                                        "Drop CSV file here or click to upload"
-                                      )}
-                                    </div>
-                                  </>
-                                )}
-                              </CSVReader> */}
-
-                              {/* <input
-                                  type="file"
-                                  accept=".csv"
-                                  id="csvFile"
-                                  className="custom-file-input"
-                                  id="customFile"
-                                  onChange={(e) => {
-                                    setCsvFile(e.target.files[0]);
-                                  }}
-                                /> */}
-                              {/* <label
-                                  className="custom-file-label"
-                                  htmlFor="customFile"
-                                >
-                                  Click to upload desired icon (if needed)
-                                </label>
-                                <button
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    if (csvFile) submit();
-                                  }}
-                                ></button> */}
                             </div>
                           </div>
                         </div>
@@ -587,7 +426,7 @@ const TargetAudience = ({
                     )}
                   </div>
                 </form>
-                <div className="col-md-5 pd-x-0 mg-y-40">
+                <div className="col-md-5 pd-x-0 mg-y-30">
                   <div className="d-flex">
                     <button
                       className="btn btn-primary w-100 "
