@@ -385,37 +385,39 @@ const PreviewInfluencerCampaign = ({
                       </div>
                     </div>
                   </div>
-                  <div className="card-footer mg-t-30 bd-t-0">
-                    {parseInt(wallet && wallet.balance) < walletTotal ? (
+                  <div className="col-md-5 pd-x-0 mg-y-40">
+                    <div className="d-flex justify-content-between">
+                      {parseInt(wallet && wallet.balance) < walletTotal ? (
+                        <button
+                          className="btn btn-primary pd-x-40 tx-com mg-r-15"
+                          onClick={Continue}
+                          disabled={loading ? true : false}
+                          type="submit"
+                          variant="contained"
+                        >
+                          Fund Wallet
+                        </button>
+                      ) : (
+                        <button
+                          className="btn btn-primary pd-x-40 tx-com mg-r-15"
+                          onClick={submitInfluencerCampaignHandler}
+                          disabled={loading ? true : false}
+                          type="submit"
+                          variant="contained"
+                        >
+                          Publish
+                        </button>
+                      )}
                       <button
-                        className="btn btn-primary pd-x-40 tx-com mg-r-15"
-                        onClick={Continue}
+                        className="btn btn-outline-primary pd-x-30"
+                        onClick={Previous}
                         disabled={loading ? true : false}
                         type="submit"
                         variant="contained"
                       >
-                        Fund Wallet
+                        Go Back
                       </button>
-                    ) : (
-                      <button
-                        className="btn btn-primary pd-x-40 tx-com mg-r-15"
-                        onClick={submitInfluencerCampaignHandler}
-                        disabled={loading ? true : false}
-                        type="submit"
-                        variant="contained"
-                      >
-                        Publish
-                      </button>
-                    )}
-                    <button
-                      className="btn btn-outline-primary pd-x-30"
-                      onClick={Previous}
-                      disabled={loading ? true : false}
-                      type="submit"
-                      variant="contained"
-                    >
-                      Go Back
-                    </button>
+                    </div>
                   </div>
                   {/*Assign  Modal */}
                   {/* <div
