@@ -140,7 +140,7 @@ const CreateCampaign = () => {
                     </div>
                   </div>
                   <div className="col-md-4 mx-auto tx-center mg-y-40 mg-md-y-60">
-                    <div className="d-flex">
+                    <div className="d-flex justify-content-center">
                       <Link
                         to="/app"
                         className="btn btn-outline-primary wd-200 mg-l-20"
