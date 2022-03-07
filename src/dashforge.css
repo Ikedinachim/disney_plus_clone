@@ -2320,10 +2320,13 @@ textarea.form-control.is-invalid {
 .btn,
 .ui-datepicker-buttonpane button,
 .sp-container button {
-  display: inline-block;
+  display: inline-flex;
   font-weight: 400;
   color: #001737;
+  align-items: center;
+  white-space: nowrap;
   text-align: center;
+  justify-content: center;
   vertical-align: middle;
   user-select: none;
   background-color: transparent;
@@ -8357,6 +8360,9 @@ button.bg-dark:focus {
 }
 
 @media (min-width: 768px) {
+  .w-sm-auto {
+    width: auto !important;
+  }
   .m-md-0 {
     margin: 0 !important;
   }
