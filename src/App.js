@@ -16,7 +16,7 @@ import RequestSenderID from "./components/app/SenderID/RequestSenderID";
 import CreateCampaign from "./components/app/campaigns/CreateCampaign";
 // import TargetAudience from "./components/app/campaigns/TargetAudience"
 // import ViewCampaign from "./components/app/campaigns/ViewCampaign"
-import AllCampaigns from "./components/app/campaigns/AllCampaigns";
+import ViewCampaignTabs from "./components/app/campaigns/viewCampaigns/ViewCampaignTabs";
 // import PreviewCampaign from "./components/app/campaigns/PreviewCampaign"
 import SmsStepForm from "./components/app/campaigns/smsCampaign/SmsStepForm";
 import FlierVideoStepForm from "./components/app/campaigns/flierVideoCampaign/FlierVideoStepForm";
@@ -27,6 +27,11 @@ import AnalyticsTable from "./components/app/analytics/analyticsTable";
 import Settings from "./components/app/settings/settings";
 import ChangePassword from "./components/app/settings/ChangePassword";
 import Ads from "./adsView/Ads";
+
+////////////// Single Campaigns /////////////////
+import AppDownloadDetails from "./components/app/campaigns/campaignDetails/AppDownloadDetails";
+import FlierVideosDetails from "./components/app/campaigns/campaignDetails/FlierVideosDetails";
+import SmsDetails from "./components/app/campaigns/campaignDetails/SmsDetails";
 
 ///////////////////////////////////////
 import InfluencerDashboardLayout from "./influencer/InfluencerDashboardLayout";
@@ -56,9 +61,7 @@ import UserPasswordUpdate from "./components/user/UserPasswordUpdate";
 AOS.init();
 
 function App() {
-  const { loading, isAuthenticated, user, error, resetPassword } = useSelector(
-    (state) => state.auth
-  );
+  const { loading, isAuthenticated, user } = useSelector((state) => state.auth);
   const { resetInfluencerPassword } = useSelector(
     (state) => state.resetInfluencerPassword
   );
@@ -158,7 +161,7 @@ function App() {
             path="campaigns"
             element={
               isAuthenticated && user && user.user.role === "user" ? (
-                <AllCampaigns />
+                <ViewCampaignTabs />
               ) : (
                 <Login />
               )
@@ -199,6 +202,36 @@ function App() {
             element={
               isAuthenticated && user && user.user.role === "user" ? (
                 <AppDownloadStepForm />
+              ) : (
+                <Login />
+              )
+            }
+          />
+          <Route
+            path="campaign/single-app-download/:id"
+            element={
+              isAuthenticated && user && user.user.role === "user" ? (
+                <AppDownloadDetails />
+              ) : (
+                <Login />
+              )
+            }
+          />
+          <Route
+            path="campaign/single-flier-video/:id"
+            element={
+              isAuthenticated && user && user.user.role === "user" ? (
+                <FlierVideosDetails />
+              ) : (
+                <Login />
+              )
+            }
+          />
+          <Route
+            path="campaign/single-sms/:id"
+            element={
+              isAuthenticated && user && user.user.role === "user" ? (
+                <SmsDetails />
               ) : (
                 <Login />
               )
@@ -274,7 +307,10 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
-        <Route path="/password-change" element={<UserPasswordUpdate />} />
+        <Route
+          path="/password-change/:uuid/confirm"
+          element={<UserPasswordUpdate />}
+        />
         {/* <Route path="/app/sender-id" element={isAuthenticated ? <SenderID /> : <Login />} /> */}
         {/* <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />

@@ -118,7 +118,7 @@ const Settings = () => {
                 <div className=" wdm-55 d-flex ht-250">
                   <img
                     src={people.imageUrl}
-                    className="img-thumbnail w-25"
+                    className="img-thumbnail wd-250"
                     alt=""
                     onChange={handleImageChange}
                   />

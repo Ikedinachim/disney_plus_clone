@@ -34,6 +34,9 @@ import {
   USER_PASSWORD_SUCCESS,
   USER_PASSWORD_RESET,
   USER_PASSWORD_FAIL,
+  NEW_PASSWORD_REQUEST,
+  NEW_PASSWORD_SUCCESS,
+  NEW_PASSWORD_FAIL,
 } from "../constants/authConstants";
 import { INFLUENCER_CAMPAIGN_REQUEST } from "../constants/campaignConstants";
 
@@ -359,7 +362,79 @@ export const updateInfluencerPassword = (userData) => async (dispatch) => {
   } catch (data) {
     dispatch({
       type: UPDATE_INFLUENCER_PASSWORD_FAIL,
+<<<<<<< HEAD
+      payload: data.error,
+    });
+  }
+};
+
+////////////////Forgot password/////////////
+
+///send mail for reset via mail
+export const sendPasswordResetLink = (params) => async (dispatch) => {
+  try {
+    dispatch({ type: FORGOT_PASSWORD_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const body = {
+      email: params,
+    };
+    const { data } = await axios.put("api/auth/forgot-password", body, config);
+    console.log(data);
+
+    if (data.status === "success") {
+      dispatch({
+        type: FORGOT_PASSWORD_SUCCESS,
+        payload: data,
+      });
+    } else {
+      dispatch({
+        type: FORGOT_PASSWORD_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: FORGOT_PASSWORD_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+//////////set new password///////////
+export const sendNewPassword = (params) => async (dispatch) => {
+  try {
+    dispatch({ type: NEW_PASSWORD_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const { data } = await axios.put("api/auth/reset-password", params, config);
+
+    if (data.status === "success") {
+      dispatch({
+        type: NEW_PASSWORD_SUCCESS,
+        payload: data,
+      });
+    } else {
+      dispatch({
+        type: NEW_PASSWORD_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: NEW_PASSWORD_FAIL,
+      payload: error.message,
+=======
       payload: data.message,
+>>>>>>> parent of 5d1f312 (Merge branch 'wole' of https://github.com/lordeceeno/mysogi-frontend into wole)
     });
   }
 };
