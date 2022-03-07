@@ -102,8 +102,6 @@ const appReducer = combineReducers({
   resetInfluencerPassword: resetInfluencerPasswordReducer,
   forgotPassword: forgotPasswordReducer,
   sendNewPassword: sendNewPasswordReducer,
-  forgotPassword: forgotPasswordReducer,
-  sendNewPassword: sendNewPasswordReducer,
 });
 
 const reducer = (state, action) => {
