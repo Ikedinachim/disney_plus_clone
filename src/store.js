@@ -15,6 +15,8 @@ import {
   updateInfluencerCostReducer,
   resetInfluencerPasswordReducer,
   updateUserPasswordReducer,
+  forgotPasswordReducer,
+  sendNewPasswordReducer,
 
   // userDetailsReducer
 } from "./reducers/authReducers";
@@ -47,6 +49,9 @@ import {
   getFilteredContactListReducer,
   getAllInfluencersReducer,
   getSingleCampaignReducer,
+  getSingleSmsCampaignReducer,
+  getSingleAppCampaignReducer,
+  getSingleFlierCampaignReducer,
   AllCampaignReducer,
   createInfluencerCampaignReducer,
   getAllInfluencerCampaignReducer,
@@ -73,6 +78,9 @@ const appReducer = combineReducers({
   flierVideoCampaign: createFlierVideoCampaignReducer,
   getSmsCampaign: getSmsCampaignsReducer,
   getSingleCampaign: getSingleCampaignReducer,
+  singleFlierCampaign: getSingleFlierCampaignReducer,
+  singleAppCampaign: getSingleAppCampaignReducer,
+  singleSmsCampaign: getSingleSmsCampaignReducer,
   showAds: createShowAdsReducer,
   appDownload: createAppDownloadCampaignReducer,
   viewFlierVideosCampaign: viewFlierVideosCampaignsReducer,
@@ -92,6 +100,8 @@ const appReducer = combineReducers({
   updateInfluencerProfile: updateInfluencerReducer,
   updateInfluencerCost: updateInfluencerCostReducer,
   resetInfluencerPassword: resetInfluencerPasswordReducer,
+  forgotPassword: forgotPasswordReducer,
+  sendNewPassword: sendNewPasswordReducer,
 });
 
 const reducer = (state, action) => {
