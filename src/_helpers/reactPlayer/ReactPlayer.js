@@ -15,7 +15,8 @@ const MediaPlayer = (url) => {
       width="100%"
       height="400px"
       // onReady={() => console.log("ready now")}
-      light={"https://i.stack.imgur.com/zw9Iz.png"}
+      // light={"https://i.stack.imgur.com/zw9Iz.png"}
+      light={true}
     />
   );
 };
