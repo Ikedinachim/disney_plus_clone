@@ -1,25 +1,38 @@
-import React, { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { Fragment, useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 import Loader from "../loader";
 import MetaData from "../layout/MetaData";
+<<<<<<< HEAD
 import { FORGOT_PASSWORD_RESET } from "../../constants/authConstants";
+=======
+
+import { useAlert } from "react-alert";
+>>>>>>> parent of 5d1f312 (Merge branch 'wole' of https://github.com/lordeceeno/mysogi-frontend into wole)
 import { useDispatch, useSelector } from "react-redux";
-import { sendPasswordResetLink, clearErrors } from "../../actions/authActions";
-import { toast } from "react-toastify";
+import { login, clearErrors } from "../../actions/authActions";
+import { getWallet } from "../../actions/billingActions";
 
 const ForgotPassword = () => {
+<<<<<<< HEAD
   const {
     forgotPassword: { message, error, loading },
   } = useSelector((state) => state);
+=======
+>>>>>>> parent of 5d1f312 (Merge branch 'wole' of https://github.com/lordeceeno/mysogi-frontend into wole)
   const [email, setEmail] = useState("");
 
   // const [userStatus, setUserStatus] = useState()
 
+<<<<<<< HEAD
+=======
+  const alert = useAlert();
+>>>>>>> parent of 5d1f312 (Merge branch 'wole' of https://github.com/lordeceeno/mysogi-frontend into wole)
   const dispatch = useDispatch();
 
   const submitHandler = (e) => {
     e.preventDefault();
+<<<<<<< HEAD
     dispatch(sendPasswordResetLink(email));
     console.log(message);
 
@@ -30,6 +43,9 @@ const ForgotPassword = () => {
       toast.error(message.error);
       dispatch(clearErrors());
     }
+=======
+    dispatch(getWallet());
+>>>>>>> parent of 5d1f312 (Merge branch 'wole' of https://github.com/lordeceeno/mysogi-frontend into wole)
   };
 
   return (
@@ -65,7 +81,7 @@ const ForgotPassword = () => {
                     <p className="tx-16 tx-gray">
                       Please input your email so we can send you a link.
                     </p>
-                    <form className="mg-y-50">
+                    <form className="mg-y-50" onSubmit={submitHandler}>
                       <div className="form-group">
                         <input
                           className="form-control new"
@@ -83,7 +99,7 @@ const ForgotPassword = () => {
                             id="login_button"
                             className="btn btn-primary btn-block btn-lg py-15"
                             type="submit"
-                            onClick={submitHandler}
+                            disabled={loading ? true : false}
                           >
                             SEND
                           </button>

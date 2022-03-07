@@ -3,6 +3,7 @@ import Axios from "axios";
 import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
+  LOGIN_RESET,
   LOGIN_FAIL,
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
@@ -15,8 +16,10 @@ import {
   USER_DETAILS_FAIL,
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
+  UPDATE_USER_RESET,
   UPDATE_USER_FAIL,
   UPDATE_INFLUENCER_PASSWORD_REQUEST,
+  UPDATE_INFLUENCER_PASSWORD_RESET,
   UPDATE_INFLUENCER_PASSWORD_SUCCESS,
   UPDATE_INFLUENCER_PASSWORD_FAIL,
   UPDATE_INFLUENCER_PROFILE_REQUEST,
@@ -27,16 +30,15 @@ import {
   UPDATE_INFLUENCER_COST_SUCCESS,
   UPDATE_INFLUENCER_COST_FAIL,
   UPDATE_INFLUENCER_PASSWORD_ACTIVE,
-  FORGOT_PASSWORD_REQUEST,
-  FORGOT_PASSWORD_SUCCESS,
-  FORGOT_PASSWORD_FAIL,
   USER_PASSWORD_REQUEST,
   USER_PASSWORD_SUCCESS,
+  USER_PASSWORD_RESET,
   USER_PASSWORD_FAIL,
   NEW_PASSWORD_REQUEST,
   NEW_PASSWORD_SUCCESS,
   NEW_PASSWORD_FAIL,
 } from "../constants/authConstants";
+import { INFLUENCER_CAMPAIGN_REQUEST } from "../constants/campaignConstants";
 
 const baseURL = "https://mysogi.uat.com.ng/";
 
@@ -340,12 +342,16 @@ export const updateInfluencerPassword = (userData) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    const data = await axios.post("api/auth/change-password", userData, config);
+    const { data } = await axios.post(
+      "api/auth/change-password",
+      userData,
+      config
+    );
 
     if (data.status === "success") {
       dispatch({
         type: UPDATE_INFLUENCER_PASSWORD_SUCCESS,
-        payload: data.message,
+        payload: data,
       });
     } else {
       dispatch({
@@ -356,6 +362,7 @@ export const updateInfluencerPassword = (userData) => async (dispatch) => {
   } catch (data) {
     dispatch({
       type: UPDATE_INFLUENCER_PASSWORD_FAIL,
+<<<<<<< HEAD
       payload: data.error,
     });
   }
@@ -425,11 +432,12 @@ export const sendNewPassword = (params) => async (dispatch) => {
     dispatch({
       type: NEW_PASSWORD_FAIL,
       payload: error.message,
+=======
+      payload: data.message,
+>>>>>>> parent of 5d1f312 (Merge branch 'wole' of https://github.com/lordeceeno/mysogi-frontend into wole)
     });
   }
 };
-
-/////////Update password //////////////////
 
 // Clear Errors
 export const clearErrors = () => async (dispatch) => {

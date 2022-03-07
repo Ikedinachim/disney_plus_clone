@@ -15,8 +15,11 @@ import {
   updateInfluencerCostReducer,
   resetInfluencerPasswordReducer,
   updateUserPasswordReducer,
+<<<<<<< HEAD
   forgotPasswordReducer,
   sendNewPasswordReducer,
+=======
+>>>>>>> parent of 5d1f312 (Merge branch 'wole' of https://github.com/lordeceeno/mysogi-frontend into wole)
 
   // userDetailsReducer
 } from "./reducers/authReducers";
@@ -100,8 +103,11 @@ const appReducer = combineReducers({
   updateInfluencerProfile: updateInfluencerReducer,
   updateInfluencerCost: updateInfluencerCostReducer,
   resetInfluencerPassword: resetInfluencerPasswordReducer,
+<<<<<<< HEAD
   forgotPassword: forgotPasswordReducer,
   sendNewPassword: sendNewPasswordReducer,
+=======
+>>>>>>> parent of 5d1f312 (Merge branch 'wole' of https://github.com/lordeceeno/mysogi-frontend into wole)
 });
 
 const reducer = (state, action) => {
