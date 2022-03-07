@@ -6,14 +6,12 @@ import {
   clearErrors,
   sendNewPassword,
 } from "../../actions/authActions";
-import { useAlert } from "react-alert";
 import { NEW_PASSWORD_RESET } from "../../constants/authConstants";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import Loader from "../loader";
 
 const UserPasswordUpdate = () => {
-  const alert = useAlert();
   const dispatch = useDispatch();
 
   const { uuid } = useParams();
@@ -47,7 +45,7 @@ const UserPasswordUpdate = () => {
     dispatch(sendNewPassword(password));
 
     if (message && message.statusCode === 100) {
-      alert.success(message.message);
+      toast.success(message.message);
       dispatch({ type: NEW_PASSWORD_RESET });
       navigate("/");
     } else if (error) {
