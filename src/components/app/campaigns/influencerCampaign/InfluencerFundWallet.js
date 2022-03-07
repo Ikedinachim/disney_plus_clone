@@ -35,10 +35,10 @@ const InfluencerFundWallet = ({ prevStep, values, price }) => {
   const makePaymentHandler = (e) => {
     e.preventDefault();
 
-    const obj = JSON.parse(`{"amount": ${amount}}`);
+    const obj = amount && JSON.parse(`{"amount": ${amount}}`);
 
     dispatch(fundUserWallet(obj));
-    setAmountToPay("");
+    // setAmountToPay("");
   };
 
   const Previous = (e) => {
@@ -146,6 +146,7 @@ const InfluencerFundWallet = ({ prevStep, values, price }) => {
     user,
     confirmFund,
     navigate,
+    amount,
     prevStep,
   ]);
 
