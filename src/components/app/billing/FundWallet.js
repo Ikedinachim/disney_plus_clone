@@ -37,10 +37,11 @@ const FundWallet = () => {
 
   const makePaymentHandler = (e) => {
     e.preventDefault();
-    const obj = JSON.parse(`{"amount": ${amount}}`);
+    const obj = amount && JSON.parse(`{"amount": ${amount}}`);
 
     dispatch(fundUserWallet(obj));
   };
+  // console.log(amount);
 
   const config = {
     reference:
@@ -72,10 +73,10 @@ const FundWallet = () => {
     const initializePayment = usePaystackPayment(config);
     const cancelPayment = (e) => {
       e.preventDefault();
+      setAmountToPay("");
       dispatch({ type: FUND_WALLET_RESET });
       dispatch({ type: CONFIRM_FUNDING_RESET });
     };
-    // setAmountToPay("");
     return (
       <div>
         <div className="form-group mg-t-40">
