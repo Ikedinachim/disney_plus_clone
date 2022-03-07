@@ -10,6 +10,9 @@ import { login, clearErrors } from "../../actions/authActions";
 import { getWallet } from "../../actions/billingActions";
 
 const ForgotPassword = () => {
+  const {
+    forgotPassword: { message, error, loading },
+  } = useSelector((state) => state);
   const [email, setEmail] = useState("");
 
   // const [userStatus, setUserStatus] = useState()

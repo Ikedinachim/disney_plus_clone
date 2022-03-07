@@ -435,7 +435,6 @@ export const sendNewPassword = (params) => async (dispatch) => {
     dispatch({
       type: NEW_PASSWORD_FAIL,
       payload: error.message,
-      payload: data.message,
     });
   }
 };

@@ -17,8 +17,6 @@ import {
   updateUserPasswordReducer,
   forgotPasswordReducer,
   sendNewPasswordReducer,
-  forgotPasswordReducer,
-  sendNewPasswordReducer,
 
   // userDetailsReducer
 } from "./reducers/authReducers";
