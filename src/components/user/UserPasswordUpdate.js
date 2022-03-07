@@ -39,7 +39,6 @@ const UserPasswordUpdate = () => {
     const name = e.target.name;
     const value = e.target.value;
 
-    console.log(message);
     setPassword({ ...password, [name]: value });
   };
 
