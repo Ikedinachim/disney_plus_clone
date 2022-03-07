@@ -1,26 +1,25 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import MetaData from "../layout/MetaData";
 import {
   getUser,
   clearErrors,
   sendNewPassword,
 } from "../../actions/authActions";
-import { useAlert } from "react-alert";
 import { NEW_PASSWORD_RESET } from "../../constants/authConstants";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import Loader from "../loader";
 
 const UserPasswordUpdate = () => {
-  const alert = useAlert();
   const dispatch = useDispatch();
 
   const { uuid } = useParams();
 
+  const navigate = useNavigate();
+
   const {
-    sendNewPassword: { message },
-    userDetails: { loading },
-    updateUserPassword: { updatePassword, error },
+    sendNewPassword: { message, loading, error },
   } = useSelector((state) => state);
 
   useEffect(() => {
@@ -46,16 +45,18 @@ const UserPasswordUpdate = () => {
     dispatch(sendNewPassword(password));
 
     if (message && message.statusCode === 100) {
-      alert.success(updatePassword.message);
+      toast.success(message.message);
       dispatch({ type: NEW_PASSWORD_RESET });
-    } else if (message.error) {
-      toast.error(message.error);
+      navigate("/");
+    } else if (error) {
+      toast.error(error);
       dispatch(clearErrors());
     }
   };
 
   return (
     <Fragment>
+      {loading ? <Loader /> : null}
       <MetaData title={"Create New Password"} />
       <section className="ht-100v container-fluid">
         <div className="col-md-12 login-side">
@@ -71,10 +72,10 @@ const UserPasswordUpdate = () => {
                     <input
                       className="form-control new"
                       placeholder="New password"
-                      name="newPassword"
+                      name="password"
                       type="password"
-                      id="new_password"
-                      value={password.newPassword}
+                      id="password"
+                      value={password.password}
                       onChange={handleChange}
                     />
                   </div>
@@ -84,7 +85,7 @@ const UserPasswordUpdate = () => {
                       placeholder="Confirm New password"
                       name="confirmPassword"
                       type="password"
-                      id="new_password"
+                      id="confirmPassword"
                       value={password.confirmPassword}
                       onChange={handleChange}
                     />

@@ -26,7 +26,6 @@ const ForgotPassword = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(sendPasswordResetLink(email));
-    console.log(message);
 
     if (message && message.statusCode === 100) {
       toast.success(message.message);
