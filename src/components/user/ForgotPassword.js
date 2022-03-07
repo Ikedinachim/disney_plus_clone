@@ -3,25 +3,38 @@ import { Link, useNavigate } from "react-router-dom";
 
 import Loader from "../loader";
 import MetaData from "../layout/MetaData";
-
-import { useAlert } from "react-alert";
+import { FORGOT_PASSWORD_RESET } from "../../constants/authConstants";
 import { useDispatch, useSelector } from "react-redux";
-import { login, clearErrors } from "../../actions/authActions";
+import {
+  login,
+  clearErrors,
+  sendPasswordResetLink,
+} from "../../actions/authActions";
 import { getWallet } from "../../actions/billingActions";
+import { toast } from "react-toastify";
 
 const ForgotPassword = () => {
+  const {
+    forgotPassword: { message, error, loading },
+  } = useSelector((state) => state);
   const [email, setEmail] = useState("");
 
   // const [userStatus, setUserStatus] = useState()
 
-  const alert = useAlert();
   const dispatch = useDispatch();
-
-  const { loading } = useSelector((state) => state.auth);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(getWallet());
+    dispatch(sendPasswordResetLink(email));
+    console.log(message);
+
+    if (message && message.statusCode === 100) {
+      toast.success(message.message);
+      dispatch({ type: FORGOT_PASSWORD_RESET });
+    } else if (message.error) {
+      toast.error(message.error);
+      dispatch(clearErrors());
+    }
   };
 
   return (
