@@ -40,14 +40,15 @@ const FlierVideoCampaign = ({
 
   const Continue = (e) => {
     e.preventDefault();
-    if (
-      values.channel === "smart_sms" &&
-      values.senderId === ""
-      // &&
-      // values.alternateSenderId === ""
-    ) {
-      toast.error("Select a Sender ID or request for one if not available");
-    } else if (values.senderId !== "" && values.alternateSenderId === "") {
+    // if (
+    //   values.channel === "smart_sms" &&
+    //   values.senderId === ""
+    //   // &&
+    //   // values.alternateSenderId === ""
+    // ) {
+    //   toast.error("Select a Sender ID or request for one if not available");
+    // } else
+    if (values.senderId !== "" && values.alternateSenderId === "") {
       toast.error("Choose an alternate ID");
     } else if (values.channel === "display_ads" && values.url === "") {
       toast.error("Input a URL");
