@@ -56250,3 +56250,7 @@ button.bg-twitter:focus,
 .wd-280 {
   width: 280px;
 }
+
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
