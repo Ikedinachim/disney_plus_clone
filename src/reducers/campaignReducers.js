@@ -58,6 +58,15 @@ import {
   GET_INFLUENCER_DETAILS_REQUEST,
   GET_INFLUENCER_DETAILS_SUCCESS,
   GET_INFLUENCER_DETAILS_FAIL,
+  VIEW_SINGLE_APP_CAMPAIGN_REQUEST,
+  VIEW_SINGLE_APP_CAMPAIGN_SUCCESS,
+  VIEW_SINGLE_APP_CAMPAIGN_FAIL,
+  VIEW_SINGLE_FLIER_CAMPAIGN_REQUEST,
+  VIEW_SINGLE_FLIER_CAMPAIGN_SUCCESS,
+  VIEW_SINGLE_FLIER_CAMPAIGN_FAIL,
+  GET_SMS_SINGLE_CAMPAIGN_REQUEST,
+  GET_SMS_SINGLE_CAMPAIGN_SUCCESS,
+  GET_SMS_SINGLE_CAMPAIGN_FAIL,
 
   ////////////// GENERIC CONSTANTS ///////////////
   CLEAR_ERRORS,
@@ -233,7 +242,7 @@ export const getSmsCampaignsReducer = (
     case GET_SMS_CAMPAIGN_SUCCESS:
       return {
         loading: false,
-        smsCampaigns: action.payload,
+        smsCampaigns: action.payload.reverse(),
       };
 
     case GET_SMS_CAMPAIGN_FAIL:
@@ -266,7 +275,7 @@ export const viewFlierVideosCampaignsReducer = (
     case VIEW_FLIER_VIDEO_CAMPAIGN_SUCCESS:
       return {
         vfLoading: false,
-        viewFlierVideosCampaigns: action.payload,
+        viewFlierVideosCampaigns: action.payload.reverse(),
       };
 
     case VIEW_FLIER_VIDEO_CAMPAIGN_FAIL:
@@ -299,7 +308,7 @@ export const viewAppDownloadCampaignsReducer = (
     case VIEW_APP_DOWNLOAD_CAMPAIGN_SUCCESS:
       return {
         adLoading: false,
-        viewAppDownloadCampaigns: action.payload,
+        viewAppDownloadCampaigns: action.payload.reverse(),
       };
 
     case VIEW_APP_DOWNLOAD_CAMPAIGN_FAIL:
@@ -393,6 +402,106 @@ export const getSingleCampaignReducer = (
   }
 };
 
+/////////////////////////GET SINGLE CAMPAIGNS/////////////////////////
+export const getSingleSmsCampaignReducer = (
+  state = { singleSmsCampaign: [] },
+  action
+) => {
+  switch (action.type) {
+    case GET_SMS_SINGLE_CAMPAIGN_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case GET_SMS_SINGLE_CAMPAIGN_SUCCESS:
+      return {
+        loading: false,
+        singleSmsCampaign: action.payload,
+      };
+
+    case GET_SMS_SINGLE_CAMPAIGN_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const getSingleAppCampaignReducer = (
+  state = { singleAppCampaign: [] },
+  action
+) => {
+  switch (action.type) {
+    case VIEW_SINGLE_APP_CAMPAIGN_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case VIEW_SINGLE_APP_CAMPAIGN_SUCCESS:
+      return {
+        loading: false,
+        singleAppCampaign: action.payload,
+      };
+
+    case VIEW_SINGLE_APP_CAMPAIGN_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const getSingleFlierCampaignReducer = (
+  state = { singleFlierCampaign: [] },
+  action
+) => {
+  switch (action.type) {
+    case VIEW_SINGLE_FLIER_CAMPAIGN_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case VIEW_SINGLE_FLIER_CAMPAIGN_SUCCESS:
+      return {
+        loading: false,
+        singleFlierCampaign: action.payload.reverse(),
+      };
+
+    case VIEW_SINGLE_FLIER_CAMPAIGN_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+///////////////////////////////////////////////////////////
 export const getFilteredContactListReducer = (
   state = { filteredContactList: [] },
   action

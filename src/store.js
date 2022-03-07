@@ -15,6 +15,11 @@ import {
   updateInfluencerCostReducer,
   resetInfluencerPasswordReducer,
   updateUserPasswordReducer,
+<<<<<<< HEAD
+  forgotPasswordReducer,
+  sendNewPasswordReducer,
+=======
+>>>>>>> parent of 5d1f312 (Merge branch 'wole' of https://github.com/lordeceeno/mysogi-frontend into wole)
 
   // userDetailsReducer
 } from "./reducers/authReducers";
@@ -47,6 +52,9 @@ import {
   getFilteredContactListReducer,
   getAllInfluencersReducer,
   getSingleCampaignReducer,
+  getSingleSmsCampaignReducer,
+  getSingleAppCampaignReducer,
+  getSingleFlierCampaignReducer,
   AllCampaignReducer,
   createInfluencerCampaignReducer,
   getAllInfluencerCampaignReducer,
@@ -73,6 +81,9 @@ const appReducer = combineReducers({
   flierVideoCampaign: createFlierVideoCampaignReducer,
   getSmsCampaign: getSmsCampaignsReducer,
   getSingleCampaign: getSingleCampaignReducer,
+  singleFlierCampaign: getSingleFlierCampaignReducer,
+  singleAppCampaign: getSingleAppCampaignReducer,
+  singleSmsCampaign: getSingleSmsCampaignReducer,
   showAds: createShowAdsReducer,
   appDownload: createAppDownloadCampaignReducer,
   viewFlierVideosCampaign: viewFlierVideosCampaignsReducer,
@@ -92,6 +103,11 @@ const appReducer = combineReducers({
   updateInfluencerProfile: updateInfluencerReducer,
   updateInfluencerCost: updateInfluencerCostReducer,
   resetInfluencerPassword: resetInfluencerPasswordReducer,
+<<<<<<< HEAD
+  forgotPassword: forgotPasswordReducer,
+  sendNewPassword: sendNewPasswordReducer,
+=======
+>>>>>>> parent of 5d1f312 (Merge branch 'wole' of https://github.com/lordeceeno/mysogi-frontend into wole)
 });
 
 const reducer = (state, action) => {
