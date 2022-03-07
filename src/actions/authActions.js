@@ -37,6 +37,10 @@ import {
   NEW_PASSWORD_REQUEST,
   NEW_PASSWORD_SUCCESS,
   NEW_PASSWORD_FAIL,
+  FORGOT_PASSWORD_REQUEST,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAIL,
+  FORGOT_PASSWORD_RESET,
 } from "../constants/authConstants";
 import { INFLUENCER_CAMPAIGN_REQUEST } from "../constants/campaignConstants";
 
@@ -362,7 +366,6 @@ export const updateInfluencerPassword = (userData) => async (dispatch) => {
   } catch (data) {
     dispatch({
       type: UPDATE_INFLUENCER_PASSWORD_FAIL,
-<<<<<<< HEAD
       payload: data.error,
     });
   }
@@ -432,9 +435,6 @@ export const sendNewPassword = (params) => async (dispatch) => {
     dispatch({
       type: NEW_PASSWORD_FAIL,
       payload: error.message,
-=======
-      payload: data.message,
->>>>>>> parent of 5d1f312 (Merge branch 'wole' of https://github.com/lordeceeno/mysogi-frontend into wole)
     });
   }
 };
