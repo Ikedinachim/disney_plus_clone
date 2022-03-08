@@ -38,7 +38,11 @@ const InfluencerCard = ({
                 <div className="div pd-l-0">
                   <div className="avatar avatar-xl">
                     <img
-                      src={influencer.imagePath}
+                      src={
+                        influencer.user_image && influencer.user_image !== ""
+                          ? influencer.user_image
+                          : influencer.imagePath
+                      }
                       className="rounded-circle"
                       alt={influencer.name}
                     />

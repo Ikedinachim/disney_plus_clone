@@ -483,6 +483,7 @@ export const updateUserReducer = (state = { updateUser: [] }, action) => {
     case UPDATE_USER_RESET:
       return {
         ...state,
+        status: null,
         updateUser: [],
       };
     case CLEAR_ERRORS:
