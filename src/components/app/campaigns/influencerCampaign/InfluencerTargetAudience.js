@@ -202,6 +202,9 @@ const InfluencerTargetAudience = ({
                         >
                           {selectedFileName}
                         </label>
+                        <span className="tx-danger tx-italic">
+                          Video size: not more than 30mb
+                        </span>
                         {uploadPercentage > 0 && (
                           <span className="mt-2">
                             <ProgressBar

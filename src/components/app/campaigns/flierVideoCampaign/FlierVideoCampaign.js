@@ -105,7 +105,12 @@ const FlierVideoCampaign = ({
       senderID.senderID &&
       senderID.senderID
         .map(
-          (senderId) => senderId.telcoStatus === "approved" && senderId.senderId
+          (senderId) =>
+            (senderId.airtelStatus === "Approved" ||
+              senderId.mtnStatus === "Approved" ||
+              senderId.gloStatus === "Approved" ||
+              senderId.nineMobileStatus === "Approved") &&
+            senderId.senderId
         )
         .filter((sender) => sender);
     // .concat(defaultSenderID.defaultSenderID);
