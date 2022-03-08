@@ -68,7 +68,7 @@ const BillingOverview = () => {
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-7 col-12 billing-info">
+                <div className="col-md-12 col-12 billing-info">
                   <div className="card rounded bd-0 shadow-sm">
                     <div className="card-body">
                       <p className="tx-18 billing-info-bold">
@@ -135,7 +135,7 @@ const BillingOverview = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-md-5 col-12 mg-t-20 mg-md-t-0">
+                <div className="col-md-5 col-12 mg-t-20 mg-md-t-0 d-none">
                   <div className="card card-height rounded bd-0 shadow-sm">
                     <div className="card-body">
                       <p className="tx-18">Preferences</p>
