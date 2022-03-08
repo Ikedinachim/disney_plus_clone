@@ -272,9 +272,12 @@ const TargetAudience = ({
                           >
                             <option value="">Select L.G.A</option>
                             {lga.lgas.map((selectLga, i) => (
-                              <option value={selectLga} key={i}>
-                                {selectLga}
-                              </option>
+                              <>
+                                <option value="all">All</option>
+                                <option value={selectLga} key={i}>
+                                  {selectLga}
+                                </option>
+                              </>
                             ))}
                           </select>
                         </div>
