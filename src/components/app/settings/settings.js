@@ -18,8 +18,16 @@ const Settings = () => {
   } = useSelector((state) => state);
 
   useEffect(() => {
+    if (updateUser && updateUser.status === "success") {
+      toast.success(`${updateUser.message}`);
+      dispatch(getUser());
+      dispatch({ type: UPDATE_USER_RESET });
+    } else if (updateUser.error) {
+      toast.error(updateUser.error);
+      dispatch(clearErrors());
+    }
     dispatch(getUser());
-  }, [dispatch]);
+  }, [dispatch, updateUser]);
 
   const handleImageChange = async () => {
     const { files } = document.querySelector('input[type="file"]');
@@ -68,15 +76,6 @@ const Settings = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(updateUserDetails(people));
-
-    if (updateUser && updateUser.status === "success") {
-      toast.success(`${updateUser.message}`);
-      dispatch(getUser());
-      dispatch({ type: UPDATE_USER_RESET });
-    } else if (updateUser.error) {
-      toast.error(updateUser.error);
-      dispatch(clearErrors());
-    }
   };
 
   // console.log("people.imageUrl", people.imageUrl);
@@ -84,25 +83,23 @@ const Settings = () => {
   return (
     <Fragment>
       <MetaData title={"Settings"} />
-      {userDetailsLoading === true ? (
+      {userDetailsLoading ? (
         <Loader />
       ) : (
         <div className="content-body">
-          <div className="container pd-x-0 p-5">
-            <div className="row justify-content-between">
-              <div className="col-md-6">
+          <div className="container-fluid">
+            <div className="d-flex flex-wrap justify-content-between">
+              <div className="flex-1">
                 <p className="tx-26 tx-bold">Settings</p>
               </div>
-              <div className="col-md-6 row justify-content-end display-content">
-                <p>
-                  <Link to="../analytics" className="btn btn-primary">
+              <div className="d-flex justify-content-between w-100 w-sm-auto">
+                <p className="d-flex w-100 justify-content-between">
+                  <Link to="../analytics" className="btn btn-primary mg-r-10">
                     All Analytics
                   </Link>
-                </p>
-                <p>
                   <Link
                     to="../billing/fund-wallet"
-                    className="btn btn-outline-primary offset-1 mx-4"
+                    className="btn btn-outline-primary"
                   >
                     Fund wallet
                   </Link>
@@ -115,10 +112,15 @@ const Settings = () => {
                 <div className="d-flex justify-content-between my-4">
                   <div>View your setup details here</div>
                 </div>
-                <div className=" wdm-55 d-flex ht-250">
+                <div className="d-flex">
                   <img
-                    src={people.imageUrl}
-                    className="img-thumbnail wd-250"
+                    htmlFor="custom-file"
+                    src={
+                      people.imageUrl
+                        ? people.imageUrl
+                        : "https://via.placeholder.com/500"
+                    }
+                    className="img-fluid wd-100 ht-100 pro-image"
                     alt=""
                     onChange={handleImageChange}
                   />
@@ -131,7 +133,7 @@ const Settings = () => {
                       onChange={handleImageChange}
                     />
                     <label
-                      for="custom-file"
+                      htmlFor="custom-file"
                       className="w-15 nav-link clickable"
                     >
                       Click here to change Photo
@@ -139,10 +141,10 @@ const Settings = () => {
                   </div>
                 </div>
                 <div>
-                  <form className="p-2">
+                  <form className="mg-t-20">
                     {/* let's put something here jare */}
                     <div className="row justify-content-between">
-                      <div className="col-md-6 p-2">
+                      <div className="form-group col-md-6">
                         <label htmlFor="fname">First name</label>
                         <br />
                         <input
@@ -150,11 +152,11 @@ const Settings = () => {
                           id="fname"
                           name="firstName"
                           value={people.firstName}
-                          className="wd-90p p-2"
+                          className="form-control"
                           onChange={handleChange}
                         />
                       </div>
-                      <div className="col-md-6 p-2">
+                      <div className="form-group col-md-6">
                         <label htmlFor="lname">Last name</label>
                         <br />
                         <input
@@ -162,13 +164,13 @@ const Settings = () => {
                           id="lname"
                           name="lastName"
                           value={people.lastName}
-                          className="wd-90p p-2"
+                          className="form-control"
                           onChange={handleChange}
                         />
                       </div>
                     </div>
                     <div className="row justify-content-around">
-                      <div className="col-md-6 p-2">
+                      <div className="form-group col-md-6">
                         <label htmlFor="username">User name</label>
                         <br />
                         <input
@@ -176,11 +178,11 @@ const Settings = () => {
                           id="username"
                           name="username"
                           value={people.username}
-                          className="wd-90p p-2"
+                          className="form-control"
                           disabled="disabled"
                         />
                       </div>
-                      <div className="col-md-6 p-2">
+                      <div className="form-group col-md-6">
                         <label htmlFor="emailad">Email address</label>
                         <br />
                         <input
@@ -188,13 +190,13 @@ const Settings = () => {
                           id="emailad"
                           name="email"
                           value={people.email}
-                          className="wd-90p p-2"
+                          className="form-control"
                           disabled="disabled"
                         />
                       </div>
                     </div>
                     <div className="row justify-content-around">
-                      <div className="col-md-6 p-2">
+                      <div className="form-group col-md-6">
                         <label htmlFor="password">Password</label>
                         <br />
                         <input
@@ -202,7 +204,7 @@ const Settings = () => {
                           id="password"
                           name="password"
                           value={people.password}
-                          className="wd-90p p-2"
+                          className="form-control"
                           disabled="disabled"
                         />
                       </div>
@@ -214,7 +216,7 @@ const Settings = () => {
                           id="phone-no"
                           name="phone"
                           value={people.phone}
-                          className="wd-90p p-2"
+                          className="form-control"
                           onChange={handleChange}
                         />
                       </div>
@@ -238,6 +240,7 @@ const Settings = () => {
                         Want to Change password?
                       </span>
                       <span style={{ textDecoration: "underline;" }}>
+                        {" "}
                         Click here
                       </span>
                     </Link>

@@ -46,7 +46,7 @@ const FundWalletFlierVideo = ({ prevStep, values, price }) => {
     const obj = JSON.parse(`{"amount": ${amount < 50 ? 50 : amount}}`);
 
     dispatch(fundUserWallet(obj));
-    setAmountToPay("");
+    // setAmountToPay("");
   };
 
   const config = {
