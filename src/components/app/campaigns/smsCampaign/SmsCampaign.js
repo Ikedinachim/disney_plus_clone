@@ -57,10 +57,10 @@ const SmsCampaign = ({
       senderID.senderID
         .map(
           (senderId) =>
-            (senderId.airtelStatus === "Approved" ||
-              senderId.mtnStatus === "Approved" ||
-              senderId.gloStatus === "Approved" ||
-              senderId.nineMobileStatus === "Approved") &&
+            (senderId.airtelStatus === "approved" ||
+              senderId.mtnStatus === "approved" ||
+              senderId.gloStatus === "approved" ||
+              senderId.nineMobileStatus === "approved") &&
             senderId.senderId
         )
         .filter((sender) => sender);
