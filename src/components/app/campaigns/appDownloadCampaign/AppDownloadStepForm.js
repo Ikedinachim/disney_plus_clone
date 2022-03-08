@@ -4,6 +4,7 @@ import TargetAudience from "./TargetAudience";
 import PreviewCampaign from "./PreviewCampaign";
 import FundWalletAppDownlaod from "./FundWalletAppDownlaod";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export default class AppDownloadStepForm extends Component {
   state = {
@@ -91,49 +92,55 @@ export default class AppDownloadStepForm extends Component {
 
   handleImageUpload = async (e) => {
     // console.log(e);
-    let files = e.target.files[0];
-    // console.log(files);
-    const formData = new FormData();
-    formData.append("file", files);
-    formData.append("upload_preset", "mysogi");
+    const width = e.target.offsetWidth;
+    const height = e.target.offsetHeight;
+    if (width > 150 || height > 150) {
+      toast.error("image dimensions not fitting");
+    } else {
+      let files = e.target.files[0];
+      // console.log(files);
+      const formData = new FormData();
+      formData.append("file", files);
+      formData.append("upload_preset", "mysogi");
 
-    const options = {
-      onUploadProgress: (progressEvent) => {
-        const { loaded, total } = progressEvent;
-        let percent = Math.floor((loaded * 100) / total);
-        // console.log(`${loaded}kb of ${total}kb | ${percent}%`);
+      const options = {
+        onUploadProgress: (progressEvent) => {
+          const { loaded, total } = progressEvent;
+          let percent = Math.floor((loaded * 100) / total);
+          // console.log(`${loaded}kb of ${total}kb | ${percent}%`);
 
-        if (percent < 100) {
-          this.setState({ uploadPercentage: percent });
-        }
-      },
-    };
+          if (percent < 100) {
+            this.setState({ uploadPercentage: percent });
+          }
+        },
+      };
 
-    try {
-      await axios
-        .post(
-          "https://api.Cloudinary.com/v1_1/mysogi/image/upload",
-          formData,
-          options
-        )
-        .then((res) => {
-          // console.log(res);
-          this.setState(
-            {
-              imageUrl: res.data.secure_url,
-              uploadPercentage: 100,
-              selectedFileName: files.name,
-              imageAlt: `An image of ${res.original_filename}`,
-            },
-            () => {
-              setTimeout(() => {
-                this.setState({ uploadPercentage: 0 });
-              }, 1000);
-            }
-          );
-        });
-    } catch (err) {
-      // return console.log(err);
+      try {
+        await axios
+          .post(
+            "https://api.Cloudinary.com/v1_1/mysogi/image/upload",
+            formData,
+            options
+          )
+          .then((res) => {
+            // console.log(res);
+            this.setState(
+              {
+                imageUrl: res.data.secure_url,
+                uploadPercentage: 100,
+                selectedFileName: files.name,
+                imageAlt: `An image of ${res.original_filename}`,
+              },
+              () => {
+                setTimeout(() => {
+                  this.setState({ uploadPercentage: 0 });
+                }, 1000);
+              }
+            );
+          });
+      } catch (err) {
+        // return console.log(err);
+      }
     }
   };
 

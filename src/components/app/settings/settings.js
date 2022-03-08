@@ -26,7 +26,7 @@ const Settings = () => {
       toast.error(updateUser.error);
       dispatch(clearErrors());
     }
-    dispatch(getUser());
+    // dispatch(getUser());
   }, [dispatch, updateUser]);
 
   const handleImageChange = async () => {
