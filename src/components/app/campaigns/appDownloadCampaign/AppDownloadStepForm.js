@@ -94,7 +94,7 @@ export default class AppDownloadStepForm extends Component {
     // console.log(e);
     const width = e.target.offsetWidth;
     const height = e.target.offsetHeight;
-    if (width > 150 || height > 150) {
+    if (width > 960 || height > 1280) {
       toast.error("image dimensions not fitting");
     } else {
       let files = e.target.files[0];
