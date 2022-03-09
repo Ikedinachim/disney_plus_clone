@@ -133,9 +133,7 @@ const SmsCampaign = ({
                             defaultValue={values.alternateSenderId}
                             onChange={handleChange("alternateSenderId")}
                           >
-                            <option value="">
-                              Select Alternate SenderId Sender ID
-                            </option>
+                            <option value="">Select Alternate Sender ID</option>
                             {defaultSenderID &&
                               defaultSenderID.defaultSenderID.map(
                                 (senderids, i) => (
