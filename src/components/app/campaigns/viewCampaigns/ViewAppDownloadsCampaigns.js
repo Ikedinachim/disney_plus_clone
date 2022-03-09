@@ -146,6 +146,7 @@ const ViewAppDownloadsCampaigns = () => {
           striped
           hover
           checkboxFirstColumn
+          responsive
         />
       )}
     </Fragment>

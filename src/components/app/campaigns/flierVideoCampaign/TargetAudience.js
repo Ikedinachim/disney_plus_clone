@@ -271,13 +271,11 @@ const TargetAudience = ({
                             onChange={handleChange("lga")}
                           >
                             <option value="">Select L.G.A</option>
+                            <option value="all">All</option>
                             {lga.lgas.map((selectLga, i) => (
-                              <>
-                                <option value="all">All</option>
-                                <option value={selectLga} key={i}>
-                                  {selectLga}
-                                </option>
-                              </>
+                              <option value={selectLga} key={i}>
+                                {selectLga}
+                              </option>
                             ))}
                           </select>
                         </div>
@@ -462,6 +460,7 @@ const TargetAudience = ({
                                 onChange={handleChange("lga")}
                               >
                                 <option value="">Select L.G.A</option>
+                                <option value="all">All</option>
                                 {lga.lgas.map((selectLga, i) => (
                                   <option value={selectLga} key={i}>
                                     {selectLga}
