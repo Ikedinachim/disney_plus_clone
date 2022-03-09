@@ -54,11 +54,6 @@ const ViewInfluencerCampaigns = () => {
           sort: "asc",
         },
         {
-          label: "REVENUE",
-          field: "revenue",
-          sort: "asc",
-        },
-        {
           label: "COST",
           field: "cost",
           sort: "asc",
@@ -99,14 +94,6 @@ const ViewInfluencerCampaigns = () => {
           ),
           campaignName: campaign.campaignType,
           adType: campaign.channel,
-          revenue: (
-            <NumberFormat
-              value={0}
-              displayType={"text"}
-              thousandSeparator={true}
-              prefix={"₦"}
-            />
-          ),
           cost: (
             <NumberFormat
               value={campaign.cost}
