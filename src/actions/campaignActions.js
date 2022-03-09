@@ -48,6 +48,9 @@ import {
   GET_SMS_SINGLE_CAMPAIGN_REQUEST,
   GET_SMS_SINGLE_CAMPAIGN_SUCCESS,
   GET_SMS_SINGLE_CAMPAIGN_FAIL,
+  SINGLE_USER_INFLUENCER_REQUEST,
+  SINGLE_USER_INFLUENCER_SUCCESS,
+  SINGLE_USER_INFLUENCER_FAIL,
 
   /////////////// INFLUENCER CONSTANTS ////////////
   GET_ALL_INFLUENCER_CAMPAIGN_REQUEST,
@@ -62,6 +65,9 @@ import {
   GET_INFLUENCER_DETAILS_REQUEST,
   GET_INFLUENCER_DETAILS_SUCCESS,
   GET_INFLUENCER_DETAILS_FAIL,
+  ALL_USER_INFLUENCER_REQUEST,
+  ALL_USER_INFLUENCER_SUCCESS,
+  ALL_USER_INFLUENCER_FAIL,
 
   ////////////// GENERIC CONSTANTS ///////////////
   CLEAR_ERRORS,
@@ -598,6 +604,82 @@ export const getAllInfluencers = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_ALL_INFLUENCERS_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+//Get all influencers for particular user
+export const getAllUserInfluencers = () => async (dispatch) => {
+  try {
+    dispatch({ type: ALL_USER_INFLUENCER_REQUEST });
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      "/api/campaign/influencer/list-user-infleuncer-campaign",
+      config
+    );
+
+    if (data.status === "success") {
+      dispatch({
+        type: ALL_USER_INFLUENCER_SUCCESS,
+        payload: data.data,
+      });
+    } else {
+      dispatch({
+        type: ALL_USER_INFLUENCER_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: ALL_USER_INFLUENCER_FAIL,
+      payload: error.message,
+    });
+  }
+};
+export const getSingleUserInfluencers = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: SINGLE_USER_INFLUENCER_REQUEST });
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const body = {
+      campaignId: id,
+    };
+
+    const { data } = await axios.get(
+      "/api/campaign/influencer/single-user-influencer-campaign",
+      config,
+      body
+    );
+
+    if (data.status === "success") {
+      dispatch({
+        type: SINGLE_USER_INFLUENCER_SUCCESS,
+        payload: data.data,
+      });
+    } else {
+      dispatch({
+        type: SINGLE_USER_INFLUENCER_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: SINGLE_USER_INFLUENCER_FAIL,
       payload: error.message,
     });
   }

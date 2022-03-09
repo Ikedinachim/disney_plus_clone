@@ -57,6 +57,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import CampaignDetails from "./components/app/campaigns/CampaignDetails";
 import UserPasswordUpdate from "./components/user/UserPasswordUpdate";
+import InfluencerDetails from "./components/app/campaigns/campaignDetails/InfluencerDetails";
 
 AOS.init();
 
@@ -232,6 +233,16 @@ function App() {
             element={
               isAuthenticated && user && user.user.role === "user" ? (
                 <SmsDetails />
+              ) : (
+                <Login />
+              )
+            }
+          />
+          <Route
+            path="campaign/single-influencer/:id"
+            element={
+              isAuthenticated && user && user.user.role === "user" ? (
+                <InfluencerDetails />
               ) : (
                 <Login />
               )
