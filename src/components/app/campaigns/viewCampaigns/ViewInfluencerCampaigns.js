@@ -12,21 +12,24 @@ import MetaData from "../../../layout/MetaData";
 // import { getWallet } from '../../../actions/billingActions'
 import { MDBDataTable } from "mdbreact";
 import {
-  getSmsCampaigns,
+  getAllUserInfluencers,
   clearErrors,
 } from "../../../../actions/campaignActions";
+import { toast } from "react-toastify";
 
 const ViewInfluencerCampaigns = () => {
-  const { loading, error, smsCampaigns } = useSelector(
-    (state) => state.getSmsCampaign || {}
+  const { loading, error, allUserInfluencer } = useSelector(
+    (state) => state.allUserInfluencer || {}
   );
+
+  console.log(allUserInfluencer);
   const dispatch = useDispatch();
   const alert = useAlert();
 
   useEffect(() => {
-    dispatch(getSmsCampaigns());
+    dispatch(getAllUserInfluencers());
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
     // dispatch(getWallet())
@@ -79,8 +82,8 @@ const ViewInfluencerCampaigns = () => {
       rows: [],
     };
 
-    smsCampaigns &&
-      smsCampaigns.forEach((campaign) => {
+    allUserInfluencer &&
+      allUserInfluencer.forEach((campaign) => {
         data.rows.push({
           checkBoxes: (
             <Fragment>
@@ -118,17 +121,17 @@ const ViewInfluencerCampaigns = () => {
           status: (
             <span
               className={`{"badge" ${
-                !campaign.isApproved ? "badge-pink" : "badge-active"
+                !campaign.isAdminApproved ? "badge-pink" : "badge-active"
               }`}
             >
-              {!campaign.isApproved ? "Pending" : "Approved"}
+              {!campaign.isAdminApproved ? "Pending" : "Approved"}
             </span>
           ),
           actions: (
             <Fragment>
               <div class="tx-black tx-14">
                 <div class="d-flex">
-                  <Link to={`../campaign/single-sms/${campaign.id}`}>
+                  <Link to={`../campaign/single-influencer/${campaign.id}`}>
                     <i className="fa fa-eye tx-orange pd-t-4 mg-r-5" /> View{" "}
                   </Link>
                 </div>

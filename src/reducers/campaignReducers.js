@@ -43,6 +43,12 @@ import {
   GET_FILTERED_CONTACT_LIST_REQUEST,
   GET_FILTERED_CONTACT_LIST_SUCCESS,
   GET_FILTERED_CONTACT_LIST_FAIL,
+  ALL_USER_INFLUENCER_REQUEST,
+  ALL_USER_INFLUENCER_SUCCESS,
+  ALL_USER_INFLUENCER_FAIL,
+  SINGLE_USER_INFLUENCER_REQUEST,
+  SINGLE_USER_INFLUENCER_SUCCESS,
+  SINGLE_USER_INFLUENCER_FAIL,
   /////////////// INFLUENCER CONSTANTS ////////////
   GET_ALL_INFLUENCER_CAMPAIGN_REQUEST,
   GET_ALL_INFLUENCER_CAMPAIGN_SUCCESS,
@@ -564,6 +570,67 @@ export const getAllInfluencersReducer = (
         error: null,
       };
 
+    default:
+      return state;
+  }
+};
+
+export const allUserInfluencerCampaignReducer = (
+  state = { allUserInfluencer: [] },
+  action
+) => {
+  switch (action.type) {
+    case ALL_USER_INFLUENCER_REQUEST:
+      return {
+        loading: true,
+        allUserInfluencer: [],
+      };
+    case ALL_USER_INFLUENCER_SUCCESS:
+      return {
+        loading: false,
+        allUserInfluencer: action.payload.reverse(),
+      };
+    case ALL_USER_INFLUENCER_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const singleUserInfluencerReducer = (
+  state = { singleUserInfluencer: [] },
+  action
+) => {
+  switch (action.type) {
+    case SINGLE_USER_INFLUENCER_REQUEST:
+      return {
+        loading: true,
+        singleUserInfluencer: [],
+      };
+    case SINGLE_USER_INFLUENCER_SUCCESS:
+      return {
+        loading: false,
+        singleUserInfluencer: action.payload,
+      };
+    case SINGLE_USER_INFLUENCER_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
     default:
       return state;
   }
