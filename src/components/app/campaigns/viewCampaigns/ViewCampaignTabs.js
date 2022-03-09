@@ -114,7 +114,7 @@ const ViewCampaignTabs = () => {
                         type="submit"
                         variant="contained"
                       >
-                        Flier/Video
+                        Digital/Display
                       </button>
                       <button
                         className={`btn w-100 mg-r-15 ${

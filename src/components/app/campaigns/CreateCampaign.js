@@ -109,7 +109,7 @@ const CreateCampaign = () => {
                             <img src={Flier} alt="" className="img-fluid" />
                             <div className="pd-t-15">
                               <p className="tx-16 tx-bold">
-                                Digital/Display Ads Campaign
+                                Digital / Display Ads Campaign
                               </p>
                               <p className="tx-14 tx-gray mb-0">
                                 Bring speed and scale to your business with
