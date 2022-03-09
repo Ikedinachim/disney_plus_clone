@@ -56,7 +56,12 @@ const SmsCampaign = ({
       senderID.senderID &&
       senderID.senderID
         .map(
-          (senderId) => senderId.telcoStatus === "approved" && senderId.senderId
+          (senderId) =>
+            (senderId.airtelStatus === "approved" ||
+              senderId.mtnStatus === "approved" ||
+              senderId.gloStatus === "approved" ||
+              senderId.nineMobileStatus === "approved") &&
+            senderId.senderId
         )
         .filter((sender) => sender);
     return senders;
@@ -128,9 +133,7 @@ const SmsCampaign = ({
                             defaultValue={values.alternateSenderId}
                             onChange={handleChange("alternateSenderId")}
                           >
-                            <option value="">
-                              Select Alternate SenderId Sender ID
-                            </option>
+                            <option value="">Select Alternate Sender ID</option>
                             {defaultSenderID &&
                               defaultSenderID.defaultSenderID.map(
                                 (senderids, i) => (

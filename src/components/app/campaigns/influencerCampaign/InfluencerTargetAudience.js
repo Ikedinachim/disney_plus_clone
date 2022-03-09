@@ -147,7 +147,7 @@ const InfluencerTargetAudience = ({
                     </div>
                   </div> */}
                   {values.assetType === "image" && (
-                    <div className="form-group col-md-6 pd-md-l-0">
+                    <div className="form-group pd-0 col-md-6 pd-md-l-0">
                       <div className="custom-file">
                         <input
                           type="file"
@@ -183,7 +183,7 @@ const InfluencerTargetAudience = ({
                     </div>
                   )}
                   {values.assetType === "video" && (
-                    <div className="form-group col-md-6 pd-md-l-0">
+                    <div className="form-group pd-0 col-md-6 pd-md-l-0">
                       <div className="custom-file">
                         <label className="mb-1">Youtube URL</label>
                         <input
@@ -202,9 +202,6 @@ const InfluencerTargetAudience = ({
                         >
                           {selectedFileName}
                         </label>
-                        <span className="tx-danger tx-italic">
-                          Video size: not more than 30mb
-                        </span>
                         {uploadPercentage > 0 && (
                           <span className="mt-2">
                             <ProgressBar
@@ -214,6 +211,9 @@ const InfluencerTargetAudience = ({
                             />
                           </span>
                         )}
+                        <p className="tx-danger tx-italic">
+                          Video size: not more than 30mb
+                        </p>
                       </div>
                     </div>
                   )}

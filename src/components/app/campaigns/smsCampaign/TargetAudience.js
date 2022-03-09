@@ -146,6 +146,8 @@ const TargetAudience = ({
     getCsvRawData(parsedCsvData);
   }, [dispatch, error, parsedCsvData]);
 
+  // console.log(values);
+
   return (
     <Fragment>
       <MetaData title={"Target Audience"} />
@@ -311,6 +313,7 @@ const TargetAudience = ({
                               onChange={handleChange("lga")}
                             >
                               <option value="">Select L.G.A</option>
+                              <option value="all">All</option>
                               {lga.lgas.map((selectLga, i) => (
                                 <option value={selectLga} key={i}>
                                   {selectLga}

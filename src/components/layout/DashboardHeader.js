@@ -29,7 +29,7 @@ const Header = () => {
 
   useEffect(() => {
     dispatch(getWallet());
-    dispatch(getUser());
+    // dispatch(getUser());
     const checkIfClickedOutside = (e) => {
       // If the menu is open and the clicked target is not within the menu,
       // then close the menu

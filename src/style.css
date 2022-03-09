@@ -305,3 +305,11 @@ tbody + thead {
   align-items: center;
   justify-content: center;
 }
+
+table thead tr {
+  white-space: nowrap;
+}
+
+.dataTables_wrapper .row > div {
+  flex: 1;
+}

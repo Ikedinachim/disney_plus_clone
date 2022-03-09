@@ -105,7 +105,12 @@ const FlierVideoCampaign = ({
       senderID.senderID &&
       senderID.senderID
         .map(
-          (senderId) => senderId.telcoStatus === "approved" && senderId.senderId
+          (senderId) =>
+            (senderId.airtelStatus === "approved" ||
+              senderId.mtnStatus === "approved" ||
+              senderId.gloStatus === "approved" ||
+              senderId.nineMobileStatus === "approved") &&
+            senderId.senderId
         )
         .filter((sender) => sender);
     // .concat(defaultSenderID.defaultSenderID);
@@ -319,9 +324,9 @@ const FlierVideoCampaign = ({
                             />
                           </div>
                           <div className="form-row">
-                            <div className="form-group col-md-6">
+                            <div className="form-group col-md-6 mg-b-0">
                               <label className="mb-1">Time Range</label>
-                              <div className="input-group mg-b-10">
+                              <div className="input-group mg-b-0">
                                 <div className="input-group-prepend">
                                   <span className="input-group-text">From</span>
                                 </div>

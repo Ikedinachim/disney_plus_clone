@@ -6,7 +6,7 @@ import MetaData from "../layout/MetaData";
 
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { login, clearErrors } from "../../actions/authActions";
+import { login, getUser, clearErrors } from "../../actions/authActions";
 import { getWallet } from "../../actions/billingActions";
 // import { UPDATE_INFLUENCER_PASSWORD_RESET } from "../../constants/authConstants";
 
@@ -26,6 +26,8 @@ const Login = () => {
   const { resetInfluencerPassword } = useSelector(
     (state) => state.resetInfluencerPassword
   );
+
+  const { userDetails } = useSelector((state) => state);
   // const { isAuthenticated, error, loading, user, resetPassword } = useSelector(
   //   (state) => state.auth
   // );
@@ -33,6 +35,7 @@ const Login = () => {
   useEffect(() => {
     if (isAuthenticated && user.user.role !== "influencer") {
       dispatch(getWallet());
+      dispatch(getUser());
       navHistory("/app");
     } else if (
       !isAuthenticated &&
@@ -77,7 +80,7 @@ const Login = () => {
 
   return (
     <Fragment>
-      {loading ? <Loader /> : null}
+      {loading || userDetails.loading ? <Loader /> : null}
       <Fragment>
         <MetaData title={"Login"} />
         <section className="ht-100v container-fluid">
