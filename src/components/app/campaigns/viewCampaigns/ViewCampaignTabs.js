@@ -83,7 +83,7 @@ const ViewCampaignTabs = () => {
                       className="btn btn-primary w-100"
                     >
                       {" "}
-                      Create New Campaign
+                      New Campaign
                     </Link>
                   </p>
                 </div>
