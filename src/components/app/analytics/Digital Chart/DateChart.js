@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Chart } from "react-google-charts";
-import { getCampaignByDate } from "../../../actions/analyticsActions";
+import { getCampaignByDate } from "../../../../actions/analyticsActions";
 
 const DateChart = ({ propellerId }) => {
   const {

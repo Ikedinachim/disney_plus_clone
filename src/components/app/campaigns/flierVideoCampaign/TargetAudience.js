@@ -304,7 +304,7 @@ const TargetAudience = ({
                         {values.budget >= 10000 && (
                           <div className="form-group col-md-6 mb-0 align-items-center d-flex">
                             <div>
-                              <span>{Math.floor(values.budget / 6)}</span>
+                              <span>{values.budget / 5}</span>
                               {" - "}
                               <span>
                                 {values.budget / 2} Estimated Reach{" "}

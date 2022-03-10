@@ -29,7 +29,7 @@ const FlierVideosDetails = () => {
     // dispatch(getWallet())
   }, [dispatch, toast, error]);
 
-  console.log(singleFlierCampaign);
+  // console.log(singleFlierCampaign);
 
   return (
     <Fragment>
@@ -63,7 +63,7 @@ const FlierVideosDetails = () => {
                     </div>
                     <div>
                       <p className="tx-20 tx-bold pd-t-20">
-                        App download Details
+                        Smart Sms/Display Ads Details
                       </p>
                     </div>
                   </div>

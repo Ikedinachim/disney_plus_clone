@@ -488,7 +488,7 @@ export const getSingleFlierCampaignReducer = (
     case VIEW_SINGLE_FLIER_CAMPAIGN_SUCCESS:
       return {
         loading: false,
-        singleFlierCampaign: action.payload.reverse(),
+        singleFlierCampaign: action.payload,
       };
 
     case VIEW_SINGLE_FLIER_CAMPAIGN_FAIL:
