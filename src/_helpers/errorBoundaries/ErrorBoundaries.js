@@ -1,17 +1,5 @@
 import React from "react";
 
-const ErrorComponent = (hasError) => {
-  return (
-    <div>
-      <h1>Oops, Something Went Wrong</h1>
-      <button type="button" onClick={() => this.setState({ hasError: false })}>
-        Try again?
-      </button>
-    </div>
-    //   <h1>Something went wrong</h1>
-  );
-};
-
 export class AppError extends React.Component {
   state = {
     hasError: false,
@@ -29,42 +17,27 @@ export class AppError extends React.Component {
     if (this.state.hasError) {
       return (
         <div>
-          <h1>Oops, Something Went Wrong</h1>
-          <button
-            type="button"
-            onClick={() => this.setState({ hasError: false })}
-          >
-            Try again?
-          </button>
+          <div id="notfound">
+            <div class="notfound">
+              <div class="notfound-404"></div>
+              <h1>Oops!</h1>
+              <h2>Something Went Wrong</h2>
+              <p>
+                Sorry but the page you are looking for does not exist, have been
+                removed. name changed or is temporarily unavailable
+              </p>
+              <button
+                className="btn btn-primary"
+                type="button"
+                onClick={() => this.setState({ hasError: false })}
+              >
+                Try again?
+              </button>
+            </div>
+          </div>
         </div>
       );
     }
     return this.props.children;
   }
 }
-
-// export class AppError extends React.Component {
-//   state = { hasError: false };
-//   static getDerivedStateFromError(error) {
-//     return { hasError: true };
-//   }
-//   componentDidCatch(error, errorInfo) {
-//     this.setState({ error, errorInfo });
-//   }
-//   render() {
-//     if (this.state.hasError) {
-//       return (
-//         <div>
-//           <h1>Oops, we done goofed up</h1>
-//           <button
-//             type="button"
-//             onClick={() => this.setState({ hasError: false })}
-//           >
-//             Try again?
-//           </button>
-//         </div>
-//       );
-//     }
-//     return this.props.children;
-//   }
-// }

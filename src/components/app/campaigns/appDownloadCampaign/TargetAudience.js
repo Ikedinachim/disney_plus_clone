@@ -506,8 +506,8 @@ const TargetAudience = ({
                           <div className="row justify-content-md-between">
                             <div className="form-group col-md-6">
                               <label htmlFor className="mb-1 tx-com">
-                                Enter Number (you can separate your contact with
-                                comma (,)
+                                Enter msisdns separated by commas e.g.
+                                23480xxxxxxxx,23480xxxxxxxx
                               </label>
                               <textarea
                                 name
@@ -515,7 +515,7 @@ const TargetAudience = ({
                                 id
                                 rows={4}
                                 onChange={handleChange("numbers")}
-                                placeholder="Enter Number(s) +234080xxxxxxxx, +234080xxxxxxxx"
+                                placeholder="23480xxxxxxxx,23480xxxxxxxx"
                                 defaultValue={numbers}
                               />
                             </div>
