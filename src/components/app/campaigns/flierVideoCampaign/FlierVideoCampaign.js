@@ -151,7 +151,7 @@ const FlierVideoCampaign = ({
                       <form>
                         <div>
                           <p className="tx-24 tx-bold mb-1 tx-com">
-                            Flier/Video Campaign
+                            Digital / Display Ads Campaign
                           </p>
                           <p className="tx-14">
                             Provide all requested details to help complete the

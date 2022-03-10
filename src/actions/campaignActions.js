@@ -891,7 +891,7 @@ export const getDigitalCampaigns = () => async (dispatch) => {
       // console.log("works");
       dispatch({
         type: GET_DIGITAL_CAMPAIGNS_SUCCESS,
-        payload: data.data,
+        payload: data.data.reverse(),
       });
     } else {
       dispatch({
