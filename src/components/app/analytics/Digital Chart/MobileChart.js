@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Chart } from "react-google-charts";
-import { getMobileCampaign } from "../../../actions/analyticsActions";
+import { getMobileCampaign } from "../../../../actions/analyticsActions";
 
 const MobileChart = ({ propellerId }) => {
   const {

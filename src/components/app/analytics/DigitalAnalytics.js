@@ -9,11 +9,11 @@ import {
 } from "../../../actions/analyticsActions";
 import Loader from "../../loader";
 import { useAlert } from "react-alert";
-import OsChart from "./OsChart";
-import MobileChart from "./MobileChart";
-import DateChart from "./DateChart";
+import OsChart from "./Digital Chart/OsChart";
+import MobileChart from "./Digital Chart/MobileChart";
+import DateChart from "./Digital Chart/DateChart";
 
-const Analytics = () => {
+const DigitalAnalytics = () => {
   const {
     getPropellerCampaigns: { loading, error, propellerCampaigns },
   } = useSelector((state) => state);
@@ -144,4 +144,4 @@ const Analytics = () => {
   );
 };
 
-export default Analytics;
+export default DigitalAnalytics;

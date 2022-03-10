@@ -22,8 +22,8 @@ import SmsStepForm from "./components/app/campaigns/smsCampaign/SmsStepForm";
 import FlierVideoStepForm from "./components/app/campaigns/flierVideoCampaign/FlierVideoStepForm";
 import AppDownloadStepForm from "./components/app/campaigns/appDownloadCampaign/AppDownloadStepForm";
 import InfluencerStepForm from "./components/app/campaigns/influencerCampaign/InfluencerStepForm";
-import Analytics from "./components/app/analytics/analytics";
-import AnalyticsTable from "./components/app/analytics/analyticsTable";
+import DigitalAnalytics from "./components/app/analytics/DigitalAnalytics";
+import ViewAnalytics from "./components/app/analytics/ViewAnalytics";
 import Settings from "./components/app/settings/settings";
 import ChangePassword from "./components/app/settings/ChangePassword";
 import Ads from "./adsView/Ads";
@@ -263,7 +263,7 @@ function App() {
             path="analytics/graph/:propellerId"
             element={
               isAuthenticated && user && user.user.role === "user" ? (
-                <Analytics />
+                <DigitalAnalytics />
               ) : (
                 <Login />
               )
@@ -274,7 +274,7 @@ function App() {
             path="analytics"
             element={
               isAuthenticated && user && user.user.role === "user" ? (
-                <AnalyticsTable />
+                <ViewAnalytics />
               ) : (
                 <Login />
               )
