@@ -656,14 +656,10 @@ export const getSingleUserInfluencers = (id) => async (dispatch) => {
         Authorization: `Bearer ${token}`,
       },
     };
-    const body = {
-      campaignId: id,
-    };
 
     const { data } = await axios.get(
-      "/api/campaign/influencer/single-user-influencer-campaign",
-      config,
-      body
+      `/api/campaign/influencer/single-user-influencer-campaign/${id}`,
+      config
     );
 
     if (data.status === "success") {
