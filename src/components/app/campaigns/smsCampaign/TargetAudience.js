@@ -99,6 +99,7 @@ const TargetAudience = ({
   ////
   const [parsedCsvData, setParsedCsvData] = useState([]);
   const [csvName, setCsvName] = useState();
+  const [validPhoneNumber, setValidPhoneNumber] = useState(false);
 
   const parseFile = (file) => {
     Papa.parse(file, {
@@ -131,11 +132,15 @@ const TargetAudience = ({
     skipEmptyLines: "greedy",
   });
 
-  // const setCsvAsset = () => {
-  //   fetch("#")
-  //     .then((res) => res.blob())
-  //     .then((blob) => saveAs(blob, "fileName"));
-  // };
+  const validateNumber = (inputtxt) => {
+    var phoneno = /^\d{13}(,\d{13})*$/;
+    if (inputtxt.value.match(phoneno)) {
+      return true;
+    } else {
+      alert("message");
+      return false;
+    }
+  };
 
   useEffect(() => {
     if (error) {
@@ -411,16 +416,16 @@ const TargetAudience = ({
                         <div className="row justify-content-md-between">
                           <div className="form-group col-md-6">
                             <label htmlFor className="mb-1 tx-com">
-                              Enter Number (you can separate your contact with
-                              comma (,)
+                              Enter msisdns separated by commas e.g.
+                              23480xxxxxxxx,23480xxxxxxxx
                             </label>
                             <textarea
                               name="phoneNumber"
                               className="form-control"
                               id="phoneNumber"
                               rows={4}
-                              onChange={handleChange("phoneNumber")}
-                              placeholder="Enter Number(s) +234080xxxxxxxx, +234080xxxxxxxx"
+                              onBlur={handleChange("phoneNumber")}
+                              placeholder="23480xxxxxxxx,23480xxxxxxxx"
                               defaultValue={phoneNumber}
                             />
                           </div>
