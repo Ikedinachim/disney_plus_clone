@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Chart } from "react-google-charts";
-import { getOsCampaign } from "../../../actions/analyticsActions";
+import { getOsCampaign } from "../../../../actions/analyticsActions";
 
 const OsChart = ({ propellerId }) => {
   const {

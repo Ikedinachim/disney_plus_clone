@@ -63,7 +63,7 @@ const SmsDetails = () => {
                     </div>
                     <div>
                       <p className="tx-20 tx-bold pd-t-20">
-                        App download Details
+                        Flash sms/ Sms Details
                       </p>
                     </div>
                   </div>
