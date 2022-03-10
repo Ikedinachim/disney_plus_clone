@@ -19,6 +19,7 @@ import {
   clearErrors,
   getAppDownloadCampaigns,
   getViewFlierVideosCampaigns,
+  getDigitalCampaigns,
 } from "../../../actions/campaignActions";
 
 const ViewAnalytics = () => {
@@ -52,6 +53,7 @@ const ViewAnalytics = () => {
   };
 
   useEffect(() => {
+    dispatch(getDigitalCampaigns());
     dispatch(getSmsCampaigns());
     dispatch(getAppDownloadCampaigns());
     dispatch(getViewFlierVideosCampaigns());

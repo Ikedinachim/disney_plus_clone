@@ -55,7 +55,7 @@ import "./style.css";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
-import CampaignDetails from "./components/app/campaigns/CampaignDetails";
+
 import UserPasswordUpdate from "./components/user/UserPasswordUpdate";
 import InfluencerDetails from "./components/app/campaigns/campaignDetails/InfluencerDetails";
 
@@ -146,17 +146,6 @@ function App() {
               )
             }
           /> */}
-
-          <Route
-            path="campaigns/:id"
-            element={
-              isAuthenticated && user && user.user.role === "user" ? (
-                <CampaignDetails />
-              ) : (
-                <Login />
-              )
-            }
-          />
 
           <Route
             path="campaigns"

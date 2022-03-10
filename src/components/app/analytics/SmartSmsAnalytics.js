@@ -69,53 +69,59 @@ const SmartSmsAnalytics = () => {
 
     viewFlierVideosCampaigns &&
       viewFlierVideosCampaigns.forEach((campaign) => {
-        data.rows.push({
-          checkBoxes: (
-            <Fragment>
-              <div class="custom-control custom-checkbox">
-                <input
-                  type="checkbox"
-                  class="custom-control-input"
-                  id="customCheck1"
-                />
-                <label class="custom-control-label" for="customCheck1"></label>
-              </div>
-            </Fragment>
-          ),
-          campaignName: campaign.campaignType,
-          adType: campaign.channel,
-          cost: (
-            <NumberFormat
-              value={campaign.cost}
-              displayType={"text"}
-              thousandSeparator={true}
-              prefix={"₦"}
-            />
-          ),
-          dateCreated: DateTime.fromJSDate(
-            new Date(campaign.createdAt)
-          ).toFormat("dd MMM, yyyy"),
-          status: (
-            <span
-              className={`{"badge" ${
-                !campaign.isApproved ? "badge-pink" : "badge-active"
-              }`}
-            >
-              {!campaign.isApproved ? "Pending" : "Approved"}
-            </span>
-          ),
-          actions: (
-            <Fragment>
-              <div class="tx-black tx-14">
-                <div class="d-flex">
-                  <Link to={`../campaign/single-flier-video/${campaign.id}`}>
-                    <i className="fa fa-eye tx-orange pd-t-4 mg-r-5" /> View{" "}
-                  </Link>
+        if (campaign.channel === "smart_sms") {
+          data.rows.push({
+            checkBoxes: (
+              <Fragment>
+                <div class="custom-control custom-checkbox">
+                  <input
+                    type="checkbox"
+                    class="custom-control-input"
+                    id="customCheck1"
+                  />
+                  <label
+                    class="custom-control-label"
+                    for="customCheck1"
+                  ></label>
                 </div>
-              </div>
-            </Fragment>
-          ),
-        });
+              </Fragment>
+            ),
+            campaignName: campaign.campaignType,
+            adType: campaign.channel,
+            cost: (
+              <NumberFormat
+                value={campaign.cost}
+                displayType={"text"}
+                thousandSeparator={true}
+                prefix={"₦"}
+              />
+            ),
+            dateCreated: DateTime.fromJSDate(
+              new Date(campaign.createdAt)
+            ).toFormat("dd MMM, yyyy"),
+            status: (
+              <span
+                className={`{"badge" ${
+                  !campaign.isApproved ? "badge-pink" : "badge-active"
+                }`}
+              >
+                {!campaign.isApproved ? "Pending" : "Approved"}
+              </span>
+            ),
+            actions: (
+              <Fragment>
+                <div class="tx-black tx-14">
+                  <div class="d-flex">
+                    <Link to={`../campaign/single-flier-video/${campaign.id}`}>
+                      <i className="fa fa-eye tx-orange pd-t-4 mg-r-5" /> View
+                      Analytics{" "}
+                    </Link>
+                  </div>
+                </div>
+              </Fragment>
+            ),
+          });
+        }
       });
     return data;
   };

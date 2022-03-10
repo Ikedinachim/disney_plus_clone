@@ -88,10 +88,6 @@ const DigitalAnalyticsTable = () => {
     return data;
   };
 
-  useEffect(() => {
-    dispatch(getDigitalCampaigns());
-  }, [dispatch]);
-
   return (
     <Fragment>
       <MetaData title={"Campaigns"} />
