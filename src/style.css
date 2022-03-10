@@ -403,4 +403,10 @@ table thead tr {
     padding-right: 15px;
     padding-top: 110px;
   }
+  .nav-line .nav-item + .nav-item {
+    margin-left: 5px;
+  }
+  ul#myTab {
+    justify-content: center;
+  }
 }
