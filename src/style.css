@@ -409,4 +409,8 @@ table thead tr {
   ul#myTab {
     justify-content: center;
   }
+  .pd-md-y-20 {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
 }
