@@ -304,7 +304,7 @@ const TargetAudience = ({
                         {values.budget >= 10000 && (
                           <div className="form-group col-md-6 mb-0 align-items-center d-flex">
                             <div>
-                              <span>{values.budget / 5}</span>
+                              <span>{Math.floor(values.budget / 6)}</span>
                               {" - "}
                               <span>
                                 {values.budget / 2} Estimated Reach{" "}
@@ -560,8 +560,8 @@ const TargetAudience = ({
                           <div className="row justify-content-md-between">
                             <div className="form-group col-md-6">
                               <label className="mb-1 tx-com">
-                                Enter Number (you can separate your contact with
-                                comma (,)
+                                Enter msisdns separated by commas e.g.
+                                23480xxxxxxxx,23480xxxxxxxx
                               </label>
                               <textarea
                                 // name
@@ -569,7 +569,7 @@ const TargetAudience = ({
                                 id="numbers"
                                 rows={4}
                                 onChange={handleChange("numbers")}
-                                placeholder="Enter Number(s) +234080xxxxxxxx, +234080xxxxxxxx"
+                                placeholder="23480xxxxxxxx,23480xxxxxxxx"
                                 defaultValue={numbers}
                               />
                             </div>
