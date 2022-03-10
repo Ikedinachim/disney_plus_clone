@@ -133,6 +133,7 @@ const ViewFlierVideosCampaigns = () => {
           striped
           hover
           checkboxFirstColumn
+          responsive
         />
       )}
     </Fragment>

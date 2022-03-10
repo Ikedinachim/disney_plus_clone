@@ -143,6 +143,11 @@ const SmsCampaign = ({
                                 )
                               )}
                           </select>
+                          <p className="mg-0 tx-12 tx-italic tx-gray-500">
+                            This generic Sender ID would be used when your
+                            Sender ID has not been approved by one or more
+                            Telcos.
+                          </p>
                         </div>
                         <div className="form-group col-md-6">
                           <label className="mb-1">Select Channel</label>
