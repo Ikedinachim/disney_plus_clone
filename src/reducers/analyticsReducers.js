@@ -14,6 +14,9 @@ import {
   ADS_CLICK_REQUEST,
   ADS_CLICK_SUCCESS,
   ADS_CLICK_FAIL,
+  BITLY_CLICK_REQUEST,
+  BITLY_CLICK_SUCCESS,
+  BITLY_CLICK_FAIL,
   CLEAR_ERRORS,
 } from "../constants/analyticsConstants";
 
@@ -167,6 +170,37 @@ export const adsClickReducer = (state = { adsClick: [] }, action) => {
     case ADS_CLICK_FAIL:
       return {
         loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+//Bitly click count reducer
+export const bitlyCountReducer = (state = { bitlyCounts: [] }, action) => {
+  switch (action.type) {
+    case BITLY_CLICK_REQUEST:
+      return {
+        blLoading: true,
+      };
+
+    case BITLY_CLICK_SUCCESS:
+      return {
+        blLoading: false,
+        bitlyCounts: action.payload,
+      };
+
+    case BITLY_CLICK_FAIL:
+      return {
+        blLoading: false,
         error: action.payload,
       };
 

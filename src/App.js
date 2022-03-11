@@ -58,6 +58,8 @@ import "aos/dist/aos.css";
 
 import UserPasswordUpdate from "./components/user/UserPasswordUpdate";
 import InfluencerDetails from "./components/app/campaigns/campaignDetails/InfluencerDetails";
+import SmartSmsAnalytics from "./components/app/analytics/SmartSmsAnalytics";
+import SmsAnalytics from "./components/app/analytics/SmsAnalytics";
 
 AOS.init();
 
@@ -253,6 +255,26 @@ function App() {
             element={
               isAuthenticated && user && user.user.role === "user" ? (
                 <DigitalAnalytics />
+              ) : (
+                <Login />
+              )
+            }
+          />
+          <Route
+            path="analytics/smartsms/:id"
+            element={
+              isAuthenticated && user && user.user.role === "user" ? (
+                <SmartSmsAnalytics />
+              ) : (
+                <Login />
+              )
+            }
+          />
+          <Route
+            path="analytics/sms/:id"
+            element={
+              isAuthenticated && user && user.user.role === "user" ? (
+                <SmsAnalytics />
               ) : (
                 <Login />
               )

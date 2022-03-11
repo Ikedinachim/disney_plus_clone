@@ -39,6 +39,7 @@ import {
   getPropellerCampaignsReducer,
   getCampaignByDateReducer,
   adsClickReducer,
+  bitlyCountReducer,
 } from "./reducers/analyticsReducers";
 import {
   createSmsCampaignReducer,
@@ -109,6 +110,7 @@ const appReducer = combineReducers({
   sendNewPassword: sendNewPasswordReducer,
   allUserInfluencer: allUserInfluencerCampaignReducer,
   singleUserInfluencer: singleUserInfluencerReducer,
+  bitlyCount: bitlyCountReducer,
 });
 
 const reducer = (state, action) => {
