@@ -12,8 +12,8 @@ import Loader from "../../../loader";
 // import { useAlert } from "react-alert";
 
 const SmsDetails = () => {
-  const { loading, error, singleFlierCampaign } = useSelector(
-    (state) => state.singleFlierCampaign || {}
+  const { loading, error, singleSmsCampaign } = useSelector(
+    (state) => state.singleSmsCampaign || {}
   );
 
   const { id } = useParams();
@@ -29,7 +29,7 @@ const SmsDetails = () => {
     // dispatch(getWallet())
   }, [dispatch, toast, error]);
 
-  console.log(singleFlierCampaign);
+  console.log(singleSmsCampaign);
 
   return (
     <Fragment>
@@ -83,8 +83,8 @@ const SmsDetails = () => {
                             Campaign Name
                           </label>
                           <p className="tx-16 mb-0">
-                            {singleFlierCampaign &&
-                              singleFlierCampaign.campaignType}
+                            {singleSmsCampaign &&
+                              singleSmsCampaign.campaignType}
                           </p>
                         </div>
                         <div className="form-group col-md-6">
@@ -95,7 +95,7 @@ const SmsDetails = () => {
                             Sender-ID
                           </label>
                           <p className="tx-16 mb-0">
-                            {singleFlierCampaign && singleFlierCampaign.user_id}
+                            {singleSmsCampaign && singleSmsCampaign.senderId}
                           </p>
                         </div>
                         <div className="form-group col-md-6">
@@ -106,8 +106,7 @@ const SmsDetails = () => {
                             Campaign-ID
                           </label>
                           <p className="tx-16 mb-0">
-                            {singleFlierCampaign &&
-                              singleFlierCampaign.campaignId}
+                            {singleSmsCampaign && singleSmsCampaign.id}
                           </p>
                         </div>
                       </div>
@@ -123,8 +122,8 @@ const SmsDetails = () => {
                             Campaign message
                           </label>
                           <p className="tx-16 mb-0">
-                            {singleFlierCampaign &&
-                              singleFlierCampaign.campaignMessage}
+                            {singleSmsCampaign &&
+                              singleSmsCampaign.campaignMessage}
                           </p>
                         </div>
                         <div className="form-group col-md-6">
@@ -135,7 +134,7 @@ const SmsDetails = () => {
                             Channel
                           </label>
                           <p className="tx-16 mb-0">
-                            {singleFlierCampaign && singleFlierCampaign.channel}
+                            {singleSmsCampaign && singleSmsCampaign.channel}
                           </p>
                         </div>
                       </div>
@@ -156,7 +155,7 @@ const SmsDetails = () => {
                             Price
                           </label>
                           <p className="tx-16 mb-0">
-                            {singleFlierCampaign && singleFlierCampaign.cost}
+                            {singleSmsCampaign && singleSmsCampaign.cost}
                           </p>
                         </div>
 
@@ -170,8 +169,7 @@ const SmsDetails = () => {
                           <p className="tx-16 mb-0">
                             {DateTime.fromJSDate(
                               new Date(
-                                singleFlierCampaign &&
-                                  singleFlierCampaign.createdAt
+                                singleSmsCampaign && singleSmsCampaign.createdAt
                               )
                             ).toFormat("dd MMM, yyyy")}
                           </p>
@@ -186,8 +184,7 @@ const SmsDetails = () => {
                           <p className="tx-16 mb-0">
                             {DateTime.fromJSDate(
                               new Date(
-                                singleFlierCampaign &&
-                                  singleFlierCampaign.updatedAt
+                                singleSmsCampaign && singleSmsCampaign.updatedAt
                               )
                             ).toFormat("dd MMM, yyyy")}
                           </p>

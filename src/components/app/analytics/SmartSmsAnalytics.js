@@ -1,145 +1,111 @@
 import React, { Fragment, useEffect } from "react";
-import { Link } from "react-router-dom";
-
-import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
-import { DateTime } from "luxon";
-import NumberFormat from "react-number-format";
-
-import Loader from "../../loader";
+import { Link, useParams } from "react-router-dom";
 import MetaData from "../../layout/MetaData";
-
-// import { getWallet } from '../../../actions/billingActions'
-import { MDBDataTable } from "mdbreact";
+import { useSelector, useDispatch } from "react-redux";
+import { DateTime } from "luxon";
+import { toast } from "react-toastify";
+import {
+  getSingleFlierVideosCampaigns,
+  clearErrors,
+} from "../../../actions/campaignActions";
+import Loader from "../../loader";
+// import { useAlert } from "react-alert";
 
 const SmartSmsAnalytics = () => {
-  const { vfLoading, error, viewFlierVideosCampaigns } = useSelector(
-    (state) => state.viewFlierVideosCampaign || {}
+  const { loading, error, singleFlierCampaign } = useSelector(
+    (state) => state.singleFlierCampaign || {}
   );
+
+  const { id } = useParams();
   const dispatch = useDispatch();
-  const alert = useAlert();
+  // const alert = useAlert();
 
-  // useEffect(() => {
-  //     dispatch(getViewFlierVideosCampaigns())
-  //     // dispatch(getWallet())
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
+    }
+    dispatch(getSingleFlierVideosCampaigns(id));
+    // dispatch(getWallet())
+  }, [dispatch, toast, error]);
 
-  // }, [])
+  console.log(singleFlierCampaign);
 
-  const setViewFlierVideosCampaigns = () => {
-    const data = {
-      columns: [
-        {
-          label: "",
-          field: "checkBoxes",
-          sort: "asc",
-        },
-        {
-          label: "CAMPAIGN NAME",
-          field: "campaignName",
-          sort: "asc",
-        },
-        {
-          label: "AD TYPE",
-          field: "adType",
-          sort: "asc",
-        },
-        {
-          label: "COST",
-          field: "cost",
-          sort: "asc",
-        },
-        {
-          label: "DATE CREATED",
-          field: "dateCreated",
-          sort: "asc",
-        },
-        {
-          label: "STATUS",
-          field: "status",
-          sort: "asc",
-        },
-        {
-          label: "ACTIONS",
-          field: "actions",
-          sort: "asc",
-        },
-      ],
-      rows: [],
-    };
-
-    viewFlierVideosCampaigns &&
-      viewFlierVideosCampaigns.forEach((campaign) => {
-        if (campaign.channel === "smart_sms") {
-          data.rows.push({
-            checkBoxes: (
-              <Fragment>
-                <div class="custom-control custom-checkbox">
-                  <input
-                    type="checkbox"
-                    class="custom-control-input"
-                    id="customCheck1"
-                  />
-                  <label
-                    class="custom-control-label"
-                    for="customCheck1"
-                  ></label>
-                </div>
-              </Fragment>
-            ),
-            campaignName: campaign.campaignType,
-            adType: campaign.channel,
-            cost: (
-              <NumberFormat
-                value={campaign.cost}
-                displayType={"text"}
-                thousandSeparator={true}
-                prefix={"₦"}
-              />
-            ),
-            dateCreated: DateTime.fromJSDate(
-              new Date(campaign.createdAt)
-            ).toFormat("dd MMM, yyyy"),
-            status: (
-              <span
-                className={`{"badge" ${
-                  !campaign.isApproved ? "badge-pink" : "badge-active"
-                }`}
-              >
-                {!campaign.isApproved ? "Pending" : "Approved"}
-              </span>
-            ),
-            actions: (
-              <Fragment>
-                <div class="tx-black tx-14">
-                  <div class="d-flex">
-                    <Link to={`../campaign/single-flier-video/${campaign.id}`}>
-                      <i className="fa fa-eye tx-orange pd-t-4 mg-r-5" /> View
-                      Analytics{" "}
-                    </Link>
-                  </div>
-                </div>
-              </Fragment>
-            ),
-          });
-        }
-      });
-    return data;
-  };
+  const totalClickCount =
+    singleFlierCampaign.whatsAppNumberClickCount +
+    singleFlierCampaign.urlClickCount +
+    singleFlierCampaign.ussdClickCount +
+    singleFlierCampaign.phoneNumberClickCount +
+    singleFlierCampaign.smsNumberClickCount;
 
   return (
     <Fragment>
-      {/* <MetaData title={"SMS Campaigns"} /> */}
-      {vfLoading ? (
+      {loading ? (
         <Loader />
       ) : (
-        <MDBDataTable
-          data={setViewFlierVideosCampaigns()}
-          className="px-3 scroll"
-          bordered
-          striped
-          hover
-          checkboxFirstColumn
-        />
+        <Fragment>
+          <MetaData title={"Campaign Details"} />
+          <div className="content-body">
+            <div className="container pd-x-0">
+              <div className="row justify-content-between">
+                <div className="col-md-6 mg-b-20 mg-md-b-0">
+                  <Link to="../analytics" className="tx-black">
+                    <div>
+                      <i className="fa fa-angle-left mg-r-10 pd-t-15 tx-18"></i>
+                      <span className="tx-28 tx-bold mb-0">Analytics</span>
+                    </div>
+                  </Link>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-12 mg-t-20 mg-md-t-0">
+                  <div className="card rounded bd-0 shadow-sm">
+                    <div className="card-body">
+                      <div className="d-flex">
+                        <div className="mg-r-20">
+                          {" "}
+                          <img
+                            src="../../../assets/img/Brand_Awareness.svg"
+                            className="tx-primary"
+                            alt=""
+                            srcset=""
+                          />
+                        </div>
+                        <div>
+                          <p className="tx-24 tx-bold">
+                            {singleFlierCampaign.targetAudienceCount}
+                          </p>
+                          <p className="tx-15 tx-blac">
+                            Total number of impressions
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="card-body">
+                      <div className="d-flex">
+                        <div className="mg-r-20">
+                          {" "}
+                          <img
+                            src="../../../assets/img/Brand_Awareness.svg"
+                            className="tx-primary"
+                            alt=""
+                            srcset=""
+                          />
+                        </div>
+                        <div>
+                          <p className="tx-24 tx-bold">{totalClickCount}</p>
+                          <p className="tx-15 tx-blac">
+                            Total number of Actions
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Fragment>
       )}
     </Fragment>
   );
