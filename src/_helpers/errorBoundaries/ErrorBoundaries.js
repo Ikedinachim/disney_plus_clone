@@ -18,8 +18,8 @@ export class AppError extends React.Component {
       return (
         <div>
           <div id="notfound">
-            <div class="notfound">
-              <div class="notfound-404"></div>
+            <div className="notfound">
+              <div className="notfound-404"></div>
               <h1>Oops!</h1>
               <h2>Something Went Wrong</h2>
               <p>
