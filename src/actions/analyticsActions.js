@@ -11,10 +11,13 @@ import {
   PROPELLER_MOBILE_REQUEST,
   PROPELLER_MOBILE_SUCCESS,
   PROPELLER_MOBILE_FAIL,
-  CLEAR_ERRORS,
   CAMPAIGN_DATE_REQUEST,
   CAMPAIGN_DATE_SUCCESS,
   CAMPAIGN_DATE_FAIL,
+  ADS_CLICK_REQUEST,
+  ADS_CLICK_SUCCESS,
+  ADS_CLICK_FAIL,
+  CLEAR_ERRORS,
   BITLY_CLICK_REQUEST,
   BITLY_CLICK_SUCCESS,
   BITLY_CLICK_FAIL,
@@ -224,6 +227,33 @@ export const getMobileCampaign = (propellerId) => async (dispatch) => {
     dispatch({
       type: PROPELLER_MOBILE_FAIL,
       payload: error.message,
+    });
+  }
+};
+
+// Update Influencer Campaign Status Action
+export const setAdsClickStatus = (payload) => async (dispatch) => {
+  console.log(payload);
+  try {
+    dispatch({ type: ADS_CLICK_REQUEST });
+    const { data } = await axios.post("/api/campaign/save-click", payload);
+
+    if (data.status === "success") {
+      dispatch({
+        type: ADS_CLICK_SUCCESS,
+        payload: data,
+      });
+      // console.log(data);
+    } else {
+      dispatch({
+        type: ADS_CLICK_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (data) {
+    dispatch({
+      type: ADS_CLICK_FAIL,
+      payload: data.message,
     });
   }
 };
