@@ -11,6 +11,9 @@ import {
   CAMPAIGN_DATE_REQUEST,
   CAMPAIGN_DATE_SUCCESS,
   CAMPAIGN_DATE_FAIL,
+  ADS_CLICK_REQUEST,
+  ADS_CLICK_SUCCESS,
+  ADS_CLICK_FAIL,
   CLEAR_ERRORS,
 } from "../constants/analyticsConstants";
 
@@ -131,6 +134,37 @@ export const getMobileCampaignsReducer = (
       };
 
     case PROPELLER_MOBILE_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+////Setting Ads Click////
+export const adsClickReducer = (state = { adsClick: [] }, action) => {
+  switch (action.type) {
+    case ADS_CLICK_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case ADS_CLICK_SUCCESS:
+      return {
+        loading: false,
+        adsClick: action.payload,
+      };
+
+    case ADS_CLICK_FAIL:
       return {
         loading: false,
         error: action.payload,

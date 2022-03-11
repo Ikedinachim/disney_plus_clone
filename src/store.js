@@ -2,10 +2,11 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
-import { persistStore, persistReducer } from "redux-persist";
+import { persistStore, persistReducer, createMigrate } from "redux-persist";
 // import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 import sessionStorage from "redux-persist/lib/storage/session";
-import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
+// import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
+import hardSet from "redux-persist/lib/stateReconciler/hardSet";
 
 import {
   authReducer,
@@ -37,6 +38,7 @@ import {
   getOsCampaignsReducer,
   getPropellerCampaignsReducer,
   getCampaignByDateReducer,
+  adsClickReducer,
 } from "./reducers/analyticsReducers";
 import {
   createSmsCampaignReducer,
@@ -99,6 +101,7 @@ const appReducer = combineReducers({
   getOsCampaigns: getOsCampaignsReducer,
   getMobileCampaigns: getMobileCampaignsReducer,
   getCampaignByDate: getCampaignByDateReducer,
+  adsClickSettings: adsClickReducer,
   updateInfluencerProfile: updateInfluencerReducer,
   updateInfluencerCost: updateInfluencerCostReducer,
   resetInfluencerPassword: resetInfluencerPasswordReducer,
@@ -119,10 +122,30 @@ const reducer = (state, action) => {
 
 let initialState = {};
 
+const migrations = {
+  0: (state) => {
+    // migration clear out device state
+    return {
+      ...state,
+      device: undefined,
+    };
+  },
+  1: (state) => {
+    // migration to keep only device state
+    return {
+      device: state.device,
+    };
+  },
+};
+
 const persistConfig = {
   key: "root",
+  version: 1, //New version 0, default or previous version -1
   storage: sessionStorage,
-  stateReconciler: autoMergeLevel2,
+  debug: true,
+  stateReconciler: hardSet,
+  // migrate: createMigrate(migrations, { debug: true }),
+  migrate: createMigrate(migrations, { debug: false }),
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);
