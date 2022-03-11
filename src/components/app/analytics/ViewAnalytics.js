@@ -9,7 +9,6 @@ import NumberFormat from "react-number-format";
 import Loader from "../../loader";
 import MetaData from "../../layout/MetaData";
 import DigitalAnalyticsTable from "./DigitalAnalyticsTable";
-import SmartSmsAnalytics from "./SmartSmsAnalytics";
 import ViewFlierVideosCampaigns from "../campaigns/viewCampaigns/ViewFlierVideosCampaigns";
 
 // import { getWallet } from '../../../actions/billingActions'
@@ -17,10 +16,11 @@ import { MDBDataTable } from "mdbreact";
 import {
   getSmsCampaigns,
   clearErrors,
-  getAppDownloadCampaigns,
   getViewFlierVideosCampaigns,
   getDigitalCampaigns,
 } from "../../../actions/campaignActions";
+import SmartSmsAnalyticsTable from "./SmartSmsAnalyticsTable";
+import SmsAnalyticsTable from "./SmsAnalyticsTable";
 
 const ViewAnalytics = () => {
   const { loading, error, allCampaigns } = useSelector(
@@ -55,7 +55,6 @@ const ViewAnalytics = () => {
   useEffect(() => {
     dispatch(getDigitalCampaigns());
     dispatch(getSmsCampaigns());
-    dispatch(getAppDownloadCampaigns());
     dispatch(getViewFlierVideosCampaigns());
     if (error) {
       alert.error(error);
@@ -75,7 +74,7 @@ const ViewAnalytics = () => {
             <div className="container pd-x-0">
               <div className="row justify-content-between">
                 <div className="col-md-6 col-6">
-                  <p className="mg-b-0 tx-26 tx-bold">Campaigns</p>
+                  <p className="mg-b-0 tx-26 tx-bold">Analytics</p>
                 </div>
                 <div className="col-md-2 col-6">
                   <p>
@@ -134,8 +133,8 @@ const ViewAnalytics = () => {
                 </div>
                 <div className="card-body pd-md-x-30 pd-t- mg-t-20 mg-md-t-0">
                   {activeTab === "tab1" ? <DigitalAnalyticsTable /> : ""}
-                  {activeTab === "tab2" ? <ViewFlierVideosCampaigns /> : ""}
-                  {activeTab === "tab3" ? <SmartSmsAnalytics /> : ""}
+                  {activeTab === "tab2" ? <SmartSmsAnalyticsTable /> : ""}
+                  {activeTab === "tab3" ? <SmsAnalyticsTable /> : ""}
                 </div>
               </div>
             </div>

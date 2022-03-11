@@ -27,7 +27,7 @@ const InfluencerDetails = () => {
     }
     dispatch(getSingleUserInfluencers(id));
     // dispatch(getWallet())
-  }, []);
+  }, [dispatch, toast, error]);
 
   console.log(singleUserInfluencer);
 
@@ -63,140 +63,115 @@ const InfluencerDetails = () => {
                     </div>
                     <div>
                       <p className="tx-20 tx-bold pd-t-20">
-                        App download Details
+                        Influencer Campaign Details
                       </p>
                     </div>
                   </div>
                   <hr />
+                  {singleUserInfluencer.map((campaign) => (
+                    <Fragment>
+                      <div className="row justify-content-between">
+                        <div className="col-md-6 col-lg-6 mg-b-20 mg-md-b-10">
+                          <p className="tx-18 tx-semibold mb-0">
+                            Basic Information
+                          </p>
+                          <div className="row mg-t-15">
+                            <div className="form-group col-md-6">
+                              <label
+                                for=""
+                                className="tx-14 tx-gray mb-0 tx-medium"
+                              >
+                                Campaign Name
+                              </label>
+                              <p className="tx-16 mb-0">
+                                {campaign.campaignType}
+                              </p>
+                            </div>
+                            <div className="form-group col-md-6">
+                              <label
+                                for=""
+                                className="tx-14 tx-gray mb-0 tx-medium"
+                              >
+                                User-ID
+                              </label>
+                              <p className="tx-16 mb-0">{campaign.user_id}</p>
+                            </div>
+                            <div className="form-group col-md-6">
+                              <label
+                                for=""
+                                className="tx-14 tx-gray mb-0 tx-medium"
+                              >
+                                Campaign-ID
+                              </label>
+                              <p className="tx-16 mb-0">{campaign.id}</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-md-6 col-lg-5 mg-b-20 mg-md-b-10">
+                          <p className="tx-18 tx-semibold mb-0">Campaign</p>
+                          <div className="row mg-t-15">
+                            <div className="form-group col-md-6">
+                              <label
+                                for=""
+                                className="tx-14 tx-gray mb-0 tx-medium"
+                              >
+                                Campaign message
+                              </label>
+                              <p className="tx-16 mb-0">
+                                {campaign.campaignMessage}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <hr />
+                      <div className="row justify-content-between">
+                        <div className="col-md-6 col-lg-5 mg-b-20 mg-md-b-10">
+                          <p className="tx-18 tx-semibold mb-0">
+                            Budget and Timing
+                          </p>
+                          <div className="row mg-t-15">
+                            <div className="form-group col-md-12">
+                              <label
+                                for=""
+                                className="tx-14 tx-gray mb-0 tx-medium"
+                              >
+                                Price
+                              </label>
+                              <p className="tx-16 mb-0">{campaign.cost}</p>
+                            </div>
 
-                  <div className="row justify-content-between">
-                    <div className="col-md-6 col-lg-6 mg-b-20 mg-md-b-10">
-                      <p className="tx-18 tx-semibold mb-0">
-                        Basic Information
-                      </p>
-                      <div className="row mg-t-15">
-                        <div className="form-group col-md-6">
-                          <label
-                            for=""
-                            className="tx-14 tx-gray mb-0 tx-medium"
-                          >
-                            Campaign Name
-                          </label>
-                          <p className="tx-16 mb-0">
-                            {singleUserInfluencer &&
-                              singleUserInfluencer.campaignType}
-                          </p>
-                        </div>
-                        <div className="form-group col-md-6">
-                          <label
-                            for=""
-                            className="tx-14 tx-gray mb-0 tx-medium"
-                          >
-                            Sender-ID
-                          </label>
-                          <p className="tx-16 mb-0">
-                            {singleUserInfluencer &&
-                              singleUserInfluencer.user_id}
-                          </p>
-                        </div>
-                        <div className="form-group col-md-6">
-                          <label
-                            for=""
-                            className="tx-14 tx-gray mb-0 tx-medium"
-                          >
-                            Campaign-ID
-                          </label>
-                          <p className="tx-16 mb-0">
-                            {singleUserInfluencer &&
-                              singleUserInfluencer.campaignId}
-                          </p>
+                            <div className="form-group col-md-6">
+                              <label
+                                for=""
+                                className="tx-14 tx-gray mb-0 tx-medium"
+                              >
+                                From
+                              </label>
+                              <p className="tx-16 mb-0">
+                                {DateTime.fromJSDate(
+                                  new Date(campaign.createdAt)
+                                ).toFormat("dd MMM, yyyy")}
+                              </p>
+                            </div>
+                            <div className="form-group col-md-6">
+                              <label
+                                for=""
+                                className="tx-14 tx-gray mb-0 tx-medium"
+                              >
+                                To
+                              </label>
+                              <p className="tx-16 mb-0">
+                                {DateTime.fromJSDate(
+                                  new Date(campaign.updatedAt)
+                                ).toFormat("dd MMM, yyyy")}
+                              </p>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="col-md-6 col-lg-5 mg-b-20 mg-md-b-10">
-                      <p className="tx-18 tx-semibold mb-0">Campaign</p>
-                      <div className="row mg-t-15">
-                        <div className="form-group col-md-6">
-                          <label
-                            for=""
-                            className="tx-14 tx-gray mb-0 tx-medium"
-                          >
-                            Campaign message
-                          </label>
-                          <p className="tx-16 mb-0">
-                            {singleUserInfluencer &&
-                              singleUserInfluencer.campaignMessage}
-                          </p>
-                        </div>
-                        <div className="form-group col-md-6">
-                          <label
-                            for=""
-                            className="tx-14 tx-gray mb-0 tx-medium"
-                          >
-                            Channel
-                          </label>
-                          <p className="tx-16 mb-0">
-                            {singleUserInfluencer &&
-                              singleUserInfluencer.channel}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <hr />
-                  <div className="row justify-content-between">
-                    <div className="col-md-6 col-lg-5 mg-b-20 mg-md-b-10">
-                      <p className="tx-18 tx-semibold mb-0">
-                        Budget and Timing
-                      </p>
-                      <div className="row mg-t-15">
-                        <div className="form-group col-md-12">
-                          <label
-                            for=""
-                            className="tx-14 tx-gray mb-0 tx-medium"
-                          >
-                            Price
-                          </label>
-                          <p className="tx-16 mb-0">
-                            {singleUserInfluencer && singleUserInfluencer.cost}
-                          </p>
-                        </div>
-
-                        <div className="form-group col-md-6">
-                          <label
-                            for=""
-                            className="tx-14 tx-gray mb-0 tx-medium"
-                          >
-                            From
-                          </label>
-                          <p className="tx-16 mb-0">
-                            {DateTime.fromJSDate(
-                              new Date(
-                                singleUserInfluencer &&
-                                  singleUserInfluencer.createdAt
-                              )
-                            ).toFormat("dd MMM, yyyy")}
-                          </p>
-                        </div>
-                        <div className="form-group col-md-6">
-                          <label
-                            for=""
-                            className="tx-14 tx-gray mb-0 tx-medium"
-                          >
-                            To
-                          </label>
-                          <p className="tx-16 mb-0">
-                            {DateTime.fromJSDate(
-                              new Date(
-                                singleUserInfluencer &&
-                                  singleUserInfluencer.updatedAt
-                              )
-                            ).toFormat("dd MMM, yyyy")}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                    </Fragment>
+                  ))}
                 </div>
               </div>
             </div>
