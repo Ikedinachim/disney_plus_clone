@@ -8,12 +8,18 @@ import {
   getSingleFlierVideosCampaigns,
   clearErrors,
 } from "../../../actions/campaignActions";
+import { getBitlyCount } from "../../../actions/analyticsActions";
 import Loader from "../../loader";
+import ActionsChart from "./SmartSms Chart/ActionsChart";
 // import { useAlert } from "react-alert";
 
 const SmartSmsAnalytics = () => {
   const { loading, error, singleFlierCampaign } = useSelector(
     (state) => state.singleFlierCampaign || {}
+  );
+
+  const { blLoading, bitlyCounts } = useSelector(
+    (state) => state.bitlyCount || {}
   );
 
   const { id } = useParams();
@@ -26,21 +32,13 @@ const SmartSmsAnalytics = () => {
       dispatch(clearErrors());
     }
     dispatch(getSingleFlierVideosCampaigns(id));
+    dispatch(getBitlyCount(singleFlierCampaign.bitlink));
     // dispatch(getWallet())
   }, [dispatch, toast, error]);
 
-  console.log(singleFlierCampaign);
-
-  const totalClickCount =
-    singleFlierCampaign.whatsAppNumberClickCount +
-    singleFlierCampaign.urlClickCount +
-    singleFlierCampaign.ussdClickCount +
-    singleFlierCampaign.phoneNumberClickCount +
-    singleFlierCampaign.smsNumberClickCount;
-
   return (
     <Fragment>
-      {loading ? (
+      {loading && blLoading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -73,7 +71,8 @@ const SmartSmsAnalytics = () => {
                         </div>
                         <div>
                           <p className="tx-24 tx-bold">
-                            {singleFlierCampaign.targetAudienceCount}
+                            {singleFlierCampaign &&
+                              singleFlierCampaign.targetAudienceCount}
                           </p>
                           <p className="tx-15 tx-blac">
                             Total number of impressions
@@ -93,11 +92,44 @@ const SmartSmsAnalytics = () => {
                           />
                         </div>
                         <div>
-                          <p className="tx-24 tx-bold">{totalClickCount}</p>
+                          <p className="tx-24 tx-bold">
+                            {singleFlierCampaign &&
+                              singleFlierCampaign.whatsAppNumberClickCount +
+                                singleFlierCampaign.urlClickCount +
+                                singleFlierCampaign.ussdClickCount +
+                                singleFlierCampaign.phoneNumberClickCount +
+                                singleFlierCampaign.smsNumberClickCount}
+                          </p>
                           <p className="tx-15 tx-blac">
                             Total number of Actions
                           </p>
                         </div>
+                      </div>
+                    </div>
+                    <div className="card-body">
+                      <div className="d-flex">
+                        <div className="mg-r-20">
+                          {" "}
+                          <img
+                            src="../../../assets/img/Brand_Awareness.svg"
+                            className="tx-primary"
+                            alt=""
+                            srcset=""
+                          />
+                        </div>
+                        <div>
+                          <p className="tx-24 tx-bold">
+                            {bitlyCounts && bitlyCounts.total_clicks}
+                          </p>
+                          <p className="tx-15 tx-blac">
+                            Total number of Clicks
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="card-body">
+                      <div className="d-flex">
+                        <ActionsChart />
                       </div>
                     </div>
                   </div>

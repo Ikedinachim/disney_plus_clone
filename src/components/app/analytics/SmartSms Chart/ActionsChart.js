@@ -1,21 +1,42 @@
 import React, { Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Chart } from "react-google-charts";
+import Loader from "../../../loader";
 
 const ActionsChart = () => {
+  const { loading, error, singleFlierCampaign } = useSelector(
+    (state) => state.singleFlierCampaign || {}
+  );
+
   const ActionsPerformed = {
     title: "Actions performed",
     pieHole: 0.4,
     legend: { position: "bottom" },
   };
 
-  const data = [["Device", "Clicks"]];
+  const data = [
+    ["Device", "Clicks"],
+    [
+      "Whatsapp",
+      singleFlierCampaign && singleFlierCampaign.whatsAppNumberClickCount,
+    ],
+    ["Url", singleFlierCampaign && singleFlierCampaign.urlClickCount],
+    ["Ussd", singleFlierCampaign && singleFlierCampaign.ussdClickCount],
+    [
+      "Phone Number",
+      singleFlierCampaign && singleFlierCampaign.phoneNumberClickCount,
+    ],
+    [
+      "Sms Number",
+      singleFlierCampaign && singleFlierCampaign.smsNumberClickCount,
+    ],
+  ];
 
-  // for (const i in mobileCampaigns) {
-  //   data.push([mobileCampaigns[i].mobile_isp, mobileCampaigns[i].clicks]);
-  // }
-
-  // console.log(data);
+  //   singleFlierCampaign.whatsAppNumberClickCount +
+  //     singleFlierCampaign.urlClickCount +
+  //     singleFlierCampaign.ussdClickCount +
+  //     singleFlierCampaign.phoneNumberClickCount +
+  //     singleFlierCampaign.smsNumberClickCount;
   return (
     <Fragment>
       <div className="col-md-6 col-12 mg-t-20 mg-md-t-0">
