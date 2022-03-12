@@ -33,6 +33,7 @@ export default class AppDownloadStepForm extends Component {
     csvFile: "",
     limit: undefined,
     budget: 10000,
+    contactNumberCount: 0,
     characterCount: 0,
     smsCount: 0,
 
@@ -144,6 +145,10 @@ export default class AppDownloadStepForm extends Component {
     }
   };
 
+  handleCount = (count) => {
+    this.setState({ contactNumberCount: count });
+  };
+
   render() {
     // const { step } = this.state;
     const {
@@ -165,6 +170,7 @@ export default class AppDownloadStepForm extends Component {
       campaignType,
       numbers,
       limit,
+      contactNumberCount,
       budget,
 
       targetAudienceOption,
@@ -258,6 +264,7 @@ export default class AppDownloadStepForm extends Component {
       filterParameters,
       price,
       limit,
+      contactNumberCount,
       budget,
       assetType,
     };
@@ -304,6 +311,7 @@ export default class AppDownloadStepForm extends Component {
             price={price}
             filterOptions={filterOptions}
             handleChange={this.handleChange}
+            handleCount={this.handleCount}
           />
         );
       case 4:

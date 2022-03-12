@@ -27,6 +27,7 @@ const PreviewCampaign = ({
   price,
   filterOptions,
   handleChange,
+  handleCount,
 }) => {
   const { error, createAppDownloadCampaign, loading } = useSelector(
     (state) => state.appDownload || []
@@ -63,6 +64,10 @@ const PreviewCampaign = ({
       return filteredContactList.count * 5;
     }
   };
+
+  useEffect(() => {
+    handleCount(filteredContactList && filteredContactList.count);
+  }, [filteredContactList]);
 
   useEffect(() => {
     if (
