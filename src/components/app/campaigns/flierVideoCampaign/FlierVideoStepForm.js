@@ -43,8 +43,7 @@ export default class FlierVideoStepForm extends Component {
     price: 0,
     limit: undefined,
     budget: 10000,
-    // csvFile: "",
-    // csvArray: "",
+    contactNumberCount: 0,
     characterCount: 0,
     smsCount: 0,
 
@@ -103,14 +102,6 @@ export default class FlierVideoStepForm extends Component {
     }
   };
 
-  // setLimit = (input) => (e) => {
-  //   this.setState({ [input]: e.target.files[0] });
-  // };
-
-  // handleManualImport = (input) => (e) => {
-
-  // };
-
   handleImageUpload = async (e) => {
     // console.log(e);
     const width = e.target.offsetWidth;
@@ -165,60 +156,9 @@ export default class FlierVideoStepForm extends Component {
     }
   };
 
-  // openWidget = () => {
-  //   // create the widget
-  //   const widget = window.cloudinary.createUploadWidget(
-  //     {
-  //       cloudName: 'mysogi',
-  //       uploadPreset: 'mysogi',
-  //     },
-  //     (error, result) => {
-  //       if (result.event === 'success') {
-  //         this.setState({
-  //           imageUrl: result.info.secure_url,
-  //           imageAlt: `An image of ${result.info.original_filename}`
-  //         })
-  //       }
-  //     },
-  //   );
-  //   widget.open(); // open up the widget after creation
-  // };
-
-  // getCsvArray = (data) => {
-  //   this.setState({ csvArray: data });
-  //   console.log(this.state.csvArray);
-  // };
-
-  // handleOpenDialog = (e) => {
-  //   // Note that the ref is set async, so it might be null at some point
-  //   if (buttonRef.current) {
-  //     buttonRef.current.open(e);
-  //   }
-  // };
-
-  // handleOnFileLoad = (data) => {
-  //   console.log("---------------------------");
-  //   console.log(data);
-  //   console.log("---------------------------");
-  // };
-
-  // handleOnError = (err, file, inputElem, reason) => {
-  //   console.log(err);
-  // };
-
-  // handleOnRemoveFile = (e) => (data) => {
-  //   e.preventDefault();
-  //   console.log("---------------------------");
-  //   console.log(data);
-  //   console.log("---------------------------");
-  // };
-
-  // handleRemoveFile = (e) => {
-  //   // Note that the ref is set async, so it might be null at some point
-  //   if (buttonRef.current) {
-  //     buttonRef.current.removeFile(e);
-  //   }
-  // };
+  handleCount = (count) => {
+    this.setState({ contactNumberCount: count });
+  };
 
   render() {
     // const { step } = this.state;
@@ -245,6 +185,7 @@ export default class FlierVideoStepForm extends Component {
       numbers,
       limit,
       budget,
+      contactNumberCount,
 
       ageRange,
       gender,
@@ -302,14 +243,9 @@ export default class FlierVideoStepForm extends Component {
     };
 
     /////////////////////////////
-
-    // const location = state;
-    // const targetAudience = numbers.split(",");
     const audience = setAudience();
     const price = audience * 5 * smsCount;
     const timeRange = timeRangeFrom + " - " + timeRangeTo;
-    // const attachment = attachmentPreview
-    // console.log(price);
 
     const filterOptions = {
       ageRange,
@@ -341,6 +277,7 @@ export default class FlierVideoStepForm extends Component {
       filterParameters,
       csvArray,
       limit,
+      contactNumberCount,
       price,
       budget,
       assetType,
@@ -390,6 +327,7 @@ export default class FlierVideoStepForm extends Component {
             filterOptions={filterOptions}
             csvArray={csvArray}
             handleChange={this.handleChange}
+            handleCount={this.handleCount}
           />
         );
       case 4:
