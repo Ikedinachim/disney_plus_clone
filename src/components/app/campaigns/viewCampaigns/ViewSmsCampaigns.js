@@ -93,7 +93,7 @@ const ViewSmsCampaign = () => {
           adType: campaign.channel,
           cost: (
             <NumberFormat
-              value={campaign.cost}
+              value={parseInt(campaign.price)}
               displayType={"text"}
               thousandSeparator={true}
               prefix={"₦"}

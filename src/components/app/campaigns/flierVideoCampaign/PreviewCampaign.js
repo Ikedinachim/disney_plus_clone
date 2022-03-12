@@ -23,7 +23,7 @@ const PreviewCampaign = ({
   prevStep,
   values,
   audience,
-  attachmentPreview,
+  handleCount,
   price,
   filterOptions,
   handleChange,
@@ -63,6 +63,10 @@ const PreviewCampaign = ({
       return filteredContactList.count * 5;
     }
   };
+
+  useEffect(() => {
+    handleCount(filteredContactList && filteredContactList.count);
+  }, [filteredContactList]);
 
   useEffect(() => {
     if (
@@ -130,6 +134,8 @@ const PreviewCampaign = ({
     values.channel = chanl;
     setView(!view);
   };
+
+  console.log(values);
 
   return (
     <Fragment>

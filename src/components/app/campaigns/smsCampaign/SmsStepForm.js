@@ -20,6 +20,7 @@ export default class SmsStepForm extends Component {
     price: 0,
     targetAudienceOption: "mysogidb",
     limit: "",
+    contactNumberCount: 0,
     parsedCsvData: [],
 
     ageRange: "",
@@ -54,6 +55,10 @@ export default class SmsStepForm extends Component {
     }
   };
 
+  handleCount = (count) => {
+    this.setState({ contactNumberCount: count });
+  };
+
   render() {
     const {
       step,
@@ -68,6 +73,7 @@ export default class SmsStepForm extends Component {
       phoneNumber,
       targetAudienceOption,
       limit,
+      contactNumberCount,
 
       ageRange,
       gender,
@@ -130,7 +136,6 @@ export default class SmsStepForm extends Component {
       channel,
       campaignMessage,
       contactNumber,
-      // gender,
       targetAge,
       location,
       interest,
@@ -140,6 +145,7 @@ export default class SmsStepForm extends Component {
       targetAudienceOption,
       audience,
       limit,
+      contactNumberCount,
     };
 
     // console.log(values);
@@ -176,6 +182,7 @@ export default class SmsStepForm extends Component {
             audience={audience}
             filterOptions={filterOptions}
             handleChange={this.handleChange}
+            handleCount={this.handleCount}
           />
         );
       case 4:

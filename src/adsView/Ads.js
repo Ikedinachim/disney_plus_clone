@@ -36,19 +36,13 @@ const ViewCampaign = () => {
 
   const handleClickType = (type) => {
     if (type === "whatsAppNumber") {
-      const clickType = {
-        WHATSAPP_NUMBER_CLICK: "whatsAppNumberClick",
-      };
       const payload = {
         campaignId: id,
         campaignType: campaignType,
-        clickType: clickType,
+        clickType: "whatsAppNumber",
       };
       dispatch(setAdsClickStatus(payload));
     } else if (type === "phoneNumber") {
-      const clickType = {
-        PHONE_NUMBER_CLICK: "phoneNumberClick",
-      };
       const payload = {
         campaignId: id,
         campaignType: campaignType,
@@ -56,53 +50,38 @@ const ViewCampaign = () => {
       };
       dispatch(setAdsClickStatus(payload));
     } else if (type === "iosStoreUrl") {
-      const clickType = {
-        IOS_URL_CLICK: "iosStoreClick",
-      };
       const payload = {
         campaignId: id,
         campaignType: campaignType,
-        clickType: clickType,
+        clickType: "iosStoreClick",
       };
       dispatch(setAdsClickStatus(payload));
     } else if (type === "androidStoreUrl") {
-      const clickType = {
-        ANDROID_URL_CLICK: "androidStoreClick",
-      };
       const payload = {
         campaignId: id,
         campaignType: campaignType,
-        clickType: clickType,
+        clickType: "androidStoreClick",
       };
       dispatch(setAdsClickStatus(payload));
     } else if (type === "ussd") {
-      const clickType = {
-        USSD_CLICK: "ussdClick",
-      };
       const payload = {
         campaignId: id,
         campaignType: campaignType,
-        clickType: clickType,
+        clickType: "ussdClick",
       };
       dispatch(setAdsClickStatus(payload));
     } else if (type === "smsNumber") {
-      const clickType = {
-        SMS_NUMBER_CLICK: "smsNumberClick",
-      };
       const payload = {
         campaignId: id,
         campaignType: campaignType,
-        clickType: clickType,
+        clickType: "smsNumberClick",
       };
       dispatch(setAdsClickStatus(payload));
     } else if (type === "url") {
-      const clickType = {
-        URL_CLICK: "urlClick",
-      };
       const payload = {
         campaignId: id,
         campaignType: campaignType,
-        clickType: clickType,
+        clickType: "urlClick",
       };
       dispatch(setAdsClickStatus(payload));
     }

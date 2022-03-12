@@ -534,7 +534,7 @@ const TargetAudience = ({
                       variant="contained"
                       disabled={values.budget < 10000 ? true : false}
                     >
-                      Filter
+                      Next
                     </button>
                     <button
                       className="btn btn-outline-primary w-100 mg-l-20"

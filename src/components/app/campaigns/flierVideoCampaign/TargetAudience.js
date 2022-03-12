@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import MetaData from "../../../layout/MetaData";
 import { toast } from "react-toastify";
 import NaijaStates from "naija-state-local-government";
-// import { saveAs } from "file-saver";
 
 import {
   getFilteredContactList,
@@ -588,7 +587,7 @@ const TargetAudience = ({
                       variant="contained"
                       disabled={values.budget < 10000 ? true : false}
                     >
-                      Filter
+                      Next
                     </button>
                     <button
                       className="btn btn-outline-primary w-100 mg-l-20"
