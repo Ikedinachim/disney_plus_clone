@@ -4,7 +4,7 @@ import MetaData from "../../../layout/MetaData";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import NaijaStates from "naija-state-local-government";
-// import { saveAs } from "file-saver";
+import Select from "react-select";
 
 import {
   getFilteredContactList,
@@ -29,10 +29,7 @@ const TargetAudience = ({
 
   const { error } = useSelector((state) => state.filteredContactList || []);
 
-  // const [status, setStatus] = useState(3);
-  // const radioHandler = (status) => {
-  //   setStatus(status);
-  // };
+  const [selectedState, setSelectedState] = useState(null);
 
   const csvData = [
     ["Numbers"],
@@ -40,6 +37,30 @@ const TargetAudience = ({
     ["234890xxxxxxxx"],
     ["234890xxxxxxxx"],
   ];
+
+  const options = NaijaStates.states().map((state) => {
+    return { value: state, label: state };
+  });
+
+  const optionsValue =
+    selectedState && selectedState.map((value) => value.value);
+
+  const lga = NaijaStates.lgas(filterOptions.state);
+
+  const allLga =
+    selectedState &&
+    selectedState
+      .map((value) => NaijaStates.lgas(value.value))
+      .map((lga) => lga.lgas);
+
+  const mergedLga =
+    allLga &&
+    [].concat(
+      [],
+      allLga.map((all) => all)
+    );
+
+  // console.log(mergedLga);
 
   const selectGenders = [
     {
@@ -93,8 +114,6 @@ const TargetAudience = ({
     e.preventDefault();
     prevStep();
   };
-
-  const lga = NaijaStates.lgas(filterOptions.state);
 
   ////
   const [parsedCsvData, setParsedCsvData] = useState([]);
@@ -151,7 +170,7 @@ const TargetAudience = ({
     getCsvRawData(parsedCsvData);
   }, [dispatch, error, parsedCsvData]);
 
-  // console.log(values);
+  // console.log(lga);
 
   return (
     <Fragment>
@@ -265,10 +284,7 @@ const TargetAudience = ({
                             </select>
                           </div>
                           <div className="form-group col-md-6">
-                            <label
-                              // htmlFor
-                              className="mb-1 tx-com d-flex align-items-center"
-                            >
+                            <label className="mb-1 tx-com d-flex align-items-center">
                               Gender
                               <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                             </label>
@@ -303,6 +319,12 @@ const TargetAudience = ({
                                 </option>
                               ))}
                             </select>
+                            {/* <Select
+                              defaultValue={selectedState}
+                              onChange={setSelectedState}
+                              options={options}
+                              isMulti
+                            /> */}
                           </div>
                           <div className="form-group col-md-6">
                             <label
@@ -443,7 +465,7 @@ const TargetAudience = ({
                       variant="contained"
                       // disabled={phoneNumber === "" ? true : false}
                     >
-                      Filter
+                      Next
                     </button>
                     <button
                       className="btn btn-outline-primary w-100 mg-l-20"

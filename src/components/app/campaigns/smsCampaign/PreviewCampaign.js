@@ -22,6 +22,7 @@ const PreviewCampaign = ({
   prevStep,
   values,
   audience,
+  handleCount,
   filterOptions,
   handleChange,
 }) => {
@@ -60,6 +61,10 @@ const PreviewCampaign = ({
       return filteredContactList.count * 5;
     }
   };
+
+  useEffect(() => {
+    handleCount(filteredContactList && filteredContactList.count);
+  }, [filteredContactList]);
 
   useEffect(() => {
     if (createSmsCampaign && createSmsCampaign.status === "success") {
