@@ -95,7 +95,7 @@ const AppDownloadDetails = () => {
                             Sender-ID
                           </label>
                           <p className="tx-16 mb-0">
-                            {singleAppCampaign && singleAppCampaign.user_id}
+                            {singleAppCampaign && singleAppCampaign.senderId}
                           </p>
                         </div>
                         <div className="form-group col-md-6">
