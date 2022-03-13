@@ -77,6 +77,32 @@ const SmartSmsAnalytics = () => {
                             Total number of impressions
                           </p>
                         </div>
+                        <div className="tx-20 tx-blac">
+                          Impressions is the number of people your campaign got
+                          to
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="card-body">
+                      <div className="d-flex">
+                        <div className="mg-r-20">
+                          {" "}
+                          <img
+                            src="../../../assets/img/Reach_Conversion_Goals.svg"
+                            className="tx-primary"
+                            alt=""
+                            srcset=""
+                          />
+                        </div>
+                        <div>
+                          <p className="tx-24 tx-bold">
+                            {bitlyCounts && bitlyCounts.total_clicks}
+                          </p>
+                          <p className="tx-15 tx-blac">
+                            Total number of Clicks
+                          </p>
+                        </div>
                       </div>
                     </div>
                     <div className="card-body">
@@ -84,7 +110,7 @@ const SmartSmsAnalytics = () => {
                         <div className="mg-r-20">
                           {" "}
                           <img
-                            src="../../../assets/img/Brand_Awareness.svg"
+                            src="../../../assets/img/Revenue_Generated.svg"
                             className="tx-primary"
                             alt=""
                             srcset=""
@@ -101,27 +127,6 @@ const SmartSmsAnalytics = () => {
                           </p>
                           <p className="tx-15 tx-blac">
                             Total number of Actions
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="card-body">
-                      <div className="d-flex">
-                        <div className="mg-r-20">
-                          {" "}
-                          <img
-                            src="../../../assets/img/Brand_Awareness.svg"
-                            className="tx-primary"
-                            alt=""
-                            srcset=""
-                          />
-                        </div>
-                        <div>
-                          <p className="tx-24 tx-bold">
-                            {bitlyCounts && bitlyCounts.total_clicks}
-                          </p>
-                          <p className="tx-15 tx-blac">
-                            Total number of Clicks
                           </p>
                         </div>
                       </div>
