@@ -84,7 +84,9 @@ const FlierVideosDetails = () => {
                           </label>
                           <p className="tx-16 mb-0">
                             {singleFlierCampaign &&
-                              singleFlierCampaign.campaignType}
+                            singleFlierCampaign.campaignType === "flier_video"
+                              ? "digital/display"
+                              : singleFlierCampaign.campaignType}
                           </p>
                         </div>
                         <div className="form-group col-md-6">
@@ -107,8 +109,7 @@ const FlierVideosDetails = () => {
                             Campaign-ID
                           </label>
                           <p className="tx-16 mb-0">
-                            {singleFlierCampaign &&
-                              singleFlierCampaign.id}
+                            {singleFlierCampaign && singleFlierCampaign.id}
                           </p>
                         </div>
                       </div>

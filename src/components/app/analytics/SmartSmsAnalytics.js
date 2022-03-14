@@ -77,10 +77,6 @@ const SmartSmsAnalytics = () => {
                             Total number of impressions
                           </p>
                         </div>
-                        <div className="tx-20 tx-blac">
-                          Impressions is the number of people your campaign got
-                          to
-                        </div>
                       </div>
                     </div>
 

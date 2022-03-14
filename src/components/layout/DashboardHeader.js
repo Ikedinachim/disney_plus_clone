@@ -88,7 +88,7 @@ const Header = () => {
             className="dropdown-link tx-dark tx-13 tx-medium"
             onClick={() => setIsMenuOpen((oldState) => !oldState)}
           >
-            {userDetails.user.firstName}
+            {userDetails.user.username}
             <div className="avatar avatar-sm mg-l-10">
               <img
                 src={
