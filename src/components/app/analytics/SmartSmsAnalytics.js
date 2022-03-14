@@ -54,10 +54,10 @@ const SmartSmsAnalytics = () => {
                   </Link>
                 </div>
               </div>
-              <div className="row">
-                <div className="col-12 mg-t-20 mg-md-t-0">
-                  <div className="card rounded bd-0 shadow-sm">
-                    <div className="card-body">
+              <div className="row justify-content-around">
+                <div className="col-md-3 col-12 mg-t-20 mg-md-t-0">
+                  <div className="card rounded bd-0 shadow-sm row">
+                    <div className="card-body ">
                       <div className="d-flex">
                         <div className="mg-r-20">
                           {" "}
@@ -79,7 +79,10 @@ const SmartSmsAnalytics = () => {
                         </div>
                       </div>
                     </div>
-
+                  </div>
+                </div>
+                <div className="col-md-3 col-12 mg-t-20 mg-md-t-0">
+                  <div className="card rounded bd-0 shadow-sm row">
                     <div className="card-body">
                       <div className="d-flex">
                         <div className="mg-r-20">
@@ -98,9 +101,15 @@ const SmartSmsAnalytics = () => {
                           <p className="tx-15 tx-blac">
                             Total number of Clicks
                           </p>
+                          <br />
                         </div>
                       </div>
                     </div>
+                  </div>
+                </div>
+
+                <div className="col-md-3 col-12 mg-t-20 mg-md-t-0">
+                  <div className="card rounded bd-0 shadow-sm row">
                     <div className="card-body">
                       <div className="d-flex">
                         <div className="mg-r-20">
@@ -124,14 +133,16 @@ const SmartSmsAnalytics = () => {
                           <p className="tx-15 tx-blac">
                             Total number of Actions
                           </p>
+                          
                         </div>
                       </div>
                     </div>
-                    <div className="card-body">
-                      <div className="d-flex">
-                        <ActionsChart />
-                      </div>
-                    </div>
+                  </div>
+                </div>
+
+                <div className="card-body">
+                  <div className="d-flex">
+                    <ActionsChart />
                   </div>
                 </div>
               </div>
