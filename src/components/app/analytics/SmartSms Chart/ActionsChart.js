@@ -39,7 +39,7 @@ const ActionsChart = () => {
   //     singleFlierCampaign.smsNumberClickCount;
   return (
     <Fragment>
-      <div className="col-md-6 col-12 mg-t-20 mg-md-t-0">
+      <div className="col-md-12 col-12 mg-t-20 mg-md-t-0">
         <div className="card rounded bd-0 shadow-sm">
           <div className="card-body">
             <div className="d-flex">

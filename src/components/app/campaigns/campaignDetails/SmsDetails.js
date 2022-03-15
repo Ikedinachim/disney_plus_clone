@@ -106,7 +106,7 @@ const SmsDetails = () => {
                             Campaign-ID
                           </label>
                           <p className="tx-16 mb-0">
-                            {singleSmsCampaign && singleSmsCampaign.id}
+                            {singleSmsCampaign && singleSmsCampaign.campaignId}
                           </p>
                         </div>
                       </div>
