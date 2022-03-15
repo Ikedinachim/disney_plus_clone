@@ -153,7 +153,7 @@ const Register = () => {
             <div className="col-md-6 login-side pd-y-30 flex-column">
               <div className="container">
                 <Link
-                  to="/home"
+                  to="/"
                   type="button"
                   className="close close-btn"
                   aria-label="Close"
@@ -162,7 +162,7 @@ const Register = () => {
                 </Link>
               </div>
               <div className="container pd-lg-30 pd-10 col d-flex justify-content-center align-items-center">
-                <div className="col w-100 mx-580 pd-t-100 pd-md-t-50 pd-lg-t-20 tx-center">
+                <div className="col w-100 mx-w-580 pd-t-100 pd-md-t-50 pd-lg-t-20 tx-center">
                   <p className="tx-36 tx-bold mb-2 tx-com">Let’s get started</p>
                   <p className="tx-18 tx-gray">
                     Please complete to create your account.
@@ -334,7 +334,9 @@ const Register = () => {
                               >
                                 I agree with{" "}
                                 <span className="tx-primary">
-                                  terms and conditions
+                                  <Link to="/terms-of-use">
+                                    terms and conditions
+                                  </Link>
                                 </span>
                               </label>
                             </div>
@@ -551,7 +553,9 @@ const Register = () => {
                               >
                                 I agree with{" "}
                                 <span className="tx-primary">
-                                  terms and conditions
+                                  <Link to="/terms-of-use">
+                                    terms and conditions
+                                  </Link>
                                 </span>
                               </label>
                             </div>

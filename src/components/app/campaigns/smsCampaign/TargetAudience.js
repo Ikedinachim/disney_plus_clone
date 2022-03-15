@@ -19,10 +19,16 @@ const TargetAudience = ({
   prevStep,
   nextStep,
   handleChange,
+  handleStateChange,
+  handleLgaChange,
   phoneNumber,
   filterOptions,
   values,
   getCsvRawData,
+  arrayState,
+  arrayLga,
+  ageRangeFrom,
+  ageRangeTo,
 }) => {
   // const alert = useAlert();
   const dispatch = useDispatch();
@@ -30,6 +36,7 @@ const TargetAudience = ({
   const { error } = useSelector((state) => state.filteredContactList || []);
 
   const [selectedState, setSelectedState] = useState(null);
+  const [selectedLga, setSelectedLga] = useState(null);
 
   const csvData = [
     ["Numbers"],
@@ -45,22 +52,33 @@ const TargetAudience = ({
   const optionsValue =
     selectedState && selectedState.map((value) => value.value);
 
-  const lga = NaijaStates.lgas(filterOptions.state);
+  // const lga = NaijaStates.lgas(filterOptions.state);
 
   const allLga =
-    selectedState &&
-    selectedState
+    arrayState &&
+    arrayState
       .map((value) => NaijaStates.lgas(value.value))
       .map((lga) => lga.lgas);
 
+  const allLga2 =
+    arrayState &&
+    arrayState.map((value) => {
+      return { state: value.value, lga: NaijaStates.lgas(value.value).lgas };
+    });
+
   const mergedLga =
     allLga &&
-    [].concat(
-      [],
-      allLga.map((all) => all)
-    );
+    [].concat.apply([], allLga).map((lga) => {
+      return { value: lga, label: lga };
+    });
 
-  // console.log(mergedLga);
+  const mergedLga2 =
+    allLga &&
+    [].concat.apply([], allLga2).map((lga) => {
+      return { value: lga, label: lga };
+    });
+
+  // console.log(mergedLga2);
 
   const selectGenders = [
     {
@@ -102,7 +120,6 @@ const TargetAudience = ({
 
   const Continue = (e) => {
     e.preventDefault();
-    console.log(values.targetAudienceOption);
     if (values.targetAudienceOption === "mysogidb") {
       dispatch(getFilteredContactList(filterOptions));
       nextStep();
@@ -170,7 +187,7 @@ const TargetAudience = ({
     getCsvRawData(parsedCsvData);
   }, [dispatch, error, parsedCsvData]);
 
-  // console.log(lga);
+  // console.log(values);
 
   return (
     <Fragment>
@@ -271,7 +288,7 @@ const TargetAudience = ({
                               Age Group
                               <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                             </label>
-                            <select
+                            {/* <select
                               className="form-control"
                               defaultValue={filterOptions.ageRange}
                               onChange={handleChange("ageRange")}
@@ -281,7 +298,47 @@ const TargetAudience = ({
                                   {selectAgeRange.label}
                                 </option>
                               ))}
-                            </select>
+                            </select> */}
+                            <div className="form-row">
+                              <div className="form-group col-md-6 mg-b-0">
+                                <div className="input-group mg-b-10">
+                                  <div className="input-group-prepend">
+                                    <span className="input-group-text">
+                                      From
+                                    </span>
+                                  </div>
+                                  <input
+                                    type="number"
+                                    id="age-from"
+                                    min="18"
+                                    max="50"
+                                    placeholder="18"
+                                    className="form-control"
+                                    aria-describedby="basic-addon1"
+                                    defaultValue={ageRangeFrom}
+                                    onChange={handleChange("ageRangeFrom")}
+                                  />
+                                </div>
+                              </div>
+                              <div className="form-group col-md-6 mg-b-0">
+                                <div className="input-group mg-b-10">
+                                  <div className="input-group-prepend">
+                                    <span className="input-group-text">To</span>
+                                  </div>
+                                  <input
+                                    type="number"
+                                    id="age-to"
+                                    min="18"
+                                    max="50"
+                                    placeholder="50"
+                                    className="form-control"
+                                    aria-describedby="basic-addon1"
+                                    defaultValue={ageRangeTo}
+                                    onChange={handleChange("ageRangeTo")}
+                                  />
+                                </div>
+                              </div>
+                            </div>
                           </div>
                           <div className="form-group col-md-6">
                             <label className="mb-1 tx-com d-flex align-items-center">
@@ -308,7 +365,7 @@ const TargetAudience = ({
                               State
                               <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                             </label>
-                            <select
+                            {/* <select
                               className="custom-select"
                               defaultValue={filterOptions.state}
                               onChange={handleChange("state")}
@@ -318,23 +375,20 @@ const TargetAudience = ({
                                   {selectState}
                                 </option>
                               ))}
-                            </select>
-                            {/* <Select
+                            </select> */}
+                            <Select
                               defaultValue={selectedState}
-                              onChange={setSelectedState}
+                              onChange={handleStateChange}
                               options={options}
                               isMulti
-                            /> */}
+                            />
                           </div>
                           <div className="form-group col-md-6">
-                            <label
-                              // htmlFor
-                              className="mb-1 tx-com d-flex align-items-center"
-                            >
+                            <label className="mb-1 tx-com d-flex align-items-center">
                               LGA
                               <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                             </label>
-                            <select
+                            {/* <select
                               className="custom-select"
                               defaultValue={filterOptions.lga}
                               onChange={handleChange("lga")}
@@ -346,7 +400,13 @@ const TargetAudience = ({
                                   {selectLga}
                                 </option>
                               ))}
-                            </select>
+                            </select> */}
+                            <Select
+                              defaultValue={selectedLga}
+                              onChange={handleLgaChange}
+                              options={mergedLga}
+                              isMulti
+                            />
                           </div>
                           <div className="form-group col-md-6">
                             <label className="mb-1 tx-com">ARPU Band</label>

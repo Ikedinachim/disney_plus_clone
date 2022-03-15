@@ -2,7 +2,6 @@ import React, { Fragment, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import MetaData from "../../layout/MetaData";
 import { useSelector, useDispatch } from "react-redux";
-import { DateTime } from "luxon";
 import { toast } from "react-toastify";
 import {
   getSingleFlierVideosCampaigns,
@@ -55,10 +54,10 @@ const SmartSmsAnalytics = () => {
                   </Link>
                 </div>
               </div>
-              <div className="row">
-                <div className="col-12 mg-t-20 mg-md-t-0">
-                  <div className="card rounded bd-0 shadow-sm">
-                    <div className="card-body">
+              <div className="row justify-content-around">
+                <div className="col-md-3 col-12 mg-t-20 mg-md-t-0">
+                  <div className="card rounded bd-0 shadow-sm row">
+                    <div className="card-body ">
                       <div className="d-flex">
                         <div className="mg-r-20">
                           {" "}
@@ -80,12 +79,43 @@ const SmartSmsAnalytics = () => {
                         </div>
                       </div>
                     </div>
+                  </div>
+                </div>
+                <div className="col-md-3 col-12 mg-t-20 mg-md-t-0">
+                  <div className="card rounded bd-0 shadow-sm row">
                     <div className="card-body">
                       <div className="d-flex">
                         <div className="mg-r-20">
                           {" "}
                           <img
-                            src="../../../assets/img/Brand_Awareness.svg"
+                            src="../../../assets/img/Reach_Conversion_Goals.svg"
+                            className="tx-primary"
+                            alt=""
+                            srcset=""
+                          />
+                        </div>
+                        <div>
+                          <p className="tx-24 tx-bold">
+                            {bitlyCounts && bitlyCounts.total_clicks}
+                          </p>
+                          <p className="tx-15 tx-blac">
+                            Total number of Clicks
+                          </p>
+                          <br />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-md-3 col-12 mg-t-20 mg-md-t-0">
+                  <div className="card rounded bd-0 shadow-sm row">
+                    <div className="card-body">
+                      <div className="d-flex">
+                        <div className="mg-r-20">
+                          {" "}
+                          <img
+                            src="../../../assets/img/Revenue_Generated.svg"
                             className="tx-primary"
                             alt=""
                             srcset=""
@@ -103,35 +133,16 @@ const SmartSmsAnalytics = () => {
                           <p className="tx-15 tx-blac">
                             Total number of Actions
                           </p>
+                          
                         </div>
                       </div>
                     </div>
-                    <div className="card-body">
-                      <div className="d-flex">
-                        <div className="mg-r-20">
-                          {" "}
-                          <img
-                            src="../../../assets/img/Brand_Awareness.svg"
-                            className="tx-primary"
-                            alt=""
-                            srcset=""
-                          />
-                        </div>
-                        <div>
-                          <p className="tx-24 tx-bold">
-                            {bitlyCounts && bitlyCounts.total_clicks}
-                          </p>
-                          <p className="tx-15 tx-blac">
-                            Total number of Clicks
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="card-body">
-                      <div className="d-flex">
-                        <ActionsChart />
-                      </div>
-                    </div>
+                  </div>
+                </div>
+
+                <div className="card-body">
+                  <div className="d-flex">
+                    <ActionsChart />
                   </div>
                 </div>
               </div>

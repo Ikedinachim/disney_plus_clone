@@ -236,7 +236,7 @@ const AppDownloadCampaign = ({
                                 onBlur={handleChange("callToAction")}
                               />
                             </div>
-                            <div className="form-group">
+                            <div className="form-group mb-2">
                               <label className="mb-1">Campaign Message</label>
                               <textarea
                                 className="form-control"

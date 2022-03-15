@@ -82,7 +82,7 @@ const ViewFlierVideosCampaigns = () => {
               </div>
             </Fragment>
           ),
-          campaignName: campaign.campaignType,
+          campaignName: campaign.campaignType === 'flier_video' ? 'display/digital' : campaign.campaignType,
           adType: campaign.channel,
           cost: (
             <NumberFormat
