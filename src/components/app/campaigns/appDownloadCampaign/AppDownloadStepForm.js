@@ -17,8 +17,6 @@ export default class AppDownloadStepForm extends Component {
     androidStoreUrl: "",
     numbers: "",
     callToAction: "",
-    timeRangeFrom: "",
-    timeRangeTo: "",
     // attachment: "",
     attachmentPreview: "",
     uploadedImage: "",
@@ -37,6 +35,13 @@ export default class AppDownloadStepForm extends Component {
     characterCount: 0,
     smsCount: 0,
 
+    scheduleOption: "none",
+    scheduleTime: "",
+    scheduleFrom: "",
+    scheduleTo: "",
+
+    ageRangeTo: undefined,
+    ageRangeFrom: undefined,
     ageRange: "",
     gender: "",
     state: "abia",
@@ -174,6 +179,8 @@ export default class AppDownloadStepForm extends Component {
       budget,
 
       targetAudienceOption,
+      ageRangeFrom,
+      ageRangeTo,
       ageRange,
       gender,
       state,
@@ -185,6 +192,11 @@ export default class AppDownloadStepForm extends Component {
       uploadPercentage,
       characterCount,
       smsCount,
+
+      scheduleOption,
+      scheduleTime,
+      scheduleFrom,
+      scheduleTo,
     } = this.state;
 
     // console.log(imageUrl);
@@ -237,7 +249,7 @@ export default class AppDownloadStepForm extends Component {
     // console.log(price);
 
     const filterOptions = {
-      ageRange,
+      ageRange: `${ageRangeFrom + "-" + ageRangeTo}`,
       gender,
       state,
       lga,
@@ -267,9 +279,13 @@ export default class AppDownloadStepForm extends Component {
       contactNumberCount,
       budget,
       assetType,
+      scheduleOption,
+      scheduleTime,
+      scheduleFrom,
+      scheduleTo,
     };
 
-    // console.log(values);
+    console.log(values);
 
     switch (step) {
       case 1:
@@ -298,6 +314,8 @@ export default class AppDownloadStepForm extends Component {
             values={values}
             filterOptions={filterOptions}
             getCsvRawData={getCsvRawData}
+            ageRangeFrom={ageRangeFrom}
+            ageRangeTo={ageRangeTo}
           />
         );
       case 3:

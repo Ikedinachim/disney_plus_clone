@@ -10,9 +10,9 @@ const Footer = () => {
     <Fragment>
       <section className="footer">
         <div className="container py-5 tx-white">
-          <div className="row col-md-9">
+          <div className="row mg-0 pd-0 col-md-12">
             <div className="col-md-3 col-6">
-              <img src="./assets/img/logo.png" alt="" />
+              <img src="./assets/img/logo.png" alt="" className="w-inherit" />
             </div>
             <div className="col-md-3 col-6">
               <ul className="list-unstyled tx-16 tx-bold footer-link">
@@ -59,7 +59,11 @@ const Footer = () => {
           <div className="row mg-t-30">
             <div className="col-md-3 offset-md-9 col-12">
               <div className="d-flex">
-                <p className="tx-14 mb-0 tx-light-blue">Terms and Policy</p>
+                <p className="tx-14 mb-0 tx-light-blue">
+                  <Link to={"/terms-of-use"} className="tx-white">
+                    Terms and Policy
+                  </Link>
+                </p>
                 <div className="mg-l-10">
                   <Link to="http://" className="tx-white">
                     <i

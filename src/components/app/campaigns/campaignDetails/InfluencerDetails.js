@@ -94,7 +94,7 @@ const InfluencerDetails = () => {
                               >
                                 User-ID
                               </label>
-                              <p className="tx-16 mb-0">{campaign.user_id}</p>
+                              <p className="tx-16 mb-0">{campaign.senderId}</p>
                             </div>
                             <div className="form-group col-md-6">
                               <label

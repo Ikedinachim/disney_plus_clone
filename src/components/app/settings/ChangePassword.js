@@ -4,13 +4,11 @@ import { toast } from "react-toastify";
 import Loader from "../../loader";
 import MetaData from "../../layout/MetaData";
 import { getUser, updateUserPassword } from "../../../actions/authActions";
-import { useAlert } from "react-alert";
 import { USER_PASSWORD_RESET } from "../../../constants/authConstants";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors } from "../../../actions/authActions";
 
 const ChangePassword = () => {
-  const alert = useAlert();
   const dispatch = useDispatch();
   const navHistory = useNavigate();
 
