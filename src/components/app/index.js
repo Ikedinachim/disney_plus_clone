@@ -72,7 +72,7 @@ const Dashboard = () => {
                         />
                       </div>
                       <div
-                        className={`col-md-5 col-10 mg-t-20 pd-md-b-40 ${
+                        className={`col-md-5 col-10 mg-y-20 pd-md-b-40 ${
                           !isActive ? "disabler" : null
                         }`}
                       >
@@ -132,7 +132,7 @@ const Dashboard = () => {
                         />
                       </div>
                       <div
-                        className={`col-md-5 col-10 mg-t-20 pd-md-b-40 ${
+                        className={`col-md-5 col-10 mg-y-20 mg-md-t-20 pd-md-b-40 ${
                           isActive ? "disabler" : null
                         }`}
                       >

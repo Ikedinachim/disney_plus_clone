@@ -22,6 +22,8 @@ const TargetAudience = ({
   filterOptions,
   values,
   getCsvRawData,
+  ageRangeFrom,
+  ageRangeTo,
 }) => {
   // const alert = useAlert();
   const dispatch = useDispatch();
@@ -241,10 +243,13 @@ const TargetAudience = ({
                         {values.budget >= 10000 && (
                           <div className="form-group col-md-6 mb-0 align-items-center d-flex">
                             <div>
-                              <span>{values.budget / 5}</span>
+                              <span>
+                                {Math.ceil(values.budget / 6 / 100) * 100}
+                              </span>
                               {" - "}
                               <span>
-                                {values.budget / 2} Estimated Reach{" "}
+                                {Math.ceil(values.budget / 3 / 1000) * 1000}{" "}
+                                Estimated Reach{" "}
                                 <i className="tx-15 fa fa-users" />
                               </span>
                             </div>
@@ -332,7 +337,7 @@ const TargetAudience = ({
                                 Age Group
                                 <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                               </label>
-                              <select
+                              {/* <select
                                 className="form-control"
                                 defaultValue={filterOptions.ageRange}
                                 onChange={handleChange("ageRange")}
@@ -342,7 +347,47 @@ const TargetAudience = ({
                                     {selectAgeRange.label}
                                   </option>
                                 ))}
-                              </select>
+                              </select> */}
+                              <div className="form-row">
+                                <div className="form-group col-md-6 mg-b-0">
+                                  <div className="input-group mg-b-10">
+                                    <div className="input-group-prepend">
+                                      <span className="input-group-text">
+                                        From
+                                      </span>
+                                    </div>
+                                    <input
+                                      type="number"
+                                      id="age-from"
+                                      min="18"
+                                      max="50"
+                                      className="form-control"
+                                      aria-describedby="basic-addon1"
+                                      defaultValue={ageRangeFrom}
+                                      onChange={handleChange("ageRangeFrom")}
+                                    />
+                                  </div>
+                                </div>
+                                <div className="form-group col-md-6 mg-b-0">
+                                  <div className="input-group mg-b-10">
+                                    <div className="input-group-prepend">
+                                      <span className="input-group-text">
+                                        To
+                                      </span>
+                                    </div>
+                                    <input
+                                      type="number"
+                                      id="age-to"
+                                      min="18"
+                                      max="50"
+                                      className="form-control"
+                                      aria-describedby="basic-addon1"
+                                      defaultValue={ageRangeTo}
+                                      onChange={handleChange("ageRangeTo")}
+                                    />
+                                  </div>
+                                </div>
+                              </div>
                             </div>
                             <div className="form-group col-md-6">
                               <label

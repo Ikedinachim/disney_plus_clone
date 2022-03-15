@@ -33,6 +33,9 @@ const FlierVideoCampaign = ({
   const [showSms, setShowSms] = useState(false);
   const [showUssd, setShowUssd] = useState(false);
 
+  const maxTimeMinDay = new Date().setHours(19, 59, 0, 0);
+  const minTimeMaxDay = new Date().setHours(0, 0, 0, 0);
+
   // const [assetType, setAssetType] = useState("image");
   // const assetTypeHandler = (asset) => {
   //   setAssetType(asset);
@@ -328,42 +331,6 @@ const FlierVideoCampaign = ({
                               onChange={handleChange("callToAction")}
                             />
                           </div>
-                          <div className="form-row">
-                            <div className="form-group col-md-6 mg-b-0">
-                              <label className="mb-1">Time Range</label>
-                              <div className="input-group mg-b-0">
-                                <div className="input-group-prepend">
-                                  <span className="input-group-text">From</span>
-                                </div>
-                                <input
-                                  type="date"
-                                  className="form-control"
-                                  placeholder="Username"
-                                  aria-label="Username"
-                                  aria-describedby="basic-addon1"
-                                  defaultValue={values.timeRangeFrom}
-                                  onChange={handleChange("timeRangeFrom")}
-                                />
-                              </div>
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label />
-                              <div className="input-group mg-b-10 mg-t-5">
-                                <div className="input-group-prepend">
-                                  <span className="input-group-text">To</span>
-                                </div>
-                                <input
-                                  type="date"
-                                  className="form-control"
-                                  placeholder="Username"
-                                  aria-label="Username"
-                                  aria-describedby="basic-addon1"
-                                  defaultValue={values.timeRangeTo}
-                                  onChange={handleChange("timeRangeTo")}
-                                />
-                              </div>
-                            </div>
-                          </div>
                           <div className="form-group mb-2">
                             <label className="mb-1">Campaign Message</label>
                             <textarea
@@ -491,6 +458,131 @@ const FlierVideoCampaign = ({
                             </div>
                           )}
                         </div>
+                        {/* <div className="mg-t-20">
+                          <p className="tx-24 tx-bold mb-1 tx-com">Schedule</p>
+                          <div className="form-group">
+                            <div className="custom-control custom-radio">
+                              <input
+                                type="radio"
+                                id="none"
+                                name="scheduleRadio"
+                                className="custom-control-input"
+                                checked={values.scheduleOption === "none"}
+                                // onClick={(e) => assetTypeHandler("image")}
+                                value={"none"}
+                                onChange={handleChange("scheduleOption")}
+                              />
+                              <label
+                                className="custom-control-label"
+                                htmlFor="none"
+                              >
+                                Publish Now
+                              </label>
+                            </div>
+                          </div>
+                          <div className="form-group">
+                            <div className="custom-control custom-radio">
+                              <input
+                                type="radio"
+                                id="once"
+                                name="scheduleRadio"
+                                className="custom-control-input"
+                                checked={values.scheduleOption === "once"}
+                                // onClick={(e) => assetTypeHandler("video")}
+                                value={"once"}
+                                onChange={handleChange("scheduleOption")}
+                              />
+                              <label
+                                className="custom-control-label"
+                                htmlFor="once"
+                              >
+                                Once
+                              </label>
+                            </div>
+                          </div>
+                          <div className="form-group">
+                            <div className="custom-control custom-radio">
+                              <input
+                                type="radio"
+                                id="recurring"
+                                name="scheduleRadio"
+                                className="custom-control-input"
+                                checked={values.scheduleOption === "recurring"}
+                                // onClick={(e) => assetTypeHandler("video")}
+                                value={"recurring"}
+                                onChange={handleChange("scheduleOption")}
+                              />
+                              <label
+                                className="custom-control-label"
+                                htmlFor="recurring"
+                              >
+                                Recurring
+                              </label>
+                            </div>
+                          </div>
+                          {values.scheduleOption === "recurring" && (
+                            <div className="form-row">
+                              <div className="form-group col-md-6 mg-b-0">
+                                <label className="mb-1">Date Range</label>
+                                <div className="input-group mg-b-0">
+                                  <div className="input-group-prepend">
+                                    <span className="input-group-text">
+                                      From
+                                    </span>
+                                  </div>
+                                  <input
+                                    type="date"
+                                    className="form-control"
+                                    placeholder="Username"
+                                    aria-label="Username"
+                                    aria-describedby="basic-addon1"
+                                    defaultValue={values.scheduleFrom}
+                                    onChange={handleChange("scheduleFrom")}
+                                  />
+                                </div>
+                              </div>
+                              <div className="form-group col-md-6 mb-0">
+                                <label />
+                                <div className="input-group mg-b-10 mg-t-5">
+                                  <div className="input-group-prepend">
+                                    <span className="input-group-text">To</span>
+                                  </div>
+                                  <input
+                                    type="date"
+                                    className="form-control"
+                                    placeholder="Username"
+                                    aria-label="Username"
+                                    aria-describedby="basic-addon1"
+                                    defaultValue={values.scheduleTo}
+                                    onChange={handleChange("scheduleTo")}
+                                  />
+                                </div>
+                              </div>
+                              <div className="form-group col-md-6 mb-0">
+                                <label className="mb-1" htmlFor="schedule-time">
+                                  Time
+                                </label>
+                                <div className="input-group mg-b-10 mg-t-5">
+                                  <div className="input-group-prepend">
+                                    <span className="input-group-text">
+                                      Time
+                                    </span>
+                                  </div>
+                                  <input
+                                    type="time"
+                                    id="schedule-time"
+                                    min="08:00"
+                                    max="20:00"
+                                    className="form-control"
+                                    aria-describedby="basic-addon1"
+                                    defaultValue={values.scheduleTime}
+                                    onChange={handleChange("scheduleTime")}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div> */}
                       </form>
                       <div className="col-md-7 pd-x-0 mg-y-30">
                         <div className="d-flex">

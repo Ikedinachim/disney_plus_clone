@@ -57,11 +57,48 @@ const PreviewCampaign = ({
     dispatch(createAppDownloadCampaignAction(values));
   };
 
+  const setScheduleDate = (initialDate, endDate) => {
+    let day1 = new Date(initialDate);
+    let day2 = new Date(endDate);
+
+    const difference = Math.abs(day2 - day1);
+    const days = difference / (1000 * 3600 * 24);
+
+    if (values.scheduleOption !== "recurrent" || days < 1 || !days) {
+      return 1;
+    } else if (values.scheduleOption === "recurrent") {
+      return days;
+    }
+  };
+
   const setPrice = () => {
-    if (values.limit !== undefined && values.limit !== "") {
-      return parseInt(values.limit) * 5;
+    if (values.channel === "display_ads") {
+      console.log(1);
+      return price * setScheduleDate(values.scheduleFrom, values.scheduleTo);
+    } else if (
+      values.limit !== undefined &&
+      values.limit !== "" &&
+      values.targetAudienceOption === "mysogidb"
+    ) {
+      console.log(2);
+      return (
+        parseInt(values.limit) *
+        5 *
+        setScheduleDate(values.scheduleFrom, values.scheduleTo)
+      );
+    } else if (
+      values.targetAudienceOption !== "mysogidb" &&
+      values.channel === "smart_sms"
+    ) {
+      console.log(3);
+      return price * setScheduleDate(values.scheduleFrom, values.scheduleTo);
     } else {
-      return filteredContactList.count * 5;
+      console.log(4);
+      return (
+        filteredContactList.count *
+        5 *
+        setScheduleDate(values.scheduleFrom, values.scheduleTo)
+      );
     }
   };
 
@@ -305,6 +342,199 @@ const PreviewCampaign = ({
                           </div>
                         </div>
                         <hr />
+                        <div className="mg-b-20 mg-md-b-10">
+                          <p className="tx-18 tx-com tx-semibold mb-0">
+                            Scheduling
+                          </p>
+                          <div className="form-group mt-2 mb-2">
+                            <div className="custom-control custom-radio">
+                              <input
+                                type="radio"
+                                id="none"
+                                name="scheduleRadio"
+                                className="custom-control-input"
+                                checked={values.scheduleOption === "none"}
+                                // onClick={(e) => assetTypeHandler("image")}
+                                value={"none"}
+                                onChange={handleChange("scheduleOption")}
+                              />
+                              <label
+                                className="custom-control-label"
+                                htmlFor="none"
+                              >
+                                Publish Now
+                              </label>
+                            </div>
+                          </div>
+                          <div className="form-group mb-2">
+                            <div className="custom-control custom-radio">
+                              <input
+                                type="radio"
+                                id="once"
+                                name="scheduleRadio"
+                                className="custom-control-input"
+                                checked={values.scheduleOption === "once"}
+                                // onClick={(e) => assetTypeHandler("video")}
+                                value={"once"}
+                                onChange={handleChange("scheduleOption")}
+                              />
+                              <label
+                                className="custom-control-label"
+                                htmlFor="once"
+                              >
+                                Once
+                              </label>
+                            </div>
+                          </div>
+                          <div className="form-group mb-2">
+                            <div className="custom-control custom-radio">
+                              <input
+                                type="radio"
+                                id="recurrent"
+                                name="scheduleRadio"
+                                className="custom-control-input"
+                                checked={values.scheduleOption === "recurrent"}
+                                // onClick={(e) => assetTypeHandler("video")}
+                                value={"recurrent"}
+                                onChange={handleChange("scheduleOption")}
+                              />
+                              <label
+                                className="custom-control-label"
+                                htmlFor="recurrent"
+                              >
+                                Recurring
+                              </label>
+                            </div>
+                          </div>
+                          {values.scheduleOption === "recurrent" && (
+                            <div className="form-row">
+                              <div className="form-group col-md-6 mg-b-0">
+                                <label className="mb-1">Date Range</label>
+                                <div className="input-group mg-b-0">
+                                  <div className="input-group-prepend">
+                                    <span className="input-group-text">
+                                      From
+                                    </span>
+                                  </div>
+                                  <input
+                                    type="date"
+                                    className="form-control"
+                                    placeholder="Username"
+                                    aria-label="Username"
+                                    aria-describedby="basic-addon1"
+                                    defaultValue={values.scheduleFrom}
+                                    onChange={handleChange("scheduleFrom")}
+                                  />
+                                </div>
+                              </div>
+                              <div className="form-group col-md-6 mb-0">
+                                <label />
+                                <div className="input-group mg-b-10 mg-t-5">
+                                  <div className="input-group-prepend">
+                                    <span className="input-group-text">To</span>
+                                  </div>
+                                  <input
+                                    type="date"
+                                    className="form-control"
+                                    placeholder="Username"
+                                    aria-label="Username"
+                                    aria-describedby="basic-addon1"
+                                    defaultValue={values.scheduleTo}
+                                    onChange={handleChange("scheduleTo")}
+                                  />
+                                </div>
+                              </div>
+                              <div className="form-group col-md-6 mb-0">
+                                <label className="mb-1" htmlFor="schedule-time">
+                                  Time
+                                </label>
+                                <div className="input-group mg-b-10">
+                                  <div className="input-group-prepend">
+                                    <span className="input-group-text">
+                                      Time
+                                    </span>
+                                  </div>
+                                  <input
+                                    type="time"
+                                    id="schedule-time"
+                                    min="08:00"
+                                    max="20:00"
+                                    className="form-control"
+                                    aria-describedby="basic-addon1"
+                                    defaultValue={values.scheduleTime}
+                                    onChange={handleChange("scheduleTime")}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                          {values.scheduleOption === "once" && (
+                            <div className="form-row col-md-12">
+                              <div className="form-group col-md-6 mg-b-0">
+                                <label className="mb-1">
+                                  Set a Date / Time
+                                </label>
+                                <div className="input-group mg-b-0">
+                                  <div className="input-group-prepend">
+                                    <span className="input-group-text">
+                                      Date
+                                    </span>
+                                  </div>
+                                  <input
+                                    type="date"
+                                    className="form-control"
+                                    placeholder="Username"
+                                    aria-label="Username"
+                                    aria-describedby="basic-addon1"
+                                    defaultValue={values.scheduleFrom}
+                                    onChange={handleChange("scheduleFrom")}
+                                  />
+                                </div>
+                              </div>
+                              <div className="form-group col-md-6 mb-0">
+                                <label />
+                                <div className="input-group mg-b-10 mg-t-5">
+                                  <div className="input-group-prepend">
+                                    <span className="input-group-text">
+                                      Time
+                                    </span>
+                                  </div>
+                                  <input
+                                    type="time"
+                                    id="schedule-time"
+                                    min="08:00"
+                                    max="20:00"
+                                    className="form-control"
+                                    aria-describedby="basic-addon1"
+                                    defaultValue={values.scheduleTime}
+                                    onChange={handleChange("scheduleTime")}
+                                  />
+                                </div>
+                              </div>
+                              {/* <div className="form-group col-md-6 mb-0">
+                            <label className="mb-1" htmlFor="schedule-time">
+                              Time
+                            </label>
+                            <div className="input-group mg-b-10 mg-t-5">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">Time</span>
+                              </div>
+                              <input
+                                type="time"
+                                id="schedule-time"
+                                min="08:00"
+                                max="20:00"
+                                className="form-control"
+                                aria-describedby="basic-addon1"
+                                defaultValue={values.scheduleTime}
+                                onChange={handleChange("scheduleTime")}
+                              />
+                            </div>
+                          </div> */}
+                            </div>
+                          )}
+                        </div>
+                        <hr />
                         {values.targetAudienceOption === "mysogidb" &&
                           values.channel !== "display_ads" && (
                             <>
@@ -500,7 +730,7 @@ const PreviewCampaign = ({
                                   </p>{" "}
                                   <NumberFormat
                                     className="badge tx-green tx-bold tx-18 mg-0 tx-amt w-100 mt-0"
-                                    value={parseInt(price)}
+                                    value={parseInt(setPrice())}
                                     displayType={"text"}
                                     thousandSeparator={true}
                                     prefix={"₦"}
@@ -519,8 +749,9 @@ const PreviewCampaign = ({
                                 Potential Reach Based on Budget
                               </label>
                               <p className="tx-18 tx-com tx-bold mb-0">
-                                {audience} - {""}
-                                {audience * 5}
+                                {Math.ceil(values.budget / 6 / 100) * 100} -{" "}
+                                {""}
+                                {Math.ceil(values.budget / 3 / 1000) * 1000}
                                 <span className="tx-14 tx-gray tx-medium">
                                   {" "}
                                   Estimated Reach{" "}
@@ -556,7 +787,7 @@ const PreviewCampaign = ({
                                 </p>{" "}
                                 <NumberFormat
                                   className="badge tx-green tx-bold tx-18 mg-0 tx-amt w-100 mt-0"
-                                  value={parseInt(price)}
+                                  value={parseInt(setPrice())}
                                   displayType={"text"}
                                   thousandSeparator={true}
                                   prefix={"₦"}

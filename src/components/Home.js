@@ -121,7 +121,7 @@ const Home = () => {
                 </div>
               </div>
             </section>
-            <section id="campaign" className="ads-body">
+            <section className="content-body">
               <div className="container pd-y-30 pd-md-t-70 pd-md-b-0">
                 <p className="tx-28 tx-com tx-center tx-bold mb-0">
                   Why Mysogi?
@@ -134,7 +134,6 @@ const Home = () => {
                           src="./assets/img/High_return_on_investment.svg"
                           className="img-fluid"
                           alt=""
-                          srcSet
                         />
                         <p className="tx-18 tx-com tx-semibold mg-t-10">
                           High return on Investment
@@ -154,7 +153,6 @@ const Home = () => {
                           src="./assets/img/Increase_Leads.svg"
                           className="img-fluid"
                           alt=""
-                          srcSet
                         />
                         <p className="tx-18 tx-com tx-semibold mg-t-10">
                           Increase Leads &amp; Customers
@@ -265,7 +263,7 @@ const Home = () => {
                   </div>
                 </div>
               </section>
-              <section className>
+              <section>
                 <div className="container pb-md-5">
                   <div className="col-xl-11 mx-auto">
                     <div className="row">
@@ -277,7 +275,6 @@ const Home = () => {
                             data-aos="fade-left"
                             data-aos-duration={2000}
                             alt=""
-                            srcSet
                           />
                         </div>
                       </div>
@@ -474,27 +471,25 @@ const Home = () => {
                           data-aos="fade-down"
                           data-aos-duration={3000}
                           alt=""
-                          srcSet
                         />
                       </div>
                     </div>
                   </div>
                 </div>
               </section>
-              <section id="campaign" className="camp-top">
-                <div className>
+              <section className="camp-top">
+                <div>
                   <div className="container bg-black">
-                    <div className>
+                    <div>
                       <div className="row">
                         <div className="col-md-6 mg-t-20">
-                          <div className>
+                          <div>
                             <img
                               src="./assets/img/mysogi_phone.png"
                               className="img-fluid img-neg-camp"
                               data-aos="fade-left"
                               data-aos-duration={2000}
                               alt=""
-                              srcSet
                             />
                           </div>
                         </div>

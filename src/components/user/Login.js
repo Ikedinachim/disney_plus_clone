@@ -52,7 +52,7 @@ const Login = () => {
       dispatch(getWallet());
       navHistory("/influencer");
     } else if (error) {
-      toast.error(error.message);
+      toast.error(error.errors.username);
       dispatch(clearErrors());
     } else {
       navHistory("/login");
@@ -107,7 +107,7 @@ const Login = () => {
                 </Link>
               </div>
               <div className="container pd-lg-30 pd-10 col d-flex justify-content-center align-items-center">
-                <div className="col w-100 mx-580 pd-t-100 pd-md-t-50 pd-lg-t-20 tx-center">
+                <div className="col w-100 mx-w-580 pd-t-100 pd-md-t-50 pd-lg-t-20 tx-center">
                   <p className="tx-36 tx-bold mb-2 tx-com">Welcome Back</p>
                   <p className="tx-16 tx-gray">
                     Welcome back! Please login to your account.

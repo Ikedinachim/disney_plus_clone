@@ -6,6 +6,7 @@ import { Route, Routes } from "react-router-dom";
 import Loader from "./components/loader";
 
 import Home from "./components/Home";
+import Terms from "./components/Terms";
 import Dashboard from "./components/app";
 import DashboardLayout from "./components/app/DashboardLayout";
 import SenderID from "./components/app/SenderID/SenderID";
@@ -326,6 +327,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/terms-of-use" element={<Terms />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
