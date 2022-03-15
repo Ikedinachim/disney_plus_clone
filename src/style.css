@@ -299,6 +299,10 @@ tbody + thead {
   width: 48%;
 }
 
+.mx-w-580 {
+  max-width: 580px;
+}
+
 .reg-container {
   display: flex;
   flex-grow: 1;
@@ -413,4 +417,91 @@ table thead tr {
     padding-top: 20px;
     padding-bottom: 20px;
   }
+}
+
+/* ol.terms-list {
+  list-style-type: none;
+  counter-reset: item;
+  margin: 0;
+  padding: 0;
+}
+
+ol.terms-list > li {
+  display: table;
+  counter-increment: item;
+  margin-bottom: 0.6em;
+}
+
+ol.terms-list > li:before {
+  content: counters(item, ".") ". ";
+  display: table-cell;
+  padding-right: 0.6em;
+}
+
+ol.terms-list > li li,
+ol.terms-list > ol li {
+  margin: 0;
+}
+
+ol.terms-list > li li:before,
+ol.terms-list > ol li:before {
+  content: counters(item, ".") " ";
+} */
+
+ol.terms-list {
+  list-style-type: none;
+  counter-reset: item;
+  margin: 0;
+  padding: 0;
+}
+
+ol.terms-list > li {
+  display: table;
+  counter-increment: item;
+  margin-bottom: 0.6em;
+}
+
+ol.terms-list > li:before {
+  content: counters(item, ".") ". ";
+  display: table-cell;
+  padding-right: 0.6em;
+}
+
+ol.terms-list > li li {
+  margin: 0;
+}
+
+ol.terms-list > li li:before {
+  content: counters(item, ".") " ";
+}
+
+ol.terms-list ol.terms-inner-list {
+  list-style-type: none;
+  counter-reset: item "";
+  margin: 0;
+  padding: 0;
+}
+
+ol.terms-list ol.terms-inner-list > li {
+  display: table;
+  counter-increment: inner-item;
+  margin-bottom: 0.6em;
+}
+
+ol.terms-list ol.terms-inner-list > li:first-child {
+  counter-reset: inner-item;
+}
+
+ol.terms-list ol.terms-inner-list > li:before {
+  content: counter(inner-item, lower-alpha) ". ";
+  display: table-cell;
+  padding-right: 0.6em;
+}
+
+ol.terms-list ol.terms-inner-list > li {
+  margin: 0;
+}
+
+ol.terms-list ol.terms-inner-list > li:before {
+  content: counter(inner-item, lower-alpha) ". ";
 }
