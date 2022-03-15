@@ -113,7 +113,7 @@ const ViewCampaign = () => {
           <div className="content-body page-content">
             <div className="container pd-x-0 d-flex justify-content-center">
               <div className="col-md-5 col-12 mg-t-20">
-                <div className="card shadow-sm rounded bd-0 page-content-card">
+                <div className="card shadow-sm rounded bd-0 page-content-card ">
                   <div className="card-body">
                     {/* <p className="tx-20 tx-bold tx-com">Preview</p> */}
                     <div className="card-image">
@@ -136,7 +136,7 @@ const ViewCampaign = () => {
                       </p>
                     </div>
                     {campaignType === "flier_video" && (
-                      <div className="d-flex flex-column align-items-center">
+                      <div className="d-flex flex-column align-items-center .wd-xs-100p">
                         {createShowAds &&
                         createShowAds.whatsAppNumber === "" ? null : (
                           <a

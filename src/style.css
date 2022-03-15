@@ -186,7 +186,7 @@ tbody + thead {
 }
 
 .page-content-card a {
-  width: 335px;
+  width: 100%;
 }
 
 .csvReader {
