@@ -6,10 +6,12 @@ import { Route, Routes } from "react-router-dom";
 import Loader from "./components/loader";
 
 import Home from "./components/Home";
+import Terms from "./components/Terms";
 import Dashboard from "./components/app";
 import DashboardLayout from "./components/app/DashboardLayout";
 import SenderID from "./components/app/SenderID/SenderID";
 import BillingOverview from "./components/app/billing/Billing";
+import Transactions from "./components/app/billing/Transactions";
 import FundWallet from "./components/app/billing/FundWallet";
 // import MakePayment from "./components/app/billing/MakePayment";
 import RequestSenderID from "./components/app/SenderID/RequestSenderID";
@@ -122,6 +124,16 @@ function App() {
             element={
               isAuthenticated && user && user.user.role === "user" ? (
                 <BillingOverview />
+              ) : (
+                <Login />
+              )
+            }
+          />
+          <Route
+            path="transactions"
+            element={
+              isAuthenticated && user && user.user.role === "user" ? (
+                <Transactions />
               ) : (
                 <Login />
               )
@@ -326,6 +338,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/terms-of-use" element={<Terms />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />

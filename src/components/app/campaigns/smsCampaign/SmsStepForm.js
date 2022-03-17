@@ -12,8 +12,7 @@ export default class SmsStepForm extends Component {
     channel: "",
     campaignMessage: "",
     // gender: "Male",
-    targetAge: "21",
-    location: ["Lagos"],
+    // targetAge: "21",
     interest: "business",
     phoneNumber: "",
     campaignType: "general",
@@ -23,6 +22,8 @@ export default class SmsStepForm extends Component {
     contactNumberCount: 0,
     parsedCsvData: [],
 
+    ageRangeTo: undefined,
+    ageRangeFrom: undefined,
     ageRange: "",
     gender: "",
     state: "abia",
@@ -31,6 +32,14 @@ export default class SmsStepForm extends Component {
     deviceBrand: "",
     characterCount: 0,
     smsCount: 0,
+
+    scheduleOption: "none",
+    scheduleTime: "",
+    scheduleFrom: "",
+    scheduleTo: "",
+
+    arrayState: undefined,
+    arrayLga: undefined,
   };
 
   // go back to previous step
@@ -59,6 +68,19 @@ export default class SmsStepForm extends Component {
     this.setState({ contactNumberCount: count });
   };
 
+  handleStateChange = (state) => {
+    this.setState({ arrayState: state });
+    // this.setState({
+    //   arrayLga: [].concat.apply([], state).map((lga) => {
+    //     return { value: lga, label: lga };
+    //   }),
+    // });
+  };
+
+  handleLgaChange = (lga) => {
+    this.setState({ arrayLga: lga.map((value) => value.value).join(",") });
+  };
+
   render() {
     const {
       step,
@@ -67,7 +89,6 @@ export default class SmsStepForm extends Component {
       channel,
       campaignMessage,
       targetAge,
-      location,
       interest,
       campaignType,
       phoneNumber,
@@ -75,6 +96,8 @@ export default class SmsStepForm extends Component {
       limit,
       contactNumberCount,
 
+      ageRangeFrom,
+      ageRangeTo,
       ageRange,
       gender,
       state,
@@ -85,6 +108,14 @@ export default class SmsStepForm extends Component {
       parsedCsvData,
       characterCount,
       smsCount,
+
+      scheduleOption,
+      scheduleTime,
+      scheduleFrom,
+      scheduleTo,
+
+      arrayState,
+      arrayLga,
     } = this.state;
 
     // console.log(campaignMessage);
@@ -120,10 +151,11 @@ export default class SmsStepForm extends Component {
     const price = audience * 5 * smsCount;
 
     const filterOptions = {
-      ageRange,
+      ageRange:
+        ageRangeFrom && ageRangeTo ? `${ageRangeFrom + "-" + ageRangeTo}` : "",
       gender,
-      state,
-      lga,
+      state: arrayState && arrayState.map((value) => value.value).join(","),
+      lga: arrayLga,
       deviceType,
       deviceBrand,
     };
@@ -137,7 +169,6 @@ export default class SmsStepForm extends Component {
       campaignMessage,
       contactNumber,
       targetAge,
-      location,
       interest,
       campaignType,
       price,
@@ -146,9 +177,13 @@ export default class SmsStepForm extends Component {
       audience,
       limit,
       contactNumberCount,
+      scheduleOption,
+      scheduleTime,
+      scheduleFrom,
+      scheduleTo,
     };
 
-    // console.log(values);
+    console.log(values);
 
     switch (step) {
       case 1:
@@ -171,6 +206,12 @@ export default class SmsStepForm extends Component {
             values={values}
             filterOptions={filterOptions}
             getCsvRawData={getCsvRawData}
+            handleStateChange={this.handleStateChange}
+            handleLgaChange={this.handleLgaChange}
+            ageRangeFrom={ageRangeFrom}
+            ageRangeTo={ageRangeTo}
+            arrayState={arrayState}
+            arrayLga={arrayLga}
           />
         );
       case 3:
@@ -183,6 +224,8 @@ export default class SmsStepForm extends Component {
             filterOptions={filterOptions}
             handleChange={this.handleChange}
             handleCount={this.handleCount}
+            ageRangeFrom={ageRangeFrom}
+            ageRangeTo={ageRangeTo}
           />
         );
       case 4:

@@ -18,11 +18,11 @@ const TargetAudience = ({
   prevStep,
   nextStep,
   handleChange,
-  handleManualImport,
   numbers,
   filterOptions,
   values,
-
+  ageRangeFrom,
+  ageRangeTo,
   getCsvRawData,
 }) => {
   // const alert = useAlert();
@@ -303,10 +303,13 @@ const TargetAudience = ({
                         {values.budget >= 10000 && (
                           <div className="form-group col-md-6 mb-0 align-items-center d-flex">
                             <div>
-                              <span>{values.budget / 5}</span>
+                              <span>
+                                {Math.ceil(values.budget / 6 / 100) * 100}
+                              </span>
                               {" - "}
                               <span>
-                                {values.budget / 2} Estimated Reach{" "}
+                                {Math.ceil(values.budget / 3 / 1000) * 1000}{" "}
+                                Estimated Reach{" "}
                                 <i className="tx-15 fa fa-users" />
                               </span>
                             </div>
@@ -393,7 +396,7 @@ const TargetAudience = ({
                                 Age Group
                                 <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                               </label>
-                              <select
+                              {/* <select
                                 className="form-control"
                                 defaultValue={filterOptions.ageRange}
                                 onChange={handleChange("ageRange")}
@@ -403,7 +406,47 @@ const TargetAudience = ({
                                     {selectAgeRange.label}
                                   </option>
                                 ))}
-                              </select>
+                              </select> */}
+                              <div className="form-row">
+                                <div className="form-group col-md-6 mg-b-0">
+                                  <div className="input-group mg-b-10">
+                                    <div className="input-group-prepend">
+                                      <span className="input-group-text">
+                                        From
+                                      </span>
+                                    </div>
+                                    <input
+                                      type="number"
+                                      id="age-from"
+                                      min="18"
+                                      max="50"
+                                      className="form-control"
+                                      aria-describedby="basic-addon1"
+                                      defaultValue={ageRangeFrom}
+                                      onChange={handleChange("ageRangeFrom")}
+                                    />
+                                  </div>
+                                </div>
+                                <div className="form-group col-md-6 mg-b-0">
+                                  <div className="input-group mg-b-10">
+                                    <div className="input-group-prepend">
+                                      <span className="input-group-text">
+                                        To
+                                      </span>
+                                    </div>
+                                    <input
+                                      type="number"
+                                      id="age-to"
+                                      min="18"
+                                      max="50"
+                                      className="form-control"
+                                      aria-describedby="basic-addon1"
+                                      defaultValue={ageRangeTo}
+                                      onChange={handleChange("ageRangeTo")}
+                                    />
+                                  </div>
+                                </div>
+                              </div>
                             </div>
                             <div className="form-group col-md-6">
                               <label
@@ -514,7 +557,7 @@ const TargetAudience = ({
                               <label className="mb-1 tx-com">
                                 Upload CSV Containing Phone Numbers
                               </label>
-                              <button className="btn tx-primary pd-x-0 pd-t-0">
+                              <button className="btn tx-primary pd-x-0 pd-t-0 justify-content-start">
                                 <div className="d-flex pd-t-3">
                                   <div>
                                     <i className="fa fa-download tx-primary mg-r-5" />

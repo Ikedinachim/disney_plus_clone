@@ -7522,6 +7522,10 @@ button.bg-dark:focus {
   width: auto !important;
 }
 
+.w-inherit {
+  width: inherit !important;
+}
+
 .h-25 {
   height: 25% !important;
 }
@@ -10533,6 +10537,7 @@ textarea.form-control {
 .pagination {
   font-size: 14px;
   font-weight: 500;
+  cursor: pointer;
 }
 
 .page-item.disabled {
@@ -17575,7 +17580,7 @@ textarea.parsley-success:focus {
   color: #637388;
   border-top: 1px solid rgba(72, 94, 144, 0.16);
   text-transform: uppercase;
-  display: none;
+  display: flex;
 }
 @media (min-width: 992px) {
   .footer {
@@ -17586,7 +17591,7 @@ textarea.parsley-success:focus {
 }
 .footer a {
   padding: 0;
-  color: #1b2e4b;
+  color: #fff;
 }
 .footer a:hover,
 .footer a:focus {

@@ -19,8 +19,21 @@ import {
   CONFIRM_FUNDING_RESET,
 } from "../../../../constants/billingConstants";
 
-const FundWalletFlierVideo = ({ prevStep, values, price }) => {
+const FundWalletFlierVideo = ({ prevStep, values }) => {
   // const alert = useAlert();
+  const setScheduleDate = (initialDate, endDate) => {
+    let day1 = new Date(initialDate);
+    let day2 = new Date(endDate);
+
+    const difference = Math.abs(day2 - day1);
+    const days = difference / (1000 * 3600 * 24);
+
+    if (values.scheduleOption !== "recurrent" || days < 1 || !days) {
+      return 1;
+    } else if (values.scheduleOption === "recurrent") {
+      return days;
+    }
+  };
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -35,10 +48,20 @@ const FundWalletFlierVideo = ({ prevStep, values, price }) => {
       values.channel !== "display_ads"
       ? Math.ceil(
           values.limit
-            ? values.limit * 5 - wallet.balance
-            : filteredContactList.filteredContactList.count * 5 - wallet.balance
+            ? values.limit *
+                5 *
+                setScheduleDate(values.scheduleFrom, values.scheduleTo) -
+                wallet.balance
+            : filteredContactList.filteredContactList.count *
+                5 *
+                setScheduleDate(values.scheduleFrom, values.scheduleTo) -
+                wallet.balance
         )
-      : Math.ceil(values.price - wallet.balance)
+      : Math.ceil(
+          values.price *
+            setScheduleDate(values.scheduleFrom, values.scheduleTo) -
+            wallet.balance
+        )
   );
 
   const makePaymentHandler = (e) => {

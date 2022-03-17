@@ -47,6 +47,13 @@ export default class FlierVideoStepForm extends Component {
     characterCount: 0,
     smsCount: 0,
 
+    scheduleOption: "none",
+    scheduleTime: "",
+    scheduleFrom: "",
+    scheduleTo: "",
+
+    ageRangeTo: undefined,
+    ageRangeFrom: undefined,
     ageRange: "",
     gender: "",
     state: "abia",
@@ -187,6 +194,8 @@ export default class FlierVideoStepForm extends Component {
       budget,
       contactNumberCount,
 
+      ageRangeFrom,
+      ageRangeTo,
       ageRange,
       gender,
       state,
@@ -201,6 +210,11 @@ export default class FlierVideoStepForm extends Component {
       uploadPercentage,
       characterCount,
       smsCount,
+
+      scheduleOption,
+      scheduleTime,
+      scheduleFrom,
+      scheduleTo,
     } = this.state;
 
     /////////////////////////////
@@ -245,10 +259,12 @@ export default class FlierVideoStepForm extends Component {
     /////////////////////////////
     const audience = setAudience();
     const price = audience * 5 * smsCount;
-    const timeRange = timeRangeFrom + " - " + timeRangeTo;
+    const timeRange =
+      timeRangeFrom && timeRangeTo ? timeRangeFrom + " - " + timeRangeTo : "";
 
     const filterOptions = {
-      ageRange,
+      ageRange:
+        ageRangeFrom && ageRangeTo ? `${ageRangeFrom + "-" + ageRangeTo}` : "",
       gender,
       state,
       lga,
@@ -281,9 +297,13 @@ export default class FlierVideoStepForm extends Component {
       price,
       budget,
       assetType,
+      scheduleOption,
+      scheduleTime,
+      scheduleFrom,
+      scheduleTo,
     };
 
-    // console.log(values);
+    console.log(values);
 
     switch (step) {
       case 1:
@@ -312,6 +332,8 @@ export default class FlierVideoStepForm extends Component {
             values={values}
             filterOptions={filterOptions}
             getCsvRawData={getCsvRawData}
+            ageRangeFrom={ageRangeFrom}
+            ageRangeTo={ageRangeTo}
           />
         );
       case 3:
