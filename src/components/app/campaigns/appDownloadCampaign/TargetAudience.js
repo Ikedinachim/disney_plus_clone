@@ -501,7 +501,7 @@ const TargetAudience = ({
                                 Upload CSV Containing Phone Numbers
                               </label>
                               <button
-                                className="btn tx-primary pd-x-0 pd-t-0"
+                                className="btn tx-primary pd-x-0 pd-t-0 justify-content-start"
                                 // onClick={setCsvAsset}
                               >
                                 <div className="d-flex pd-t-3">
