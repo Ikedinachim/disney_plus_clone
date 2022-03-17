@@ -19,7 +19,7 @@ const Header = () => {
 
   const logoutHandler = () => {
     dispatch(logout());
-    toast.success("Logged out successfully");
+    // toast.success("Logged out successfully");
   };
 
   // const { user } = useSelector((state) => state.auth);

@@ -11,6 +11,7 @@ import Dashboard from "./components/app";
 import DashboardLayout from "./components/app/DashboardLayout";
 import SenderID from "./components/app/SenderID/SenderID";
 import BillingOverview from "./components/app/billing/Billing";
+import Transactions from "./components/app/billing/Transactions";
 import FundWallet from "./components/app/billing/FundWallet";
 // import MakePayment from "./components/app/billing/MakePayment";
 import RequestSenderID from "./components/app/SenderID/RequestSenderID";
@@ -123,6 +124,16 @@ function App() {
             element={
               isAuthenticated && user && user.user.role === "user" ? (
                 <BillingOverview />
+              ) : (
+                <Login />
+              )
+            }
+          />
+          <Route
+            path="transactions"
+            element={
+              isAuthenticated && user && user.user.role === "user" ? (
+                <Transactions />
               ) : (
                 <Login />
               )

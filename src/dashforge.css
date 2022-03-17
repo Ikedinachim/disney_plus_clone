@@ -10537,6 +10537,7 @@ textarea.form-control {
 .pagination {
   font-size: 14px;
   font-weight: 500;
+  cursor: pointer;
 }
 
 .page-item.disabled {

@@ -59,7 +59,7 @@ const PreviewCampaign = ({
     let day2 = new Date(endDate);
 
     const difference = Math.abs(day2 - day1);
-    const days = difference / (1000 * 3600 * 24);
+    const days = difference / (1000 * 3600 * 24) + 1;
 
     if (values.scheduleOption !== "recurrent" || days < 1) {
       return 1;
@@ -324,7 +324,7 @@ const PreviewCampaign = ({
                             >
                               Location
                             </label>
-                            <div className="d-flex">
+                            <div className="d-flex flex-wrap">
                               <span className="badge badge-pink tx-14 mg-5">
                                 {" "}
                                 {filterOptions.state}

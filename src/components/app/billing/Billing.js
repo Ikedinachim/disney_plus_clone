@@ -102,6 +102,7 @@ const BillingOverview = () => {
                               type="checkbox"
                               className="custom-control-input"
                               id="customSwitch1"
+                              disabled
                             />
                             <label
                               className="custom-control-label tx-blac"
@@ -110,7 +111,7 @@ const BillingOverview = () => {
                               Disabled
                             </label>
                           </div>
-                          <div className="mg-t-20">
+                          {/* <div className="mg-t-20">
                             <p className="tx-16 mb-1">Invoice</p>
                             <p className="tx-12 tx-blac">
                               Your next invoice will be ready on 12th Sept. 2021
@@ -129,7 +130,7 @@ const BillingOverview = () => {
                                 <option value={3}>EXV</option>
                               </select>
                             </div>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>

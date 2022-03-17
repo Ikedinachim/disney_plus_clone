@@ -18,7 +18,7 @@ const TransactionHistory = () => {
     <Fragment>
       <div className="d-flex justify-content-between mg-b-10">
         <p className="mg-b-0 pd-t-10 tx-medium">Payment History</p>
-        <Link to="/app/billing" className="pd-t-10 tx-primary tx-medium">
+        <Link to="/app/transactions" className="pd-t-10 tx-primary tx-medium">
           View all transactions
         </Link>
       </div>
