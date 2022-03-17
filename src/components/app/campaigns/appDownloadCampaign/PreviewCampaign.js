@@ -62,7 +62,7 @@ const PreviewCampaign = ({
     let day2 = new Date(endDate);
 
     const difference = Math.abs(day2 - day1);
-    const days = difference / (1000 * 3600 * 24);
+    const days = difference / (1000 * 3600 * 24) + 1;
 
     if (values.scheduleOption !== "recurrent" || days < 1 || !days) {
       return 1;
@@ -204,29 +204,7 @@ const PreviewCampaign = ({
                             </div>
                             <div>
                               <p className="tx-20 tx-bold pd-t-15 tx-com capitalize">
-                                {view === false ? (
-                                  values.channel
-                                ) : (
-                                  <Fragment>
-                                    <select
-                                      name="channels"
-                                      onClick={handleChanlChange}
-                                    >
-                                      <option value="smart_sms">
-                                        smart_sms
-                                      </option>
-                                      <option value="display_ads">
-                                        display_ads
-                                      </option>
-                                    </select>
-                                    <button
-                                      className="btn btn-primary"
-                                      onClick={handleCampaignChannelSub}
-                                    >
-                                      save
-                                    </button>
-                                  </Fragment>
-                                )}
+                                {values.channel}
                               </p>
                             </div>
                           </div>
@@ -250,268 +228,265 @@ const PreviewCampaign = ({
                                 Campaign Information
                               </p>
                             </div>
-                            {/* <div>
-                              <div
-                                className="d-flex pd-t-3 clickable"
-                                onClick={showButton}
-                              >
-                                <div>
-                                  <i className="fa fa-edit tx-primary mg-r-5" />
-                                </div>
-                                <p className="mb-0">Edit</p>
-                              </div>
-                            </div> */}
                           </div>
-                          <div className="row mg-t-15">
-                            <div className="form-group col-md-6">
-                              <label className="tx-14 tx-gray mb-0 tx-medium">
-                                Channel
-                              </label>
-                              <p className="tx-16 mb-0">{values.channel}</p>
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label className="tx-14 tx-gray mb-0 tx-medium">
-                                Call To Action
-                              </label>
-                              <p className="tx-16 mb-0">
-                                {show === false ? (
-                                  values.callToAction
-                                ) : (
-                                  <Fragment>
-                                    <input
-                                      type="text"
-                                      name="callToAction"
-                                      value={val.callToAction}
-                                      className="p-1"
-                                      onChange={handleEdit}
-                                    />{" "}
-                                  </Fragment>
-                                )}
-                              </p>
-                            </div>
-                            {/* <div className="form-group col-md-6">
-                              <label
-                                
-                                className="tx-14 tx-gray mb-0 tx-medium"
-                              >
-                                WhatsApp Number
-                              </label>
-                              <p className="tx-16 mb-0">
-                                {values.whatsAppNumber}
-                              </p>
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label
-                                
-                                className="tx-14 tx-gray mb-0 tx-medium"
-                              >
-                                SMS Number
-                              </label>
-                              <p className="tx-16 mb-0">{values.smsNumber}</p>
-                            </div> */}
-                            <div className="form-group col-md-12">
-                              <label className="tx-14 tx-gray mb-0 tx-medium">
-                                Campaign Message
-                              </label>
-                              <p className="tx-15 mb-0">
-                                {show === false ? (
-                                  values.campaignMessage
-                                ) : (
-                                  <Fragment>
-                                    <input
-                                      type="text"
-                                      name="campaignMessage"
-                                      value={val.campaignMessage}
-                                      className="p-1"
-                                      onChange={handleEdit}
-                                    />{" "}
-                                  </Fragment>
-                                )}
-                              </p>
-                            </div>
-                            {show === false ? null : (
+                          {values.channel === "display_ads" ? (
+                            <div className="row mg-t-15">
                               <div className="form-group col-md-6">
-                                <button
-                                  className="btn btn-primary"
-                                  onClick={handleSubmit}
-                                >
-                                  save
-                                </button>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                        <hr />
-                        <div className="mg-b-20 mg-md-b-10">
-                          <p className="tx-18 tx-com tx-semibold mb-0">
-                            Scheduling
-                          </p>
-                          <div className="form-group mt-2 mb-2">
-                            <div className="custom-control custom-radio">
-                              <input
-                                type="radio"
-                                id="none"
-                                name="scheduleRadio"
-                                className="custom-control-input"
-                                checked={values.scheduleOption === "none"}
-                                // onClick={(e) => assetTypeHandler("image")}
-                                value={"none"}
-                                onChange={handleChange("scheduleOption")}
-                              />
-                              <label
-                                className="custom-control-label"
-                                htmlFor="none"
-                              >
-                                Publish Now
-                              </label>
-                            </div>
-                          </div>
-                          <div className="form-group mb-2">
-                            <div className="custom-control custom-radio">
-                              <input
-                                type="radio"
-                                id="once"
-                                name="scheduleRadio"
-                                className="custom-control-input"
-                                checked={values.scheduleOption === "once"}
-                                // onClick={(e) => assetTypeHandler("video")}
-                                value={"once"}
-                                onChange={handleChange("scheduleOption")}
-                              />
-                              <label
-                                className="custom-control-label"
-                                htmlFor="once"
-                              >
-                                Once
-                              </label>
-                            </div>
-                          </div>
-                          <div className="form-group mb-2">
-                            <div className="custom-control custom-radio">
-                              <input
-                                type="radio"
-                                id="recurrent"
-                                name="scheduleRadio"
-                                className="custom-control-input"
-                                checked={values.scheduleOption === "recurrent"}
-                                // onClick={(e) => assetTypeHandler("video")}
-                                value={"recurrent"}
-                                onChange={handleChange("scheduleOption")}
-                              />
-                              <label
-                                className="custom-control-label"
-                                htmlFor="recurrent"
-                              >
-                                Recurring
-                              </label>
-                            </div>
-                          </div>
-                          {values.scheduleOption === "recurrent" && (
-                            <div className="form-row">
-                              <div className="form-group col-md-6 mg-b-0">
-                                <label className="mb-1">Date Range</label>
-                                <div className="input-group mg-b-0">
-                                  <div className="input-group-prepend">
-                                    <span className="input-group-text">
-                                      From
-                                    </span>
-                                  </div>
-                                  <input
-                                    type="date"
-                                    className="form-control"
-                                    placeholder="Username"
-                                    aria-label="Username"
-                                    aria-describedby="basic-addon1"
-                                    defaultValue={values.scheduleFrom}
-                                    onChange={handleChange("scheduleFrom")}
-                                  />
-                                </div>
-                              </div>
-                              <div className="form-group col-md-6 mb-0">
-                                <label />
-                                <div className="input-group mg-b-10 mg-t-5">
-                                  <div className="input-group-prepend">
-                                    <span className="input-group-text">To</span>
-                                  </div>
-                                  <input
-                                    type="date"
-                                    className="form-control"
-                                    placeholder="Username"
-                                    aria-label="Username"
-                                    aria-describedby="basic-addon1"
-                                    defaultValue={values.scheduleTo}
-                                    onChange={handleChange("scheduleTo")}
-                                  />
-                                </div>
-                              </div>
-                              <div className="form-group col-md-6 mb-0">
-                                <label className="mb-1" htmlFor="schedule-time">
-                                  Time
+                                <label className="tx-14 tx-gray mb-0 tx-medium">
+                                  Channel
                                 </label>
-                                <div className="input-group mg-b-10">
-                                  <div className="input-group-prepend">
-                                    <span className="input-group-text">
-                                      Time
-                                    </span>
-                                  </div>
-                                  <input
-                                    type="time"
-                                    id="schedule-time"
-                                    min="08:00"
-                                    max="20:00"
-                                    className="form-control"
-                                    aria-describedby="basic-addon1"
-                                    defaultValue={values.scheduleTime}
-                                    onChange={handleChange("scheduleTime")}
-                                  />
-                                </div>
+                                <p className="tx-16 mb-0">{values.channel}</p>
+                              </div>
+                              <div className="form-group col-md-6">
+                                <label className="tx-14 tx-gray mb-0 tx-medium">
+                                  Call To Action
+                                </label>
+                                <p className="tx-16 mb-0">
+                                  {values.callToAction}
+                                </p>
+                              </div>
+                              <div className="form-group col-md-12">
+                                <label className="tx-14 tx-gray mb-0 tx-medium">
+                                  Campaign Message
+                                </label>
+                                <p className="tx-15 mb-0">
+                                  {values.campaignMessage}
+                                </p>
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="row mg-t-15">
+                              <div className="form-group col-md-6">
+                                <label className="tx-14 tx-gray mb-0 tx-medium">
+                                  Channel
+                                </label>
+                                <p className="tx-16 mb-0">{values.channel}</p>
+                              </div>
+                              <div className="form-group col-md-6">
+                                <label className="tx-14 tx-gray mb-0 tx-medium">
+                                  Sender ID
+                                </label>
+                                <p className="tx-16 mb-0">
+                                  {values.senderId !== ""
+                                    ? values.senderId
+                                    : values.alternateSenderId}
+                                </p>
+                              </div>
+                              <div className="form-group col-md-6">
+                                <label className="tx-14 tx-gray mb-0 tx-medium">
+                                  Call To Action
+                                </label>
+                                <p className="tx-16 mb-0">
+                                  {values.callToAction}
+                                </p>
+                              </div>
+                              <div className="form-group col-md-6">
+                                <label className="tx-14 tx-gray mb-0 tx-medium">
+                                  IOS URL
+                                </label>
+                                <p className="tx-16 mb-0">
+                                  {values.iosStoreUrl}
+                                </p>
+                              </div>
+                              <div className="form-group col-md-6">
+                                <label className="tx-14 tx-gray mb-0 tx-medium">
+                                  Android URL
+                                </label>
+                                <p className="tx-16 mb-0">
+                                  {values.androidStoreUrl}
+                                </p>
+                              </div>
+                              <div className="form-group col-md-12">
+                                <label className="tx-14 tx-gray mb-0 tx-medium">
+                                  Campaign Message
+                                </label>
+                                <p className="tx-15 mb-0">
+                                  {values.campaignMessage}
+                                </p>
                               </div>
                             </div>
                           )}
-                          {values.scheduleOption === "once" && (
-                            <div className="form-row col-md-12">
-                              <div className="form-group col-md-6 mg-b-0">
-                                <label className="mb-1">
-                                  Set a Date / Time
-                                </label>
-                                <div className="input-group mg-b-0">
-                                  <div className="input-group-prepend">
-                                    <span className="input-group-text">
-                                      Date
-                                    </span>
-                                  </div>
+                        </div>
+                        <hr />
+                        {values.channel !== "display_ads" && (
+                          <>
+                            <div className="mg-b-20 mg-md-b-10">
+                              <p className="tx-18 tx-com tx-semibold mb-0">
+                                Scheduling
+                              </p>
+                              <div className="form-group mt-2 mb-2">
+                                <div className="custom-control custom-radio">
                                   <input
-                                    type="date"
-                                    className="form-control"
-                                    placeholder="Username"
-                                    aria-label="Username"
-                                    aria-describedby="basic-addon1"
-                                    defaultValue={values.scheduleFrom}
-                                    onChange={handleChange("scheduleFrom")}
+                                    type="radio"
+                                    id="none"
+                                    name="scheduleRadio"
+                                    className="custom-control-input"
+                                    checked={values.scheduleOption === "none"}
+                                    // onClick={(e) => assetTypeHandler("image")}
+                                    value={"none"}
+                                    onChange={handleChange("scheduleOption")}
                                   />
+                                  <label
+                                    className="custom-control-label"
+                                    htmlFor="none"
+                                  >
+                                    Publish Now
+                                  </label>
                                 </div>
                               </div>
-                              <div className="form-group col-md-6 mb-0">
-                                <label />
-                                <div className="input-group mg-b-10 mg-t-5">
-                                  <div className="input-group-prepend">
-                                    <span className="input-group-text">
+                              <div className="form-group mb-2">
+                                <div className="custom-control custom-radio">
+                                  <input
+                                    type="radio"
+                                    id="once"
+                                    name="scheduleRadio"
+                                    className="custom-control-input"
+                                    checked={values.scheduleOption === "once"}
+                                    // onClick={(e) => assetTypeHandler("video")}
+                                    value={"once"}
+                                    onChange={handleChange("scheduleOption")}
+                                  />
+                                  <label
+                                    className="custom-control-label"
+                                    htmlFor="once"
+                                  >
+                                    Once
+                                  </label>
+                                </div>
+                              </div>
+                              <div className="form-group mb-2">
+                                <div className="custom-control custom-radio">
+                                  <input
+                                    type="radio"
+                                    id="recurrent"
+                                    name="scheduleRadio"
+                                    className="custom-control-input"
+                                    checked={
+                                      values.scheduleOption === "recurrent"
+                                    }
+                                    // onClick={(e) => assetTypeHandler("video")}
+                                    value={"recurrent"}
+                                    onChange={handleChange("scheduleOption")}
+                                  />
+                                  <label
+                                    className="custom-control-label"
+                                    htmlFor="recurrent"
+                                  >
+                                    Recurring
+                                  </label>
+                                </div>
+                              </div>
+                              {values.scheduleOption === "recurrent" && (
+                                <div className="form-row">
+                                  <div className="form-group col-md-6 mg-b-0">
+                                    <label className="mb-1">Date Range</label>
+                                    <div className="input-group mg-b-0">
+                                      <div className="input-group-prepend">
+                                        <span className="input-group-text">
+                                          From
+                                        </span>
+                                      </div>
+                                      <input
+                                        type="date"
+                                        className="form-control"
+                                        placeholder="Username"
+                                        aria-label="Username"
+                                        aria-describedby="basic-addon1"
+                                        defaultValue={values.scheduleFrom}
+                                        onChange={handleChange("scheduleFrom")}
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="form-group col-md-6 mb-0">
+                                    <label />
+                                    <div className="input-group mg-b-10 mg-t-5">
+                                      <div className="input-group-prepend">
+                                        <span className="input-group-text">
+                                          To
+                                        </span>
+                                      </div>
+                                      <input
+                                        type="date"
+                                        className="form-control"
+                                        placeholder="Username"
+                                        aria-label="Username"
+                                        aria-describedby="basic-addon1"
+                                        defaultValue={values.scheduleTo}
+                                        onChange={handleChange("scheduleTo")}
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="form-group col-md-6 mb-0">
+                                    <label
+                                      className="mb-1"
+                                      htmlFor="schedule-time"
+                                    >
                                       Time
-                                    </span>
+                                    </label>
+                                    <div className="input-group mg-b-10">
+                                      <div className="input-group-prepend">
+                                        <span className="input-group-text">
+                                          Time
+                                        </span>
+                                      </div>
+                                      <input
+                                        type="time"
+                                        id="schedule-time"
+                                        min="08:00"
+                                        max="20:00"
+                                        className="form-control"
+                                        aria-describedby="basic-addon1"
+                                        defaultValue={values.scheduleTime}
+                                        onChange={handleChange("scheduleTime")}
+                                      />
+                                    </div>
                                   </div>
-                                  <input
-                                    type="time"
-                                    id="schedule-time"
-                                    min="08:00"
-                                    max="20:00"
-                                    className="form-control"
-                                    aria-describedby="basic-addon1"
-                                    defaultValue={values.scheduleTime}
-                                    onChange={handleChange("scheduleTime")}
-                                  />
                                 </div>
-                              </div>
-                              {/* <div className="form-group col-md-6 mb-0">
+                              )}
+                              {values.scheduleOption === "once" && (
+                                <div className="form-row col-md-12">
+                                  <div className="form-group col-md-6 mg-b-0">
+                                    <label className="mb-1">
+                                      Set a Date / Time
+                                    </label>
+                                    <div className="input-group mg-b-0">
+                                      <div className="input-group-prepend">
+                                        <span className="input-group-text">
+                                          Date
+                                        </span>
+                                      </div>
+                                      <input
+                                        type="date"
+                                        className="form-control"
+                                        placeholder="Username"
+                                        aria-label="Username"
+                                        aria-describedby="basic-addon1"
+                                        defaultValue={values.scheduleFrom}
+                                        onChange={handleChange("scheduleFrom")}
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="form-group col-md-6 mb-0">
+                                    <label />
+                                    <div className="input-group mg-b-10 mg-t-5">
+                                      <div className="input-group-prepend">
+                                        <span className="input-group-text">
+                                          Time
+                                        </span>
+                                      </div>
+                                      <input
+                                        type="time"
+                                        id="schedule-time"
+                                        min="08:00"
+                                        max="20:00"
+                                        className="form-control"
+                                        aria-describedby="basic-addon1"
+                                        defaultValue={values.scheduleTime}
+                                        onChange={handleChange("scheduleTime")}
+                                      />
+                                    </div>
+                                  </div>
+                                  {/* <div className="form-group col-md-6 mb-0">
                             <label className="mb-1" htmlFor="schedule-time">
                               Time
                             </label>
@@ -531,10 +506,12 @@ const PreviewCampaign = ({
                               />
                             </div>
                           </div> */}
+                                </div>
+                              )}
                             </div>
-                          )}
-                        </div>
-                        <hr />
+                            <hr />
+                          </>
+                        )}
                         {values.targetAudienceOption === "mysogidb" &&
                           values.channel !== "display_ads" && (
                             <>

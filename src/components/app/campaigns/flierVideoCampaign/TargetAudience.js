@@ -557,7 +557,7 @@ const TargetAudience = ({
                               <label className="mb-1 tx-com">
                                 Upload CSV Containing Phone Numbers
                               </label>
-                              <button className="btn tx-primary pd-x-0 pd-t-0">
+                              <button className="btn tx-primary pd-x-0 pd-t-0 justify-content-start">
                                 <div className="d-flex pd-t-3">
                                   <div>
                                     <i className="fa fa-download tx-primary mg-r-5" />

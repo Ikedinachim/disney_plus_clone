@@ -259,10 +259,12 @@ export default class FlierVideoStepForm extends Component {
     /////////////////////////////
     const audience = setAudience();
     const price = audience * 5 * smsCount;
-    const timeRange = timeRangeFrom + " - " + timeRangeTo;
+    const timeRange =
+      timeRangeFrom && timeRangeTo ? timeRangeFrom + " - " + timeRangeTo : "";
 
     const filterOptions = {
-      ageRange: `${ageRangeFrom + "-" + ageRangeTo}`,
+      ageRange:
+        ageRangeFrom && ageRangeTo ? `${ageRangeFrom + "-" + ageRangeTo}` : "",
       gender,
       state,
       lga,
