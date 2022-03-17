@@ -244,12 +244,14 @@ export default class AppDownloadStepForm extends Component {
     // const targetAudience = numbers.split(",");
     const audience = setAudience();
     const price = audience * 5 * smsCount;
-    const timeRange = timeRangeFrom + " - " + timeRangeTo;
+    const timeRange =
+      timeRangeFrom && timeRangeTo ? timeRangeFrom + " - " + timeRangeTo : "";
     // const attachment = attachmentPreview
     // console.log(price);
 
     const filterOptions = {
-      ageRange: `${ageRangeFrom + "-" + ageRangeTo}`,
+      ageRange:
+        ageRangeFrom && ageRangeTo ? `${ageRangeFrom + "-" + ageRangeTo}` : "",
       gender,
       state,
       lga,

@@ -60,17 +60,14 @@ const ViewInfluencerCampaignDetails = () => {
     }
   };
 
-  //   console.log(parseInt(platformCost(influencerDetails.costs, "twitter")));
-
   const campaignDetails = details(influencerCampaignList, influenceMarketingId);
 
-  const platforms = campaignDetails.platforms.split(",");
-
-  // console.log(platforms);
+  const platforms = campaignDetails.platforms.split(",").map((el) => el.trim());
 
   const checkPlatformCost = (p) => {
     let findIndex = platforms.findIndex((el) => el === p);
-    if (findIndex !== -1) {
+    let findAll = platforms.findIndex((el) => el === "all");
+    if (findIndex !== -1 && findAll === -1) {
       let price = parseInt(platformCost(influencerDetails.costs, p));
       return (
         <NumberFormat
@@ -80,7 +77,24 @@ const ViewInfluencerCampaignDetails = () => {
           prefix={"₦"}
         />
       );
-    } else if (findIndex !== -1 && influencerDetails.allPlatform) {
+    }
+    // else if (findIndex !== -1 && influencerDetails.allPlatform) {
+    //   let price = parseInt(influencerDetails.allCost);
+    //   return (
+    //     <NumberFormat
+    //       value={parseInt(price)}
+    //       displayType={"text"}
+    //       thousandSeparator={true}
+    //       prefix={"₦"}
+    //     />
+    //   );
+    // }
+    else if (
+      findIndex !== -1 &&
+      campaignDetails.allPlatform &&
+      findAll !== -1 &&
+      p === "all"
+    ) {
       let price = parseInt(influencerDetails.allCost);
       return (
         <NumberFormat
@@ -117,9 +131,9 @@ const ViewInfluencerCampaignDetails = () => {
   };
 
   const setAsset = () => {
-    fetch(campaignDetails.attachment)
+    fetch(campaignDetails.marketingData.attachment)
       .then((res) => res.blob())
-      .then((blob) => saveAs(blob, "fileName"));
+      .then((blob) => saveAs(blob, "campaign_asset"));
   };
 
   const acceptCampaignHandler = (e) => {
@@ -492,7 +506,7 @@ const ViewInfluencerCampaignDetails = () => {
                   {/*Reject  Modal */}
                   <div
                     id="rejectModal"
-                    className="modal fadedownload"
+                    className="modal fade"
                     tabIndex={-1}
                     aria-labelledby="assignModalLabel"
                     aria-hidden="true"
@@ -519,7 +533,6 @@ const ViewInfluencerCampaignDetails = () => {
                               onInput={(e) => setRejectInput(e.target.value)}
                             /> */}
                             <textarea
-                              name
                               className="form-control"
                               rows={4}
                               onChange={(e) => setRejectInput(e.target.value)}
@@ -551,7 +564,7 @@ const ViewInfluencerCampaignDetails = () => {
                   {/*Confirm Publish Modal */}
                   <div
                     id="publishModal"
-                    className="modal fadedownload"
+                    className="modal fade"
                     tabIndex={-1}
                     aria-labelledby="assignModalLabel"
                     aria-hidden="true"

@@ -151,7 +151,8 @@ export default class SmsStepForm extends Component {
     const price = audience * 5 * smsCount;
 
     const filterOptions = {
-      ageRange: `${ageRangeFrom + "-" + ageRangeTo}`,
+      ageRange:
+        ageRangeFrom && ageRangeTo ? `${ageRangeFrom + "-" + ageRangeTo}` : "",
       gender,
       state: arrayState && arrayState.map((value) => value.value).join(","),
       lga: arrayLga,

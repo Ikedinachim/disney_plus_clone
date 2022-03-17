@@ -220,8 +220,6 @@ const Dashboard = () => {
     }
   }, [dispatch, error, user]);
 
-  console.log(approvedStat);
-
   return (
     <Fragment>
       {loading || idLoading ? (
