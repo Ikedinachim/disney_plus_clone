@@ -322,18 +322,20 @@ const PreviewCampaign = ({
                               htmlFor
                               className="tx-14 tx-gray mb-0 tx-medium d-block"
                             >
-                              Location
+                              State:
                             </label>
-                            <div className="d-flex flex-wrap">
-                              <span className="badge badge-pink tx-14 mg-5">
-                                {" "}
-                                {filterOptions.state}
-                              </span>
-                              <span className="badge badge-pink tx-14 mg-5">
-                                {" "}
-                                {filterOptions.lga}
-                              </span>
-                            </div>
+
+                            <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
+                              {" "}
+                              {filterOptions.state}
+                            </span>
+                            <label className="tx-14 tx-gray mb-0 tx-medium d-block mt-3">
+                              LGA:
+                            </label>
+                            <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
+                              {" "}
+                              {filterOptions.lga}
+                            </span>
                           </div>
                           <div className="form-group">
                             <label
@@ -418,7 +420,7 @@ const PreviewCampaign = ({
                       {values.scheduleOption === "recurrent" && (
                         <div className="form-row">
                           <div className="form-group col-md-6 mg-b-0">
-                            <label className="mb-1">Date Range</label>
+                            <label className="mb-1">Date Range:</label>
                             <div className="input-group mg-b-0">
                               <div className="input-group-prepend">
                                 <span className="input-group-text">From</span>
@@ -451,7 +453,7 @@ const PreviewCampaign = ({
                               />
                             </div>
                           </div>
-                          <div className="form-group col-md-6 mb-0">
+                          {/* <div className="form-group col-md-6 mb-0">
                             <label className="mb-1" htmlFor="schedule-time">
                               Time
                             </label>
@@ -470,7 +472,7 @@ const PreviewCampaign = ({
                                 onChange={handleChange("scheduleTime")}
                               />
                             </div>
-                          </div>
+                          </div> */}
                         </div>
                       )}
                       {values.scheduleOption === "once" && (

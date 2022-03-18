@@ -1,10 +1,11 @@
 import React, { Fragment, useEffect, useState, useCallback } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { useAlert } from "react-alert";
 import NaijaStates from "naija-state-local-government";
 import MetaData from "../../../layout/MetaData";
 import { toast } from "react-toastify";
+import Select from "react-select";
+
 import {
   getFilteredContactList,
   clearErrors,
@@ -18,12 +19,15 @@ const TargetAudience = ({
   prevStep,
   nextStep,
   handleChange,
+  handleStateChange,
+  handleLgaChange,
   numbers,
   filterOptions,
   values,
   getCsvRawData,
   ageRangeFrom,
   ageRangeTo,
+  arrayState,
 }) => {
   // const alert = useAlert();
   const dispatch = useDispatch();
@@ -32,12 +36,31 @@ const TargetAudience = ({
     (state) => state.filteredContactList || []
   );
 
+  const [selectedState, setSelectedState] = useState(null);
+  const [selectedLga, setSelectedLga] = useState(null);
+
   const csvData = [
     ["Numbers"],
     ["234890xxxxxxxx"],
     ["234890xxxxxxxx"],
     ["234890xxxxxxxx"],
   ];
+
+  const options = NaijaStates.states().map((state) => {
+    return { value: state, label: state };
+  });
+
+  const allLga =
+    arrayState &&
+    arrayState
+      .map((value) => NaijaStates.lgas(value.value))
+      .map((lga) => lga.lgas);
+
+  const mergedLga =
+    allLga &&
+    [].concat.apply([], allLga).map((lga) => {
+      return { value: lga, label: lga };
+    });
 
   const selectGenders = [
     {
@@ -58,25 +81,6 @@ const TargetAudience = ({
     },
   ];
 
-  const selectAgeRanges = [
-    {
-      label: "Select Age Group",
-      value: "",
-    },
-    {
-      label: "13-24",
-      value: "13-24",
-    },
-    {
-      label: "25-34",
-      value: "25-34",
-    },
-    {
-      label: "35-44",
-      value: "35-44",
-    },
-  ];
-
   const Continue = (e) => {
     e.preventDefault();
     if (
@@ -94,8 +98,6 @@ const TargetAudience = ({
     e.preventDefault();
     prevStep();
   };
-
-  const lga = NaijaStates.lgas(filterOptions.state);
 
   ////
   const [parsedCsvData, setParsedCsvData] = useState([]);
@@ -185,17 +187,12 @@ const TargetAudience = ({
                             State
                             <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                           </label>
-                          <select
-                            className="custom-select"
-                            defaultValue={filterOptions.state}
-                            onChange={handleChange("state")}
-                          >
-                            {NaijaStates.states().map((selectState, i) => (
-                              <option value={selectState} key={i}>
-                                {selectState}
-                              </option>
-                            ))}
-                          </select>
+                          <Select
+                            defaultValue={selectedState}
+                            onChange={handleStateChange}
+                            options={options}
+                            isMulti
+                          />
                         </div>
                         <div className="form-group col-md-6">
                           <label
@@ -205,19 +202,12 @@ const TargetAudience = ({
                             LGA
                             <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                           </label>
-                          <select
-                            className="custom-select"
-                            defaultValue={filterOptions.lga}
-                            onChange={handleChange("lga")}
-                          >
-                            <option value="">Select L.G.A</option>
-                            <option value="all">All</option>
-                            {lga.lgas.map((selectLga, i) => (
-                              <option value={selectLga} key={i}>
-                                {selectLga}
-                              </option>
-                            ))}
-                          </select>
+                          <Select
+                            defaultValue={selectedLga}
+                            onChange={handleLgaChange}
+                            options={mergedLga}
+                            isMulti
+                          />
                         </div>
                         <div className="form-group col-md-6">
                           <label
@@ -417,17 +407,12 @@ const TargetAudience = ({
                                 State
                                 <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                               </label>
-                              <select
-                                className="custom-select"
-                                defaultValue={filterOptions.state}
-                                onChange={handleChange("state")}
-                              >
-                                {NaijaStates.states().map((selectState, i) => (
-                                  <option value={selectState} key={i}>
-                                    {selectState}
-                                  </option>
-                                ))}
-                              </select>
+                              <Select
+                                defaultValue={selectedState}
+                                onChange={handleStateChange}
+                                options={options}
+                                isMulti
+                              />
                             </div>
                             <div className="form-group col-md-6">
                               <label
@@ -437,19 +422,12 @@ const TargetAudience = ({
                                 LGA
                                 <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                               </label>
-                              <select
-                                className="custom-select"
-                                defaultValue={filterOptions.lga}
-                                onChange={handleChange("lga")}
-                              >
-                                <option value="">Select L.G.A</option>
-                                <option value="all">All</option>
-                                {lga.lgas.map((selectLga, i) => (
-                                  <option value={selectLga} key={i}>
-                                    {selectLga}
-                                  </option>
-                                ))}
-                              </select>
+                              <Select
+                                defaultValue={selectedLga}
+                                onChange={handleLgaChange}
+                                options={mergedLga}
+                                isMulti
+                              />
                             </div>
                             <div className="form-group col-md-6">
                               <label className="mb-1 tx-com">ARPU Band</label>
