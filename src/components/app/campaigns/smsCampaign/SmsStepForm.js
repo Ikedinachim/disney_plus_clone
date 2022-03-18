@@ -70,11 +70,6 @@ export default class SmsStepForm extends Component {
 
   handleStateChange = (state) => {
     this.setState({ arrayState: state });
-    // this.setState({
-    //   arrayLga: [].concat.apply([], state).map((lga) => {
-    //     return { value: lga, label: lga };
-    //   }),
-    // });
   };
 
   handleLgaChange = (lga) => {

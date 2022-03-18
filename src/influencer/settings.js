@@ -250,32 +250,6 @@ const InfluencerSettings = () => {
     return joinedArr;
   };
 
-  // useEffect(() => {
-  //   if (profileImage && profileImage.uploadPercentage === 100) {
-  //     setProfileImage({
-  //       ...profileImage,
-  //       uploadPercentage: 0,
-  //     });
-  //   }
-  //   console.log(profileImage);
-  // }, [profileImage]);
-
-  // const isEmpty = (object) => {
-  //   for (const property in object) {
-  //     return false;
-  //   }
-  //   return true;
-  // };
-
-  // const setImage = (query) => {
-  //   if (isEmpty(query)) {
-  //     setProfile((prevState) => ({
-  //       ...prevState,
-  //       imageUrl: profileImage.imageUrl,
-  //     }));
-  //   }
-  // };
-
   const occupations = [
     {
       label: "Choose Occupation",
@@ -329,34 +303,6 @@ const InfluencerSettings = () => {
     setProfileImage({});
   };
 
-  // const handlePricingSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log(profileImage);
-  //   dispatch(updateInfluencerProfile(payload.updatedCosts));
-  //   setProfile({});
-  //   setUpdateCost([]);
-  // };
-
-  // const setCost = (query) => {
-  //   (influencerDetails &&
-  //     influencerDetails.influencerDetails.costs.find(
-  //       (c) => c.platform === query
-  //     )?.cost) ||
-  //     0;
-  // };
-
-  // useEffect(() => {
-  //   const setImgaePreview = () => {
-  //     if (influencer.imageUrl) {
-  //       return influencer.imageUrl;
-  //     } else if (userDetails.user.imageUrl) {
-  //       return userDetails.user.imageUrl;
-  //     } else {
-  //       return influencerDetails.imagePath && influencerDetails.imagePath;
-  //     }
-  //   };
-  // }, [third])
-
   const setImagePreview = () => {
     if (profileImage && profileImage.imageUrl) {
       return profileImage.imageUrl;
@@ -409,8 +355,6 @@ const InfluencerSettings = () => {
     influencer,
   ]);
 
-  // console.log(influencerDetails);
-
   return (
     <Fragment>
       {loading ? (
@@ -448,7 +392,7 @@ const InfluencerSettings = () => {
                                       htmlFor="photo-upload"
                                       src={setImagePreview()}
                                       className="img-fluid wd-100 ht-100 pro-image"
-                                      alt={`${influencer.firstName} display`}
+                                      alt={`${userDetails.user.firstName} display`}
                                     />
                                     <p
                                       htmlFor="photo-upload"
@@ -482,42 +426,20 @@ const InfluencerSettings = () => {
                                       </span>
                                     )}
                                 </label>
-                                {/* <input
-                                  type="file"
-                                  name="file"
-                                  // className="drop-zone__input"
-                                  accept="image/png, image/jpeg, image/gif, image/jpg"
-                                  className="custom-file-input"
-                                  id="photo-upload"
-                                  onChange={(e) => handleImageUpload(e)}
-                                /> */}
                               </div>
                             </div>
-                            {/* <label
-                              htmlFor="photo-upload"
-                              className="custom-file-upload fas"
-                            >
-                              <div className="img-wrap img-upload">
-                                <img for="photo-upload" src={src} />
-                              </div>
-                              <input
-                                id="photo-upload"
-                                type="file"
-                                onChange={onChange}
-                              />
-                            </label> */}
                           </div>
                         </div>
-                        <div className="card-scroll pd-md-x-30 pd-xl-x-50">
+                        <div className="pd-md-x-30 pd-xl-x-50">
                           <div className="row justify-content-md-between">
                             <div className="form-group col-md-6">
                               <label className="mb-1 tx-com">First Name</label>
                               <input
                                 type="text"
                                 className="form-control"
-                                placeholder={influencer.firstName}
+                                placeholder={userDetails.user.firstName}
                                 name="firstName"
-                                defaultValue={influencer.firstName}
+                                defaultValue={userDetails.user.firstName}
                                 onChange={handleChange}
                               />
                             </div>
@@ -527,8 +449,8 @@ const InfluencerSettings = () => {
                                 name="lastName"
                                 type="text"
                                 className="form-control"
-                                placeholder={influencer.lastName}
-                                defaultValue={influencer.lastName}
+                                placeholder={userDetails.user.lastName}
+                                defaultValue={userDetails.user.lastName}
                                 onChange={handleChange}
                               />
                             </div>
@@ -538,8 +460,8 @@ const InfluencerSettings = () => {
                                 name="username"
                                 type="text"
                                 className="form-control"
-                                placeholder={influencer.username}
-                                defaultValue={influencer.username}
+                                placeholder={userDetails.user.username}
+                                defaultValue={userDetails.user.username}
                                 onChange={handleChange}
                                 disabled
                               />
@@ -552,8 +474,8 @@ const InfluencerSettings = () => {
                                 name="email"
                                 type="text"
                                 className="form-control"
-                                placeholder={influencer.email}
-                                defaultValue={influencer.email}
+                                placeholder={userDetails.user.email}
+                                defaultValue={userDetails.user.email}
                                 // onChange={handleChange}
                                 disabled
                               />
@@ -588,103 +510,6 @@ const InfluencerSettings = () => {
                               </select>
                             </div>
                           </div>
-                          {/* <p className="tx-20 tx-com tx-bold mg-t-30">
-                            Pricing
-                          </p>
-                          <div className="row justify-content-md-between">
-                            <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                Instagram Handle
-                              </label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="@tomedow"
-                                disabled
-                              />
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                Amount
-                              </label>
-                              <input
-                                name="instagram"
-                                type="text"
-                                className="form-control"
-                                placeholder="N500,000.00"
-                                onBlur={handleCostChange}
-                              />
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                Twitter Handle
-                              </label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="@Johndoe"
-                                disabled
-                              />
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                Amount
-                              </label>
-                              <input
-                                name="twitter"
-                                type="text"
-                                className="form-control"
-                                placeholder="N500,000.00"
-                                onBlur={handleCostChange}
-                              />
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                Snapchat Handle
-                              </label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="@tomedow"
-                                disabled
-                              />
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                Amount
-                              </label>
-                              <input
-                                name="snapchat"
-                                type="text"
-                                className="form-control"
-                                placeholder="N500,000.00"
-                                onBlur={handleCostChange}
-                              />
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                Facebook Handle
-                              </label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="@tomedow"
-                                disabled
-                              />
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                Amount
-                              </label>
-                              <input
-                                name="facebook"
-                                type="text"
-                                className="form-control"
-                                placeholder="N500,000.00"
-                                onBlur={handleCostChange}
-                              />
-                            </div>
-                          </div> */}
                         </div>
                       </div>
                       <div className="col-md-4 pd-x-0 pd-md-l-30 pd-xl-l-50 mg-y-40">
@@ -707,154 +532,7 @@ const InfluencerSettings = () => {
                     </form>
                     <form onSubmit={handleCostSubmit}>
                       <div>
-                        {/* <div id className="pd-md-x-30 pd-xl-x-50">
-                          <p
-                            className="tx-22 tx-com tx-bold mb-2"
-                            htmlFor="customFile"
-                          >
-                            Personal Details
-                          </p>
-                          <p className="tx-14 tx-blac">
-                            View your setup details here
-                          </p>
-                          <div className="form-drop col-md-4 pd-x-0 ">
-                            <div className="drop-zone-form pd-b-40">
-                              <div className="cell">
-                                <label
-                                  htmlFor="photo-upload"
-                                  className="custom-file-upload"
-                                >
-                                  <div className="d-flex">
-                                    <img
-                                      htmlFor="photo-upload"
-                                      src={
-                                        influencerDetails &&
-                                        influencerDetails.imagePath
-                                      }
-                                      className="img-fluid wd-100 ht-100 pro-image"
-                                      alt={`${influencer.firstName} display picture`}
-                                    />
-                                    <p
-                                      htmlFor="photo-upload"
-                                      className="p-14 mg-t-20 tx-primary mg-l-15"
-                                    >
-                                      Click to change photo <br /> (Not more
-                                      than 1mb)
-                                    </p>
-                                  </div>
-                                  <input
-                                    type="file"
-                                    name="file"
-                                    // className="drop-zone__input"
-                                    accept="image/png, image/jpeg, image/gif, image/jpg"
-                                    className="custom-file-input"
-                                    id="photo-upload"
-                                    onChange={(e) => handleImageUpload(e)}
-                                  />
-                                  {profileImage.uploadPercentage > 0 && (
-                                    <span className="mt-2">
-                                      <ProgressBar
-                                        now={profileImage.uploadPercentage}
-                                        // active
-                                        label={`${profileImage.uploadPercentage}%`}
-                                      />
-                                    </span>
-                                  )}
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                        </div> */}
-                        <div className="card-scroll pd-md-x-30 pd-xl-x-50">
-                          {/* <div className="row justify-content-md-between">
-                            <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                First Name
-                              </label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder={influencer.firstName}
-                                name="firstName"
-                                defaultValue={influencer.firstName}
-                                onChange={handleChange}
-                              />
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                Last Name
-                              </label>
-                              <input
-                                name="lastName"
-                                type="text"
-                                className="form-control"
-                                placeholder={influencer.lastName}
-                                defaultValue={influencer.lastName}
-                                onChange={handleChange}
-                              />
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                User Name
-                              </label>
-                              <input
-                                name="username"
-                                type="text"
-                                className="form-control"
-                                placeholder={influencer.username}
-                                defaultValue={influencer.username}
-                                onChange={handleChange}
-                                disabled
-                              />
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                Email Address
-                              </label>
-                              <input
-                                name="email"
-                                type="text"
-                                className="form-control"
-                                placeholder={influencer.email}
-                                defaultValue={influencer.email}
-                                onChange={handleChange}
-                                disabled
-                              />
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                Password
-                              </label>
-                              <input
-                                name="password"
-                                type="password"
-                                className="form-control"
-                                placeholder="********"
-                                value={influencer.password}
-                                onChange={handleChange}
-                              />
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                Occupation
-                              </label>
-                              <select
-                                name="kind"
-                                className="custom-select"
-                                // value="select channel"
-                                defaultValue={
-                                  influencerDetails && influencerDetails.kind
-                                }
-                                onChange={handleChange}
-                              >
-                                {occupations.map((occupation, i) => (
-                                  <option value={occupation.value} key={i}>
-                                    {occupation.label}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-                          </div> */}
+                        <div className="pd-md-x-30 pd-xl-x-50">
                           <p className="tx-20 tx-com tx-bold mg-t-30">
                             Pricing
                           </p>
