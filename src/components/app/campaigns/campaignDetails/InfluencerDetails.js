@@ -29,7 +29,7 @@ const InfluencerDetails = () => {
     // dispatch(getWallet())
   }, [dispatch, toast, error]);
 
-  console.log(singleUserInfluencer);
+  // console.log(singleUserInfluencer);
 
   return (
     <Fragment>
@@ -126,6 +126,46 @@ const InfluencerDetails = () => {
                       </div>
                       <hr />
                       <div className="row justify-content-between">
+                        <div className="col-md-6 col-lg-5 mg-b-20 mg-md-b-10">
+                          <p className="tx-18 tx-semibold mb-0">
+                            Target Audience
+                          </p>
+                          <div className="row mg-t-15">
+                            <div className="form-group col-md-6">
+                              <label
+                                for=""
+                                className="tx-14 tx-gray mb-0 tx-medium"
+                              >
+                                Gender
+                              </label>
+                              <br/>
+                              <p className="tx-16 mb-0 badge badge-pink">{campaign.gender === null ? 'N/A' : campaign.gender}</p>
+                            </div>
+
+                            <div className="form-group col-md-6">
+                              <label
+                                for=""
+                                className="tx-14 tx-gray mb-0 tx-medium"
+                              >
+                                Age
+                              </label>
+                              <p className="tx-16 mb-0 badge badge-pink">
+                                {campaign.targetAge === null ? 'N/A' : campaign.targetAge}
+                              </p>
+                            </div>
+                            <div className="form-group col-md-6">
+                              <label
+                                for=""
+                                className="tx-14 tx-gray mb-0 tx-medium"
+                              >
+                                Interest
+                              </label>
+                              <p className="tx-16 mb-0 badge badge-pink ">
+                                {campaign.interest === null ? 'N/A' : campaign.interest}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
                         <div className="col-md-6 col-lg-5 mg-b-20 mg-md-b-10">
                           <p className="tx-18 tx-semibold mb-0">
                             Budget and Timing

@@ -25,13 +25,15 @@ const SmartSmsAnalytics = () => {
   const dispatch = useDispatch();
   // const alert = useAlert();
 
+
+  
   useEffect(() => {
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
     }
     dispatch(getSingleFlierVideosCampaigns(id));
-    dispatch(getBitlyCount(singleFlierCampaign.bitlink));
+    dispatch(getBitlyCount(singleFlierCampaign && singleFlierCampaign.bitlink));
     // dispatch(getWallet())
   }, [dispatch, toast, error]);
 
@@ -101,7 +103,6 @@ const SmartSmsAnalytics = () => {
                           <p className="tx-15 tx-blac">
                             Total number of Clicks
                           </p>
-                          <br />
                         </div>
                       </div>
                     </div>
