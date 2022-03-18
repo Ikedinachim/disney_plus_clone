@@ -416,7 +416,7 @@ const PreviewCampaign = ({
                                       />
                                     </div>
                                   </div>
-                                  <div className="form-group col-md-6 mb-0">
+                                  {/* <div className="form-group col-md-6 mb-0">
                                     <label
                                       className="mb-1"
                                       htmlFor="schedule-time"
@@ -440,7 +440,7 @@ const PreviewCampaign = ({
                                         onChange={handleChange("scheduleTime")}
                                       />
                                     </div>
-                                  </div>
+                                  </div> */}
                                 </div>
                               )}
                               {values.scheduleOption === "once" && (
@@ -486,26 +486,6 @@ const PreviewCampaign = ({
                                       />
                                     </div>
                                   </div>
-                                  {/* <div className="form-group col-md-6 mb-0">
-                            <label className="mb-1" htmlFor="schedule-time">
-                              Time
-                            </label>
-                            <div className="input-group mg-b-10 mg-t-5">
-                              <div className="input-group-prepend">
-                                <span className="input-group-text">Time</span>
-                              </div>
-                              <input
-                                type="time"
-                                id="schedule-time"
-                                min="08:00"
-                                max="20:00"
-                                className="form-control"
-                                aria-describedby="basic-addon1"
-                                defaultValue={values.scheduleTime}
-                                onChange={handleChange("scheduleTime")}
-                              />
-                            </div>
-                          </div> */}
                                 </div>
                               )}
                             </div>
@@ -550,15 +530,18 @@ const PreviewCampaign = ({
                                       {filterOptions.gender}
                                     </span>
                                   </div>
-                                  <div className="col-md-6 form-group">
+                                  <div className="col-md-12 form-group">
                                     <label className="tx-14 tx-gray mb-0 tx-medium d-block">
-                                      Location
+                                      State:
                                     </label>
-                                    <span className="badge badge-pink tx-14 mg-5">
+                                    <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
                                       {" "}
                                       {filterOptions.state}
                                     </span>
-                                    <span className="badge badge-pink tx-14 mg-5">
+                                    <label className="tx-14 tx-gray mb-0 tx-medium d-block mt-3">
+                                      LGA:
+                                    </label>
+                                    <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
                                       {" "}
                                       {filterOptions.lga}
                                     </span>
@@ -605,15 +588,18 @@ const PreviewCampaign = ({
                                 </div> */}
                               </div>
                               <div className="row mg-t-15">
-                                <div className="col-md-6 form-group">
+                                <div className="col-md-12 form-group">
                                   <label className="tx-14 tx-gray mb-0 tx-medium d-block">
-                                    Location
+                                    State:
                                   </label>
-                                  <span className="badge badge-pink tx-14 mg-5">
+                                  <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
                                     {" "}
                                     {filterOptions.state}
                                   </span>
-                                  <span className="badge badge-pink tx-14 mg-5">
+                                  <label className="tx-14 tx-gray mb-0 tx-medium d-block mt-3">
+                                    LGA:
+                                  </label>
+                                  <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
                                     {" "}
                                     {filterOptions.lga}
                                   </span>

@@ -365,17 +365,6 @@ const TargetAudience = ({
                               State
                               <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                             </label>
-                            {/* <select
-                              className="custom-select"
-                              defaultValue={filterOptions.state}
-                              onChange={handleChange("state")}
-                            >
-                              {NaijaStates.states().map((selectState, i) => (
-                                <option value={selectState} key={i}>
-                                  {selectState}
-                                </option>
-                              ))}
-                            </select> */}
                             <Select
                               defaultValue={selectedState}
                               onChange={handleStateChange}
@@ -388,19 +377,6 @@ const TargetAudience = ({
                               LGA
                               <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                             </label>
-                            {/* <select
-                              className="custom-select"
-                              defaultValue={filterOptions.lga}
-                              onChange={handleChange("lga")}
-                            >
-                              <option value="">Select L.G.A</option>
-                              <option value="all">All</option>
-                              {lga.lgas.map((selectLga, i) => (
-                                <option value={selectLga} key={i}>
-                                  {selectLga}
-                                </option>
-                              ))}
-                            </select> */}
                             <Select
                               defaultValue={selectedLga}
                               onChange={handleLgaChange}

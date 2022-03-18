@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import MetaData from "../../../layout/MetaData";
 import { toast } from "react-toastify";
 import NaijaStates from "naija-state-local-government";
+import Select from "react-select";
 
 import {
   getFilteredContactList,
@@ -18,12 +19,15 @@ const TargetAudience = ({
   prevStep,
   nextStep,
   handleChange,
+  handleStateChange,
+  handleLgaChange,
   numbers,
   filterOptions,
   values,
   ageRangeFrom,
   ageRangeTo,
   getCsvRawData,
+  arrayState,
 }) => {
   // const alert = useAlert();
   const dispatch = useDispatch();
@@ -37,44 +41,8 @@ const TargetAudience = ({
     setStatus(status);
   };
 
-  // const [assetType, setAssetType] = useState("image");
-  // const assetTypeHandler = (asset) => {
-  //   setStatus(asset);
-  // };
-
-  // const [csvFile, setCsvFile] = useState();
-  // const [csvArray, setCsvArray] = useState([]);
-
-  // const processCSV = (str, delim = ",") => {
-  //   const headers = str.slice(0, str.indexOf("\n")).split(delim);
-  //   const rows = str.slice(str.indexOf("\n") + 1).split("\n");
-
-  //   const newArray = rows.map((row) => {
-  //     const values = row.split(delim);
-  //     const eachObject = headers.reduce((obj, header, i) => {
-  //       obj[header] = values[i];
-  //       return obj;
-  //     }, {});
-  //     return eachObject;
-  //   });
-
-  //   setCsvArray(newArray);
-  // };
-
-  // const submit = () => {
-  //   const file = csvFile;
-  //   const reader = new FileReader();
-
-  //   reader.onload = function (e) {
-  //     const text = e.target.result;
-  //     console.log(text);
-  //     processCSV(text);
-  //   };
-
-  //   getCsvArray(csvArray);
-
-  //   reader.readAsText(file);
-  // };
+  const [selectedState, setSelectedState] = useState(null);
+  const [selectedLga, setSelectedLga] = useState(null);
 
   const csvData = [
     ["Numbers"],
@@ -82,6 +50,22 @@ const TargetAudience = ({
     ["234890xxxxxxxx"],
     ["234890xxxxxxxx"],
   ];
+
+  const options = NaijaStates.states().map((state) => {
+    return { value: state, label: state };
+  });
+
+  const allLga =
+    arrayState &&
+    arrayState
+      .map((value) => NaijaStates.lgas(value.value))
+      .map((lga) => lga.lgas);
+
+  const mergedLga =
+    allLga &&
+    [].concat.apply([], allLga).map((lga) => {
+      return { value: lga, label: lga };
+    });
 
   const selectGenders = [
     {
@@ -102,41 +86,6 @@ const TargetAudience = ({
     },
   ];
 
-  const selectAgeRanges = [
-    {
-      label: "Select Age Group",
-      value: "",
-    },
-    {
-      label: "13-24",
-      value: "13-24",
-    },
-    {
-      label: "25-34",
-      value: "25-34",
-    },
-    {
-      label: "35-44",
-      value: "35-44",
-    },
-  ];
-
-  // const handleOnDrop = (data) => {
-  //   console.log("---------------------------");
-  //   console.log(data);
-  //   console.log("---------------------------");
-  // };
-
-  // const handleOnError = (err, file, inputElem, reason) => {
-  //   console.log(err);
-  // };
-
-  // const handleOnRemoveFile = (data) => {
-  //   console.log("---------------------------");
-  //   console.log(data);
-  //   console.log("---------------------------");
-  // };
-
   const Continue = (e) => {
     e.preventDefault();
     if (
@@ -154,8 +103,6 @@ const TargetAudience = ({
     prevStep();
   };
 
-  const lga = NaijaStates.lgas(filterOptions.state);
-
   ////
   const [parsedCsvData, setParsedCsvData] = useState([]);
   const [csvName, setCsvName] = useState();
@@ -166,7 +113,6 @@ const TargetAudience = ({
       complete: (results) => {
         setParsedCsvData(results.data);
         setCsvName(file.name);
-        // console.log(parsedCsvData);
       },
     });
     // console.log(parsedCsvData);
@@ -190,18 +136,11 @@ const TargetAudience = ({
     skipEmptyLines: "greedy",
   });
 
-  // const setCsvAsset = () => {
-  //   fetch("#")
-  //     .then((res) => res.blob())
-  //     .then((blob) => saveAs(blob, "fileName"));
-  // };
-
   useEffect(() => {
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
     }
-    // console.log(parsedCsvData);
     getCsvRawData(parsedCsvData);
   }, [dispatch, error, toast, parsedCsvData]);
 
@@ -244,17 +183,12 @@ const TargetAudience = ({
                             State
                             <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                           </label>
-                          <select
-                            className="custom-select"
-                            defaultValue={filterOptions.state}
-                            onChange={handleChange("state")}
-                          >
-                            {NaijaStates.states().map((selectState, i) => (
-                              <option value={selectState} key={i}>
-                                {selectState}
-                              </option>
-                            ))}
-                          </select>
+                          <Select
+                            defaultValue={selectedState}
+                            onChange={handleStateChange}
+                            options={options}
+                            isMulti
+                          />
                         </div>
                         <div className="form-group col-md-6">
                           <label
@@ -264,19 +198,12 @@ const TargetAudience = ({
                             LGA
                             <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                           </label>
-                          <select
-                            className="custom-select"
-                            defaultValue={filterOptions.lga}
-                            onChange={handleChange("lga")}
-                          >
-                            <option value="">Select L.G.A</option>
-                            <option value="all">All</option>
-                            {lga.lgas.map((selectLga, i) => (
-                              <option value={selectLga} key={i}>
-                                {selectLga}
-                              </option>
-                            ))}
-                          </select>
+                          <Select
+                            defaultValue={selectedLga}
+                            onChange={handleLgaChange}
+                            options={mergedLga}
+                            isMulti
+                          />
                         </div>
                         <div className="form-group col-md-6">
                           <label
@@ -396,17 +323,6 @@ const TargetAudience = ({
                                 Age Group
                                 <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                               </label>
-                              {/* <select
-                                className="form-control"
-                                defaultValue={filterOptions.ageRange}
-                                onChange={handleChange("ageRange")}
-                              >
-                                {selectAgeRanges.map((selectAgeRange, i) => (
-                                  <option value={selectAgeRange.value} key={i}>
-                                    {selectAgeRange.label}
-                                  </option>
-                                ))}
-                              </select> */}
                               <div className="form-row">
                                 <div className="form-group col-md-6 mg-b-0">
                                   <div className="input-group mg-b-10">
@@ -476,17 +392,12 @@ const TargetAudience = ({
                                 State
                                 <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                               </label>
-                              <select
-                                className="custom-select"
-                                defaultValue={filterOptions.state}
-                                onChange={handleChange("state")}
-                              >
-                                {NaijaStates.states().map((selectState, i) => (
-                                  <option value={selectState} key={i}>
-                                    {selectState}
-                                  </option>
-                                ))}
-                              </select>
+                              <Select
+                                defaultValue={selectedState}
+                                onChange={handleStateChange}
+                                options={options}
+                                isMulti
+                              />
                             </div>
                             <div className="form-group col-md-6">
                               <label
@@ -496,19 +407,12 @@ const TargetAudience = ({
                                 LGA
                                 <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                               </label>
-                              <select
-                                className="custom-select"
-                                defaultValue={filterOptions.lga}
-                                onChange={handleChange("lga")}
-                              >
-                                <option value="">Select L.G.A</option>
-                                <option value="all">All</option>
-                                {lga.lgas.map((selectLga, i) => (
-                                  <option value={selectLga} key={i}>
-                                    {selectLga}
-                                  </option>
-                                ))}
-                              </select>
+                              <Select
+                                defaultValue={selectedLga}
+                                onChange={handleLgaChange}
+                                options={mergedLga}
+                                isMulti
+                              />
                             </div>
                             <div className="form-group col-md-6">
                               <label className="mb-1 tx-com">ARPU Band</label>
