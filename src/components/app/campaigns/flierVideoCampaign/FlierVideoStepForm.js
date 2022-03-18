@@ -64,6 +64,9 @@ export default class FlierVideoStepForm extends Component {
     selectedFileName: "Upload Asset *png, *jpg, *gif",
 
     parsedCsvData: [],
+
+    arrayState: undefined,
+    arrayLga: undefined,
   };
 
   // go back to previous step
@@ -110,7 +113,6 @@ export default class FlierVideoStepForm extends Component {
   };
 
   handleImageUpload = async (e) => {
-    // console.log(e);
     const width = e.target.offsetWidth;
     const height = e.target.offsetHeight;
     if (width > 960 || height > 1280) {
@@ -126,7 +128,6 @@ export default class FlierVideoStepForm extends Component {
         onUploadProgress: (progressEvent) => {
           const { loaded, total } = progressEvent;
           let percent = Math.floor((loaded * 100) / total);
-          // console.log(`${loaded}kb of ${total}kb | ${percent}%`);
 
           if (percent < 100) {
             this.setState({ uploadPercentage: percent });
@@ -167,8 +168,15 @@ export default class FlierVideoStepForm extends Component {
     this.setState({ contactNumberCount: count });
   };
 
+  handleStateChange = (state) => {
+    this.setState({ arrayState: state });
+  };
+
+  handleLgaChange = (lga) => {
+    this.setState({ arrayLga: lga.map((value) => value.value).join(",") });
+  };
+
   render() {
-    // const { step } = this.state;
     const {
       step,
       senderId,
@@ -215,6 +223,9 @@ export default class FlierVideoStepForm extends Component {
       scheduleTime,
       scheduleFrom,
       scheduleTo,
+
+      arrayState,
+      arrayLga,
     } = this.state;
 
     /////////////////////////////
@@ -266,8 +277,8 @@ export default class FlierVideoStepForm extends Component {
       ageRange:
         ageRangeFrom && ageRangeTo ? `${ageRangeFrom + "-" + ageRangeTo}` : "",
       gender,
-      state,
-      lga,
+      state: arrayState && arrayState.map((value) => value.value).join(","),
+      lga: arrayLga,
       deviceType,
       deviceBrand,
     };
@@ -334,6 +345,10 @@ export default class FlierVideoStepForm extends Component {
             getCsvRawData={getCsvRawData}
             ageRangeFrom={ageRangeFrom}
             ageRangeTo={ageRangeTo}
+            handleStateChange={this.handleStateChange}
+            handleLgaChange={this.handleLgaChange}
+            arrayState={arrayState}
+            arrayLga={arrayLga}
           />
         );
       case 3:

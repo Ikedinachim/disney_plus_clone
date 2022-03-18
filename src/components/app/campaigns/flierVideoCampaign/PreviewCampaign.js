@@ -215,17 +215,7 @@ const PreviewCampaign = ({
                               </p>
                             </div>
                           </div>
-                          <div>
-                            {/* <div
-                              className="d-flex pd-t-25 clickable"
-                              onClick={viewButton}
-                            >
-                              <div>
-                                <i className="fa fa-edit tx-primary mg-r-5" />
-                              </div>
-                              <p className="mb-0">Edit</p>
-                            </div> */}
-                          </div>
+                          <div></div>
                         </div>
                         <hr />
                         <div className=" mg-b-20 mg-md-b-10">
@@ -235,17 +225,6 @@ const PreviewCampaign = ({
                                 Campaign Information
                               </p>
                             </div>
-                            {/* <div>
-                              <div
-                                className="d-flex pd-t-3 clickable"
-                                onClick={showButton}
-                              >
-                                <div>
-                                  <i className="fa fa-edit tx-primary mg-r-5" />
-                                </div>
-                                <p className="mb-0">Edit</p>
-                              </div>
-                            </div> */}
                           </div>
                           {values.channel === "smart_sms" ? (
                             <div className="row mg-t-15">
@@ -312,46 +291,6 @@ const PreviewCampaign = ({
                             </div>
                           ) : (
                             <div className="row mg-t-15">
-                              {/* <div className="form-group col-md-6">
-                                <label
-                                  htmlFor
-                                  className="tx-14 tx-gray mb-0 tx-medium"
-                                >
-                                  USSD Code
-                                </label>
-                                <p className="tx-16 mb-0">*{values.ussd}#</p>
-                              </div> */}
-                              {/* <div className="form-group col-md-6">
-                                <label
-                                  htmlFor
-                                  className="tx-14 tx-gray mb-0 tx-medium"
-                                >
-                                  Phone Call
-                                </label>
-                                <p className="tx-16 mb-0">
-                                  {values.phoneNumber}
-                                </p>
-                              </div> */}
-                              {/* <div className="form-group col-md-6">
-                                <label
-                                  htmlFor
-                                  className="tx-14 tx-gray mb-0 tx-medium"
-                                >
-                                  WhatsApp Number
-                                </label>
-                                <p className="tx-16 mb-0">
-                                  {values.whatsAppNumber}
-                                </p>
-                              </div> */}
-                              {/* <div className="form-group col-md-6">
-                                <label
-                                  htmlFor
-                                  className="tx-14 tx-gray mb-0 tx-medium"
-                                >
-                                  SMS Number
-                                </label>
-                                <p className="tx-16 mb-0">{values.smsNumber}</p>
-                              </div> */}
                               <div className="form-group col-md-6">
                                 <label
                                   htmlFor
@@ -428,29 +367,24 @@ const PreviewCampaign = ({
                                       {filterOptions.gender}
                                     </span>
                                   </div>
-                                  <div className="form-group">
-                                    <label
-                                      htmlFor
-                                      className="tx-14 tx-gray mb-0 tx-medium d-block"
-                                    >
-                                      Location
+                                  <div className="form-group col-md-12">
+                                    <label className="tx-14 tx-gray mb-0 tx-medium d-block">
+                                      State
                                     </label>
-                                    <div className="d-flex">
-                                      <span className="badge badge-pink tx-14 mg-5">
-                                        {" "}
-                                        {filterOptions.state}
-                                      </span>
-                                      <span className="badge badge-pink tx-14 mg-5">
-                                        {" "}
-                                        {filterOptions.lga}
-                                      </span>
-                                    </div>
+                                    <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
+                                      {" "}
+                                      {filterOptions.state}
+                                    </span>
+                                    <label className="tx-14 tx-gray mb-0 tx-medium d-block mt-3">
+                                      LGA:
+                                    </label>
+                                    <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
+                                      {" "}
+                                      {filterOptions.lga}
+                                    </span>
                                   </div>
                                   <div className="col-md-3 form-group">
-                                    <label
-                                      htmlFor
-                                      className="tx-14 tx-gray mb-0 tx-medium d-block"
-                                    >
+                                    <label className="tx-14 tx-gray mb-0 tx-medium d-block">
                                       ARPU Brand
                                     </label>
                                     <span className="badge badge-pink tx-14 mg-5">
@@ -459,10 +393,7 @@ const PreviewCampaign = ({
                                     </span>
                                   </div>
                                   <div className="col-md-6 form-group">
-                                    <label
-                                      htmlFor
-                                      className="tx-14 tx-gray mb-0 tx-medium d-block"
-                                    >
+                                    <label className="tx-14 tx-gray mb-0 tx-medium d-block">
                                       Interest
                                     </label>
                                     <span className="badge badge-pink tx-14 mg-5">
@@ -484,25 +415,20 @@ const PreviewCampaign = ({
                                     Target Audience
                                   </p>
                                 </div>
-                                {/* <div>
-                                  <div className="d-flex pd-t-3">
-                                    <div>
-                                      <i className="fa fa-edit tx-primary mg-r-5" />
-                                    </div>
-                                    <p className="mb-0">Edit</p>
-                                  </div>
-                                </div> */}
                               </div>
                               <div className="row mg-t-15">
-                                <div className="col-md-6 form-group">
+                                <div className="col-md-12 form-group">
                                   <label className="tx-14 tx-gray mb-0 tx-medium d-block">
-                                    Location
+                                    State:
                                   </label>
-                                  <span className="badge badge-pink tx-14 mg-5">
+                                  <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
                                     {" "}
                                     {filterOptions.state}
                                   </span>
-                                  <span className="badge badge-pink tx-14 mg-5">
+                                  <label className="tx-14 tx-gray mb-0 tx-medium d-block mt-3">
+                                    LGA:
+                                  </label>
+                                  <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
                                     {" "}
                                     {filterOptions.lga}
                                   </span>
@@ -620,7 +546,7 @@ const PreviewCampaign = ({
                                       />
                                     </div>
                                   </div>
-                                  <div className="form-group col-md-6 mb-0">
+                                  {/* <div className="form-group col-md-6 mb-0">
                                     <label
                                       className="mb-1"
                                       htmlFor="schedule-time"
@@ -644,7 +570,7 @@ const PreviewCampaign = ({
                                         onChange={handleChange("scheduleTime")}
                                       />
                                     </div>
-                                  </div>
+                                  </div> */}
                                 </div>
                               )}
                               {values.scheduleOption === "once" && (
