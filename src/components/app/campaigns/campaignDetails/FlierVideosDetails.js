@@ -146,6 +146,42 @@ const FlierVideosDetails = () => {
                   <hr />
                   <div className="row justify-content-between">
                     <div className="col-md-6 col-lg-5 mg-b-20 mg-md-b-10">
+                      <p className="tx-18 tx-semibold mb-0">Target Audience</p>
+                      <div className="row mg-t-15">
+                        <div className="form-group col-md-6">
+                          <label
+                            for=""
+                            className="tx-14 tx-gray mb-0 tx-medium"
+                          >
+                            Gender
+                          </label>
+                          <br />
+                          <p className="tx-16 mb-0 badge badge-pink">
+                            {singleFlierCampaign &&
+                            singleFlierCampaign.gender === null
+                              ? "N/A"
+                              : singleFlierCampaign.gender}
+                          </p>
+                        </div>
+
+                        <div className="form-group col-md-6">
+                          <label
+                            for=""
+                            className="tx-14 tx-gray mb-0 tx-medium"
+                          >
+                            Age
+                            </label>
+                            <br/>
+                          <p className="tx-16 mb-0">
+                            {singleFlierCampaign &&
+                            singleFlierCampaign.targetAge === null
+                              ? "N/A"
+                              : singleFlierCampaign.targetAge}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-md-6 col-lg-5 mg-b-20 mg-md-b-10">
                       <p className="tx-18 tx-semibold mb-0">
                         Budget and Timing
                       </p>
