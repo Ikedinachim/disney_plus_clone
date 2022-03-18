@@ -265,22 +265,21 @@ export const getBitlyCount = (links) => async (dispatch) => {
 
     const token = "4695c38c4bca19ec51a931b8a12209ea8ec489bf";
 
-    const link = links.split("//").pop();
-    const config = {
+    const link = links.split('//').pop();
+
+    const headers = {
       Authorization: `Bearer ${token}`,
-      accept: "application/json",
-      "Content-type": "application/json",
     };
 
-    const { data } = await axios.get(
-      `https://api-ssl.bitly.com/v4/bitlinks/${link}/clicks/summary`,
-      config
+    const data = await axios.get(
+      `https://api-ssl.bitly.com/v4/bitlinks/${ link}/clicks/summary`,
+      {headers: headers}
     );
-
+  
     if (data.status === 200) {
       dispatch({
         type: BITLY_CLICK_SUCCESS,
-        payload: data,
+        payload: data.data,
       });
     } else {
       dispatch({
