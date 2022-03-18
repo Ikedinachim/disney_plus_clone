@@ -20,7 +20,7 @@ const Header = () => {
 
   const logoutHandler = () => {
     dispatch(logout());
-    toast.success("Logged out successfully");
+    // toast.success("Logged out successfully");
   };
 
   const { user } = useSelector((state) => state.auth);
@@ -86,7 +86,7 @@ const Header = () => {
             className="dropdown-link tx-dark tx-13 tx-medium"
             onClick={() => setIsMenuOpen((oldState) => !oldState)}
           >
-            {user.user.firstName}
+            {userDetails.user.firstName}
             <div className="avatar avatar-sm mg-l-10">
               <img
                 src={
@@ -113,7 +113,9 @@ const Header = () => {
                 />
               </div>
               <h6 className="tx-semibold mg-b-5">
-                {user.user.firstName + " " + user.user.LastName}
+                {userDetails.user.firstName +
+                  " " +
+                  (userDetails.user.lastName ? userDetails.user.lastName : "")}
               </h6>
               <p className="mg-b-25 tx-12 tx-color-03">Administrator</p>
               <Link to="settings" className="dropdown-item">

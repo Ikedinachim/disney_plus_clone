@@ -52,6 +52,9 @@ export default class AppDownloadStepForm extends Component {
     selectedFileName: "Upload Asset *png, *jpg, *gif",
 
     parsedCsvData: [],
+
+    arrayState: undefined,
+    arrayLga: undefined,
   };
 
   // go back to previous step
@@ -154,6 +157,14 @@ export default class AppDownloadStepForm extends Component {
     this.setState({ contactNumberCount: count });
   };
 
+  handleStateChange = (state) => {
+    this.setState({ arrayState: state });
+  };
+
+  handleLgaChange = (lga) => {
+    this.setState({ arrayLga: lga.map((value) => value.value).join(",") });
+  };
+
   render() {
     // const { step } = this.state;
     const {
@@ -197,6 +208,9 @@ export default class AppDownloadStepForm extends Component {
       scheduleTime,
       scheduleFrom,
       scheduleTo,
+
+      arrayState,
+      arrayLga,
     } = this.state;
 
     // console.log(imageUrl);
@@ -253,8 +267,8 @@ export default class AppDownloadStepForm extends Component {
       ageRange:
         ageRangeFrom && ageRangeTo ? `${ageRangeFrom + "-" + ageRangeTo}` : "",
       gender,
-      state,
-      lga,
+      state: arrayState && arrayState.map((value) => value.value).join(","),
+      lga: arrayLga,
       deviceType,
       deviceBrand,
     };
@@ -318,6 +332,10 @@ export default class AppDownloadStepForm extends Component {
             getCsvRawData={getCsvRawData}
             ageRangeFrom={ageRangeFrom}
             ageRangeTo={ageRangeTo}
+            handleStateChange={this.handleStateChange}
+            handleLgaChange={this.handleLgaChange}
+            arrayState={arrayState}
+            arrayLga={arrayLga}
           />
         );
       case 3:
