@@ -18,6 +18,8 @@ import {
   updateUserPasswordReducer,
   forgotPasswordReducer,
   sendNewPasswordReducer,
+  resendVerificationReducer,
+  confirmRegistrationReducer
 
   // userDetailsReducer
 } from "./reducers/authReducers";
@@ -111,6 +113,8 @@ const appReducer = combineReducers({
   allUserInfluencer: allUserInfluencerCampaignReducer,
   singleUserInfluencer: singleUserInfluencerReducer,
   bitlyCount: bitlyCountReducer,
+  confirmRegistration: confirmRegistrationReducer,
+  resendVerification: resendVerificationReducer,
 });
 
 const reducer = (state, action) => {

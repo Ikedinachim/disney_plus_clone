@@ -4,7 +4,7 @@ import MetaData from "../layout/MetaData";
 import {
   getUser,
   clearErrors,
-  sendNewPassword,
+  registrationConfirmation
 } from "../../actions/authActions";
 import { NEW_PASSWORD_RESET } from "../../constants/authConstants";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,7 +19,7 @@ const RegistrationConfirmation = () => {
   const navigate = useNavigate();
 
   const {
-    sendNewPassword: { message, loading, error },
+    confirmRegistration: { confirmReg, loading, error },
   } = useSelector((state) => state);
 
   useEffect(() => {
@@ -28,10 +28,10 @@ const RegistrationConfirmation = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    dispatch(sendNewPassword(uuid));
+    dispatch(registrationConfirmation(uuid));
 
-    if (message && message.statusCode === 100) {
-      toast.success(message.message);
+    if (confirmReg && confirmReg.statusCode === 100) {
+      toast.success(confirmReg.message);
       dispatch({ type: NEW_PASSWORD_RESET });
       navigate("/");
     } else if (error) {

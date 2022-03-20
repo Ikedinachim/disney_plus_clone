@@ -6,16 +6,15 @@ import MetaData from "../layout/MetaData";
 import { FORGOT_PASSWORD_RESET } from "../../constants/authConstants";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  login,
   clearErrors,
-  sendPasswordResetLink,
+  resendVerificationLink
 } from "../../actions/authActions";
 import { getWallet } from "../../actions/billingActions";
 import { toast } from "react-toastify";
 
 const ResendVerification = () => {
  const {
-   forgotPassword: { message, error, loading },
+   resendVerification: {resend, error, loading },
  } = useSelector((state) => state);
  const [email, setEmail] = useState("");
 
@@ -25,13 +24,13 @@ const ResendVerification = () => {
 
  const submitHandler = (e) => {
    e.preventDefault();
-   dispatch(sendPasswordResetLink(email));
+   dispatch(resendVerificationLink(email));
 
-   if (message && message.statusCode === 100) {
-     toast.success(message.message);
+   if (resend && resend.statusCode === 100) {
+     toast.success(resend.message);
      dispatch({ type: FORGOT_PASSWORD_RESET });
-   } else if (message.error) {
-     toast.error(message.error);
+   } else if (resend.error) {
+     toast.error(resend.error);
      dispatch(clearErrors());
    }
  };
