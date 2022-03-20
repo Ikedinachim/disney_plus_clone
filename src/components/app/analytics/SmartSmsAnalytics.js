@@ -98,7 +98,10 @@ const SmartSmsAnalytics = () => {
                         </div>
                         <div>
                           <p className="tx-24 tx-bold">
-                            {bitlyCounts && bitlyCounts.total_clicks}
+                            {singleFlierCampaign &&
+                            singleFlierCampaign.bitlink === null
+                              ? "0"
+                              : bitlyCounts && bitlyCounts.total_clicks}
                           </p>
                           <p className="tx-15 tx-blac">
                             Total number of Clicks
@@ -134,7 +137,6 @@ const SmartSmsAnalytics = () => {
                           <p className="tx-15 tx-blac">
                             Total number of Actions
                           </p>
-                          
                         </div>
                       </div>
                     </div>

@@ -36,7 +36,7 @@ const ResendVerification = () => {
    <Fragment>
      {loading ? <Loader /> : null}
      <Fragment>
-       <MetaData title={"Forgot password"} />
+       <MetaData title={"Resend Verification"} />
        <section className="ht-100v container-fluid">
          <div className="row">
            <div className="col-md-6 login-bg card-height d-none d-md-block d-lg-block d-xl-block">

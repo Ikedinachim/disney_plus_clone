@@ -17,7 +17,7 @@ const RegistrationConfirmation = () => {
   const navigate = useNavigate();
 
   const {
-    confirmRegistration: { confirmReg, loading, error },
+    confirmRegistration: {confirmReg, loading, error },
   } = useSelector((state) => state);
 
   const submitHandler = async (e) => {
@@ -36,7 +36,7 @@ const RegistrationConfirmation = () => {
   return (
     <Fragment>
       {loading ? <Loader /> : null}
-      <MetaData title={"Create New Password"} />
+      <MetaData title={"Confirm registration"} />
       <section className="ht-100v container-fluid">
         <div className="col-md-12 login-side">
           <div className="container pd-lg-30 pd-10">
