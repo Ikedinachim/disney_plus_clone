@@ -44,6 +44,12 @@ import {
   USER_PASSWORD_SUCCESS,
   USER_PASSWORD_RESET,
   USER_PASSWORD_FAIL,
+  CONFIRM_USER_REQUEST,
+  CONFIRM_USER_SUCCESS,
+  CONFIRM_USER_FAIL,
+  RESEND_VERIFICATION_REQUEST,
+  RESEND_VERIFICATION_SUCCESS,
+  RESEND_VERIFICATION_FAIL,
   DELETE_USER_REQUEST,
   DELETE_USER_SUCCESS,
   DELETE_USER_RESET,
@@ -386,6 +392,65 @@ export const sendNewPasswordReducer = (state = { message: [] }, action) => {
       return state;
   }
 };
+
+export const confirmRegistrationReducer = (state = { confirmReg: [] }, action) => {
+  switch (action.type) {
+    case CONFIRM_USER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      }
+    case CONFIRM_USER_SUCCESS:
+      return {
+        ...state,
+         loading: false,
+        confirmReg: action.payload,
+      }
+    case CONFIRM_USER_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      }
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      }
+    default:
+      return state;
+  }
+  
+}
+
+export const resendVerificationReducer = (state= {resend: []}, action) => {
+  switch (action.type) {
+    case RESEND_VERIFICATION_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      }
+    case RESEND_VERIFICATION_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        resend: action.payload
+      }
+    case RESEND_VERIFICATION_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      }
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null
+      }
+    default:
+      return state;
+  }
+}
 
 export const allUsersReducer = (state = { users: [] }, action) => {
   switch (action.type) {
