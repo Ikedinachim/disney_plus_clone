@@ -168,7 +168,7 @@ const Register = () => {
                     Please complete to create your account.
                   </p>
                   <ul
-                    className="nav nav-tabs bd-tab w-100 pd-5 col-lg-11 justify-content-between d-flex"
+                    className="nav nav-tabs bd-tab w-100 pd-5 col-lg-11 justify-content-between d-flex m-auto"
                     id="myTab"
                     role="tablist"
                   >

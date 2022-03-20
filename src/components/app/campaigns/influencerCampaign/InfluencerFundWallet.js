@@ -54,7 +54,7 @@ const InfluencerFundWallet = ({ prevStep, values, price }) => {
       Object.keys(fundWallet).length > 0
         ? parseInt(fundWallet.data.amount) * 100
         : 0,
-    publicKey: "pk_test_ede7f0b05b35161246f7bb41898a1d4342c12a7b",
+    publicKey: process.env.REACT_APP_PAYSTACK_PUBLIC_KEY,
   };
 
   // you can call this function anything

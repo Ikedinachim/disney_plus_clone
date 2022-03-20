@@ -13,7 +13,7 @@ import {
   CLEAR_ERRORS,
 } from "../constants/senderIDConstants";
 
-const baseURL = "https://mysogi.uat.com.ng/";
+const baseURL = process.env.REACT_APP_MYSOGI_BASE_URL;
 
 const axios = Axios.create({
   baseURL,

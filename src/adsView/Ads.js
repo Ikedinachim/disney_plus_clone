@@ -160,7 +160,7 @@ const ViewCampaign = () => {
                         createShowAds.phoneNumber === "" ? null : (
                           <a
                             className="btn btn-primary mg-b-15 round-5"
-                            href={`tel:+${
+                            href={`tel:${
                               createShowAds && createShowAds.phoneNumber
                             }`}
                             onClick={() => handleClickType("phoneNumber")}
@@ -173,7 +173,7 @@ const ViewCampaign = () => {
                         {createShowAds && createShowAds.ussd === "" ? null : (
                           <a
                             className="btn btn-primary mg-b-15 round-5"
-                            href={`tel:+${createShowAds && createShowAds.ussd}`}
+                            href={`tel:${createShowAds && createShowAds.ussd}`}
                             onClick={() => handleClickType("ussd")}
                           >
                             <i className="fa fa-phone mg-r-5" />
@@ -184,7 +184,7 @@ const ViewCampaign = () => {
                         createShowAds.smsNumber === "" ? null : (
                           <a
                             className="btn btn-primary mg-b-15 round-5"
-                            href={`sms:+${
+                            href={`sms:${
                               createShowAds && createShowAds.smsNumber
                             }?body="I will like to make an enquiry"`}
                             onClick={() => handleClickType("smsNumber")}
@@ -197,7 +197,9 @@ const ViewCampaign = () => {
                         {createShowAds && createShowAds.url === "" ? null : (
                           <a
                             className="btn btn-primary mg-b-15 round-5"
-                            href={createShowAds && createShowAds.url}
+                            href={`http://${
+                              createShowAds && createShowAds.url
+                            }`}
                             onClick={() => handleClickType("url")}
                           >
                             <i className="fa fa-globe mg-r-10"> </i>
@@ -213,9 +215,9 @@ const ViewCampaign = () => {
                         createShowAds.androidStoreUrl === "" ? null : (
                           <a
                             className="btn btn-primary mg-b-15 round-5"
-                            href={
+                            href={`http://${
                               createShowAds && createShowAds.androidStoreUrl
-                            }
+                            }`}
                             onClick={() => handleClickType("androidStoreUrl")}
                           >
                             <i
@@ -232,7 +234,9 @@ const ViewCampaign = () => {
                         createShowAds.iosStoreUrl === "" ? null : (
                           <a
                             className="btn btn-primary mg-b-15 round-5"
-                            href={createShowAds && createShowAds.iosStoreUrl}
+                            href={`http://${
+                              createShowAds && createShowAds.iosStoreUrl
+                            }`}
                             onClick={() => handleClickType("iosStoreUrl")}
                           >
                             <i
