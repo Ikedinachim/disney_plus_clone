@@ -100,9 +100,9 @@ export default class AppDownloadStepForm extends Component {
   };
 
   handleImageUpload = async (e) => {
-    // console.log(e);
-    const width = e.target.offsetWidth;
-    const height = e.target.offsetHeight;
+    console.log(e.target.naturalWidth);
+    const width = e.target.naturalWidth;
+    const height = e.target.naturalHeight;
     if (width > 960 || height > 1280) {
       toast.error("image dimensions not fitting");
     } else {
@@ -300,8 +300,6 @@ export default class AppDownloadStepForm extends Component {
       scheduleFrom,
       scheduleTo,
     };
-
-    console.log(values);
 
     switch (step) {
       case 1:
