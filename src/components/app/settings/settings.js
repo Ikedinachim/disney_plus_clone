@@ -42,10 +42,7 @@ const Settings = () => {
     };
 
     try {
-      const res = await fetch(
-        "https://api.Cloudinary.com/v1_1/mysogi/image/upload",
-        options
-      );
+      const res = await fetch(process.env.REACT_APP_CLOUDINARY_URL, options);
       const res_1 = await res.json();
 
       setPeople({ ...people, imageUrl: res_1.secure_url });

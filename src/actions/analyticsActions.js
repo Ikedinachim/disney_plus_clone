@@ -23,7 +23,7 @@ import {
   BITLY_CLICK_FAIL,
 } from "../constants/analyticsConstants";
 
-const baseURL = "https://mysogi.uat.com.ng/";
+const baseURL = process.env.REACT_APP_MYSOGI_BASE_URL;
 
 const axios = Axios.create({
   baseURL,
@@ -263,19 +263,19 @@ export const getBitlyCount = (links) => async (dispatch) => {
   try {
     dispatch({ type: BITLY_CLICK_REQUEST });
 
-    const token = "4695c38c4bca19ec51a931b8a12209ea8ec489bf";
+    const token = process.env.REACT_APP_BITLY_KEY;
 
-    const link = links.split('//').pop();
+    const link = links.split("//").pop();
 
     const headers = {
       Authorization: `Bearer ${token}`,
     };
 
     const data = await axios.get(
-      `https://api-ssl.bitly.com/v4/bitlinks/${ link}/clicks/summary`,
-      {headers: headers}
+      `https://api-ssl.bitly.com/v4/bitlinks/${link}/clicks/summary`,
+      { headers: headers }
     );
-  
+
     if (data.status === 200) {
       dispatch({
         type: BITLY_CLICK_SUCCESS,

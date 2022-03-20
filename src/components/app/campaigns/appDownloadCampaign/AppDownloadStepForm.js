@@ -126,11 +126,7 @@ export default class AppDownloadStepForm extends Component {
 
       try {
         await axios
-          .post(
-            "https://api.Cloudinary.com/v1_1/mysogi/image/upload",
-            formData,
-            options
-          )
+          .post(process.env.REACT_APP_CLOUDINARY_URL, formData, options)
           .then((res) => {
             // console.log(res);
             this.setState(
