@@ -389,8 +389,8 @@ const AppDownloadCampaign = ({
                               <img
                                 src={values.attachment}
                                 className="img-fluid mg-b-10"
-                                alt=""
-                              />
+                                  alt=""
+                                />
                               <p className="mb-4">{values.campaignMessage}</p>
                             </div>
                           ) : (

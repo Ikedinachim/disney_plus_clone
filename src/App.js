@@ -62,6 +62,8 @@ import UserPasswordUpdate from "./components/user/UserPasswordUpdate";
 import InfluencerDetails from "./components/app/campaigns/campaignDetails/InfluencerDetails";
 import SmartSmsAnalytics from "./components/app/analytics/SmartSmsAnalytics";
 import SmsAnalytics from "./components/app/analytics/SmsAnalytics";
+import RegistrationConfirmation from "./components/user/RegistrationConfirmation";
+import ResendVerification from "./components/user/ResendVerification";
 
 AOS.init();
 
@@ -346,6 +348,9 @@ function App() {
           path="/password-change/:uuid/confirm"
           element={<UserPasswordUpdate />}
         />
+        <Route path="/registration/:uuid/confirm"
+          element={<RegistrationConfirmation />} />
+        <Route path="/resend-verification" element={<ResendVerification/>}/>
         {/* <Route path="/app/sender-id" element={isAuthenticated ? <SenderID /> : <Login />} /> */}
         {/* <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
