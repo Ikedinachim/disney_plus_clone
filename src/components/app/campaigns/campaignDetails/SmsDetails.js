@@ -188,7 +188,7 @@ const SmsDetails = () => {
                             {singleSmsCampaign &&
                             singleSmsCampaign.location === null
                               ? "N/A"
-                              : singleSmsCampaign.location.map((x)=>x )}
+                              : singleSmsCampaign.location}
                           </p>
                         </div>
                       </div>
