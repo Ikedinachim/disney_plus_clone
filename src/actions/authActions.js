@@ -3,7 +3,6 @@ import Axios from "axios";
 import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
-  LOGIN_RESET,
   LOGIN_FAIL,
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
@@ -16,10 +15,8 @@ import {
   USER_DETAILS_FAIL,
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
-  UPDATE_USER_RESET,
   UPDATE_USER_FAIL,
   UPDATE_INFLUENCER_PASSWORD_REQUEST,
-  UPDATE_INFLUENCER_PASSWORD_RESET,
   UPDATE_INFLUENCER_PASSWORD_SUCCESS,
   UPDATE_INFLUENCER_PASSWORD_FAIL,
   UPDATE_INFLUENCER_PROFILE_REQUEST,
@@ -32,7 +29,12 @@ import {
   UPDATE_INFLUENCER_PASSWORD_ACTIVE,
   USER_PASSWORD_REQUEST,
   USER_PASSWORD_SUCCESS,
-  USER_PASSWORD_RESET,
+  CONFIRM_USER_REQUEST,
+  CONFIRM_USER_SUCCESS,
+  CONFIRM_USER_FAIL,
+  RESEND_VERIFICATION_REQUEST,
+  RESEND_VERIFICATION_SUCCESS,
+  RESEND_VERIFICATION_FAIL,
   USER_PASSWORD_FAIL,
   NEW_PASSWORD_REQUEST,
   NEW_PASSWORD_SUCCESS,
@@ -40,9 +42,8 @@ import {
   FORGOT_PASSWORD_REQUEST,
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_FAIL,
-  FORGOT_PASSWORD_RESET,
 } from "../constants/authConstants";
-import { INFLUENCER_CAMPAIGN_REQUEST } from "../constants/campaignConstants";
+
 
 const baseURL = process.env.REACT_APP_MYSOGI_BASE_URL;
 
@@ -401,6 +402,67 @@ export const sendPasswordResetLink = (params) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: FORGOT_PASSWORD_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+export const resendVerificationLink = (params) => async (dispatch) => {
+  try {
+    dispatch({ type: RESEND_VERIFICATION_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const body = {
+      email: params,
+    };
+    const data = await axios.put("api/auth/forgot-password", body, config);
+    if (data.status === "success") {
+      dispatch({
+        type: RESEND_VERIFICATION_SUCCESS,
+        payload: data,
+      });
+    } else {
+      dispatch({
+        type: RESEND_VERIFICATION_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: RESEND_VERIFICATION_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+export const registrationConfirmation = (params) => async (dispatch) => {
+  try {
+    dispatch({ type: CONFIRM_USER_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const data = await axios.put("api/auth/forgot-password", params, config);
+    if (data.status === "success") {
+      dispatch({
+        type: CONFIRM_USER_SUCCESS,
+        payload: data,
+      });
+    } else {
+      dispatch({
+        type: CONFIRM_USER_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: CONFIRM_USER_FAIL,
       payload: error.message,
     });
   }
