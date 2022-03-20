@@ -1,12 +1,10 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment} from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import MetaData from "../layout/MetaData";
 import {
-  getUser,
   clearErrors,
   registrationConfirmation
 } from "../../actions/authActions";
-import { NEW_PASSWORD_RESET } from "../../constants/authConstants";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import Loader from "../loader";
@@ -22,17 +20,12 @@ const RegistrationConfirmation = () => {
     confirmRegistration: { confirmReg, loading, error },
   } = useSelector((state) => state);
 
-  useEffect(() => {
-    dispatch(getUser());
-  }, []);
-
   const submitHandler = async (e) => {
     e.preventDefault();
     dispatch(registrationConfirmation(uuid));
 
     if (confirmReg && confirmReg.statusCode === 100) {
       toast.success(confirmReg.message);
-      dispatch({ type: NEW_PASSWORD_RESET });
       navigate("/");
     } else if (error) {
       toast.error(error);
