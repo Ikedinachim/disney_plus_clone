@@ -60,20 +60,6 @@ const RegistrationConfirmation = () => {
                       </button>
                     </div>
                   </div>
-                  <Link to="../resend-verification">
-                    <span
-                      className="tx-dark"
-                      style={{
-                        color: "#000;",
-                        textDecoration: "underline;",
-                      }}
-                    >
-                      Didn't get verification code? 
-                    </span>
-                    <span style={{ textDecoration: "underline;" }}>
-                      {" "}Click here
-                    </span>
-                  </Link>
                 </form>
                 <p className="tx-blac tx-12 pd-t-50 mb-0">mysogi ads &copy;</p>
               </div>
