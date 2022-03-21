@@ -30,8 +30,8 @@ const ForgotPassword = () => {
     if (message && message.statusCode === 100) {
       toast.success(message && message.message);
       dispatch({ type: FORGOT_PASSWORD_RESET });
-    } else if (message && message.error) {
-      toast.error(message && message.error);
+    } else {
+      toast.error(error);
       dispatch(clearErrors());
     }
   };

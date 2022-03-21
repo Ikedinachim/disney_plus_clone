@@ -387,7 +387,7 @@ export const sendPasswordResetLink = (params) => async (dispatch) => {
     const body = {
       email: params,
     };
-    const data = await axios.put("api/auth/forgot-password", body, config);
+    const {data} = await axios.put("api/auth/forgot-password", body, config);
     if (data.status === "success") {
       dispatch({
         type: FORGOT_PASSWORD_SUCCESS,
@@ -399,10 +399,10 @@ export const sendPasswordResetLink = (params) => async (dispatch) => {
         payload: data.message,
       });
     }
-  } catch (error) {
+  } catch (data) {
     dispatch({
       type: FORGOT_PASSWORD_FAIL,
-      payload: error.message,
+      payload: data.error,
     });
   }
 };
