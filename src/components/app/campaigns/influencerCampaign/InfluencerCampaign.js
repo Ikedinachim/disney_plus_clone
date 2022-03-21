@@ -57,7 +57,7 @@ const InfluencerCampaign = ({
     if (isChecked) {
       setCloseModal(true);
       setInfluencerId(e.target.value);
-      console.log(singleInfluencer);
+      // console.log(singleInfluencer);
       singleInfluencer.platforms = [];
       setCheckedInfluencer(singleInfluencer);
     } else {
