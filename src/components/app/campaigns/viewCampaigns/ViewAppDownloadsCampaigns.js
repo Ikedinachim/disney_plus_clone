@@ -24,7 +24,7 @@ const ViewAppDownloadsCampaigns = () => {
     dispatch(getAppDownloadCampaigns());
   }, []);
 
-  console.log(viewAppDownloadCampaigns);
+  // console.log(viewAppDownloadCampaigns);
   const setViewAppDownloadCampaigns = () => {
     const data = {
       columns: [
