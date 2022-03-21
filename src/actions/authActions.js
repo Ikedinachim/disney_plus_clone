@@ -95,7 +95,7 @@ export const login = (username, password) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: LOGIN_FAIL,
-      payload: error.message,
+      payload: error.data,
     });
   }
 };

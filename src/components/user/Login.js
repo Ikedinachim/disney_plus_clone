@@ -45,7 +45,7 @@ const Login = () => {
       resetInfluencerPassword.statusCode === 102
     ) {
       navHistory("/update-password");
-      toast.error(resetInfluencerPassword.error);
+      toast.error(resetInfluencerPassword.message);
       dispatch(clearErrors());
       // dispatch({ type: UPDATE_INFLUENCER_PASSWORD_RESET });
     } else if (isAuthenticated && user && user.user.role === "influencer") {
