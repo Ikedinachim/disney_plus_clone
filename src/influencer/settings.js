@@ -57,74 +57,6 @@ const InfluencerSettings = () => {
   const [profileImage, setProfileImage] = useState(null);
   const [progressIncrement, setProgress] = useState(null);
   const [isUploading, setIsUploading] = useState(null);
-  // console.log(progressIncrement && progressIncrement.uploadPercentage);
-
-  // const handleImageUpload = async (e) => {
-  //   let files = e.target.files[0];
-  //   const formData = new FormData();
-  //   formData.append("file", files);
-  //   formData.append("upload_preset", "mysogi");
-
-  //   const options = {
-  //     onUploadProgress: (progressEvent) => {
-  //       const { loaded, total } = progressEvent;
-  //       let percent = Math.floor((loaded * 100) / total);
-
-  //       if (percent < 100) {
-  //         setProfileImage({
-  //           ...profileImage,
-  //           uploadPercentage: percent,
-  //         });
-  //       }
-  //     },
-  //   };
-
-  //   // const config = {
-  //   //   onUploadProgress: function (progressEvent) {
-  //   //     const progress = Math.round(
-  //   //       (progressEvent.loaded * 100) / progressEvent.total
-  //   //     );
-  //   //     setProgress(progress);
-  //   //   },
-  //   // };
-
-  //   try {
-  //     await axios
-  //       .post(
-  //         "https://api.Cloudinary.com/v1_1/mysogi/image/upload",
-  //         formData,
-  //         options
-  //       )
-  //       .then((res) => {
-  //         setProfileImage(
-  //           {
-  //             ...profileImage,
-  //             imageUrl: res.data.secure_url,
-  //             uploadPercentage: 100,
-  //             selectedFileName: files.name,
-  //             imageAlt: `An image of ${files.name}`,
-  //           },
-  //           () => {
-  //             setTimeout(() => {
-  //               setProfileImage({
-  //                 ...profileImage,
-  //                 uploadPercentage: 0,
-  //               });
-  //               console.log("working");
-  //             }, 5000);
-  //           }
-  //         );
-  //         // setProfileImage({
-  //         //   ...profileImage,
-  //         //   uploadPercentage: 0,
-  //         // });
-  //         setProfile((prevState) => ({
-  //           ...prevState,
-  //           imageUrl: res.data.secure_url,
-  //         }));
-  //       });
-  //   } catch (err) {}
-  // };
 
   const getBase64Image = (file, callback) => {
     const reader = new FileReader();
@@ -184,11 +116,7 @@ const InfluencerSettings = () => {
     setIsUploading(true);
 
     for (const file of event.target.files) {
-      const uploadPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
-      const cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
-      // console.log(cloudName);
-      // const url = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
-      const url = `https://api.Cloudinary.com/v1_1/mysogi/image/upload`;
+      const url = process.env.REACT_APP_CLOUDINARY_URL;
 
       getBase64Image(file, (base64Value) => {
         const data = {
