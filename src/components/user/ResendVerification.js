@@ -29,8 +29,8 @@ const ResendVerification = () => {
    if (resend && resend.statusCode === 100) {
      toast.success(resend.message);
      navigate('/');
-   } else if (resend.error) {
-     toast.error(resend.error);
+   } else if (error) {
+     toast.error(error);
      dispatch(clearErrors());
    }
  };
