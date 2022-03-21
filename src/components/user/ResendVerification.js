@@ -51,14 +51,6 @@ const ResendVerification = () => {
            </div>
            <div className="col-md-6 login-side">
              <div className="container pd-lg-30 pd-10">
-               <Link
-                 to="../"
-                 type="button"
-                 className="close close-btn"
-                 aria-label="Close"
-               >
-                 <span aria-hidden="true">&times;</span>
-               </Link>
                <div>
                  <div className="col-lg-10 col-xl-8 mx-auto pd-t-30 tx-center welcome-div">
                    <p className="tx-36 tx-bold mb-2 tx-com">Resend code</p>
