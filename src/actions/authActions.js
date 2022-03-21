@@ -419,7 +419,11 @@ export const resendVerificationLink = (params) => async (dispatch) => {
     const body = {
       email: params,
     };
-    const data = await axios.put("api/auth/forgot-password", body, config);
+    const data = await axios.post(
+      "api/auth/resend-activation-link",
+      body,
+      config
+    );
     if (data.status === "success") {
       dispatch({
         type: RESEND_VERIFICATION_SUCCESS,
@@ -448,7 +452,10 @@ export const registrationConfirmation = (params) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    const data = await axios.put("api/auth/forgot-password", params, config);
+     const body = {
+       code: params,
+     };
+    const data = await axios.post("api/auth/account-activation/", body, config);
     if (data.status === "success") {
       dispatch({
         type: CONFIRM_USER_SUCCESS,
