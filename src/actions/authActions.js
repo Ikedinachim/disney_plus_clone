@@ -387,7 +387,7 @@ export const sendPasswordResetLink = (params) => async (dispatch) => {
     const body = {
       email: params,
     };
-    const data = await axios.put("api/auth/forgot-password", body, config);
+    const {data} = await axios.put("api/auth/forgot-password", body, config);
     if (data.status === "success") {
       dispatch({
         type: FORGOT_PASSWORD_SUCCESS,
@@ -419,7 +419,7 @@ export const resendVerificationLink = (params) => async (dispatch) => {
     const body = {
       email: params,
     };
-    const data = await axios.post(
+    const {data} = await axios.post(
       "api/auth/resend-activation-link",
       body,
       config
@@ -455,7 +455,7 @@ export const registrationConfirmation = (params) => async (dispatch) => {
      const body = {
        code: params,
      };
-    const data = await axios.post("api/auth/account-activation/", body, config);
+    const {data} = await axios.put("api/auth/account-activation", body, config);
     if (data.status === "success") {
       dispatch({
         type: CONFIRM_USER_SUCCESS,

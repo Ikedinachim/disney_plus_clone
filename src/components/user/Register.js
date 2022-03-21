@@ -125,6 +125,7 @@ const Register = () => {
   useEffect(() => {
     if (isRegistered) {
       toast.success("User registered successfully");
+      toast.success('Check email for account activation');
       navigate("/login");
       dispatch({ type: REGISTER_USER_RESET });
     }
