@@ -28,10 +28,10 @@ const ForgotPassword = () => {
     dispatch(sendPasswordResetLink(email));
 
     if (message && message.statusCode === 100) {
-      toast.success(message.message);
+      toast.success(message && message.message);
       dispatch({ type: FORGOT_PASSWORD_RESET });
-    } else if (message.error) {
-      toast.error(message.error);
+    } else if (message && message.error) {
+      toast.error(message && message.error);
       dispatch(clearErrors());
     }
   };
