@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Link} from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 
 import Loader from "../loader";
 import MetaData from "../layout/MetaData";
@@ -20,12 +20,15 @@ const ResendVerification = () => {
 
   const dispatch = useDispatch();
 
+  const navigate = useNavigate()
+
  const submitHandler = (e) => {
    e.preventDefault();
    dispatch(resendVerificationLink(email));
 
    if (resend && resend.statusCode === 100) {
      toast.success(resend.message);
+     navigate('/');
    } else if (resend.error) {
      toast.error(resend.error);
      dispatch(clearErrors());
