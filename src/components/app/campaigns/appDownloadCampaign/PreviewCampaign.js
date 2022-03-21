@@ -73,14 +73,14 @@ const PreviewCampaign = ({
 
   const setPrice = () => {
     if (values.channel === "display_ads") {
-      console.log(1);
+      // console.log(1);
       return price * setScheduleDate(values.scheduleFrom, values.scheduleTo);
     } else if (
       values.limit !== undefined &&
       values.limit !== "" &&
       values.targetAudienceOption === "mysogidb"
     ) {
-      console.log(2);
+      // console.log(2);
       return (
         parseInt(values.limit) *
         5 *
@@ -90,10 +90,10 @@ const PreviewCampaign = ({
       values.targetAudienceOption !== "mysogidb" &&
       values.channel === "smart_sms"
     ) {
-      console.log(3);
+      // console.log(3);
       return price * setScheduleDate(values.scheduleFrom, values.scheduleTo);
     } else {
-      console.log(4);
+      // console.log(4);
       return (
         filteredContactList.count *
         5 *

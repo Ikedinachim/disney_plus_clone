@@ -233,7 +233,7 @@ export const getMobileCampaign = (propellerId) => async (dispatch) => {
 
 // Update Influencer Campaign Status Action
 export const setAdsClickStatus = (payload) => async (dispatch) => {
-  console.log(payload);
+  // console.log(payload);
   try {
     dispatch({ type: ADS_CLICK_REQUEST });
     const { data } = await axios.post("/api/campaign/save-click", payload);
