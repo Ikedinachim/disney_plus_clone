@@ -348,7 +348,7 @@ function App() {
           path="/password-change/:uuid/confirm"
           element={<UserPasswordUpdate />}
         />
-        <Route path="/registration/:uuid/confirm"
+        <Route path="/account-activation/:uuid"
           element={<RegistrationConfirmation />} />
         <Route path="/resend-verification" element={<ResendVerification/>}/>
         {/* <Route path="/app/sender-id" element={isAuthenticated ? <SenderID /> : <Login />} /> */}
