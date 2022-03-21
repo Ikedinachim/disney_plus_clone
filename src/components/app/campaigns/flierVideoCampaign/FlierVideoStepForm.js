@@ -310,7 +310,7 @@ export default class FlierVideoStepForm extends Component {
       scheduleTo,
     };
 
-    console.log(values);
+    // console.log(values);
 
     switch (step) {
       case 1:

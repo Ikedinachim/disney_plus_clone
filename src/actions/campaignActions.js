@@ -437,7 +437,7 @@ export const getAppDownloadCampaigns = () => async (dispatch) => {
     );
 
     if (data.status === "success") {
-      console.log("app download");
+      // console.log("app download");
       dispatch({
         type: VIEW_APP_DOWNLOAD_CAMPAIGN_SUCCESS,
         payload: data.data,
@@ -475,7 +475,7 @@ export const getSingleAppDownloadCampaigns = (id) => async (dispatch) => {
     );
 
     if (data.status === "success") {
-      console.log("app download");
+      // console.log("app download");
       dispatch({
         type: VIEW_SINGLE_APP_CAMPAIGN_SUCCESS,
         payload: data.data,

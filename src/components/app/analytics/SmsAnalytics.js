@@ -29,7 +29,7 @@ const SmsAnalytics = () => {
     // dispatch(getWallet())
   }, [dispatch, toast, error]);
 
-  console.log(singleSmsCampaign);
+  // console.log(singleSmsCampaign);
 
   return (
     <Fragment>

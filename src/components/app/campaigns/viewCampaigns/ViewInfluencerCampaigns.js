@@ -22,7 +22,7 @@ const ViewInfluencerCampaigns = () => {
     (state) => state.allUserInfluencer || {}
   );
 
-  console.log(allUserInfluencer);
+  // console.log(allUserInfluencer);
   const dispatch = useDispatch();
   const alert = useAlert();
 
