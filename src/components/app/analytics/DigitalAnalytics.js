@@ -1,26 +1,25 @@
 import React, { Fragment, useEffect } from "react";
-import MetaData from "../../layout/MetaData";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+
 import {
   clearErrors,
   getPropellerCampaign,
 } from "../../../actions/analyticsActions";
-import Loader from "../../loader";
-import { useAlert } from "react-alert";
+// import Loader from "../../loader";
 import OsChart from "./Digital Chart/OsChart";
+import MetaData from "../../layout/MetaData";
 import MobileChart from "./Digital Chart/MobileChart";
 import DateChart from "./Digital Chart/DateChart";
 
 const DigitalAnalytics = () => {
-  const {
-    getPropellerCampaigns: { loading, error, propellerCampaigns },
-  } = useSelector((state) => state);
-
   const { propellerId } = useParams();
   const dispatch = useDispatch();
-  // const alert = useAlert();
+
+  const {
+    getPropellerCampaigns: { error, propellerCampaigns },
+  } = useSelector((state) => state);
 
   useEffect(() => {
     if (error) {
@@ -28,9 +27,8 @@ const DigitalAnalytics = () => {
       dispatch(clearErrors());
     }
     dispatch(getPropellerCampaign(propellerId));
-  }, []);
+  }, [dispatch, error, propellerId]);
 
-  // console.log(propellerCampaigns);
   return (
     <Fragment>
       <Fragment>

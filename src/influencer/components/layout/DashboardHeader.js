@@ -2,8 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-// import NumberFormat from "react-number-format";
 
 import { logout } from "../../../actions/authActions";
 // import { getWallet } from "../../../actions/billingActions";
@@ -20,10 +18,9 @@ const Header = () => {
 
   const logoutHandler = () => {
     dispatch(logout());
-    // toast.success("Logged out successfully");
   };
 
-  const { user } = useSelector((state) => state.auth);
+  // const { user } = useSelector((state) => state.auth);
   // const { wallet } = useSelector((state) => state.wallet);
 
   useEffect(() => {
@@ -77,11 +74,7 @@ const Header = () => {
             </span>
           </div>
         </div> */}
-        <div
-          // className={`dropdown dropdown-profile ml-md-4 ml-2 ${isActive ? "show" : null}`} onClick={ToggleClass}
-          className="dropdown dropdown-profile ml-md-4 ml-2"
-          ref={ref}
-        >
+        <div className="dropdown dropdown-profile ml-md-4 ml-2" ref={ref}>
           <div
             className="dropdown-link tx-dark tx-13 tx-medium"
             onClick={() => setIsMenuOpen((oldState) => !oldState)}

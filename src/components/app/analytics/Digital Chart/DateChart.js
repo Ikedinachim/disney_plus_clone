@@ -9,9 +9,10 @@ const DateChart = ({ propellerId }) => {
   } = useSelector((state) => state);
 
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getCampaignByDate(propellerId));
-  }, []);
+  }, [dispatch, propellerId]);
 
   const data = [["Day", "Number of clicks", "Number of actions"]];
 

@@ -1,23 +1,15 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-
-import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
+import { MDBDataTable } from "mdbreact";
 import { DateTime } from "luxon";
-import NumberFormat from "react-number-format";
 
 import Loader from "../../loader";
-import MetaData from "../../layout/MetaData";
-
-// import { getWallet } from '../../../actions/billingActions'
-import { MDBDataTable } from "mdbreact";
 
 const SmartSmsAnalyticsTable = () => {
-  const { vfLoading, error, viewFlierVideosCampaigns } = useSelector(
+  const { vfLoading, viewFlierVideosCampaigns } = useSelector(
     (state) => state.viewFlierVideosCampaign || {}
   );
-  const dispatch = useDispatch();
-  const alert = useAlert();
 
   // useEffect(() => {
   //     dispatch(getViewFlierVideosCampaigns())
@@ -75,8 +67,8 @@ const SmartSmsAnalyticsTable = () => {
                     id="customCheck1"
                   />
                   <label
-                    class="custom-control-label"
-                    for="customCheck1"
+                    className="custom-control-label"
+                    htmlFor="customCheck1"
                   ></label>
                 </div>
               </Fragment>

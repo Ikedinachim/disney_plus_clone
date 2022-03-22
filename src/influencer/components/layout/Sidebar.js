@@ -50,7 +50,7 @@ const Sidebar = () => {
       // Cleanup the event listener
       document.removeEventListener("mousedown", checkIfClickedOutside);
     };
-  }, [isMenuOpen]);
+  }, [isMenuOpen, width]);
 
   return (
     <aside
