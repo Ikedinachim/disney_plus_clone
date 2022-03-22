@@ -1,17 +1,15 @@
 // /* eslint-disable jsx-a11y/alt-text */
 import React, { Fragment, useState } from "react";
+import { useSelector } from "react-redux";
 import Axios from "axios";
 import { Link } from "react-router-dom";
-import { useAlert } from "react-alert";
 import { toast } from "react-toastify";
+
 import "rc-slider/assets/index.css";
 import Header from "./layout/Header";
 import Footer from "./layout/Footer";
-
 import MetaData from "./layout/MetaData";
 import Loader from "./layout/Loader";
-
-import { useSelector } from "react-redux";
 
 const Home = () => {
   const baseURL = process.env.REACT_APP_MYSOGI_BASE_URL;
@@ -20,7 +18,6 @@ const Home = () => {
     baseURL,
   });
   const { loading } = useSelector((state) => state.auth);
-  // const alert = useAlert();
 
   const [mailerState, setMailerState] = useState({
     name: "",

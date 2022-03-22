@@ -1,22 +1,15 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
-
-import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
+import { useSelector } from "react-redux";
+import { MDBDataTable } from "mdbreact";
 import { DateTime } from "luxon";
-import NumberFormat from "react-number-format";
 
 import Loader from "../../loader";
 
-// import { getWallet } from '../../../actions/billingActions'
-import { MDBDataTable } from "mdbreact";
-
 const SmsAnalyticsTable = () => {
-  const { loading, error, smsCampaigns } = useSelector(
+  const { loading, smsCampaigns } = useSelector(
     (state) => state.getSmsCampaign || {}
   );
-  const dispatch = useDispatch();
-  const alert = useAlert();
 
   const setSmsCampaigns = () => {
     const data = {

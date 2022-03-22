@@ -1,15 +1,15 @@
-import React, { Fragment, useEffect } from "react";
-import { getDigitalCampaigns } from "../../../actions/campaignActions";
-import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import NumberFormat from "react-number-format";
-import Loader from "../../loader";
+import React, { Fragment } from "react";
+import { useSelector } from "react-redux";
 import { DateTime } from "luxon";
+import { Link } from "react-router-dom";
 import { MDBDataTable } from "mdbreact";
+// import NumberFormat from "react-number-format";
+
+// import { getDigitalCampaigns } from "../../../actions/campaignActions";
+import Loader from "../../loader";
 import MetaData from "../../layout/MetaData";
 
 const DigitalAnalyticsTable = () => {
-  const dispatch = useDispatch();
   const { loading, digitalCampaigns } = useSelector(
     (state) => state.digitalCampaigns || {}
   );
@@ -52,7 +52,6 @@ const DigitalAnalyticsTable = () => {
       rows: [],
     };
 
-    // console.log(digitalCampaigns);
     digitalCampaigns &&
       digitalCampaigns.forEach((campaign) => {
         data.rows.push({

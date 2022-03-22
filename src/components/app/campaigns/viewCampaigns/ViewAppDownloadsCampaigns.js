@@ -2,29 +2,25 @@ import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
 import { DateTime } from "luxon";
 import NumberFormat from "react-number-format";
 
 import Loader from "../../../loader";
 import MetaData from "../../../layout/MetaData";
 
-// import { getWallet } from '../../../actions/billingActions'
 import { MDBDataTable } from "mdbreact";
 import { getAppDownloadCampaigns } from "../../../../actions/campaignActions";
 
 const ViewAppDownloadsCampaigns = () => {
-  const { adLoading, error, viewAppDownloadCampaigns } = useSelector(
+  const { adLoading, viewAppDownloadCampaigns } = useSelector(
     (state) => state.viewAppDownloadCampaign || {}
   );
   const dispatch = useDispatch();
-  const alert = useAlert();
 
   useEffect(() => {
     dispatch(getAppDownloadCampaigns());
-  }, []);
+  }, [dispatch]);
 
-  // console.log(viewAppDownloadCampaigns);
   const setViewAppDownloadCampaigns = () => {
     const data = {
       columns: [
@@ -122,7 +118,7 @@ const ViewAppDownloadsCampaigns = () => {
 
   return (
     <Fragment>
-      {/* <MetaData title={"SMS Campaigns"} /> */}
+      <MetaData title={"App Download Campaigns"} />
       {adLoading ? (
         <Loader />
       ) : (

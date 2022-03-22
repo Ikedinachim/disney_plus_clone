@@ -3,10 +3,9 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 import { persistStore, persistReducer, createMigrate } from "redux-persist";
-// import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 import sessionStorage from "redux-persist/lib/storage/session";
-// import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
-import hardSet from "redux-persist/lib/stateReconciler/hardSet";
+import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
+// import hardSet from "redux-persist/lib/stateReconciler/hardSet";
 
 import {
   authReducer,
@@ -19,7 +18,7 @@ import {
   forgotPasswordReducer,
   sendNewPasswordReducer,
   resendVerificationReducer,
-  confirmRegistrationReducer
+  confirmRegistrationReducer,
 
   // userDetailsReducer
 } from "./reducers/authReducers";
@@ -149,7 +148,7 @@ const persistConfig = {
   version: 1, //New version 0, default or previous version -1
   storage: sessionStorage,
   debug: true,
-  stateReconciler: hardSet,
+  stateReconciler: autoMergeLevel2,
   // migrate: createMigrate(migrations, { debug: true }),
   migrate: createMigrate(migrations, { debug: false }),
 };

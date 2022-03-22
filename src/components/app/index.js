@@ -1,32 +1,24 @@
 import React, { Fragment, useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useSelector, useDispatch } from "react-redux";
+import FeatherIcon from "feather-icons-react";
 
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
-import FeatherIcon from "feather-icons-react";
-// import { useAlert } from "react-alert";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const alert = useAlert();
 
   const { loading, user } = useSelector((state) => state.auth);
   const { error } = useSelector((state) => state.wallet);
-
   const [isActive, setActive] = useState("false");
 
   const ToggleClass = (e) => {
     setActive(!isActive);
     e.preventDefault();
   };
-
-  // const resetPropagation = (e) => {
-  //     e.stopPropagation()
-  //     e.preventDefault()
-  //  }
 
   useEffect(() => {
     if (error) {
@@ -149,7 +141,6 @@ const Dashboard = () => {
                           href="./all-campaigns.html"
                           className="btn btn-primary pd-x-30"
                           onClick={() => navigate("/app/campaigns")}
-                          // onClick={resetPropagation}
                         >
                           All Campaigns
                         </button>

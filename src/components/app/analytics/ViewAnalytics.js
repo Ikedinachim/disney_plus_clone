@@ -1,18 +1,13 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
 import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
-import { DateTime } from "luxon";
-import NumberFormat from "react-number-format";
+import { toast } from "react-toastify";
 
 import Loader from "../../loader";
 import MetaData from "../../layout/MetaData";
 import DigitalAnalyticsTable from "./DigitalAnalyticsTable";
-import ViewFlierVideosCampaigns from "../campaigns/viewCampaigns/ViewFlierVideosCampaigns";
+// import ViewFlierVideosCampaigns from "../campaigns/viewCampaigns/ViewFlierVideosCampaigns";
 
-// import { getWallet } from '../../../actions/billingActions'
-import { MDBDataTable } from "mdbreact";
 import {
   getSmsCampaigns,
   clearErrors,
@@ -23,14 +18,11 @@ import SmartSmsAnalyticsTable from "./SmartSmsAnalyticsTable";
 import SmsAnalyticsTable from "./SmsAnalyticsTable";
 
 const ViewAnalytics = () => {
-  const { loading, error, allCampaigns } = useSelector(
-    (state) => state.getAllCampaign || {}
-  );
+  const { loading, error } = useSelector((state) => state.getAllCampaign || {});
   const { vfLoading } = useSelector(
     (state) => state.viewFlierVideosCampaign || {}
   );
   const dispatch = useDispatch();
-  const alert = useAlert();
 
   const [activeTab, setActiveTab] = useState("tab1");
 
@@ -47,21 +39,22 @@ const ViewAnalytics = () => {
     // update the state to tab2
     setActiveTab("tab3");
   };
-  const handleTab4 = () => {
-    // update the state to tab2
-    setActiveTab("tab4");
-  };
+
+  // const handleTab4 = () => {
+  //   // update the state to tab2
+  //   setActiveTab("tab4");
+  // };
 
   useEffect(() => {
     dispatch(getDigitalCampaigns());
     dispatch(getSmsCampaigns());
     dispatch(getViewFlierVideosCampaigns());
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
     // dispatch(getWallet())
-  }, [dispatch, alert, error]);
+  }, [dispatch, error]);
 
   return (
     <Fragment>
