@@ -1,11 +1,17 @@
-import React, { Fragment} from "react";
-import { useSelector } from "react-redux";
+import React, { Fragment, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Chart } from "react-google-charts";
+import { getCampaignByDate } from "../../../../actions/analyticsActions";
 
-const DateChart = () => {
+const DateChart = ({ propellerId }) => {
   const {
     getCampaignByDate: { dateCampaigns },
   } = useSelector((state) => state);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getCampaignByDate(propellerId));
+  }, []);
 
   const data = [["Day", "Number of clicks", "Number of actions"]];
 
