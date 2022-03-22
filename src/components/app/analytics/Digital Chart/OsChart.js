@@ -1,17 +1,13 @@
-import React, { Fragment, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { Fragment } from "react";
+import { useSelector} from "react-redux";
 import { Chart } from "react-google-charts";
-import { getOsCampaign } from "../../../../actions/analyticsActions";
 
-const OsChart = ({ propellerId }) => {
+const OsChart = () => {
   const {
     getOsCampaigns: { OsCampaigns },
   } = useSelector((state) => state);
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getOsCampaign(propellerId));
-  }, []);
+
 
   //specifying diagram design
   const Adsreport = {

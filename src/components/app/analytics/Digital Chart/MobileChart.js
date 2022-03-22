@@ -1,22 +1,18 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Chart } from "react-google-charts";
-import { getMobileCampaign } from "../../../../actions/analyticsActions";
 
-const MobileChart = ({ propellerId }) => {
+const MobileChart = () => {
   const {
     getMobileCampaigns: { mobileCampaigns },
   } = useSelector((state) => state);
 
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getMobileCampaign(propellerId));
-  }, [mobileCampaigns]);
 
   // console.log(mobileCampaigns);
 
   const ActionsPerformed = {
-    title: "Actions performed",
+    title: "Network medium",
     pieHole: 0.4,
     legend: { position: "bottom" },
   };
