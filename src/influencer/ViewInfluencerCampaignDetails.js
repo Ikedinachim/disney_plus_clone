@@ -1,14 +1,11 @@
 import React, { Fragment, useEffect, useState } from "react";
-
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { saveAs } from "file-saver";
-
-import MetaData from "../components/layout/MetaData";
 import NumberFormat from "react-number-format";
 
-import { getWallet } from "../actions/billingActions";
+import MetaData from "../components/layout/MetaData";
 import check from "../assets/img/Check.svg";
 import {
   updateInfluencerCampaignStatusAction,
@@ -21,19 +18,17 @@ import {
 } from "../constants/campaignConstants";
 import Loader from "../components/layout/Loader";
 
-// import PreviewIcon from "../assets/img/Promote_Offers.svg";
-
 const ViewInfluencerCampaignDetails = () => {
+  const { influenceMarketingId } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { influencerCampaignList } = useSelector(
     (state) => state.influencerCampaignList || []
   );
   const { influencerDetails } = useSelector(
     (state) => state.influencerDetails || []
   );
-  const { influenceMarketingId } = useParams();
-  // const alert = useAlert();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { updateInfluencerCampaignStatus, error, loading } = useSelector(
     (state) => state.updateInfluencerCampaignStatus || []
   );
@@ -46,7 +41,7 @@ const ViewInfluencerCampaignDetails = () => {
 
   const details = (arr, id) => {
     for (var i in arr) {
-      if (arr[i].marketingData.id == id) {
+      if (arr[i].marketingData.id === parseInt(id)) {
         return arr[i];
       }
     }
@@ -54,7 +49,7 @@ const ViewInfluencerCampaignDetails = () => {
 
   const platformCost = (arr, platform) => {
     for (var i in arr) {
-      if (arr[i].platform == platform) {
+      if (arr[i].platform === platform) {
         return arr[i].cost;
       }
     }
@@ -62,7 +57,9 @@ const ViewInfluencerCampaignDetails = () => {
 
   const campaignDetails = details(influencerCampaignList, influenceMarketingId);
 
-  const platforms = campaignDetails.platforms.split(",").map((el) => el.trim());
+  const platforms =
+    campaignDetails &&
+    campaignDetails.platforms.split(",").map((el) => el.trim());
 
   const checkPlatformCost = (p) => {
     let findIndex = platforms.findIndex((el) => el === p);
@@ -77,19 +74,7 @@ const ViewInfluencerCampaignDetails = () => {
           prefix={"₦"}
         />
       );
-    }
-    // else if (findIndex !== -1 && influencerDetails.allPlatform) {
-    //   let price = parseInt(influencerDetails.allCost);
-    //   return (
-    //     <NumberFormat
-    //       value={parseInt(price)}
-    //       displayType={"text"}
-    //       thousandSeparator={true}
-    //       prefix={"₦"}
-    //     />
-    //   );
-    // }
-    else if (
+    } else if (
       findIndex !== -1 &&
       campaignDetails.allPlatform &&
       findAll !== -1 &&
@@ -108,8 +93,6 @@ const ViewInfluencerCampaignDetails = () => {
       return "-";
     }
   };
-
-  // console.log(campaignDetails);
 
   const approvedPayload = {
     influencerId: campaignDetails && campaignDetails.influencerId,
@@ -172,7 +155,6 @@ const ViewInfluencerCampaignDetails = () => {
             Approve
           </button>
           <button
-            // onclick={rejectCampaignHandler}
             className="btn btn-outline-primary pd-x-30"
             data-toggle="modal"
             data-dismiss="modal"
@@ -192,7 +174,6 @@ const ViewInfluencerCampaignDetails = () => {
         <>
           <button
             type="button"
-            // onClick={publishCampaignHandler}
             className="btn btn-primary pd-x-40 tx-com mg-r-15"
             data-toggle="modal"
             data-dismiss="modal"
@@ -263,14 +244,6 @@ const ViewInfluencerCampaignDetails = () => {
                     </div>
                   </Link>
                 </div>
-                {/* <div className="col-md-3 col-xl-2 pd-xl-l-0 mg-b-20">
-                  <select className="custom-select">
-                    <option selected>Actions</option>
-                    <option value={1}>Accept</option>
-                    <option value={2}>Reject</option>
-                  </select>
-                  {loadActionButtons()}
-                </div> */}
                 <div className="col-md-5 col-xl-5 pd-xl-l-0 mg-b-20 bd-t-0 flex-basis-max">
                   {loadActionButtons()}
                 </div>
@@ -302,28 +275,6 @@ const ViewInfluencerCampaignDetails = () => {
                           </button>
                         </div>
                         <div className="row mg-t-15">
-                          {/* <div className="form-group col-md-3">
-                            <label
-                              htmlFor
-                              className="tx-14 tx-gray mb-0 tx-medium"
-                            >
-                              Instagram
-                            </label>
-                            <p className="tx-14 mb-0">
-                              @{campaignDetails.marketingData.instgramHandle}
-                            </p>
-                          </div>
-                          <div className="form-group col-md-3">
-                            <label
-                              htmlFor
-                              className="tx-14 tx-gray mb-0 tx-medium"
-                            >
-                              Twitter
-                            </label>
-                            <p className="tx-14 mb-0">
-                              @{campaignDetails.marketingData.twitterHandle}
-                            </p>
-                          </div> */}
                           <div className="form-group col-md-6">
                             <label className="tx-14 tx-gray mb-0 tx-medium">
                               Campaign Message
@@ -333,22 +284,6 @@ const ViewInfluencerCampaignDetails = () => {
                                 campaignDetails.marketingData.campaignMessage}
                             </p>
                           </div>
-                          {/* <div className="form-group col-md-3">
-                            <label className="tx-14 tx-gray mb-0 tx-medium">
-                              Facebook
-                            </label>
-                            <p className="tx-14 mb-0">
-                              @{campaignDetails.marketingData.facebookHandle}
-                            </p>
-                          </div>
-                          <div className="form-group col-md-3">
-                            <label className="tx-14 tx-gray mb-0 tx-medium">
-                              Snapchat
-                            </label>
-                            <p className="tx-14 mb-0">
-                              @{campaignDetails.marketingData.snapchatHandle}
-                            </p>
-                          </div> */}
                         </div>
                       </div>
                       <div className="col-md-4 pd-md-l-50">
@@ -391,10 +326,6 @@ const ViewInfluencerCampaignDetails = () => {
                           <th scope="col">Twitter</th>
                           <th scope="col">Facebook</th>
                           <th scope="col">All</th>
-                          {/* <th scope="col" className="tx-right">
-                            Total Amount
-                          </th> */}
-                          {/* <th /> */}
                         </tr>
                       </thead>
                       <tbody>
@@ -422,14 +353,6 @@ const ViewInfluencerCampaignDetails = () => {
                           <td className>{checkPlatformCost("twitter")}</td>
                           <td className>{checkPlatformCost("facebook")}</td>
                           <td className>{checkPlatformCost("all")}</td>
-                          {/* <td>
-                            <div className="d-flex pd-t-3">
-                              <div>
-                                <i className="fa fa-edit tx-primary mg-r-5 tx-semibold" />
-                              </div>
-                              <p className="mb-0">Edit</p>
-                            </div>
-                          </td> */}
                         </tr>
                       </tbody>
                     </table>
@@ -453,10 +376,6 @@ const ViewInfluencerCampaignDetails = () => {
                       </div>
                     </div>
                   </div>
-                  {/* <div className="card-footer mg-t-30 bd-t-0">
-                    {loadActionButtons()}
-                  </div> */}
-                  {/*Download  Modal */}
                   <div
                     className="modal fade"
                     id="downloadModal"
@@ -516,22 +435,12 @@ const ViewInfluencerCampaignDetails = () => {
                         <div className="modal-header bd-b-0"></div>
                         <div className="modal-body tx-center pd-x-10">
                           <div className="form-group">
-                            {/* <img
-                              src="../assets/img/Check.svg"
-                              className="img-fluid wd-100 ht-100"
-                              alt=""
-                              srcSet
-                            /> */}
                             <p className="tx-26 tx-com tx-bold">
                               Reject Campaign
                             </p>
                             <p className="tx-16 mb-10">
                               Please specify the reason for the rejection.
                             </p>
-                            {/* <input
-                              value={input}
-                              onInput={(e) => setRejectInput(e.target.value)}
-                            /> */}
                             <textarea
                               className="form-control"
                               rows={4}

@@ -1,32 +1,25 @@
 import React, { Fragment, useState, useEffect } from "react";
-
-import { Link, useNavigate } from "react-router-dom";
-import MetaData from "../layout/MetaData";
-import Loader from "../../components/loader";
-
-import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  updateInfluencerPassword,
-  clearErrors,
-} from "../../actions/authActions";
-// import { getWallet } from "../../actions/billingActions";
-import { UPDATE_INFLUENCER_PROFILE_RESET } from "../../constants/authConstants";
-
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
+import MetaData from "../layout/MetaData";
+import Loader from "../../components/loader";
+import {
+  updateInfluencerPassword,
+  clearErrors,
+} from "../../actions/authActions";
+import { UPDATE_INFLUENCER_PROFILE_RESET } from "../../constants/authConstants";
+
 const UpdateInfluencerPassword = () => {
   const navigate = useNavigate();
-  // const alert = useAlert();
   const dispatch = useDispatch();
-
   const [newUser, setNewUser] = useState({
-    // middleName: '',
     username: "",
     userType: "",
-    // email: '',
     password: "",
     confirmPassword: "",
   });
@@ -34,7 +27,6 @@ const UpdateInfluencerPassword = () => {
   const { username } = newUser;
 
   const schema = Yup.object().shape({
-    // email: Yup.string().email().required(),
     oldPassword: Yup.string()
       .required("Password is required")
       .min(6, "Password must be at least 6 characters"),
@@ -56,17 +48,15 @@ const UpdateInfluencerPassword = () => {
   const { isAuthenticated, user, isUpdated } = useSelector(
     (state) => state.auth
   );
+
   const { passwordUpdated, error, loading } = useSelector(
     (state) => state.resetInfluencerPassword
   );
 
   const submitIndividualHandler = (data) => {
-    // console.log(data);
     dispatch(updateInfluencerPassword(data));
     reset();
   };
-
-  // const onError = (errors, e) => console.log(errors, e);
 
   const onChange = (e) => {
     if (e.target.name === "avatar") {
@@ -86,7 +76,6 @@ const UpdateInfluencerPassword = () => {
     }
   }, [
     dispatch,
-    // toast,
     user,
     isAuthenticated,
     passwordUpdated,

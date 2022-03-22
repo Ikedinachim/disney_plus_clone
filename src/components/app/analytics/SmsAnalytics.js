@@ -1,24 +1,22 @@
 import React, { Fragment, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import MetaData from "../../layout/MetaData";
 import { useSelector, useDispatch } from "react-redux";
-import { DateTime } from "luxon";
 import { toast } from "react-toastify";
+
+import MetaData from "../../layout/MetaData";
 import {
   getSingleSmsCampaigns,
   clearErrors,
 } from "../../../actions/campaignActions";
 import Loader from "../../loader";
-// import { useAlert } from "react-alert";
 
 const SmsAnalytics = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+
   const { loading, error, singleSmsCampaign } = useSelector(
     (state) => state.singleSmsCampaign || {}
   );
-
-  const { id } = useParams();
-  const dispatch = useDispatch();
-  // const alert = useAlert();
 
   useEffect(() => {
     if (error) {
@@ -26,10 +24,7 @@ const SmsAnalytics = () => {
       dispatch(clearErrors());
     }
     dispatch(getSingleSmsCampaigns(id));
-    // dispatch(getWallet())
-  }, [dispatch, toast, error]);
-
-  // console.log(singleSmsCampaign);
+  }, [dispatch, error, id]);
 
   return (
     <Fragment>

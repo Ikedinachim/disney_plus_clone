@@ -1,69 +1,14 @@
 // /* eslint-disable jsx-a11y/alt-text */
-import React, { Fragment, useState } from "react";
-import Axios from "axios";
-import { Link } from "react-router-dom";
-import { useAlert } from "react-alert";
-import { toast } from "react-toastify";
+import React, { Fragment } from "react";
 import "rc-slider/assets/index.css";
 import Header from "./layout/Header";
-import Footer from "./layout/Footer";
 
 import MetaData from "./layout/MetaData";
 import Loader from "./layout/Loader";
-
 import { useSelector } from "react-redux";
-import { date } from "yup";
 
 const Home = () => {
-  const baseURL = process.env.REACT_APP_MYSOGI_BASE_URL;
-
-  const axios = Axios.create({
-    baseURL,
-  });
   const { loading } = useSelector((state) => state.auth);
-  // const alert = useAlert();
-
-  const [mailerState, setMailerState] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    company: "",
-    designation: "",
-    industry: "",
-    employee: "",
-    city: "",
-  });
-
-  const { name, email, phone, company, designation, industry, employee, city } =
-    mailerState;
-
-  const handleStateChange = (e) => {
-    setMailerState({
-      ...mailerState,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const submitEmail = async (e) => {
-    e.preventDefault();
-
-    const { data } = await axios.post("api/contact", mailerState);
-    if (data.status === "success") {
-      toast.success(data.message);
-      setMailerState({
-        name: "",
-        email: "",
-        phone: "",
-        company: "",
-        designation: "",
-        industry: "",
-        employee: "",
-        city: "",
-      });
-    } else {
-      toast.error("Mail Not Sent");
-    }
-  };
 
   return (
     <Fragment>
