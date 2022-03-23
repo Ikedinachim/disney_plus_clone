@@ -1,36 +1,24 @@
 import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
-
 import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
+import { MDBDataTable } from "mdbreact";
+import { toast } from "react-toastify";
 import { DateTime } from "luxon";
 import NumberFormat from "react-number-format";
 
 import Loader from "../../../loader";
 import MetaData from "../../../layout/MetaData";
-
-// import { getWallet } from '../../../actions/billingActions'
-import { MDBDataTable } from "mdbreact";
 import {
   getSmsCampaigns,
   clearErrors,
 } from "../../../../actions/campaignActions";
 
 const ViewSmsCampaign = () => {
+  const dispatch = useDispatch();
+
   const { loading, error, smsCampaigns } = useSelector(
     (state) => state.getSmsCampaign || {}
   );
-  const dispatch = useDispatch();
-  const alert = useAlert();
-
-  useEffect(() => {
-    dispatch(getSmsCampaigns());
-    if (error) {
-      alert.error(error);
-      dispatch(clearErrors());
-    }
-    // dispatch(getWallet())
-  }, [dispatch, alert, error]);
 
   const setSmsCampaigns = () => {
     const data = {
@@ -127,11 +115,19 @@ const ViewSmsCampaign = () => {
     return data;
   };
 
+  useEffect(() => {
+    dispatch(getSmsCampaigns());
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
+    }
+  }, [dispatch, error]);
+
   return (
     <Fragment>
-      {/* <MetaData title={"SMS Campaigns"} /> */}
+      <MetaData title={"SMS Campaigns"} />
       {loading ? (
-        ""
+        <Loader />
       ) : (
         <MDBDataTable
           data={setSmsCampaigns()}
