@@ -17,4 +17,4 @@ const LinkPreview = ({campaignMessage, image}) => {
   );
 }
 
-export default LinkPreview
+export default LinkPreview;
