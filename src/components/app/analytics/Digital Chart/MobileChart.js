@@ -12,10 +12,12 @@ const MobileChart = ({ propellerId }) => {
 
   useEffect(() => {
     dispatch(getMobileCampaign(propellerId));
-  }, [dispatch, propellerId]);
+  }, []);
+
+  // console.log(mobileCampaigns);
 
   const ActionsPerformed = {
-    title: "Actions performed",
+    title: "Network medium",
     pieHole: 0.4,
     legend: { position: "bottom" },
   };

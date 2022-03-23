@@ -8,6 +8,7 @@ import MetaData from "../components/layout/MetaData";
 import MediaPlayer from "../_helpers/reactPlayer/ReactPlayer";
 import { showAds, clearErrors } from "../actions/campaignActions";
 import { setAdsClickStatus } from "../actions/analyticsActions";
+import LinkPreview from "../components/layout/LinkPreview";
 
 const ViewCampaign = () => {
   const { loading, error, createShowAds } = useSelector(
@@ -105,6 +106,8 @@ const ViewCampaign = () => {
       ) : (
         <Fragment>
           <MetaData title={"Campaigns"} />
+            <LinkPreview campaignMessage={createShowAds && createShowAds.campaignMessage} image={createShowAds && createShowAds.attachment}
+          />
           {/* <p>Hello</p> */}
           <div className="content-body page-content">
             <div className="container pd-x-0 d-flex justify-content-center">
