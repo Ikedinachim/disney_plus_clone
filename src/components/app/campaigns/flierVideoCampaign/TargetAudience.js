@@ -42,6 +42,9 @@ const TargetAudience = ({
   const [selectedState, setSelectedState] = useState(null);
   const [selectedLga, setSelectedLga] = useState(null);
 
+  const [parsedCsvData, setParsedCsvData] = useState([]);
+  const [csvName, setCsvName] = useState();
+
   const csvData = [
     ["Numbers"],
     ["234890xxxxxxxx"],
@@ -102,8 +105,6 @@ const TargetAudience = ({
   };
 
   ////
-  const [parsedCsvData, setParsedCsvData] = useState([]);
-  const [csvName, setCsvName] = useState();
 
   const parseFile = (file) => {
     Papa.parse(file, {

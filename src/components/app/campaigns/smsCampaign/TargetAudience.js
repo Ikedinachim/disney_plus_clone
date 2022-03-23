@@ -1,11 +1,11 @@
 import React, { Fragment, useState, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import NaijaStates from "naija-state-local-government";
+import Select from "react-select";
 import { CSVLink } from "react-csv";
 import { useDropzone } from "react-dropzone";
 import Papa from "papaparse";
-import Select from "react-select";
+import NaijaStates from "naija-state-local-government";
 
 import MetaData from "../../../layout/MetaData";
 import {
@@ -48,32 +48,17 @@ const TargetAudience = ({
     return { value: state, label: state };
   });
 
-  // const optionsValue =
-  //   selectedState && selectedState.map((value) => value.value);
-
   const allLga =
     arrayState &&
     arrayState
       .map((value) => NaijaStates.lgas(value.value))
       .map((lga) => lga.lgas);
 
-  const allLga2 =
-    arrayState &&
-    arrayState.map((value) => {
-      return { state: value.value, lga: NaijaStates.lgas(value.value).lgas };
-    });
-
   const mergedLga =
     allLga &&
     [].concat.apply([], allLga).map((lga) => {
       return { value: lga, label: lga };
     });
-
-  // const mergedLga2 =
-  //   allLga &&
-  //   [].concat.apply([], allLga2).map((lga) => {
-  //     return { value: lga, label: lga };
-  //   });
 
   const selectGenders = [
     {
@@ -114,7 +99,6 @@ const TargetAudience = ({
     Papa.parse(file, {
       header: true,
       complete: (results) => {
-        // console.log(file);
         setParsedCsvData(results.data);
         setCsvName(file.name);
       },
@@ -139,15 +123,15 @@ const TargetAudience = ({
     skipEmptyLines: "greedy",
   });
 
-  const validateNumber = (inputtxt) => {
-    var phoneno = /^\d{13}(,\d{13})*$/;
-    if (inputtxt.value.match(phoneno)) {
-      return true;
-    } else {
-      alert("message");
-      return false;
-    }
-  };
+  // const validateNumber = (inputtxt) => {
+  //   var phoneno = /^\d{13}(,\d{13})*$/;
+  //   if (inputtxt.value.match(phoneno)) {
+  //     return true;
+  //   } else {
+  //     alert("message");
+  //     return false;
+  //   }
+  // };
 
   useEffect(() => {
     if (error) {
@@ -256,17 +240,6 @@ const TargetAudience = ({
                               Age Group
                               <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                             </label>
-                            {/* <select
-                              className="form-control"
-                              defaultValue={filterOptions.ageRange}
-                              onChange={handleChange("ageRange")}
-                            >
-                              {selectAgeRanges.map((selectAgeRange, i) => (
-                                <option value={selectAgeRange.value} key={i}>
-                                  {selectAgeRange.label}
-                                </option>
-                              ))}
-                            </select> */}
                             <div className="form-row">
                               <div className="form-group col-md-6 mg-b-0">
                                 <div className="input-group mg-b-10">
