@@ -1,8 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 
-// import Header from "./components/layout/DashboardHeader";
-// import Sidebar from "./components/layout/Sidebar";
 import Loader from "./components/loader";
 
 import Home from "./components/Home";
@@ -13,13 +11,9 @@ import SenderID from "./components/app/SenderID/SenderID";
 import BillingOverview from "./components/app/billing/Billing";
 import Transactions from "./components/app/billing/Transactions";
 import FundWallet from "./components/app/billing/FundWallet";
-// import MakePayment from "./components/app/billing/MakePayment";
 import RequestSenderID from "./components/app/SenderID/RequestSenderID";
 import CreateCampaign from "./components/app/campaigns/CreateCampaign";
-// import TargetAudience from "./components/app/campaigns/TargetAudience"
-// import ViewCampaign from "./components/app/campaigns/ViewCampaign"
 import ViewCampaignTabs from "./components/app/campaigns/viewCampaigns/ViewCampaignTabs";
-// import PreviewCampaign from "./components/app/campaigns/PreviewCampaign"
 import SmsStepForm from "./components/app/campaigns/smsCampaign/SmsStepForm";
 import FlierVideoStepForm from "./components/app/campaigns/flierVideoCampaign/FlierVideoStepForm";
 import AppDownloadStepForm from "./components/app/campaigns/appDownloadCampaign/AppDownloadStepForm";
@@ -348,9 +342,11 @@ function App() {
           path="/password-change/:uuid/confirm"
           element={<UserPasswordUpdate />}
         />
-        <Route path="/account-activation/:uuid"
-          element={<RegistrationConfirmation />} />
-        <Route path="/resend-verification" element={<ResendVerification/>}/>
+        <Route
+          path="/account-activation/:uuid"
+          element={<RegistrationConfirmation />}
+        />
+        <Route path="/resend-verification" element={<ResendVerification />} />
         {/* <Route path="/app/sender-id" element={isAuthenticated ? <SenderID /> : <Login />} /> */}
         {/* <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />

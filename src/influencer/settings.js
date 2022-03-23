@@ -1,10 +1,10 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
 import {
   updateInfluencerProfile,
-  updateInfluencerCost,
+  updatingInfluencerCost,
   getUser,
 } from "../actions/authActions";
 
@@ -25,30 +25,27 @@ const InfluencerSettings = () => {
   const { updateInfluencer, loading, error } = useSelector(
     (state) => state.updateInfluencerProfile || []
   );
-  const { updateCosts } = useSelector(
-    (state) => state.updateInfluencerCost || []
+  const { updateInfluencerCost, influencerDetails, userDetails } = useSelector(
+    (state) => state || []
   );
-  const { influencerDetails } = useSelector(
-    (state) => state.influencerDetails || []
-  );
-  const { userDetails } = useSelector((state) => state || []);
-  // console.log(userDetails);
   const { user } = useSelector((state) => state.auth || []);
 
-  const influencer = {
-    id: user.user.influencer_id,
-    firstName: user.user.firstName,
-    lastName: user.user.lastName,
-    username: user.user.userName,
-    email: user.user.email,
-    password: "",
-    occupation: "",
-    selectedFileName: "",
-    imageUrl: null,
-    imageAlt: "",
-    uploadPercentage: 0,
-    updatedCosts: [],
-  };
+  const influencer = useMemo(() => {
+    return {
+      id: user.user.influencer_id,
+      firstName: user.user.firstName,
+      lastName: user.user.lastName,
+      username: user.user.userName,
+      email: user.user.email,
+      password: "",
+      occupation: "",
+      selectedFileName: "",
+      imageUrl: null,
+      imageAlt: "",
+      uploadPercentage: 0,
+      updatedCosts: [],
+    };
+  }, [user]);
 
   const [updateCost, setUpdateCost] = useState({});
 
@@ -168,15 +165,15 @@ const InfluencerSettings = () => {
     }
   };
 
-  const imagePosition = (url) => {
-    const arr = new URL(url).href.split("/");
-    const transformation = "w_1080,h_1080,c_thumb,g_face/w_1000";
+  // const imagePosition = (url) => {
+  //   const arr = new URL(url).href.split("/");
+  //   const transformation = "w_1080,h_1080,c_thumb,g_face/w_1000";
 
-    arr.splice(6, 0, transformation);
-    const joinedArr = arr.join("/");
+  //   arr.splice(6, 0, transformation);
+  //   const joinedArr = arr.join("/");
 
-    return joinedArr;
-  };
+  //   return joinedArr;
+  // };
 
   const occupations = [
     {
@@ -225,7 +222,7 @@ const InfluencerSettings = () => {
 
   const handleCostSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateInfluencerCost(payload));
+    dispatch(updatingInfluencerCost(payload));
     setProfile({});
     setUpdateCost("");
     setProfileImage({});
@@ -239,20 +236,29 @@ const InfluencerSettings = () => {
     } else if (userDetails.user.imageUrl) {
       return userDetails.user.imageUrl;
     } else {
-      return influencerDetails.imagePath && influencerDetails.imagePath;
+      return (
+        influencerDetails.influencerDetails.imagePath &&
+        influencerDetails.influencerDetails.imagePath
+      );
     }
   };
 
-  let payload = {};
+  let payload = {
+    id: influencer.id,
+    profile,
+    updatedCosts: {
+      updatedCosts: Object.entries(updateCost).map(([k, v]) => ({ [k]: v })),
+    },
+  };
   useEffect(() => {
-    let plaformCost;
-    plaformCost = Object.entries(updateCost).map(([k, v]) => ({ [k]: v }));
+    // let plaformCost;
+    // plaformCost = Object.entries(updateCost).map(([k, v]) => ({ [k]: v }));
 
-    payload = {
-      id: influencer.id,
-      profile,
-      updatedCosts: { updatedCosts: plaformCost },
-    };
+    // payload = {
+    //   id: influencer.id,
+    //   profile,
+    //   updatedCosts: { updatedCosts: plaformCost },
+    // };
 
     if (updateInfluencer && updateInfluencer.statusCode === 100) {
       toast.success(updateInfluencer.message);
@@ -260,23 +266,28 @@ const InfluencerSettings = () => {
       dispatch(getInfluencerDetails(influencer.id));
       dispatch(getUser());
     }
-    if (updateCosts && updateCosts.statusCode === 100) {
-      toast.success(updateCosts.message);
+    if (
+      updateInfluencerCost.updateCosts &&
+      updateInfluencerCost.updateCosts.statusCode === 100
+    ) {
+      toast.success(updateInfluencerCost.updateCosts.message);
       dispatch({ type: UPDATE_INFLUENCER_COST_RESET });
       dispatch(getInfluencerDetails(influencer.id));
       dispatch(getUser());
     }
-    if (error || updateCosts.error) {
+    if (error || updateInfluencerCost.updateCosts.error) {
       toast.error(error);
       dispatch({ type: CLEAR_ERRORS });
     }
+
+    // return payload;
   }, [
     dispatch,
     updateCost,
-    updateCosts,
+    updateInfluencerCost,
     profile,
-    toast,
-    payload,
+    error,
+    influencerDetails,
     profileImage,
     updateInfluencer,
     user,
@@ -285,7 +296,10 @@ const InfluencerSettings = () => {
 
   return (
     <Fragment>
-      {loading ? (
+      {loading ||
+      updateInfluencerCost.loading ||
+      influencerDetails.idLoading ||
+      userDetails.loading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -426,7 +440,8 @@ const InfluencerSettings = () => {
                                 className="custom-select"
                                 // value="select channel"
                                 defaultValue={
-                                  influencerDetails && influencerDetails.kind
+                                  influencerDetails.influencerDetails &&
+                                  influencerDetails.influencerDetails.kind
                                 }
                                 onChange={handleChange}
                               >
@@ -482,8 +497,8 @@ const InfluencerSettings = () => {
                                 name="instagram"
                                 type="text"
                                 defaultValue={
-                                  (influencerDetails &&
-                                    influencerDetails.costs.find(
+                                  (influencerDetails.influencerDetails &&
+                                    influencerDetails.influencerDetails.costs.find(
                                       (c) => c.platform === "instagram"
                                     )?.cost) ||
                                   0
@@ -510,8 +525,8 @@ const InfluencerSettings = () => {
                                 name="twitter"
                                 type="text"
                                 defaultValue={
-                                  (influencerDetails &&
-                                    influencerDetails.costs.find(
+                                  (influencerDetails.influencerDetails &&
+                                    influencerDetails.influencerDetails.costs.find(
                                       (c) => c.platform === "twitter"
                                     )?.cost) ||
                                   0
@@ -538,8 +553,8 @@ const InfluencerSettings = () => {
                                 name="snapchat"
                                 type="text"
                                 defaultValue={
-                                  (influencerDetails &&
-                                    influencerDetails.costs.find(
+                                  (influencerDetails.influencerDetails &&
+                                    influencerDetails.influencerDetails.costs.find(
                                       (c) => c.platform === "snapchat"
                                     )?.cost) ||
                                   0
@@ -566,8 +581,8 @@ const InfluencerSettings = () => {
                                 name="facebook"
                                 type="text"
                                 defaultValue={
-                                  (influencerDetails &&
-                                    influencerDetails.costs.find(
+                                  (influencerDetails.influencerDetails &&
+                                    influencerDetails.influencerDetails.costs.find(
                                       (c) => c.platform === "facebook"
                                     )?.cost) ||
                                   ""

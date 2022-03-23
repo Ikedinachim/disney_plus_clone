@@ -153,36 +153,6 @@ const Dashboard = () => {
         ),
         actions: (
           <Fragment>
-            {/* <div className="dropdown">
-                        <span
-                            className
-                            type="button"
-                            id="dropdownMenuButton"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                        >
-                            <span className="dot" />
-                            <span className="dot" />
-                            <span className="dot" />
-                        </span>
-                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a className="dropdown-item" href="./view-sender.html">
-                            {" "}
-                            <i data-feather="eye" className="favourite-icon mr-2 wd-15 ht-15" />
-                            View
-                            </a>
-                            <a className="dropdown-item" href>
-                            {" "}
-                            <i data-feather="edit" className="favourite-icon mr-2 wd-15 ht-15" />
-                            Edit
-                            </a>
-                            <a className="dropdown-item" href="#">
-                            <i data-feather="trash-2" className="favourite-icon mr-2 wd-15 ht-15" />
-                            Delete
-                            </a>
-                        </div>
-                    </div> */}
             <div className="tx-black tx-14">
               <Link
                 to={`/influencer/view-campaign/${campaign.influenceMarketingId}`}
@@ -202,10 +172,6 @@ const Dashboard = () => {
     });
     return data;
   };
-
-  const approvedStat =
-    influencerCampaignList &&
-    influencerCampaignList.filter((x) => x.isRejected === true).length;
 
   useEffect(() => {
     if (user) {
@@ -234,23 +200,12 @@ const Dashboard = () => {
                   <p className="mg-b-0 tx-26 tx-bold">Overview</p>
                 </div>
                 <div className="col-12 col-md-4 col-xl-3 pd-xl-l-0">
-                  <div className="d-flex justify-content-end">
-                    {/* <div>
-                      <div className="d-flex justify-content-end">
-                        <a
-                          href="./all-campaign.html"
-                          className="btn btn-primary w-100"
-                        >
-                          View All Campaigns
-                        </a>
-                      </div>
-                    </div> */}
-                  </div>
+                  <div className="d-flex justify-content-end"></div>
                 </div>
               </div>
               <div className="row row-xs">
                 <div className="col-sm-6 col-xs-6 col-lg-3 mg-t-10">
-                  <div className="card card-body p-3 rounded bd-0 shadow-sm">
+                  <div className="card card-body p-3 rounded bd-0 shadow-sm analytics-card">
                     <div className="d-flex d-lg-block d-xl-flex">
                       <span>
                         <img
@@ -276,7 +231,7 @@ const Dashboard = () => {
                 </div>
                 {/* col */}
                 <div className="col-sm-6 col-xs-6 col-lg-3 mg-t-10">
-                  <div className="card card-body p-3 rounded bd-0 shadow-sm">
+                  <div className="card card-body p-3 rounded bd-0 shadow-sm analytics-card">
                     <div className="d-flex d-lg-block d-xl-flex">
                       <span>
                         <img
@@ -307,7 +262,7 @@ const Dashboard = () => {
                 </div>
                 {/* col */}
                 <div className="col-sm-6 col-xs-6 col-lg-3 mg-t-10">
-                  <div className="card card-body p-3 rounded bd-0 shadow-sm">
+                  <div className="card card-body p-3 rounded bd-0 shadow-sm analytics-card">
                     <div className="d-flex d-lg-block d-xl-flex">
                       <span>
                         <img
@@ -338,7 +293,7 @@ const Dashboard = () => {
                 </div>
                 {/* col */}
                 <div className="col-sm-6 col-xs-6 col-lg-3 mg-t-10">
-                  <div className="card card-body p-3 rounded bd-0 shadow-sm">
+                  <div className="card card-body p-3 rounded bd-0 shadow-sm analytics-card">
                     <div className="d-flex d-lg-block d-xl-flex">
                       <span>
                         <img
@@ -367,305 +322,15 @@ const Dashboard = () => {
                 {/* col */}
               </div>
               <div className="card rounded bd-0 shadow-sm mg-t-40">
-                {/* <div className="card-header bd-b-0 pd-b-0 pd-t-40 pd-md-x-30">
-                  <div className>
-                    <div className="row justify-content-between">
-                      <div className="col-12 col-lg-4 col-md-4 pd-r-5 mg-b-20 mg-md-b-0">
-                        <div className="d-flex">
-                          <div className="mg-t-10 mg-r-20">
-                            <div className="custom-control custom-checkbox">
-                              <input
-                                type="checkbox"
-                                className="custom-control-input "
-                                name="select-all"
-                                id="customCheck"
-                              />
-                              <label
-                                className="custom-control-label pd-y-10"
-                                htmlFor="customCheck"
-                              ></label>
-                            </div>
-                          </div>
-                          <div>
-                            <div className="search-form w-100">
-                              <input
-                                type="search"
-                                className="form-control bg-search"
-                                placeholder="Search in Campaigns"
-                              />
-                              <button className="btn" type="button">
-                                <FeatherIcon icon="search" />
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-md-6">
-                        <div className="row">
-                          <div className="col-md-6  mg-b-10 mg-md-b-0">
-                            <div className="form-group form-row">
-                              <label
-                                htmlFor="inputEmail3"
-                                className="col-3 col-form-label pd-r-0"
-                              >
-                                Sort by
-                              </label>
-                              <div className="col-9">
-                                <select className="custom-select">
-                                  <option selected>Most recent</option>
-                                  <option value={1}>One</option>
-                                  <option value={2}>Two</option>
-                                  <option value={3}>Three</option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-12 col-md-6">
-                            <div className="d-flex justify-content-between">
-                              <div>
-                                <button
-                                  className="btn btn-outline w-100 pd-x-30"
-                                  data-toggle="modal"
-                                  data-target="#exportModal"
-                                >
-                                  <span>
-                                    <FeatherIcon
-                                      icon="download"
-                                      className="mg-r-5"
-                                    />
-                                    Export as
-                                  </span>
-                                </button>
-                              </div>
-                              <div>
-                                <div className="d-flex justify-content-end">
-                                  <button className="btn">
-                                    <span>
-                                      <FeatherIcon
-                                        icon="printer"
-                                        className="tx-primary mg-r-5 print-icon"
-                                      />
-                                      Print
-                                    </span>
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
                 <div className="card-body pd-md-x-30 pd-t- mg-t-20 mg-md-t-0">
-                  {/* <table className="table display table-hover">
-                    <thead className="tx-uppercase">
-                      <tr>
-                        <th scope="col" />
-                        <th scope="col">Campaign Name</th>
-                        <th scope="col">Channel</th>
-                        <th scope="col">Date Created</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">
-                          <div className="custom-control custom-checkbox">
-                            <input
-                              type="checkbox"
-                              className="custom-control-input"
-                              id="customCheck1"
-                            />
-                            <label
-                              className="custom-control-label"
-                              htmlFor="customCheck1"
-                            />
-                            <div></div>
-                          </div>
-                        </th>
-                        <td>Art Campaign</td>
-                        <td>Instagram, twitter. Snapchat</td>
-                        <td>01 Mar, 2021</td>
-                        <td>
-                          <span className="badge badge-active tx-14">
-                            {" "}
-                            Approved
-                          </span>{" "}
-                        </td>
-                        <td>
-                          <a
-                            href="./view-campaign.html"
-                            className="tx-black tx-14"
-                          >
-                            <div className="d-flex">
-                              <i className="fa fa-eye tx-orange pd-t-4 mg-r-5" />
-                              View
-                            </div>
-                          </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">
-                          <div className="custom-control custom-checkbox">
-                            <input
-                              type="checkbox"
-                              className="custom-control-input"
-                              id="customCheck2"
-                            />
-                            <label
-                              className="custom-control-label"
-                              htmlFor="customCheck2"
-                            />
-                            <div></div>
-                          </div>
-                        </th>
-                        <td>Enterprise Table</td>
-                        <td>Instagram, twitter</td>
-                        <td>01 Mar, 2021</td>
-                        <td>
-                          <span className="badge badge-pink tx-14">
-                            {" "}
-                            Rejected
-                          </span>{" "}
-                        </td>
-                        <td>
-                          <a
-                            href="./view-campaign.html"
-                            className="tx-black tx-14"
-                          >
-                            <div className="d-flex">
-                              <i className="fa fa-eye tx-orange pd-t-4 mg-r-5" />
-                              View
-                            </div>
-                          </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">
-                          <div className="custom-control custom-checkbox">
-                            <input
-                              type="checkbox"
-                              className="custom-control-input"
-                              id="customCheck3"
-                            />
-                            <label
-                              className="custom-control-label"
-                              htmlFor="customCheck3"
-                            />
-                            <div></div>
-                          </div>
-                        </th>
-                        <td>HOR campaign</td>
-                        <td>Instagram, twitter. Snapchat</td>
-                        <td>01 Mar, 2021</td>
-                        <td>
-                          <span className="badge badge-active tx-14">
-                            {" "}
-                            Approved
-                          </span>{" "}
-                        </td>
-                        <td>
-                          <a
-                            href="./view-campaign.html"
-                            className="tx-black tx-14"
-                          >
-                            <div className="d-flex">
-                              <i className="fa fa-eye tx-orange pd-t-4 mg-r-5" />
-                              View
-                            </div>
-                          </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">
-                          <div className="custom-control custom-checkbox">
-                            <input
-                              type="checkbox"
-                              className="custom-control-input"
-                              id="customCheck4"
-                            />
-                            <label
-                              className="custom-control-label"
-                              htmlFor="customCheck4"
-                            />
-                            <div></div>
-                          </div>
-                        </th>
-                        <td>Art Campaign</td>
-                        <td>Instagram</td>
-                        <td>01 Mar, 2021</td>
-                        <td>
-                          <span className="badge badge-pink tx-14">
-                            {" "}
-                            Rejected
-                          </span>{" "}
-                        </td>
-                        <td>
-                          <a
-                            href="./view-campaign.html"
-                            className="tx-black tx-14"
-                          >
-                            <div className="d-flex">
-                              <i className="fa fa-eye tx-orange pd-t-4 mg-r-5" />
-                              View
-                            </div>
-                          </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">
-                          <div className="custom-control custom-checkbox">
-                            <input
-                              type="checkbox"
-                              className="custom-control-input"
-                              id="customCheck5"
-                            />
-                            <label
-                              className="custom-control-label"
-                              htmlFor="customCheck5"
-                            />
-                            <div></div>
-                          </div>
-                        </th>
-                        <td>Art Campaign</td>
-                        <td>twitter. Snapchat</td>
-                        <td>01 Mar, 2021</td>
-                        <td>
-                          <span className="badge badge-pending tx-14">
-                            {" "}
-                            Pending
-                          </span>{" "}
-                        </td>
-                        <td>
-                          <a
-                            href="./view-campaign.html"
-                            className="tx-black tx-14"
-                          >
-                            <div className="d-flex">
-                              <i className="fa fa-eye tx-orange pd-t-4 mg-r-5" />
-                              View
-                            </div>
-                          </a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table> */}
                   <MDBDataTable
                     responsive
                     data={setAllCampaigns()}
                     className="px-3 scroll"
-                    // onSort={(s) => console.log(s)}
-                    // order={["dateCreated", "desc"]}
                     bordered
                     striped
                     hover
-                    // checkboxFirstColumn
-                    // pagingTop
                     barReverse
-                    // searchTop
-                    // searchBottom={false}
                   />
                 </div>
               </div>

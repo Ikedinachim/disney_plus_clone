@@ -1,25 +1,19 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
 
 import Loader from "../loader";
 import MetaData from "../layout/MetaData";
-
-import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
 import { login, getUser, clearErrors } from "../../actions/authActions";
 import { getWallet } from "../../actions/billingActions";
-// import { UPDATE_INFLUENCER_PASSWORD_RESET } from "../../constants/authConstants";
 
 const Login = () => {
   const navHistory = useNavigate();
 
   const [userName, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const [userStatus, setUserStatus] = useState()
-
-  // const alert = useAlert();
   const dispatch = useDispatch();
-
   const { isAuthenticated, error, loading, user, resetPassword } = useSelector(
     (state) => state.auth
   );
@@ -28,9 +22,6 @@ const Login = () => {
   );
 
   const { userDetails } = useSelector((state) => state);
-  // const { isAuthenticated, error, loading, user, resetPassword } = useSelector(
-  //   (state) => state.auth
-  // );
 
   useEffect(() => {
     if (isAuthenticated && user.user.role !== "influencer") {
@@ -47,12 +38,19 @@ const Login = () => {
       navHistory("/update-password");
       toast.error(resetInfluencerPassword.message);
       dispatch(clearErrors());
-      // dispatch({ type: UPDATE_INFLUENCER_PASSWORD_RESET });
     } else if (isAuthenticated && user && user.user.role === "influencer") {
       dispatch(getWallet());
       navHistory("/influencer");
-    } else if (error) {
-      toast.error(error.errors.username);
+    } else if (
+      error &&
+      !error.errors.Verified &&
+      error.errors.Verified !== false
+    ) {
+      toast.error(error.errors.username || error.message);
+      dispatch(clearErrors());
+    } else if (error && error.errors.Verified === false) {
+      toast.error(error.errors.username || error.message);
+      navHistory("/resend-verification");
       dispatch(clearErrors());
     } else {
       navHistory("/login");
@@ -61,7 +59,6 @@ const Login = () => {
     }
   }, [
     dispatch,
-    // toast,
     resetInfluencerPassword,
     user,
     isAuthenticated,

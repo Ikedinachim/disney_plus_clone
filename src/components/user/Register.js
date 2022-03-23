@@ -1,30 +1,25 @@
 import React, { Fragment, useState, useEffect } from "react";
-
-import { Link, useNavigate } from "react-router-dom";
-import MetaData from "../layout/MetaData";
-import Loader from "../../components/loader";
-
-import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { registerUser, clearErrors } from "../../actions/authActions";
-import { REGISTER_USER_RESET } from "../../constants/authConstants";
-
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
+import MetaData from "../layout/MetaData";
+import Loader from "../../components/loader";
+import { registerUser, clearErrors } from "../../actions/authActions";
+import { REGISTER_USER_RESET } from "../../constants/authConstants";
+
 const Register = () => {
   const navigate = useNavigate();
-  // const alert = useAlert();
   const dispatch = useDispatch();
 
   const [newUser, setNewUser] = useState({
     firstName: "",
     lastName: "",
-    // middleName: '',
     username: "",
     userType: "",
-    // email: '',
     password: "",
     confirmPassword: "",
     phone: "",
@@ -124,8 +119,8 @@ const Register = () => {
 
   useEffect(() => {
     if (isRegistered) {
-      toast.success("User registered successfully");
-      toast.success('Check email for account activation');
+      // toast.success("User registered successfully");
+      toast.success("Check email for account activation");
       navigate("/login");
       dispatch({ type: REGISTER_USER_RESET });
     }
@@ -279,10 +274,6 @@ const Register = () => {
                             type="password"
                             className="form-control new"
                             placeholder="Password"
-                            // name="password"
-                            // required
-                            // value={password}
-                            // onChange={onChange}
                           />
                           {errors.password && (
                             <span className="tx-primary">
@@ -296,10 +287,6 @@ const Register = () => {
                             type="password"
                             className="form-control new"
                             placeholder="Confirm Password"
-                            // name="confirmPassword"
-                            // required
-                            // value={confirmPassword}
-                            // onChange={onChange}
                           />
                           {errors.confirmPassword && (
                             <span className="tx-primary">
@@ -313,7 +300,6 @@ const Register = () => {
                             type="number"
                             className="form-control new"
                             placeholder="Phone Number"
-                            // name="phone"
                             required
                             value={phone}
                             onChange={onChange}
@@ -389,10 +375,6 @@ const Register = () => {
                               type="text"
                               className="form-control new"
                               placeholder="First Name"
-                              // name="firstName"
-                              // required
-                              // value={businessFirstName}
-                              // onChange={onChange}
                             />
                             {businessError.firstName && (
                               <span className="tx-primary reg-error">
@@ -415,16 +397,6 @@ const Register = () => {
                             )}
                           </div>
                         </div>
-                        {/* <div className="form-group">
-                                                        <input
-                                                        type="text"
-                                                        className="form-control new"
-                                                        placeholder="Middle Name"
-                                                        name="middleName"
-                                                        value={middleName}
-                                                        onChange={onChange}
-                                                        />
-                                                    </div> */}
                         <div className="form-group">
                           <input
                             {...registerBusiness("username")}
@@ -432,7 +404,6 @@ const Register = () => {
                             id="businessUsername"
                             className="form-control new"
                             placeholder="Username"
-                            // name="username"
                           />
                         </div>
                         <div className="form-group">
@@ -446,27 +417,12 @@ const Register = () => {
                             value={"business"}
                           />
                         </div>
-                        {/* <div className="form-group">
-                                                        <input
-                                                        type="email"
-                                                        className="form-control new"
-                                                        placeholder="Company Email"
-                                                        name="email"
-                                                        required
-                                                        value={email}
-                                                        onChange={onChange}
-                                                        />
-                                                    </div> */}
                         <div className="form-group">
                           <input
                             {...registerBusiness("password")}
                             type="password"
                             className="form-control new"
                             placeholder="Password"
-                            // name="password"
-                            // required
-                            // value={password}
-                            // onChange={onChange}
                           />
                           {businessError.password && (
                             <span className="tx-primary reg-error">
@@ -480,10 +436,6 @@ const Register = () => {
                             type="password"
                             className="form-control new"
                             placeholder="Confirm Password"
-                            // name="confirmPassword"
-                            // required
-                            // value={confirmPassword}
-                            // onChange={onChange}
                           />
                           {businessError.confirmPassword && (
                             <span className="tx-primary reg-error">
@@ -497,10 +449,6 @@ const Register = () => {
                             type="number"
                             className="form-control new"
                             placeholder="Phone Number"
-                            // name="phone"
-                            // required
-                            // value={phone}
-                            // onChange={onChange}
                           />
                         </div>
                         <div className="form-group">
@@ -509,10 +457,6 @@ const Register = () => {
                             type="text"
                             className="form-control new"
                             placeholder="Business Name"
-                            // name="businessName"
-                            // required
-                            // value={businessName}
-                            // onChange={onChange}
                           />
                         </div>
                         <div className="form-group">
@@ -521,9 +465,6 @@ const Register = () => {
                             type="email"
                             className="form-control new"
                             placeholder="Business Email"
-                            // name="businessEmail"
-                            // value={businessEmail}
-                            // onChange={onChange}
                           />
                         </div>
                         <div className="form-group">
@@ -532,10 +473,6 @@ const Register = () => {
                             type="text"
                             className="form-control new"
                             placeholder="Contact Name"
-                            // name="contactName"
-                            // required
-                            // value={contactName}
-                            // onChange={onChange}
                           />
                         </div>
 

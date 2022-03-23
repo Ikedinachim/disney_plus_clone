@@ -1,8 +1,9 @@
 import React, { Fragment, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import MetaData from "../../layout/MetaData";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+
+import MetaData from "../../layout/MetaData";
 import {
   getSingleFlierVideosCampaigns,
   clearErrors,
@@ -10,36 +11,33 @@ import {
 import { getBitlyCount } from "../../../actions/analyticsActions";
 import Loader from "../../loader";
 import ActionsChart from "./SmartSms Chart/ActionsChart";
-// import { useAlert } from "react-alert";
 
 const SmartSmsAnalytics = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+
   const { loading, error, singleFlierCampaign } = useSelector(
     (state) => state.singleFlierCampaign || {}
   );
 
-  const { blLoading, bitlyCounts } = useSelector(
-    (state) => state.bitlyCount || {}
-  );
+  const { bitlyCount } = useSelector((state) => state || {});
 
-  const { id } = useParams();
-  const dispatch = useDispatch();
-  // const alert = useAlert();
-
-
-  
   useEffect(() => {
-    if (error) {
-      toast.error(error);
+    if (id) {
+      dispatch(getSingleFlierVideosCampaigns(id));
+    } else if (singleFlierCampaign && singleFlierCampaign.bitlink) {
+      dispatch(
+        getBitlyCount(singleFlierCampaign && singleFlierCampaign.bitlink)
+      );
+    } else if (error || bitlyCount.error) {
+      toast.error(error || bitlyCount.error);
       dispatch(clearErrors());
     }
-    dispatch(getSingleFlierVideosCampaigns(id));
-    dispatch(getBitlyCount(singleFlierCampaign && singleFlierCampaign.bitlink));
-    // dispatch(getWallet())
-  }, [dispatch, toast, error]);
+  }, [dispatch, id, error, bitlyCount]);
 
   return (
     <Fragment>
-      {loading && blLoading ? (
+      {loading || bitlyCount.blLoading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -67,7 +65,7 @@ const SmartSmsAnalytics = () => {
                             src="../../../assets/img/Brand_Awareness.svg"
                             className="tx-primary"
                             alt=""
-                            srcset=""
+                            srcSet=""
                           />
                         </div>
                         <div>
@@ -93,7 +91,7 @@ const SmartSmsAnalytics = () => {
                             src="../../../assets/img/Reach_Conversion_Goals.svg"
                             className="tx-primary"
                             alt=""
-                            srcset=""
+                            srcSet=""
                           />
                         </div>
                         <div>
@@ -101,7 +99,8 @@ const SmartSmsAnalytics = () => {
                             {singleFlierCampaign &&
                             singleFlierCampaign.bitlink === null
                               ? "0"
-                              : bitlyCounts && bitlyCounts.total_clicks}
+                              : bitlyCount.bitlyCounts &&
+                                bitlyCount.bitlyCounts.total_clicks}
                           </p>
                           <p className="tx-15 tx-blac">
                             Total number of Clicks
@@ -122,7 +121,7 @@ const SmartSmsAnalytics = () => {
                             src="../../../assets/img/Revenue_Generated.svg"
                             className="tx-primary"
                             alt=""
-                            srcset=""
+                            srcSet=""
                           />
                         </div>
                         <div>

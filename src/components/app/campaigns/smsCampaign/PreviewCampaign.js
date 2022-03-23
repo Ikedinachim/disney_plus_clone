@@ -89,11 +89,9 @@ const PreviewCampaign = ({
     }
   };
 
-  // console.log(setScheduleDate(values.scheduleFrom, values.scheduleTime));
-
   useEffect(() => {
     handleCount(filteredContactList && filteredContactList.count);
-  }, [filteredContactList]);
+  }, [handleCount, filteredContactList]);
 
   useEffect(() => {
     if (createSmsCampaign && createSmsCampaign.status === "success") {
@@ -106,7 +104,7 @@ const PreviewCampaign = ({
       dispatch(clearErrors());
       // dispatch(getWallet());
     }
-  }, [dispatch, toast, error, createSmsCampaign, navigate]);
+  }, [dispatch, error, createSmsCampaign, navigate]);
 
   //Edit buttons
 
@@ -124,18 +122,11 @@ const PreviewCampaign = ({
     values.campaignMessage = val;
     setShow(!show);
   };
-  const showButton = (e) => {
-    setShow(!show);
-  };
 
   //campaign channel
   const [view, setView] = useState(false);
 
   const [chanl, setChanl] = useState(values.channel);
-
-  const viewButton = () => {
-    setView(!view);
-  };
 
   const handleChanlChange = (e) => {
     setChanl(e.target.value);

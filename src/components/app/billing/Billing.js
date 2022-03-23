@@ -1,23 +1,18 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
 import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
+import { DateTime } from "luxon";
+import NumberFormat from "react-number-format";
 
 import MetaData from "../../layout/MetaData";
 import Loader from "../../loader";
 import { getSenderID } from "../../../actions/senderIDActions";
 import { getAllCampaign } from "../../../actions/campaignActions";
-import { DateTime } from "luxon";
-import NumberFormat from "react-number-format";
 import TransactionHistory from "./TransactionHistory";
 import CampaignCard from "./CampaignCard";
 
 const BillingOverview = () => {
-  const alert = useAlert();
   const dispatch = useDispatch();
-
-  // const { user } = useSelector((state) => state.auth)
 
   const {
     allCampaign: { reverseAllCampaign, loading: campaignLoading },
@@ -27,7 +22,7 @@ const BillingOverview = () => {
   useEffect(() => {
     dispatch(getSenderID());
     dispatch(getAllCampaign());
-  }, []);
+  }, [dispatch]);
 
   const [filteredItems, setfilteredItems] = useState(reverseAllCampaign);
 
@@ -36,7 +31,6 @@ const BillingOverview = () => {
     setfilteredItems(reverseAllCampaign);
   }, [reverseAllCampaign]);
 
-  // console.log(filteredItems, reverseAllCampaign);
   const filterItem = (createdAt) => {
     if (!createdAt) {
       return setfilteredItems(reverseAllCampaign);
@@ -50,7 +44,6 @@ const BillingOverview = () => {
     setfilteredItems(newItem);
   };
 
-  // console.log(filteredItems);
   return (
     <Fragment>
       {campaignLoading ? (

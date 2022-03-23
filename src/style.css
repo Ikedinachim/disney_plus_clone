@@ -505,3 +505,9 @@ ol.terms-list ol.terms-inner-list > li {
 ol.terms-list ol.terms-inner-list > li:before {
   content: counter(inner-item, lower-alpha) ". ";
 }
+
+.analytics-card {
+  min-height: 110px;
+  display: flex;
+  justify-content: center;
+}
