@@ -93,10 +93,10 @@ export default class SmsStepForm extends Component {
 
       ageRangeFrom,
       ageRangeTo,
-      ageRange,
+      // ageRange,
       gender,
-      state,
-      lga,
+      // state,
+      // lga,
       deviceType,
       deviceBrand,
 
@@ -178,7 +178,7 @@ export default class SmsStepForm extends Component {
       scheduleTo,
     };
 
-    console.log(values);
+    // console.log(values);
 
     switch (step) {
       case 1:

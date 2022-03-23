@@ -1,15 +1,11 @@
 import React, { Fragment, useEffect, useState } from "react";
-
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-// import { toast } from "react-toastify";
 
 import { getAllInfluencers } from "../../../../actions/campaignActions";
-
 import Loader from "../../../loader";
 import MetaData from "../../../layout/MetaData";
 import InfluencerCard from "./InfluencerCard";
-// import InfluencerPlatformModal from "./InfluencerPlatformModal";
 import InfluencerModal from "./InfluencerModal";
 
 const InfluencerCampaign = ({
@@ -22,34 +18,22 @@ const InfluencerCampaign = ({
   showModal,
   activeItemId,
   handleCheckedState,
-  // closePlatFormModal,
-  // toggleHandler,
-  // handlePlatformOnChange,
-  // closeModal,
-  // checkedInfluencers,
 }) => {
-  // const alert = useAlert();
   const dispatch = useDispatch();
+
   const { Influencers, loading } = useSelector(
     (state) => state.allInfluencers || []
   );
 
   const [checkedInfluencer, setCheckedInfluencer] = useState(null);
-  const [payloadData, setPayloadData] = useState({});
-  // const [platformId, setPlatformId] = useState("");
 
   // const ref = useRef();
   const [closeModal, setCloseModal] = useState(false);
   const [influencerId, setInfluencerId] = useState("");
 
   const Continue = (e) => {
-    // e.preventDefault();
     nextStep();
-    // handleImageUpload();
   };
-
-  // let d = document.createElement("div");
-  // let f = d.classList.add("backdrop");
 
   const toggleHandler = (item) => (e) => {
     const isChecked = e.target.checked;
@@ -57,22 +41,20 @@ const InfluencerCampaign = ({
     if (isChecked) {
       setCloseModal(true);
       setInfluencerId(e.target.value);
-      // console.log(singleInfluencer);
       singleInfluencer.platforms = [];
       setCheckedInfluencer(singleInfluencer);
     } else {
       setCloseModal(false);
     }
 
-    setPayloadData((state) => ({
-      ...state,
-      [item.id]: state[item.id] ? null : singleInfluencer,
-    }));
+    // setPayloadData((state) => ({
+    //   ...state,
+    //   [item.id]: state[item.id] ? null : singleInfluencer,
+    // }));
     // handleCheckedState(checkedInfluencer);
   };
 
   const handlePlatformOnChange = (item) => (e) => {
-    // console.log(item);
     const isChecked = e.target.checked;
     const influencer = { ...checkedInfluencer };
     let platforms = influencer.platforms;
@@ -84,7 +66,6 @@ const InfluencerCampaign = ({
         );
         platforms.splice(platformIndex, 1);
         let allIndex = platforms.findIndex((el) => el.id === "all");
-        // console.log(allIndex);
         if (allIndex !== -1) platforms.splice(allIndex, 1);
       } else {
         const platformIndex = platforms.findIndex((x) => x.id === item);
@@ -92,7 +73,7 @@ const InfluencerCampaign = ({
       }
       setCheckedInfluencer((state) => ({
         ...state,
-        ["platforms"]: [...platforms],
+        platforms: [...platforms],
       }));
     } else {
       platforms.push({
@@ -112,10 +93,9 @@ const InfluencerCampaign = ({
           cost: checkedInfluencer.allCost,
         });
       }
-      // console.log(platforms);
       setCheckedInfluencer((state) => ({
         ...state,
-        ["platforms"]: [...platforms],
+        platforms: [...platforms],
       }));
     }
   };
@@ -128,34 +108,34 @@ const InfluencerCampaign = ({
     if (checkedInfluencer !== null) {
       handleCheckedState(checkedInfluencer);
     }
-  }, [checkedInfluencer]);
+  }, [handleCheckedState, checkedInfluencer]);
 
   // console.log("This is the payload data", payloadData);
   // console.log("This is the checkedInfluencer data", checkedInfluencer);
 
-  const customFilter = (object, key, value) => {
-    if (Array.isArray(object)) {
-      for (const obj of object) {
-        const result = customFilter(obj, key, value);
-        if (result) {
-          return obj;
-        }
-      }
-    } else {
-      if (object.hasOwnProperty(key) && object[key] === value) {
-        return object;
-      }
+  // const customFilter = (object, key, value) => {
+  //   if (Array.isArray(object)) {
+  //     for (const obj of object) {
+  //       const result = customFilter(obj, key, value);
+  //       if (result) {
+  //         return obj;
+  //       }
+  //     }
+  //   } else {
+  //     if (object.hasOwnProperty(key) && object[key] === value) {
+  //       return object;
+  //     }
 
-      for (const k of Object.keys(object)) {
-        if (typeof object[k] === "object") {
-          const o = customFilter(object[k], key, value);
-          if (o !== null && typeof o !== "undefined") return o;
-        }
-      }
+  //     for (const k of Object.keys(object)) {
+  //       if (typeof object[k] === "object") {
+  //         const o = customFilter(object[k], key, value);
+  //         if (o !== null && typeof o !== "undefined") return o;
+  //       }
+  //     }
 
-      return null;
-    }
-  };
+  //     return null;
+  //   }
+  // };
 
   const sortIcon = (icon) => {
     if (icon.platform === "instagram") {
@@ -183,18 +163,18 @@ const InfluencerCampaign = ({
     }
   };
 
-  const convertToArray = (arr1) => {
-    Object.entries(arr1);
-  };
+  // const convertToArray = (arr1) => {
+  //   Object.entries(arr1);
+  // };
 
-  const mergeArrayObjects = (arr1, arr2) => {
-    return arr1.map((item, i) => {
-      if (item.id === arr2[i].influencerId) {
-        //merging two objects
-        return Object.assign({}, item, arr2[i]);
-      }
-    });
-  };
+  // const mergeArrayObjects = (arr1, arr2) => {
+  //   return arr1.map((item, i) => {
+  //     if (item.id === arr2[i].influencerId) {
+  //       //merging two objects
+  //       return Object.assign({}, item, arr2[i]);
+  //     }
+  //   });
+  // };
 
   return (
     <Fragment>
