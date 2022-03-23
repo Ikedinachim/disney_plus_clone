@@ -1,19 +1,17 @@
 import React, { Fragment, useState, useCallback, useEffect } from "react";
-
-import MetaData from "../../../layout/MetaData";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import NaijaStates from "naija-state-local-government";
+import { CSVLink } from "react-csv";
+import { useDropzone } from "react-dropzone";
+import Papa from "papaparse";
 import Select from "react-select";
 
+import MetaData from "../../../layout/MetaData";
 import {
   getFilteredContactList,
   clearErrors,
 } from "../../../../actions/campaignActions";
-
-import { useDropzone } from "react-dropzone";
-import Papa from "papaparse";
-import { CSVLink } from "react-csv";
 
 const TargetAudience = ({
   prevStep,
@@ -30,13 +28,14 @@ const TargetAudience = ({
   ageRangeFrom,
   ageRangeTo,
 }) => {
-  // const alert = useAlert();
   const dispatch = useDispatch();
 
   const { error } = useSelector((state) => state.filteredContactList || []);
 
   const [selectedState, setSelectedState] = useState(null);
   const [selectedLga, setSelectedLga] = useState(null);
+  const [parsedCsvData, setParsedCsvData] = useState([]);
+  const [csvName, setCsvName] = useState();
 
   const csvData = [
     ["Numbers"],
@@ -49,10 +48,8 @@ const TargetAudience = ({
     return { value: state, label: state };
   });
 
-  const optionsValue =
-    selectedState && selectedState.map((value) => value.value);
-
-  // const lga = NaijaStates.lgas(filterOptions.state);
+  // const optionsValue =
+  //   selectedState && selectedState.map((value) => value.value);
 
   const allLga =
     arrayState &&
@@ -72,13 +69,11 @@ const TargetAudience = ({
       return { value: lga, label: lga };
     });
 
-  const mergedLga2 =
-    allLga &&
-    [].concat.apply([], allLga2).map((lga) => {
-      return { value: lga, label: lga };
-    });
-
-  // console.log(mergedLga2);
+  // const mergedLga2 =
+  //   allLga &&
+  //   [].concat.apply([], allLga2).map((lga) => {
+  //     return { value: lga, label: lga };
+  //   });
 
   const selectGenders = [
     {
@@ -99,25 +94,6 @@ const TargetAudience = ({
     },
   ];
 
-  const selectAgeRanges = [
-    {
-      label: "Select Age Group",
-      value: "",
-    },
-    {
-      label: "13-24",
-      value: "13-24",
-    },
-    {
-      label: "25-34",
-      value: "25-34",
-    },
-    {
-      label: "35-44",
-      value: "35-44",
-    },
-  ];
-
   const Continue = (e) => {
     e.preventDefault();
     if (values.targetAudienceOption === "mysogidb") {
@@ -133,9 +109,6 @@ const TargetAudience = ({
   };
 
   ////
-  const [parsedCsvData, setParsedCsvData] = useState([]);
-  const [csvName, setCsvName] = useState();
-  const [validPhoneNumber, setValidPhoneNumber] = useState(false);
 
   const parseFile = (file) => {
     Papa.parse(file, {
@@ -144,10 +117,8 @@ const TargetAudience = ({
         // console.log(file);
         setParsedCsvData(results.data);
         setCsvName(file.name);
-        // console.log(parsedCsvData);
       },
     });
-    // console.log(parsedCsvData);
   };
 
   const onDrop = useCallback((acceptedFiles) => {
@@ -183,11 +154,8 @@ const TargetAudience = ({
       toast.error(error);
       dispatch(clearErrors());
     }
-    // console.log(parsedCsvData);
     getCsvRawData(parsedCsvData);
   }, [dispatch, error, parsedCsvData]);
-
-  // console.log(values);
 
   return (
     <Fragment>
