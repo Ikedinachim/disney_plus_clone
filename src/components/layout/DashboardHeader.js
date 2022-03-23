@@ -1,35 +1,27 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-
 import { useDispatch, useSelector } from "react-redux";
-// import { useAlert } from "react-alert";
 import NumberFormat from "react-number-format";
-import { toast } from "react-toastify";
-import { logout, getUser } from "../../actions/authActions";
-import { getWallet } from "../../actions/billingActions";
-
 import FeatherIcon from "feather-icons-react";
+
+import { logout } from "../../actions/authActions";
+import { getWallet } from "../../actions/billingActions";
 
 const Header = () => {
   const ref = useRef();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const dispatch = useDispatch();
-  // const alert = useAlert();
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const logoutHandler = () => {
     dispatch(logout());
-    // toast.success("Logged out successfully");
   };
 
   // const { user } = useSelector((state) => state.auth);
   const { userDetails } = useSelector((state) => state);
-
   const { wallet } = useSelector((state) => state.wallet);
 
   useEffect(() => {
     dispatch(getWallet());
-    // dispatch(getUser());
     const checkIfClickedOutside = (e) => {
       // If the menu is open and the clicked target is not within the menu,
       // then close the menu
@@ -79,11 +71,7 @@ const Header = () => {
             </span>
           </div>
         </div>
-        <div
-          // className={`dropdown dropdown-profile ml-md-4 ml-2 ${isActive ? "show" : null}`} onClick={ToggleClass}
-          className="dropdown dropdown-profile ml-md-4 ml-2"
-          ref={ref}
-        >
+        <div className="dropdown dropdown-profile ml-md-4 ml-2" ref={ref}>
           <div
             className="dropdown-link tx-dark tx-13 tx-medium"
             onClick={() => setIsMenuOpen((oldState) => !oldState)}
@@ -92,7 +80,7 @@ const Header = () => {
             <div className="avatar avatar-sm mg-l-10">
               <img
                 src={
-                  userDetails.user
+                  userDetails.user && userDetails.user.imageUrl
                     ? userDetails.user.imageUrl
                     : "https://via.placeholder.com/500"
                 }
@@ -106,7 +94,7 @@ const Header = () => {
               <div className="avatar avatar-lg mg-b-15">
                 <img
                   src={
-                    userDetails.user
+                    userDetails.user && userDetails.user.imageUrl
                       ? userDetails.user.imageUrl
                       : "https://via.placeholder.com/500"
                   }

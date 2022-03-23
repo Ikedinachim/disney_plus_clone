@@ -32,14 +32,12 @@ const TargetAudience = ({
   // const alert = useAlert();
   const dispatch = useDispatch();
 
-  const { filteredContactList, error, loading } = useSelector(
-    (state) => state.filteredContactList || []
-  );
+  const { error } = useSelector((state) => state.filteredContactList || []);
 
-  const [status, setStatus] = useState(3);
-  const radioHandler = (status) => {
-    setStatus(status);
-  };
+  // const [status, setStatus] = useState(3);
+  // const radioHandler = (status) => {
+  //   setStatus(status);
+  // };
 
   const [selectedState, setSelectedState] = useState(null);
   const [selectedLga, setSelectedLga] = useState(null);
@@ -142,7 +140,7 @@ const TargetAudience = ({
       dispatch(clearErrors());
     }
     getCsvRawData(parsedCsvData);
-  }, [dispatch, error, toast, parsedCsvData]);
+  }, [dispatch, error, parsedCsvData]);
 
   return (
     <Fragment>
@@ -300,7 +298,7 @@ const TargetAudience = ({
                             name="customRadio"
                             className="custom-control-input"
                             checked={values.targetAudienceOption === "manual"}
-                            onClick={(e) => radioHandler(3)}
+                            // onClick={(e) => radioHandler(3)}
                             defaultValue={"manual"}
                             onChange={handleChange("targetAudienceOption")}
                           />

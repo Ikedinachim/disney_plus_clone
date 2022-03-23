@@ -1,5 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import MetaData from "../layout/MetaData";
 import {
   getUser,
@@ -7,24 +9,19 @@ import {
   sendNewPassword,
 } from "../../actions/authActions";
 import { NEW_PASSWORD_RESET } from "../../constants/authConstants";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import Loader from "../loader";
 
 const UserPasswordUpdate = () => {
   const dispatch = useDispatch();
-
   const { uuid } = useParams();
-
   const navigate = useNavigate();
-
   const {
     sendNewPassword: { message, loading, error },
   } = useSelector((state) => state);
 
   useEffect(() => {
     dispatch(getUser());
-  }, []);
+  }, [dispatch]);
 
   const [password, setPassword] = useState({
     resetLink: uuid,

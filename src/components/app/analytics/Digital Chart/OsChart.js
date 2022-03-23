@@ -1,17 +1,19 @@
 import React, { Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Chart } from "react-google-charts";
+
 import { getOsCampaign } from "../../../../actions/analyticsActions";
 
 const OsChart = ({ propellerId }) => {
+  const dispatch = useDispatch();
+
   const {
     getOsCampaigns: { OsCampaigns },
   } = useSelector((state) => state);
 
-  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getOsCampaign(propellerId));
-  }, []);
+  }, [dispatch, propellerId]);
 
   //specifying diagram design
   const Adsreport = {
@@ -32,8 +34,6 @@ const OsChart = ({ propellerId }) => {
       OsCampaigns[i].conversions,
     ]);
   }
-
-  // console.log(data);
 
   return (
     <Fragment>

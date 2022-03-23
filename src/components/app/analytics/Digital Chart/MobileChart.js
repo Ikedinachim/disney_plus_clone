@@ -4,11 +4,12 @@ import { Chart } from "react-google-charts";
 import { getMobileCampaign } from "../../../../actions/analyticsActions";
 
 const MobileChart = ({ propellerId }) => {
+  const dispatch = useDispatch();
+
   const {
     getMobileCampaigns: { mobileCampaigns },
   } = useSelector((state) => state);
 
-  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getMobileCampaign(propellerId));
   }, []);
@@ -26,8 +27,6 @@ const MobileChart = ({ propellerId }) => {
   for (const i in mobileCampaigns) {
     data.push([mobileCampaigns[i].mobile_isp, mobileCampaigns[i].clicks]);
   }
-
-  // console.log(data);
   return (
     <Fragment>
       <div className="col-md-6 col-12 mg-t-20 mg-md-t-0">

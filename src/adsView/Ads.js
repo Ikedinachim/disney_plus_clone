@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -90,18 +90,14 @@ const ViewCampaign = () => {
 
   useEffect(() => {
     dispatch(showAds(id, campaignType, slug));
-  }, [dispatch]);
+  }, [dispatch, campaignType, id, slug]);
 
   useEffect(() => {
-    // dispatch(showAds(id, campaignType, clickType));
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
     }
-    // else {
-    //   dispatch(showAds(id, campaignType, slug));
-    // }
-  }, [error]);
+  }, [dispatch, error]);
 
   return (
     <Fragment>
