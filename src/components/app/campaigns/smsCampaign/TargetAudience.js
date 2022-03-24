@@ -1,4 +1,10 @@
-import React, { Fragment, useState, useCallback, useEffect } from "react";
+import React, {
+  Fragment,
+  useState,
+  useCallback,
+  useEffect,
+  useMemo,
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import Select from "react-select";
@@ -6,6 +12,7 @@ import { CSVLink } from "react-csv";
 import { useDropzone } from "react-dropzone";
 import Papa from "papaparse";
 import NaijaStates from "naija-state-local-government";
+import NumberFormat from "react-number-format";
 
 import MetaData from "../../../layout/MetaData";
 import {
@@ -24,6 +31,7 @@ const TargetAudience = ({
   values,
   getCsvRawData,
   arrayState,
+  audience,
   arrayLga,
   ageRangeFrom,
   ageRangeTo,
@@ -32,10 +40,32 @@ const TargetAudience = ({
 
   const { error } = useSelector((state) => state.filteredContactList || []);
 
+  const filter2 = useMemo((filterOptions) => {
+    if (filterOptions) {
+      return filterOptions;
+    }
+  }, []);
+
+  const filter = useCallback(
+    (filterOptions) => {
+      filterOptions();
+      dispatch(getFilteredContactList(filterOptions));
+    },
+    [filterOptions]
+  );
+
+  useEffect(() => {
+    console.log(filterOptions);
+    dispatch(getFilteredContactList(filterOptions));
+  }, [dispatch, filterOptions, values]);
+
   const [selectedState, setSelectedState] = useState(null);
   const [selectedLga, setSelectedLga] = useState(null);
   const [parsedCsvData, setParsedCsvData] = useState([]);
   const [csvName, setCsvName] = useState();
+  const { filteredContactList, fcLoading } = useSelector(
+    (state) => state.filteredContactList || []
+  );
 
   const csvData = [
     ["Numbers"],
@@ -78,6 +108,16 @@ const TargetAudience = ({
       value: "B",
     },
   ];
+
+  const setPrice = () => {
+    if (values.targetAudienceOption !== "mysogidb") {
+      return parseInt(values.price);
+    } else if (values.limit !== "") {
+      return parseInt(values.limit) * 5;
+    } else {
+      return filteredContactList ? filteredContactList.count * 5 : 0;
+    }
+  };
 
   const Continue = (e) => {
     e.preventDefault();
@@ -141,6 +181,69 @@ const TargetAudience = ({
     getCsvRawData(parsedCsvData);
   }, [dispatch, error, parsedCsvData]);
 
+  const stateOnChange = (e) => {
+    handleStateChange(e);
+    // function runMeFirst(callback) {
+    //   handleStateChange(e);
+    //   console.log(typeof callback);
+    //   if (typeof callback == "function") callback();
+    // }
+
+    // function anotherFunc() {
+    //   console.log(filter);
+    //   dispatch(getFilteredContactList(filterOptions));
+    // }
+    // runMeFirst(anotherFunc);
+    // handleStateChange(e);
+    // console.log(
+    //   "🚀 ~ file: TargetAudience.js ~ line 173 ~ returnnewPromise ~ values.filterParameters",
+    //   values
+    // );
+    // setTimeout(() => {
+    //   dispatch(getFilteredContactList(filterOptions));
+    // }, 2000);
+    // dispatch(getFilteredContactList(filterOptions));
+    // function first() {
+    //   return new Promise((resolve) => {
+    //     handleStateChange(e);
+    //     console.log(
+    //       "🚀 ~ file: TargetAudience.js ~ line 173 ~ returnnewPromise ~ values.filterParameters",
+    //       values
+    //     );
+    //     resolve();
+    //   });
+    // }
+
+    // function second() {
+    //   return new Promise((resolve) => {
+    //     dispatch(getFilteredContactList(filter));
+    //     resolve();
+    //   });
+    // }
+
+    // first().then(second());
+  };
+
+  const lgaOnChange = async (e) => {
+    function first() {
+      return new Promise((resolve) => {
+        handleLgaChange(e);
+        resolve();
+      });
+    }
+
+    function second() {
+      return new Promise((resolve) => {
+        // filter;
+        resolve(dispatch(getFilteredContactList(filterOptions)));
+      });
+    }
+
+    first().then(second());
+  };
+
+  // console.log(values);
+
   return (
     <Fragment>
       <MetaData title={"Target Audience"} />
@@ -164,69 +267,151 @@ const TargetAudience = ({
               <div className>
                 <form>
                   <div>
-                    <p className="tx-22 tx-com tx-bold mb-1">
-                      Select Target Audience
-                    </p>
-                    <p className="tx-14 tx-blac">
-                      Let’s narrow down your target audience to help boost sales
-                    </p>
-                    <div className="form-group">
-                      <div className="custom-control custom-radio">
-                        <input
-                          type="radio"
-                          id="db"
-                          name="customRadio"
-                          className="custom-control-input"
-                          checked={values.targetAudienceOption === "mysogidb"}
-                          // onClick={(e) => radioHandler(1)}
-                          value={"mysogidb"}
-                          onChange={handleChange("targetAudienceOption")}
-                        />
-                        <label className="custom-control-label" htmlFor="db">
-                          Use Mysogi Database
-                        </label>
+                    <div className="row justify-content-md-between">
+                      <div className="col-md-6 p-0">
+                        <p className="tx-22 tx-com tx-bold mb-1">
+                          Select Target Audience
+                        </p>
+                        <p className="tx-14 tx-blac">
+                          Let’s narrow down your target audience to help boost
+                          sales
+                        </p>
+                        <div className="form-group">
+                          <div className="custom-control custom-radio">
+                            <input
+                              type="radio"
+                              id="db"
+                              name="customRadio"
+                              className="custom-control-input"
+                              checked={
+                                values.targetAudienceOption === "mysogidb"
+                              }
+                              // onClick={(e) => radioHandler(1)}
+                              value={"mysogidb"}
+                              onChange={handleChange("targetAudienceOption")}
+                            />
+                            <label
+                              className="custom-control-label"
+                              htmlFor="db"
+                            >
+                              Use Mysogi Database
+                            </label>
+                          </div>
+                        </div>
+                        <div className="form-group">
+                          <div className="custom-control custom-radio">
+                            <input
+                              type="radio"
+                              id="import"
+                              name="customRadio"
+                              className="custom-control-input"
+                              checked={
+                                values.targetAudienceOption === "manual_import"
+                              }
+                              // onClick={(e) => radioHandler(2)}
+                              value={"manual_import"}
+                              onChange={handleChange("targetAudienceOption")}
+                            />
+                            <label
+                              className="custom-control-label"
+                              htmlFor="import"
+                            >
+                              Import My Own Database
+                            </label>
+                          </div>
+                        </div>
+                        <div className="form-group">
+                          <div className="custom-control custom-radio">
+                            <input
+                              type="radio"
+                              id="manual"
+                              name="customRadio"
+                              className="custom-control-input"
+                              checked={values.targetAudienceOption === "manual"}
+                              // onClick={(e) => radioHandler(3)}
+                              defaultValue={"manual"}
+                              onChange={handleChange("targetAudienceOption")}
+                            />
+                            <label
+                              className="custom-control-label"
+                              htmlFor="manual"
+                            >
+                              Enter Contacts Manually
+                            </label>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div className="form-group">
-                      <div className="custom-control custom-radio">
-                        <input
-                          type="radio"
-                          id="import"
-                          name="customRadio"
-                          className="custom-control-input"
-                          checked={
-                            values.targetAudienceOption === "manual_import"
-                          }
-                          // onClick={(e) => radioHandler(2)}
-                          value={"manual_import"}
-                          onChange={handleChange("targetAudienceOption")}
-                        />
-                        <label
-                          className="custom-control-label"
-                          htmlFor="import"
-                        >
-                          Import My Own Database
-                        </label>
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <div className="custom-control custom-radio">
-                        <input
-                          type="radio"
-                          id="manual"
-                          name="customRadio"
-                          className="custom-control-input"
-                          checked={values.targetAudienceOption === "manual"}
-                          // onClick={(e) => radioHandler(3)}
-                          defaultValue={"manual"}
-                          onChange={handleChange("targetAudienceOption")}
-                        />
-                        <label
-                          className="custom-control-label"
-                          htmlFor="manual"
-                        >
-                          Enter Contacts Manually
-                        </label>
+                      <div className="col-md-6">
+                        {values.targetAudienceOption === "mysogidb" && (
+                          <div className="mg-b-20 mg-md-b-10">
+                            <p className="tx-18 tx-com tx-semibold mb-0">
+                              Audience
+                            </p>
+                            <div className="form-group mg-t-15">
+                              <label className="tx-14 tx-gray mb-0 tx-medium">
+                                Potential Audience Based on filter
+                              </label>
+                              <p className="tx-18 tx-com tx-bold mb-1 mg-t-15">
+                                {filteredContactList
+                                  ? filteredContactList.count
+                                  : "loading"}{" "}
+                                <span className="tx-14">Audience</span>
+                              </p>
+                            </div>
+                            <div className="form-row mg-t-15">
+                              {/* <div className="form-group col-md-4">
+                                <input
+                                  type="number"
+                                  onChange={handleChange("limit")}
+                                  value={values.limit}
+                                  className="form-control"
+                                  placeholder="Enter your target audience number to get price"
+                                />
+                              </div> */}
+                              {/* <div className="form-group">
+                                <NumberFormat
+                                  className="badge badge-pink  tx-18 mg-5 tx-amt w-100 mt-0"
+                                  value={parseInt(setPrice())}
+                                  displayType={"text"}
+                                  thousandSeparator={true}
+                                  prefix={"₦"}
+                                />
+                              </div> */}
+                            </div>
+                          </div>
+                        )}
+                        {/* {values.targetAudienceOption !== "mysogidb" && (
+                          <div className="mg-b-20 mg-md-b-10">
+                            <p className="tx-18 tx-com tx-semibold mb-0">
+                              Pricing
+                            </p>
+                            <div className="form-group mg-t-15">
+                              <label className="tx-14 tx-gray mb-1 tx-medium">
+                                Potential Audience Based on Manual Input
+                              </label>
+                              <p className="tx-18 tx-com tx-bold mb-0">
+                                {audience}{" "}
+                                <span className="tx-14 tx-gray tx-medium">
+                                  number(s) loaded
+                                </span>
+                              </p>
+                            </div>
+                            <div className="form-row mg-t-15 pd-x-0">
+                              <div className=" col-md-2 d-flex align-items-center">
+                                <p className="tx-18 tx-com tx-bold mb-0">
+                                  Amount:
+                                </p>{" "}
+                                <NumberFormat
+                                  className="badge tx-green tx-bold tx-18 tx-amt w-100 mt-0"
+                                  value={parseInt(setPrice())}
+                                  displayType={"text"}
+                                  thousandSeparator={true}
+                                  prefix={"₦"}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        )} */}
                       </div>
                     </div>
                     {values.targetAudienceOption === "mysogidb" && (
@@ -308,7 +493,7 @@ const TargetAudience = ({
                             </label>
                             <Select
                               defaultValue={selectedState}
-                              onChange={handleStateChange}
+                              onChange={stateOnChange}
                               options={options}
                               isMulti
                             />
@@ -320,13 +505,13 @@ const TargetAudience = ({
                             </label>
                             <Select
                               defaultValue={selectedLga}
-                              onChange={handleLgaChange}
+                              onChange={lgaOnChange}
                               options={mergedLga}
                               isMulti
                             />
                           </div>
                           <div className="form-group col-md-6">
-                            <label className="mb-1 tx-com">ARPU Band</label>
+                            <label className="mb-1 tx-com">Money Spent</label>
                             <select id="band" className="form-control">
                               <option value />
                               <option value="m">0-1000</option>
@@ -335,9 +520,7 @@ const TargetAudience = ({
                             </select>
                           </div>
                           <div className="form-group col-md-6">
-                            <label htmlFor className="mb-1 tx-com">
-                              Interest
-                            </label>
+                            <label className="mb-1 tx-com">Interest</label>
                             <select className="custom-select">
                               <option selected>Select Interest</option>
                               <option value={1}>Music</option>
@@ -354,14 +537,14 @@ const TargetAudience = ({
                               <option value={2}>IOS</option>
                             </select>
                           </div>
-                          <div className="form-group col-md-6">
+                          {/* <div className="form-group col-md-6">
                             <label className="mb-1 tx-com">Device Brand</label>
                             <select className="custom-select">
                               <option selected>Select Device Brand</option>
                               <option value={1}>Nokia</option>
                               <option value={2}>Iphone</option>
                             </select>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     )}
@@ -369,7 +552,7 @@ const TargetAudience = ({
                       <div className="hide" id="show_2">
                         <div className="row justify-content-md-between">
                           <div className="form-group col-sm-12 col-md-5 d-flex flex-column">
-                            <label htmlFor className="mb-1 tx-com">
+                            <label className="mb-1 tx-com">
                               Upload CSV Containing Phone Numbers
                             </label>
                             <button className="btn tx-primary pd-x-0 pd-t-0 justify-content-start">
@@ -414,7 +597,7 @@ const TargetAudience = ({
                       <div className="hide" id="show_3">
                         <div className="row justify-content-md-between">
                           <div className="form-group col-md-6">
-                            <label htmlFor className="mb-1 tx-com">
+                            <label className="mb-1 tx-com">
                               Enter msisdns separated by commas e.g.
                               23480xxxxxxxx,23480xxxxxxxx
                             </label>
