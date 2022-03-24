@@ -35,7 +35,7 @@ const AppDownloadCampaign = ({
   //   setAssetType(asset);
   // };
 
-  // console.log(values);
+  console.log(values);
   const Continue = (e) => {
     e.preventDefault();
     // if (
@@ -46,7 +46,7 @@ const AppDownloadCampaign = ({
     // ) {
     //   toast.error("Select a Sender ID or request for one if not available");
     // } else
-    if (values.senderId !== "" && values.alternateSenderId === "") {
+    if (values.senderId === "" && values.alternateSenderId === "") {
       toast.error("Choose an alternate ID");
     } else if (values.channel === "") {
       toast.error("Choose a channel");
@@ -389,8 +389,8 @@ const AppDownloadCampaign = ({
                               <img
                                 src={values.attachment}
                                 className="img-fluid mg-b-10"
-                                  alt=""
-                                />
+                                alt=""
+                              />
                               <p className="mb-4">{values.campaignMessage}</p>
                             </div>
                           ) : (

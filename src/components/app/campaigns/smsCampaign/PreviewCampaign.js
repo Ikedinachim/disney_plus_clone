@@ -579,29 +579,8 @@ const PreviewCampaign = ({
                               number(s) loaded
                             </span>
                           </p>
-                          {/* <div className="form-group col-md-3">
-                            <p className="tx-18 tx-com tx-bold mb-0">
-                              {audience}
-                            </p>
-                            <span className="badge badge-pink  tx-18 mg-5 tx-amt w-100 mt-0">
-                              {" "}
-                              <NumberFormat
-                                value={values.price}
-                                displayType={"text"}
-                                thousandSeparator={true}
-                                prefix={"₦"}
-                              />
-                            </span>
-                          </div> */}
                         </div>
                         <div className="form-row mg-t-15 pd-x-0">
-                          {/* <div className="form-group col-md-9">
-                            <input
-                              type="text"
-                              className="form-control"
-                              placeholder="Enter your target audience number to get price"
-                            />
-                          </div> */}
                           <div className=" col-md-2 d-flex align-items-center">
                             <p className="tx-18 tx-com tx-bold mb-0">Amount:</p>{" "}
                             <NumberFormat
@@ -615,34 +594,6 @@ const PreviewCampaign = ({
                         </div>
                       </div>
                     )}
-                    {/* <div className="mg-b-20 mg-md-b-10">
-                      <p className="tx-18 tx-com tx-semibold mb-0">Pricing</p>
-                      <div className="form-group mg-t-15">
-                        <label htmlFor className="tx-14 tx-gray mb-1 tx-medium">
-                          Potential Audience Based on Manual Input
-                        </label>
-                        <p className="tx-18 tx-com tx-bold mb-0">
-                          {audience}
-                          <span className="tx-14 tx-gray tx-medium">
-                            number(s) loaded
-                          </span>
-                        </p>
-                      </div>
-                      <div className="form-row mg-t-15 pd-x-0">
-                        <div className=" col-md-2 d-flex">
-                          <p className="tx-18 tx-com tx-bold mb-0">Amount:</p>
-                          <span className="badge tx-green tx-bold tx-18 mg-5 tx-amt w-100 mt-0">
-                            {" "}
-                            <NumberFormat
-                              value={values.price}
-                              displayType={"text"}
-                              thousandSeparator={true}
-                              prefix={"₦"}
-                            />
-                          </span>
-                        </div>
-                      </div>
-                    </div> */}
                     <div className="col-md-5 pd-x-0 mg-y-40">
                       <div className="mg-t-20 d-flex">
                         {parseInt(wallet.balance) < values.price ||
