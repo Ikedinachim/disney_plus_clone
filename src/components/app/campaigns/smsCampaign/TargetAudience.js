@@ -353,7 +353,7 @@ const TargetAudience = ({
                             />
                           </div>
                           <div className="form-group col-md-6">
-                            <label className="mb-1 tx-com">ARPU Band</label>
+                            <label className="mb-1 tx-com">Money Spent</label>
                             <select id="band" className="form-control">
                               <option value />
                               <option value="m">0-1000</option>
