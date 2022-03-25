@@ -68,7 +68,8 @@ const SenderID = () => {
               <div className="col-md-5 pd-x-0">
                 <p className="tx-22 tx-bold tx-com mg-b-5">Request Sender ID</p>
                 <p className="tx-blac tx-16">
-                  Input Sender ID details for processing (Sender ID takes 7 to 21 days to process)
+                  Input Sender ID details for processing (Sender ID takes up to
+                  7 to 21 working days to process)
                 </p>
                 <form
                   className="mg-t-30"
