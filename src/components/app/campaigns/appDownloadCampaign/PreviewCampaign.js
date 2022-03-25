@@ -548,7 +548,7 @@ const PreviewCampaign = ({
                                   </div>
                                   <div className="col-md-3 form-group">
                                     <label className="tx-14 tx-gray mb-0 tx-medium d-block">
-                                      ARPU Brand
+                                      Money Spent
                                     </label>
                                     <span className="badge badge-pink tx-14 mg-5">
                                       {" "}
