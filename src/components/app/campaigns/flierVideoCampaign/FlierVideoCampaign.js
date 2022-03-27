@@ -51,14 +51,18 @@ const FlierVideoCampaign = ({
     // ) {
     //   toast.error("Select a Sender ID or request for one if not available");
     // } else
-    if (values.senderId === "" && values.alternateSenderId === "") {
+    if (values.channel === "") {
+      toast.error("Choose a channel");
+    } else if (
+      values.channel !== "display_ads" &&
+      values.senderId === "" &&
+      values.alternateSenderId === ""
+    ) {
       toast.error("Choose an alternate ID");
     } else if (values.channel === "display_ads" && values.url === "") {
       toast.error("Input a URL");
     } else if (values.callToAction === "") {
       toast.error("Provide a call to action for users");
-    } else if (values.channel === "") {
-      toast.error("Choose a channel");
     } else if (values.campaignMessage === "") {
       toast.error("Create the campaign message");
     } else if (values.assetType === "image" && values.attachment === null) {
