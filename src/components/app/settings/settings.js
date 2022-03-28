@@ -230,8 +230,8 @@ const Settings = () => {
                       <span
                         className="tx-dark"
                         style={{
-                          color: "#000;",
-                          textDecoration: "underline;",
+                          color: "#000",
+                          textDecoration: "underline",
                         }}
                       >
                         Want to Change password?
