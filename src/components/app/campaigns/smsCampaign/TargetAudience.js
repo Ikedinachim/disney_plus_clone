@@ -27,6 +27,7 @@ const TargetAudience = ({
   handleStateChange,
   handleLgaChange,
   phoneNumber,
+  personalUpload,
   filterOptions,
   values,
   getCsvRawData,
@@ -55,8 +56,9 @@ const TargetAudience = ({
   );
 
   useEffect(() => {
-    console.log(filterOptions);
-    dispatch(getFilteredContactList(filterOptions));
+    if (values.targetAudienceOption === "mysogidb") {
+      dispatch(getFilteredContactList(filterOptions));
+    }
   }, [dispatch, filterOptions, values]);
 
   const [selectedState, setSelectedState] = useState(null);
@@ -121,7 +123,43 @@ const TargetAudience = ({
 
   const Continue = (e) => {
     e.preventDefault();
-    if (values.targetAudienceOption === "mysogidb") {
+    if (
+      values.targetAudienceOption === "mysogidb" &&
+      filterOptions.ageRange === ""
+    ) {
+      toast.error("Set a Valid Age Range");
+    } else if (
+      values.targetAudienceOption === "mysogidb" &&
+      filterOptions.gender === ""
+    ) {
+      toast.error("Choose a Gender");
+    } else if (
+      values.targetAudienceOption === "mysogidb" &&
+      (filterOptions.state === "" || filterOptions.state === undefined)
+    ) {
+      toast.error("Choose a State");
+    } else if (
+      values.targetAudienceOption === "mysogidb" &&
+      (filterOptions.lga === "" || filterOptions.lga === undefined)
+    ) {
+      toast.error("Choose an LGA");
+    } else if (
+      values.targetAudienceOption === "manual_import" &&
+      personalUpload.length < 1
+    ) {
+      toast.error("Upload Audience Base");
+    } else if (
+      values.targetAudienceOption === "manual" &&
+      values.contactNumber.length < 2 &&
+      values.contactNumber.includes("")
+    ) {
+      toast.error("Audience Cannot be Empty");
+    } else if (
+      values.targetAudienceOption === "mysogidb" &&
+      filterOptions.gender !== "" &&
+      (filterOptions.state !== "" || filterOptions.state !== undefined) &&
+      (filterOptions.lga !== "" || filterOptions.lga !== undefined)
+    ) {
       dispatch(getFilteredContactList(filterOptions));
       nextStep();
     } else {
@@ -183,45 +221,6 @@ const TargetAudience = ({
 
   const stateOnChange = (e) => {
     handleStateChange(e);
-    // function runMeFirst(callback) {
-    //   handleStateChange(e);
-    //   console.log(typeof callback);
-    //   if (typeof callback == "function") callback();
-    // }
-
-    // function anotherFunc() {
-    //   console.log(filter);
-    //   dispatch(getFilteredContactList(filterOptions));
-    // }
-    // runMeFirst(anotherFunc);
-    // handleStateChange(e);
-    // console.log(
-    //   "🚀 ~ file: TargetAudience.js ~ line 173 ~ returnnewPromise ~ values.filterParameters",
-    //   values
-    // );
-    // setTimeout(() => {
-    //   dispatch(getFilteredContactList(filterOptions));
-    // }, 2000);
-    // dispatch(getFilteredContactList(filterOptions));
-    // function first() {
-    //   return new Promise((resolve) => {
-    //     handleStateChange(e);
-    //     console.log(
-    //       "🚀 ~ file: TargetAudience.js ~ line 173 ~ returnnewPromise ~ values.filterParameters",
-    //       values
-    //     );
-    //     resolve();
-    //   });
-    // }
-
-    // function second() {
-    //   return new Promise((resolve) => {
-    //     dispatch(getFilteredContactList(filter));
-    //     resolve();
-    //   });
-    // }
-
-    // first().then(second());
   };
 
   const lgaOnChange = async (e) => {
@@ -511,20 +510,12 @@ const TargetAudience = ({
                             />
                           </div>
                           <div className="form-group col-md-6">
-                            <label className="mb-1 tx-com">Money Spent</label>
+                            <label className="mb-1 tx-com">Monthly Spend</label>
                             <select id="band" className="form-control">
                               <option value />
                               <option value="m">0-1000</option>
                               <option value="f">1001-5000</option>
                               <option value="b">5001-10000</option>
-                            </select>
-                          </div>
-                          <div className="form-group col-md-6">
-                            <label className="mb-1 tx-com">Interest</label>
-                            <select className="custom-select">
-                              <option selected>Select Interest</option>
-                              <option value={1}>Music</option>
-                              <option value={2}>Comedy</option>
                             </select>
                           </div>
                           <div className="form-group col-md-6">

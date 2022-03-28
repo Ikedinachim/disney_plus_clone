@@ -58,6 +58,7 @@ const Sidebar = () => {
       }
        ${!isMenuOpen && hovered ? "maximize" : ""}
       `}
+      // ref={width > 989 ? null : ref}
       ref={ref}
       onMouseEnter={toggleHover}
       onMouseLeave={toggleHover}

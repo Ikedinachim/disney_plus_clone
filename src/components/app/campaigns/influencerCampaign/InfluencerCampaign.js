@@ -100,6 +100,8 @@ const InfluencerCampaign = ({
     }
   };
 
+  console.log(values);
+
   useEffect(() => {
     dispatch(getAllInfluencers());
   }, [dispatch]);

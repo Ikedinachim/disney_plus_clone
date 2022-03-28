@@ -119,58 +119,7 @@ const PreviewCampaign = ({
     }
   }, [dispatch, error, createFlierVideoCampaign, navigate]);
 
-  //Edit functionality
-  const [show, setShow] = useState(false);
-
-  const [val, setVal] = useState({
-    campaignMessage: values.campaignMessage,
-    callToAction: values.callToAction,
-    ussd: values.ussd,
-    phoneNumber: values.phoneNumber,
-    whatsAppNumber: values.whatsAppNumber,
-    smsNumber: values.smsNumber,
-  });
-
-  const handleEdit = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setVal({ ...val, [name]: value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    values.campaignMessage = val.campaignMessage;
-    values.callToAction = val.callToAction;
-    values.ussd = val.ussd;
-    values.phoneNumber = val.phoneNumber;
-    values.whatsAppNumber = val.whatsAppNumber;
-    values.smsNumber = val.smsNumber;
-    setShow(!show);
-  };
-  const showButton = (e) => {
-    setShow(!show);
-  };
-
-  //Campaign channel
-  const [view, setView] = useState(false);
-
-  const [chanl, setChanl] = useState(values.channel);
-
-  const viewButton = () => {
-    setView(!view);
-  };
-
-  const handleChanlChange = (e) => {
-    setChanl(e.target.value);
-  };
-
-  const handleCampaignChannelSub = (e) => {
-    e.preventDefault();
-    values.channel = chanl;
-    setView(!view);
-  };
-
-  console.log(values);
+  // console.log(values);
 
   return (
     <Fragment>
