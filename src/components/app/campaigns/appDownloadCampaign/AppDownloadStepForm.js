@@ -100,7 +100,7 @@ export default class AppDownloadStepForm extends Component {
   };
 
   handleImageUpload = async (e) => {
-    console.log(e.target.naturalWidth);
+    // console.log(e.target.naturalWidth);
     const width = e.target.naturalWidth;
     const height = e.target.naturalHeight;
     if (width > 960 || height > 1280) {
@@ -322,6 +322,7 @@ export default class AppDownloadStepForm extends Component {
             onChangeAttachment={this.onChangeAttachment}
             numbers={numbers}
             values={values}
+            personalUpload={personalUpload}
             filterOptions={filterOptions}
             getCsvRawData={getCsvRawData}
             ageRangeFrom={ageRangeFrom}
