@@ -1,4 +1,4 @@
-import React, { Component} from "react";
+import React, { Component } from "react";
 import FlierVideoCampaign from "./FlierVideoCampaign";
 import TargetAudience from "./TargetAudience";
 import PreviewCampaign from "./PreviewCampaign";
@@ -337,6 +337,7 @@ export default class FlierVideoStepForm extends Component {
             onChangeAttachment={this.onChangeAttachment}
             numbers={numbers}
             values={values}
+            personalUpload={personalUpload}
             filterOptions={filterOptions}
             getCsvRawData={getCsvRawData}
             ageRangeFrom={ageRangeFrom}

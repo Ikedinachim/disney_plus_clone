@@ -35,7 +35,7 @@ const AppDownloadCampaign = ({
   //   setAssetType(asset);
   // };
 
-  console.log(values);
+  // console.log(values);
   const Continue = (e) => {
     e.preventDefault();
     // if (

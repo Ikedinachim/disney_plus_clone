@@ -156,22 +156,17 @@ export default class SmsStepForm extends Component {
     const audience = getAudience().length;
     const price = audience * 5 * smsCount;
 
-    const filterOptions = () => {
-      const filter = {
-        ageRange:
-          ageRangeFrom && ageRangeTo
-            ? `${ageRangeFrom + "-" + ageRangeTo}`
-            : "",
-        gender,
-        state: arrayState && arrayState.map((value) => value.value).join(","),
-        lga: arrayLga,
-        deviceType,
-        deviceBrand,
-      };
-      return filter;
+    const filterOptions = {
+      ageRange:
+        ageRangeFrom && ageRangeTo ? `${ageRangeFrom + "-" + ageRangeTo}` : "",
+      gender,
+      state: arrayState && arrayState.map((value) => value.value).join(","),
+      lga: arrayLga,
+      deviceType,
+      deviceBrand,
     };
 
-    const filterParameters = [filterOptions()];
+    const filterParameters = [filterOptions];
 
     const values = {
       senderId,
@@ -216,7 +211,8 @@ export default class SmsStepForm extends Component {
             phoneNumber={phoneNumber}
             values={values}
             audience={audience}
-            filterOptions={filterOptions()}
+            personalUpload={personalUpload}
+            filterOptions={filterOptions}
             getCsvRawData={getCsvRawData}
             handleStateChange={this.handleStateChange}
             handleLgaChange={this.handleLgaChange}
