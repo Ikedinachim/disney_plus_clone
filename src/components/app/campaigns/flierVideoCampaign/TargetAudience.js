@@ -1,19 +1,18 @@
 import React, { Fragment, useEffect, useState, useCallback } from "react";
-
 import { useDispatch, useSelector } from "react-redux";
-import MetaData from "../../../layout/MetaData";
 import { toast } from "react-toastify";
 import NaijaStates from "naija-state-local-government";
 import Select from "react-select";
+import NumberFormat from "react-number-format";
+import { useDropzone } from "react-dropzone";
+import Papa from "papaparse";
+import { CSVLink } from "react-csv";
 
+import MetaData from "../../../layout/MetaData";
 import {
   getFilteredContactList,
   clearErrors,
 } from "../../../../actions/campaignActions";
-
-import { useDropzone } from "react-dropzone";
-import Papa from "papaparse";
-import { CSVLink } from "react-csv";
 
 const TargetAudience = ({
   prevStep,
@@ -383,9 +382,17 @@ const TargetAudience = ({
                                   Potential Audience Based on filter
                                 </label>
                                 <p className="tx-18 tx-com tx-bold mb-1 mg-t-15">
-                                  {filteredContactList
-                                    ? filteredContactList.count
-                                    : "loading"}{" "}
+                                  {filteredContactList ? (
+                                    <NumberFormat
+                                      value={parseInt(
+                                        filteredContactList.count
+                                      )}
+                                      displayType={"text"}
+                                      thousandSeparator={true}
+                                    />
+                                  ) : (
+                                    "loading"
+                                  )}{" "}
                                   <span className="tx-14">Audience</span>
                                 </p>
                               </div>
