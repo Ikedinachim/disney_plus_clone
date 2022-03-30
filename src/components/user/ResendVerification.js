@@ -4,6 +4,7 @@ import MetaData from "../layout/MetaData";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, resendVerificationLink } from "../../actions/authActions";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const ResendVerification = () => {
   const {
@@ -63,7 +64,6 @@ const ResendVerification = () => {
                           onChange={(e) => setEmail(e.target.value)}
                         />
                       </div>
-
                       <div className="mg-y-30">
                         <div className="form-group col-md-5 mx-auto">
                           <button
@@ -76,6 +76,20 @@ const ResendVerification = () => {
                           </button>
                         </div>
                       </div>
+                      <span
+                        className="tx-dark"
+                        style={{
+                          color: "#000;",
+                          textDecoration: "underline;",
+                        }}
+                      >
+                        Return to Sign in?
+                      </span>{"  "}
+                      <Link to="/register">
+                        <span style={{ textDecoration: "underline;" }}>
+                          Click here
+                        </span>
+                      </Link>
                     </form>
                   </div>
                 </div>
