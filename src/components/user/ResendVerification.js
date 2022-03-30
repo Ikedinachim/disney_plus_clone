@@ -85,7 +85,7 @@ const ResendVerification = () => {
                       >
                         Return to Sign in?
                       </span>{"  "}
-                      <Link to="/register">
+                      <Link to="/login">
                         <span style={{ textDecoration: "underline;" }}>
                           Click here
                         </span>
