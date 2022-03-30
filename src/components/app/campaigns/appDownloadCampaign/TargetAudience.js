@@ -22,6 +22,7 @@ const TargetAudience = ({
   handleStateChange,
   handleLgaChange,
   numbers,
+  personalUpload,
   filterOptions,
   values,
   getCsvRawData,
@@ -40,7 +41,9 @@ const TargetAudience = ({
   const [selectedLga, setSelectedLga] = useState(null);
 
   useEffect(() => {
-    dispatch(getFilteredContactList(filterOptions));
+    if (values.targetAudienceOption === "mysogidb") {
+      dispatch(getFilteredContactList(filterOptions));
+    }
   }, [dispatch, filterOptions, values]);
 
   const csvData = [
@@ -89,7 +92,47 @@ const TargetAudience = ({
     e.preventDefault();
     if (
       values.targetAudienceOption === "mysogidb" &&
-      values.channel !== "display_ads"
+      filterOptions.ageRange === ""
+    ) {
+      toast.error("Set a Valid Age Range");
+    } else if (
+      values.targetAudienceOption === "mysogidb" &&
+      filterOptions.gender === ""
+    ) {
+      toast.error("Set Gender");
+    } else if (
+      (values.targetAudienceOption === "mysogidb" ||
+        values.channel === "display_ads") &&
+      (filterOptions.state === "" || filterOptions.state === undefined)
+    ) {
+      toast.error("Choose a State");
+    } else if (
+      (values.targetAudienceOption === "mysogidb" ||
+        values.channel === "display_ads") &&
+      (filterOptions.lga === "" || filterOptions.lga === undefined)
+    ) {
+      toast.error("Choose an LGA");
+    } else if (
+      values.channel !== "display_ads" &&
+      values.targetAudienceOption === "manual_import" &&
+      personalUpload.length < 1
+    ) {
+      toast.error("Upload Audience Base");
+    } else if (
+      values.channel !== "display_ads" &&
+      values.targetAudienceOption === "manual" &&
+      values.targetAudience.length < 2 &&
+      values.targetAudience.includes("")
+    ) {
+      toast.error("Audience Cannot be Empty");
+    } else if (values.channel === "display_ads" && values.budget === "") {
+      toast.error("Set a Budget");
+    } else if (
+      values.targetAudienceOption === "mysogidb" &&
+      values.channel !== "display_ads" &&
+      filterOptions.gender !== "" &&
+      (filterOptions.state !== "" || filterOptions.state !== undefined) &&
+      (filterOptions.lga !== "" || filterOptions.lga !== undefined)
     ) {
       dispatch(getFilteredContactList(filterOptions));
       nextStep();
@@ -517,22 +560,14 @@ const TargetAudience = ({
                               />
                             </div>
                             <div className="form-group col-md-6">
-                              <label className="mb-1 tx-com">Monthly Spend</label>
+                              <label className="mb-1 tx-com">
+                                Monthly Spend
+                              </label>
                               <select id="band" className="form-control">
                                 <option value />
                                 <option value="m">0-1000</option>
                                 <option value="f">1001-5000</option>
                                 <option value="b">5001-10000</option>
-                              </select>
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label htmlFor className="mb-1 tx-com">
-                                Interest
-                              </label>
-                              <select className="custom-select">
-                                <option selected>Select Interest</option>
-                                <option value={1}>Music</option>
-                                <option value={2}>Comedy</option>
                               </select>
                             </div>
                             <div className="form-group col-md-6">

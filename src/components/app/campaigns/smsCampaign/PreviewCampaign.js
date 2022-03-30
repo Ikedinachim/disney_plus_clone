@@ -106,38 +106,6 @@ const PreviewCampaign = ({
     }
   }, [dispatch, error, createSmsCampaign, navigate]);
 
-  //Edit buttons
-
-  //campaign message
-  const [show, setShow] = useState(false);
-
-  const [val, setVal] = useState(values.campaignMessage);
-
-  const handleEdit = (e) => {
-    setVal(e.target.value);
-  };
-
-  const handleCampaignMessageSub = (e) => {
-    e.preventDefault();
-    values.campaignMessage = val;
-    setShow(!show);
-  };
-
-  //campaign channel
-  const [view, setView] = useState(false);
-
-  const [chanl, setChanl] = useState(values.channel);
-
-  const handleChanlChange = (e) => {
-    setChanl(e.target.value);
-  };
-
-  const handleCampaignChannelSub = (e) => {
-    e.preventDefault();
-    values.channel = chanl;
-    setView(!view);
-  };
-
   return (
     <Fragment>
       {loading || fcLoading ? (
@@ -175,25 +143,7 @@ const PreviewCampaign = ({
                         </div>
                         <div>
                           <p className="tx-20 tx-bold pd-t-15 tx-com capitalize">
-                            {view === false ? (
-                              values.channel
-                            ) : (
-                              <Fragment>
-                                <select
-                                  name="channels"
-                                  onClick={handleChanlChange}
-                                >
-                                  <option value="sms">Sms</option>
-                                  <option value="flash_sms">Flash_sms</option>
-                                </select>
-                                <button
-                                  className="btn btn-primary"
-                                  onClick={handleCampaignChannelSub}
-                                >
-                                  save
-                                </button>
-                              </Fragment>
-                            )}
+                            {values.channel}
                           </p>
                         </div>
                       </div>
@@ -238,26 +188,7 @@ const PreviewCampaign = ({
                             Campaign Message
                           </label>
 
-                          <p className="tx-15 mb-0">
-                            {show === false ? (
-                              values.campaignMessage
-                            ) : (
-                              <Fragment>
-                                <input
-                                  type="text"
-                                  value={val}
-                                  className="p-1"
-                                  onChange={handleEdit}
-                                />{" "}
-                                <button
-                                  className="btn btn-primary"
-                                  onClick={handleCampaignMessageSub}
-                                >
-                                  save
-                                </button>
-                              </Fragment>
-                            )}
-                          </p>
+                          <p className="tx-15 mb-0">{values.campaignMessage}</p>
                         </div>
                       </div>
                     </div>
@@ -282,10 +213,7 @@ const PreviewCampaign = ({
                           </div>
                           <div className="form-row mg-t-15">
                             <div className="col-md-3 form-group">
-                              <label
-                                htmlFor
-                                className="tx-14 tx-gray mb-0 tx-medium d-block"
-                              >
+                              <label className="tx-14 tx-gray mb-0 tx-medium d-block">
                                 Age Range
                               </label>
                               <div className="d-flex">
