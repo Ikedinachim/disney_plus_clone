@@ -233,7 +233,7 @@ const FlierVideoCampaign = ({
                           <div className="form-group">
                             <label className="mb-1">Input URL</label>
                             <input
-                              type="text"
+                              type="url"
                               className="form-control"
                               placeholder="Enter URL customers can order or view your products through"
                               defaultValue={values.url}
