@@ -99,11 +99,13 @@ const TargetAudience = ({
   const Continue = (e) => {
     e.preventDefault();
     if (
+      values.channel !== "display_ads" &&
       values.targetAudienceOption === "mysogidb" &&
       filterOptions.ageRange === ""
     ) {
       toast.error("Set a Valid Age Range");
     } else if (
+      values.channel !== "display_ads" &&
       values.targetAudienceOption === "mysogidb" &&
       filterOptions.gender === ""
     ) {
