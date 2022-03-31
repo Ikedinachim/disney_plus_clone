@@ -204,7 +204,7 @@ const ViewCampaign = () => {
                                 createShowAds.url.indexOf("https://") === 0)
                                 ? ""
                                 : "http://"
-                            }${createShowAds && createShowAds.url}`}
+                            }${createShowAds && createShowAds.url.trim()}`}
                             onClick={() => handleClickType("url")}
                           >
                             <i className="fa fa-globe mg-r-10"> </i>
@@ -230,7 +230,10 @@ const ViewCampaign = () => {
                                 ) === 0)
                                 ? ""
                                 : "http://"
-                            }${createShowAds && createShowAds.androidStoreUrl}`}
+                            }${
+                              createShowAds &&
+                              createShowAds.androidStoreUrl.trim()
+                            }`}
                             onClick={() => handleClickType("androidStoreUrl")}
                           >
                             <i
@@ -256,7 +259,9 @@ const ViewCampaign = () => {
                                 ) === 0)
                                 ? ""
                                 : "http://"
-                            }${createShowAds && createShowAds.iosStoreUrl}`}
+                            }${
+                              createShowAds && createShowAds.iosStoreUrl.trim()
+                            }`}
                             onClick={() => handleClickType("iosStoreUrl")}
                           >
                             <i
