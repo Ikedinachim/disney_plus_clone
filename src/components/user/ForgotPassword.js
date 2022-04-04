@@ -1,16 +1,14 @@
-import React, { Fragment, useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { Fragment, useState } from "react";
+import { Link} from "react-router-dom";
 
 import Loader from "../loader";
 import MetaData from "../layout/MetaData";
 import { FORGOT_PASSWORD_RESET } from "../../constants/authConstants";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  login,
   clearErrors,
   sendPasswordResetLink,
 } from "../../actions/authActions";
-import { getWallet } from "../../actions/billingActions";
 import { toast } from "react-toastify";
 
 const ForgotPassword = () => {
