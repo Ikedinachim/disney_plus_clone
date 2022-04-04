@@ -248,7 +248,9 @@ export const getSmsCampaignsReducer = (
     case GET_SMS_CAMPAIGN_SUCCESS:
       return {
         loading: false,
-        smsCampaigns: action.payload.reverse(),
+        smsCampaigns: action.payload.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        ),
       };
 
     case GET_SMS_CAMPAIGN_FAIL:
@@ -281,7 +283,9 @@ export const viewFlierVideosCampaignsReducer = (
     case VIEW_FLIER_VIDEO_CAMPAIGN_SUCCESS:
       return {
         vfLoading: false,
-        viewFlierVideosCampaigns: action.payload.reverse(),
+        viewFlierVideosCampaigns: action.payload.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        ),
       };
 
     case VIEW_FLIER_VIDEO_CAMPAIGN_FAIL:
@@ -314,7 +318,9 @@ export const viewAppDownloadCampaignsReducer = (
     case VIEW_APP_DOWNLOAD_CAMPAIGN_SUCCESS:
       return {
         adLoading: false,
-        viewAppDownloadCampaigns: action.payload.reverse(),
+        viewAppDownloadCampaigns: action.payload.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        ),
       };
 
     case VIEW_APP_DOWNLOAD_CAMPAIGN_FAIL:
@@ -340,6 +346,8 @@ const initialState = {
   reverseAllCampaign: [],
   error: null,
 };
+
+
 export const AllCampaignReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_CAMPAIGN_REQUEST:
@@ -353,8 +361,8 @@ export const AllCampaignReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         allCampaign: action.payload,
-        reverseAllCampaign: action.payload.sort((a, b) =>
-          a.createdAt > b.createdAt ? -1 : 1
+        reverseAllCampaign: action.payload.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         ),
       };
     case GET_ALL_CAMPAIGN_FAIL:
@@ -588,7 +596,9 @@ export const allUserInfluencerCampaignReducer = (
     case ALL_USER_INFLUENCER_SUCCESS:
       return {
         loading: false,
-        allUserInfluencer: action.payload.reverse(),
+        allUserInfluencer: action.payload.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        ),
       };
     case ALL_USER_INFLUENCER_FAIL:
       return {
