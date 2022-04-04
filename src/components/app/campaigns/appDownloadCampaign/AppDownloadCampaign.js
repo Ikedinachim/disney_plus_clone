@@ -24,6 +24,7 @@ const AppDownloadCampaign = ({
   uploadPercentage,
   characterCount,
   smsCount,
+  callToActionCount,
 }) => {
   // const alert = useAlert();
   const dispatch = useDispatch();
@@ -237,8 +238,12 @@ const AppDownloadCampaign = ({
                                 className="form-control"
                                 placeholder="Enter call to action prompt e.g download now"
                                 defaultValue={values.callToAction}
-                                onBlur={handleChange("callToAction")}
+                                onChange={handleChange("callToAction")}
+                                maxLength={20}
                               />
+                              <p className="mg-0 tx-12 tx-italic tx-gray-400">
+                                {20 - callToActionCount} Characters Left
+                              </p>
                             </div>
                             <div className="form-group mb-2">
                               <label className="mb-1">Campaign Message</label>

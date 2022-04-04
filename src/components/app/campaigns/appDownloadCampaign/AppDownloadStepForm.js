@@ -34,6 +34,7 @@ export default class AppDownloadStepForm extends Component {
     contactNumberCount: 0,
     characterCount: 0,
     smsCount: 0,
+    callToActionCount: 0,
 
     scheduleOption: "none",
     scheduleTime: "",
@@ -76,6 +77,9 @@ export default class AppDownloadStepForm extends Component {
     if (input === "campaignMessage") {
       this.setState({ characterCount: e.target.value.length });
       this.setState({ smsCount: Math.ceil(e.target.value.length / 160) });
+    }
+    if (input === "callToAction") {
+      this.setState({ callToActionCount: e.target.value.length });
     }
   };
 
@@ -183,6 +187,7 @@ export default class AppDownloadStepForm extends Component {
       numbers,
       limit,
       contactNumberCount,
+      callToActionCount,
       budget,
 
       targetAudienceOption,
@@ -277,7 +282,6 @@ export default class AppDownloadStepForm extends Component {
       channel,
       campaignMessage,
       timeRange,
-      targetAudience,
       callToAction,
       attachment: setAssets(),
       iosStoreUrl,
@@ -311,6 +315,7 @@ export default class AppDownloadStepForm extends Component {
             uploadPercentage={uploadPercentage}
             characterCount={characterCount}
             smsCount={smsCount}
+            callToActionCount={callToActionCount}
           />
         );
       case 2:
