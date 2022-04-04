@@ -23,17 +23,17 @@ const SmartSmsAnalytics = () => {
   const { bitlyCount } = useSelector((state) => state || {});
 
   useEffect(() => {
-    if (id) {
       dispatch(getSingleFlierVideosCampaigns(id));
-    } else if (singleFlierCampaign && singleFlierCampaign.bitlink) {
-      dispatch(
-        getBitlyCount(singleFlierCampaign && singleFlierCampaign.bitlink)
+    if (singleFlierCampaign.bitlink !== null) {
+       const link = singleFlierCampaign.bitlink.split('//').pop();
+       dispatch(
+        getBitlyCount(link)
       );
     } else if (error || bitlyCount.error) {
       toast.error(error || bitlyCount.error);
       dispatch(clearErrors());
     }
-  }, [dispatch, id, error, bitlyCount]);
+  }, []);
 
   return (
     <Fragment>
