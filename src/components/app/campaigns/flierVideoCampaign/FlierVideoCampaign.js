@@ -24,6 +24,7 @@ const FlierVideoCampaign = ({
   uploadPercentage,
   characterCount,
   smsCount,
+  callToActionCount,
 }) => {
   // const alert = useAlert();
   const dispatch = useDispatch();
@@ -232,7 +233,7 @@ const FlierVideoCampaign = ({
                           <div className="form-group">
                             <label className="mb-1">Input URL</label>
                             <input
-                              type="text"
+                              type="url"
                               className="form-control"
                               placeholder="Enter URL customers can order or view your products through"
                               defaultValue={values.url}
@@ -331,9 +332,13 @@ const FlierVideoCampaign = ({
                               type="text"
                               className="form-control"
                               placeholder="Enter the call to action prompt e.g buy now"
-                              value={values.callToAction}
+                              defaultValue={values.callToAction}
                               onChange={handleChange("callToAction")}
+                              maxLength={20}
                             />
+                            <p className="mg-0 tx-12 tx-italic tx-gray-400">
+                              {20 - callToActionCount} Characters Left
+                            </p>
                           </div>
                           <div className="form-group mb-2">
                             <label className="mb-1">Campaign Message</label>

@@ -106,7 +106,9 @@ const ViewCampaign = () => {
       ) : (
         <Fragment>
           <MetaData title={"Campaigns"} />
-            <LinkPreview campaignMessage={createShowAds && createShowAds.campaignMessage} image={createShowAds && createShowAds.attachment}
+          <LinkPreview
+            campaignMessage={createShowAds && createShowAds.campaignMessage}
+            image={createShowAds && createShowAds.attachment}
           />
           {/* <p>Hello</p> */}
           <div className="content-body page-content">
@@ -196,9 +198,13 @@ const ViewCampaign = () => {
                         {createShowAds && createShowAds.url === "" ? null : (
                           <a
                             className="btn btn-primary mg-b-15 round-5"
-                            href={`http://${
-                              createShowAds && createShowAds.url
-                            }`}
+                            href={`${
+                              createShowAds.url &&
+                              (createShowAds.url.indexOf("http://") === 0 ||
+                                createShowAds.url.indexOf("https://") === 0)
+                                ? ""
+                                : "http://"
+                            }${createShowAds.url && createShowAds.url.trim()}`}
                             onClick={() => handleClickType("url")}
                           >
                             <i className="fa fa-globe mg-r-10"> </i>
@@ -214,8 +220,19 @@ const ViewCampaign = () => {
                         createShowAds.androidStoreUrl === "" ? null : (
                           <a
                             className="btn btn-primary mg-b-15 round-5"
-                            href={`http://${
-                              createShowAds && createShowAds.androidStoreUrl
+                            href={`${
+                              createShowAds.androidStoreUrl &&
+                              (createShowAds.androidStoreUrl.indexOf(
+                                "http://"
+                              ) === 0 ||
+                                createShowAds.androidStoreUrl.indexOf(
+                                  "https://"
+                                ) === 0)
+                                ? ""
+                                : "http://"
+                            }${
+                              createShowAds.androidStoreUrl &&
+                              createShowAds.androidStoreUrl.trim()
                             }`}
                             onClick={() => handleClickType("androidStoreUrl")}
                           >
@@ -233,8 +250,18 @@ const ViewCampaign = () => {
                         createShowAds.iosStoreUrl === "" ? null : (
                           <a
                             className="btn btn-primary mg-b-15 round-5"
-                            href={`http://${
-                              createShowAds && createShowAds.iosStoreUrl
+                            href={`${
+                              createShowAds.iosStoreUrl &&
+                              (createShowAds.iosStoreUrl.indexOf("http://") ===
+                                0 ||
+                                createShowAds.iosStoreUrl.indexOf(
+                                  "https://"
+                                ) === 0)
+                                ? ""
+                                : "http://"
+                            }${
+                              createShowAds.iosStoreUrl &&
+                              createShowAds.iosStoreUrl.trim()
                             }`}
                             onClick={() => handleClickType("iosStoreUrl")}
                           >

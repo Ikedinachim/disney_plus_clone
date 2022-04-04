@@ -351,9 +351,15 @@ const TargetAudience = ({
                                 Potential Audience Based on filter
                               </label>
                               <p className="tx-18 tx-com tx-bold mb-1 mg-t-15">
-                                {filteredContactList
-                                  ? filteredContactList.count
-                                  : "loading"}{" "}
+                                {filteredContactList ? (
+                                  <NumberFormat
+                                    value={parseInt(filteredContactList.count)}
+                                    displayType={"text"}
+                                    thousandSeparator={true}
+                                  />
+                                ) : (
+                                  "loading"
+                                )}{" "}
                                 <span className="tx-14">Audience</span>
                               </p>
                             </div>
