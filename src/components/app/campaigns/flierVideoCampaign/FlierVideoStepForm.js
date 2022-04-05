@@ -39,7 +39,7 @@ export default class FlierVideoStepForm extends Component {
     imageUrl: null,
     imageAlt: "",
     uploadPercentage: 0,
-    videoUrl: "",
+    rawVideoUrl: "",
     price: 0,
     limit: undefined,
     budget: 10000,
@@ -193,7 +193,7 @@ export default class FlierVideoStepForm extends Component {
       timeRangeTo,
       // attachment,
       imageUrl,
-      videoUrl,
+      rawVideoUrl,
       attachmentPreview,
       campaignType,
       targetAudienceOption,
@@ -250,6 +250,23 @@ export default class FlierVideoStepForm extends Component {
       }
     };
 
+    const setYoutubeUrl = (url) => {
+      let regExp =
+        /^https?\:\/\/(?:www\.youtube(?:\-nocookie)?\.com\/|m\.youtube\.com\/|youtube\.com\/)?(?:ytscreeningroom\?vi?=|youtu\.be\/|vi?\/|user\/.+\/u\/\w{1,2}\/|embed\/|watch\?(?:.*\&)?vi?=|\&vi?=|\?(?:.*\&)?vi?=)([^#\&\?\n\/<>"']*)/i;
+      let match = url && url.match(regExp);
+      const watchUrl = `https://www.youtube.com/watch?v=${match && match[1]}`;
+      // return match && match[1].length === 11 ? match[1] : false;
+
+      const result = match
+        ? { videoUrl: watchUrl, videoError: false }
+        : { videoUrl: "", videoError: true };
+
+      let videoUrl = result.videoUrl;
+      let videoError = result.videoError;
+
+      return { videoUrl, videoError };
+    };
+
     const setAudience = () => {
       if (channel === "display_ads") {
         return (targetAudience = budget / 5);
@@ -259,6 +276,8 @@ export default class FlierVideoStepForm extends Component {
     };
 
     let attachment = "";
+
+    const { videoUrl, videoError } = setYoutubeUrl(rawVideoUrl);
 
     const setAssets = () => {
       if (assetType === "image") {
@@ -332,6 +351,7 @@ export default class FlierVideoStepForm extends Component {
             characterCount={characterCount}
             smsCount={smsCount}
             callToActionCount={callToActionCount}
+            videoError={videoError}
           />
         );
       case 2:

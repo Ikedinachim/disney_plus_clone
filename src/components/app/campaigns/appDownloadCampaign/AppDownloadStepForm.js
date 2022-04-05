@@ -17,7 +17,6 @@ export default class AppDownloadStepForm extends Component {
     androidStoreUrl: "",
     numbers: "",
     callToAction: "",
-    // attachment: "",
     attachmentPreview: "",
     uploadedImage: "",
     campaignType: "app_download",
@@ -26,7 +25,7 @@ export default class AppDownloadStepForm extends Component {
     imageUrl: null,
     imageAlt: "",
     uploadPercentage: 0,
-    videoUrl: "",
+    rawVideoUrl: "",
     price: 0,
     csvFile: "",
     limit: undefined,
@@ -51,7 +50,6 @@ export default class AppDownloadStepForm extends Component {
     deviceBrand: "",
 
     selectedFileName: "Upload Asset *png, *jpg, *gif",
-
     parsedCsvData: [],
 
     arrayState: undefined,
@@ -73,12 +71,10 @@ export default class AppDownloadStepForm extends Component {
   // Handle fields change
   handleChange = (input) => (e) => {
     this.setState({ [input]: e.target.value });
-
     if (input === "campaignMessage") {
       this.setState({ characterCount: e.target.value.length });
       this.setState({ smsCount: Math.ceil(e.target.value.length / 160) });
-    }
-    if (input === "callToAction") {
+    } else if (input === "callToAction") {
       this.setState({ callToActionCount: e.target.value.length });
     }
   };
@@ -178,7 +174,9 @@ export default class AppDownloadStepForm extends Component {
       timeRangeTo,
       // attachment,
       imageUrl,
-      videoUrl,
+      // videoUrl,
+      rawVideoUrl,
+      // videoError,
       assetType,
       attachmentPreview,
       iosStoreUrl,
@@ -236,6 +234,23 @@ export default class AppDownloadStepForm extends Component {
       }
     };
 
+    const setYoutubeUrl = (url) => {
+      let regExp =
+        /^https?\:\/\/(?:www\.youtube(?:\-nocookie)?\.com\/|m\.youtube\.com\/|youtube\.com\/)?(?:ytscreeningroom\?vi?=|youtu\.be\/|vi?\/|user\/.+\/u\/\w{1,2}\/|embed\/|watch\?(?:.*\&)?vi?=|\&vi?=|\?(?:.*\&)?vi?=)([^#\&\?\n\/<>"']*)/i;
+      let match = url && url.match(regExp);
+      const watchUrl = `https://www.youtube.com/watch?v=${match && match[1]}`;
+      // return match && match[1].length === 11 ? match[1] : false;
+
+      const result = match
+        ? { videoUrl: watchUrl, videoError: false }
+        : { videoUrl: "", videoError: true };
+
+      let videoUrl = result.videoUrl;
+      let videoError = result.videoError;
+
+      return { videoUrl, videoError };
+    };
+
     const setAudience = () => {
       if (channel === "display_ads") {
         return (targetAudience = budget / 5);
@@ -245,6 +260,8 @@ export default class AppDownloadStepForm extends Component {
     };
 
     let attachment = "";
+
+    const { videoUrl, videoError } = setYoutubeUrl(rawVideoUrl);
 
     const setAssets = () => {
       if (assetType === "image") {
@@ -316,6 +333,7 @@ export default class AppDownloadStepForm extends Component {
             characterCount={characterCount}
             smsCount={smsCount}
             callToActionCount={callToActionCount}
+            videoError={videoError}
           />
         );
       case 2:
