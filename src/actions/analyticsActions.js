@@ -265,14 +265,12 @@ export const getBitlyCount = (links) => async (dispatch) => {
 
     const token = process.env.REACT_APP_BITLY_KEY;
 
-    const link = links.split("//").pop();
-
     const headers = {
       Authorization: `Bearer ${token}`,
     };
 
     const data = await axios.get(
-      `https://api-ssl.bitly.com/v4/bitlinks/${link}/clicks/summary`,
+      `https://api-ssl.bitly.com/v4/bitlinks/${links}/clicks/summary`,
       { headers: headers }
     );
 
