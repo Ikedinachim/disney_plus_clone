@@ -25,6 +25,7 @@ const AppDownloadCampaign = ({
   characterCount,
   smsCount,
   callToActionCount,
+  videoError,
 }) => {
   // const alert = useAlert();
   const dispatch = useDispatch();
@@ -137,7 +138,7 @@ const AppDownloadCampaign = ({
                   />
                 </div>
                 <div className="pd-md-y-20">
-                  <div className="row justify-content-between">
+                  <div className="align-items-start row justify-content-between">
                     <div className="col-md-6 col-12 mg-t-20">
                       <div className="card-scrol pd-md-x-10">
                         <form>
@@ -346,21 +347,26 @@ const AppDownloadCampaign = ({
                               </div>
                             )}
                             {values.assetType === "video" && (
-                              <div className="form-group">
-                                <div className="custom-file">
-                                  <label htmlFor className="mb-1">
-                                    Youtube URL
-                                  </label>
-                                  <input
-                                    type="text"
-                                    id="videoAsset"
-                                    className="form-control"
-                                    value={values.attachment}
-                                    placeholder="https://www.youtube.com/watch?v=ysz5S6PUM-U"
-                                    onChange={handleChange("videoUrl")}
-                                  />
+                              <>
+                                <div className="form-group">
+                                  <div className="custom-file">
+                                    <label className="mb-1">Youtube URL</label>
+                                    <input
+                                      type="text"
+                                      id="videoAsset"
+                                      className="form-control"
+                                      defaultValue={values.attachment}
+                                      placeholder="https://www.youtube.com/watch?v=ysz5S6PUM-U"
+                                      onChange={handleChange("rawVideoUrl")}
+                                    />
+                                  </div>
                                 </div>
-                              </div>
+                                {videoError && (
+                                  <p className="mt-2 tx-danger tx-italic">
+                                    Enter a valid youtube url
+                                  </p>
+                                )}
+                              </>
                             )}
                           </div>
                         </form>
@@ -373,7 +379,8 @@ const AppDownloadCampaign = ({
                               variant="contained"
                               disabled={
                                 uploadPercentage !== 100 &&
-                                values.attachment === null
+                                (values.attachment === null ||
+                                  values.attachment === "")
                                   ? true
                                   : false
                               }
@@ -390,7 +397,7 @@ const AppDownloadCampaign = ({
                         </div>
                       </div>
                     </div>
-                    <div className="col-md-5 col-12 mg-t-20">
+                    <div className="position-sticky t-0 col-md-5 col-12 mg-t-20">
                       <div className="card shadow-sm rounded bd-0">
                         <div className="card-body">
                           {values.assetType === "image" ? (
