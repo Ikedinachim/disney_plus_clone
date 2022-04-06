@@ -109,22 +109,12 @@ const ViewCampaign = () => {
     }
   }, [dispatch, error]);
 
-  // console.log(
-  //   createShowAds &&
-  //     createShowAds.androidStoreUrl &&
-  //     (createShowAds.androidStoreUrl.indexOf("http://") === 0 ||
-  //       createShowAds.androidStoreUrl.indexOf("https://") === 0)
-  //     ? "http://" +
-  //         (createShowAds.androidStoreUrl &&
-  //           createShowAds.androidStoreUrl.trim())
-  //     : createShowAds.androidStoreUrl && createShowAds.androidStoreUrl.trim()
-  // );
-
-  // console.log(
-  //   createShowAds.androidStoreUrl &&
-  //     (createShowAds.androidStoreUrl.indexOf("http://") === 0 ||
-  //       createShowAds.androidStoreUrl.indexOf("https://") === 0)
-  // );
+  console.log(
+    createShowAds &&
+      createShowAds.androidStoreUrl &&
+      (createShowAds.androidStoreUrl.indexOf("http://") === 0 ||
+        createShowAds.androidStoreUrl.indexOf("https://") === 0)
+  );
 
   return (
     <Fragment>
@@ -230,10 +220,10 @@ const ViewCampaign = () => {
                               createShowAds.url &&
                               (createShowAds.url.indexOf("http://") === 0 ||
                                 createShowAds.url.indexOf("https://") === 0)
-                                ? "http://" +
+                                ? createShowAds.url && createShowAds.url.trim()
+                                : "http://" +
                                   (createShowAds.url &&
                                     createShowAds.url.trim())
-                                : createShowAds.url && createShowAds.url.trim()
                             }`}
                             onClick={() => handleClickType("url")}
                           >
@@ -258,11 +248,11 @@ const ViewCampaign = () => {
                                 createShowAds.androidStoreUrl.indexOf(
                                   "https://"
                                 ) === 0)
-                                ? "http://" +
+                                ? createShowAds.androidStoreUrl &&
+                                  createShowAds.androidStoreUrl.trim()
+                                : "http://" +
                                   (createShowAds.androidStoreUrl &&
                                     createShowAds.androidStoreUrl.trim())
-                                : createShowAds.androidStoreUrl &&
-                                  createShowAds.androidStoreUrl.trim()
                             }`}
                             onClick={() => handleClickType("androidStoreUrl")}
                           >
@@ -287,11 +277,11 @@ const ViewCampaign = () => {
                                 createShowAds.iosStoreUrl.indexOf(
                                   "https://"
                                 ) === 0)
-                                ? "http://" +
+                                ? createShowAds.iosStoreUrl &&
+                                  createShowAds.iosStoreUrl.trim()
+                                : "http://" +
                                   (createShowAds.iosStoreUrl &&
                                     createShowAds.iosStoreUrl.trim())
-                                : createShowAds.iosStoreUrl &&
-                                  createShowAds.iosStoreUrl.trim()
                             }`}
                             onClick={() => handleClickType("iosStoreUrl")}
                           >
