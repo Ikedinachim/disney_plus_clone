@@ -233,7 +233,7 @@ const ViewCampaign = () => {
                                 ? "http://" +
                                   (createShowAds.url &&
                                     createShowAds.url.trim())
-                                : createShowAds.url.trim()
+                                : createShowAds.url && createShowAds.url.trim()
                             }`}
                             onClick={() => handleClickType("url")}
                           >
@@ -261,7 +261,8 @@ const ViewCampaign = () => {
                                 ? "http://" +
                                   (createShowAds.androidStoreUrl &&
                                     createShowAds.androidStoreUrl.trim())
-                                : createShowAds.androidStoreUrl.trim()
+                                : createShowAds.androidStoreUrl &&
+                                  createShowAds.androidStoreUrl.trim()
                             }`}
                             onClick={() => handleClickType("androidStoreUrl")}
                           >
@@ -289,7 +290,8 @@ const ViewCampaign = () => {
                                 ? "http://" +
                                   (createShowAds.iosStoreUrl &&
                                     createShowAds.iosStoreUrl.trim())
-                                : createShowAds.iosStoreUrl.trim()
+                                : createShowAds.iosStoreUrl &&
+                                  createShowAds.iosStoreUrl.trim()
                             }`}
                             onClick={() => handleClickType("iosStoreUrl")}
                           >
