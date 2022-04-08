@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import NaijaStates from "naija-state-local-government";
+// import NaijaStates from "naija-state-local-government";
 import { toast } from "react-toastify";
 import Select from "react-select";
 import NumberFormat from "react-number-format";
@@ -14,12 +14,15 @@ import {
   clearErrors,
 } from "../../../../actions/campaignActions";
 
+import NaijaStates from "../../../../_helpers/NaijaStates/NaijaStates.js";
+
 const TargetAudience = ({
   prevStep,
   nextStep,
   handleChange,
   handleStateChange,
   handleLgaChange,
+  handleAreaChange,
   numbers,
   personalUpload,
   filterOptions,
@@ -28,6 +31,8 @@ const TargetAudience = ({
   ageRangeFrom,
   ageRangeTo,
   arrayState,
+  rawLga,
+  rawArea,
 }) => {
   // const alert = useAlert();
   const dispatch = useDispatch();
@@ -35,9 +40,6 @@ const TargetAudience = ({
   const { filteredContactList, error, loading } = useSelector(
     (state) => state.filteredContactList || []
   );
-
-  const [selectedState, setSelectedState] = useState(null);
-  const [selectedLga, setSelectedLga] = useState(null);
 
   useEffect(() => {
     if (values.targetAudienceOption === "mysogidb") {
@@ -53,7 +55,7 @@ const TargetAudience = ({
   ];
 
   const options = NaijaStates.states().map((state) => {
-    return { value: state, label: state };
+    return { value: state.name, label: state.name };
   });
 
   const allLga =
@@ -62,16 +64,29 @@ const TargetAudience = ({
       .map((value) => NaijaStates.lgas(value.value))
       .map((lga) => lga.lgas);
 
+  const allArea =
+    rawLga &&
+    rawLga !== [] &&
+    rawLga
+      .map((value) => NaijaStates.areas(value.label))
+      .map((lga) => lga.areas);
+
   const mergedLga =
     allLga &&
     [].concat.apply([], allLga).map((lga) => {
-      return { value: lga, label: lga };
+      return { value: lga.name, label: lga.name };
+    });
+
+  const mergedArea =
+    allArea &&
+    [].concat.apply([], allArea).map((area) => {
+      return { value: area.name, label: area.name };
     });
 
   const selectGenders = [
     {
       label: "Select Gender",
-      value: "",
+      value: "B",
     },
     {
       label: "Male",
@@ -87,33 +102,57 @@ const TargetAudience = ({
     },
   ];
 
+  const revenueBand = [
+    {
+      id: 1,
+      name: "Choose Audience Monthly Spend",
+      value: "",
+    },
+    {
+      id: 2,
+      name: "Below 5K",
+      value: "BELOW 5K",
+    },
+    {
+      id: 3,
+      name: "BTW 5K and 10K",
+      value: "BTW 5K AND 10K",
+    },
+    {
+      id: 4,
+      name: "Above 10K",
+      value: "ABOVE 10K",
+    },
+  ];
+
   const Continue = (e) => {
     e.preventDefault();
+    // if (
+    //   values.channel !== "display_ads" &&
+    //   values.targetAudienceOption === "mysogidb" &&
+    //   filterOptions.ageRange === ""
+    // ) {
+    //   toast.error("Set a Valid Age Range");
+    // } else if (
+    //   values.channel !== "display_ads" &&
+    //   values.targetAudienceOption === "mysogidb" &&
+    //   filterOptions.gender === ""
+    // ) {
+    //   toast.error("Set Gender");
+    // } else if (
+    //   (values.targetAudienceOption === "mysogidb" ||
+    //     values.channel === "display_ads") &&
+    //   (filterOptions.state === "" || filterOptions.state === undefined)
+    // ) {
+    //   toast.error("Choose a State");
+    // } else if (
+    //   (values.targetAudienceOption === "mysogidb" ||
+    //     values.channel === "display_ads") &&
+    //   (filterOptions.lga === "" || filterOptions.lga === undefined)
+    // ) {
+    //   toast.error("Choose an LGA");
+    // } else
     if (
-      values.channel !== "display_ads" &&
-      values.targetAudienceOption === "mysogidb" &&
-      filterOptions.ageRange === ""
-    ) {
-      toast.error("Set a Valid Age Range");
-    } else if (
-      values.channel !== "display_ads" &&
-      values.targetAudienceOption === "mysogidb" &&
-      filterOptions.gender === ""
-    ) {
-      toast.error("Set Gender");
-    } else if (
-      (values.targetAudienceOption === "mysogidb" ||
-        values.channel === "display_ads") &&
-      (filterOptions.state === "" || filterOptions.state === undefined)
-    ) {
-      toast.error("Choose a State");
-    } else if (
-      (values.targetAudienceOption === "mysogidb" ||
-        values.channel === "display_ads") &&
-      (filterOptions.lga === "" || filterOptions.lga === undefined)
-    ) {
-      toast.error("Choose an LGA");
-    } else if (
       values.channel !== "display_ads" &&
       values.targetAudienceOption === "manual_import" &&
       personalUpload.length < 1
@@ -130,10 +169,11 @@ const TargetAudience = ({
       toast.error("Set a Budget");
     } else if (
       values.targetAudienceOption === "mysogidb" &&
-      values.channel !== "display_ads" &&
-      filterOptions.gender !== "" &&
-      (filterOptions.state !== "" || filterOptions.state !== undefined) &&
-      (filterOptions.lga !== "" || filterOptions.lga !== undefined)
+      values.channel !== "display_ads"
+      // &&
+      // filterOptions.gender !== "" &&
+      // (filterOptions.state !== "" || filterOptions.state !== undefined) &&
+      // (filterOptions.lga !== "" || filterOptions.lga !== undefined)
     ) {
       dispatch(getFilteredContactList(filterOptions));
       nextStep();
@@ -236,7 +276,7 @@ const TargetAudience = ({
                             <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                           </label>
                           <Select
-                            defaultValue={selectedState}
+                            defaultValue={arrayState}
                             onChange={handleStateChange}
                             options={options}
                             isMulti
@@ -251,7 +291,7 @@ const TargetAudience = ({
                             <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                           </label>
                           <Select
-                            defaultValue={selectedLga}
+                            defaultValue={rawLga}
                             onChange={handleLgaChange}
                             options={mergedLga}
                             isMulti
@@ -547,7 +587,7 @@ const TargetAudience = ({
                                 <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                               </label>
                               <Select
-                                defaultValue={selectedState}
+                                defaultValue={arrayState}
                                 onChange={handleStateChange}
                                 options={options}
                                 isMulti
@@ -562,9 +602,21 @@ const TargetAudience = ({
                                 <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                               </label>
                               <Select
-                                defaultValue={selectedLga}
+                                defaultValue={rawLga}
                                 onChange={handleLgaChange}
                                 options={mergedLga}
+                                isMulti
+                              />
+                            </div>
+                            <div className="form-group col-md-6">
+                              <label className="mb-1 tx-com d-flex align-items-center">
+                                Area
+                                <i className="tx-6 fa fa-star tx-primary mg-l-2" />
+                              </label>
+                              <Select
+                                defaultValue={rawArea}
+                                onChange={handleAreaChange}
+                                options={mergedArea}
                                 isMulti
                               />
                             </div>
@@ -572,11 +624,16 @@ const TargetAudience = ({
                               <label className="mb-1 tx-com">
                                 Monthly Spend
                               </label>
-                              <select id="band" className="form-control">
-                                <option value />
-                                <option value="m">0-1000</option>
-                                <option value="f">1001-5000</option>
-                                <option value="b">5001-10000</option>
+                              <select
+                                className="form-control"
+                                defaultValue={filterOptions.revenueBand}
+                                onChange={handleChange("revenueBand")}
+                              >
+                                {revenueBand.map((band, i) => (
+                                  <option value={band.value} key={i}>
+                                    {band.name}
+                                  </option>
+                                ))}
                               </select>
                             </div>
                             <div className="form-group col-md-6">

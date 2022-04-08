@@ -65,6 +65,7 @@ import {
   getDigitalCampaignsReducer,
   allUserInfluencerCampaignReducer,
   singleUserInfluencerReducer,
+  getRevenueBandReducer,
 } from "./reducers/campaignReducers";
 
 const appReducer = combineReducers({
@@ -114,6 +115,7 @@ const appReducer = combineReducers({
   bitlyCount: bitlyCountReducer,
   confirmRegistration: confirmRegistrationReducer,
   resendVerification: resendVerificationReducer,
+  revenueBand: getRevenueBandReducer,
 });
 
 const reducer = (state, action) => {
