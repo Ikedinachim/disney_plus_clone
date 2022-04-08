@@ -26,11 +26,12 @@ export default class SmsStepForm extends Component {
     ageRangeTo: undefined,
     ageRangeFrom: undefined,
     ageRange: "",
-    gender: "",
+    gender: "B",
     state: "abia",
     lga: "",
     deviceType: "",
     deviceBrand: "",
+    revenueBand: "",
     characterCount: 0,
     smsCount: 0,
 
@@ -40,7 +41,10 @@ export default class SmsStepForm extends Component {
     scheduleTo: "",
 
     arrayState: undefined,
+    rawLga: undefined,
+    rawArea: undefined,
     arrayLga: undefined,
+    arrayArea: undefined,
   };
 
   // go back to previous step
@@ -75,6 +79,12 @@ export default class SmsStepForm extends Component {
 
   handleLgaChange = (lga) => {
     this.setState({ arrayLga: lga.map((value) => value.value).join(",") });
+    this.setState({ rawLga: lga });
+  };
+
+  handleAreaChange = (area) => {
+    this.setState({ arrayArea: area.map((value) => value.value).join(",") });
+    this.setState({ rawArea: area });
   };
 
   // filterOptions = {
@@ -110,6 +120,7 @@ export default class SmsStepForm extends Component {
       // lga,
       deviceType,
       deviceBrand,
+      revenueBand,
 
       parsedCsvData,
       characterCount,
@@ -121,10 +132,13 @@ export default class SmsStepForm extends Component {
       scheduleTo,
 
       arrayState,
+      rawLga,
+      rawArea,
       arrayLga,
+      arrayArea,
     } = this.state;
 
-    // console.log(campaignMessage);
+    // console.log(rawLga);
     /////////////////////////////
 
     const getCsvRawData = (data) => {
@@ -162,8 +176,10 @@ export default class SmsStepForm extends Component {
       gender,
       state: arrayState && arrayState.map((value) => value.value).join(","),
       lga: arrayLga,
+      area: arrayArea,
       deviceType,
       deviceBrand,
+      revenueBand,
     };
 
     const filterParameters = [filterOptions];
@@ -189,7 +205,7 @@ export default class SmsStepForm extends Component {
       scheduleTo,
     };
 
-    // console.log(values);
+    // console.log(rawLga);
 
     switch (step) {
       case 1:
@@ -216,10 +232,14 @@ export default class SmsStepForm extends Component {
             getCsvRawData={getCsvRawData}
             handleStateChange={this.handleStateChange}
             handleLgaChange={this.handleLgaChange}
+            handleAreaChange={this.handleAreaChange}
             ageRangeFrom={ageRangeFrom}
             ageRangeTo={ageRangeTo}
             arrayState={arrayState}
             arrayLga={arrayLga}
+            rawLga={rawLga}
+            rawArea={rawArea}
+            arrayArea={arrayArea}
           />
         );
       case 3:
