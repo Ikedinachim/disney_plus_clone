@@ -67,6 +67,9 @@ import {
   singleUserInfluencerReducer,
 } from "./reducers/campaignReducers";
 
+import { AdminSenderIDReducer }
+  from "./components/admin/reducers/senderIdReducer";
+
 const appReducer = combineReducers({
   auth: authReducer,
   userDetails: userDetailsReducer,
@@ -114,6 +117,7 @@ const appReducer = combineReducers({
   bitlyCount: bitlyCountReducer,
   confirmRegistration: confirmRegistrationReducer,
   resendVerification: resendVerificationReducer,
+  AdminSenderId: AdminSenderIDReducer,
 });
 
 const reducer = (state, action) => {

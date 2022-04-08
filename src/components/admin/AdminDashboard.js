@@ -3,9 +3,13 @@ import React, {Fragment, useEffect} from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from 'react-toastify';
 import { clearErrors, getAdminSenderID } from '../../actions/senderIDActions';
+import { MDBDataTable } from "mdbreact";
+import MetaData from '../layout/MetaData';
 
 const AdminDashboard = () => {
-  const { loading, error, senderID } = useSelector((state) => state.senderID || []);
+  const { loading, error, adminSenderID } = useSelector(
+    (state) => state.AdminSenderId || []
+  );
 
   const dispatch = useDispatch();
 
@@ -39,30 +43,31 @@ const AdminDashboard = () => {
           field: "userId",
         },
         {
-          label: "TELCO STATUS",
+          label: "TELCO",
           field: "telcoStatus",
         },
         {
-          label: "AIRTEL STATUS",
+          label: "AIRTEL",
           field: "airtelStatus",
         },
         {
-          label: "MTN STATUS",
+          label: "MTN",
           field: "mtnStatus",
         },
         {
-          label: "GLO STATUS",
+          label: "GLO",
           field: "gloStatus",
         },
         {
-          label: "9mobile STATUS",
+          label: "9mobile",
           field: "nineMobileStatus",
         },
       ],
       rows: [],
     };
 
-    senderID.forEach((senderids) => {
+    console.log(adminSenderID);
+    adminSenderID && adminSenderID.forEach((senderids) => {
       data.rows.push({
         senderId: senderids.senderId,
 
@@ -113,6 +118,27 @@ const AdminDashboard = () => {
               : null}
           </span>
         ),
+        airtelStatus: (
+          <span
+            className={`badge d-flex-center ${
+              senderids.airtelStatus === null ||
+              senderids.airtelStatus === "pending"
+                ? "badge-pink"
+                : ""
+            } ${senderids.airtelStatus === "approved" ? "badge-active" : ""} ${
+              senderids.airtelStatus === "declined" ? "badge-primary" : ""
+            }`}
+          >
+            {senderids.airtelStatus === "pending" ||
+            senderids.airtelStatus === null
+              ? "Pending"
+              : null || senderids.airtelStatus === "declined"
+              ? "Declined"
+              : null || senderids.airtelStatus === "approved"
+              ? "Approved"
+              : null}
+          </span>
+        ),
 
         mtnStatus: (
           <span
@@ -153,14 +179,53 @@ const AdminDashboard = () => {
               : null}
           </span>
         ),
+        nineMobileStatus: (
+          <span
+            className={`badge d-flex-center ${
+              senderids.nineMobileStatus === null ||
+              senderids.nineMobileStatus === "pending"
+                ? "badge-pink"
+                : ""
+            } ${
+              senderids.nineMobileStatus === "approved" ? "badge-active" : ""
+            } ${
+              senderids.nineMobileStatus === "declined" ? "badge-primary" : ""
+            }`}
+          >
+            {senderids.nineMobileStatus === "pending" ||
+            senderids.nineMobileStatus === null
+              ? "Pending"
+              : null || senderids.nineMobileStatus === "declined"
+              ? "Declined"
+              : null || senderids.nineMobileStatus === "approved"
+              ? "Approved"
+              : null}
+          </span>
+        ),
       });
     });
 
     return data;
   }
-  return (<div>
-    things that should be here
-  </div>)
+  return (
+    <Fragment>
+      <MetaData title={"All Sender IDs"} />
+      <div className="card card rounded bd-0 shadow-sm">
+        <div className="card-header bd-b-0 pd-b-0 pd-t-40 pd-md-x-30"></div>
+        <div className="card-body pd-md-x-30 pd-t- mg-t-20 mg-md-t-0">
+          <MDBDataTable
+            responsive
+            data={setSenderID()}
+            className="px-3 scroll"
+            bordered
+            striped
+            hover
+            checkboxFirstColumn
+          />
+        </div>
+      </div>
+    </Fragment>
+  );
 };
 
 export default AdminDashboard;
