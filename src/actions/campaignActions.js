@@ -74,6 +74,9 @@ import {
   GET_DIGITAL_CAMPAIGNS_REQUEST,
   GET_DIGITAL_CAMPAIGNS_SUCCESS,
   GET_DIGITAL_CAMPAIGNS_FAIL,
+  GET_REVENUE_BAND_REQUEST,
+  GET_REVENUE_BAND_SUCCESS,
+  GET_REVENUE_BAND_FAIL,
 } from "../constants/campaignConstants";
 
 const baseURL = process.env.REACT_APP_MYSOGI_BASE_URL;
@@ -323,7 +326,6 @@ export const displaySingleCampaign = (id) => async (dispatch) => {
       `/api/campaign/single-generic-campaign/${id}`,
       config
     );
-    // console.log({ data });
 
     if (data.status === "success") {
       dispatch({
@@ -571,6 +573,40 @@ export const getFilteredContactList =
       });
     }
   };
+
+// Get Revenue Band
+export const getRevenueBands = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_REVENUE_BAND_REQUEST });
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get("/api/revenue-band", config);
+
+    if (data.status === "success") {
+      dispatch({
+        type: GET_REVENUE_BAND_SUCCESS,
+        payload: data.data,
+      });
+    } else {
+      dispatch({
+        type: GET_REVENUE_BAND_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: GET_REVENUE_BAND_FAIL,
+      payload: error.message,
+    });
+  }
+};
 
 // Get All Influencers
 export const getAllInfluencers = () => async (dispatch) => {
