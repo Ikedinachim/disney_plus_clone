@@ -56,18 +56,22 @@ export default class FlierVideoStepForm extends Component {
     ageRangeTo: undefined,
     ageRangeFrom: undefined,
     ageRange: "",
-    gender: "",
+    gender: "B",
     state: "abia",
     lga: "",
     deviceType: "",
     deviceBrand: "",
+    revenueBand: "",
 
     selectedFileName: "Upload Asset *png, *jpg, *gif",
 
     parsedCsvData: [],
 
     arrayState: undefined,
+    rawLga: undefined,
+    rawArea: undefined,
     arrayLga: undefined,
+    arrayArea: undefined,
   };
 
   // go back to previous step
@@ -174,6 +178,12 @@ export default class FlierVideoStepForm extends Component {
 
   handleLgaChange = (lga) => {
     this.setState({ arrayLga: lga.map((value) => value.value).join(",") });
+    this.setState({ rawLga: lga });
+  };
+
+  handleAreaChange = (area) => {
+    this.setState({ arrayArea: area.map((value) => value.value).join(",") });
+    this.setState({ rawArea: area });
   };
 
   render() {
@@ -210,6 +220,7 @@ export default class FlierVideoStepForm extends Component {
       lga,
       deviceType,
       deviceBrand,
+      revenueBand,
       // csvFile,
       csvArray,
       parsedCsvData,
@@ -226,7 +237,10 @@ export default class FlierVideoStepForm extends Component {
       scheduleTo,
 
       arrayState,
+      rawLga,
+      rawArea,
       arrayLga,
+      arrayArea,
     } = this.state;
 
     /////////////////////////////
@@ -299,8 +313,10 @@ export default class FlierVideoStepForm extends Component {
       gender,
       state: arrayState && arrayState.map((value) => value.value).join(","),
       lga: arrayLga,
+      area: arrayArea,
       deviceType,
       deviceBrand,
+      revenueBand,
     };
 
     const filterParameters = [filterOptions];
@@ -370,8 +386,12 @@ export default class FlierVideoStepForm extends Component {
             ageRangeTo={ageRangeTo}
             handleStateChange={this.handleStateChange}
             handleLgaChange={this.handleLgaChange}
+            handleAreaChange={this.handleAreaChange}
             arrayState={arrayState}
             arrayLga={arrayLga}
+            rawLga={rawLga}
+            rawArea={rawArea}
+            arrayArea={arrayArea}
           />
         );
       case 3:

@@ -73,6 +73,9 @@ import {
   GET_SMS_SINGLE_CAMPAIGN_REQUEST,
   GET_SMS_SINGLE_CAMPAIGN_SUCCESS,
   GET_SMS_SINGLE_CAMPAIGN_FAIL,
+  GET_REVENUE_BAND_REQUEST,
+  GET_REVENUE_BAND_SUCCESS,
+  GET_REVENUE_BAND_FAIL,
 
   ////////////// GENERIC CONSTANTS ///////////////
   CLEAR_ERRORS,
@@ -347,7 +350,6 @@ const initialState = {
   error: null,
 };
 
-
 export const AllCampaignReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_CAMPAIGN_REQUEST:
@@ -515,6 +517,7 @@ export const getSingleFlierCampaignReducer = (
       return state;
   }
 };
+
 ///////////////////////////////////////////////////////////
 export const getFilteredContactListReducer = (
   state = { filteredContactList: [] },
@@ -543,6 +546,36 @@ export const getFilteredContactListReducer = (
       return {
         ...state,
         fcError: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const getRevenueBandReducer = (state = { revenueBand: [] }, action) => {
+  switch (action.type) {
+    case GET_REVENUE_BAND_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case GET_REVENUE_BAND_SUCCESS:
+      return {
+        loading: false,
+        revenueBand: action.payload,
+      };
+
+    case GET_REVENUE_BAND_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
       };
 
     default:
