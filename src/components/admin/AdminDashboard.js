@@ -66,7 +66,6 @@ const AdminDashboard = () => {
       rows: [],
     };
 
-    console.log(adminSenderID);
     adminSenderID && adminSenderID.forEach((senderids) => {
       data.rows.push({
         senderId: senderids.senderId,

@@ -15,7 +15,9 @@ export const AdminSenderIDReducer = (state = { adminSenderID: [] }, action) => {
     case GET_ADMIN_SENDERID_SUCCESS:
       return {
         loading: false,
-        adminSenderID: action.payload,
+        adminSenderID: action.payload.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        ),
       };
 
     case GET_ADMIN_SENDERID_FAIL:

@@ -109,7 +109,6 @@ export const getAdminSenderID = () => async (dispatch) => {
     const { data } = await axios.get("/api/sender-ids", config);
 
     if (data.status === "success") {
-      console.log(data);
       dispatch({
         type: GET_ADMIN_SENDERID_SUCCESS,
         payload: data.data,

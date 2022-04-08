@@ -96,7 +96,7 @@ const Sidebar = () => {
           </li>
           <li className="nav-item active">
             <NavLink
-              to="/influencer/settings"
+              to="/admin/#"
               end
               className={({ isActive }) =>
                 isActive ? "nav-link active" : "nav-link"
