@@ -7,6 +7,12 @@ import {
   GET_DEFAULT_SENDERID_REQUEST,
   GET_DEFAULT_SENDERID_SUCCESS,
   GET_DEFAULT_SENDERID_FAIL,
+  GET_ADMIN_SENDERID_REQUEST,
+  GET_ADMIN_SENDERID_SUCCESS,
+  GET_ADMIN_SENDERID_FAIL,
+  UPDATE_ADMIN_SENDERID_REQUEST,
+  UPDATE_ADMIN_SENDERID_SUCCESS,
+  UPDATE_ADMIN_SENDERID_FAIL,
   CREATE_SENDERID_REQUEST,
   CREATE_SENDERID_SUCCESS,
   CREATE_SENDERID_FAIL,
@@ -82,6 +88,40 @@ export const getSenderID = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_SENDERID_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+//Get Admin Sender ID
+export const getAdminSenderID = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_ADMIN_SENDERID_REQUEST });
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get("/api/sender-ids", config);
+
+    if (data.status === "success") {
+      dispatch({
+        type: GET_ADMIN_SENDERID_SUCCESS,
+        payload: data.data.senderIds,
+      });
+    } else {
+      dispatch({
+        type: GET_ADMIN_SENDERID_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: GET_ADMIN_SENDERID_FAIL,
       payload: error.message,
     });
   }

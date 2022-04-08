@@ -59,6 +59,10 @@ import SmsAnalytics from "./components/app/analytics/SmsAnalytics";
 import RegistrationConfirmation from "./components/user/RegistrationConfirmation";
 import ResendVerification from "./components/user/ResendVerification";
 
+//Admin
+import AdminDashboardLayout from "./components/admin/AdminDashboardLayout";
+import AdminDashboard from "./components/admin/AdminDashboard";
+
 AOS.init();
 
 function App() {
@@ -78,7 +82,10 @@ function App() {
         <Route
           path="/app"
           element={
-            isAuthenticated && user && user.user.role === "user" ? (
+            isAuthenticated &&
+            user &&
+            user.user.role === "user" &&
+            user.user.isAdmin === false ? (
               <DashboardLayout />
             ) : (
               <Login />
@@ -88,7 +95,10 @@ function App() {
           <Route
             index
             element={
-              isAuthenticated && user && user.user.role === "user" ? (
+              isAuthenticated &&
+              user &&
+              user.user.role === "user" &&
+              user.user.isAdmin === false ? (
                 <Dashboard />
               ) : (
                 <Login />
@@ -98,7 +108,10 @@ function App() {
           <Route
             path="sender-id"
             element={
-              isAuthenticated && user && user.user.role === "user" ? (
+              isAuthenticated &&
+              user &&
+              user.user.role === "user" &&
+              user.user.isAdmin === false ? (
                 <SenderID />
               ) : (
                 <Login />
@@ -108,7 +121,10 @@ function App() {
           <Route
             path="request-sender-id"
             element={
-              isAuthenticated && user && user.user.role === "user" ? (
+              isAuthenticated &&
+              user &&
+              user.user.role === "user" &&
+              user.user.isAdmin === false ? (
                 <RequestSenderID />
               ) : (
                 <Login />
@@ -118,7 +134,10 @@ function App() {
           <Route
             path="billing"
             element={
-              isAuthenticated && user && user.user.role === "user" ? (
+              isAuthenticated &&
+              user &&
+              user.user.role === "user" &&
+              user.user.isAdmin === false ? (
                 <BillingOverview />
               ) : (
                 <Login />
@@ -128,7 +147,10 @@ function App() {
           <Route
             path="transactions"
             element={
-              isAuthenticated && user && user.user.role === "user" ? (
+              isAuthenticated &&
+              user &&
+              user.user.role === "user" &&
+              user.user.isAdmin === false ? (
                 <Transactions />
               ) : (
                 <Login />
@@ -138,7 +160,10 @@ function App() {
           <Route
             path="billing/fund-wallet"
             element={
-              isAuthenticated && user && user.user.role === "user" ? (
+              isAuthenticated &&
+              user &&
+              user.user.role === "user" &&
+              user.user.isAdmin === false ? (
                 <FundWallet />
               ) : (
                 <Login />
@@ -149,7 +174,7 @@ function App() {
           {/* <Route
             path="billing/payment"
             element={
-              isAuthenticated && user && user.user.role === "user" ? (
+              isAuthenticated && user && user.user.role === "user" && user.user.isAdmin === false ? (
                 <MakePayment />
               ) : (
                 <Login />
@@ -160,7 +185,10 @@ function App() {
           <Route
             path="campaigns"
             element={
-              isAuthenticated && user && user.user.role === "user" ? (
+              isAuthenticated &&
+              user &&
+              user.user.role === "user" &&
+              user.user.isAdmin === false ? (
                 <ViewCampaignTabs />
               ) : (
                 <Login />
@@ -170,7 +198,10 @@ function App() {
           <Route
             path="campaign/create"
             element={
-              isAuthenticated && user && user.user.role === "user" ? (
+              isAuthenticated &&
+              user &&
+              user.user.role === "user" &&
+              user.user.isAdmin === false ? (
                 <CreateCampaign />
               ) : (
                 <Login />
@@ -180,7 +211,10 @@ function App() {
           <Route
             path="campaign/sms"
             element={
-              isAuthenticated && user && user.user.role === "user" ? (
+              isAuthenticated &&
+              user &&
+              user.user.role === "user" &&
+              user.user.isAdmin === false ? (
                 <SmsStepForm />
               ) : (
                 <Login />
@@ -190,7 +224,10 @@ function App() {
           <Route
             path="campaign/flier-video"
             element={
-              isAuthenticated && user && user.user.role === "user" ? (
+              isAuthenticated &&
+              user &&
+              user.user.role === "user" &&
+              user.user.isAdmin === false ? (
                 <FlierVideoStepForm />
               ) : (
                 <Login />
@@ -200,7 +237,10 @@ function App() {
           <Route
             path="campaign/app-download"
             element={
-              isAuthenticated && user && user.user.role === "user" ? (
+              isAuthenticated &&
+              user &&
+              user.user.role === "user" &&
+              user.user.isAdmin === false ? (
                 <AppDownloadStepForm />
               ) : (
                 <Login />
@@ -210,7 +250,10 @@ function App() {
           <Route
             path="campaign/single-app-download/:id"
             element={
-              isAuthenticated && user && user.user.role === "user" ? (
+              isAuthenticated &&
+              user &&
+              user.user.role === "user" &&
+              user.user.isAdmin === false ? (
                 <AppDownloadDetails />
               ) : (
                 <Login />
@@ -220,7 +263,10 @@ function App() {
           <Route
             path="campaign/single-flier-video/:id"
             element={
-              isAuthenticated && user && user.user.role === "user" ? (
+              isAuthenticated &&
+              user &&
+              user.user.role === "user" &&
+              user.user.isAdmin === false ? (
                 <FlierVideosDetails />
               ) : (
                 <Login />
@@ -230,7 +276,10 @@ function App() {
           <Route
             path="campaign/single-sms/:id"
             element={
-              isAuthenticated && user && user.user.role === "user" ? (
+              isAuthenticated &&
+              user &&
+              user.user.role === "user" &&
+              user.user.isAdmin === false ? (
                 <SmsDetails />
               ) : (
                 <Login />
@@ -240,7 +289,10 @@ function App() {
           <Route
             path="campaign/single-influencer/:id"
             element={
-              isAuthenticated && user && user.user.role === "user" ? (
+              isAuthenticated &&
+              user &&
+              user.user.role === "user" &&
+              user.user.isAdmin === false ? (
                 <InfluencerDetails />
               ) : (
                 <Login />
@@ -250,7 +302,10 @@ function App() {
           <Route
             path="campaign/influencer"
             element={
-              isAuthenticated && user && user.user.role === "user" ? (
+              isAuthenticated &&
+              user &&
+              user.user.role === "user" &&
+              user.user.isAdmin === false ? (
                 <InfluencerStepForm />
               ) : (
                 <Login />
@@ -261,7 +316,10 @@ function App() {
           <Route
             path="analytics/graph/:propellerId"
             element={
-              isAuthenticated && user && user.user.role === "user" ? (
+              isAuthenticated &&
+              user &&
+              user.user.role === "user" &&
+              user.user.isAdmin === false ? (
                 <DigitalAnalytics />
               ) : (
                 <Login />
@@ -271,7 +329,10 @@ function App() {
           <Route
             path="analytics/smartsms/:id"
             element={
-              isAuthenticated && user && user.user.role === "user" ? (
+              isAuthenticated &&
+              user &&
+              user.user.role === "user" &&
+              user.user.isAdmin === false ? (
                 <SmartSmsAnalytics />
               ) : (
                 <Login />
@@ -281,7 +342,10 @@ function App() {
           <Route
             path="analytics/sms/:id"
             element={
-              isAuthenticated && user && user.user.role === "user" ? (
+              isAuthenticated &&
+              user &&
+              user.user.role === "user" &&
+              user.user.isAdmin === false ? (
                 <SmsAnalytics />
               ) : (
                 <Login />
@@ -292,7 +356,10 @@ function App() {
           <Route
             path="analytics"
             element={
-              isAuthenticated && user && user.user.role === "user" ? (
+              isAuthenticated &&
+              user &&
+              user.user.role === "user" &&
+              user.user.isAdmin === false ? (
                 <ViewAnalytics />
               ) : (
                 <Login />
@@ -303,7 +370,10 @@ function App() {
           <Route
             path="setting"
             element={
-              isAuthenticated && user && user.user.role === "user" ? (
+              isAuthenticated &&
+              user &&
+              user.user.role === "user" &&
+              user.user.isAdmin === false ? (
                 <Settings />
               ) : (
                 <Login />
@@ -313,7 +383,10 @@ function App() {
           <Route
             path="setting/change-password"
             element={
-              isAuthenticated && user && user.user.role === "user" ? (
+              isAuthenticated &&
+              user &&
+              user.user.role === "user" &&
+              user.user.isAdmin === false ? (
                 <ChangePassword />
               ) : (
                 <Login />
@@ -368,6 +441,35 @@ function App() {
         />
       </Routes>
 
+      <Routes>
+        <Route
+          path="/admin"
+          element={
+            isAuthenticated &&
+            user &&
+            user.user.role === "user" &&
+            user.user.isAdmin === true ? (
+              <AdminDashboardLayout />
+            ) : (
+              <Login />
+            )
+          }
+        >
+        <Route
+          index
+          element={
+            isAuthenticated &&
+            user &&
+            user.user.role === "user" &&
+            user.user.isAdmin === true ? (
+              <AdminDashboard/>
+            ) : (
+              <Login />
+            )
+          }
+          />
+          </Route>
+      </Routes>
       <Routes>
         <Route
           path="/influencer"
