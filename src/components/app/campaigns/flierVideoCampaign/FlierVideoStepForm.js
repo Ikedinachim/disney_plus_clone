@@ -19,7 +19,7 @@ export default class FlierVideoStepForm extends Component {
     campaignMessage: "",
     targetAge: "21",
     location: ["Lagos"],
-    interest: "business",
+    // interest: "business",
     phoneNumber: "",
     whatsAppNumber: "",
     numbers: "",
