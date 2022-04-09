@@ -256,7 +256,7 @@ const PreviewCampaign = ({
                               {filterOptions.lga}
                             </span>
                           </div>
-                          <div className="form-group">
+                          {/* <div className="form-group">
                             <label
                               htmlFor
                               className="tx-14 tx-gray mb-0 tx-medium d-block"
@@ -267,7 +267,7 @@ const PreviewCampaign = ({
                               {" "}
                               Surfing Net
                             </span>
-                          </div>
+                          </div> */}
                         </div>
                       </>
                     )}

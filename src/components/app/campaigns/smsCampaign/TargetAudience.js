@@ -297,7 +297,7 @@ const TargetAudience = ({
     <Fragment>
       <MetaData title={"Target Audience"} />
       <div className="content-body">
-        <div className="container-fluid">
+        <div className="container pd-x-0">
           <div className="card card-body rounded bd-0 shadow-sm pd-lg-x-50 pd-lg-y-30">
             <div className="d-flex justify-content-between">
               <p className="tx-18 mb-0">100%</p>
@@ -478,7 +478,7 @@ const TargetAudience = ({
                               className="mb-1 tx-com d-flex align-items-center"
                             >
                               Age Group
-                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
+                              {/* <i className="tx-6 fa fa-star tx-primary mg-l-2" /> */}
                             </label>
                             <div className="form-row">
                               <div className="form-group col-md-6 mg-b-0">
@@ -510,7 +510,7 @@ const TargetAudience = ({
                                     type="number"
                                     id="age-to"
                                     min="18"
-                                    max="50"
+                                    max="100"
                                     placeholder="50"
                                     className="form-control"
                                     aria-describedby="basic-addon1"
@@ -524,7 +524,7 @@ const TargetAudience = ({
                           <div className="form-group col-md-6">
                             <label className="mb-1 tx-com d-flex align-items-center">
                               Gender
-                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
+                              {/* <i className="tx-6 fa fa-star tx-primary mg-l-2" /> */}
                             </label>
                             <select
                               className="form-control"
@@ -541,7 +541,7 @@ const TargetAudience = ({
                           <div className="form-group col-md-6">
                             <label className="mb-1 tx-com d-flex align-items-center">
                               State
-                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
+                              {/* <i className="tx-6 fa fa-star tx-primary mg-l-2" /> */}
                             </label>
                             <Select
                               defaultValue={arrayState}
@@ -553,7 +553,7 @@ const TargetAudience = ({
                           <div className="form-group col-md-6">
                             <label className="mb-1 tx-com d-flex align-items-center">
                               LGA
-                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
+                              {/* <i className="tx-6 fa fa-star tx-primary mg-l-2" /> */}
                             </label>
                             <Select
                               defaultValue={rawLga}
@@ -565,7 +565,7 @@ const TargetAudience = ({
                           <div className="form-group col-md-6">
                             <label className="mb-1 tx-com d-flex align-items-center">
                               Area
-                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
+                              {/* <i className="tx-6 fa fa-star tx-primary mg-l-2" /> */}
                             </label>
                             <Select
                               defaultValue={rawArea}
@@ -588,7 +588,7 @@ const TargetAudience = ({
                               ))}
                             </select>
                           </div>
-                          <div className="form-group col-md-6">
+                          {/* <div className="form-group col-md-6">
                             <label className="mb-1 tx-com">Device Type</label>
                             <select className="custom-select">
                               <option selected>
@@ -597,7 +597,7 @@ const TargetAudience = ({
                               <option value={1}>Android</option>
                               <option value={2}>IOS</option>
                             </select>
-                          </div>
+                          </div> */}
                           {/* <div className="form-group col-md-6">
                             <label className="mb-1 tx-com">Device Brand</label>
                             <select className="custom-select">

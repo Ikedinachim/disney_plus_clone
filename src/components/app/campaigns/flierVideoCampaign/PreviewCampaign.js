@@ -145,7 +145,7 @@ const PreviewCampaign = ({
                 </div>
               </div>
               <div className="pd-md-y-20">
-                <div className="row justify-content-between">
+                <div className="align-items-start row justify-content-between">
                   <div className="col-md-7 col-12 mg-t-20">
                     <div className="card rounded bd-0 shadow-sm">
                       <div className="card-body pd-lg-x-50">
@@ -338,10 +338,10 @@ const PreviewCampaign = ({
                                     </label>
                                     <span className="badge badge-pink tx-14 mg-5">
                                       {" "}
-                                      0-1000
+                                      {filterOptions.revenueBand}
                                     </span>
                                   </div>
-                                  <div className="col-md-6 form-group">
+                                  {/* <div className="col-md-6 form-group">
                                     <label className="tx-14 tx-gray mb-0 tx-medium d-block">
                                       Interest
                                     </label>
@@ -349,7 +349,7 @@ const PreviewCampaign = ({
                                       {" "}
                                       Surfing Net
                                     </span>
-                                  </div>
+                                  </div> */}
                                 </div>
                               </div>
                               <hr />
@@ -783,7 +783,7 @@ const PreviewCampaign = ({
                       </div>
                     </div>
                   </div>
-                  <div className="col-md-5 col-12 mg-t-20">
+                  <div className="position-sticky t-0 col-md-5 col-12 mg-t-20">
                     <div className="card shadow-sm rounded bd-0">
                       <div className="card-body">
                         <p className="tx-20 tx-bold tx-com">Preview</p>
