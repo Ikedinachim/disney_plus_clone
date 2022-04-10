@@ -119,7 +119,7 @@ const appReducer = combineReducers({
   confirmRegistration: confirmRegistrationReducer,
   resendVerification: resendVerificationReducer,
   AdminSenderId: AdminSenderIDReducer,
-  UpdateSenderId: UpdateAdminSenderIDReducer
+  UpdateSenderId: UpdateAdminSenderIDReducer,
   revenueBand: getRevenueBandReducer,
 });
 
