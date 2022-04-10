@@ -17,7 +17,6 @@ export default class AppDownloadStepForm extends Component {
     androidStoreUrl: "",
     numbers: "",
     callToAction: "",
-    // attachment: "",
     attachmentPreview: "",
     uploadedImage: "",
     campaignType: "app_download",
@@ -26,7 +25,7 @@ export default class AppDownloadStepForm extends Component {
     imageUrl: null,
     imageAlt: "",
     uploadPercentage: 0,
-    videoUrl: "",
+    rawVideoUrl: "",
     price: 0,
     csvFile: "",
     limit: undefined,
@@ -44,18 +43,21 @@ export default class AppDownloadStepForm extends Component {
     ageRangeTo: undefined,
     ageRangeFrom: undefined,
     ageRange: "",
-    gender: "",
+    gender: "B",
     state: "abia",
     lga: "",
     deviceType: "",
     deviceBrand: "",
+    revenueBand: "",
 
     selectedFileName: "Upload Asset *png, *jpg, *gif",
-
     parsedCsvData: [],
 
     arrayState: undefined,
     arrayLga: undefined,
+    rawLga: undefined,
+    rawArea: undefined,
+    arrayArea: undefined,
   };
 
   // go back to previous step
@@ -73,12 +75,10 @@ export default class AppDownloadStepForm extends Component {
   // Handle fields change
   handleChange = (input) => (e) => {
     this.setState({ [input]: e.target.value });
-
     if (input === "campaignMessage") {
       this.setState({ characterCount: e.target.value.length });
       this.setState({ smsCount: Math.ceil(e.target.value.length / 160) });
-    }
-    if (input === "callToAction") {
+    } else if (input === "callToAction") {
       this.setState({ callToActionCount: e.target.value.length });
     }
   };
@@ -163,6 +163,12 @@ export default class AppDownloadStepForm extends Component {
 
   handleLgaChange = (lga) => {
     this.setState({ arrayLga: lga.map((value) => value.value).join(",") });
+    this.setState({ rawLga: lga });
+  };
+
+  handleAreaChange = (area) => {
+    this.setState({ arrayArea: area.map((value) => value.value).join(",") });
+    this.setState({ rawArea: area });
   };
 
   render() {
@@ -178,7 +184,9 @@ export default class AppDownloadStepForm extends Component {
       timeRangeTo,
       // attachment,
       imageUrl,
-      videoUrl,
+      // videoUrl,
+      rawVideoUrl,
+      // videoError,
       assetType,
       attachmentPreview,
       iosStoreUrl,
@@ -199,6 +207,8 @@ export default class AppDownloadStepForm extends Component {
       lga,
       deviceType,
       deviceBrand,
+      revenueBand,
+
       parsedCsvData,
       selectedFileName,
       uploadPercentage,
@@ -211,7 +221,10 @@ export default class AppDownloadStepForm extends Component {
       scheduleTo,
 
       arrayState,
+      rawLga,
+      rawArea,
       arrayLga,
+      arrayArea,
     } = this.state;
 
     // console.log(imageUrl);
@@ -236,6 +249,23 @@ export default class AppDownloadStepForm extends Component {
       }
     };
 
+    const setYoutubeUrl = (url) => {
+      let regExp =
+        /^https?\:\/\/(?:www\.youtube(?:\-nocookie)?\.com\/|m\.youtube\.com\/|youtube\.com\/)?(?:ytscreeningroom\?vi?=|youtu\.be\/|vi?\/|user\/.+\/u\/\w{1,2}\/|embed\/|watch\?(?:.*\&)?vi?=|\&vi?=|\?(?:.*\&)?vi?=)([^#\&\?\n\/<>"']*)/i;
+      let match = url && url.match(regExp);
+      const watchUrl = `https://www.youtube.com/watch?v=${match && match[1]}`;
+      // return match && match[1].length === 11 ? match[1] : false;
+
+      const result = match
+        ? { videoUrl: watchUrl, videoError: false }
+        : { videoUrl: "", videoError: true };
+
+      let videoUrl = result.videoUrl;
+      let videoError = result.videoError;
+
+      return { videoUrl, videoError };
+    };
+
     const setAudience = () => {
       if (channel === "display_ads") {
         return (targetAudience = budget / 5);
@@ -245,6 +275,8 @@ export default class AppDownloadStepForm extends Component {
     };
 
     let attachment = "";
+
+    const { videoUrl, videoError } = setYoutubeUrl(rawVideoUrl);
 
     const setAssets = () => {
       if (assetType === "image") {
@@ -270,8 +302,10 @@ export default class AppDownloadStepForm extends Component {
       gender,
       state: arrayState && arrayState.map((value) => value.value).join(","),
       lga: arrayLga,
+      area: arrayArea,
       deviceType,
       deviceBrand,
+      revenueBand,
     };
 
     const filterParameters = [filterOptions];
@@ -316,6 +350,7 @@ export default class AppDownloadStepForm extends Component {
             characterCount={characterCount}
             smsCount={smsCount}
             callToActionCount={callToActionCount}
+            videoError={videoError}
           />
         );
       case 2:
@@ -334,8 +369,12 @@ export default class AppDownloadStepForm extends Component {
             ageRangeTo={ageRangeTo}
             handleStateChange={this.handleStateChange}
             handleLgaChange={this.handleLgaChange}
+            handleAreaChange={this.handleAreaChange}
             arrayState={arrayState}
             arrayLga={arrayLga}
+            rawLga={rawLga}
+            rawArea={rawArea}
+            arrayArea={arrayArea}
           />
         );
       case 3:

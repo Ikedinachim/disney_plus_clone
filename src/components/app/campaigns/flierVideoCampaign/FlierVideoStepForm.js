@@ -19,7 +19,7 @@ export default class FlierVideoStepForm extends Component {
     campaignMessage: "",
     targetAge: "21",
     location: ["Lagos"],
-    interest: "business",
+    // interest: "business",
     phoneNumber: "",
     whatsAppNumber: "",
     numbers: "",
@@ -39,7 +39,7 @@ export default class FlierVideoStepForm extends Component {
     imageUrl: null,
     imageAlt: "",
     uploadPercentage: 0,
-    videoUrl: "",
+    rawVideoUrl: "",
     price: 0,
     limit: undefined,
     budget: 10000,
@@ -56,18 +56,22 @@ export default class FlierVideoStepForm extends Component {
     ageRangeTo: undefined,
     ageRangeFrom: undefined,
     ageRange: "",
-    gender: "",
+    gender: "B",
     state: "abia",
     lga: "",
     deviceType: "",
     deviceBrand: "",
+    revenueBand: "",
 
     selectedFileName: "Upload Asset *png, *jpg, *gif",
 
     parsedCsvData: [],
 
     arrayState: undefined,
+    rawLga: undefined,
+    rawArea: undefined,
     arrayLga: undefined,
+    arrayArea: undefined,
   };
 
   // go back to previous step
@@ -174,6 +178,12 @@ export default class FlierVideoStepForm extends Component {
 
   handleLgaChange = (lga) => {
     this.setState({ arrayLga: lga.map((value) => value.value).join(",") });
+    this.setState({ rawLga: lga });
+  };
+
+  handleAreaChange = (area) => {
+    this.setState({ arrayArea: area.map((value) => value.value).join(",") });
+    this.setState({ rawArea: area });
   };
 
   render() {
@@ -193,7 +203,7 @@ export default class FlierVideoStepForm extends Component {
       timeRangeTo,
       // attachment,
       imageUrl,
-      videoUrl,
+      rawVideoUrl,
       attachmentPreview,
       campaignType,
       targetAudienceOption,
@@ -210,6 +220,7 @@ export default class FlierVideoStepForm extends Component {
       lga,
       deviceType,
       deviceBrand,
+      revenueBand,
       // csvFile,
       csvArray,
       parsedCsvData,
@@ -226,7 +237,10 @@ export default class FlierVideoStepForm extends Component {
       scheduleTo,
 
       arrayState,
+      rawLga,
+      rawArea,
       arrayLga,
+      arrayArea,
     } = this.state;
 
     /////////////////////////////
@@ -250,6 +264,23 @@ export default class FlierVideoStepForm extends Component {
       }
     };
 
+    const setYoutubeUrl = (url) => {
+      let regExp =
+        /^https?\:\/\/(?:www\.youtube(?:\-nocookie)?\.com\/|m\.youtube\.com\/|youtube\.com\/)?(?:ytscreeningroom\?vi?=|youtu\.be\/|vi?\/|user\/.+\/u\/\w{1,2}\/|embed\/|watch\?(?:.*\&)?vi?=|\&vi?=|\?(?:.*\&)?vi?=)([^#\&\?\n\/<>"']*)/i;
+      let match = url && url.match(regExp);
+      const watchUrl = `https://www.youtube.com/watch?v=${match && match[1]}`;
+      // return match && match[1].length === 11 ? match[1] : false;
+
+      const result = match
+        ? { videoUrl: watchUrl, videoError: false }
+        : { videoUrl: "", videoError: true };
+
+      let videoUrl = result.videoUrl;
+      let videoError = result.videoError;
+
+      return { videoUrl, videoError };
+    };
+
     const setAudience = () => {
       if (channel === "display_ads") {
         return (targetAudience = budget / 5);
@@ -259,6 +290,8 @@ export default class FlierVideoStepForm extends Component {
     };
 
     let attachment = "";
+
+    const { videoUrl, videoError } = setYoutubeUrl(rawVideoUrl);
 
     const setAssets = () => {
       if (assetType === "image") {
@@ -280,8 +313,10 @@ export default class FlierVideoStepForm extends Component {
       gender,
       state: arrayState && arrayState.map((value) => value.value).join(","),
       lga: arrayLga,
+      area: arrayArea,
       deviceType,
       deviceBrand,
+      revenueBand,
     };
 
     const filterParameters = [filterOptions];
@@ -332,6 +367,7 @@ export default class FlierVideoStepForm extends Component {
             characterCount={characterCount}
             smsCount={smsCount}
             callToActionCount={callToActionCount}
+            videoError={videoError}
           />
         );
       case 2:
@@ -350,8 +386,12 @@ export default class FlierVideoStepForm extends Component {
             ageRangeTo={ageRangeTo}
             handleStateChange={this.handleStateChange}
             handleLgaChange={this.handleLgaChange}
+            handleAreaChange={this.handleAreaChange}
             arrayState={arrayState}
             arrayLga={arrayLga}
+            rawLga={rawLga}
+            rawArea={rawArea}
+            arrayArea={arrayArea}
           />
         );
       case 3:

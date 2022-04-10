@@ -65,6 +65,7 @@ import {
   getDigitalCampaignsReducer,
   allUserInfluencerCampaignReducer,
   singleUserInfluencerReducer,
+  getRevenueBandReducer,
 } from "./reducers/campaignReducers";
 
 import { AdminSenderIDReducer, UpdateAdminSenderIDReducer }
@@ -119,6 +120,7 @@ const appReducer = combineReducers({
   resendVerification: resendVerificationReducer,
   AdminSenderId: AdminSenderIDReducer,
   UpdateSenderId: UpdateAdminSenderIDReducer
+  revenueBand: getRevenueBandReducer,
 });
 
 const reducer = (state, action) => {

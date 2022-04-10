@@ -35,6 +35,16 @@ const ViewCampaign = () => {
   //   return "Other"
   // }
 
+  // const setYoutubeUrl = (url) => {
+  //   let regExp =
+  //     /^https?\:\/\/(?:www\.youtube(?:\-nocookie)?\.com\/|m\.youtube\.com\/|youtube\.com\/)?(?:ytscreeningroom\?vi?=|youtu\.be\/|vi?\/|user\/.+\/u\/\w{1,2}\/|embed\/|watch\?(?:.*\&)?vi?=|\&vi?=|\?(?:.*\&)?vi?=)([^#\&\?\n\/<>"']*)/i;
+  //   let match = url && url.match(regExp);
+  //   console.log(match);
+  //   const watchUrl = `https://www.youtube.com/watch?v=${match && match[1]}`;
+  //   // return match && match[1].length === 11 ? match[1] : false;
+  //   return watchUrl;
+  // };
+
   const handleClickType = (type) => {
     if (type === "whatsAppNumber") {
       const payload = {
@@ -98,6 +108,13 @@ const ViewCampaign = () => {
       dispatch(clearErrors());
     }
   }, [dispatch, error]);
+
+  console.log(
+    createShowAds &&
+      createShowAds.androidStoreUrl &&
+      (createShowAds.androidStoreUrl.indexOf("http://") === 0 ||
+        createShowAds.androidStoreUrl.indexOf("https://") === 0)
+  );
 
   return (
     <Fragment>
@@ -199,12 +216,15 @@ const ViewCampaign = () => {
                           <a
                             className="btn btn-primary mg-b-15 round-5"
                             href={`${
+                              createShowAds &&
                               createShowAds.url &&
                               (createShowAds.url.indexOf("http://") === 0 ||
                                 createShowAds.url.indexOf("https://") === 0)
-                                ? ""
-                                : "http://"
-                            }${createShowAds.url && createShowAds.url.trim()}`}
+                                ? createShowAds.url && createShowAds.url.trim()
+                                : "http://" +
+                                  (createShowAds.url &&
+                                    createShowAds.url.trim())
+                            }`}
                             onClick={() => handleClickType("url")}
                           >
                             <i className="fa fa-globe mg-r-10"> </i>
@@ -228,11 +248,11 @@ const ViewCampaign = () => {
                                 createShowAds.androidStoreUrl.indexOf(
                                   "https://"
                                 ) === 0)
-                                ? ""
-                                : "http://"
-                            }${
-                              createShowAds.androidStoreUrl &&
-                              createShowAds.androidStoreUrl.trim()
+                                ? createShowAds.androidStoreUrl &&
+                                  createShowAds.androidStoreUrl.trim()
+                                : "http://" +
+                                  (createShowAds.androidStoreUrl &&
+                                    createShowAds.androidStoreUrl.trim())
                             }`}
                             onClick={() => handleClickType("androidStoreUrl")}
                           >
@@ -257,11 +277,11 @@ const ViewCampaign = () => {
                                 createShowAds.iosStoreUrl.indexOf(
                                   "https://"
                                 ) === 0)
-                                ? ""
-                                : "http://"
-                            }${
-                              createShowAds.iosStoreUrl &&
-                              createShowAds.iosStoreUrl.trim()
+                                ? createShowAds.iosStoreUrl &&
+                                  createShowAds.iosStoreUrl.trim()
+                                : "http://" +
+                                  (createShowAds.iosStoreUrl &&
+                                    createShowAds.iosStoreUrl.trim())
                             }`}
                             onClick={() => handleClickType("iosStoreUrl")}
                           >
