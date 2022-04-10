@@ -86,8 +86,7 @@ function App() {
           element={
             isAuthenticated &&
             user &&
-            user.user.role === "user" &&
-            user.user.isAdmin === false ? (
+            user.user.role === "user" ? (
               <DashboardLayout />
             ) : (
               <Login />
@@ -99,8 +98,7 @@ function App() {
             element={
               isAuthenticated &&
               user &&
-              user.user.role === "user" &&
-              user.user.isAdmin === false ? (
+              user.user.role === "user" ? (
                 <Dashboard />
               ) : (
                 <Login />
@@ -112,8 +110,7 @@ function App() {
             element={
               isAuthenticated &&
               user &&
-              user.user.role === "user" &&
-              user.user.isAdmin === false ? (
+              user.user.role === "user"  ? (
                 <SenderID />
               ) : (
                 <Login />
@@ -125,8 +122,7 @@ function App() {
             element={
               isAuthenticated &&
               user &&
-              user.user.role === "user" &&
-              user.user.isAdmin === false ? (
+              user.user.role === "user" ? (
                 <RequestSenderID />
               ) : (
                 <Login />
@@ -138,8 +134,7 @@ function App() {
             element={
               isAuthenticated &&
               user &&
-              user.user.role === "user" &&
-              user.user.isAdmin === false ? (
+              user.user.role === "user" ? (
                 <BillingOverview />
               ) : (
                 <Login />
@@ -151,8 +146,7 @@ function App() {
             element={
               isAuthenticated &&
               user &&
-              user.user.role === "user" &&
-              user.user.isAdmin === false ? (
+              user.user.role === "user" ? (
                 <Transactions />
               ) : (
                 <Login />
@@ -164,8 +158,7 @@ function App() {
             element={
               isAuthenticated &&
               user &&
-              user.user.role === "user" &&
-              user.user.isAdmin === false ? (
+              user.user.role === "user" ? (
                 <FundWallet />
               ) : (
                 <Login />
@@ -189,8 +182,7 @@ function App() {
             element={
               isAuthenticated &&
               user &&
-              user.user.role === "user" &&
-              user.user.isAdmin === false ? (
+              user.user.role === "user" ? (
                 <ViewCampaignTabs />
               ) : (
                 <Login />
@@ -202,8 +194,7 @@ function App() {
             element={
               isAuthenticated &&
               user &&
-              user.user.role === "user" &&
-              user.user.isAdmin === false ? (
+              user.user.role === "user" ? (
                 <CreateCampaign />
               ) : (
                 <Login />
@@ -215,8 +206,7 @@ function App() {
             element={
               isAuthenticated &&
               user &&
-              user.user.role === "user" &&
-              user.user.isAdmin === false ? (
+              user.user.role === "user" ? (
                 <SmsStepForm />
               ) : (
                 <Login />
@@ -228,8 +218,7 @@ function App() {
             element={
               isAuthenticated &&
               user &&
-              user.user.role === "user" &&
-              user.user.isAdmin === false ? (
+              user.user.role === "user" ? (
                 <FlierVideoStepForm />
               ) : (
                 <Login />
@@ -241,8 +230,7 @@ function App() {
             element={
               isAuthenticated &&
               user &&
-              user.user.role === "user" &&
-              user.user.isAdmin === false ? (
+              user.user.role === "user" ? (
                 <AppDownloadStepForm />
               ) : (
                 <Login />
@@ -254,8 +242,7 @@ function App() {
             element={
               isAuthenticated &&
               user &&
-              user.user.role === "user" &&
-              user.user.isAdmin === false ? (
+              user.user.role === "user" ? (
                 <AppDownloadDetails />
               ) : (
                 <Login />
@@ -267,8 +254,7 @@ function App() {
             element={
               isAuthenticated &&
               user &&
-              user.user.role === "user" &&
-              user.user.isAdmin === false ? (
+              user.user.role === "user" ? (
                 <FlierVideosDetails />
               ) : (
                 <Login />
@@ -280,8 +266,7 @@ function App() {
             element={
               isAuthenticated &&
               user &&
-              user.user.role === "user" &&
-              user.user.isAdmin === false ? (
+              user.user.role === "user" ? (
                 <SmsDetails />
               ) : (
                 <Login />
@@ -293,8 +278,7 @@ function App() {
             element={
               isAuthenticated &&
               user &&
-              user.user.role === "user" &&
-              user.user.isAdmin === false ? (
+              user.user.role === "user" ? (
                 <InfluencerDetails />
               ) : (
                 <Login />
@@ -306,8 +290,7 @@ function App() {
             element={
               isAuthenticated &&
               user &&
-              user.user.role === "user" &&
-              user.user.isAdmin === false ? (
+              user.user.role === "user" ? (
                 <InfluencerStepForm />
               ) : (
                 <Login />
@@ -320,8 +303,7 @@ function App() {
             element={
               isAuthenticated &&
               user &&
-              user.user.role === "user" &&
-              user.user.isAdmin === false ? (
+              user.user.role === "user" ? (
                 <DigitalAnalytics />
               ) : (
                 <Login />
@@ -333,8 +315,7 @@ function App() {
             element={
               isAuthenticated &&
               user &&
-              user.user.role === "user" &&
-              user.user.isAdmin === false ? (
+              user.user.role === "user" ? (
                 <SmartSmsAnalytics />
               ) : (
                 <Login />
@@ -346,8 +327,7 @@ function App() {
             element={
               isAuthenticated &&
               user &&
-              user.user.role === "user" &&
-              user.user.isAdmin === false ? (
+              user.user.role === "user" ? (
                 <SmsAnalytics />
               ) : (
                 <Login />
@@ -360,8 +340,7 @@ function App() {
             element={
               isAuthenticated &&
               user &&
-              user.user.role === "user" &&
-              user.user.isAdmin === false ? (
+              user.user.role === "user" ? (
                 <ViewAnalytics />
               ) : (
                 <Login />
@@ -374,8 +353,7 @@ function App() {
             element={
               isAuthenticated &&
               user &&
-              user.user.role === "user" &&
-              user.user.isAdmin === false ? (
+              user.user.role === "user" ? (
                 <Settings />
               ) : (
                 <Login />
@@ -387,8 +365,7 @@ function App() {
             element={
               isAuthenticated &&
               user &&
-              user.user.role === "user" &&
-              user.user.isAdmin === false ? (
+              user.user.role === "user" ? (
                 <ChangePassword />
               ) : (
                 <Login />
@@ -462,7 +439,6 @@ function App() {
           element={
             isAuthenticated &&
             user &&
-            user.user.role === "user" &&
             user.user.isAdmin === true ? (
               <AdminDashboard/>
             ) : (
@@ -475,7 +451,6 @@ function App() {
           element={
             isAuthenticated &&
             user &&
-            user.user.role === "user" &&
             user.user.isAdmin === true ? (
                 <AdminSettings />
             ) : (
@@ -488,7 +463,6 @@ function App() {
           element={
             isAuthenticated &&
             user &&
-            user.user.role === "user" &&
             user.user.isAdmin === true ? (
                 <ChangeAdminPassword/>
             ) : (
