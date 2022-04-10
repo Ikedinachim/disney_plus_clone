@@ -169,7 +169,7 @@ function App() {
           {/* <Route
             path="billing/payment"
             element={
-              isAuthenticated && user && user.user.role === "user" && user.user.isAdmin === false ? (
+              isAuthenticated && user && user.user.role === "user" ? (
                 <MakePayment />
               ) : (
                 <Login />
