@@ -62,6 +62,8 @@ import ResendVerification from "./components/user/ResendVerification";
 //Admin
 import AdminDashboardLayout from "./components/admin/AdminDashboardLayout";
 import AdminDashboard from "./components/admin/AdminDashboard";
+import AdminSettings from "./components/admin/settings/AdminSettings";
+import ChangeAdminPassword from "./components/admin/settings/ChangeAdminPassword";
 
 AOS.init();
 
@@ -468,6 +470,32 @@ function App() {
             )
           }
           />
+          <Route
+          path="/admin/settings"
+          element={
+            isAuthenticated &&
+            user &&
+            user.user.role === "user" &&
+            user.user.isAdmin === true ? (
+                <AdminSettings />
+            ) : (
+              <Login />
+            )
+          }
+          />
+          <Route
+          path="/admin/settings/change-password"
+          element={
+            isAuthenticated &&
+            user &&
+            user.user.role === "user" &&
+            user.user.isAdmin === true ? (
+                <ChangeAdminPassword/>
+            ) : (
+              <Login />
+            )
+          }
+        />
           </Route>
       </Routes>
       <Routes>

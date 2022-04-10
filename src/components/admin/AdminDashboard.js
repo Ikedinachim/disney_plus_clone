@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { clearErrors, getAdminSenderID } from '../../actions/senderIDActions';
 import { MDBDataTable } from "mdbreact";
 import MetaData from '../layout/MetaData';
+import Loader from '../loader';
 
 const AdminDashboard = () => {
   const { loading, error, adminSenderID } = useSelector(
@@ -61,6 +62,10 @@ const AdminDashboard = () => {
         {
           label: "9mobile",
           field: "nineMobileStatus",
+        },
+        {
+          label: "ACTION",
+          field: "actionPerformed",
         },
       ],
       rows: [],
@@ -201,6 +206,28 @@ const AdminDashboard = () => {
               : null}
           </span>
         ),
+        actionPerformed: (
+          <select name="action" value={senderids.status}>
+            <option
+              value="approved"
+              className="badge d-flex-center badge-active"
+            >
+              Approved
+            </option>
+            <option
+              value="declined"
+              className="badge d-flex-center badge-primary"
+            >
+              Declined
+            </option>
+            <option
+              value="pending"
+              className="badge d-flex-center badge-pink"
+            >
+              Pending
+            </option>
+          </select>
+        ),
       });
     });
 
@@ -208,21 +235,25 @@ const AdminDashboard = () => {
   }
   return (
     <Fragment>
-      <MetaData title={"All Sender IDs"} />
-      <div className="card card rounded bd-0 shadow-sm">
-        <div className="card-header bd-b-0 pd-b-0 pd-t-40 pd-md-x-30"></div>
-        <div className="card-body pd-md-x-30 pd-t- mg-t-20 mg-md-t-0">
-          <MDBDataTable
-            responsive
-            data={setSenderID()}
-            className="px-3 scroll"
-            bordered
-            striped
-            hover
-            checkboxFirstColumn
-          />
-        </div>
-      </div>
+      {loading ? (<Loader/>):(
+        <Fragment>
+          <MetaData title={"All Sender IDs"} />
+          <div className="card card rounded bd-0 shadow-sm">
+            <div className="card-header bd-b-0 pd-b-0 pd-t-40 pd-md-x-30"></div>
+            <div className="card-body pd-md-x-30 pd-t- mg-t-20 mg-md-t-0">
+              <MDBDataTable
+                responsive
+                data={setSenderID()}
+                className="px-3 scroll"
+                bordered
+                striped
+                hover
+                checkboxFirstColumn
+              />
+            </div>
+          </div>
+        </Fragment>
+      )}
     </Fragment>
   );
 };
