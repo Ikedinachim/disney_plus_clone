@@ -17,7 +17,7 @@ import NumberFormat from "react-number-format";
 import MetaData from "../../../layout/MetaData";
 import {
   getFilteredContactList,
-  getRevenueBands,
+  // getRevenueBands,
   clearErrors,
 } from "../../../../actions/campaignActions";
 import NaijaStates from "../../../../_helpers/NaijaStates/NaijaStates.js";
@@ -64,7 +64,7 @@ const TargetAudience = ({
   useEffect(() => {
     if (values.targetAudienceOption === "mysogidb") {
       dispatch(getFilteredContactList(filterOptions));
-      dispatch(getRevenueBands());
+      // dispatch(getRevenueBands());
     }
   }, [dispatch, filterOptions, values]);
 
