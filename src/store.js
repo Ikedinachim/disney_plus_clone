@@ -67,7 +67,7 @@ import {
   singleUserInfluencerReducer,
 } from "./reducers/campaignReducers";
 
-import { AdminSenderIDReducer }
+import { AdminSenderIDReducer, UpdateAdminSenderIDReducer }
   from "./components/admin/reducers/senderIdReducer";
 
 const appReducer = combineReducers({
@@ -118,6 +118,7 @@ const appReducer = combineReducers({
   confirmRegistration: confirmRegistrationReducer,
   resendVerification: resendVerificationReducer,
   AdminSenderId: AdminSenderIDReducer,
+  UpdateSenderId: UpdateAdminSenderIDReducer
 });
 
 const reducer = (state, action) => {

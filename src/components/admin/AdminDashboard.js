@@ -1,18 +1,42 @@
 import { DateTime } from 'luxon';
-import React, {Fragment, useEffect} from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from 'react-toastify';
-import { clearErrors, getAdminSenderID } from '../../actions/senderIDActions';
+import { clearErrors, getAdminSenderID, UpdateAdminSenderId } from '../../actions/senderIDActions';
 import { MDBDataTable } from "mdbreact";
 import MetaData from '../layout/MetaData';
 import Loader from '../loader';
+import { UPDATE_ADMIN_SENDERID_RESET } from '../../constants/senderIDConstants';
 
 const AdminDashboard = () => {
   const { loading, error, adminSenderID } = useSelector(
     (state) => state.AdminSenderId || []
   );
+  const {updateError, updateAdminSenderID} = useSelector((state)=> state.UpdateSenderId || [])
+
 
   const dispatch = useDispatch();
+  
+  const handleChange = (e) => {
+    const id = e.target.id;
+    const value = e.target.value;
+    
+    const things = {id: id, status:value}
+    dispatch(UpdateAdminSenderId(things));
+
+  }
+
+  useEffect(() => {
+    if (updateAdminSenderID && updateAdminSenderID.status === "success") {
+      toast.success(updateAdminSenderID.message);
+      dispatch(getAdminSenderID());
+      dispatch({ type: UPDATE_ADMIN_SENDERID_RESET });
+    } else if (updateError) {
+      toast.error(updateError);
+      dispatch(clearErrors());
+    }
+  }, [dispatch, updateAdminSenderID, updateError])
+  console.log(updateAdminSenderID)
 
   useEffect(() => {
     dispatch(getAdminSenderID());
@@ -40,8 +64,8 @@ const AdminDashboard = () => {
           field: "status",
         },
         {
-          label: "USER ID",
-          field: "userId",
+          label: "ID",
+          field: "Id",
         },
         {
           label: "TELCO",
@@ -99,7 +123,7 @@ const AdminDashboard = () => {
           </span>
         ),
 
-        userId: senderids.user_id,
+        Id: senderids.id,
 
         telcoStatus: (
           <span
@@ -207,23 +231,14 @@ const AdminDashboard = () => {
           </span>
         ),
         actionPerformed: (
-          <select name="action" value={senderids.status}>
-            <option
-              value="approved"
-              className="badge d-flex-center badge-active"
-            >
+          <select id={senderids.id} value={senderids.status} onChange={handleChange}>
+            <option value="approved">
               Approved
             </option>
-            <option
-              value="declined"
-              className="badge d-flex-center badge-primary"
-            >
+            <option value="declined">
               Declined
             </option>
-            <option
-              value="pending"
-              className="badge d-flex-center badge-pink"
-            >
+            <option value="pending">
               Pending
             </option>
           </select>

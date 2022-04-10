@@ -127,6 +127,40 @@ export const getAdminSenderID = () => async (dispatch) => {
   }
 };
 
+export const UpdateAdminSenderId = (update) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_ADMIN_SENDERID_REQUEST });
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const { data } = await axios.post("api/sender-id/update", update, config);
+
+    if (data.status === "success") {
+      dispatch({
+        type: UPDATE_ADMIN_SENDERID_SUCCESS,
+        payload: data,
+      });
+    } else {
+      dispatch({
+        type: UPDATE_ADMIN_SENDERID_FAIL,
+        payload: data,
+      });
+    }
+  } catch (data) {
+    dispatch({
+      type: UPDATE_ADMIN_SENDERID_FAIL,
+      payload: data,
+    });
+  }
+};
+
+
 // Create New Sender ID
 export const createSenderId = (setCreateSenderId) => async (dispatch) => {
   try {
@@ -164,6 +198,7 @@ export const createSenderId = (setCreateSenderId) => async (dispatch) => {
     });
   }
 };
+
 
 // Clear Errors
 export const clearErrors = () => async (dispatch) => {
