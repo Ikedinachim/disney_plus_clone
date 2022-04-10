@@ -85,6 +85,10 @@ const axios = Axios.create({
   baseURL,
 });
 
+const filterContactAxios = Axios.create({
+  baseURL: "https://proxi.uat.com.ng/",
+});
+
 // Create SMS Campaign Action
 export const createSmsCampaignAction =
   (smsCampaignData) => async (dispatch) => {
@@ -549,13 +553,15 @@ export const getFilteredContactList =
         },
       };
 
-      const { data } = await axios.post(
-        "/api/campaign/filter-database",
-        filterContactData,
-        config
+      const { data } = await filterContactAxios.post(
+        "/filter-db/",
+        filterContactData
+        // config
       );
 
-      if (data.status === "success") {
+      console.log(data);
+
+      if (data.success) {
         dispatch({
           type: GET_FILTERED_CONTACT_LIST_SUCCESS,
           payload: data,
