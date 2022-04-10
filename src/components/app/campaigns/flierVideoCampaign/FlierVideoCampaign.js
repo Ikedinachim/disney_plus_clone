@@ -247,9 +247,9 @@ const FlierVideoCampaign = ({
                                 <label className="mb-1">Phone Number</label>
                                 <div className="d-flex">
                                   <input
-                                    type="number"
+                                    type="phone"
                                     className="form-control"
-                                    placeholder="Enter customer care number customers can reach you on"
+                                    placeholder="2348057xxxxxx"
                                     defaultValue={values.phoneNumber}
                                     onChange={handleChange("phoneNumber")}
                                   />
@@ -270,9 +270,9 @@ const FlierVideoCampaign = ({
                                   </label>
                                   <div className="d-flex">
                                     <input
-                                      type="number"
+                                      type="phone"
                                       className="form-control"
-                                      placeholder="WhatsApp Number"
+                                      placeholder="2348057xxxxxx"
                                       defaultValue={values.whatsAppNumber}
                                       onChange={handleChange("whatsAppNumber")}
                                     />
@@ -290,9 +290,9 @@ const FlierVideoCampaign = ({
                                   <label className="mb-1">USSD</label>
                                   <div className="d-flex">
                                     <input
-                                      type="number"
+                                      type="phone"
                                       className="form-control"
-                                      placeholder="Enter preferred code"
+                                      placeholder="Enter USSD code"
                                       defaultValue={values.ussd}
                                       onChange={handleChange("ussd")}
                                     />
@@ -310,9 +310,9 @@ const FlierVideoCampaign = ({
                                   <label className="mb-1">SMS Number</label>
                                   <div className="d-flex">
                                     <input
-                                      type="number"
+                                      type="phone"
                                       className="form-control"
-                                      placeholder="Enter number you want to be texted on by your customers"
+                                      placeholder="2348057xxxxxx"
                                       defaultValue={values.smsNumber}
                                       onChange={handleChange("smsNumber")}
                                     />

@@ -193,14 +193,14 @@ const TargetAudience = ({
 
   const parseFile = (file) => {
     Papa.parse(file, {
-      header: true,
+      // header: true,
       complete: (results) => {
         setParsedCsvData(results.data);
         setCsvName(file.name);
         // console.log(parsedCsvData);
       },
     });
-    // console.log(parsedCsvData);
+    console.log(parsedCsvData);
   };
 
   const onDrop = useCallback((acceptedFiles) => {
