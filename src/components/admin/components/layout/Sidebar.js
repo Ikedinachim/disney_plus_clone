@@ -106,6 +106,18 @@ const Sidebar = () => {
               <span>Settings</span>
             </NavLink>
           </li>
+          <li className="nav-item active">
+            <NavLink
+              to="/app"
+              end
+              className={({ isActive }) =>
+                isActive ? "nav-link active" : "nav-link"
+              }
+            >
+              <i className="fa fa-home mr-3" />
+              <span>Dashboard</span>
+            </NavLink>
+          </li>
         </ul>
       </div>
     </aside>

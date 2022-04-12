@@ -10,7 +10,7 @@ import Sidebar from "../layout/Sidebar";
 const Dashboard = () => {
   const dispatch = useDispatch();
 
-  const { loading } = useSelector((state) => state.auth);
+  const { loading, user } = useSelector((state) => state.auth);
   const { error } = useSelector((state) => state.wallet);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const Dashboard = () => {
         <Loader />
       ) : (
         <Fragment>
-          <Sidebar />
+          <Sidebar user={user} />
           <div className="content ht-100v pd-0">
             <Header />
             <Outlet />

@@ -29,13 +29,9 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (isAuthenticated && user && user.user.isAdmin === true) {
-      dispatch(getWallet());
-      navHistory("/admin");
-    } else if (
+    if (
       isAuthenticated &&
-      user.user.role !== "influencer" &&
-      user.user.isAdmin === false
+      user.user.role !== "influencer"
     ) {
       dispatch(getWallet());
       dispatch(getUser());
