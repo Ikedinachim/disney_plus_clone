@@ -511,3 +511,20 @@ ol.terms-list ol.terms-inner-list > li:before {
   display: flex;
   justify-content: center;
 }
+
+.pass-wrapper {
+  position: relative;
+  display: flex;
+  margin-bottom: 14px;
+}
+
+.password-eye {
+  position: absolute;
+  color: #ff1f00;
+  top: 38%;
+  right: 3%;
+}
+.password-eye:hover {
+  color: #d70900;
+  cursor: pointer;
+}
