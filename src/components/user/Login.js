@@ -10,10 +10,11 @@ import { getWallet } from "../../actions/billingActions";
 
 const Login = () => {
   const navHistory = useNavigate();
+  const dispatch = useDispatch();
 
   const [userName, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
+  const [passwordShown, setPasswordShown] = useState(false);
   const { isAuthenticated, error, loading, user, resetPassword } = useSelector(
     (state) => state.auth
   );
@@ -22,6 +23,10 @@ const Login = () => {
   );
 
   const { userDetails } = useSelector((state) => state);
+
+  const togglePasswordVisiblity = () => {
+    setPasswordShown(passwordShown ? false : true);
+  };
 
   useEffect(() => {
     if (
@@ -123,14 +128,20 @@ const Login = () => {
                         onChange={(e) => setUsername(e.target.value)}
                       />
                     </div>
-                    <div className="form-group">
+                    <div className="form-group pass-wrapper">
                       <input
                         className="form-control new"
                         placeholder="Password"
-                        type="password"
+                        type={passwordShown ? "text" : "password"}
                         id="password_field"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                      />
+                      <i
+                        onClick={togglePasswordVisiblity}
+                        className={`fa ${
+                          passwordShown ? "fa-eye-slash" : "fa-eye"
+                        } password-eye`}
                       />
                     </div>
                     <div className="form-row mg-t-30">
