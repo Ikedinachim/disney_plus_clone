@@ -41,10 +41,10 @@ const SmsCampaign = ({
       label: "Select Channel",
       value: "select channel",
     },
-    {
-      label: "Flash SMS",
-      value: "flash_sms",
-    },
+    // {
+    //   label: "Flash SMS",
+    //   value: "flash_sms",
+    // },
     {
       label: "SMS",
       value: "sms",
