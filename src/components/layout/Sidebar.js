@@ -4,7 +4,7 @@ import NavLogo from "../../assets/img/logo.svg";
 
 import FeatherIcon from "feather-icons-react";
 
-const Sidebar = () => {
+const Sidebar = ({user}) => {
   const ref = useRef();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [width, setWindowWidth] = useState(0);
@@ -151,6 +151,17 @@ const Sidebar = () => {
               <span className="marine-active-menu">Analytics</span>
             </NavLink>
           </li>
+          {user.user.isAdmin ? <li className="nav-item active">
+            <NavLink
+              to="/admin"
+              className={({ isActive }) =>
+                isActive ? "nav-link active" : "nav-link"
+              }
+            >
+              <i className="fa fa-lock mr-3" />{" "}
+              <span className="marine-active-menu">Admin</span>
+            </NavLink>
+          </li>: null}
         </ul>
       </div>
     </aside>

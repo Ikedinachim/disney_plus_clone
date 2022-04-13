@@ -82,7 +82,10 @@ const ViewFlierVideosCampaigns = () => {
               </div>
             </Fragment>
           ),
-          campaignName: campaign.campaignType === 'flier_video' ? 'display/digital' : campaign.campaignType,
+          campaignName:
+            campaign.campaignType === "flier_video"
+              ? "display/digital"
+              : campaign.campaignType,
           adType: campaign.channel,
           cost: (
             <NumberFormat
@@ -95,15 +98,27 @@ const ViewFlierVideosCampaigns = () => {
           dateCreated: DateTime.fromJSDate(
             new Date(campaign.createdAt)
           ).toFormat("dd MMM, yyyy"),
-          status: (
-            <span
-              className={`{"badge" ${
-                !campaign.isApproved ? "badge-pink" : "badge-active"
-              }`}
-            >
-              {!campaign.isApproved ? "Pending" : "Approved"}
-            </span>
-          ),
+          status:
+            (campaign.channel === "smart_sms" && (
+              <span
+                className={`{"badge" ${
+                  !campaign.isApproved ? "badge-pink" : "badge-active"
+                }`}
+              >
+                {!campaign.isApproved ? "Pending" : "Approved"}
+              </span>
+            )) ||
+            (campaign.channel === "display_ads" && (
+              <span
+                className={`{"badge" ${
+                  !campaign.displayAdsStatus ? "badge-pink" : "badge-active"
+                }`}
+              >
+                {!campaign.displayAdsStatus
+                  ? "Pending"
+                  : campaign.displayAdsStatus}
+              </span>
+            )),
           actions: (
             <Fragment>
               <div class="tx-black tx-14">
