@@ -37,7 +37,7 @@ const TargetAudience = ({
   // const alert = useAlert();
   const dispatch = useDispatch();
 
-  const { filteredContactList, error, loading } = useSelector(
+  const { filteredContactList, error, fcLoading } = useSelector(
     (state) => state.filteredContactList || []
   );
 
@@ -425,7 +425,7 @@ const TargetAudience = ({
                                   Potential Audience Based on filter
                                 </label>
                                 <p className="tx-18 tx-com tx-bold mb-1 mg-t-15">
-                                  {filteredContactList ? (
+                                  {filteredContactList && !fcLoading ? (
                                     <NumberFormat
                                       value={parseInt(
                                         filteredContactList.count

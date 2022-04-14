@@ -526,6 +526,7 @@ export const getFilteredContactListReducer = (
   switch (action.type) {
     case GET_FILTERED_CONTACT_LIST_REQUEST:
       return {
+        ...state,
         fcLoading: true,
       };
 
@@ -537,8 +538,9 @@ export const getFilteredContactListReducer = (
 
     case GET_FILTERED_CONTACT_LIST_FAIL:
       return {
+        ...state,
         fcLoading: false,
-        filteredContactList: null,
+        // filteredContactList: null,
         fcError: action.payload,
       };
 
