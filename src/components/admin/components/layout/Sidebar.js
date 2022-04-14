@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
-import NavLogo from "../../assets/img/logo.svg";
+import NavLogo from "../../../../assets/img/logo.svg";
 
 import FeatherIcon from "feather-icons-react";
 
-const Sidebar = ({user}) => {
+const Sidebar = () => {
   const ref = useRef();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [width, setWindowWidth] = useState(0);
@@ -27,6 +27,7 @@ const Sidebar = ({user}) => {
     const checkIfClickedOutside = (e) => {
       if (isMenuOpen && ref.current && !ref.current.contains(e.target)) {
         setIsMenuOpen(false);
+        document.body.classList.remove("show-aside");
       }
     };
 
@@ -49,7 +50,7 @@ const Sidebar = ({user}) => {
       // Cleanup the event listener
       document.removeEventListener("mousedown", checkIfClickedOutside);
     };
-  }, [isMenuOpen]);
+  }, [isMenuOpen, width]);
 
   return (
     <aside
@@ -58,7 +59,6 @@ const Sidebar = ({user}) => {
       }
        ${!isMenuOpen && hovered ? "maximize" : ""}
       `}
-      // ref={width > 989 ? null : ref}
       ref={ref}
       onMouseEnter={toggleHover}
       onMouseLeave={toggleHover}
@@ -80,57 +80,23 @@ const Sidebar = ({user}) => {
           />
         </div>
       </div>
-      <div className="aside-body">
+      <div className="aside-body h-100">
         <ul className="nav nav-aside">
           <li className="nav-item active">
             <NavLink
-              to="/app"
-              end
-              className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
-              }
-            >
-              <i className="fa fa-home mr-3" />
-              <span>Home</span>
-            </NavLink>
-          </li>
-          <li className="nav-item active">
-            <NavLink
-              to="/app/campaigns"
+              to="/admin"
               end
               className={({ isActive }) =>
                 isActive ? "nav-link active" : "nav-link"
               }
             >
               <i className="fa fa-archive mr-3" />
-              <span>Campaigns</span>
+              <span>Sender Ids</span>
             </NavLink>
           </li>
           <li className="nav-item active">
             <NavLink
-              to="/app/billing"
-              className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
-              }
-            >
-              <i className="fas fa-money-bill mr-3" />
-              <span>Billing</span>
-            </NavLink>
-          </li>
-          <li className="nav-item active">
-            <NavLink
-              to="/app/sender-id"
-              className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
-              }
-            >
-              <i className="fa fa-user mr-3 tx-muted" />
-              <span>Sender ID</span>
-            </NavLink>
-          </li>
-          <li className="nav-item active">
-            <NavLink
-              to="/app/setting"
+              to="/admin/settings"
               end
               className={({ isActive }) =>
                 isActive ? "nav-link active" : "nav-link"
@@ -142,26 +108,16 @@ const Sidebar = ({user}) => {
           </li>
           <li className="nav-item active">
             <NavLink
-              to="/app/analytics"
+              to="/app"
+              end
               className={({ isActive }) =>
                 isActive ? "nav-link active" : "nav-link"
               }
             >
-              <i className="fa fa-chart-bar mr-3" />{" "}
-              <span className="marine-active-menu">Analytics</span>
+              <i className="fa fa-home mr-3" />
+              <span>Dashboard</span>
             </NavLink>
           </li>
-          {user.user.isAdmin ? <li className="nav-item active">
-            <NavLink
-              to="/admin"
-              className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
-              }
-            >
-              <i className="fa fa-lock mr-3" />{" "}
-              <span className="marine-active-menu">Admin</span>
-            </NavLink>
-          </li>: null}
         </ul>
       </div>
     </aside>

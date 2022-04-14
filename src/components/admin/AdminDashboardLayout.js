@@ -1,19 +1,22 @@
 import React, { Fragment, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useSelector, useDispatch } from "react-redux";
 
-import Loader from "../layout/Loader";
-import Header from "../layout/DashboardHeader";
-import Sidebar from "../layout/Sidebar";
+import Loader from './components/layout/Loader';
+import Header from './components/layout/Header';
+import Sidebar from './components/layout/Sidebar';
+import Dashboard from './components/layout/DashboardHeader';
+import { getUser } from "../../actions/authActions";
 
-const Dashboard = () => {
+const AdminDashboardLayout = () => {
   const dispatch = useDispatch();
 
-  const { loading, user } = useSelector((state) => state.auth);
+  const { loading } = useSelector((state) => state.auth);
   const { error } = useSelector((state) => state.wallet);
 
   useEffect(() => {
+    dispatch(getUser())
     if (error) {
       return toast.error(error);
     }
@@ -25,9 +28,9 @@ const Dashboard = () => {
         <Loader />
       ) : (
         <Fragment>
-          <Sidebar user={user} />
+          <Sidebar />
           <div className="content ht-100v pd-0">
-            <Header />
+              <Dashboard/>
             <Outlet />
           </div>
         </Fragment>
@@ -36,4 +39,5 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default AdminDashboardLayout;
+

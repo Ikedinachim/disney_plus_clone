@@ -7,6 +7,12 @@ import {
   GET_DEFAULT_SENDERID_REQUEST,
   GET_DEFAULT_SENDERID_SUCCESS,
   GET_DEFAULT_SENDERID_FAIL,
+  GET_ADMIN_SENDERID_REQUEST,
+  GET_ADMIN_SENDERID_SUCCESS,
+  GET_ADMIN_SENDERID_FAIL,
+  UPDATE_ADMIN_SENDERID_REQUEST,
+  UPDATE_ADMIN_SENDERID_SUCCESS,
+  UPDATE_ADMIN_SENDERID_FAIL,
   CREATE_SENDERID_REQUEST,
   CREATE_SENDERID_SUCCESS,
   CREATE_SENDERID_FAIL,
@@ -87,6 +93,74 @@ export const getSenderID = () => async (dispatch) => {
   }
 };
 
+//Get Admin Sender ID
+export const getAdminSenderID = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_ADMIN_SENDERID_REQUEST });
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get("/api/sender-ids", config);
+
+    if (data.status === "success") {
+      dispatch({
+        type: GET_ADMIN_SENDERID_SUCCESS,
+        payload: data.data,
+      });
+    } else {
+      dispatch({
+        type: GET_ADMIN_SENDERID_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: GET_ADMIN_SENDERID_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+export const UpdateAdminSenderId = (update) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_ADMIN_SENDERID_REQUEST });
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const { data } = await axios.post("api/sender-id/update", update, config);
+
+    if (data.status === "success") {
+      dispatch({
+        type: UPDATE_ADMIN_SENDERID_SUCCESS,
+        payload: data,
+      });
+    } else {
+      dispatch({
+        type: UPDATE_ADMIN_SENDERID_FAIL,
+        payload: data,
+      });
+    }
+  } catch (data) {
+    dispatch({
+      type: UPDATE_ADMIN_SENDERID_FAIL,
+      payload: data,
+    });
+  }
+};
+
+
 // Create New Sender ID
 export const createSenderId = (setCreateSenderId) => async (dispatch) => {
   try {
@@ -124,6 +198,7 @@ export const createSenderId = (setCreateSenderId) => async (dispatch) => {
     });
   }
 };
+
 
 // Clear Errors
 export const clearErrors = () => async (dispatch) => {

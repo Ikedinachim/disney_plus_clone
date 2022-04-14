@@ -68,6 +68,9 @@ import {
   getRevenueBandReducer,
 } from "./reducers/campaignReducers";
 
+import { AdminSenderIDReducer, UpdateAdminSenderIDReducer }
+  from "./components/admin/reducers/senderIdReducer";
+
 const appReducer = combineReducers({
   auth: authReducer,
   userDetails: userDetailsReducer,
@@ -115,6 +118,8 @@ const appReducer = combineReducers({
   bitlyCount: bitlyCountReducer,
   confirmRegistration: confirmRegistrationReducer,
   resendVerification: resendVerificationReducer,
+  AdminSenderId: AdminSenderIDReducer,
+  UpdateSenderId: UpdateAdminSenderIDReducer,
   revenueBand: getRevenueBandReducer,
 });
 
