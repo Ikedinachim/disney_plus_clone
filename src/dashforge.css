@@ -17086,7 +17086,7 @@ textarea.parsley-success:focus {
 }
 @media (min-width: 992px) {
   .aside-fixed + .content {
-    margin-left: 60px;
+    margin-left: 245px;
   }
 }
 @media (min-width: 1200px) {
@@ -17153,6 +17153,7 @@ textarea.parsley-success:focus {
 
 .aside-menu-link {
   color: #8392a5;
+  cursor: pointer;
 }
 .aside-menu-link:hover,
 .aside-menu-link:focus {
