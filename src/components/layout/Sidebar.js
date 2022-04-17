@@ -17,10 +17,6 @@ const Sidebar = ({ user }) => {
   };
 
   useEffect(() => {
-    // const updateDimensions = () => {
-    //   const width = window.innerWidth;
-    //   setWindowWidth(width);
-    // };
     updateDimensions();
 
     window.addEventListener("resize", updateDimensions);
