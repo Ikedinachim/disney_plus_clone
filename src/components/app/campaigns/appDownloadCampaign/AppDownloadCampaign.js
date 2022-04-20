@@ -50,8 +50,8 @@ const AppDownloadCampaign = ({
     // } else
     if (
       values.channel !== "display_ads" &&
-      values.senderId === "" &&
-      values.alternateSenderId === ""
+      ((values.senderId === "" && values.alternateSenderId === "") ||
+        values.alternateSenderId === "")
     ) {
       toast.error("Choose an alternate ID");
     } else if (values.channel === "") {

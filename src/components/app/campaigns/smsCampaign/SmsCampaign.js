@@ -26,7 +26,10 @@ const SmsCampaign = ({
     // if (values.senderId === "" && values.alternateSenderId !== "") {
     //   toast.error("Select a Sender ID or choose an alternate ID");
     // } else
-    if (values.senderId === "" && values.alternateSenderId === "") {
+    if (
+      (values.senderId === "" && values.alternateSenderId === "") ||
+      values.alternateSenderId === ""
+    ) {
       toast.error("Choose an alternate ID");
     } else if (values.channel === "") {
       toast.error("Choose a channel");
@@ -41,10 +44,10 @@ const SmsCampaign = ({
       label: "Select Channel",
       value: "select channel",
     },
-    {
-      label: "Flash SMS",
-      value: "flash_sms",
-    },
+    // {
+    //   label: "Flash SMS",
+    //   value: "flash_sms",
+    // },
     {
       label: "SMS",
       value: "sms",

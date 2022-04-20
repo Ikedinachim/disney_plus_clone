@@ -559,8 +559,6 @@ export const getFilteredContactList =
         // config
       );
 
-      console.log(data);
-
       if (data.success) {
         dispatch({
           type: GET_FILTERED_CONTACT_LIST_SUCCESS,

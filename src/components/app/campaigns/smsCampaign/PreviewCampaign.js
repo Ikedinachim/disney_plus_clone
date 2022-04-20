@@ -81,11 +81,11 @@ const PreviewCampaign = ({
         setScheduleDate(values.scheduleFrom, values.scheduleTo)
       );
     } else {
-      return (
-        filteredContactList.count *
-        5 *
-        setScheduleDate(values.scheduleFrom, values.scheduleTo)
-      );
+      return filteredContactList
+        ? filteredContactList.count *
+            5 *
+            setScheduleDate(values.scheduleFrom, values.scheduleTo)
+        : 0;
     }
   };
 
@@ -466,7 +466,9 @@ const PreviewCampaign = ({
                             Potential Audience Based on filter
                           </label>
                           <p className="tx-18 tx-com tx-bold mb-1">
-                            {filteredContactList.count}
+                            {filteredContactList
+                              ? filteredContactList.count
+                              : 0}
                           </p>
                         </div>
                         <div className="form-row mg-t-15">

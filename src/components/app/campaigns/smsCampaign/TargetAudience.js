@@ -401,7 +401,7 @@ const TargetAudience = ({
                                 Potential Audience Based on filter
                               </label>
                               <p className="tx-18 tx-com tx-bold mb-1 mg-t-15">
-                                {filteredContactList ? (
+                                {filteredContactList && !fcLoading ? (
                                   <NumberFormat
                                     value={parseInt(filteredContactList.count)}
                                     displayType={"text"}
