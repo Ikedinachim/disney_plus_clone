@@ -204,7 +204,7 @@ const ViewCampaign = () => {
                             className="btn btn-primary mg-b-15 round-5"
                             href={`sms:${
                               createShowAds && createShowAds.smsNumber
-                            }?body="I will like to make an enquiry"`}
+                            };?&body="I will like to make an enquiry"`}
                             onClick={() => handleClickType("smsNumber")}
                           >
                             <i className="fa fa-comment mg-r-10"> </i>
