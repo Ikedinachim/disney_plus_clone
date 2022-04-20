@@ -109,18 +109,18 @@ const Header = () => {
               {/* <Link to="admin" className="dropdown-item">
                 <FeatherIcon icon="edit-3" /> Edit Profile
               </Link> */}
-              <Link to="/app/setting" className="dropdown-item">
+              {/* <Link to="/app/setting" className="dropdown-item">
                 <FeatherIcon icon="user" /> View Profile
-              </Link>
-              <div className="dropdown-divider" />
-              <Link to="#" className="dropdown-item">
-                <FeatherIcon icon="help-circle" /> Help Center
-              </Link>
-              <Link to="" className="dropdown-item">
-                <FeatherIcon icon="life-buoy" /> Forum
-              </Link>
+              </Link> */}
               <Link to="setting" className="dropdown-item">
                 <FeatherIcon icon="settings" /> Account Settings
+              </Link>
+              <div className="dropdown-divider" />
+              <Link to="#" className="dropdown-item disabled">
+                <FeatherIcon icon="help-circle" /> Help Center
+              </Link>
+              <Link to="" className="dropdown-item disabled">
+                <FeatherIcon icon="life-buoy" /> Forum
               </Link>
               {/* <Link to="setting" className="dropdown-item">
                 <FeatherIcon icon="settings" /> Privacy Settings
