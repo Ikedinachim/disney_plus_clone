@@ -106,25 +106,25 @@ const Header = () => {
                 {userDetails.user.firstName + " " + userDetails.user.lastName}
               </h6>
               <p className="mg-b-25 tx-12 tx-color-03">Administrator</p>
-              <Link to="admin" className="dropdown-item">
+              {/* <Link to="admin" className="dropdown-item">
                 <FeatherIcon icon="edit-3" /> Edit Profile
-              </Link>
-              <Link to="/app/setting" className="dropdown-item">
+              </Link> */}
+              {/* <Link to="/app/setting" className="dropdown-item">
                 <FeatherIcon icon="user" /> View Profile
-              </Link>
-              <div className="dropdown-divider" />
-              <Link to="page-help-center.html" className="dropdown-item">
-                <FeatherIcon icon="help-circle" /> Help Center
-              </Link>
-              <Link to="" className="dropdown-item">
-                <FeatherIcon icon="life-buoy" /> Forum
-              </Link>
+              </Link> */}
               <Link to="setting" className="dropdown-item">
                 <FeatherIcon icon="settings" /> Account Settings
               </Link>
-              <Link to="setting" className="dropdown-item">
-                <FeatherIcon icon="settings" /> Privacy Settings
+              <div className="dropdown-divider" />
+              <Link to="#" className="dropdown-item disabled">
+                <FeatherIcon icon="help-circle" /> Help Center
               </Link>
+              <Link to="" className="dropdown-item disabled">
+                <FeatherIcon icon="life-buoy" /> Forum
+              </Link>
+              {/* <Link to="setting" className="dropdown-item">
+                <FeatherIcon icon="settings" /> Privacy Settings
+              </Link> */}
               <Link to="/" className="dropdown-item" onClick={logoutHandler}>
                 <FeatherIcon icon="log-out" /> Sign Out
               </Link>

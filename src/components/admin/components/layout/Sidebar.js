@@ -6,10 +6,15 @@ import FeatherIcon from "feather-icons-react";
 
 const Sidebar = () => {
   const ref = useRef();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [width, setWindowWidth] = useState(0);
+  const [isMenuOpen, setIsMenuOpen] = useState(width > 989 ? false : true);
   const [hovered, setHovered] = useState(false);
   const toggleHover = () => setHovered(!hovered);
+
+  const updateDimensions = () => {
+    const width = window.innerWidth;
+    setWindowWidth(width);
+  };
 
   useEffect(() => {
     updateDimensions();
@@ -18,14 +23,9 @@ const Sidebar = () => {
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
-  const updateDimensions = () => {
-    const width = window.innerWidth;
-    setWindowWidth(width);
-  };
-
   useEffect(() => {
     const checkIfClickedOutside = (e) => {
-      if (isMenuOpen && ref.current && !ref.current.contains(e.target)) {
+      if (!isMenuOpen && ref.current && !ref.current.contains(e.target)) {
         setIsMenuOpen(false);
         document.body.classList.remove("show-aside");
       }
@@ -33,12 +33,12 @@ const Sidebar = () => {
 
     let backdrop = document.createElement("div");
 
-    if (isMenuOpen && width < 989) {
+    if (!isMenuOpen && width < 989) {
       document.body.classList.add("show-aside");
       backdrop.classList.add("aside-backdrop");
       document.body.appendChild(backdrop);
     }
-    if ((!isMenuOpen && width < 989) || (isMenuOpen && width > 989)) {
+    if ((isMenuOpen && width < 989) || (!isMenuOpen && width > 989)) {
       document.body.classList.remove("show-aside");
       document.querySelector(".aside-backdrop") &&
         document.body.removeChild(document.querySelector(".aside-backdrop"));
@@ -50,7 +50,7 @@ const Sidebar = () => {
       // Cleanup the event listener
       document.removeEventListener("mousedown", checkIfClickedOutside);
     };
-  }, [isMenuOpen, width]);
+  }, [isMenuOpen, width, setIsMenuOpen]);
 
   return (
     <aside
@@ -59,7 +59,7 @@ const Sidebar = () => {
       }
        ${!isMenuOpen && hovered ? "maximize" : ""}
       `}
-      ref={ref}
+      ref={width > 989 ? null : ref}
       onMouseEnter={toggleHover}
       onMouseLeave={toggleHover}
     >
@@ -116,6 +116,18 @@ const Sidebar = () => {
             >
               <i className="fa fa-home mr-3" />
               <span>Dashboard</span>
+            </NavLink>
+          </li>
+          <li className="nav-item active">
+            <NavLink
+              to="/admin/statistics"
+              end
+              className={({ isActive }) =>
+                isActive ? "nav-link active" : "nav-link"
+              }
+            >
+              <i className="fa fa-money mr-3" />
+              <span>Statistics</span>
             </NavLink>
           </li>
         </ul>

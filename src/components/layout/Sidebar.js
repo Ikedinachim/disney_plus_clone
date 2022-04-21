@@ -4,12 +4,17 @@ import NavLogo from "../../assets/img/logo.svg";
 
 import FeatherIcon from "feather-icons-react";
 
-const Sidebar = ({user}) => {
+const Sidebar = ({ user }) => {
   const ref = useRef();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [width, setWindowWidth] = useState(0);
+  const [isMenuOpen, setIsMenuOpen] = useState(width > 989 ? false : true);
   const [hovered, setHovered] = useState(false);
   const toggleHover = () => setHovered(!hovered);
+
+  const updateDimensions = () => {
+    const width = window.innerWidth;
+    setWindowWidth(width);
+  };
 
   useEffect(() => {
     updateDimensions();
@@ -18,26 +23,21 @@ const Sidebar = ({user}) => {
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
-  const updateDimensions = () => {
-    const width = window.innerWidth;
-    setWindowWidth(width);
-  };
-
   useEffect(() => {
     const checkIfClickedOutside = (e) => {
-      if (isMenuOpen && ref.current && !ref.current.contains(e.target)) {
+      if (!isMenuOpen && ref.current && !ref.current.contains(e.target)) {
         setIsMenuOpen(false);
       }
     };
 
     let backdrop = document.createElement("div");
 
-    if (isMenuOpen && width < 989) {
+    if (!isMenuOpen && width < 989) {
       document.body.classList.add("show-aside");
       backdrop.classList.add("aside-backdrop");
       document.body.appendChild(backdrop);
     }
-    if ((!isMenuOpen && width < 989) || (isMenuOpen && width > 989)) {
+    if ((isMenuOpen && width < 989) || (!isMenuOpen && width > 989)) {
       document.body.classList.remove("show-aside");
       document.querySelector(".aside-backdrop") &&
         document.body.removeChild(document.querySelector(".aside-backdrop"));
@@ -49,17 +49,17 @@ const Sidebar = ({user}) => {
       // Cleanup the event listener
       document.removeEventListener("mousedown", checkIfClickedOutside);
     };
-  }, [isMenuOpen]);
+  }, [isMenuOpen, width, setIsMenuOpen]);
 
   return (
     <aside
       className={`aside aside-fixed ${
         !isMenuOpen ? (width > 989 ? "minimize" : "") : ""
       }
-       ${!isMenuOpen && hovered ? "maximize" : ""}
+       ${!isMenuOpen && hovered && width > 989 ? "maximize" : ""}
       `}
-      // ref={width > 989 ? null : ref}
-      ref={ref}
+      ref={width > 989 ? null : ref}
+      // ref={ref}
       onMouseEnter={toggleHover}
       onMouseLeave={toggleHover}
     >
@@ -151,17 +151,19 @@ const Sidebar = ({user}) => {
               <span className="marine-active-menu">Analytics</span>
             </NavLink>
           </li>
-          {user.user.isAdmin ? <li className="nav-item active">
-            <NavLink
-              to="/admin"
-              className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
-              }
-            >
-              <i className="fa fa-lock mr-3" />{" "}
-              <span className="marine-active-menu">Admin</span>
-            </NavLink>
-          </li>: null}
+          {user.user.isAdmin ? (
+            <li className="nav-item active">
+              <NavLink
+                to="/admin"
+                className={({ isActive }) =>
+                  isActive ? "nav-link active" : "nav-link"
+                }
+              >
+                <i className="fa fa-lock mr-3" />{" "}
+                <span className="marine-active-menu">Admin</span>
+              </NavLink>
+            </li>
+          ) : null}
         </ul>
       </div>
     </aside>
