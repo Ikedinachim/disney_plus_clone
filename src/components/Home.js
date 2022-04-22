@@ -79,8 +79,11 @@ const Home = () => {
                       <span className="tx-primary tx-com">Mysogi</span>
                     </p>
                     <p className="tx-16 tx-blac tx-medium mg-t-30">
-                      Relied upon to get constant engagement with audience and
-                      provide the win your organisation needs.
+                      Leverage on our 50 million+ target audience reach for your
+                      SMS, Email, Voice SMS and Smart SMS marketing campaigns.
+                      Our Catalogue of Influencers connects you to your favorite
+                      influencers to reach their fans and a wider audience and
+                      that's not all.
                     </p>
                     <div className="mg-t-40">
                       <Link
