@@ -29,10 +29,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (
-      isAuthenticated &&
-      user.user.role !== "influencer"
-    ) {
+    if (isAuthenticated && user.user.role !== "influencer") {
       dispatch(getWallet());
       dispatch(getUser());
       navHistory("/app");
@@ -121,7 +118,7 @@ const Login = () => {
                     <div className="form-group">
                       <input
                         className="form-control new"
-                        placeholder="Username"
+                        placeholder="Email"
                         type="text"
                         id="email_field"
                         value={userName}
