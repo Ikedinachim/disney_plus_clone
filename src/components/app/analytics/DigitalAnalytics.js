@@ -49,7 +49,7 @@ const DigitalAnalytics = () => {
                 <div className="row">
                   <div className="col-md-4 col-12 mg-t-20 mg-md-t-0">
                     <div className="card rounded bd-0 shadow-sm">
-                      <div className="card-body">
+                      <div className="card-body h-25">
                         <div className="d-flex">
                           <div className="mg-r-20">
                             {" "}
@@ -74,7 +74,7 @@ const DigitalAnalytics = () => {
                   </div>
                   <div className="col-md-4 col-12 mg-t-20 mg-md-t-0">
                     <div className="card rounded bd-0 shadow-sm">
-                      <div className="card-body">
+                      <div className="card-body h-25">
                         <div className="d-flex">
                           <div className="mg-r-20">
                             {" "}
@@ -98,7 +98,7 @@ const DigitalAnalytics = () => {
                   </div>
                   <div className="col-md-4 col-12 mg-t-20 mg-md-t-0">
                     <div className="card rounded bd-0 shadow-sm">
-                      <div className="card-body">
+                      <div className="card-body h-25">
                         <div className="d-flex">
                           <div className="mg-r-20">
                             {" "}
