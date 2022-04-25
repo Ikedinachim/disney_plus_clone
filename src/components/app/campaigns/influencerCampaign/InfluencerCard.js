@@ -15,7 +15,7 @@ const InfluencerCard = ({
   // }, [show]);
   return (
     <Fragment>
-      <div className="col-md-3 col-12 mg-b-20">
+      <div className="col-md-4 col-lg-3 col-12 mg-b-20">
         <div className="card card-body shadow-sm pd-12 card-height rounded">
           <div className="custom-control custom-checkbox pd-l-15">
             {/* <div className="custom-control-input"> */}
@@ -34,7 +34,7 @@ const InfluencerCard = ({
               data-toggle="modal2"
               data-target="#sideModal"
             >
-              <div className="d-flex">
+              <div className="d-flex overflow-hidden">
                 <div className="div pd-l-0">
                   <div className="avatar avatar-xl">
                     <img
@@ -49,7 +49,7 @@ const InfluencerCard = ({
                   </div>
                 </div>
                 <div className="mg-l-10">
-                  <p className="tx-18 mb-0 tx-com tx-bold">{influencer.name}</p>
+                  <p className="tx-16 mb-0 tx-com tx-bold">{influencer.name}</p>
                   <p className="mb-1 tx-14 capitalize">{influencer.kind}</p>
                   <p className="mb-0 tx-12 tx-gray">
                     <i className="fa fa-users wd-5 ht-5 mg-r-8" />{" "}

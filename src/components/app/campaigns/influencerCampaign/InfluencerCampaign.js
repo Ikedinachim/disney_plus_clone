@@ -210,7 +210,7 @@ const InfluencerCampaign = ({
                   </p>
                 </div>
                 <div className="col-md-5 col-12 mg-b-20">
-                  <div className="d-flex float-md-right">
+                  <div className="d-flex float-md-right justify-content-end">
                     <div>
                       <div className="d-flex justify-content-end">
                         <form

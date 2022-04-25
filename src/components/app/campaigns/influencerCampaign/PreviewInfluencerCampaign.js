@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -17,7 +17,7 @@ import Loader from "../../../loader";
 
 import MediaPlayer from "../../../../_helpers/reactPlayer/ReactPlayer";
 
-import PreviewIcon from "../../../../assets/img/Promote_Offers.svg";
+// import PreviewIcon from "../../../../assets/img/Promote_Offers.svg";
 
 const PreviewInfluencerCampaign = ({
   nextStep,
@@ -100,11 +100,11 @@ const PreviewInfluencerCampaign = ({
       dispatch(clearErrors());
       dispatch(getWallet());
     }
-  }, [dispatch, toast, error, createInfluencerCampaign, navigate]);
+  }, [dispatch, error, createInfluencerCampaign, navigate]);
 
   const filteredValue = checkedInfluencers;
 
-  console.log(filteredValue?.map((platform) => platform));
+  // console.log(filteredValue?.map((platform) => platform));
 
   // const total = filteredValue.reduce(
   //   (accumulator, platform, currentIndex, array) => {
