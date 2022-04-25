@@ -21,7 +21,7 @@ const ChangePassword = () => {
 
   useEffect(() => {
     dispatch(getUser());
-  }, []);
+  }, [dispatch]);
 
   const [people, setPeople] = useState({
     username: user.username,

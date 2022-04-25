@@ -65,7 +65,9 @@ export default class SmsStepForm extends Component {
 
     if (input === "campaignMessage") {
       this.setState({ characterCount: e.target.value.length });
-      this.setState({ smsCount: Math.ceil(e.target.value.length / 160) });
+      this.setState({
+        smsCount: Math.ceil((e.target.value.length + 25) / 160),
+      });
     }
   };
 

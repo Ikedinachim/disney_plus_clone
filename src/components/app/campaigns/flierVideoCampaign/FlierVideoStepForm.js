@@ -92,7 +92,9 @@ export default class FlierVideoStepForm extends Component {
 
     if (input === "campaignMessage") {
       this.setState({ characterCount: e.target.value.length });
-      this.setState({ smsCount: Math.ceil(e.target.value.length / 160) });
+      this.setState({
+        smsCount: Math.ceil((e.target.value.length + 25) / 160),
+      });
     }
     if (input === "callToAction") {
       this.setState({ callToActionCount: e.target.value.length });
@@ -266,6 +268,7 @@ export default class FlierVideoStepForm extends Component {
 
     const setYoutubeUrl = (url) => {
       let regExp =
+        // eslint-disable-next-line no-useless-escape
         /^https?\:\/\/(?:www\.youtube(?:\-nocookie)?\.com\/|m\.youtube\.com\/|youtube\.com\/)?(?:ytscreeningroom\?vi?=|youtu\.be\/|vi?\/|user\/.+\/u\/\w{1,2}\/|embed\/|watch\?(?:.*\&)?vi?=|\&vi?=|\?(?:.*\&)?vi?=)([^#\&\?\n\/<>"']*)/i;
       let match = url && url.match(regExp);
       const watchUrl = `https://www.youtube.com/watch?v=${match && match[1]}`;

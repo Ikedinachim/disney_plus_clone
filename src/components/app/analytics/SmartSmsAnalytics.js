@@ -61,7 +61,7 @@ const SmartSmsAnalytics = () => {
               <div className="row justify-content-around">
                 <div className="col-md-3 col-12 mg-t-20 mg-md-t-0">
                   <div className="card rounded bd-0 shadow-sm row">
-                    <div className="card-body ">
+                    <div className="card-body vh-36">
                       <div className="d-flex">
                         <div className="mg-r-20">
                           {" "}
@@ -87,7 +87,7 @@ const SmartSmsAnalytics = () => {
                 </div>
                 <div className="col-md-3 col-12 mg-t-20 mg-md-t-0">
                   <div className="card rounded bd-0 shadow-sm row">
-                    <div className="card-body">
+                    <div className="card-body vh-36">
                       <div className="d-flex">
                         <div className="mg-r-20">
                           {" "}
@@ -117,7 +117,7 @@ const SmartSmsAnalytics = () => {
 
                 <div className="col-md-3 col-12 mg-t-20 mg-md-t-0">
                   <div className="card rounded bd-0 shadow-sm row">
-                    <div className="card-body">
+                    <div className="card-body vh-36">
                       <div className="d-flex">
                         <div className="mg-r-20">
                           {" "}
@@ -145,12 +145,9 @@ const SmartSmsAnalytics = () => {
                     </div>
                   </div>
                 </div>
-
-                <div className="card-body">
-                  <div className="d-flex">
-                    <ActionsChart />
-                  </div>
-                </div>
+              </div>
+              <div className="card-body">
+                <ActionsChart />
               </div>
             </div>
           </div>

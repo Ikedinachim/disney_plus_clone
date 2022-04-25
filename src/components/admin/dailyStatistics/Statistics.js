@@ -2,19 +2,12 @@ import React, { Fragment, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { MDBDataTable } from "mdbreact";
 import MetaData from "../../layout/MetaData";
-import { getAdminSenderID } from "../../../actions/senderIDActions";
 import Loader from '../../loader';
 
 const Statistics = () => {
-   const { loading, error, adminSenderID } = useSelector(
-     (state) => state.AdminSenderId || []
-   );
   
   const dispatch = useDispatch();
-  
-  useEffect(() => {
-  dispatch(getAdminSenderID());
-  })
+
   const setCampaign = () => {
     const campaignData = {
       columns: [
@@ -50,10 +43,6 @@ const Statistics = () => {
   };
   
   return (
-    <Fragment>
-      {loading ? (
-        <Loader/>
-      ) : (
         <Fragment>
           <MetaData title={"All Sender IDs"} />
           <div className="card card rounded bd-0 shadow-sm">
@@ -82,8 +71,6 @@ const Statistics = () => {
             </div>
           </div>
         </Fragment>
-      )}
-    </Fragment>
   );
 };
 
