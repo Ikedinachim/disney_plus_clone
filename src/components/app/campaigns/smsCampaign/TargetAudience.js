@@ -3,7 +3,7 @@ import React, {
   useState,
   useCallback,
   useEffect,
-  useMemo,
+  // useMemo,
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -47,19 +47,19 @@ const TargetAudience = ({
 
   const { error } = useSelector((state) => state.filteredContactList || []);
 
-  const filter2 = useMemo((filterOptions) => {
-    if (filterOptions) {
-      return filterOptions;
-    }
-  }, []);
+  // const filter2 = useMemo((filterOptions) => {
+  //   if (filterOptions) {
+  //     return filterOptions;
+  //   }
+  // }, []);
 
-  const filter = useCallback(
-    (filterOptions) => {
-      filterOptions();
-      dispatch(getFilteredContactList(filterOptions));
-    },
-    [filterOptions]
-  );
+  // const filter = useCallback(
+  //   (filterOptions) => {
+  //     filterOptions();
+  //     dispatch(getFilteredContactList(filterOptions));
+  //   },
+  //   [dispatch,]
+  // );
 
   useEffect(() => {
     if (values.targetAudienceOption === "mysogidb") {
@@ -68,8 +68,8 @@ const TargetAudience = ({
     }
   }, [dispatch, filterOptions, values]);
 
-  const [selectedState, setSelectedState] = useState(null);
-  const [selectedLga, setSelectedLga] = useState(null);
+  // const [selectedState, setSelectedState] = useState(null);
+  // const [selectedLga, setSelectedLga] = useState(null);
   const [parsedCsvData, setParsedCsvData] = useState([]);
   const [csvName, setCsvName] = useState();
   const { filteredContactList, fcLoading } = useSelector(
@@ -154,15 +154,15 @@ const TargetAudience = ({
     },
   ];
 
-  const setPrice = () => {
-    if (values.targetAudienceOption !== "mysogidb") {
-      return parseInt(values.price);
-    } else if (values.limit !== "") {
-      return parseInt(values.limit) * 5;
-    } else {
-      return filteredContactList ? filteredContactList.count * 5 : 0;
-    }
-  };
+  // const setPrice = () => {
+  //   if (values.targetAudienceOption !== "mysogidb") {
+  //     return parseInt(values.price);
+  //   } else if (values.limit !== "") {
+  //     return parseInt(values.limit) * 5;
+  //   } else {
+  //     return filteredContactList ? filteredContactList.count * 5 : 0;
+  //   }
+  // };
 
   const Continue = (e) => {
     e.preventDefault();
@@ -313,7 +313,7 @@ const TargetAudience = ({
               />
             </div>
             <div className="pd-md-y-20">
-              <div className>
+              <div>
                 <form>
                   <div>
                     <div className="row justify-content-md-between">

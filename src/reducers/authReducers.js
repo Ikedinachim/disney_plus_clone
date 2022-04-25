@@ -348,7 +348,7 @@ export const forgotPasswordReducer = (state = {}, action) => {
       };
     case FORGOT_PASSWORD_RESET:
       return {
-        ...state,
+        loading: false,
         message: [],
       };
     case CLEAR_ERRORS:

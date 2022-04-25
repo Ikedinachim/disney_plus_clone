@@ -121,7 +121,7 @@ const Home = () => {
                 </div>
               </div>
             </section>
-            <section className="content-body">
+            <section className="content-body" id="more">
               <div className="container pd-y-30 pd-md-t-70 pd-md-b-0">
                 <p className="tx-28 tx-com tx-center tx-bold mb-0">
                   Why Mysogi?
@@ -299,7 +299,7 @@ const Home = () => {
                   </div>
                 </div>
               </section>
-              <section className="bg-reddish">
+              <section className="bg-reddish" id="mysogi-contact">
                 <div className="container py-1">
                   <div className="mg-md-t-40 mg-t-30">
                     <p className="tx-36 tx-bold mb-2 tx-com ">Let's discuss</p>
