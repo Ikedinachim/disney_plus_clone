@@ -175,7 +175,6 @@ const FundWalletSMS = ({ prevStep, values }) => {
     }
   }, [
     dispatch,
-    toast,
     loading,
     error,
     fundWallet,
@@ -270,6 +269,7 @@ const FundWalletSMS = ({ prevStep, values }) => {
                         <img
                           src="../../../assets/img/atm.jpg"
                           className="img-fluid"
+                          alt="ATM"
                         />
                       </div>
                     </div>

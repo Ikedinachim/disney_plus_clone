@@ -9,7 +9,7 @@ const TransactionHistory = () => {
 
   useEffect(() => {
     dispatch(getTransactionHistory());
-  }, []);
+  }, [dispatch]);
 
   const {
     tnxHistory: { reverseTnxHistory },
