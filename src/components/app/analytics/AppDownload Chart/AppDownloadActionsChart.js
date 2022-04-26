@@ -59,3 +59,4 @@ const AppDownloadActionsChart = () => {
 };
 
 export default AppDownloadActionsChart;
+
