@@ -79,8 +79,11 @@ const Home = () => {
                       <span className="tx-primary tx-com">Mysogi</span>
                     </p>
                     <p className="tx-16 tx-blac tx-medium mg-t-30">
-                      Relied upon to get constant engagement with audience and
-                      provide the win your organisation needs.
+                      Leverage on our 50 million+ target audience reach for your
+                      SMS, Email, Voice SMS and Smart SMS marketing campaigns.
+                      Our Catalogue of Influencers connects you to your favorite
+                      influencers to reach their fans and a wider audience and
+                      that's not all.
                     </p>
                     <div className="mg-t-40">
                       <Link
@@ -118,7 +121,7 @@ const Home = () => {
                 </div>
               </div>
             </section>
-            <section className="content-body">
+            <section className="content-body" id="more">
               <div className="container pd-y-30 pd-md-t-70 pd-md-b-0">
                 <p className="tx-28 tx-com tx-center tx-bold mb-0">
                   Why Mysogi?
@@ -296,7 +299,7 @@ const Home = () => {
                   </div>
                 </div>
               </section>
-              <section className="bg-reddish">
+              <section className="bg-reddish" id="mysogi-contact">
                 <div className="container py-1">
                   <div className="mg-md-t-40 mg-t-30">
                     <p className="tx-36 tx-bold mb-2 tx-com ">Let's discuss</p>

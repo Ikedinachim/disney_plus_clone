@@ -24,7 +24,7 @@ const DigitalAnalyticsTable = () => {
         },
         // custom-control-label
         {
-          label: "Propeller Id",
+          label: "Digital channel Id",
           field: "propellerId",
           sort: "asc",
         },

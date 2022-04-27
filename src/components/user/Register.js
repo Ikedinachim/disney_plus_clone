@@ -34,7 +34,7 @@ const Register = () => {
     businessEmail: "",
   });
 
-  const { firstName, lastName, username, email, phone } = newUser;
+  const { firstName, lastName, email, phone } = newUser;
 
   const schema = Yup.object().shape({
     firstName: Yup.string()
@@ -56,14 +56,14 @@ const Register = () => {
   });
 
   const businessSchema = Yup.object().shape({
-    firstName: Yup.string()
-      .min(2, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Required"),
-    lastName: Yup.string()
-      .min(2, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Required"),
+    // firstName: Yup.string()
+    //   .min(2, "Too Short!")
+    //   .max(50, "Too Long!")
+    //   .required("Required"),
+    // lastName: Yup.string()
+    //   .min(2, "Too Short!")
+    //   .max(50, "Too Long!")
+    //   .required("Required"),
     businessEmail: Yup.string().email().required(),
     password: Yup.string()
       .required("Password is required")
@@ -233,7 +233,7 @@ const Register = () => {
                             />
                           </div>
                         </div>
-                        <div className="form-group">
+                        {/* <div className="form-group">
                           <input
                             {...register("username")}
                             type="text"
@@ -244,8 +244,8 @@ const Register = () => {
                             value={username}
                             onChange={onChange}
                           />
-                        </div>
-                        <div className="form-group">
+                        </div> */}
+                        <div className="form-group d-none">
                           <input
                             {...register("userType")}
                             type="hidden"
@@ -368,7 +368,7 @@ const Register = () => {
                         onSubmit={handleSubmit2(submitBusinessHandler, onError)}
                         id="businessForm"
                       >
-                        <div className="form-row">
+                        {/* <div className="form-row">
                           <div className="form-group col-md-6">
                             <input
                               {...registerBusiness("firstName")}
@@ -396,14 +396,30 @@ const Register = () => {
                               </span>
                             )}
                           </div>
-                        </div>
-                        <div className="form-group">
+                        </div> */}
+                        {/* <div className="form-group">
                           <input
                             {...registerBusiness("username")}
                             type="text"
                             id="businessUsername"
                             className="form-control new"
                             placeholder="Username"
+                          />
+                        </div> */}
+                        <div className="form-group">
+                          <input
+                            {...registerBusiness("businessName")}
+                            type="text"
+                            className="form-control new"
+                            placeholder="Business Name"
+                          />
+                        </div>
+                        <div className="form-group">
+                          <input
+                            {...registerBusiness("businessEmail")}
+                            type="email"
+                            className="form-control new"
+                            placeholder="Business Email"
                           />
                         </div>
                         <div className="form-group">
@@ -445,34 +461,18 @@ const Register = () => {
                         </div>
                         <div className="form-group">
                           <input
-                            {...registerBusiness("phone")}
-                            type="number"
-                            className="form-control new"
-                            placeholder="Phone Number"
-                          />
-                        </div>
-                        <div className="form-group">
-                          <input
-                            {...registerBusiness("businessName")}
-                            type="text"
-                            className="form-control new"
-                            placeholder="Business Name"
-                          />
-                        </div>
-                        <div className="form-group">
-                          <input
-                            {...registerBusiness("businessEmail")}
-                            type="email"
-                            className="form-control new"
-                            placeholder="Business Email"
-                          />
-                        </div>
-                        <div className="form-group">
-                          <input
                             {...registerBusiness("contactName")}
                             type="text"
                             className="form-control new"
                             placeholder="Contact Name"
+                          />
+                        </div>
+                        <div className="form-group">
+                          <input
+                            {...registerBusiness("phone")}
+                            type="number"
+                            className="form-control new"
+                            placeholder="Phone Number"
                           />
                         </div>
 

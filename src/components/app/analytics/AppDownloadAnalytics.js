@@ -5,34 +5,35 @@ import { toast } from "react-toastify";
 
 import MetaData from "../../layout/MetaData";
 import {
-  getSingleFlierVideosCampaigns,
+  getSingleAppDownloadCampaigns,
   clearErrors,
 } from "../../../actions/campaignActions";
 import { getBitlyCount } from "../../../actions/analyticsActions";
 import Loader from "../../loader";
 import ActionsChart from "./SmartSms Chart/ActionsChart";
 
-const SmartSmsAnalytics = () => {
+const AppDownloadAnalytics = () => {
+
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const { loading, error, singleFlierCampaign } = useSelector(
-    (state) => state.singleFlierCampaign || {}
+  const { loading, error, singleAppCampaign } = useSelector(
+    (state) => state.singleAppCampaign || {}
   );
 
   const { bitlyCount } = useSelector((state) => state || {});
 
   useEffect(() => {
     if (
-      singleFlierCampaign &&
-      (singleFlierCampaign.bitlink !== null ||
-        singleFlierCampaign.bitlink !== undefined)
+      singleAppCampaign &&
+      (singleAppCampaign.bitlink !== null ||
+        singleAppCampaign.bitlink !== undefined)
     ) {
       const link =
-        singleFlierCampaign.bitlink &&
-        singleFlierCampaign.bitlink.split("//").pop();
+        singleAppCampaign.bitlink &&
+        singleAppCampaign.bitlink.split("//").pop();
       dispatch(getBitlyCount(link));
-      dispatch(getSingleFlierVideosCampaigns(id));
+      dispatch(getSingleAppDownloadCampaigns(id));
     } else if (error || bitlyCount.error) {
       toast.error(error || bitlyCount.error);
       dispatch(clearErrors());
@@ -74,8 +75,8 @@ const SmartSmsAnalytics = () => {
                         </div>
                         <div>
                           <p className="tx-24 tx-bold">
-                            {singleFlierCampaign &&
-                              singleFlierCampaign.targetAudienceCount}
+                            {singleAppCampaign &&
+                              singleAppCampaign.targetAudienceCount}
                           </p>
                           <p className="tx-15 tx-blac">
                             Total number of impressions
@@ -100,8 +101,8 @@ const SmartSmsAnalytics = () => {
                         </div>
                         <div>
                           <p className="tx-24 tx-bold">
-                            {singleFlierCampaign &&
-                            singleFlierCampaign.bitlink === null
+                            {singleAppCampaign &&
+                            singleAppCampaign.bitlink === null
                               ? "0"
                               : bitlyCount.bitlyCounts &&
                                 bitlyCount.bitlyCounts.total_clicks}
@@ -130,12 +131,9 @@ const SmartSmsAnalytics = () => {
                         </div>
                         <div>
                           <p className="tx-24 tx-bold">
-                            {singleFlierCampaign &&
-                              singleFlierCampaign.whatsAppNumberClickCount +
-                                singleFlierCampaign.urlClickCount +
-                                singleFlierCampaign.ussdClickCount +
-                                singleFlierCampaign.phoneNumberClickCount +
-                                singleFlierCampaign.smsNumberClickCount}
+                            {singleAppCampaign &&
+                              singleAppCampaign.androidStoreClickCount +
+                                singleAppCampaign.iosStoreClickCount }
                           </p>
                           <p className="tx-15 tx-blac">
                             Total number of Actions
@@ -157,4 +155,5 @@ const SmartSmsAnalytics = () => {
   );
 };
 
-export default SmartSmsAnalytics;
+export default AppDownloadAnalytics;
+

@@ -13,9 +13,11 @@ import {
   clearErrors,
   getViewFlierVideosCampaigns,
   getDigitalCampaigns,
+  getAppDownloadCampaigns
 } from "../../../actions/campaignActions";
 import SmartSmsAnalyticsTable from "./SmartSmsAnalyticsTable";
 import SmsAnalyticsTable from "./SmsAnalyticsTable";
+import AppDownloadAnalyticsTable from "./AppDownloadAnalyticsTable";
 
 const ViewAnalytics = () => {
   const { loading, error } = useSelector((state) => state.getAllCampaign || {});
@@ -40,15 +42,16 @@ const ViewAnalytics = () => {
     setActiveTab("tab3");
   };
 
-  // const handleTab4 = () => {
-  //   // update the state to tab2
-  //   setActiveTab("tab4");
-  // };
+  const handleTab4 = () => {
+    // update the state to tab4
+    setActiveTab("tab4");
+  };
 
   useEffect(() => {
     dispatch(getDigitalCampaigns());
     dispatch(getSmsCampaigns());
     dispatch(getViewFlierVideosCampaigns());
+    dispatch(getAppDownloadCampaigns());
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
@@ -121,6 +124,18 @@ const ViewAnalytics = () => {
                       >
                         SMS
                       </button>
+                      <button
+                        className={`btn w-100 mg-r-15 ${
+                          activeTab === "tab3"
+                            ? "btn-primary"
+                            : "btn-outline-primary mg-r-15"
+                        }`}
+                        onClick={handleTab4}
+                        type="submit"
+                        variant="contained"
+                      >
+                        APP DOWNLOAD
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -128,6 +143,7 @@ const ViewAnalytics = () => {
                   {activeTab === "tab1" ? <DigitalAnalyticsTable /> : ""}
                   {activeTab === "tab2" ? <SmartSmsAnalyticsTable /> : ""}
                   {activeTab === "tab3" ? <SmsAnalyticsTable /> : ""}
+                  {activeTab === 'tab4' ? <AppDownloadAnalyticsTable/> : ""}
                 </div>
               </div>
             </div>
