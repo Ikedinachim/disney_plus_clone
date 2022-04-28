@@ -85,65 +85,84 @@ const ViewAnalytics = () => {
                 </div>
               </div>
               <div className="card card rounded bd-0 shadow-sm">
-                <div className="card-header bd-b-0 pd-b-0 pd-t-40 pd-md-x-30">
-                  <div className="pd-x-0 mg-y-30">
-                    <div className="d-flex smsViewTab">
-                      <button
-                        className={`btn w-100 mg-r-15 ${
-                          activeTab === "tab1"
-                            ? "btn-primary"
-                            : "btn-outline-primary mg-r-15"
-                        }`}
+                <div className="card-body pd-md-x-30 pd-t- mg-t-20 mg-md-t-0">
+                  <ul className="nav w-100 nav-line" id="myTab" role="tablist">
+                    <li className="nav-item">
+                      <a
+                        className="nav-link tab active"
+                        id="sms-tab"
+                        data-toggle="tab"
+                        href="#sms"
+                        role="tab"
                         onClick={handleTab1}
-                        type="submit"
-                        variant="contained"
+                        aria-controls="sms"
+                        aria-selected="true"
                       >
-                        Digital campaign
-                      </button>
-                      <button
-                        className={`btn w-100 mg-r-15 ${
-                          activeTab === "tab2"
-                            ? "btn-primary"
-                            : "btn-outline-primary mg-r-15"
-                        }`}
+                       Digital Campaign
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a
+                        className="nav-link tab"
+                        id="display-tab"
+                        data-toggle="tab"
+                        href="#display"
+                        role="tab"
                         onClick={handleTab2}
-                        type="submit"
-                        variant="contained"
+                        aria-controls="display"
+                        aria-selected="false"
                       >
                         Smart sms
-                      </button>
-                      <button
-                        className={`btn w-100 mg-r-15 ${
-                          activeTab === "tab3"
-                            ? "btn-primary"
-                            : "btn-outline-primary mg-r-15"
-                        }`}
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a
+                        className="nav-link tab"
+                        id="app-tab"
+                        data-toggle="tab"
+                        href="#app"
+                        role="tab"
                         onClick={handleTab3}
-                        type="submit"
-                        variant="contained"
+                        aria-controls="app"
+                        aria-selected="false"
                       >
                         SMS
-                      </button>
-                      <button
-                        className={`btn w-100 mg-r-15 ${
-                          activeTab === "tab3"
-                            ? "btn-primary"
-                            : "btn-outline-primary mg-r-15"
-                        }`}
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a
+                        className="nav-link tab"
+                        id="influencer-tab"
+                        data-toggle="tab"
+                        href="#influencer"
+                        role="tab"
                         onClick={handleTab4}
-                        type="submit"
-                        variant="contained"
+                        aria-controls="influencer"
+                        aria-selected="false"
                       >
-                        APP DOWNLOAD
-                      </button>
+                        App download
+                      </a>
+                    </li>
+                  </ul>
+                  <div className="tab-content bd-t-0" id="myTabContent">
+                    <div
+                      className="tab-pane fade show active"
+                      id="home"
+                      role="tabpanel"
+                      aria-labelledby="home-tab"
+                    >
+                      <div className="pd-y-20">
+                        {activeTab === "tab1" ? <DigitalAnalyticsTable /> : ""}
+                        {activeTab === "tab2" ? <SmartSmsAnalyticsTable /> : ""}
+                        {activeTab === "tab3" ? <SmsAnalyticsTable /> : ""}
+                        {activeTab === "tab4" ? (
+                          <AppDownloadAnalyticsTable />
+                        ) : (
+                          ""
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="card-body pd-md-x-30 pd-t- mg-t-20 mg-md-t-0">
-                  {activeTab === "tab1" ? <DigitalAnalyticsTable /> : ""}
-                  {activeTab === "tab2" ? <SmartSmsAnalyticsTable /> : ""}
-                  {activeTab === "tab3" ? <SmsAnalyticsTable /> : ""}
-                  {activeTab === 'tab4' ? <AppDownloadAnalyticsTable/> : ""}
                 </div>
               </div>
             </div>

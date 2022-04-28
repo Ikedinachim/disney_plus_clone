@@ -3,6 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from '../../loader';
+import MobileChart from "./Digital Chart/MobileChart";
+import OsChart from "./Digital Chart/OsChart";
+import DateChart from "./Digital Chart/DateChart";
 
 import {
   clearErrors,
@@ -11,10 +14,6 @@ import {
 import MetaData from "../../layout/MetaData";
 
 const DigitalAnalytics = () => {
-  const OsChart = React.lazy(() => import('./Digital Chart/OsChart'));
-  const DateChart = React.lazy(() => import('./Digital Chart/DateChart'));
-  const MobileChart = React.lazy(() => import('./Digital Chart/MobileChart'));
-  
   const { propellerId } = useParams();
   const dispatch = useDispatch();
 
@@ -29,8 +28,6 @@ const DigitalAnalytics = () => {
     }
     dispatch(getPropellerCampaign(propellerId));
   }, [dispatch, error, propellerId]);
-
-  console.log(propellerCampaigns)
 
   return (
     <Fragment>
@@ -131,51 +128,17 @@ const DigitalAnalytics = () => {
                 ))}
 
               {/* diagram of clicks and impressions  */}
-              <Suspense
-                fallback={
-                  <div className="col-12 mg-t-20 mg-md-t-0">
-                    <div className="card rounded bd-0 shadow-sm">
-                      <div className="card-body">
-                        <div className="d-flex">Loading impression data...</div>
-                      </div>
-                    </div>
-                  </div>
-                }
-              >
+              
                 <DateChart propellerId={propellerId} />
-              </Suspense>
 
-              <div className="row mg-t-30">
-                {/* ads performed & actions performed */}
-                <Suspense
-                  fallback={
-                    <div className="col-md-6 col-12 mg-t-20 mg-md-t-0">
-                      <div className="card rounded bd-0 shadow-sm">
-                        <div className="card-body">
-                          <div className="d-flex">Loading OS data...</div>
-                        </div>
-                      </div>
-                    </div>
-                  }
-                >
+                <div className="row mg-t-30">
+                  {/* ads performed & actions performed */}
                   <OsChart propellerId={propellerId} />
-                </Suspense>
 
-                {/* chartArea */}
-                <Suspense
-                  fallback={
-                    <div className="col-md-6 col-12 mg-t-20 mg-md-t-0">
-                      <div className="card rounded bd-0 shadow-sm">
-                        <div className="card-body">
-                          <div className="d-flex">Loading Mobile data...</div>
-                        </div>
-                      </div>
-                    </div>
-                  }
-                >
+                  {/* chartArea */}
                   <MobileChart propellerId={propellerId} />
-                </Suspense>
-              </div>
+                </div>
+              
             </div>
           </div>
         </Fragment>
