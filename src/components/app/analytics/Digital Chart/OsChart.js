@@ -1,10 +1,13 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Chart } from "react-google-charts";
 
 import { getOsCampaign } from "../../../../actions/analyticsActions";
+import { Spinner } from "react-bootstrap";
+import { width } from "@mui/system";
 
-const OsChart = ({ propellerId }) => {
+const OsChart = ({ propellerId, google }) => {
+  const [chart, setChart] = useState(null);
   const dispatch = useDispatch();
 
   const {
@@ -15,40 +18,53 @@ const OsChart = ({ propellerId }) => {
     dispatch(getOsCampaign(propellerId));
   }, [dispatch, propellerId]);
 
-  //specifying diagram design
-  const Adsreport = {
-    title: "Os report",
-    chartArea: { width: "50%" },
-    legend: { position: "bottom" },
-    isStacked: true,
-  };
+  console.log(OsCampaigns);
 
-  //specifying diagram data
-  const data = [["Os Type", "Impressions", "Clicks", "Conversions"]];
+  useEffect(() => {
+    if (google && !chart) { 
+      const Adsreport = {
+        title: "Os report",
+        chartArea: { width: "50%" },
+        legend: { position: "bottom" },
+        isStacked: true,
+      };
 
-  for (const i in OsCampaigns) {
-    data.push([
-      OsCampaigns[i].os,
-      OsCampaigns[i].impressions,
-      OsCampaigns[i].clicks,
-      OsCampaigns[i].conversions,
-    ]);
-  }
+      const row = [];
+      const data = new google.visualization.DataTable();
+      data.addColumn("string", "Os Type");
+      data.addColumn("number", "Impressions");
+      data.addColumn("number", "Clicks");
+      data.addColumn("number", "Conversions");
 
+      for (const i in OsCampaigns) {
+        row.push([
+          OsCampaigns[i].os,
+          OsCampaigns[i].impressions,
+          OsCampaigns[i].clicks,
+          OsCampaigns[i].conversions,
+        ]);
+      }
+      data.addRows(row);
+
+      const newChart = new google.visualization.BarChart(
+        document.getElementById('osChart'));
+      newChart.draw(data, Adsreport);
+      setChart(newChart)
+    }
+  }, [chart, google, OsCampaigns])
+  
   return (
     <Fragment>
       <div className="col-md-6 col-12 mg-t-20 mg-md-t-0">
         <div className="card rounded bd-0 shadow-sm">
           <div className="card-body">
             <div className="d-flex">
-              <Chart
-                chartType="ColumnChart"
-                data={data}
-                width="100%"
-                height="400px"
-                options={Adsreport}
-                legendToggle
-              />
+              {!google && <Spinner />}
+              <div
+                id="osChart"
+                className={!google ? "d-none" : ""}
+                style={{width: 400, height:300}}
+              ></div>
             </div>
           </div>
         </div>
