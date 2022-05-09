@@ -64,7 +64,7 @@ const SmsAnalytics = () => {
 
                   <div>
                     <p className="tx-24 tx-bold">
-                      {singleSmsCampaign.targetAudienceCount}
+                      {singleSmsCampaign.count}
                     </p>
                     <p className="tx-15 tx-blac">Total number of impressions</p>
                   </div>
