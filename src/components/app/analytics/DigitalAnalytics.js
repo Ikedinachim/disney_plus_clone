@@ -6,6 +6,7 @@ import Loader from '../../loader';
 import MobileChart from "./Digital Chart/MobileChart";
 import OsChart from "./Digital Chart/OsChart";
 import DateChart from "./Digital Chart/DateChart";
+import useGoogleCharts from "./googleChart/useGoogleChart";
 
 import {
   clearErrors,
@@ -14,6 +15,7 @@ import {
 import MetaData from "../../layout/MetaData";
 
 const DigitalAnalytics = () => {
+  const google = useGoogleCharts();
   const { propellerId } = useParams();
   const dispatch = useDispatch();
 
@@ -128,17 +130,16 @@ const DigitalAnalytics = () => {
                 ))}
 
               {/* diagram of clicks and impressions  */}
-              
-                <DateChart propellerId={propellerId} />
 
-                <div className="row mg-t-30">
-                  {/* ads performed & actions performed */}
-                  <OsChart propellerId={propellerId} />
+              <DateChart propellerId={propellerId} google={google} />
 
-                  {/* chartArea */}
-                  <MobileChart propellerId={propellerId} />
-                </div>
-              
+              <div className="row mg-t-30">
+                {/* ads performed & actions performed */}
+                <OsChart propellerId={propellerId} google={google}/>
+
+                {/* chartArea */}
+                <MobileChart propellerId={propellerId} google={google} />
+              </div>
             </div>
           </div>
         </Fragment>
