@@ -41,7 +41,7 @@ const MobileChart = ({ propellerId, google }) => {
     }
   }, [chart, google, mobileCampaigns])
 
-  console.log(mobileCampaigns);
+  // console.log(mobileCampaigns);
 
   
 
