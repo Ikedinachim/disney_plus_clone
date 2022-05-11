@@ -64,7 +64,6 @@ import AdminDashboardLayout from "./components/admin/AdminDashboardLayout";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import AdminSettings from "./components/admin/settings/AdminSettings";
 import ChangeAdminPassword from "./components/admin/settings/ChangeAdminPassword";
-import Statistics from "./components/admin/dailyStatistics/Statistics";
 import AppDownloadAnalytics from "./components/app/analytics/AppDownloadAnalytics";
 
 AOS.init();
@@ -425,16 +424,6 @@ function App() {
             element={
               isAuthenticated && user && user.user.isAdmin === true ? (
                 <ChangeAdminPassword />
-              ) : (
-                <Login />
-              )
-            }
-          />
-          <Route
-            path="/admin/statistics"
-            element={
-              isAuthenticated && user && user.user.isAdmin === true ? (
-                <Statistics />
               ) : (
                 <Login />
               )

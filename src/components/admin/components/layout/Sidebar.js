@@ -118,18 +118,6 @@ const Sidebar = () => {
               <span>Dashboard</span>
             </NavLink>
           </li>
-          <li className="nav-item active">
-            <NavLink
-              to="/admin/statistics"
-              end
-              className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
-              }
-            >
-              <i className="fa fa-money mr-3" />
-              <span>Statistics</span>
-            </NavLink>
-          </li>
         </ul>
       </div>
     </aside>
