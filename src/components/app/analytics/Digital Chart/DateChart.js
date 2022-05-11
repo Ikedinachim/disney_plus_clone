@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Chart } from "react-google-charts";
 import { getCampaignByDate } from "../../../../actions/analyticsActions";
 import { Spinner } from "react-bootstrap";
+import { DateTime } from "luxon";
 
 const DateChart = ({ propellerId, google }) => {
   const [chart, setChart] = useState(null);
@@ -27,14 +28,14 @@ const DateChart = ({ propellerId, google }) => {
       const row = [];
       const data = new google.visualization.DataTable();
       data.addColumn("string", "Day");
-      data.addColumn("number", "Number of clicks");
-      data.addColumn("number", "Number of actions")
+      data.addColumn("number", "Number of impressions");
+      data.addColumn("number", "Number of conversion")
 
       for (const i in dateCampaigns) {
         row.push([
-          dateCampaigns[i].date_time,
+          DateTime.fromISO(dateCampaigns[i].date_time).toFormat("dd MMM"),
+          dateCampaigns[i].impressions,
           dateCampaigns[i].clicks,
-          dateCampaigns[i].conversions,
         ]);
       }
       data.addRows(row);
