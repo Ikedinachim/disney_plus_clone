@@ -1,9 +1,12 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Chart } from "react-google-charts";
 import { getCampaignByDate } from "../../../../actions/analyticsActions";
+import { Spinner } from "react-bootstrap";
+import { DateTime } from "luxon";
 
-const DateChart = ({ propellerId }) => {
+const DateChart = ({ propellerId, google }) => {
+  const [chart, setChart] = useState(null);
   const {
     getCampaignByDate: { dateCampaigns },
   } = useSelector((state) => state);
@@ -14,23 +17,40 @@ const DateChart = ({ propellerId }) => {
     dispatch(getCampaignByDate(propellerId));
   }, [dispatch, propellerId]);
 
-  const data = [["Day", "Number of clicks", "Number of actions"]];
+  useEffect(() => {
+    if (google && !chart) {
+      const MonthlyAds = {
+        title: "Monthly ads",
+        curveType: "function",
+        legend: { position: "bottom" },
+      };
 
-  for (const i in dateCampaigns) {
-    data.push([
-      dateCampaigns[i].date_time,
-      dateCampaigns[i].clicks,
-      dateCampaigns[i].conversions,
-    ]);
-  }
+      const row = [];
+      const data = new google.visualization.DataTable();
+      data.addColumn("string", "Day");
+      data.addColumn("number", "Number of impressions");
+      data.addColumn("number", "Number of conversion")
+
+      for (const i in dateCampaigns) {
+        row.push([
+          DateTime.fromISO(dateCampaigns[i].date_time).toFormat("dd MMM"),
+          dateCampaigns[i].impressions,
+          dateCampaigns[i].clicks,
+        ]);
+      }
+      data.addRows(row);
+
+      const newChart = new google.visualization.LineChart(
+        document.getElementById('dateChart')
+      );
+      newChart.draw(data, MonthlyAds);
+      setChart(newChart);
+    }
+  }, [chart, google, dateCampaigns])
+
+  
 
   // console.log(data);
-
-  const MonthlyAds = {
-    title: "Monthly ads",
-    curveType: "function",
-    legend: { position: "bottom" },
-  };
   return (
     <Fragment>
       <div className="row mg-t-30">
@@ -38,14 +58,12 @@ const DateChart = ({ propellerId }) => {
           <div className="card rounded bd-0 shadow-sm">
             <div className="card-body">
               <div className="d-flex">
-                <Chart
-                  chartType="LineChart"
-                  data={data}
-                  width="100%"
-                  height="400px"
-                  options={MonthlyAds}
-                  legendToggle
-                />
+                {!google && <Spinner />}
+                <div
+                  id="dateChart"
+                  className={!google ? "d-none" : ""}
+                  style={{ width: '100%', height: 300 }}
+                ></div>
               </div>
             </div>
           </div>
