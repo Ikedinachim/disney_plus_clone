@@ -12,21 +12,22 @@ import {
   updateInfluencerPassword,
   clearErrors,
 } from "../../actions/authActions";
-import { UPDATE_INFLUENCER_PROFILE_RESET } from "../../constants/authConstants";
+import { UPDATE_INFLUENCER_PASSWORD_RESET } from "../../constants/authConstants";
 
 const UpdateInfluencerPassword = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [newUser, setNewUser] = useState({
-    username: "",
+    email: "",
     userType: "",
     password: "",
     confirmPassword: "",
   });
 
-  const { username } = newUser;
+  const { email } = newUser;
 
   const schema = Yup.object().shape({
+    email: Yup.string().email().required(),
     oldPassword: Yup.string()
       .required("Password is required")
       .min(6, "Password must be at least 6 characters"),
@@ -45,11 +46,9 @@ const UpdateInfluencerPassword = () => {
     mode: "onBlur",
   });
 
-  const { isAuthenticated, user, isUpdated } = useSelector(
-    (state) => state.auth
-  );
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
 
-  const { passwordUpdated, error, loading } = useSelector(
+  const { passwordUpdated, error, loading, isUpdated } = useSelector(
     (state) => state.resetInfluencerPassword
   );
 
@@ -66,10 +65,10 @@ const UpdateInfluencerPassword = () => {
   };
 
   useEffect(() => {
-    if (passwordUpdated && isUpdated && isUpdated.statusCode === 100) {
+    if (passwordUpdated && isUpdated?.statusCode === 100) {
       toast.success(isUpdated.message);
       navigate("/login");
-      dispatch({ type: UPDATE_INFLUENCER_PROFILE_RESET });
+      dispatch({ type: UPDATE_INFLUENCER_PASSWORD_RESET });
     } else if (!isAuthenticated && error) {
       toast.error(error.message);
       dispatch(clearErrors());
@@ -132,13 +131,13 @@ const UpdateInfluencerPassword = () => {
                         >
                           <div className="form-group">
                             <input
-                              {...register("username")}
+                              {...register("email")}
                               type="text"
                               id="individualUsername"
                               className="form-control new"
-                              placeholder="Username"
+                              placeholder="Email"
                               required
-                              value={username}
+                              value={email}
                               onChange={onChange}
                             />
                           </div>

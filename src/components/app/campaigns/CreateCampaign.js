@@ -93,9 +93,9 @@ const CreateCampaign = () => {
                           <div className="card-body tx-center pd-x-12 pd-md-x-30">
                             <img src={FlashSms} alt="" className="img-fluid" />
                             <div className="pd-t-15">
-                              <p className="tx-16 tx-bold">Flash SMS / SMS</p>
+                              <p className="tx-16 tx-bold">Voice / SMS</p>
                               <p className="tx-14 tx-gray mb-0">
-                                Hit your right target with smart SMS
+                                Hit your right target with smart Voice / SMS
                               </p>
                             </div>
                           </div>

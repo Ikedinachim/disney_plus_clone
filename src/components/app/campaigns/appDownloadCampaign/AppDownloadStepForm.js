@@ -29,7 +29,7 @@ export default class AppDownloadStepForm extends Component {
     price: 0,
     csvFile: "",
     limit: undefined,
-    budget: 10000,
+    budget: 20000,
     contactNumberCount: 0,
     characterCount: 0,
     smsCount: 0,
@@ -106,53 +106,85 @@ export default class AppDownloadStepForm extends Component {
   };
 
   handleImageUpload = async (e) => {
-    // console.log(e.target.naturalWidth);
-    const width = e.target.naturalWidth;
-    const height = e.target.naturalHeight;
-    if (width > 960 || height > 1280) {
-      toast.error("image dimensions not fitting");
-    } else {
-      let files = e.target.files[0];
-      // console.log(files);
-      const formData = new FormData();
-      formData.append("file", files);
-      formData.append("upload_preset", "mysogi");
+    let file = e.target.files[0];
+    let reader = new FileReader();
+    reader.onload = (e) => {
+      let img = document.createElement("img");
+      img.onload = async () => {
+        let canvas = document.createElement("canvas");
+        let ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
 
-      const options = {
-        onUploadProgress: (progressEvent) => {
-          const { loaded, total } = progressEvent;
-          let percent = Math.floor((loaded * 100) / total);
-          // console.log(`${loaded}kb of ${total}kb | ${percent}%`);
-
-          if (percent < 100) {
-            this.setState({ uploadPercentage: percent });
+        let MAX_WIDTH = 720;
+        let MAX_HEIGHT = 480;
+        let width = img.width;
+        let height = img.height;
+        let maxFileSize = 2097152;
+        if (file.size > maxFileSize) {
+          toast.error(
+            "The selected image file is too big. Please choose one that is smaller than 2 MB."
+          );
+        } else {
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
           }
-        },
-      };
+          canvas.width = width;
+          canvas.height = height;
+          let ctx2 = canvas.getContext("2d");
+          ctx2.drawImage(img, 0, 0, width, height);
+          let dataurl = canvas.toDataURL("image/png");
+          let files = dataurl;
+          const formData = new FormData();
+          formData.append("file", files);
+          formData.append("upload_preset", "mysogi");
 
-      try {
-        await axios
-          .post(process.env.REACT_APP_CLOUDINARY_URL, formData, options)
-          .then((res) => {
-            // console.log(res);
-            this.setState(
-              {
-                imageUrl: res.data.secure_url,
-                uploadPercentage: 100,
-                selectedFileName: files.name,
-                imageAlt: `An image of ${res.original_filename}`,
-              },
-              () => {
-                setTimeout(() => {
-                  this.setState({ uploadPercentage: 0 });
-                }, 1000);
+          const options = {
+            onUploadProgress: (progressEvent) => {
+              const { loaded, total } = progressEvent;
+              let percent = Math.floor((loaded * 100) / total);
+              // console.log(`${loaded}kb of ${total}kb | ${percent}%`);
+
+              if (percent < 100) {
+                this.setState({ uploadPercentage: percent });
               }
-            );
-          });
-      } catch (err) {
-        // return console.log(err);
-      }
-    }
+            },
+          };
+
+          try {
+            await axios
+              .post(process.env.REACT_APP_CLOUDINARY_URL, formData, options)
+              .then((res) => {
+                // console.log(res);
+                this.setState(
+                  {
+                    imageUrl: res.data.secure_url,
+                    uploadPercentage: 100,
+                    selectedFileName: file.name,
+                    imageAlt: `An image of ${res.original_filename}`,
+                  },
+                  () => {
+                    setTimeout(() => {
+                      this.setState({ uploadPercentage: 0 });
+                    }, 1000);
+                  }
+                );
+              });
+          } catch (err) {
+            // return console.log(err);
+          }
+        }
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
   };
 
   handleCount = (count) => {

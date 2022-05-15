@@ -252,7 +252,9 @@ const AppDownloadCampaign = ({
                                 className="form-control"
                                 rows={3}
                                 maxLength={
-                                  values.channel === "display_ads" ? 40 : false
+                                  values.channel === "display_ads"
+                                    ? 40
+                                    : undefined
                                 }
                                 placeholder="Type your ad message here"
                                 defaultValue={values.campaignMessage}
@@ -294,26 +296,28 @@ const AppDownloadCampaign = ({
                                 </label>
                               </div>
                             </div>
-                            <div className="form-group">
-                              <div className="custom-control custom-radio">
-                                <input
-                                  type="radio"
-                                  id="video"
-                                  name="customRadio"
-                                  className="custom-control-input"
-                                  checked={values.assetType === "video"}
-                                  // onClick={(e) => assetTypeHandler("video")}
-                                  value={"video"}
-                                  onChange={handleChange("assetType")}
-                                />
-                                <label
-                                  className="custom-control-label"
-                                  htmlFor="video"
-                                >
-                                  Video Asset
-                                </label>
+                            {values.channel === "smart_sms" && (
+                              <div className="form-group">
+                                <div className="custom-control custom-radio">
+                                  <input
+                                    type="radio"
+                                    id="video"
+                                    name="customRadio"
+                                    className="custom-control-input"
+                                    checked={values.assetType === "video"}
+                                    // onClick={(e) => assetTypeHandler("video")}
+                                    value={"video"}
+                                    onChange={handleChange("assetType")}
+                                  />
+                                  <label
+                                    className="custom-control-label"
+                                    htmlFor="video"
+                                  >
+                                    Video Asset
+                                  </label>
+                                </div>
                               </div>
-                            </div>
+                            )}
                             {values.assetType === "image" && (
                               <div className="form-group">
                                 <div className="custom-file">
@@ -346,28 +350,31 @@ const AppDownloadCampaign = ({
                                 </div>
                               </div>
                             )}
-                            {values.assetType === "video" && (
-                              <>
-                                <div className="form-group">
-                                  <div className="custom-file">
-                                    <label className="mb-1">Youtube URL</label>
-                                    <input
-                                      type="text"
-                                      id="videoAsset"
-                                      className="form-control"
-                                      defaultValue={values.attachment}
-                                      placeholder="https://www.youtube.com/watch?v=ysz5S6PUM-U"
-                                      onChange={handleChange("rawVideoUrl")}
-                                    />
+                            {values.assetType === "video" &&
+                              values.channel === "smart_sms" && (
+                                <>
+                                  <div className="form-group">
+                                    <div className="custom-file">
+                                      <label className="mb-1">
+                                        Youtube URL
+                                      </label>
+                                      <input
+                                        type="text"
+                                        id="videoAsset"
+                                        className="form-control"
+                                        defaultValue={values.attachment}
+                                        placeholder="https://www.youtube.com/watch?v=ysz5S6PUM-U"
+                                        onChange={handleChange("rawVideoUrl")}
+                                      />
+                                    </div>
                                   </div>
-                                </div>
-                                {videoError && (
-                                  <p className="mt-2 tx-danger tx-italic">
-                                    Enter a valid youtube url
-                                  </p>
-                                )}
-                              </>
-                            )}
+                                  {videoError && (
+                                    <p className="mt-2 tx-danger tx-italic">
+                                      Enter a valid youtube url
+                                    </p>
+                                  )}
+                                </>
+                              )}
                           </div>
                         </form>
                         <div className="col-md-7 pd-x-0 mg-y-30">
