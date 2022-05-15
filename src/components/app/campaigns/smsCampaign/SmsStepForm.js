@@ -4,16 +4,17 @@ import SmsCampaign from "./SmsCampaign";
 import TargetAudience from "./TargetAudience";
 import PreviewCampaign from "./PreviewCampaign";
 import FundWalletSMS from "./FundWalletSMS";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { clearErrors } from "../../../../actions/campaignActions";
 
 export default class SmsStepForm extends Component {
   state = {
     step: 1,
     senderId: "",
     alternateSenderId: "",
-    channel: "",
+    channel: "sms",
     campaignMessage: "",
-    // gender: "Male",
-    // targetAge: "21",
     interest: "business",
     phoneNumber: "",
     campaignType: "general",
@@ -22,6 +23,8 @@ export default class SmsStepForm extends Component {
     limit: "",
     contactNumberCount: 0,
     parsedCsvData: [],
+    audioUrl: undefined,
+    uploadPercentage: 0,
 
     ageRangeTo: undefined,
     ageRangeFrom: undefined,
@@ -45,6 +48,8 @@ export default class SmsStepForm extends Component {
     rawArea: undefined,
     arrayLga: undefined,
     arrayArea: undefined,
+
+    selectedFileName: "Upload Audio Asset *mp3, *mpeg",
   };
 
   // go back to previous step
@@ -89,15 +94,77 @@ export default class SmsStepForm extends Component {
     this.setState({ rawArea: area });
   };
 
-  // filterOptions = {
-  //     ageRange:
-  //       this.ageRangeFrom && this.ageRangeTo ? `${this.ageRangeFrom + "-" + this.ageRangeTo}` : ""
-  //     this.state.gender,
-  //     state: arrayState && arrayState.map((value) => value.value).join(","),
-  //     lga: arrayLga,
-  //     deviceType,
-  //     deviceBrand,
-  //   };
+  // Handle image change
+  onChangeAttachment = (input) => (e) => {
+    const reader = new FileReader();
+    let file = e.target.files[0];
+
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        // console.log(reader.result);
+        this.setState({ [input]: e.target.files[0] });
+      }
+      this.setState({ attachmentPreview: reader.result });
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+      this.setState({
+        selectedFileName: file.name,
+      });
+    }
+  };
+
+  handleAudioUpload = async (e) => {
+    // console.log(e);
+    let files = e.target.files[0];
+    console.log(files);
+    const size = files && files.size;
+    if (size > 31457280) {
+      toast.error("file too large!!");
+      clearErrors();
+    } else {
+      const formData = new FormData();
+      formData.append("file", files);
+      formData.append("upload_preset", "mysogi");
+      // formData.append("resource_type", "video");
+
+      const options = {
+        onUploadProgress: (progressEvent) => {
+          const { loaded, total } = progressEvent;
+          let percent = Math.floor((loaded * 100) / total);
+          // console.log(`${loaded}kb of ${total}kb | ${percent}%`);
+
+          if (percent < 100) {
+            this.setState({ uploadPercentage: percent });
+          }
+        },
+      };
+
+      try {
+        await axios
+          .post(process.env.REACT_APP_CLOUDINARY_VIDEO_URL, formData, options)
+          .then((res) => {
+            // console.log(res);
+            this.setState(
+              {
+                audioUrl: res.data.secure_url,
+                uploadPercentage: 100,
+                selectedFileName: files.name,
+                // imageAlt: `An image of ${res.original_filename}`,
+              },
+              () => {
+                setTimeout(() => {
+                  this.setState({ uploadPercentage: 0 });
+                }, 1000);
+              }
+            );
+          });
+      } catch (err) {
+        // return console.log(err);
+      }
+    }
+  };
 
   render() {
     const {
@@ -113,6 +180,9 @@ export default class SmsStepForm extends Component {
       targetAudienceOption,
       limit,
       contactNumberCount,
+      audioUrl,
+      uploadPercentage,
+      selectedFileName,
 
       ageRangeFrom,
       ageRangeTo,
@@ -166,11 +236,21 @@ export default class SmsStepForm extends Component {
       }
     };
 
+    let price;
+
+    const setPrice = () => {
+      if (channel === "voice_sms") {
+        return (price = audience * 5);
+      } else {
+        return (price = audience * 5 * smsCount);
+      }
+    };
+
     /////////////////////////////
 
     const contactNumber = getAudience();
     const audience = getAudience().length;
-    const price = audience * 5 * smsCount;
+    // const price = audience * 5 * smsCount;
 
     const filterOptions = {
       ageRange:
@@ -195,7 +275,7 @@ export default class SmsStepForm extends Component {
       targetAge,
       interest,
       campaignType,
-      price,
+      price: setPrice(),
       filterParameters,
       targetAudienceOption,
       audience,
@@ -205,9 +285,10 @@ export default class SmsStepForm extends Component {
       scheduleTime,
       scheduleFrom,
       scheduleTo,
+      attachment: audioUrl,
     };
 
-    // console.log(rawLga);
+    console.log(values);
 
     switch (step) {
       case 1:
@@ -218,6 +299,10 @@ export default class SmsStepForm extends Component {
             values={values}
             characterCount={characterCount}
             smsCount={smsCount}
+            onChangeAttachment={this.onChangeAttachment}
+            handleAudioUpload={this.handleAudioUpload}
+            selectedFileName={selectedFileName}
+            uploadPercentage={uploadPercentage}
           />
         );
       case 2:

@@ -306,13 +306,13 @@ const TargetAudience = ({
                             defaultValue={values.budget}
                             onChange={handleChange("budget")}
                           />
-                          {values.budget < 10000 && (
+                          {values.budget < 20000 && (
                             <p className="text-danger p-0 m-0 mt-2">
                               insufficient budget
                             </p>
                           )}
                         </div>
-                        {values.budget >= 10000 && (
+                        {values.budget >= 20000 && (
                           <div className="form-group col-md-6 mb-0 align-items-center d-flex">
                             <div>
                               <span>
