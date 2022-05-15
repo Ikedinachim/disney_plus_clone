@@ -75,7 +75,11 @@ const SmartSmsAnalytics = () => {
                         <div>
                           <p className="tx-24 tx-bold">
                             {singleFlierCampaign &&
-                              singleFlierCampaign.targetAudienceCount}
+                            singleFlierCampaign.count === 0
+                              ? singleFlierCampaign &&
+                                singleFlierCampaign.smsSent
+                              : singleFlierCampaign &&
+                                singleFlierCampaign.count}
                           </p>
                           <p className="tx-15 tx-blac">
                             Total number of impressions

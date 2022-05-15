@@ -6,6 +6,7 @@ import Loader from '../../loader';
 import MobileChart from "./Digital Chart/MobileChart";
 import OsChart from "./Digital Chart/OsChart";
 import DateChart from "./Digital Chart/DateChart";
+import useGoogleCharts from "./googleChart/useGoogleChart";
 
 import {
   clearErrors,
@@ -14,6 +15,7 @@ import {
 import MetaData from "../../layout/MetaData";
 
 const DigitalAnalytics = () => {
+  const google = useGoogleCharts();
   const { propellerId } = useParams();
   const dispatch = useDispatch();
 
@@ -50,7 +52,7 @@ const DigitalAnalytics = () => {
               {propellerCampaigns &&
                 propellerCampaigns.map((campaign) => (
                   <div className="row">
-                    <div className="col-md-4 col-12 mg-t-20 mg-md-t-0">
+                    <div className="col-md-6 col-12 mg-t-20 mg-md-t-0">
                       <div className="card rounded bd-0 shadow-sm">
                         <div className="card-body h-25">
                           <div className="d-flex">
@@ -75,7 +77,7 @@ const DigitalAnalytics = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="col-md-4 col-12 mg-t-20 mg-md-t-0">
+                    <div className="col-md-6 col-12 mg-t-20 mg-md-t-0">
                       <div className="card rounded bd-0 shadow-sm">
                         <div className="card-body h-25">
                           <div className="d-flex">
@@ -91,34 +93,9 @@ const DigitalAnalytics = () => {
                             <div>
                               <p className="tx-24 tx-bold">{campaign.clicks}</p>
                               <p className="tx-15 tx-blac">
-                                Total number of clicks
+                                Total number of conversions
                               </p>
                               <br></br>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-4 col-12 mg-t-20 mg-md-t-0">
-                      <div className="card rounded bd-0 shadow-sm">
-                        <div className="card-body h-25">
-                          <div className="d-flex">
-                            <div className="mg-r-20">
-                              {" "}
-                              <img
-                                src="../../../assets/img/Revenue_Generated.svg"
-                                className="tx-primary"
-                                alt=""
-                                srcset=""
-                              />
-                            </div>
-                            <div>
-                              <p className="tx-24 tx-bold">
-                                {campaign.conversions}
-                              </p>
-                              <p className="tx-15 tx-blac">
-                                Total number of actions performed
-                              </p>
                             </div>
                           </div>
                         </div>
@@ -128,17 +105,16 @@ const DigitalAnalytics = () => {
                 ))}
 
               {/* diagram of clicks and impressions  */}
-              
-                <DateChart propellerId={propellerId} />
 
-                <div className="row mg-t-30">
-                  {/* ads performed & actions performed */}
-                  <OsChart propellerId={propellerId} />
+              <DateChart propellerId={propellerId} google={google} />
 
-                  {/* chartArea */}
-                  <MobileChart propellerId={propellerId} />
-                </div>
-              
+              <div className="row mg-t-30">
+                {/* ads performed & actions performed */}
+                <OsChart propellerId={propellerId} google={google}/>
+
+                {/* chartArea */}
+                <MobileChart propellerId={propellerId} google={google} />
+              </div>
             </div>
           </div>
         </Fragment>
