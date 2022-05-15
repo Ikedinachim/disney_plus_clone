@@ -252,7 +252,9 @@ const AppDownloadCampaign = ({
                                 className="form-control"
                                 rows={3}
                                 maxLength={
-                                  values.channel === "display_ads" ? 40 : false
+                                  values.channel === "display_ads"
+                                    ? 40
+                                    : undefined
                                 }
                                 placeholder="Type your ad message here"
                                 defaultValue={values.campaignMessage}

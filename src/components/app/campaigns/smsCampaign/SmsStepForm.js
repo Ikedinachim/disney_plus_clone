@@ -288,7 +288,7 @@ export default class SmsStepForm extends Component {
       attachment: audioUrl,
     };
 
-    console.log(values);
+    // console.log(values);
 
     switch (step) {
       case 1:
