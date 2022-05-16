@@ -518,7 +518,10 @@ const PreviewCampaign = ({
                                     </label>
                                     <span className="badge badge-pink tx-14 mg-5">
                                       {" "}
-                                      {filterOptions.ageRange} years
+                                      {filterOptions.ageRange}{" "}
+                                      {filterOptions.ageRange === ""
+                                        ? ""
+                                        : "years"}
                                     </span>
                                   </div>
                                   <div className="col-md-3 form-group">
@@ -527,7 +530,12 @@ const PreviewCampaign = ({
                                     </label>
                                     <span className="badge badge-pink tx-14 mg-5">
                                       {" "}
-                                      {filterOptions.gender}
+                                      {(filterOptions.gender === "B" &&
+                                        "Both") ||
+                                        (filterOptions.gender === "M" &&
+                                          "Male") ||
+                                        (filterOptions.gender === "F" &&
+                                          "Female")}
                                     </span>
                                   </div>
                                   <div className="col-md-12 form-group">
@@ -552,7 +560,15 @@ const PreviewCampaign = ({
                                     </label>
                                     <span className="badge badge-pink tx-14 mg-5">
                                       {" "}
-                                      {filterOptions.revenueBand}
+                                      {(filterOptions.revenueBand ===
+                                        "BELOW 5K" &&
+                                        "Moderate") ||
+                                        (filterOptions.revenueBand ===
+                                          "BTW 5K AND 10K" &&
+                                          "Medium High") ||
+                                        (filterOptions.revenueBand ===
+                                          "ABOVE 10K" &&
+                                          "High End")}
                                     </span>
                                   </div>
                                   {/* <div className="col-md-6 form-group">
