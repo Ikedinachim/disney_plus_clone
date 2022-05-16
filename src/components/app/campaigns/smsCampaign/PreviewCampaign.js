@@ -219,7 +219,8 @@ const PreviewCampaign = ({
                               <div className="d-flex">
                                 <span className="badge badge-pink tx-14 mg-5">
                                   {" "}
-                                  {filterOptions.ageRange} years
+                                  {filterOptions.ageRange}{" "}
+                                  {filterOptions.ageRange === "" ? "" : "years"}
                                 </span>
                               </div>
                             </div>
@@ -232,7 +233,9 @@ const PreviewCampaign = ({
                               </label>
                               <span className="badge badge-pink tx-14 mg-5">
                                 {" "}
-                                {filterOptions.gender}
+                                {(filterOptions.gender === "B" && "Both") ||
+                                  (filterOptions.gender === "M" && "Male") ||
+                                  (filterOptions.gender === "F" && "Female")}
                               </span>
                             </div>
                           </div>
@@ -255,7 +258,23 @@ const PreviewCampaign = ({
                               {" "}
                               {filterOptions.lga}
                             </span>
+                            <label className="tx-14 tx-gray mb-0 tx-medium d-block mt-3">
+                              Money Spent
+                            </label>
+                            <span className="badge badge-pink tx-14 mg-5">
+                              {" "}
+                              {(filterOptions.revenueBand === "BELOW 5K" &&
+                                "Moderate") ||
+                                (filterOptions.revenueBand ===
+                                  "BTW 5K AND 10K" &&
+                                  "Medium High") ||
+                                (filterOptions.revenueBand === "ABOVE 10K" &&
+                                  "High End")}
+                            </span>
                           </div>
+                          {/* <div className="col-md-3 form-group">
+                            
+                          </div> */}
                           {/* <div className="form-group">
                             <label
                               htmlFor

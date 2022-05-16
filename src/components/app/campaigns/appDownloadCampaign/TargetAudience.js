@@ -264,7 +264,7 @@ const TargetAudience = ({
                         Select Campaign Budget
                       </p>
                       <p className="tx-14 tx-blac">
-                        Minimum amount to spend is ₦10,000
+                        Minimum amount to spend is ₦20,000
                       </p>
                       <div className="row justify-content-md-between">
                         <div className="form-group col-md-6">
