@@ -110,17 +110,17 @@ const TargetAudience = ({
     },
     {
       id: 2,
-      name: "Below 5K",
+      name: "Moderate",
       value: "BELOW 5K",
     },
     {
       id: 3,
-      name: "BTW 5K and 10K",
+      name: "Medium High",
       value: "BTW 5K AND 10K",
     },
     {
       id: 4,
-      name: "Above 10K",
+      name: "High End",
       value: "ABOVE 10K",
     },
   ];
