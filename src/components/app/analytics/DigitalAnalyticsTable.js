@@ -63,11 +63,21 @@ const DigitalAnalyticsTable = () => {
           ).toFormat("dd MMM, yyyy"),
           status: (
             <span
-              className={`{"badge" ${(campaign.status === ""
-                ? "badge-pink"
-                : "badge-active")}`}
+              className={`{"badge" ${
+                campaign.status === "Stopped"
+                  ? "badge-primary"
+                  : "" || campaign.status === "Working" 
+                  ? "badge-active"
+                  : "" || campaign.status === "Completed" ? "badge-pink" : ""
+              }`}
             >
-              {(campaign.status === "" ? "Closed" : "Open")}
+              {campaign.status === "Stopped"
+                ? "Closed"
+                : null || campaign.status === "Working"
+                ? "Working"
+                : null || campaign.status === "Completed"
+                ? "Completed"
+                : null}
             </span>
           ),
           actions: (
