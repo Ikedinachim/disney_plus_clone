@@ -13,6 +13,7 @@ const SenderID = () => {
   const navigate = useNavigate();
 
   const [newSenderId, setCreateSenderId] = useState({ senderId: "" });
+  const [characterCount, setCharacterCount] = useState(0);
 
   const { senderId } = newSenderId;
 
@@ -53,6 +54,7 @@ const SenderID = () => {
     if (e.target.name === "avatar") {
     } else {
       setCreateSenderId({ ...newSenderId, [e.target.name]: e.target.value });
+      setCharacterCount(e.target.value.length);
     }
   };
 
@@ -76,7 +78,7 @@ const SenderID = () => {
                   id="senderIdForm"
                   onSubmit={submitSenderIdHandler}
                 >
-                  <div className="form-group">
+                  <div className="form-group mb-0">
                     <label htmlFor className="mb-1 tx-medium tx-16">
                       Sender ID
                     </label>
@@ -86,9 +88,13 @@ const SenderID = () => {
                       placeholder="Enter preferred Sender ID"
                       id="sender"
                       name="senderId"
+                      maxLength={11}
                       value={senderId}
                       onChange={onChange}
                     />
+                  </div>
+                  <div className="d-flex justify-content-between">
+                    <p>{11 - characterCount} Characters Left</p>
                   </div>
                   <div className="col-md-8 pd-x-0 mg-t-30">
                     <div className="row">

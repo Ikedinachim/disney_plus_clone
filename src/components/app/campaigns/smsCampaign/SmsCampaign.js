@@ -3,6 +3,7 @@ import React, { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { ProgressBar } from "react-bootstrap";
 import {
   getSenderID,
   getDefaultSenderID,
@@ -16,7 +17,10 @@ const SmsCampaign = ({
   handleChange,
   values,
   characterCount,
+  handleAudioUpload,
   smsCount,
+  uploadPercentage,
+  selectedFileName,
 }) => {
   // const alert = useAlert();
   const dispatch = useDispatch();
@@ -33,8 +37,13 @@ const SmsCampaign = ({
       toast.error("Choose an alternate ID");
     } else if (values.channel === "") {
       toast.error("Choose a channel");
-    } else if (values.campaignMessage === "") {
+    } else if (
+      values.channel !== "voice_sms" &&
+      values.campaignMessage === ""
+    ) {
       toast.error("Create the campaign message");
+    } else if (values.channel === "voice_sms" && !values.attachment) {
+      toast.error("Upload campaign audio");
     } else {
       nextStep();
     }
@@ -45,8 +54,8 @@ const SmsCampaign = ({
       value: "select channel",
     },
     // {
-    //   label: "Flash SMS",
-    //   value: "flash_sms",
+    //   label: "Voice",
+    //   value: "voice_sms",
     // },
     {
       label: "SMS",
@@ -103,9 +112,7 @@ const SmsCampaign = ({
                 <div className="col-lg-11 pd-x-0">
                   <form>
                     <div>
-                      <p className="tx-24 tx-bold mb-1 tx-com">
-                        Flash SMS / SMS
-                      </p>
+                      <p className="tx-24 tx-bold mb-1 tx-com">Voice / SMS</p>
                       <p className="tx-14">
                         Provide all requested details to help complete the
                         campaign creation
@@ -167,7 +174,60 @@ const SmsCampaign = ({
                             ))}
                           </select>
                         </div>
-                        <div className="form-group col-md-6 mb-2">
+                        {values.channel !== "voice_sms" ? (
+                          <>
+                            <div className="form-group col-md-6 mb-2">
+                              <label className="mb-1">Campaign Message</label>
+                              <textarea
+                                className="form-control"
+                                rows={3}
+                                // maxlength={150}
+                                placeholder="Type your ad message here e.g Get up to 50% discount on first purchase"
+                                onChange={handleChange("campaignMessage")}
+                                defaultValue={values.campaignMessage}
+                              />
+                            </div>
+                            <div className="form-group col-md-6 mb-2 d-flex justify-content-between">
+                              <p>{characterCount} Characters</p>
+                              <p>{smsCount} SMS</p>
+                            </div>
+                          </>
+                        ) : (
+                          <div className="form-group col-md-6 mb-2">
+                            <label className="mb-1">Upload Audio Message</label>
+                            <div className="custom-file">
+                              <input
+                                type="file"
+                                name="file"
+                                id="audioAsset"
+                                className="custom-file-input"
+                                accept="audio/mp3,audio/mpeg,audio/*"
+                                // value={values.attachment}
+                                // placeholder="https://www.youtube.com/watch?v=ysz5S6PUM-U"
+                                onChange={handleAudioUpload}
+                              />
+                              <label
+                                className="custom-file-label"
+                                htmlFor="audioAsset"
+                              >
+                                {selectedFileName}
+                              </label>
+                              {uploadPercentage > 0 && (
+                                <span className="mt-2">
+                                  <ProgressBar
+                                    now={uploadPercentage}
+                                    // active
+                                    label={`${uploadPercentage}%`}
+                                  />
+                                </span>
+                              )}
+                              <p className="tx-danger tx-italic">
+                                Audio size: not more than 30mb
+                              </p>
+                            </div>
+                          </div>
+                        )}
+                        {/* <div className="form-group col-md-6 mb-2">
                           <label className="mb-1">Campaign Message</label>
                           <textarea
                             className="form-control"
@@ -181,7 +241,7 @@ const SmsCampaign = ({
                         <div className="form-group col-md-6 mb-2 d-flex justify-content-between">
                           <p>{characterCount} Characters</p>
                           <p>{smsCount} SMS</p>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </form>

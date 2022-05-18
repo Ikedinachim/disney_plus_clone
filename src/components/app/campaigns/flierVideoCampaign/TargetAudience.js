@@ -114,17 +114,17 @@ const TargetAudience = ({
     },
     {
       id: 2,
-      name: "Below 5K",
+      name: "Moderate",
       value: "BELOW 5K",
     },
     {
       id: 3,
-      name: "BTW 5K and 10K",
+      name: "Medium High",
       value: "BTW 5K AND 10K",
     },
     {
       id: 4,
-      name: "Above 10K",
+      name: "High End",
       value: "ABOVE 10K",
     },
   ];
@@ -257,7 +257,7 @@ const TargetAudience = ({
                         Select Campaign Budget
                       </p>
                       <p className="tx-14 tx-blac">
-                        Minimum amount to spend is ₦10,000
+                        Minimum amount to spend is ₦20,000
                       </p>
                       <div className="row justify-content-md-between">
                         <div className="form-group col-md-6">
@@ -306,13 +306,13 @@ const TargetAudience = ({
                             defaultValue={values.budget}
                             onChange={handleChange("budget")}
                           />
-                          {values.budget < 10000 && (
+                          {values.budget < 20000 && (
                             <p className="text-danger p-0 m-0 mt-2">
                               insufficient budget
                             </p>
                           )}
                         </div>
-                        {values.budget >= 10000 && (
+                        {values.budget >= 20000 && (
                           <div className="form-group col-md-6 mb-0 align-items-center d-flex">
                             <div>
                               <span>
