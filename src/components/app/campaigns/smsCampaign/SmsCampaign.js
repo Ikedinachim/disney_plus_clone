@@ -53,10 +53,10 @@ const SmsCampaign = ({
       label: "Select Channel",
       value: "select channel",
     },
-    {
-      label: "Voice",
-      value: "voice_sms",
-    },
+    // {
+    //   label: "Voice",
+    //   value: "voice_sms",
+    // },
     {
       label: "SMS",
       value: "sms",
@@ -174,7 +174,7 @@ const SmsCampaign = ({
                             ))}
                           </select>
                         </div>
-                        {values.channel === "sms" ? (
+                        {values.channel !== "voice_sms" ? (
                           <>
                             <div className="form-group col-md-6 mb-2">
                               <label className="mb-1">Campaign Message</label>
