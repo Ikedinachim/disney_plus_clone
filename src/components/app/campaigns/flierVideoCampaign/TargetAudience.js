@@ -114,17 +114,17 @@ const TargetAudience = ({
     },
     {
       id: 2,
-      name: "Moderate",
+      name: "Low",
       value: "BELOW 5K",
     },
     {
       id: 3,
-      name: "Medium High",
+      name: "Medium",
       value: "BTW 5K AND 10K",
     },
     {
       id: 4,
-      name: "High End",
+      name: "High",
       value: "ABOVE 10K",
     },
   ];
@@ -200,7 +200,6 @@ const TargetAudience = ({
         setCsvName(file.name);
       },
     });
-    // console.log(parsedCsvData);
   };
 
   const onDrop = useCallback((acceptedFiles) => {
