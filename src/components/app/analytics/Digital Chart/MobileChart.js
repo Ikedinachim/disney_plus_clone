@@ -41,10 +41,6 @@ const MobileChart = ({ propellerId, google }) => {
     }
   }, [chart, google, mobileCampaigns])
 
-  // console.log(mobileCampaigns);
-
-  
-
   return (
     <Fragment>
       <div className="col-md-6 col-12 mg-t-20 mg-md-t-0">
