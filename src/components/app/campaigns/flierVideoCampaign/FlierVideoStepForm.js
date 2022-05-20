@@ -133,8 +133,8 @@ export default class FlierVideoStepForm extends Component {
         let ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0);
 
-        let MAX_WIDTH = 720;
-        let MAX_HEIGHT = 480;
+        let MAX_WIDTH = 900;
+        let MAX_HEIGHT = 600;
         let width = img.width;
         let height = img.height;
         let maxFileSize = 2097152;
