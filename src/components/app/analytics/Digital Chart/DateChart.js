@@ -31,7 +31,7 @@ const DateChart = ({ propellerId, google }) => {
       data.addColumn("number", "Number of impressions");
       data.addColumn("number", "Number of conversion")
 
-      for (const i in dateCampaigns) {
+      for (const i in dateCampaigns && dateCampaigns.sort((a,b)=>a.date_time - b.date_time)) {
         row.push([
           DateTime.fromISO(dateCampaigns[i].date_time).toFormat("dd MMM"),
           dateCampaigns[i].impressions,
@@ -48,9 +48,6 @@ const DateChart = ({ propellerId, google }) => {
     }
   }, [chart, google, dateCampaigns])
 
-  
-
-  // console.log(data);
   return (
     <Fragment>
       <div className="row mg-t-30">
