@@ -878,7 +878,9 @@ export const getDigitalCampaignsReducer = (
     case GET_DIGITAL_CAMPAIGNS_SUCCESS:
       return {
         loading: false,
-        digitalCampaigns: action.payload,
+        digitalCampaigns: action.payload.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        ),
       };
     case GET_DIGITAL_CAMPAIGNS_FAIL:
       return {

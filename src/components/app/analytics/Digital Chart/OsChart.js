@@ -18,8 +18,6 @@ const OsChart = ({ propellerId, google }) => {
     dispatch(getOsCampaign(propellerId));
   }, [dispatch, propellerId]);
 
-  // console.log(OsCampaigns);
-
   useEffect(() => {
     if (google && !chart) { 
       const Adsreport = {
