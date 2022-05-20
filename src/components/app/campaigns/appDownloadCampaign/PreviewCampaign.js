@@ -23,7 +23,6 @@ const PreviewCampaign = ({
   prevStep,
   values,
   audience,
-  attachmentPreview,
   price,
   filterOptions,
   handleChange,
@@ -33,7 +32,7 @@ const PreviewCampaign = ({
     (state) => state.appDownload || []
   );
 
-  const { filteredContactList, fcError, fcLoading } = useSelector(
+  const { filteredContactList, fcLoading } = useSelector(
     (state) => state.filteredContactList || []
   );
 
@@ -120,50 +119,7 @@ const PreviewCampaign = ({
       dispatch(clearErrors());
       // dispatch(getWallet());
     }
-  }, [dispatch, toast, error, createAppDownloadCampaign, navigate]);
-
-  //Edit functionality
-  const [show, setShow] = useState(false);
-
-  const [val, setVal] = useState({
-    campaignMessage: values.campaignMessage,
-    callToAction: values.callToAction,
-  });
-
-  const handleEdit = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setVal({ ...val, [name]: value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    values.campaignMessage = val.campaignMessage;
-    values.callToAction = val.callToAction;
-    setShow(!show);
-  };
-  const showButton = (e) => {
-    setShow(!show);
-  };
-
-  //Campaign channel
-  const [view, setView] = useState(false);
-
-  const [chanl, setChanl] = useState(values.channel);
-
-  const viewButton = () => {
-    setView(!view);
-  };
-
-  const handleChanlChange = (e) => {
-    setChanl(e.target.value);
-  };
-
-  const handleCampaignChannelSub = (e) => {
-    e.preventDefault();
-    values.channel = chanl;
-    setView(!view);
-  };
+  }, [dispatch, error, createAppDownloadCampaign, navigate]);
 
   return (
     <Fragment>
@@ -208,17 +164,7 @@ const PreviewCampaign = ({
                               </p>
                             </div>
                           </div>
-                          <div>
-                            {/* <div
-                              className="d-flex pd-t-25 clickable"
-                              onClick={viewButton}
-                            >
-                              <div>
-                                <i className="fa fa-edit tx-primary mg-r-5" />
-                              </div>
-                              <p className="mb-0">Edit</p>
-                            </div> */}
-                          </div>
+                          <div></div>
                         </div>
                         <hr />
                         <div className=" mg-b-20 mg-md-b-10">
@@ -502,14 +448,6 @@ const PreviewCampaign = ({
                                       Target Audience
                                     </p>
                                   </div>
-                                  {/* <div>
-                                  <div className="d-flex pd-t-3">
-                                    <div>
-                                      <i className="fa fa-edit tx-primary mg-r-5" />
-                                    </div>
-                                    <p className="mb-0">Edit</p>
-                                  </div>
-                                </div> */}
                                 </div>
                                 <div className="row mg-t-15">
                                   <div className="col-md-3 form-group">
@@ -562,24 +500,15 @@ const PreviewCampaign = ({
                                       {" "}
                                       {(filterOptions.revenueBand ===
                                         "BELOW 5K" &&
-                                        "Moderate") ||
+                                        "Low") ||
                                         (filterOptions.revenueBand ===
                                           "BTW 5K AND 10K" &&
-                                          "Medium High") ||
+                                          "Medium") ||
                                         (filterOptions.revenueBand ===
                                           "ABOVE 10K" &&
-                                          "High End")}
+                                          "High")}
                                     </span>
                                   </div>
-                                  {/* <div className="col-md-6 form-group">
-                                    <label className="tx-14 tx-gray mb-0 tx-medium d-block">
-                                      Interest
-                                    </label>
-                                    <span className="badge badge-pink tx-14 mg-5">
-                                      {" "}
-                                      Surfing Net
-                                    </span>
-                                  </div> */}
                                 </div>
                               </div>
                               <hr />
@@ -594,14 +523,6 @@ const PreviewCampaign = ({
                                     Target Audience
                                   </p>
                                 </div>
-                                {/* <div>
-                                  <div className="d-flex pd-t-3">
-                                    <div>
-                                      <i className="fa fa-edit tx-primary mg-r-5" />
-                                    </div>
-                                    <p className="mb-0">Edit</p>
-                                  </div>
-                                </div> */}
                               </div>
                               <div className="row mg-t-15">
                                 <div className="col-md-12 form-group">
@@ -755,13 +676,6 @@ const PreviewCampaign = ({
                               </div> */}
                             </div>
                             <div className="form-row mg-t-15 pd-x-0">
-                              {/* <div className="form-group col-md-9">
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Enter your target audience number to get price"
-                                />
-                              </div> */}
                               <div className=" col-md-2 d-flex align-items-center">
                                 <p className="tx-18 tx-com tx-bold mb-0">
                                   Budget:
