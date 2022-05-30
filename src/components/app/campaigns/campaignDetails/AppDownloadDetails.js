@@ -27,7 +27,7 @@ const AppDownloadDetails = () => {
     }
     dispatch(getSingleAppDownloadCampaigns(id));
     // dispatch(getWallet())
-  }, [dispatch, toast, error]);
+  }, [dispatch, error]);
 
   // console.log(singleAppCampaign);
 
@@ -170,7 +170,6 @@ const AppDownloadDetails = () => {
                             {singleAppCampaign && singleAppCampaign.Interest}
                           </p>
                         </div>
-                        
                       </div>
                     </div>
                     <div className="col-md-6 col-lg-5 mg-b-20 mg-md-b-10">

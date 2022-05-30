@@ -27,7 +27,7 @@ const FlierVideosDetails = () => {
     }
     dispatch(getSingleFlierVideosCampaigns(id));
     // dispatch(getWallet())
-  }, [dispatch, toast, error]);
+  }, [dispatch, error]);
 
   // console.log(singleFlierCampaign);
 
@@ -170,8 +170,8 @@ const FlierVideosDetails = () => {
                             className="tx-14 tx-gray mb-0 tx-medium"
                           >
                             Age
-                            </label>
-                            <br/>
+                          </label>
+                          <br />
                           <p className="tx-16 mb-0">
                             {singleFlierCampaign &&
                             singleFlierCampaign.targetAge === null
