@@ -13,6 +13,7 @@ import FlashSms from "../../../assets/img/flashsms_sm.png";
 import Markerting from "../../../assets/img/Influencer_Marketing_sm.png";
 import Flier from "../../../assets/img/flier_campaign_sm.png";
 import Phone from "../../../assets/img/mysogi_phone_sm.png";
+import Billboard from "../../../assets/img/billboard.png";
 
 const CreateCampaign = () => {
   // const alert = useAlert();
@@ -33,7 +34,7 @@ const CreateCampaign = () => {
     }
     dispatch(getWallet());
     dispatch(getSenderID());
-  }, [dispatch, toast, error, isAuthenticated, navigate, user]);
+  }, [dispatch, error, isAuthenticated, navigate, user]);
 
   return (
     <Fragment>
@@ -64,7 +65,7 @@ const CreateCampaign = () => {
                     Select the goal that would make the campaign successful for
                     you
                   </p>
-                  <div className="row">
+                  <div className="row d-flex justify-content-center">
                     <div className="col-md-6 col-lg-3 col-12 mg-t-20">
                       <Link to="/app/campaign/influencer" className="tx-dark">
                         <div className="card card-height rounded bd-0 shadow-sm">
@@ -128,6 +129,24 @@ const CreateCampaign = () => {
                             <div className="pd-t-15">
                               <p className="tx-16 tx-bold">
                                 APP Download Campaign
+                              </p>
+                              <p className="tx-14 tx-gray mb-0">
+                                Get access to a new world of campaigning with
+                                the right touch
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    </div>
+                    <div className="col-md-6 col-lg-3 col-12 mg-t-20">
+                      <Link to="/app/campaign/billboard" className="tx-dark">
+                        <div className="card card-height rounded bd-0 shadow-sm">
+                          <div className="card-body tx-center pd-x-12">
+                            <img src={Billboard} alt="" className="img-fluid" />
+                            <div className="pd-t-15">
+                              <p className="tx-16 tx-bold">
+                                Billboard Campaign
                               </p>
                               <p className="tx-14 tx-gray mb-0">
                                 Get access to a new world of campaigning with
