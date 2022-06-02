@@ -525,7 +525,7 @@ const PreviewCampaign = ({
                                 </div>
                               </div>
                               <div className="row mg-t-15">
-                                <div className="col-md-12 form-group">
+                                <div className="col-md-6 form-group">
                                   <label className="tx-14 tx-gray mb-0 tx-medium d-block">
                                     State:
                                   </label>
@@ -539,6 +539,22 @@ const PreviewCampaign = ({
                                   <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
                                     {" "}
                                     {filterOptions.lga}
+                                  </span>
+                                </div>
+                                <div className="col-md-6 form-group">
+                                  <label className="tx-14 tx-gray mb-0 tx-medium d-block">
+                                    Start Date:
+                                  </label>
+                                  <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
+                                    {" "}
+                                    {values.scheduleFrom}
+                                  </span>
+                                  <label className="tx-14 tx-gray mb-0 tx-medium d-block mt-3">
+                                    End Date:
+                                  </label>
+                                  <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
+                                    {" "}
+                                    {values.scheduleTo}
                                   </span>
                                 </div>
                               </div>
