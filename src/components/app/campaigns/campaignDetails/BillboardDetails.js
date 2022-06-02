@@ -48,7 +48,7 @@ const BillboardDetails = () => {
               <div className="card rounded bd-0 shadow-sm">
                 <div className="card-body">
                   <div className="d-flex">
-                    <div className="">
+                    <div>
                       <img
                         src="../../assets/img/Brand_Awareness.svg"
                         className="tx-primary"
