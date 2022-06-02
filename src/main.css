@@ -608,3 +608,7 @@ table.dataTable thead th {
   display: inline;
   content: "⚠ ";
 }
+
+.billboard-card {
+  cursor: pointer;
+}
