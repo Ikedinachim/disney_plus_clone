@@ -77,6 +77,21 @@ import {
   GET_REVENUE_BAND_SUCCESS,
   GET_REVENUE_BAND_FAIL,
 
+  /////////////// BILLBOARD CONSTANTS ////////////
+  BILLBOARD_CAMPAIGN_REQUEST,
+  BILLBOARD_CAMPAIGN_SUCCESS,
+  BILLBOARD_CAMPAIGN_RESET,
+  BILLBOARD_CAMPAIGN_FAIL,
+  GET_ALL_BILLBOARD_CAMPAIGN_REQUEST,
+  GET_ALL_BILLBOARD_CAMPAIGN_SUCCESS,
+  GET_ALL_BILLBOARD_CAMPAIGN_FAIL,
+  GET_ALL_BILLBOARD_REQUEST,
+  GET_ALL_BILLBOARD_SUCCESS,
+  GET_ALL_BILLBOARD_FAIL,
+  GET_SINGLE_BILLBOARD_CAMPAIGN_REQUEST,
+  GET_SINGLE_BILLBOARD_CAMPAIGN_SUCCESS,
+  GET_SINGLE_BILLBOARD_CAMPAIGN_FAIL,
+
   ////////////// GENERIC CONSTANTS ///////////////
   CLEAR_ERRORS,
 } from "../constants/campaignConstants";
@@ -851,6 +866,146 @@ export const getInfluencerDetailsReducer = (
       return {
         idLoading: false,
         influencerDetails: null,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+/////////////////// BILLBOARD DASHBOARD REDUCER //////////////////
+export const createBillBoardCampaignReducer = (
+  state = { createBillBoardCampaign: [] },
+  action
+) => {
+  switch (action.type) {
+    case BILLBOARD_CAMPAIGN_REQUEST:
+      return {
+        loading: true,
+        createBillBoardCampaign: [],
+      };
+
+    case BILLBOARD_CAMPAIGN_SUCCESS:
+      return {
+        loading: false,
+        createBillBoardCampaign: action.payload,
+      };
+    case BILLBOARD_CAMPAIGN_FAIL:
+      return {
+        loading: false,
+        createBillBoardCampaign: null,
+        error: action.payload,
+      };
+    case BILLBOARD_CAMPAIGN_RESET:
+      return {
+        ...state,
+        createBillBoardCampaign: [],
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const getAllBillBoardCampaignReducer = (
+  state = { billBoardCampaigns: [] },
+  action
+) => {
+  switch (action.type) {
+    case GET_ALL_BILLBOARD_CAMPAIGN_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case GET_ALL_BILLBOARD_CAMPAIGN_SUCCESS:
+      return {
+        loading: false,
+        billBoardCampaigns: action.payload,
+      };
+
+    case GET_ALL_BILLBOARD_CAMPAIGN_FAIL:
+      return {
+        loading: false,
+        billBoardCampaigns: null,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+export const getAllBillBoardReducer = (
+  state = { allBillBoard: [] },
+  action
+) => {
+  switch (action.type) {
+    case GET_ALL_BILLBOARD_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case GET_ALL_BILLBOARD_SUCCESS:
+      return {
+        loading: false,
+        allBillBoard: action.payload,
+      };
+
+    case GET_ALL_BILLBOARD_FAIL:
+      return {
+        loading: false,
+        allBillBoard: null,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+export const getSingleBillBoardCampaignReducer = (
+  state = { singleBillBoardCampaign: [] },
+  action
+) => {
+  switch (action.type) {
+    case GET_SINGLE_BILLBOARD_CAMPAIGN_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case GET_SINGLE_BILLBOARD_CAMPAIGN_SUCCESS:
+      return {
+        loading: false,
+        singleBillBoardCampaign: action.payload,
+      };
+
+    case GET_SINGLE_BILLBOARD_CAMPAIGN_FAIL:
+      return {
+        loading: false,
+        singleBillBoardCampaign: null,
         error: action.payload,
       };
 

@@ -5,31 +5,26 @@ import { useSelector, useDispatch } from "react-redux";
 import { DateTime } from "luxon";
 import { toast } from "react-toastify";
 import {
-  getSingleUserInfluencers,
+  getSingleBillBoardCampaign,
   clearErrors,
 } from "../../../../actions/campaignActions";
+import Billboard from "../../../../assets/img/billboard.png";
 import Loader from "../../../loader";
-// import { useAlert } from "react-alert";
 
-const InfluencerDetails = () => {
-  const { loading, error, singleUserInfluencer } = useSelector(
-    (state) => state.singleUserInfluencer || {}
+const BillboardDetails = () => {
+  const { loading, error, singleBillBoardCampaign } = useSelector(
+    (state) => state.singleBillBoardCampaign || {}
   );
 
   const { id } = useParams();
   const dispatch = useDispatch();
-  // const alert = useAlert();
-
   useEffect(() => {
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
     }
-    dispatch(getSingleUserInfluencers(id));
-    // dispatch(getWallet())
-  }, [dispatch, error]);
-
-  // console.log(singleUserInfluencer);
+    dispatch(getSingleBillBoardCampaign(id));
+  }, [dispatch, error, id]);
 
   return (
     <Fragment>
@@ -37,7 +32,7 @@ const InfluencerDetails = () => {
         <Loader />
       ) : (
         <Fragment>
-          <MetaData title={"Campaign Details"} />
+          <MetaData title={"Billboard Campaign Details"} />
           <div className="content-body">
             <div className="container pd-x-0">
               <div className="row justify-content-between">
@@ -53,7 +48,7 @@ const InfluencerDetails = () => {
               <div className="card rounded bd-0 shadow-sm">
                 <div className="card-body">
                   <div className="d-flex">
-                    <div className="mg-r-20">
+                    <div className="">
                       <img
                         src="../../assets/img/Brand_Awareness.svg"
                         className="tx-primary"
@@ -63,12 +58,12 @@ const InfluencerDetails = () => {
                     </div>
                     <div>
                       <p className="tx-20 tx-bold pd-t-20">
-                        Influencer Campaign Details
+                        Billboard Campaign Details
                       </p>
                     </div>
                   </div>
                   <hr />
-                  {singleUserInfluencer.map((campaign) => (
+                  {singleBillBoardCampaign && (
                     <Fragment>
                       <div className="row justify-content-between">
                         <div className="col-md-6 col-lg-6 mg-b-20 mg-md-b-10">
@@ -84,7 +79,7 @@ const InfluencerDetails = () => {
                                 Campaign Name
                               </label>
                               <p className="tx-16 mb-0">
-                                {campaign.campaignType}
+                                {singleBillBoardCampaign.campaignType}
                               </p>
                             </div>
                             <div className="form-group col-md-6">
@@ -92,9 +87,11 @@ const InfluencerDetails = () => {
                                 for=""
                                 className="tx-14 tx-gray mb-0 tx-medium"
                               >
-                                User-ID
+                                Rate Type
                               </label>
-                              <p className="tx-16 mb-0">{campaign.senderId}</p>
+                              <p className="tx-16 mb-0 text-capitalize">
+                                {singleBillBoardCampaign.rateType}
+                              </p>
                             </div>
                             <div className="form-group col-md-6">
                               <label
@@ -103,73 +100,8 @@ const InfluencerDetails = () => {
                               >
                                 Campaign-ID
                               </label>
-                              <p className="tx-16 mb-0">{campaign.id}</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-md-6 col-lg-5 mg-b-20 mg-md-b-10">
-                          <p className="tx-18 tx-semibold mb-0">Campaign</p>
-                          <div className="row mg-t-15">
-                            <div className="form-group col-md-6">
-                              <label
-                                for=""
-                                className="tx-14 tx-gray mb-0 tx-medium"
-                              >
-                                Campaign message
-                              </label>
                               <p className="tx-16 mb-0">
-                                {campaign.campaignMessage}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <hr />
-                      <div className="row justify-content-between">
-                        <div className="col-md-6 col-lg-5 mg-b-20 mg-md-b-10">
-                          <p className="tx-18 tx-semibold mb-0">
-                            Target Audience
-                          </p>
-                          <div className="row mg-t-15">
-                            <div className="form-group col-md-6">
-                              <label
-                                for=""
-                                className="tx-14 tx-gray mb-0 tx-medium"
-                              >
-                                Gender
-                              </label>
-                              <br />
-                              <p className="tx-16 mb-0 badge badge-pink">
-                                {campaign.gender === null
-                                  ? "N/A"
-                                  : campaign.gender}
-                              </p>
-                            </div>
-
-                            <div className="form-group col-md-6">
-                              <label
-                                for=""
-                                className="tx-14 tx-gray mb-0 tx-medium"
-                              >
-                                Age
-                              </label>
-                              <p className="tx-16 mb-0 badge badge-pink">
-                                {campaign.targetAge === null
-                                  ? "N/A"
-                                  : campaign.targetAge}
-                              </p>
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label
-                                for=""
-                                className="tx-14 tx-gray mb-0 tx-medium"
-                              >
-                                Interest
-                              </label>
-                              <p className="tx-16 mb-0 badge badge-pink ">
-                                {campaign.interest === null
-                                  ? "N/A"
-                                  : campaign.interest}
+                                {singleBillBoardCampaign.id}
                               </p>
                             </div>
                           </div>
@@ -186,7 +118,9 @@ const InfluencerDetails = () => {
                               >
                                 Price
                               </label>
-                              <p className="tx-16 mb-0">{campaign.cost}</p>
+                              <p className="tx-16 mb-0">
+                                {singleBillBoardCampaign.cost}
+                              </p>
                             </div>
 
                             <div className="form-group col-md-6">
@@ -198,7 +132,7 @@ const InfluencerDetails = () => {
                               </label>
                               <p className="tx-16 mb-0">
                                 {DateTime.fromJSDate(
-                                  new Date(campaign.createdAt)
+                                  new Date(singleBillBoardCampaign.createdAt)
                                 ).toFormat("dd MMM, yyyy")}
                               </p>
                             </div>
@@ -211,15 +145,86 @@ const InfluencerDetails = () => {
                               </label>
                               <p className="tx-16 mb-0">
                                 {DateTime.fromJSDate(
-                                  new Date(campaign.updatedAt)
+                                  new Date(singleBillBoardCampaign.updatedAt)
                                 ).toFormat("dd MMM, yyyy")}
                               </p>
                             </div>
                           </div>
                         </div>
                       </div>
+                      <hr />
+                      <div className="row justify-content-between">
+                        <div className="col-md-6 col-lg-5 mg-b-20 mg-md-b-10">
+                          <p className="tx-18 tx-semibold mb-0">Status</p>
+                          <div className="row mg-t-15">
+                            <div className="form-group col-md-6">
+                              <label
+                                for=""
+                                className="tx-14 tx-gray mb-0 tx-medium"
+                              >
+                                Status
+                              </label>
+                              <p className="tx-16 mb-0">
+                                {singleBillBoardCampaign.isApproved &&
+                                !singleBillBoardCampaign.isPublished &&
+                                !singleBillBoardCampaign.isRejected
+                                  ? "Unpublished"
+                                  : null ||
+                                    (singleBillBoardCampaign.isApproved &&
+                                      singleBillBoardCampaign.isPublished &&
+                                      !singleBillBoardCampaign.isRejected)
+                                  ? "Published"
+                                  : null ||
+                                    (!singleBillBoardCampaign.isApproved &&
+                                      !singleBillBoardCampaign.isPublished &&
+                                      singleBillBoardCampaign.isRejected)
+                                  ? "Rejected"
+                                  : null ||
+                                    (!singleBillBoardCampaign.isApproved &&
+                                      !singleBillBoardCampaign.isPublished &&
+                                      !singleBillBoardCampaign.isRejected)
+                                  ? "Pending"
+                                  : null}
+                              </p>
+                            </div>
+                            {singleBillBoardCampaign.isRejected && (
+                              <div className="form-group col-md-6">
+                                <label
+                                  for=""
+                                  className="tx-14 tx-gray mb-0 tx-medium"
+                                >
+                                  Rejection Reason
+                                </label>
+                                <p className="tx-16 mb-0">
+                                  {singleBillBoardCampaign.rejectionReason}
+                                </p>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <div className="col-md-6 col-lg-5 mg-b-20 mg-md-b-10">
+                          {singleBillBoardCampaign.isApproved &&
+                            singleBillBoardCampaign.isPublished &&
+                            !singleBillBoardCampaign.isRejected && (
+                              <>
+                                <p className="tx-18 tx-semibold mb-0">
+                                  Billboard Placement
+                                </p>
+                                <div className="row mg-t-15">
+                                  <div className="form-group col-md-12">
+                                    <img
+                                      src={Billboard}
+                                      className="img-fluid mg-b-10 img-fit-contain"
+                                      alt=""
+                                    />
+                                  </div>
+                                </div>
+                              </>
+                            )}
+                        </div>
+                      </div>
                     </Fragment>
-                  ))}
+                  )}
                 </div>
               </div>
             </div>
@@ -230,4 +235,4 @@ const InfluencerDetails = () => {
   );
 };
 
-export default InfluencerDetails;
+export default BillboardDetails;

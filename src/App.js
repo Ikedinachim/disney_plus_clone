@@ -18,6 +18,7 @@ import SmsStepForm from "./components/app/campaigns/smsCampaign/SmsStepForm";
 import FlierVideoStepForm from "./components/app/campaigns/flierVideoCampaign/FlierVideoStepForm";
 import AppDownloadStepForm from "./components/app/campaigns/appDownloadCampaign/AppDownloadStepForm";
 import InfluencerStepForm from "./components/app/campaigns/influencerCampaign/InfluencerStepForm";
+import BillBoardStepForm from "./components/app/campaigns/billBoardCampaign/BillBoardStepForm";
 import DigitalAnalytics from "./components/app/analytics/DigitalAnalytics";
 import ViewAnalytics from "./components/app/analytics/ViewAnalytics";
 import Settings from "./components/app/settings/settings";
@@ -28,6 +29,7 @@ import Ads from "./adsView/Ads";
 import AppDownloadDetails from "./components/app/campaigns/campaignDetails/AppDownloadDetails";
 import FlierVideosDetails from "./components/app/campaigns/campaignDetails/FlierVideosDetails";
 import SmsDetails from "./components/app/campaigns/campaignDetails/SmsDetails";
+import BillboardDetails from "./components/app/campaigns/campaignDetails/BillboardDetails";
 
 ///////////////////////////////////////
 import InfluencerDashboardLayout from "./influencer/InfluencerDashboardLayout";
@@ -153,17 +155,6 @@ function App() {
             }
           />
 
-          {/* <Route
-            path="billing/payment"
-            element={
-              isAuthenticated && user && user.user.role === "user" ? (
-                <MakePayment />
-              ) : (
-                <Login />
-              )
-            }
-          /> */}
-
           <Route
             path="campaigns"
             element={
@@ -245,6 +236,16 @@ function App() {
             }
           />
           <Route
+            path="campaign/single-billboard/:id"
+            element={
+              isAuthenticated && user && user.user.role === "user" ? (
+                <BillboardDetails />
+              ) : (
+                <Login />
+              )
+            }
+          />
+          <Route
             path="campaign/single-influencer/:id"
             element={
               isAuthenticated && user && user.user.role === "user" ? (
@@ -259,6 +260,16 @@ function App() {
             element={
               isAuthenticated && user && user.user.role === "user" ? (
                 <InfluencerStepForm />
+              ) : (
+                <Login />
+              )
+            }
+          />
+          <Route
+            path="campaign/billboard"
+            element={
+              isAuthenticated && user && user.user.role === "user" ? (
+                <BillBoardStepForm />
               ) : (
                 <Login />
               )
@@ -299,7 +310,7 @@ function App() {
             path="analytics/appdownload/:id"
             element={
               isAuthenticated && user && user.user.role === "user" ? (
-                <AppDownloadAnalytics/>
+                <AppDownloadAnalytics />
               ) : (
                 <Login />
               )
