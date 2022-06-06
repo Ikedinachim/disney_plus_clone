@@ -27,7 +27,7 @@ const SmsDetails = () => {
     }
     dispatch(getSingleSmsCampaigns(id));
     // dispatch(getWallet())
-  }, [dispatch, toast, error]);
+  }, [dispatch, error]);
 
   // console.log(singleSmsCampaign);
 

@@ -9,6 +9,7 @@ import ViewSmsCampaign from "./ViewSmsCampaigns";
 import ViewAppDownloadsCampaigns from "./ViewAppDownloadsCampaigns";
 import ViewFlierVideosCampaigns from "./ViewFlierVideosCampaigns";
 import ViewInfluencerCampaigns from "./ViewInfluencerCampaigns";
+import ViewBillboardCampaign from "./ViewBillboardCampaigns";
 import {
   getSmsCampaigns,
   clearErrors,
@@ -42,6 +43,10 @@ const ViewCampaignTabs = () => {
   const handleTab4 = () => {
     // update the state to tab2
     setActiveTab("tab4");
+  };
+  const handleTab5 = () => {
+    // update the state to tab2
+    setActiveTab("tab5");
   };
 
   useEffect(() => {
@@ -138,6 +143,20 @@ const ViewCampaignTabs = () => {
                         Influencer
                       </a>
                     </li>
+                    <li className="nav-item">
+                      <a
+                        className="nav-link tab"
+                        id="influencer-tab"
+                        data-toggle="tab"
+                        href="#influencer"
+                        role="tab"
+                        onClick={handleTab5}
+                        aria-controls="influencer"
+                        aria-selected="false"
+                      >
+                        Billboard
+                      </a>
+                    </li>
                   </ul>
                   <div className="tab-content bd-t-0" id="myTabContent">
                     <div
@@ -163,6 +182,7 @@ const ViewCampaignTabs = () => {
                         ) : (
                           ""
                         )}
+                        {activeTab === "tab5" ? <ViewBillboardCampaign /> : ""}
                       </div>
                     </div>
                   </div>
