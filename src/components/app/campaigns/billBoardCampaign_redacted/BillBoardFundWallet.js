@@ -19,7 +19,7 @@ import {
   CONFIRM_FUNDING_RESET,
 } from "../../../../constants/billingConstants";
 
-const InfluencerFundWallet = ({ prevStep, values, price }) => {
+const BillBoardFundWallet = ({ prevStep, values, cost }) => {
   // const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const InfluencerFundWallet = ({ prevStep, values, price }) => {
     (state) => state.fundWallet
   );
   const { confirmFund } = useSelector((state) => state.confirmFund);
-  const [amount, setAmountToPay] = useState(price - parseInt(wallet.balance));
+  const [amount, setAmountToPay] = useState(cost - parseInt(wallet.balance));
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   const makePaymentHandler = (e) => {
@@ -138,7 +138,6 @@ const InfluencerFundWallet = ({ prevStep, values, price }) => {
     }
   }, [
     dispatch,
-    toast,
     loading,
     error,
     fundWallet,
@@ -249,4 +248,4 @@ const InfluencerFundWallet = ({ prevStep, values, price }) => {
   );
 };
 
-export default InfluencerFundWallet;
+export default BillBoardFundWallet;

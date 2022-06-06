@@ -1,44 +1,48 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
-import { ProgressBar } from "react-bootstrap";
-import NumberFormat from "react-number-format";
+// import { Link } from "react-router-dom";
 
 import MetaData from "../../../layout/MetaData";
-import MediaPlayer from "../../../../_helpers/reactPlayer/ReactPlayer";
+import { ProgressBar } from "react-bootstrap";
 
-const BillBoardTargetAudience = ({
+const InfluencerTargetAudience = ({
   prevStep,
   nextStep,
   handleChange,
+  // onChangeAttachment,
   handleImageUpload,
   handleVideoUpload,
   values,
   selectedFileName,
   uploadPercentage,
+  resetCheckedState,
 }) => {
-  const { allBillBoard } = useSelector((state) => state.allBillBoard || []);
+  // const alert = useAlert();
+  const [status, setStatus] = useState(3);
+  const radioHandler = (status) => {
+    setStatus(status);
+  };
 
   const Continue = (e) => {
     e.preventDefault();
-    if (values.attachment === "" || values.attachment === undefined) {
-      toast.error("Please upload billboard creative");
-    } else if (values.startDate === "") {
-      toast.error("Set campaign start date");
-    } else if (values.endDate === "") {
-      toast.error("Set campaign end date");
+    if (values.campaignMessage === "") {
+      toast.error("Create the campaign message");
+    } else if (values.attachment === null) {
+      nextStep();
+      handleImageUpload();
     } else {
       nextStep();
     }
   };
   const Previous = (e) => {
     e.preventDefault();
+    resetCheckedState();
     prevStep();
   };
 
   return (
     <Fragment>
-      <MetaData title={"Billboard Marketing"} />
+      <MetaData title={"Influencer Marketing"} />
       <div className="content-body">
         <div className="container pd-x-0">
           <div className="mg-b-20 mg-md-b-30">
@@ -56,283 +60,189 @@ const BillBoardTargetAudience = ({
               />
             </div>
           </div>
-          <div className="pd-md-y-20">
-            <div className="align-items-start row justify-content-between">
-              <div className="col-md-6 col-12 mg-t-20">
-                <div className="card-scrol pd-md-x-10">
-                  <form>
-                    <div>
-                      <p className="tx-24 tx-bold mb-1 tx-com">
-                        Billboard Marketing
-                      </p>
-                      <p className="tx-14 tx-blac">
-                        Provide all requested details to help complete your
-                        billboard placement
-                      </p>
+          <div className="pd-md-y-20 col-xl-11 pd-x-0">
+            <form>
+              <div>
+                <p className="tx-22 tx-com tx-bold mb-1">
+                  Influencer Marketing
+                </p>
+                <p className="tx-14 tx-blac">
+                  Provide all requested details to help complete the campaign
+                  creation
+                </p>
 
-                      <div className="mg-t-40">
-                        <p className="tx-22 tx-bold mb-1 tx-com">
-                          Billboard Creative
+                <div className="form-group">
+                  <label className="mb-1">Campaign Message</label>
+                  <textarea
+                    className="form-control"
+                    rows={6}
+                    placeholder="Indulge in any of our yummy treat for just 4500 naira per loaf... Get all three for 12,500. Contact us now
+                    IG: @xxxx
+                    Twitter: @xxxx
+                    FB: @xxxx
+                    Snapchat: @xxxx"
+                    defaultValue={values.campaignMessage}
+                    onChange={handleChange("campaignMessage")}
+                  />
+                </div>
+                <div className="mg-t-40">
+                  <p className="tx-22 tx-bold mb-1 tx-com">Attachment</p>
+                  <div className="form-group">
+                    <div className="custom-control custom-radio">
+                      <input
+                        type="radio"
+                        id="image"
+                        name="customRadio"
+                        className="custom-control-input"
+                        checked={values.assetType === "image"}
+                        // onClick={(e) => assetTypeHandler("image")}
+                        value={"image"}
+                        onChange={handleChange("assetType")}
+                      />
+                      <label className="custom-control-label" htmlFor="image">
+                        Image Asset
+                      </label>
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <div className="custom-control custom-radio">
+                      <input
+                        type="radio"
+                        id="video"
+                        name="customRadio"
+                        className="custom-control-input"
+                        checked={values.assetType === "video"}
+                        // onClick={(e) => assetTypeHandler("video")}
+                        value={"video"}
+                        onChange={handleChange("assetType")}
+                      />
+                      <label className="custom-control-label" htmlFor="video">
+                        Video Asset
+                      </label>
+                    </div>
+                  </div>
+                  {/* <div className="form-group col-md-6 pd-md-l-0">
+                    <div className="custom-file">
+                      <input
+                        type="file"
+                        name="file"
+                        className="custom-file-input"
+                        id="customFile"
+                        accept="image/png, image/jpeg, image/gif, image/jpg"
+                        onChange={handleImageUpload}
+                        // placeholder="Click to upload desired icon (if needed)"
+                      />
+                      <label className="custom-file-label" htmlFor="customFile">
+                        {selectedFileName}
+                      </label>
+                      {uploadPercentage > 0 && (
+                        <span className="mt-2">
+                          <ProgressBar
+                            now={uploadPercentage}
+                            // active
+                            label={`${uploadPercentage}%`}
+                          />
+                        </span>
+                      )}
+                    </div>
+                  </div> */}
+                  {values.assetType === "image" && (
+                    <div className="form-group pd-0 col-md-6 pd-md-l-0">
+                      <div className="custom-file">
+                        <input
+                          type="file"
+                          name="file"
+                          accept="image/png, image/jpeg, image/gif, image/jpg"
+                          className="custom-file-input"
+                          id="customFile"
+                          // defaultValue={values.attachment}
+                          onChange={
+                            // (onChangeAttachment("uploadedImage"),
+                            handleImageUpload
+                          }
+                        />
+                        <label
+                          className="custom-file-label"
+                          htmlFor="customFile"
+                        >
+                          {selectedFileName}
+                        </label>
+                        {uploadPercentage > 0 && (
+                          <span className="mt-2">
+                            <ProgressBar
+                              now={uploadPercentage}
+                              // active
+                              label={`${uploadPercentage}%`}
+                            />
+                          </span>
+                        )}
+                        <p className="mt-2 tx-danger tx-italic">
+                          Image dimension: 960 x 1280
                         </p>
-                        <div className="form-group">
-                          <div className="custom-control custom-radio">
-                            <input
-                              type="radio"
-                              id="image"
-                              name="customRadio"
-                              className="custom-control-input"
-                              checked={values.assetType === "image"}
-                              value={"image"}
-                              onChange={handleChange("assetType")}
-                            />
-                            <label
-                              className="custom-control-label"
-                              htmlFor="image"
-                            >
-                              Image Asset
-                            </label>
-                          </div>
-                        </div>
-                        <div className="form-group">
-                          <div className="custom-control custom-radio">
-                            <input
-                              type="radio"
-                              id="video"
-                              name="customRadio"
-                              className="custom-control-input"
-                              checked={values.assetType === "video"}
-                              value={"video"}
-                              onChange={handleChange("assetType")}
-                            />
-                            <label
-                              className="custom-control-label"
-                              htmlFor="video"
-                            >
-                              Video Asset
-                            </label>
-                          </div>
-                        </div>
-                        {values.attachment !== undefined && (
-                          <div className="card shadow-sm rounded bd-0 mg-b-20 ht-250">
-                            <div className="card-body ht-100p">
-                              {values.assetType === "image" ? (
-                                <img
-                                  src={values && values.attachment}
-                                  className="img-fluid mg-b-10 img-fit-contain"
-                                  alt=""
-                                />
-                              ) : (
-                                values.attachment !== undefined &&
-                                values.attachment !== "" && (
-                                  <>
-                                    <div className="mg-b-10">
-                                      <MediaPlayer url={values.attachment} />
-                                    </div>
-                                  </>
-                                )
-                              )}
-                            </div>
-                          </div>
-                        )}
-                        {values.assetType === "image" && (
-                          <div className="form-group pd-0">
-                            <div className="custom-file">
-                              <input
-                                type="file"
-                                name="file"
-                                accept="image/png, image/jpeg, image/gif, image/jpg"
-                                className="custom-file-input"
-                                id="customFile"
-                                onChange={handleImageUpload}
-                              />
-                              <label
-                                className="custom-file-label"
-                                htmlFor="customFile"
-                              >
-                                {selectedFileName}
-                              </label>
-                              {uploadPercentage > 0 && (
-                                <span className="mt-2">
-                                  <ProgressBar
-                                    now={uploadPercentage}
-                                    label={`${uploadPercentage}%`}
-                                  />
-                                </span>
-                              )}
-                              <p className="mt-2 tx-danger tx-italic">
-                                Image dimension: 960 x 1280
-                              </p>
-                            </div>
-                          </div>
-                        )}
-                        {values.assetType === "video" && (
-                          <div className="form-group">
-                            <div className="custom-file">
-                              <label className="mb-1">Youtube URL</label>
-                              <input
-                                type="file"
-                                name="file"
-                                id="videoAsset"
-                                className="custom-file-input"
-                                accept="video/mp4,video/x-m4v,video/*"
-                                onChange={handleVideoUpload}
-                              />
-                              <label
-                                className="custom-file-label"
-                                htmlFor="videoAsset"
-                              >
-                                {selectedFileName}
-                              </label>
-                              {uploadPercentage > 0 && (
-                                <span className="mt-2">
-                                  <ProgressBar
-                                    now={uploadPercentage}
-                                    label={`${uploadPercentage}%`}
-                                  />
-                                </span>
-                              )}
-                              <p className="tx-danger tx-italic">
-                                Video size: not more than 30mb
-                              </p>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                      <div className="form-group d-flex">
-                        <div className="form-group col-md-6 pd-l-0 mg-0">
-                          <label className="mb-1">
-                            Duration
-                            <i className="tx-6 fa fa-star tx-primary mg-l-2" />
-                          </label>
-                          <div className="input-group mg-b-0">
-                            <div className="input-group-prepend">
-                              <span className="input-group-text">Start</span>
-                            </div>
-                            <input
-                              type="date"
-                              className="form-control"
-                              placeholder="Username"
-                              aria-label="Username"
-                              aria-describedby="basic-addon1"
-                              defaultValue={values.startDate}
-                              onChange={handleChange("startDate")}
-                            />
-                          </div>
-                        </div>
-                        <div className="form-group col-md-6 pd-x-0 mg-0">
-                          <label />
-                          <div className="input-group mg-b-10 mg-t-5">
-                            <div className="input-group-prepend">
-                              <span className="input-group-text">End</span>
-                            </div>
-                            <input
-                              type="date"
-                              className="form-control"
-                              placeholder="Username"
-                              aria-label="Username"
-                              aria-describedby="basic-addon1"
-                              defaultValue={values.endDate}
-                              onChange={handleChange("endDate")}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-md-5 pd-x-0 mg-y-40">
-                        <div className="d-flex">
-                          <button
-                            className="btn btn-primary w-100 tx-com"
-                            onClick={Continue}
-                            type="submit"
-                            variant="contained"
-                            disabled={
-                              uploadPercentage !== 100 &&
-                              values.attachment === null
-                                ? true
-                                : false
-                            }
-                          >
-                            Proceed
-                          </button>
-                          <button
-                            onClick={Previous}
-                            className="btn btn-outline-primary w-100 mg-l-20 tx-bold tx-com"
-                          >
-                            Go Back
-                          </button>
-                        </div>
                       </div>
                     </div>
-                  </form>
+                  )}
+                  {values.assetType === "video" && (
+                    <div className="form-group pd-0 col-md-6 pd-md-l-0">
+                      <div className="custom-file">
+                        <label className="mb-1">Youtube URL</label>
+                        <input
+                          type="file"
+                          name="file"
+                          id="videoAsset"
+                          className="custom-file-input"
+                          accept="video/mp4,video/x-m4v,video/*"
+                          // value={values.attachment}
+                          // placeholder="https://www.youtube.com/watch?v=ysz5S6PUM-U"
+                          onChange={handleVideoUpload}
+                        />
+                        <label
+                          className="custom-file-label"
+                          htmlFor="videoAsset"
+                        >
+                          {selectedFileName}
+                        </label>
+                        {uploadPercentage > 0 && (
+                          <span className="mt-2">
+                            <ProgressBar
+                              now={uploadPercentage}
+                              // active
+                              label={`${uploadPercentage}%`}
+                            />
+                          </span>
+                        )}
+                        <p className="tx-danger tx-italic">
+                          Video size: not more than 30mb
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                <div className="col-md-5 pd-x-0 mg-y-40">
+                  <div className="d-flex">
+                    <button
+                      className="btn btn-primary w-100 tx-com"
+                      onClick={Continue}
+                      type="submit"
+                      variant="contained"
+                      disabled={
+                        uploadPercentage !== 100 && values.attachment === null
+                          ? true
+                          : false
+                      }
+                    >
+                      Proceed
+                    </button>
+                    <button
+                      onClick={Previous}
+                      className="btn btn-outline-primary w-100 mg-l-20 tx-bold tx-com"
+                    >
+                      Go Back
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div className="position-sticky t-0 col-md-5 col-12 mg-t-20">
-                {allBillBoard.map(
-                  (billboard, i) =>
-                    billboard.id === values.billboard_id && (
-                      <div key={i}>
-                        <div className="card shadow-sm rounded bd-0 ht-400">
-                          <div className="card-body">
-                            <img
-                              src={billboard?.imageUrl}
-                              className="img-fluid mg-b-10 img-fit-cover"
-                              alt=""
-                            />
-                          </div>
-                        </div>
-                        <div className="pd-30">
-                          <h2 className="tx-24 tx-bold mg-b-20 tx-com text-uppercase">
-                            {billboard.title}
-                          </h2>
-                          <div>
-                            <p className="tx-bold">
-                              Price:{" "}
-                              <NumberFormat
-                                className="tx-18 mg-5 tx-amt mt-0"
-                                value={parseInt(billboard.daily)}
-                                displayType={"text"}
-                                thousandSeparator={true}
-                                prefix={"₦"}
-                              />
-                            </p>
-                          </div>
-                          <div>
-                            <p className="tx-bold">
-                              Location:{" "}
-                              <span className="tx-normal">
-                                {billboard.location}
-                              </span>
-                            </p>
-                          </div>
-                          <div>
-                            <p className="tx-bold">
-                              Size:{" "}
-                              <span className="tx-normal">
-                                {billboard.size}
-                              </span>
-                            </p>
-                          </div>
-                          <div>
-                            <p className="tx-bold">
-                              illumination:{" "}
-                              <span className="tx-normal">
-                                {billboard.illumination}
-                              </span>
-                            </p>
-                          </div>
-                          <div>
-                            <p className="tx-bold">
-                              Traffic:{" "}
-                              <span className="tx-normal">
-                                {billboard.traffic}
-                              </span>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    )
-                )}
-              </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
@@ -340,4 +250,4 @@ const BillBoardTargetAudience = ({
   );
 };
 
-export default BillBoardTargetAudience;
+export default InfluencerTargetAudience;
