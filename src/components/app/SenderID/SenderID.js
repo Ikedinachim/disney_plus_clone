@@ -21,7 +21,7 @@ const SenderID = () => {
       toast.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, error, toast]);
+  }, [dispatch, error]);
 
   const setSenderID = () => {
     const data = {

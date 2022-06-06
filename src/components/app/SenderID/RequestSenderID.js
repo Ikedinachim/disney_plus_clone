@@ -21,7 +21,6 @@ const SenderID = () => {
     (state) => state.createSenderId || []
   );
 
-  // const alert = useAlert();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -35,7 +34,7 @@ const SenderID = () => {
       toast.error(error.message);
       dispatch(clearErrors());
     }
-  }, [dispatch, toast, status, error, loading, navigate]);
+  }, [dispatch, status, error, loading, navigate]);
 
   const submitSenderIdHandler = (e) => {
     e.preventDefault();
@@ -93,7 +92,7 @@ const SenderID = () => {
                       onChange={onChange}
                     />
                   </div>
-                  <div className="d-flex justify-content-between">
+                  <div className="d-flex justify-content-between mt-1">
                     <p>{11 - characterCount} Characters Left</p>
                   </div>
                   <div className="col-md-8 pd-x-0 mg-t-30">
@@ -105,6 +104,7 @@ const SenderID = () => {
                           data-toggle="modal"
                           data-target="#successModal"
                           data-dismiss="modal"
+                          disabled={characterCount < 2 ? true : false}
                         >
                           Proceed
                         </button>

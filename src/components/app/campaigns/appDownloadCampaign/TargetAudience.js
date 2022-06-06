@@ -110,17 +110,17 @@ const TargetAudience = ({
     },
     {
       id: 2,
-      name: "Moderate",
+      name: "Low",
       value: "BELOW 5K",
     },
     {
       id: 3,
-      name: "Medium High",
+      name: "Medium",
       value: "BTW 5K AND 10K",
     },
     {
       id: 4,
-      name: "High End",
+      name: "High",
       value: "ABOVE 10K",
     },
   ];
@@ -165,6 +165,10 @@ const TargetAudience = ({
       values.targetAudience.includes("")
     ) {
       toast.error("Audience Cannot be Empty");
+    } else if (values.channel === "display_ads" && values.scheduleFrom === "") {
+      toast.error("Set duration start date");
+    } else if (values.channel === "display_ads" && values.scheduleTo === "") {
+      toast.error("Set duration end date");
     } else if (values.channel === "display_ads" && values.budget === "") {
       toast.error("Set a Budget");
     } else if (
@@ -200,7 +204,6 @@ const TargetAudience = ({
         // console.log(parsedCsvData);
       },
     });
-    console.log(parsedCsvData);
   };
 
   const onDrop = useCallback((acceptedFiles) => {
@@ -232,9 +235,8 @@ const TargetAudience = ({
       toast.error(error);
       dispatch(clearErrors());
     }
-    // console.log(parsedCsvData);
     getCsvRawData(parsedCsvData);
-  }, [dispatch, error, toast, parsedCsvData]);
+  }, [dispatch, error, parsedCsvData]);
 
   return (
     <Fragment>
@@ -298,6 +300,43 @@ const TargetAudience = ({
                           />
                         </div>
                         <div className="form-group col-md-6">
+                          <label className="mb-1">
+                            Duration
+                            <i className="tx-6 fa fa-star tx-primary mg-l-2" />
+                          </label>
+                          <div className="input-group mg-b-0">
+                            <div className="input-group-prepend">
+                              <span className="input-group-text">Start</span>
+                            </div>
+                            <input
+                              type="date"
+                              className="form-control"
+                              placeholder="Username"
+                              aria-label="Username"
+                              aria-describedby="basic-addon1"
+                              defaultValue={values.scheduleFrom}
+                              onChange={handleChange("scheduleFrom")}
+                            />
+                          </div>
+                        </div>
+                        <div className="form-group col-md-6">
+                          <label />
+                          <div className="input-group mg-b-10 mg-t-5">
+                            <div className="input-group-prepend">
+                              <span className="input-group-text">End</span>
+                            </div>
+                            <input
+                              type="date"
+                              className="form-control"
+                              placeholder="Username"
+                              aria-label="Username"
+                              aria-describedby="basic-addon1"
+                              defaultValue={values.scheduleTo}
+                              onChange={handleChange("scheduleTo")}
+                            />
+                          </div>
+                        </div>
+                        <div className="form-group col-md-6">
                           <label
                             htmlFor
                             className="mb-1 tx-com d-flex align-items-center"
@@ -356,7 +395,6 @@ const TargetAudience = ({
                                 checked={
                                   values.targetAudienceOption === "mysogidb"
                                 }
-                                // onClick={(e) => radioHandler(1)}
                                 value={"mysogidb"}
                                 onChange={handleChange("targetAudienceOption")}
                               />
@@ -379,7 +417,6 @@ const TargetAudience = ({
                                   values.targetAudienceOption ===
                                   "manual_import"
                                 }
-                                // onClick={(e) => radioHandler(2)}
                                 value={"manual_import"}
                                 onChange={handleChange("targetAudienceOption")}
                               />
@@ -401,7 +438,6 @@ const TargetAudience = ({
                                 checked={
                                   values.targetAudienceOption === "manual"
                                 }
-                                // onClick={(e) => radioHandler(3)}
                                 defaultValue={"manual"}
                                 onChange={handleChange("targetAudienceOption")}
                               />
@@ -461,38 +497,6 @@ const TargetAudience = ({
                               </div>
                             </div>
                           )}
-                          {/* {values.targetAudienceOption !== "mysogidb" && (
-                          <div className="mg-b-20 mg-md-b-10">
-                            <p className="tx-18 tx-com tx-semibold mb-0">
-                              Pricing
-                            </p>
-                            <div className="form-group mg-t-15">
-                              <label className="tx-14 tx-gray mb-1 tx-medium">
-                                Potential Audience Based on Manual Input
-                              </label>
-                              <p className="tx-18 tx-com tx-bold mb-0">
-                                {audience}{" "}
-                                <span className="tx-14 tx-gray tx-medium">
-                                  number(s) loaded
-                                </span>
-                              </p>
-                            </div>
-                            <div className="form-row mg-t-15 pd-x-0">
-                              <div className=" col-md-2 d-flex align-items-center">
-                                <p className="tx-18 tx-com tx-bold mb-0">
-                                  Amount:
-                                </p>{" "}
-                                <NumberFormat
-                                  className="badge tx-green tx-bold tx-18 tx-amt w-100 mt-0"
-                                  value={parseInt(setPrice())}
-                                  displayType={"text"}
-                                  thousandSeparator={true}
-                                  prefix={"₦"}
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        )} */}
                         </div>
                       </div>
                       {values.targetAudienceOption === "mysogidb" && (
@@ -504,19 +508,7 @@ const TargetAudience = ({
                                 className="mb-1 tx-com d-flex align-items-center"
                               >
                                 Age Group
-                                {/* <i className="tx-6 fa fa-star tx-primary mg-l-2" /> */}
                               </label>
-                              {/* <select
-                                className="form-control"
-                                defaultValue={filterOptions.ageRange}
-                                onChange={handleChange("ageRange")}
-                              >
-                                {selectAgeRanges.map((selectAgeRange, i) => (
-                                  <option value={selectAgeRange.value} key={i}>
-                                    {selectAgeRange.label}
-                                  </option>
-                                ))}
-                              </select> */}
                               <div className="form-row">
                                 <div className="form-group col-md-6 mg-b-0">
                                   <div className="input-group mg-b-10">
@@ -564,7 +556,6 @@ const TargetAudience = ({
                                 className="mb-1 tx-com d-flex align-items-center"
                               >
                                 Gender
-                                {/* <i className="tx-6 fa fa-star tx-primary mg-l-2" /> */}
                               </label>
                               <select
                                 className="form-control"
@@ -636,26 +627,6 @@ const TargetAudience = ({
                                 ))}
                               </select>
                             </div>
-                            {/* <div className="form-group col-md-6">
-                              <label className="mb-1 tx-com">Device Type</label>
-                              <select className="custom-select">
-                                <option selected>
-                                  Select the kind of device
-                                </option>
-                                <option value={1}>Android</option>
-                                <option value={2}>IOS</option>
-                              </select>
-                            </div> */}
-                            {/* <div className="form-group col-md-6">
-                              <label className="mb-1 tx-com">
-                                Device Brand
-                              </label>
-                              <select className="custom-select">
-                                <option selected>Select Device Brand</option>
-                                <option value={1}>Nokia</option>
-                                <option value={2}>Iphone</option>
-                              </select>
-                            </div> */}
                           </div>
                         </div>
                       )}
@@ -680,12 +651,6 @@ const TargetAudience = ({
                                       Download Sample
                                     </CSVLink>
                                   </div>
-                                  {/* <p className="mb-0 pointer">
-                                    Download Sample
-                                    <CSVLink data={csvData}>
-                                      Download Sample
-                                    </CSVLink>
-                                  </p> */}
                                 </div>
                               </button>
                               <div className="form-group">

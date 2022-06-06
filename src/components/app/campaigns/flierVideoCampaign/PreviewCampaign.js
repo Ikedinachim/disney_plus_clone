@@ -119,8 +119,6 @@ const PreviewCampaign = ({
     }
   }, [dispatch, error, createFlierVideoCampaign, navigate]);
 
-  // console.log(values);
-
   return (
     <Fragment>
       {loading || fcLoading ? (
@@ -285,14 +283,6 @@ const PreviewCampaign = ({
                                       Target Audience
                                     </p>
                                   </div>
-                                  {/* <div>
-                                  <div className="d-flex pd-t-3">
-                                    <div>
-                                      <i className="fa fa-edit tx-primary mg-r-5" />
-                                    </div>
-                                    <p className="mb-0">Edit</p>
-                                  </div>
-                                </div> */}
                                 </div>
                                 <div className="row mg-t-15">
                                   <div className="col-md-3 form-group">
@@ -348,24 +338,15 @@ const PreviewCampaign = ({
                                       {" "}
                                       {(filterOptions.revenueBand ===
                                         "BELOW 5K" &&
-                                        "Moderate") ||
+                                        "Low") ||
                                         (filterOptions.revenueBand ===
                                           "BTW 5K AND 10K" &&
-                                          "Medium High") ||
+                                          "Medium") ||
                                         (filterOptions.revenueBand ===
                                           "ABOVE 10K" &&
-                                          "High End")}
+                                          "High")}
                                     </span>
                                   </div>
-                                  {/* <div className="col-md-6 form-group">
-                                    <label className="tx-14 tx-gray mb-0 tx-medium d-block">
-                                      Interest
-                                    </label>
-                                    <span className="badge badge-pink tx-14 mg-5">
-                                      {" "}
-                                      Surfing Net
-                                    </span>
-                                  </div> */}
                                 </div>
                               </div>
                               <hr />
@@ -382,7 +363,7 @@ const PreviewCampaign = ({
                                 </div>
                               </div>
                               <div className="row mg-t-15">
-                                <div className="col-md-12 form-group">
+                                <div className="col-md-6 form-group">
                                   <label className="tx-14 tx-gray mb-0 tx-medium d-block">
                                     State:
                                   </label>
@@ -396,6 +377,22 @@ const PreviewCampaign = ({
                                   <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
                                     {" "}
                                     {filterOptions.lga}
+                                  </span>
+                                </div>
+                                <div className="col-md-6 form-group">
+                                  <label className="tx-14 tx-gray mb-0 tx-medium d-block">
+                                    Start Date:
+                                  </label>
+                                  <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
+                                    {" "}
+                                    {values.scheduleFrom}
+                                  </span>
+                                  <label className="tx-14 tx-gray mb-0 tx-medium d-block mt-3">
+                                    End Date:
+                                  </label>
+                                  <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
+                                    {" "}
+                                    {values.scheduleTo}
                                   </span>
                                 </div>
                               </div>
@@ -459,7 +456,6 @@ const PreviewCampaign = ({
                                     checked={
                                       values.scheduleOption === "recurrent"
                                     }
-                                    // onClick={(e) => assetTypeHandler("video")}
                                     value={"recurrent"}
                                     onChange={handleChange("scheduleOption")}
                                   />
@@ -737,13 +733,6 @@ const PreviewCampaign = ({
                               </div> */}
                             </div>
                             <div className="form-row mg-t-15 pd-x-0">
-                              {/* <div className="form-group col-md-9">
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  placeholder="Enter your target audience number to get price"
-                                />
-                              </div> */}
                               <div className=" col-md-2 d-flex align-items-center">
                                 <p className="tx-18 tx-com tx-bold mb-0">
                                   Budget:

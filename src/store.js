@@ -66,10 +66,16 @@ import {
   allUserInfluencerCampaignReducer,
   singleUserInfluencerReducer,
   getRevenueBandReducer,
+  createBillBoardCampaignReducer,
+  getAllBillBoardCampaignReducer,
+  getSingleBillBoardCampaignReducer,
+  getAllBillBoardReducer,
 } from "./reducers/campaignReducers";
 
-import { AdminSenderIDReducer, UpdateAdminSenderIDReducer }
-  from "./components/admin/reducers/senderIdReducer";
+import {
+  AdminSenderIDReducer,
+  UpdateAdminSenderIDReducer,
+} from "./components/admin/reducers/senderIdReducer";
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -98,6 +104,10 @@ const appReducer = combineReducers({
   filteredContactList: getFilteredContactListReducer,
   allInfluencers: getAllInfluencersReducer,
   influencerCampaign: createInfluencerCampaignReducer,
+  billBoardCampaign: createBillBoardCampaignReducer,
+  getBillBoardCampaign: getAllBillBoardCampaignReducer,
+  allBillBoard: getAllBillBoardReducer,
+  singleBillBoardCampaign: getSingleBillBoardCampaignReducer,
   influencerCampaignList: getAllInfluencerCampaignReducer,
   updateInfluencerCampaignStatus: updateInfluencerCampaignStatusReducer,
   updateInfluencerCampaignPublishStatus: updateInfluencerPublishedStatusReducer,

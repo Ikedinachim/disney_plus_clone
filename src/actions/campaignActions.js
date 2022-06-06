@@ -69,6 +69,20 @@ import {
   ALL_USER_INFLUENCER_SUCCESS,
   ALL_USER_INFLUENCER_FAIL,
 
+  ////////////// BILLBOARD CONSTANTS ///////////////
+  BILLBOARD_CAMPAIGN_REQUEST,
+  BILLBOARD_CAMPAIGN_SUCCESS,
+  BILLBOARD_CAMPAIGN_FAIL,
+  GET_ALL_BILLBOARD_CAMPAIGN_REQUEST,
+  GET_ALL_BILLBOARD_CAMPAIGN_SUCCESS,
+  GET_ALL_BILLBOARD_CAMPAIGN_FAIL,
+  GET_ALL_BILLBOARD_REQUEST,
+  GET_ALL_BILLBOARD_SUCCESS,
+  GET_ALL_BILLBOARD_FAIL,
+  GET_SINGLE_BILLBOARD_CAMPAIGN_REQUEST,
+  GET_SINGLE_BILLBOARD_CAMPAIGN_SUCCESS,
+  GET_SINGLE_BILLBOARD_CAMPAIGN_FAIL,
+
   ////////////// GENERIC CONSTANTS ///////////////
   CLEAR_ERRORS,
   GET_DIGITAL_CAMPAIGNS_REQUEST,
@@ -538,6 +552,150 @@ export const createInfluencerCampaignAction =
       });
     }
   };
+
+// Create Billboard Campaign Action
+export const createBillBoardCampaignAction =
+  (billBoardCampaignData) => async (dispatch) => {
+    try {
+      dispatch({ type: BILLBOARD_CAMPAIGN_REQUEST });
+      let user = JSON.parse(sessionStorage.getItem("user"));
+      const token = user.user.token;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await axios.post(
+        "api/campaign/bill-board",
+        billBoardCampaignData,
+        config
+      );
+
+      if (data.status === "success") {
+        dispatch({
+          type: BILLBOARD_CAMPAIGN_SUCCESS,
+          payload: data,
+        });
+      } else {
+        dispatch({
+          type: BILLBOARD_CAMPAIGN_FAIL,
+          payload: data.message,
+        });
+      }
+    } catch (data) {
+      dispatch({
+        type: BILLBOARD_CAMPAIGN_FAIL,
+        payload: data.message,
+      });
+    }
+  };
+
+// Get All Billboard Campaign Action
+export const getAllBillBoardCampaign = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_ALL_BILLBOARD_CAMPAIGN_REQUEST });
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/campaign/bill-board`, config);
+
+    if (data.status === "success") {
+      dispatch({
+        type: GET_ALL_BILLBOARD_CAMPAIGN_SUCCESS,
+        payload: data.data,
+      });
+    } else {
+      dispatch({
+        type: GET_ALL_BILLBOARD_CAMPAIGN_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: GET_ALL_BILLBOARD_CAMPAIGN_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+// Get All Billboard Action
+export const getAllBillBoard = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_ALL_BILLBOARD_CAMPAIGN_REQUEST });
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/bill-board/`, config);
+
+    if (data.status === "success") {
+      dispatch({
+        type: GET_ALL_BILLBOARD_SUCCESS,
+        payload: data.data,
+      });
+    } else {
+      dispatch({
+        type: GET_ALL_BILLBOARD_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: GET_ALL_BILLBOARD_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+// Get Single Billboard Campaign Action
+export const getSingleBillBoardCampaign = (params) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_SINGLE_BILLBOARD_CAMPAIGN_REQUEST });
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `/api/campaign/bill-board/${params}`,
+      config
+    );
+
+    if (data.status === "success") {
+      dispatch({
+        type: GET_SINGLE_BILLBOARD_CAMPAIGN_SUCCESS,
+        payload: data.data,
+      });
+    } else {
+      dispatch({
+        type: GET_SINGLE_BILLBOARD_CAMPAIGN_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: GET_SINGLE_BILLBOARD_CAMPAIGN_FAIL,
+      payload: error.message,
+    });
+  }
+};
 
 // Get Filtered Contact List
 export const getFilteredContactList =

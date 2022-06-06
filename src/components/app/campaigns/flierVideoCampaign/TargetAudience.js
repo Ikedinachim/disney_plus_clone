@@ -34,7 +34,6 @@ const TargetAudience = ({
   rawLga,
   rawArea,
 }) => {
-  // const alert = useAlert();
   const dispatch = useDispatch();
 
   const { error } = useSelector((state) => state.filteredContactList || []);
@@ -114,17 +113,17 @@ const TargetAudience = ({
     },
     {
       id: 2,
-      name: "Moderate",
+      name: "Low",
       value: "BELOW 5K",
     },
     {
       id: 3,
-      name: "Medium High",
+      name: "Medium",
       value: "BTW 5K AND 10K",
     },
     {
       id: 4,
-      name: "High End",
+      name: "High",
       value: "ABOVE 10K",
     },
   ];
@@ -169,6 +168,10 @@ const TargetAudience = ({
       values.targetAudience.includes("")
     ) {
       toast.error("Audience Cannot be Empty");
+    } else if (values.channel === "display_ads" && values.scheduleFrom === "") {
+      toast.error("Set duration start date");
+    } else if (values.channel === "display_ads" && values.scheduleTo === "") {
+      toast.error("Set duration end date");
     } else if (values.channel === "display_ads" && values.budget === "") {
       toast.error("Set a Budget");
     } else if (
@@ -200,7 +203,6 @@ const TargetAudience = ({
         setCsvName(file.name);
       },
     });
-    // console.log(parsedCsvData);
   };
 
   const onDrop = useCallback((acceptedFiles) => {
@@ -289,6 +291,43 @@ const TargetAudience = ({
                             options={mergedLga}
                             isMulti
                           />
+                        </div>
+                        <div className="form-group col-md-6">
+                          <label className="mb-1">
+                            Duration
+                            <i className="tx-6 fa fa-star tx-primary mg-l-2" />
+                          </label>
+                          <div className="input-group mg-b-0">
+                            <div className="input-group-prepend">
+                              <span className="input-group-text">Start</span>
+                            </div>
+                            <input
+                              type="date"
+                              className="form-control"
+                              placeholder="Username"
+                              aria-label="Username"
+                              aria-describedby="basic-addon1"
+                              defaultValue={values.scheduleFrom}
+                              onChange={handleChange("scheduleFrom")}
+                            />
+                          </div>
+                        </div>
+                        <div className="form-group col-md-6">
+                          <label />
+                          <div className="input-group mg-b-10 mg-t-5">
+                            <div className="input-group-prepend">
+                              <span className="input-group-text">End</span>
+                            </div>
+                            <input
+                              type="date"
+                              className="form-control"
+                              placeholder="Username"
+                              aria-label="Username"
+                              aria-describedby="basic-addon1"
+                              defaultValue={values.scheduleTo}
+                              onChange={handleChange("scheduleTo")}
+                            />
+                          </div>
                         </div>
                         <div className="form-group col-md-6">
                           <label

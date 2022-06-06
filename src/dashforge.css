@@ -7534,7 +7534,7 @@ button.bg-dark:focus {
   height: 50% !important;
 }
 
-.vh-36{
+.vh-36 {
   height: 25vh !important;
 }
 
@@ -34185,6 +34185,12 @@ button.bg-twitter:focus,
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.img-fit-contain {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .img-object-left {
