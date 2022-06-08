@@ -84,7 +84,7 @@ const SmsCampaign = ({
   useEffect(() => {
     dispatch(getSenderID());
     dispatch(getDefaultSenderID());
-    dispatch(getGeneralSender())
+    dispatch(getGeneralSender());
   }, [dispatch]);
 
   return (
