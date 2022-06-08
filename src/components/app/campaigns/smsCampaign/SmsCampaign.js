@@ -89,7 +89,7 @@ const SmsCampaign = ({
 
   return (
     <Fragment>
-      {senderID.loading || defaultSenderID.loading ? (
+      {senderID.loading || defaultSenderID.loading || generalSender.loading ? (
         <Loader />
       ) : (
         <Fragment>
