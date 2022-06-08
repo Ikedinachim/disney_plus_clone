@@ -75,7 +75,7 @@ export const getGeneralSender = () => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.get("/api/alternate-sender-ids", config);
+    const { data } = await axios.get("/api/general-settings", config);
 
     if (data.status === "success") {
       dispatch({

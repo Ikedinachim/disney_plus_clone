@@ -26,13 +26,11 @@ const SmsCampaign = ({
   // const alert = useAlert();
   const dispatch = useDispatch();
   const { senderID, defaultSenderID, generalSender } = useSelector((state) => state || []);
-  console.log(generalSender)
   const Continue = (e) => {
     e.preventDefault();
     // if (values.senderId === "" && values.alternateSenderId !== "") {
     //   toast.error("Select a Sender ID or choose an alternate ID");
     // } else
-    console.log(values)
     if (
       (values.senderId === "" && values.alternateSenderId === "") ||
       values.alternateSenderId === ""
@@ -87,6 +85,7 @@ const SmsCampaign = ({
   useEffect(() => {
     dispatch(getSenderID());
     dispatch(getDefaultSenderID());
+    dispatch(getGeneralSender())
   }, [dispatch]);
 
   return (
@@ -147,13 +146,17 @@ const SmsCampaign = ({
                             onChange={handleChange("alternateSenderId")}
                           >
                             <option value="">Select Alternate Sender ID</option>
+                            {console.log(defaultSenderID)}
                             {defaultSenderID &&
                               defaultSenderID.defaultSenderID.map(
-                                (senderids, i) => (
-                                  <option value={senderids} key={i}>
-                                    {senderids}
-                                  </option>
-                                )
+                                (senderids, i) =>
+                                  generalSender &&
+                                  generalSender.generalSender.smsSender ===
+                                    senderids.provider ? (
+                                    <option value={senderids.name} key={i}>
+                                      {senderids.name}
+                                    </option>
+                                  ) : null
                               )}
                           </select>
                           <p className="mg-0 tx-12 tx-italic tx-gray-500">
