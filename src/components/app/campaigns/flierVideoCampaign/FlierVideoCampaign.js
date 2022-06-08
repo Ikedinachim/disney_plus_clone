@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import {
   getSenderID,
   getDefaultSenderID,
+  getGeneralSender,
 } from "../../../../actions/senderIDActions";
 import MetaData from "../../../layout/MetaData";
 import Loader from "../../../loader";
@@ -29,7 +30,7 @@ const FlierVideoCampaign = ({
 }) => {
   // const alert = useAlert();
   const dispatch = useDispatch();
-  const { senderID, defaultSenderID } = useSelector((state) => state || []);
+  const { senderID, defaultSenderID, generalSender } = useSelector((state) => state || []);
 
   const [showWhatsapp, setShowWhatsapp] = useState(false);
   const [showSms, setShowSms] = useState(false);
@@ -129,11 +130,12 @@ const FlierVideoCampaign = ({
   useEffect(() => {
     dispatch(getSenderID());
     dispatch(getDefaultSenderID());
+    dispatch(getGeneralSender());
   }, [dispatch]);
 
   return (
     <Fragment>
-      {senderID.loading || defaultSenderID.loading ? (
+      {senderID.loading || defaultSenderID.loading || generalSender.loading? (
         <Loader />
       ) : (
         <Fragment>
@@ -216,11 +218,17 @@ const FlierVideoCampaign = ({
                                   </option>
                                   {defaultSenderID &&
                                     defaultSenderID.defaultSenderID.map(
-                                      (senderids, i) => (
-                                        <option value={senderids} key={i}>
-                                          {senderids}
-                                        </option>
-                                      )
+                                      (senderids, i) =>
+                                        generalSender &&
+                                        generalSender.generalSender
+                                          .smsSender === senderids.provider ? (
+                                          <option
+                                            value={senderids.name}
+                                            key={i}
+                                          >
+                                            {senderids.name}
+                                          </option>
+                                        ) : null
                                     )}
                                 </select>
                                 <p className="mg-0 tx-12 tx-italic tx-gray-500">
