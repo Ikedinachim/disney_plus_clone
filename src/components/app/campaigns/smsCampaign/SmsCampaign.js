@@ -7,6 +7,7 @@ import { ProgressBar } from "react-bootstrap";
 import {
   getSenderID,
   getDefaultSenderID,
+  getGeneralSender,
 } from "../../../../actions/senderIDActions";
 import Loader from "../../../loader";
 
@@ -24,12 +25,14 @@ const SmsCampaign = ({
 }) => {
   // const alert = useAlert();
   const dispatch = useDispatch();
-  const { senderID, defaultSenderID } = useSelector((state) => state || []);
+  const { senderID, defaultSenderID, generalSender } = useSelector((state) => state || []);
+  console.log(generalSender)
   const Continue = (e) => {
     e.preventDefault();
     // if (values.senderId === "" && values.alternateSenderId !== "") {
     //   toast.error("Select a Sender ID or choose an alternate ID");
     // } else
+    console.log(values)
     if (
       (values.senderId === "" && values.alternateSenderId === "") ||
       values.alternateSenderId === ""
