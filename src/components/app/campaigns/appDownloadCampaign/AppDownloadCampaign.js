@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect } from "react";
 
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   getSenderID,
   getDefaultSenderID,
+  getGeneralSender,
 } from "../../../../actions/senderIDActions";
 import Loader from "../../../loader";
 import MediaPlayer from "../../../../_helpers/reactPlayer/ReactPlayer";
@@ -29,7 +30,9 @@ const AppDownloadCampaign = ({
 }) => {
   // const alert = useAlert();
   const dispatch = useDispatch();
-  const { senderID, defaultSenderID } = useSelector((state) => state || []);
+  const { senderID, defaultSenderID, generalSender } = useSelector(
+    (state) => state || []
+  );
   // const { defaultSenderID } = useSelector((state) => state || []);
 
   // const [assetType, setAssetType] = useState("image");
@@ -112,11 +115,12 @@ const AppDownloadCampaign = ({
   useEffect(() => {
     dispatch(getSenderID());
     dispatch(getDefaultSenderID());
+    dispatch(getGeneralSender());
   }, [dispatch]);
 
   return (
     <Fragment>
-      {senderID.loading || defaultSenderID.loading ? (
+      {senderID.loading || defaultSenderID.loading || generalSender.loading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -197,11 +201,18 @@ const AppDownloadCampaign = ({
                                     </option>
                                     {defaultSenderID &&
                                       defaultSenderID.defaultSenderID.map(
-                                        (senderids, i) => (
-                                          <option value={senderids} key={i}>
-                                            {senderids}
-                                          </option>
-                                        )
+                                        (senderids, i) =>
+                                          generalSender &&
+                                          generalSender.generalSender
+                                            .smsSender ===
+                                            senderids.provider ? (
+                                            <option
+                                              value={senderids.name}
+                                              key={i}
+                                            >
+                                              {senderids.name}
+                                            </option>
+                                          ) : null
                                       )}
                                   </select>
                                   <p className="mg-0 tx-12 tx-italic tx-gray-400">

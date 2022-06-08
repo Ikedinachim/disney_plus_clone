@@ -10,6 +10,9 @@ import {
   CREATE_SENDERID_RESET,
   CREATE_SENDERID_FAIL,
   CLEAR_ERRORS,
+  GET_GENERAL_REQUEST,
+  GET_GENERAL_FAIL,
+  GET_GENERAL_SUCCESS,
 } from "../constants/senderIDConstants";
 
 export const defaultSenderIDReducer = (
@@ -32,6 +35,37 @@ export const defaultSenderIDReducer = (
       return {
         loading: false,
         error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const generalSenderReducer = (state = { generalSender: [] }, action) => {
+  switch (action.type) {
+    case GET_GENERAL_REQUEST:
+      return {
+        loading: true,
+        // senderID: []
+      };
+
+    case GET_GENERAL_SUCCESS:
+      return {
+        loading: false,
+        generalSender: action.payload,
+      };
+
+    case GET_GENERAL_FAIL:
+      return {
+        loading: false,
+        generalSender: action.payload,
       };
 
     case CLEAR_ERRORS:

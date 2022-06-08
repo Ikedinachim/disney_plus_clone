@@ -27,6 +27,7 @@ import {
   senderIDReducer,
   createSenderIdReducer,
   defaultSenderIDReducer,
+  generalSenderReducer,
 } from "./reducers/senderIDReducers";
 import {
   walletReducer,
@@ -131,6 +132,7 @@ const appReducer = combineReducers({
   AdminSenderId: AdminSenderIDReducer,
   UpdateSenderId: UpdateAdminSenderIDReducer,
   revenueBand: getRevenueBandReducer,
+  generalSender: generalSenderReducer,
 });
 
 const reducer = (state, action) => {
