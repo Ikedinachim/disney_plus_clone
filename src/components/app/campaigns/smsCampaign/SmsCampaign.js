@@ -80,7 +80,6 @@ const SmsCampaign = ({
     return senders;
   };
 
-  // console.log(defaultSenderID.defaultSenderID.length);
 
   useEffect(() => {
     dispatch(getSenderID());
@@ -146,7 +145,6 @@ const SmsCampaign = ({
                             onChange={handleChange("alternateSenderId")}
                           >
                             <option value="">Select Alternate Sender ID</option>
-                            {console.log(defaultSenderID)}
                             {defaultSenderID &&
                               defaultSenderID.defaultSenderID.map(
                                 (senderids, i) =>
