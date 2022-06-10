@@ -25,14 +25,16 @@ const InfluencerTargetAudience = ({
 
   const Continue = (e) => {
     e.preventDefault();
-    if (values.campaignMessage === "") {
-      toast.error("Create the campaign message");
-    } else if (values.attachment === null) {
-      nextStep();
-      handleImageUpload();
-    } else {
-      nextStep();
-    }
+    // if (values.campaignMessage === "") {
+    //   toast.error("Create the campaign message");
+    // } else
+    // if (values.attachment === null) {
+    //   nextStep();
+    //   handleImageUpload();
+    // } else {
+    //   nextStep();
+    // }
+    nextStep();
   };
   const Previous = (e) => {
     e.preventDefault();
@@ -42,7 +44,7 @@ const InfluencerTargetAudience = ({
 
   return (
     <Fragment>
-      <MetaData title={"Influencer Marketing"} />
+      <MetaData title={"BillBoard Marketing"} />
       <div className="content-body">
         <div className="container pd-x-0">
           <div className="mg-b-20 mg-md-b-30">
@@ -63,15 +65,13 @@ const InfluencerTargetAudience = ({
           <div className="pd-md-y-20 col-xl-11 pd-x-0">
             <form>
               <div>
-                <p className="tx-22 tx-com tx-bold mb-1">
-                  Influencer Marketing
-                </p>
+                <p className="tx-22 tx-com tx-bold mb-1">BillBoard Marketing</p>
                 <p className="tx-14 tx-blac">
                   Provide all requested details to help complete the campaign
                   creation
                 </p>
 
-                <div className="form-group">
+                {/* <div className="form-group">
                   <label className="mb-1">Campaign Message</label>
                   <textarea
                     className="form-control"
@@ -84,6 +84,28 @@ const InfluencerTargetAudience = ({
                     defaultValue={values.campaignMessage}
                     onChange={handleChange("campaignMessage")}
                   />
+                </div> */}
+                <div className="form-group">
+                  <div className="form-group col-md-6 pd-l-0 mg-0">
+                    <label className="mb-1">
+                      Start Date
+                      <i className="tx-6 fa fa-star tx-primary mg-l-2" />
+                    </label>
+                    <div className="input-group mg-b-0">
+                      <div className="input-group-prepend">
+                        <span className="input-group-text">Start</span>
+                      </div>
+                      <input
+                        type="date"
+                        className="form-control"
+                        placeholder="Username"
+                        aria-label="Username"
+                        aria-describedby="basic-addon1"
+                        defaultValue={values.startDate}
+                        onChange={handleChange("startDate")}
+                      />
+                    </div>
+                  </div>
                 </div>
                 <div className="mg-t-40">
                   <p className="tx-22 tx-bold mb-1 tx-com">Attachment</p>
@@ -237,7 +259,7 @@ const InfluencerTargetAudience = ({
                       onClick={Previous}
                       className="btn btn-outline-primary w-100 mg-l-20 tx-bold tx-com"
                     >
-                      Go Back
+                      Reset
                     </button>
                   </div>
                 </div>

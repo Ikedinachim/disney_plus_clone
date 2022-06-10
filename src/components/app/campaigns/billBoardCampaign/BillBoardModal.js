@@ -2,22 +2,24 @@ import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { CSSTransition } from "react-transition-group";
+import NumberFormat from "react-number-format";
 import "./BillBoardModal.css";
 
 const BillBoardModal = ({
   onClose,
   show,
-  singleBillBoard,
+  checkedBillBoard,
   sortIcon,
   handlePlatformOnChange,
   handleAllCostSelection,
+  setSelectedBillBoard,
+  selectedRate,
 }) => {
   const closeOnEscapeKeyDown = (e) => {
     if ((e.charCode || e.keyCode) === 27) {
       onClose();
     }
   };
-
   useEffect(() => {
     document.body.addEventListener("keydown", closeOnEscapeKeyDown);
     return function cleanup() {
@@ -28,7 +30,7 @@ const BillBoardModal = ({
   return ReactDOM.createPortal(
     <CSSTransition in={show} unmountOnExit timeout={{ enter: 0, exit: 300 }}>
       <>
-        {singleBillBoard && (
+        {checkedBillBoard && (
           <>
             <div className="modal2 right fade" onClick={onClose}>
               <div className="modal2-dialog" role="document">
@@ -42,7 +44,7 @@ const BillBoardModal = ({
                         <div className="div">
                           <div className="avatar avatar-xl">
                             <img
-                              src={singleBillBoard.imageUrl}
+                              src={checkedBillBoard.imageUrl}
                               className="rounded-circle"
                               alt=""
                             />
@@ -50,14 +52,14 @@ const BillBoardModal = ({
                         </div>
                         <div className="mg-l-10">
                           <p className="tx-12 tx-com mb-0 capitalize">
-                            {singleBillBoard.kind}
+                            {checkedBillBoard.title}
                           </p>
                           <p className="tx-28 mb-0 tx-com tx-bold">
-                            {singleBillBoard.name}
+                            {checkedBillBoard.size}
                           </p>
                           <p className="mb-0 tx-12">
                             <i className="fa fa-users" />{" "}
-                            {singleBillBoard.reach}
+                            {checkedBillBoard.traffic}
                           </p>
                         </div>
                       </div>
@@ -73,39 +75,55 @@ const BillBoardModal = ({
                     </button>
                   </div>
                   <div className="modal2-body pd-x-30">
-                    <p className="tx-18 tx-semibold">Select Platform</p>
-                    <div className="row justify content-between mg-b-15">
-                      <div className="col-5">
-                        <p>
-                          {/* {sortIcon(platform)} */}
-                          Daily
-                        </p>
-                      </div>
-                      <div className="col-7">
-                        <div className="custom-control custom-checkbox">
-                          <input
-                            type="checkbox"
-                            className="custom-control-input"
-                            values={parseInt(singleBillBoard.daily)}
-                            id={singleBillBoard.daily}
-                            onChange={handlePlatformOnChange(singleBillBoard)}
-                            checked={
-                              singleBillBoard.platforms.findIndex(
-                                (el) => el.id === singleBillBoard.daily
-                              ) !== -1
-                                ? true
-                                : false
-                            }
-                          />
-                          <label
-                            className="custom-control-label"
-                            htmlFor={singleBillBoard.daily}
-                          >
-                            {parseInt(singleBillBoard.daily)}
-                          </label>
+                    <p className="tx-18 tx-semibold">Select Duration</p>
+                    {checkedBillBoard &&
+                      checkedBillBoard.rates.map((billboard, idx) => (
+                        <div
+                          key={billboard.id}
+                          className="row justify content-between mg-b-15"
+                        >
+                          <div className="col-5">
+                            <p>
+                              {/* {sortIcon(platform)} */}
+                              {billboard.name} price
+                            </p>
+                          </div>
+                          <div className="col-7">
+                            <div className="custom-control custom-radio">
+                              <input
+                                type="radio"
+                                name="customRadio"
+                                className="custom-control-input"
+                                value={parseInt(billboard.id)}
+                                id={billboard.name}
+                                onChange={handlePlatformOnChange(
+                                  billboard,
+                                  idx
+                                )}
+                                checked={
+                                  selectedRate !== null &&
+                                  billboard.id === selectedRate.id
+                                    ? true
+                                    : false
+                                }
+                              />
+                              <label
+                                className="custom-control-label"
+                                htmlFor={billboard.name}
+                              >
+                                {/* {parseInt(billboard.cost)} */}
+                                <NumberFormat
+                                  className="mt-0"
+                                  value={parseInt(billboard.cost)}
+                                  displayType={"text"}
+                                  thousandSeparator={true}
+                                  prefix={"₦"}
+                                />
+                              </label>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
+                      ))}
                     {/* <div className="row justify content-between mg-b-15">
                       <div className="col-5">
                         <p>
@@ -118,11 +136,11 @@ const BillBoardModal = ({
                           <input
                             type="checkbox"
                             className="custom-control-input"
-                            values={singleBillBoard}
+                            values={checkedBillBoard}
                             id="all"
                             onChange={handlePlatformOnChange("all")}
                             checked={
-                              singleBillBoard.platforms.findIndex(
+                              checkedBillBoard.platforms.findIndex(
                                 (el) => el.id === "all"
                               ) !== -1
                                 ? true
@@ -130,7 +148,7 @@ const BillBoardModal = ({
                             }
                           />
                           <label className="custom-control-label" htmlFor="all">
-                            {parseInt(singleBillBoard.allCost)} per post
+                            {parseInt(checkedBillBoard.allCost)} per post
                           </label>
                         </div>
                       </div>
@@ -139,7 +157,10 @@ const BillBoardModal = ({
                   <div className="modal2-footer bd-t-0">
                     <button
                       className="btn btn-outline-primary bg-white tx-bold tx-com"
-                      onClick={onClose}
+                      onClick={() => {
+                        setSelectedBillBoard();
+                        onClose();
+                      }}
                     >
                       Save Selection
                     </button>

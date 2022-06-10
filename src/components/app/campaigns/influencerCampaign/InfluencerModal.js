@@ -80,6 +80,7 @@ const InfluencerModal = ({
                           key={platform.id}
                           className="row justify content-between mg-b-15"
                         >
+                          {console.log(platform)}
                           <div className="col-5">
                             <p>
                               {sortIcon(platform)}
