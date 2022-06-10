@@ -103,6 +103,10 @@ const filterContactAxios = Axios.create({
   baseURL: "https://proxi.uat.com.ng/",
 });
 
+const billBoardAxios = Axios.create({
+  baseURL: "https://proxi.uat.com.ng/",
+});
+
 // Create SMS Campaign Action
 export const createSmsCampaignAction =
   (smsCampaignData) => async (dispatch) => {
@@ -567,13 +571,13 @@ export const createBillBoardCampaignAction =
           Authorization: `Bearer ${token}`,
         },
       };
-      const { data } = await axios.post(
-        "api/campaign/bill-board",
+      const { data } = await billBoardAxios.post(
+        "billboard/create/",
         billBoardCampaignData,
         config
       );
 
-      if (data.status === "success") {
+      if (data.success) {
         dispatch({
           type: BILLBOARD_CAMPAIGN_SUCCESS,
           payload: data,
@@ -639,12 +643,12 @@ export const getAllBillBoard = () => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.get(`/api/bill-board/`, config);
+    const { data } = await billBoardAxios.get(`billboards/`, config);
 
-    if (data.status === "success") {
+    if (data) {
       dispatch({
         type: GET_ALL_BILLBOARD_SUCCESS,
-        payload: data.data,
+        payload: data.billboards,
       });
     } else {
       dispatch({

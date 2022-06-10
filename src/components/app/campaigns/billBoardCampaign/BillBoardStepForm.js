@@ -41,6 +41,7 @@ export default class BillBoardStepForm extends Component {
     platformId: "",
     platform: [],
     assetType: "image",
+    startDate: "",
 
     showModal: false,
     activeItemId: "",
@@ -276,6 +277,7 @@ export default class BillBoardStepForm extends Component {
       selectedFileName,
       uploadPercentage,
       assetType,
+      startDate,
     } = this.state;
 
     // const filteredValue = Object.values(checkedInfluencers);
@@ -337,6 +339,7 @@ export default class BillBoardStepForm extends Component {
       platform,
       assetType,
       price,
+      startDate,
     };
 
     // console.log(values);
