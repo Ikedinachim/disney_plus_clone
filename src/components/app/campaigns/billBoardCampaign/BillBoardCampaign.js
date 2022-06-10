@@ -25,7 +25,12 @@ const BillBoardCampaign = ({
     (state) => state.allBillBoard || []
   );
 
-  const [checkedBillBoard, setCheckedBillBoard] = useState(null);
+  const [tempBillBoard, setTempBillBoard] = useState(null);
+  const [selectedBillBoards, setSelectedBillBoards] = useState([]);
+  const [selectedRate, setSelectedRate] = useState(null);
+  const [checkedBillBoard, setCheckedBillBoard] = useState(
+    tempBillBoard ? [...tempBillBoard.billboards] : []
+  );
 
   // const ref = useRef();
   const [closeModal, setCloseModal] = useState(false);
@@ -35,111 +40,52 @@ const BillBoardCampaign = ({
     nextStep();
   };
 
-  console.log(checkedBillBoard);
-
   const toggleHandler = (item) => (e) => {
     const isChecked = e.target.checked;
     let singleBillBoard = allBillBoard.find((el) => el.id === item.id);
     if (isChecked) {
-      setCloseModal(true);
       setBillBoardId(e.target.value);
-      singleBillBoard.platforms = [];
-      setCheckedBillBoard(singleBillBoard);
+      singleBillBoard.billboards = tempBillBoard
+        ? [...tempBillBoard.billboards]
+        : [];
+      setTempBillBoard(singleBillBoard);
+      setCloseModal(true);
     } else {
+      const unchecked = selectedBillBoards.filter(
+        (el) => parseInt(el.id) !== parseInt(e.target.value)
+      );
+      setSelectedBillBoards(unchecked);
       setCloseModal(false);
     }
-
-    // setPayloadData((state) => ({
-    //   ...state,
-    //   [item.id]: state[item.id] ? null : singleInfluencer,
-    // }));
-    // handleCheckedState(checkedInfluencer);
   };
 
-  const handlePlatformOnChange = (item) => (e) => {
-    const isChecked = e.target.checked;
-    const influencer = { ...checkedBillBoard };
-    let platforms = influencer.platforms;
-
-    if (!isChecked) {
-      if (item !== "all") {
-        const platformIndex = platforms.findIndex(
-          (x) => x.id === item.platform
-        );
-        platforms.splice(platformIndex, 1);
-        let allIndex = platforms.findIndex((el) => el.id === "all");
-        if (allIndex !== -1) platforms.splice(allIndex, 1);
-      } else {
-        const platformIndex = platforms.findIndex((x) => x.id === item);
-        platforms.splice(platformIndex, 1);
-      }
-      setCheckedBillBoard((state) => ({
-        ...state,
-        platforms: [...platforms],
-      }));
-    } else {
-      platforms.push({
-        id: item !== "all" ? item.platform : item,
-
-        cost: item !== "all" ? item.cost : influencer.allCost,
-      });
-      if (item === "all") {
-        platforms = checkedBillBoard.costs.map((el) => {
-          return {
-            id: el.platform,
-            cost: el.cost,
-          };
-        });
-        platforms.push({
-          id: "all",
-          cost: checkedBillBoard.allCost,
-        });
-      }
-      setCheckedBillBoard((state) => ({
-        ...state,
-        platforms: [...platforms],
-      }));
-    }
+  const handlePlatformOnChange = (item, idx) => (e) => {
+    setSelectedRate(item);
   };
 
-  // console.log(values);
+  const setSelectedBillBoard = () => {
+    const billboard = { ...tempBillBoard, selectedRate: selectedRate };
+    const billboardObject = {
+      rateType: selectedRate.name,
+      cost: selectedRate.cost,
+      billboard_id: selectedRate.billboard_id,
+      imageUrl: tempBillBoard.imageUrl,
+      name: tempBillBoard.title,
+      location: tempBillBoard.location,
+      size: tempBillBoard.size,
+    };
+    setSelectedBillBoards([...selectedBillBoards, billboardObject]);
+  };
 
   useEffect(() => {
     dispatch(getAllBillBoard());
   }, [dispatch]);
 
   useEffect(() => {
-    if (checkedBillBoard !== null) {
-      handleCheckedState(checkedBillBoard);
+    if (selectedBillBoards.length > 0) {
+      handleCheckedState(selectedBillBoards);
     }
-  }, [handleCheckedState, checkedBillBoard]);
-
-  // console.log("This is the payload data", payloadData);
-  // console.log("This is the checkedBillBoard data", checkedInfluencer);
-
-  // const customFilter = (object, key, value) => {
-  //   if (Array.isArray(object)) {
-  //     for (const obj of object) {
-  //       const result = customFilter(obj, key, value);
-  //       if (result) {
-  //         return obj;
-  //       }
-  //     }
-  //   } else {
-  //     if (object.hasOwnProperty(key) && object[key] === value) {
-  //       return object;
-  //     }
-
-  //     for (const k of Object.keys(object)) {
-  //       if (typeof object[k] === "object") {
-  //         const o = customFilter(object[k], key, value);
-  //         if (o !== null && typeof o !== "undefined") return o;
-  //       }
-  //     }
-
-  //     return null;
-  //   }
-  // };
+  }, [handleCheckedState, selectedBillBoards]);
 
   const sortIcon = (icon) => {
     if (icon.platform === "instagram") {
@@ -167,26 +113,13 @@ const BillBoardCampaign = ({
     }
   };
 
-  // const convertToArray = (arr1) => {
-  //   Object.entries(arr1);
-  // };
-
-  // const mergeArrayObjects = (arr1, arr2) => {
-  //   return arr1.map((item, i) => {
-  //     if (item.id === arr2[i].influencerId) {
-  //       //merging two objects
-  //       return Object.assign({}, item, arr2[i]);
-  //     }
-  //   });
-  // };
-
   return (
     <Fragment>
       {loading ? (
         <Loader />
       ) : (
         <Fragment>
-          <MetaData title={"Influencer Campaign"} />
+          <MetaData title={"BillBoard Campaign"} />
           <div className="content-body">
             <div className="container pd-x-0">
               <div className="mg-b-20 mg-md-b-50">
@@ -206,9 +139,10 @@ const BillBoardCampaign = ({
               </div>
               <div className="row justify-content-between">
                 <div className="col-md-5 col-12 mg-b-20">
-                  <p className="tx-20 mb-1">Influencers</p>
+                  <p className="tx-20 mb-1">BillBoards</p>
                   <p className="tx-blac">
-                    Select your choice influencer to help promote your business
+                    Select your choice billboard package to help promote your
+                    business
                   </p>
                 </div>
                 <div className="col-md-5 col-12 mg-b-20">
@@ -271,9 +205,11 @@ const BillBoardCampaign = ({
                 onClose={() => setCloseModal(false)}
                 show={closeModal}
                 billBoardId={billBoardId}
-                singleBillBoard={checkedBillBoard}
+                checkedBillBoard={tempBillBoard}
                 sortIcon={sortIcon}
                 handlePlatformOnChange={handlePlatformOnChange}
+                setSelectedBillBoard={setSelectedBillBoard}
+                selectedRate={selectedRate}
                 // handleAllCostSelection={handleAllCostSelection}
               />
             </div>
