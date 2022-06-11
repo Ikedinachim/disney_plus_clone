@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { MDBDataTable } from "mdbreact";
 import { toast } from "react-toastify";
@@ -15,6 +15,7 @@ import {
 
 const ViewBillboardCampaign = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { loading, error, billBoardCampaigns } = useSelector(
     (state) => state.getBillBoardCampaign || {}
@@ -152,12 +153,15 @@ const ViewBillboardCampaign = () => {
   };
 
   useEffect(() => {
-    dispatch(getAllBillBoardCampaign());
+    // dispatch(getAllBillBoardCampaign());
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
+      navigate("/app/campaigns");
+    } else {
+      dispatch(getAllBillBoardCampaign());
     }
-  }, [dispatch, error]);
+  }, [dispatch, navigate]);
 
   return (
     <Fragment>

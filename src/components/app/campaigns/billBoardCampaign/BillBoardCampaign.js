@@ -7,16 +7,11 @@ import Loader from "../../../loader";
 import MetaData from "../../../layout/MetaData";
 import BillBoardCard from "./BillBoardCard";
 import BillBoardModal from "./BillBoardModal";
+import { toast } from "react-toastify";
 
 const BillBoardCampaign = ({
   nextStep,
-  values,
-  handleImageUpload,
-  handleInfluencerChange,
-  handleCheck,
   selectedInfluencer,
-  showModal,
-  activeItemId,
   handleCheckedState,
 }) => {
   const dispatch = useDispatch();
@@ -28,20 +23,24 @@ const BillBoardCampaign = ({
   const [tempBillBoard, setTempBillBoard] = useState(null);
   const [selectedBillBoards, setSelectedBillBoards] = useState([]);
   const [selectedRate, setSelectedRate] = useState(null);
-  const [checkedBillBoard, setCheckedBillBoard] = useState(
-    tempBillBoard ? [...tempBillBoard.billboards] : []
-  );
+
+  console.log("selectedBillBoards", selectedBillBoards);
 
   // const ref = useRef();
   const [closeModal, setCloseModal] = useState(false);
   const [billBoardId, setBillBoardId] = useState("");
 
   const Continue = (e) => {
-    nextStep();
+    if (tempBillBoard === null || selectedBillBoards.length <= 0) {
+      toast.warning("Choose at least a billboard & plan to continue");
+    } else {
+      nextStep();
+    }
   };
 
   const toggleHandler = (item) => (e) => {
     const isChecked = e.target.checked;
+    console.log("e target", e.target.value);
     let singleBillBoard = allBillBoard.find((el) => el.id === item.id);
     if (isChecked) {
       setBillBoardId(e.target.value);
@@ -52,9 +51,10 @@ const BillBoardCampaign = ({
       setCloseModal(true);
     } else {
       const unchecked = selectedBillBoards.filter(
-        (el) => parseInt(el.id) !== parseInt(e.target.value)
+        (el) => parseInt(el.billboard_id) !== parseInt(e.target.value)
       );
       setSelectedBillBoards(unchecked);
+      setSelectedRate(null);
       setCloseModal(false);
     }
   };
@@ -63,18 +63,25 @@ const BillBoardCampaign = ({
     setSelectedRate(item);
   };
 
+  console.log("selectedRate", selectedRate);
+
   const setSelectedBillBoard = () => {
-    const billboard = { ...tempBillBoard, selectedRate: selectedRate };
-    const billboardObject = {
-      rateType: selectedRate.name,
-      cost: selectedRate.cost,
-      billboard_id: selectedRate.billboard_id,
-      imageUrl: tempBillBoard.imageUrl,
-      name: tempBillBoard.title,
-      location: tempBillBoard.location,
-      size: tempBillBoard.size,
-    };
-    setSelectedBillBoards([...selectedBillBoards, billboardObject]);
+    if (!selectedRate) {
+      toast.warning("Please choose a plan");
+    } else {
+      const billboardObject = {
+        rateType: selectedRate.name,
+        cost: selectedRate.cost,
+        billboard_id: selectedRate.billboard_id,
+        imageUrl: tempBillBoard.imageUrl,
+        name: tempBillBoard.title,
+        location: tempBillBoard.location,
+        size: tempBillBoard.size,
+      };
+      setSelectedBillBoards([...selectedBillBoards, billboardObject]);
+      setSelectedRate(null);
+      setCloseModal(false);
+    }
   };
 
   useEffect(() => {
@@ -86,32 +93,6 @@ const BillBoardCampaign = ({
       handleCheckedState(selectedBillBoards);
     }
   }, [handleCheckedState, selectedBillBoards]);
-
-  const sortIcon = (icon) => {
-    if (icon.platform === "instagram") {
-      return (
-        <i
-          className="fab fa-instagram mg-r-5 social-media"
-          aria-hidden="true"
-        />
-      );
-    } else if (icon.platform === "twitter") {
-      return (
-        <i className="fab fa-twitter mg-r-5 social-media" aria-hidden="true" />
-      );
-    } else if (icon.platform === "facebook") {
-      return (
-        <i
-          className="fab fa-facebook-square  mg-r-5 social-media"
-          aria-hidden="true"
-        />
-      );
-    } else if (icon.platform === "snapchat") {
-      return (
-        <i className="fab fa-snapchat mg-r-5 social-media" aria-hidden="true" />
-      );
-    }
-  };
 
   return (
     <Fragment>
@@ -201,16 +182,13 @@ const BillBoardCampaign = ({
               </div>
               <BillBoardModal
                 title="My Modal"
-                // onClose={closePlatFormModal(false)}
                 onClose={() => setCloseModal(false)}
                 show={closeModal}
                 billBoardId={billBoardId}
                 checkedBillBoard={tempBillBoard}
-                sortIcon={sortIcon}
                 handlePlatformOnChange={handlePlatformOnChange}
                 setSelectedBillBoard={setSelectedBillBoard}
                 selectedRate={selectedRate}
-                // handleAllCostSelection={handleAllCostSelection}
               />
             </div>
           </div>
