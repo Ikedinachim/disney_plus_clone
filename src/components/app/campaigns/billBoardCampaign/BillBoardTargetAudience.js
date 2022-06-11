@@ -1,15 +1,14 @@
 import React, { Fragment, useState } from "react";
 import { toast } from "react-toastify";
-// import { Link } from "react-router-dom";
+// import DatePicker from "react-datepicker";
 
 import MetaData from "../../../layout/MetaData";
 import { ProgressBar } from "react-bootstrap";
 
-const InfluencerTargetAudience = ({
+const BillBoardTargetAudience = ({
   prevStep,
   nextStep,
   handleChange,
-  // onChangeAttachment,
   handleImageUpload,
   handleVideoUpload,
   values,
@@ -17,24 +16,15 @@ const InfluencerTargetAudience = ({
   uploadPercentage,
   resetCheckedState,
 }) => {
-  // const alert = useAlert();
-  const [status, setStatus] = useState(3);
-  const radioHandler = (status) => {
-    setStatus(status);
-  };
-
   const Continue = (e) => {
     e.preventDefault();
-    // if (values.campaignMessage === "") {
-    //   toast.error("Create the campaign message");
-    // } else
-    // if (values.attachment === null) {
-    //   nextStep();
-    //   handleImageUpload();
-    // } else {
-    //   nextStep();
-    // }
-    nextStep();
+    if (values.startDate === "") {
+      toast.warning("Please choose a start date");
+    } else if (!values.attachment) {
+      toast.warning("Please upload billboard creative");
+    } else {
+      nextStep();
+    }
   };
   const Previous = (e) => {
     e.preventDefault();
@@ -70,21 +60,6 @@ const InfluencerTargetAudience = ({
                   Provide all requested details to help complete the campaign
                   creation
                 </p>
-
-                {/* <div className="form-group">
-                  <label className="mb-1">Campaign Message</label>
-                  <textarea
-                    className="form-control"
-                    rows={6}
-                    placeholder="Indulge in any of our yummy treat for just 4500 naira per loaf... Get all three for 12,500. Contact us now
-                    IG: @xxxx
-                    Twitter: @xxxx
-                    FB: @xxxx
-                    Snapchat: @xxxx"
-                    defaultValue={values.campaignMessage}
-                    onChange={handleChange("campaignMessage")}
-                  />
-                </div> */}
                 <div className="form-group">
                   <div className="form-group col-md-6 pd-l-0 mg-0">
                     <label className="mb-1">
@@ -103,7 +78,18 @@ const InfluencerTargetAudience = ({
                         aria-describedby="basic-addon1"
                         defaultValue={values.startDate}
                         onChange={handleChange("startDate")}
+                        min="6/11/2022"
+                        max="6/11/2022"
                       />
+                      {/* <DatePicker
+                        name="startDate"
+                        dateFormat="yyyy/MM/dd"
+                        calendarClassName="form-control"
+                        selected={values.startDate}
+                        onChange={handleChange("startDate")}
+                        startDate={new Date()}
+                        minDate={new Date()}
+                      /> */}
                     </div>
                   </div>
                 </div>
@@ -117,7 +103,6 @@ const InfluencerTargetAudience = ({
                         name="customRadio"
                         className="custom-control-input"
                         checked={values.assetType === "image"}
-                        // onClick={(e) => assetTypeHandler("image")}
                         value={"image"}
                         onChange={handleChange("assetType")}
                       />
@@ -134,7 +119,6 @@ const InfluencerTargetAudience = ({
                         name="customRadio"
                         className="custom-control-input"
                         checked={values.assetType === "video"}
-                        // onClick={(e) => assetTypeHandler("video")}
                         value={"video"}
                         onChange={handleChange("assetType")}
                       />
@@ -143,31 +127,6 @@ const InfluencerTargetAudience = ({
                       </label>
                     </div>
                   </div>
-                  {/* <div className="form-group col-md-6 pd-md-l-0">
-                    <div className="custom-file">
-                      <input
-                        type="file"
-                        name="file"
-                        className="custom-file-input"
-                        id="customFile"
-                        accept="image/png, image/jpeg, image/gif, image/jpg"
-                        onChange={handleImageUpload}
-                        // placeholder="Click to upload desired icon (if needed)"
-                      />
-                      <label className="custom-file-label" htmlFor="customFile">
-                        {selectedFileName}
-                      </label>
-                      {uploadPercentage > 0 && (
-                        <span className="mt-2">
-                          <ProgressBar
-                            now={uploadPercentage}
-                            // active
-                            label={`${uploadPercentage}%`}
-                          />
-                        </span>
-                      )}
-                    </div>
-                  </div> */}
                   {values.assetType === "image" && (
                     <div className="form-group pd-0 col-md-6 pd-md-l-0">
                       <div className="custom-file">
@@ -177,11 +136,7 @@ const InfluencerTargetAudience = ({
                           accept="image/png, image/jpeg, image/gif, image/jpg"
                           className="custom-file-input"
                           id="customFile"
-                          // defaultValue={values.attachment}
-                          onChange={
-                            // (onChangeAttachment("uploadedImage"),
-                            handleImageUpload
-                          }
+                          onChange={handleImageUpload}
                         />
                         <label
                           className="custom-file-label"
@@ -193,7 +148,6 @@ const InfluencerTargetAudience = ({
                           <span className="mt-2">
                             <ProgressBar
                               now={uploadPercentage}
-                              // active
                               label={`${uploadPercentage}%`}
                             />
                           </span>
@@ -243,7 +197,13 @@ const InfluencerTargetAudience = ({
                 <div className="col-md-5 pd-x-0 mg-y-40">
                   <div className="d-flex">
                     <button
-                      className="btn btn-primary w-100 tx-com"
+                      onClick={Previous}
+                      className="btn btn-outline-primary w-100 tx-bold tx-com"
+                    >
+                      Reset
+                    </button>
+                    <button
+                      className="btn btn-primary w-100 tx-com mg-l-20"
                       onClick={Continue}
                       type="submit"
                       variant="contained"
@@ -254,12 +214,6 @@ const InfluencerTargetAudience = ({
                       }
                     >
                       Proceed
-                    </button>
-                    <button
-                      onClick={Previous}
-                      className="btn btn-outline-primary w-100 mg-l-20 tx-bold tx-com"
-                    >
-                      Reset
                     </button>
                   </div>
                 </div>
@@ -272,4 +226,4 @@ const InfluencerTargetAudience = ({
   );
 };
 
-export default InfluencerTargetAudience;
+export default BillBoardTargetAudience;
