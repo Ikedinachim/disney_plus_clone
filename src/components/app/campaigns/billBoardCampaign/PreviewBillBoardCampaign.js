@@ -401,9 +401,18 @@ const PreviewBillBoardCampaign = ({
                   </div>
                   <div className="col-md-5 pd-x-0 mg-y-40">
                     <div className="d-flex">
+                      <button
+                        className="btn btn-outline-primary pd-x-30 mg-r-15"
+                        onClick={Previous}
+                        disabled={loading ? true : false}
+                        type="submit"
+                        variant="contained"
+                      >
+                        Go Back
+                      </button>
                       {parseInt(wallet && wallet.balance) < walletTotal ? (
                         <button
-                          className="btn btn-primary pd-x-40 tx-com mg-r-15"
+                          className="btn btn-primary pd-x-40 tx-com"
                           onClick={Continue}
                           disabled={loading ? true : false}
                           type="submit"
@@ -413,24 +422,15 @@ const PreviewBillBoardCampaign = ({
                         </button>
                       ) : (
                         <button
-                          className="btn btn-primary pd-x-40 tx-com mg-r-15"
-                          onClick={submitInfluencerCampaignHandler}
-                          disabled={loading ? true : false}
-                          type="submit"
-                          variant="contained"
+                          className="btn btn-primary pd-x-40 tx-com"
+                          type="button"
+                          data-toggle="modal"
+                          data-target="#successModal"
+                          data-dismiss="modal"
                         >
-                          Publish
+                          Proceed
                         </button>
                       )}
-                      <button
-                        className="btn btn-outline-primary pd-x-30"
-                        onClick={Previous}
-                        disabled={loading ? true : false}
-                        type="submit"
-                        variant="contained"
-                      >
-                        Go Back
-                      </button>
                     </div>
                   </div>
                   {/*Assign  Modal */}
@@ -494,7 +494,7 @@ const PreviewBillBoardCampaign = ({
                     </div>
                   </div> */}
                   {/*Success  Modal */}
-                  {/* <div
+                  <div
                     className="modal fade"
                     id="successModal"
                     tabIndex={-1}
@@ -507,31 +507,35 @@ const PreviewBillBoardCampaign = ({
                         <div className="modal-body tx-center pd-x-10">
                           <div className="form-group">
                             <img
-                              src="./assets/img/Check.svg"
+                              src="../../assets/img/my4.svg"
                               className="img-fluid wd-100 ht-100"
                               alt=""
                               srcSet
                             />
-                            <p className="tx-26 tx-com tx-bold">Successful</p>
+                            <p className="tx-26 tx-com tx-bold">Please Note</p>
                             <p className="tx-16 mb-0">
-                              User will be notified of the campaign creation
-                              Within the hour
+                              Billboard campaigns hours to process, you will get
+                              a response within this period
                             </p>
                           </div>
                         </div>
                         <div className="tx-center bd-t-0 pd-b-30">
-                          <a
-                            href="./campaign.html"
+                          <button
                             type="button"
+                            value="submit"
+                            form="senderIdForm"
                             className="btn btn-primary w-50"
                             data-dismiss="modal"
+                            onClick={submitInfluencerCampaignHandler}
+                            disabled={loading ? true : false}
+                            variant="contained"
                           >
-                            Go to Campaigns
-                          </a>
+                            Publish
+                          </button>
                         </div>
                       </div>
                     </div>
-                  </div> */}
+                  </div>
                 </div>
               </div>
             </div>

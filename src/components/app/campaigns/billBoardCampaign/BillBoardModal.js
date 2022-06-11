@@ -9,9 +9,7 @@ const BillBoardModal = ({
   onClose,
   show,
   checkedBillBoard,
-  sortIcon,
   handlePlatformOnChange,
-  handleAllCostSelection,
   setSelectedBillBoard,
   selectedRate,
 }) => {
@@ -159,7 +157,6 @@ const BillBoardModal = ({
                       className="btn btn-outline-primary bg-white tx-bold tx-com"
                       onClick={() => {
                         setSelectedBillBoard();
-                        onClose();
                       }}
                     >
                       Save Selection
