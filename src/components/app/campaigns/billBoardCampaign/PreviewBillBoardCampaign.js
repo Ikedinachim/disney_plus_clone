@@ -514,8 +514,8 @@ const PreviewBillBoardCampaign = ({
                             />
                             <p className="tx-26 tx-com tx-bold">Please Note</p>
                             <p className="tx-16 mb-0">
-                              Billboard campaigns hours to process, you will get
-                              a response within this period
+                              Billboard campaigns takes 24 hours to process, you
+                              will get a response within this period
                             </p>
                           </div>
                         </div>
