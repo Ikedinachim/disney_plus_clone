@@ -153,7 +153,6 @@ const ViewBillboardCampaign = () => {
   };
 
   useEffect(() => {
-    // dispatch(getAllBillBoardCampaign());
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
@@ -161,7 +160,7 @@ const ViewBillboardCampaign = () => {
     } else {
       dispatch(getAllBillBoardCampaign());
     }
-  }, [dispatch, navigate]);
+  }, [dispatch, error, navigate]);
 
   return (
     <Fragment>

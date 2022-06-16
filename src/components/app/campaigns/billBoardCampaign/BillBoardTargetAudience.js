@@ -16,10 +16,18 @@ const BillBoardTargetAudience = ({
   uploadPercentage,
   resetCheckedState,
 }) => {
+  let date = new Date();
+  // add 1 day
+  date.setDate(date.getDate() + 1);
   const Continue = (e) => {
     e.preventDefault();
+    let d1 = new Date().setHours(0, 0, 0, 0);
+    let d2 = new Date(values.startDate).setHours(0, 0, 0, 0);
+
     if (values.startDate === "") {
       toast.warning("Please choose a start date");
+    } else if (d1.valueOf() > d2.valueOf()) {
+      toast.warning("Please set a valid date");
     } else if (!values.attachment) {
       toast.warning("Please upload billboard creative");
     } else {
@@ -31,6 +39,8 @@ const BillBoardTargetAudience = ({
     resetCheckedState();
     prevStep();
   };
+
+  console.log(values);
 
   return (
     <Fragment>
@@ -78,8 +88,8 @@ const BillBoardTargetAudience = ({
                         aria-describedby="basic-addon1"
                         defaultValue={values.startDate}
                         onChange={handleChange("startDate")}
-                        min="6/11/2022"
-                        max="6/11/2022"
+                        min={date.toISOString().split("T")[0]}
+                        // max="6/11/2022"
                       />
                       {/* <DatePicker
                         name="startDate"

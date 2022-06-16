@@ -39,7 +39,7 @@ export default class BillBoardStepForm extends Component {
     platformId: "",
     platform: [],
     assetType: "image",
-    startDate: new Date(),
+    startDate: "",
 
     showModal: false,
     activeItemId: "",

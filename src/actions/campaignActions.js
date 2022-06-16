@@ -82,6 +82,15 @@ import {
   GET_SINGLE_BILLBOARD_CAMPAIGN_REQUEST,
   GET_SINGLE_BILLBOARD_CAMPAIGN_SUCCESS,
   GET_SINGLE_BILLBOARD_CAMPAIGN_FAIL,
+  GET_ALL_BILBOARD_PROVIDER_CAMPAIGN_REQUEST,
+  GET_ALL_BILBOARD_PROVIDER_CAMPAIGN_SUCCESS,
+  GET_ALL_BILBOARD_PROVIDER_CAMPAIGN_FAIL,
+  UPDATE_BILLBOARD_CAMPAIGN_STATUS_REQUEST,
+  UPDATE_BILLBOARD_CAMPAIGN_STATUS_SUCCESS,
+  UPDATE_BILLBOARD_CAMPAIGN_STATUS_FAIL,
+  UPDATE_BILLBOARD_PUBLISHED_STATUS_REQUEST,
+  UPDATE_BILLBOARD_PUBLISHED_STATUS_SUCCESS,
+  UPDATE_BILLBOARD_PUBLISHED_STATUS_FAIL,
 
   ////////////// GENERIC CONSTANTS ///////////////
   CLEAR_ERRORS,
@@ -609,7 +618,7 @@ export const getAllBillBoardCampaign = () => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.get(`/api/campaign/bill-board`, config);
+    const { data } = await axios.get(`/api/bill-board`, config);
 
     if (data.status === "success") {
       dispatch({
@@ -633,7 +642,7 @@ export const getAllBillBoardCampaign = () => async (dispatch) => {
 // Get All Billboard Action
 export const getAllBillBoard = () => async (dispatch) => {
   try {
-    dispatch({ type: GET_ALL_BILLBOARD_CAMPAIGN_REQUEST });
+    dispatch({ type: GET_ALL_BILLBOARD_REQUEST });
     let user = JSON.parse(sessionStorage.getItem("user"));
     const token = user.user.token;
 
@@ -1068,8 +1077,126 @@ export const getInfluencerDetails = (params) => async (dispatch) => {
   }
 };
 
-// /campaign/digital-campaigns
+/////////////////// BILLBOARD PROVIDER DASHBOARD ACTION //////////////////
+// Get All Campaigns For Billboard Provider
+export const getAllPoviderCampaign = (params) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_ALL_BILBOARD_PROVIDER_CAMPAIGN_REQUEST });
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
 
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `/api/bill-board/get-provider/${params}`,
+      config
+    );
+
+    if (data.status === "success") {
+      dispatch({
+        type: GET_ALL_BILBOARD_PROVIDER_CAMPAIGN_SUCCESS,
+        payload: data.data,
+      });
+    } else {
+      dispatch({
+        type: GET_ALL_BILBOARD_PROVIDER_CAMPAIGN_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: GET_ALL_INFLUENCER_CAMPAIGN_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+// Update Billboard Campaign Status Action
+export const updateBillboardCampaignStatusAction =
+  (payload) => async (dispatch) => {
+    try {
+      dispatch({ type: UPDATE_BILLBOARD_CAMPAIGN_STATUS_REQUEST });
+      let user = JSON.parse(sessionStorage.getItem("user"));
+      const token = user.user.token;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await axios.post(
+        "api/campaign/bill-board/update-approval-status",
+        payload,
+        config
+      );
+
+      if (data.status === "success") {
+        dispatch({
+          type: UPDATE_BILLBOARD_CAMPAIGN_STATUS_SUCCESS,
+          payload: data,
+        });
+        // console.log(data);
+      } else {
+        dispatch({
+          type: UPDATE_BILLBOARD_CAMPAIGN_STATUS_FAIL,
+          payload: data.message,
+        });
+      }
+    } catch (data) {
+      dispatch({
+        type: UPDATE_BILLBOARD_CAMPAIGN_STATUS_FAIL,
+        payload: data.message,
+      });
+    }
+  };
+
+// Update Billboard Campaign Publish Status Action
+export const updateBillboardPublishStatusAction =
+  (payload) => async (dispatch) => {
+    try {
+      dispatch({ type: UPDATE_BILLBOARD_PUBLISHED_STATUS_REQUEST });
+      let user = JSON.parse(sessionStorage.getItem("user"));
+      const token = user.user.token;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await axios.put(
+        "api/campaign/bill-board/confirm-publish",
+        payload,
+        config
+      );
+
+      if (data.status === "success") {
+        dispatch({
+          type: UPDATE_BILLBOARD_PUBLISHED_STATUS_SUCCESS,
+          payload: data,
+        });
+        // console.log(data);
+      } else {
+        dispatch({
+          type: UPDATE_BILLBOARD_PUBLISHED_STATUS_FAIL,
+          payload: data.message,
+        });
+      }
+    } catch (data) {
+      dispatch({
+        type: UPDATE_BILLBOARD_PUBLISHED_STATUS_FAIL,
+        payload: data.message,
+      });
+    }
+  };
+/////////////////// INFLUENCER DASHBOARD ACTION //////////////////
+
+// /campaign/digital-campaigns
 export const getDigitalCampaigns = () => async (dispatch) => {
   try {
     dispatch({ type: GET_DIGITAL_CAMPAIGNS_REQUEST });

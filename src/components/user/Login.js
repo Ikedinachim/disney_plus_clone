@@ -43,7 +43,12 @@ const Login = () => {
       navHistory("/update-password");
       toast.error(resetInfluencerPassword.message);
       dispatch(clearErrors());
-    } else if (isAuthenticated && user && user.user.role === "influencer") {
+    } else if (
+      isAuthenticated &&
+      user &&
+      (user.user.role === "influencer" ||
+        user.user.role === "billboard_provider")
+    ) {
       dispatch(getWallet());
       navHistory("/influencer");
     } else if (
