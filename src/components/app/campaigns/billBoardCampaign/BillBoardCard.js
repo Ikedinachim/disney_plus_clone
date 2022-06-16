@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
+import NumberFormat from "react-number-format";
 
 const InfluencerCard = ({
   billboard,
@@ -67,16 +68,28 @@ const InfluencerCard = ({
                     </div>
                     <div>
                       <p className="tx-bold">
-                        illumination:{" "}
-                        <span className="tx-normal">
-                          {billboard.illumination}
-                        </span>
+                        impressions:{" "}
+                        <span className="tx-normal">70 per day</span>
                       </p>
                     </div>
                     <div>
                       <p className="tx-bold">
                         Traffic:{" "}
                         <span className="tx-normal">{billboard.traffic}</span>
+                      </p>
+                    </div>
+                    <div>
+                      <p className="tx-bold">
+                        Price:{" "}
+                        <span className="tx-normal">
+                          From{" "}
+                          <NumberFormat
+                            value={10000}
+                            displayType={"text"}
+                            thousandSeparator={true}
+                            prefix={"₦"}
+                          />
+                        </span>
                       </p>
                     </div>
                   </div>

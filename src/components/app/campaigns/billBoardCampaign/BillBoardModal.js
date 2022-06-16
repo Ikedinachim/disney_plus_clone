@@ -56,8 +56,7 @@ const BillBoardModal = ({
                             {checkedBillBoard.size}
                           </p>
                           <p className="mb-0 tx-12">
-                            <i className="fa fa-users" />{" "}
-                            {checkedBillBoard.traffic}
+                            <i className="fa fa-users" /> 70 impressions per day
                           </p>
                         </div>
                       </div>
@@ -116,12 +115,36 @@ const BillBoardModal = ({
                                   displayType={"text"}
                                   thousandSeparator={true}
                                   prefix={"₦"}
-                                />
+                                />{" "}
+                                {billboard.name === "Daily" && "(1 day plan)"}
+                                {billboard.name === "Weekly" && "(7 days plan)"}
+                                {billboard.name === "Monthly" &&
+                                  "(30 days plan)"}
+                                {/* (1 day plan) */}
                               </label>
                             </div>
                           </div>
                         </div>
                       ))}
+                    <br />
+
+                    <div className="row justify content-between mg-b-15">
+                      <div className="col">
+                        <h3>Note:</h3>
+                        <p className="tx-16 mb-0 tx-com tx-bold">
+                          Customers advert will be displayed 70 times daily on
+                          the billboard.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="row justify content-between mg-b-15">
+                      <div className="col">
+                        <p className="tx-16 mb-0 tx-com tx-bold">
+                          Customers advert will be displayed for 10 seconds each
+                          time it appears on the billboard.
+                        </p>
+                      </div>
+                    </div>
                     {/* <div className="row justify content-between mg-b-15">
                       <div className="col-5">
                         <p>

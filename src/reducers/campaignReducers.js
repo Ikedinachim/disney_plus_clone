@@ -91,6 +91,18 @@ import {
   GET_SINGLE_BILLBOARD_CAMPAIGN_REQUEST,
   GET_SINGLE_BILLBOARD_CAMPAIGN_SUCCESS,
   GET_SINGLE_BILLBOARD_CAMPAIGN_FAIL,
+  UPDATE_BILLBOARD_CAMPAIGN_STATUS_REQUEST,
+  UPDATE_BILLBOARD_CAMPAIGN_STATUS_SUCCESS,
+  UPDATE_BILLBOARD_CAMPAIGN_STATUS_FAIL,
+  UPDATE_BILLBOARD_CAMPAIGN_STATUS_RESET,
+  UPDATE_BILLBOARD_PUBLISHED_STATUS_REQUEST,
+  UPDATE_BILLBOARD_PUBLISHED_STATUS_SUCCESS,
+  UPDATE_BILLBOARD_PUBLISHED_STATUS_FAIL,
+  UPDATE_BILLBOARD_PUBLISHED_STATUS_RESET,
+  ///DASHBOARD//////
+  GET_ALL_BILBOARD_PROVIDER_CAMPAIGN_REQUEST,
+  GET_ALL_BILBOARD_PROVIDER_CAMPAIGN_SUCCESS,
+  GET_ALL_BILBOARD_PROVIDER_CAMPAIGN_FAIL,
 
   ////////////// GENERIC CONSTANTS ///////////////
   CLEAR_ERRORS,
@@ -1013,6 +1025,118 @@ export const getSingleBillBoardCampaignReducer = (
       return {
         ...state,
         error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const getAllBillboardProviderCampaignReducer = (
+  state = { providerCampaignList: [] },
+  action
+) => {
+  switch (action.type) {
+    case GET_ALL_BILBOARD_PROVIDER_CAMPAIGN_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case GET_ALL_BILBOARD_PROVIDER_CAMPAIGN_SUCCESS:
+      return {
+        loading: false,
+        providerCampaignList: action.payload,
+      };
+
+    case GET_ALL_BILBOARD_PROVIDER_CAMPAIGN_FAIL:
+      return {
+        loading: false,
+        providerCampaignList: null,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const updateBillboardCampaignStatusReducer = (
+  state = { updateBillboardCampaignStatus: [] },
+  action
+) => {
+  switch (action.type) {
+    case UPDATE_BILLBOARD_CAMPAIGN_STATUS_REQUEST:
+      return {
+        loading: true,
+        updateBillboardCampaignStatus: [],
+      };
+
+    case UPDATE_BILLBOARD_CAMPAIGN_STATUS_SUCCESS:
+      return {
+        loading: false,
+        updateBillboardCampaignStatus: action.payload,
+      };
+    case UPDATE_BILLBOARD_CAMPAIGN_STATUS_FAIL:
+      return {
+        loading: false,
+        updateBillboardCampaignStatus: null,
+        error: action.payload,
+      };
+    case UPDATE_BILLBOARD_CAMPAIGN_STATUS_RESET:
+      return {
+        ...state,
+        updateBillboardCampaignStatus: [],
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const updateBillboardPublishedStatusReducer = (
+  state = { updateBillboardPublishedStatus: [] },
+  action
+) => {
+  switch (action.type) {
+    case UPDATE_BILLBOARD_PUBLISHED_STATUS_REQUEST:
+      return {
+        publishLoading: true,
+        updateBillboardPublishedStatus: [],
+      };
+
+    case UPDATE_BILLBOARD_PUBLISHED_STATUS_SUCCESS:
+      return {
+        publishLoading: false,
+        updateBillboardPublishedStatus: action.payload,
+      };
+    case UPDATE_BILLBOARD_PUBLISHED_STATUS_FAIL:
+      return {
+        publishLoading: false,
+        updateBillboardPublishedStatus: null,
+        publishError: action.payload,
+      };
+    case UPDATE_BILLBOARD_PUBLISHED_STATUS_RESET:
+      return {
+        ...state,
+        updateBillboardPublishedStatus: [],
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        publishError: null,
       };
 
     default:

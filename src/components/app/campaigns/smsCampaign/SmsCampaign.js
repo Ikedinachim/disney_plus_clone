@@ -25,7 +25,9 @@ const SmsCampaign = ({
 }) => {
   // const alert = useAlert();
   const dispatch = useDispatch();
-  const { senderID, defaultSenderID, generalSender } = useSelector((state) => state || []);
+  const { senderID, defaultSenderID, generalSender } = useSelector(
+    (state) => state || []
+  );
   const Continue = (e) => {
     e.preventDefault();
     // if (values.senderId === "" && values.alternateSenderId !== "") {
@@ -79,7 +81,6 @@ const SmsCampaign = ({
         .filter((sender) => sender);
     return senders;
   };
-
 
   useEffect(() => {
     dispatch(getSenderID());

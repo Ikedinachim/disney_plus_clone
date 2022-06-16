@@ -203,137 +203,276 @@ const Dashboard = () => {
                   <div className="d-flex justify-content-end"></div>
                 </div>
               </div>
-              <div className="row row-xs">
-                <div className="col-sm-6 col-xs-6 col-lg-3 mg-t-10">
-                  <div className="card card-body p-3 rounded bd-0 shadow-sm analytics-card">
-                    <div className="d-flex d-lg-block d-xl-flex">
-                      <span>
-                        <img
-                          className="icon img-fluid"
-                          src="../assets/img/Total_Ads_Played.svg"
-                          alt="Total Campaign"
-                        />
-                      </span>
-                      <div className="ml-3">
-                        <p className="tx-bold tx-bold tx-28 mg-b-0 lh-1 white">
-                          {influencerCampaignList &&
-                          influencerCampaignList.length
-                            ? influencerCampaignList.length
-                            : 0}
-                          {influencerCampaignList.length > 1000 ? "k" : ""}
-                        </p>
-                        <p className="tx-gray tx-12 tx-14 mb-0">
-                          Total Campaigns
-                        </p>
+              {user && user.user.role === "influencer" && (
+                <>
+                  <div className="row row-xs">
+                    <div className="col-sm-6 col-xs-6 col-lg-3 mg-t-10">
+                      <div className="card card-body p-3 rounded bd-0 shadow-sm analytics-card">
+                        <div className="d-flex d-lg-block d-xl-flex">
+                          <span>
+                            <img
+                              className="icon img-fluid"
+                              src="../assets/img/Total_Ads_Played.svg"
+                              alt="Total Campaign"
+                            />
+                          </span>
+                          <div className="ml-3">
+                            <p className="tx-bold tx-bold tx-28 mg-b-0 lh-1 white">
+                              {influencerCampaignList &&
+                              influencerCampaignList.length
+                                ? influencerCampaignList.length
+                                : 0}
+                              {influencerCampaignList.length > 1000 ? "k" : ""}
+                            </p>
+                            <p className="tx-gray tx-12 tx-14 mb-0">
+                              Total Campaigns
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-                {/* col */}
-                <div className="col-sm-6 col-xs-6 col-lg-3 mg-t-10">
-                  <div className="card card-body p-3 rounded bd-0 shadow-sm analytics-card">
-                    <div className="d-flex d-lg-block d-xl-flex">
-                      <span>
-                        <img
-                          className="icon img-fluid"
-                          src="../assets/img/my2.svg"
-                          alt="Approved Campaign"
-                        />
-                      </span>
-                      <div className="ml-3">
-                        <p className="tx-bold tx-bold tx-28 mg-b-0 lh-1 white">
-                          {influencerCampaignList
-                            ? influencerCampaignList &&
-                              influencerCampaignList.filter(
-                                (x) =>
-                                  x.isRejected === false &&
-                                  x.isApproved === true &&
-                                  x.isPublished === true
-                              ).length
-                            : 0}
-                          {influencerCampaignList.length > 1000 ? "k" : ""}
-                        </p>
-                        <p className="tx-gray tx-12 tx-14 mb-0">
-                          Published Campaigns
-                        </p>
+                    {/* col */}
+                    <div className="col-sm-6 col-xs-6 col-lg-3 mg-t-10">
+                      <div className="card card-body p-3 rounded bd-0 shadow-sm analytics-card">
+                        <div className="d-flex d-lg-block d-xl-flex">
+                          <span>
+                            <img
+                              className="icon img-fluid"
+                              src="../assets/img/my2.svg"
+                              alt="Approved Campaign"
+                            />
+                          </span>
+                          <div className="ml-3">
+                            <p className="tx-bold tx-bold tx-28 mg-b-0 lh-1 white">
+                              {influencerCampaignList
+                                ? influencerCampaignList &&
+                                  influencerCampaignList.filter(
+                                    (x) =>
+                                      x.isRejected === false &&
+                                      x.isApproved === true &&
+                                      x.isPublished === true
+                                  ).length
+                                : 0}
+                              {influencerCampaignList.length > 1000 ? "k" : ""}
+                            </p>
+                            <p className="tx-gray tx-12 tx-14 mb-0">
+                              Published Campaigns
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-                {/* col */}
-                <div className="col-sm-6 col-xs-6 col-lg-3 mg-t-10">
-                  <div className="card card-body p-3 rounded bd-0 shadow-sm analytics-card">
-                    <div className="d-flex d-lg-block d-xl-flex">
-                      <span>
-                        <img
-                          className="icon img-fluid"
-                          src="../assets/img/my3.svg"
-                          alt="Pending Campaign"
-                        />
-                      </span>
-                      <div className="ml-3">
-                        <p className="tx-bold tx-bold tx-28 mg-b-0 lh-1 white">
-                          {influencerCampaignList
-                            ? influencerCampaignList &&
-                              influencerCampaignList.filter(
-                                (x) =>
-                                  x.isRejected === false &&
-                                  x.isApproved === false &&
-                                  x.isPublished === false
-                              ).length
-                            : 0}
-                          {influencerCampaignList.length > 1000 ? "k" : ""}
-                        </p>
-                        <p className="tx-gray tx-12 tx-14 mb-0">
-                          Pending Campaigns
-                        </p>
+                    {/* col */}
+                    <div className="col-sm-6 col-xs-6 col-lg-3 mg-t-10">
+                      <div className="card card-body p-3 rounded bd-0 shadow-sm analytics-card">
+                        <div className="d-flex d-lg-block d-xl-flex">
+                          <span>
+                            <img
+                              className="icon img-fluid"
+                              src="../assets/img/my3.svg"
+                              alt="Pending Campaign"
+                            />
+                          </span>
+                          <div className="ml-3">
+                            <p className="tx-bold tx-bold tx-28 mg-b-0 lh-1 white">
+                              {influencerCampaignList
+                                ? influencerCampaignList &&
+                                  influencerCampaignList.filter(
+                                    (x) =>
+                                      x.isRejected === false &&
+                                      x.isApproved === false &&
+                                      x.isPublished === false
+                                  ).length
+                                : 0}
+                              {influencerCampaignList.length > 1000 ? "k" : ""}
+                            </p>
+                            <p className="tx-gray tx-12 tx-14 mb-0">
+                              Pending Campaigns
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-                {/* col */}
-                <div className="col-sm-6 col-xs-6 col-lg-3 mg-t-10">
-                  <div className="card card-body p-3 rounded bd-0 shadow-sm analytics-card">
-                    <div className="d-flex d-lg-block d-xl-flex">
-                      <span>
-                        <img
-                          className="icon img-fluid"
-                          src="../assets/img/Reported_Ads.svg"
-                          alt="Rejected Campaign"
-                        />
-                      </span>
-                      <div className="ml-3">
-                        <p className="tx-bold tx-bold tx-28 mg-b-0 lh-1 white">
-                          {influencerCampaignList
-                            ? influencerCampaignList &&
-                              influencerCampaignList.filter(
-                                (x) => x.isRejected === true
-                              ).length
-                            : 0}
-                          {influencerCampaignList.length > 1000 ? "k" : ""}
-                        </p>
-                        <p className="tx-gray tx-12 tx-14 mb-0">
-                          Rejected Campaigns
-                        </p>
+                    {/* col */}
+                    <div className="col-sm-6 col-xs-6 col-lg-3 mg-t-10">
+                      <div className="card card-body p-3 rounded bd-0 shadow-sm analytics-card">
+                        <div className="d-flex d-lg-block d-xl-flex">
+                          <span>
+                            <img
+                              className="icon img-fluid"
+                              src="../assets/img/Reported_Ads.svg"
+                              alt="Rejected Campaign"
+                            />
+                          </span>
+                          <div className="ml-3">
+                            <p className="tx-bold tx-bold tx-28 mg-b-0 lh-1 white">
+                              {influencerCampaignList
+                                ? influencerCampaignList &&
+                                  influencerCampaignList.filter(
+                                    (x) => x.isRejected === true
+                                  ).length
+                                : 0}
+                              {influencerCampaignList.length > 1000 ? "k" : ""}
+                            </p>
+                            <p className="tx-gray tx-12 tx-14 mb-0">
+                              Rejected Campaigns
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
+                    {/* col */}
                   </div>
-                </div>
-                {/* col */}
-              </div>
-              <div className="card rounded bd-0 shadow-sm mg-t-40">
-                <div className="card-body pd-md-x-30 pd-t- mg-t-20 mg-md-t-0">
-                  <MDBDataTable
-                    responsive
-                    data={setAllCampaigns()}
-                    className="px-3 scroll"
-                    bordered
-                    striped
-                    hover
-                    barReverse
-                  />
-                </div>
-              </div>
+                  <div className="card rounded bd-0 shadow-sm mg-t-40">
+                    <div className="card-body pd-md-x-30 pd-t- mg-t-20 mg-md-t-0">
+                      <MDBDataTable
+                        responsive
+                        data={setAllCampaigns()}
+                        className="px-3 scroll"
+                        bordered
+                        striped
+                        hover
+                        barReverse
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
+              {user && user.user.role === "billboard_provider" && (
+                <>
+                  <div className="row row-xs">
+                    <div className="col-sm-6 col-xs-6 col-lg-3 mg-t-10">
+                      <div className="card card-body p-3 rounded bd-0 shadow-sm analytics-card">
+                        <div className="d-flex d-lg-block d-xl-flex">
+                          <span>
+                            <img
+                              className="icon img-fluid"
+                              src="../assets/img/Total_Ads_Played.svg"
+                              alt="Total Campaign"
+                            />
+                          </span>
+                          <div className="ml-3">
+                            <p className="tx-bold tx-bold tx-28 mg-b-0 lh-1 white">
+                              {influencerCampaignList &&
+                              influencerCampaignList.length
+                                ? influencerCampaignList.length
+                                : 0}
+                              {influencerCampaignList.length > 1000 ? "k" : ""}
+                            </p>
+                            <p className="tx-gray tx-12 tx-14 mb-0">
+                              Total Campaigns
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {/* col */}
+                    <div className="col-sm-6 col-xs-6 col-lg-3 mg-t-10">
+                      <div className="card card-body p-3 rounded bd-0 shadow-sm analytics-card">
+                        <div className="d-flex d-lg-block d-xl-flex">
+                          <span>
+                            <img
+                              className="icon img-fluid"
+                              src="../assets/img/my2.svg"
+                              alt="Approved Campaign"
+                            />
+                          </span>
+                          <div className="ml-3">
+                            <p className="tx-bold tx-bold tx-28 mg-b-0 lh-1 white">
+                              {influencerCampaignList
+                                ? influencerCampaignList &&
+                                  influencerCampaignList.filter(
+                                    (x) =>
+                                      x.isRejected === false &&
+                                      x.isApproved === true &&
+                                      x.isPublished === true
+                                  ).length
+                                : 0}
+                              {influencerCampaignList.length > 1000 ? "k" : ""}
+                            </p>
+                            <p className="tx-gray tx-12 tx-14 mb-0">
+                              Published Campaigns
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {/* col */}
+                    <div className="col-sm-6 col-xs-6 col-lg-3 mg-t-10">
+                      <div className="card card-body p-3 rounded bd-0 shadow-sm analytics-card">
+                        <div className="d-flex d-lg-block d-xl-flex">
+                          <span>
+                            <img
+                              className="icon img-fluid"
+                              src="../assets/img/my3.svg"
+                              alt="Pending Campaign"
+                            />
+                          </span>
+                          <div className="ml-3">
+                            <p className="tx-bold tx-bold tx-28 mg-b-0 lh-1 white">
+                              {influencerCampaignList
+                                ? influencerCampaignList &&
+                                  influencerCampaignList.filter(
+                                    (x) =>
+                                      x.isRejected === false &&
+                                      x.isApproved === false &&
+                                      x.isPublished === false
+                                  ).length
+                                : 0}
+                              {influencerCampaignList.length > 1000 ? "k" : ""}
+                            </p>
+                            <p className="tx-gray tx-12 tx-14 mb-0">
+                              Pending Campaigns
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {/* col */}
+                    <div className="col-sm-6 col-xs-6 col-lg-3 mg-t-10">
+                      <div className="card card-body p-3 rounded bd-0 shadow-sm analytics-card">
+                        <div className="d-flex d-lg-block d-xl-flex">
+                          <span>
+                            <img
+                              className="icon img-fluid"
+                              src="../assets/img/Reported_Ads.svg"
+                              alt="Rejected Campaign"
+                            />
+                          </span>
+                          <div className="ml-3">
+                            <p className="tx-bold tx-bold tx-28 mg-b-0 lh-1 white">
+                              {influencerCampaignList
+                                ? influencerCampaignList &&
+                                  influencerCampaignList.filter(
+                                    (x) => x.isRejected === true
+                                  ).length
+                                : 0}
+                              {influencerCampaignList.length > 1000 ? "k" : ""}
+                            </p>
+                            <p className="tx-gray tx-12 tx-14 mb-0">
+                              Rejected Campaigns
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {/* col */}
+                  </div>
+                  <div className="card rounded bd-0 shadow-sm mg-t-40">
+                    <div className="card-body pd-md-x-30 pd-t- mg-t-20 mg-md-t-0">
+                      <MDBDataTable
+                        responsive
+                        data={setAllCampaigns()}
+                        className="px-3 scroll"
+                        bordered
+                        striped
+                        hover
+                        barReverse
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </Fragment>
