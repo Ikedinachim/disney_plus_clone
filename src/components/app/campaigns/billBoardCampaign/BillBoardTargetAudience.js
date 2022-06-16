@@ -1,15 +1,14 @@
 import React, { Fragment, useState } from "react";
 import { toast } from "react-toastify";
-// import { Link } from "react-router-dom";
+// import DatePicker from "react-datepicker";
 
 import MetaData from "../../../layout/MetaData";
 import { ProgressBar } from "react-bootstrap";
 
-const InfluencerTargetAudience = ({
+const BillBoardTargetAudience = ({
   prevStep,
   nextStep,
   handleChange,
-  // onChangeAttachment,
   handleImageUpload,
   handleVideoUpload,
   values,
@@ -17,19 +16,20 @@ const InfluencerTargetAudience = ({
   uploadPercentage,
   resetCheckedState,
 }) => {
-  // const alert = useAlert();
-  const [status, setStatus] = useState(3);
-  const radioHandler = (status) => {
-    setStatus(status);
-  };
-
+  let date = new Date();
+  // add 1 day
+  date.setDate(date.getDate() + 1);
   const Continue = (e) => {
     e.preventDefault();
-    if (values.campaignMessage === "") {
-      toast.error("Create the campaign message");
-    } else if (values.attachment === null) {
-      nextStep();
-      handleImageUpload();
+    let d1 = new Date().setHours(0, 0, 0, 0);
+    let d2 = new Date(values.startDate).setHours(0, 0, 0, 0);
+
+    if (values.startDate === "") {
+      toast.warning("Please choose a start date");
+    } else if (d1.valueOf() > d2.valueOf()) {
+      toast.warning("Please set a valid date");
+    } else if (!values.attachment) {
+      toast.warning("Please upload billboard creative");
     } else {
       nextStep();
     }
@@ -40,9 +40,11 @@ const InfluencerTargetAudience = ({
     prevStep();
   };
 
+  console.log(values);
+
   return (
     <Fragment>
-      <MetaData title={"Influencer Marketing"} />
+      <MetaData title={"BillBoard Marketing"} />
       <div className="content-body">
         <div className="container pd-x-0">
           <div className="mg-b-20 mg-md-b-30">
@@ -63,27 +65,43 @@ const InfluencerTargetAudience = ({
           <div className="pd-md-y-20 col-xl-11 pd-x-0">
             <form>
               <div>
-                <p className="tx-22 tx-com tx-bold mb-1">
-                  Influencer Marketing
-                </p>
+                <p className="tx-22 tx-com tx-bold mb-1">BillBoard Marketing</p>
                 <p className="tx-14 tx-blac">
                   Provide all requested details to help complete the campaign
                   creation
                 </p>
-
                 <div className="form-group">
-                  <label className="mb-1">Campaign Message</label>
-                  <textarea
-                    className="form-control"
-                    rows={6}
-                    placeholder="Indulge in any of our yummy treat for just 4500 naira per loaf... Get all three for 12,500. Contact us now
-                    IG: @xxxx
-                    Twitter: @xxxx
-                    FB: @xxxx
-                    Snapchat: @xxxx"
-                    defaultValue={values.campaignMessage}
-                    onChange={handleChange("campaignMessage")}
-                  />
+                  <div className="form-group col-md-6 pd-l-0 mg-0">
+                    <label className="mb-1">
+                      Start Date
+                      <i className="tx-6 fa fa-star tx-primary mg-l-2" />
+                    </label>
+                    <div className="input-group mg-b-0">
+                      <div className="input-group-prepend">
+                        <span className="input-group-text">Start</span>
+                      </div>
+                      <input
+                        type="date"
+                        className="form-control"
+                        placeholder="Username"
+                        aria-label="Username"
+                        aria-describedby="basic-addon1"
+                        defaultValue={values.startDate}
+                        onChange={handleChange("startDate")}
+                        min={date.toISOString().split("T")[0]}
+                        // max="6/11/2022"
+                      />
+                      {/* <DatePicker
+                        name="startDate"
+                        dateFormat="yyyy/MM/dd"
+                        calendarClassName="form-control"
+                        selected={values.startDate}
+                        onChange={handleChange("startDate")}
+                        startDate={new Date()}
+                        minDate={new Date()}
+                      /> */}
+                    </div>
+                  </div>
                 </div>
                 <div className="mg-t-40">
                   <p className="tx-22 tx-bold mb-1 tx-com">Attachment</p>
@@ -95,7 +113,6 @@ const InfluencerTargetAudience = ({
                         name="customRadio"
                         className="custom-control-input"
                         checked={values.assetType === "image"}
-                        // onClick={(e) => assetTypeHandler("image")}
                         value={"image"}
                         onChange={handleChange("assetType")}
                       />
@@ -112,7 +129,6 @@ const InfluencerTargetAudience = ({
                         name="customRadio"
                         className="custom-control-input"
                         checked={values.assetType === "video"}
-                        // onClick={(e) => assetTypeHandler("video")}
                         value={"video"}
                         onChange={handleChange("assetType")}
                       />
@@ -121,31 +137,6 @@ const InfluencerTargetAudience = ({
                       </label>
                     </div>
                   </div>
-                  {/* <div className="form-group col-md-6 pd-md-l-0">
-                    <div className="custom-file">
-                      <input
-                        type="file"
-                        name="file"
-                        className="custom-file-input"
-                        id="customFile"
-                        accept="image/png, image/jpeg, image/gif, image/jpg"
-                        onChange={handleImageUpload}
-                        // placeholder="Click to upload desired icon (if needed)"
-                      />
-                      <label className="custom-file-label" htmlFor="customFile">
-                        {selectedFileName}
-                      </label>
-                      {uploadPercentage > 0 && (
-                        <span className="mt-2">
-                          <ProgressBar
-                            now={uploadPercentage}
-                            // active
-                            label={`${uploadPercentage}%`}
-                          />
-                        </span>
-                      )}
-                    </div>
-                  </div> */}
                   {values.assetType === "image" && (
                     <div className="form-group pd-0 col-md-6 pd-md-l-0">
                       <div className="custom-file">
@@ -155,11 +146,7 @@ const InfluencerTargetAudience = ({
                           accept="image/png, image/jpeg, image/gif, image/jpg"
                           className="custom-file-input"
                           id="customFile"
-                          // defaultValue={values.attachment}
-                          onChange={
-                            // (onChangeAttachment("uploadedImage"),
-                            handleImageUpload
-                          }
+                          onChange={handleImageUpload}
                         />
                         <label
                           className="custom-file-label"
@@ -171,7 +158,6 @@ const InfluencerTargetAudience = ({
                           <span className="mt-2">
                             <ProgressBar
                               now={uploadPercentage}
-                              // active
                               label={`${uploadPercentage}%`}
                             />
                           </span>
@@ -221,7 +207,13 @@ const InfluencerTargetAudience = ({
                 <div className="col-md-5 pd-x-0 mg-y-40">
                   <div className="d-flex">
                     <button
-                      className="btn btn-primary w-100 tx-com"
+                      onClick={Previous}
+                      className="btn btn-outline-primary w-100 tx-bold tx-com"
+                    >
+                      Reset
+                    </button>
+                    <button
+                      className="btn btn-primary w-100 tx-com mg-l-20"
                       onClick={Continue}
                       type="submit"
                       variant="contained"
@@ -232,12 +224,6 @@ const InfluencerTargetAudience = ({
                       }
                     >
                       Proceed
-                    </button>
-                    <button
-                      onClick={Previous}
-                      className="btn btn-outline-primary w-100 mg-l-20 tx-bold tx-com"
-                    >
-                      Go Back
                     </button>
                   </div>
                 </div>
@@ -250,4 +236,4 @@ const InfluencerTargetAudience = ({
   );
 };
 
-export default InfluencerTargetAudience;
+export default BillBoardTargetAudience;

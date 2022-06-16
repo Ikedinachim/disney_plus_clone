@@ -7,6 +7,7 @@ import { ProgressBar } from "react-bootstrap";
 import {
   getSenderID,
   getDefaultSenderID,
+  getGeneralSender,
 } from "../../../../actions/senderIDActions";
 import Loader from "../../../loader";
 
@@ -24,7 +25,9 @@ const SmsCampaign = ({
 }) => {
   // const alert = useAlert();
   const dispatch = useDispatch();
-  const { senderID, defaultSenderID } = useSelector((state) => state || []);
+  const { senderID, defaultSenderID, generalSender } = useSelector(
+    (state) => state || []
+  );
   const Continue = (e) => {
     e.preventDefault();
     // if (values.senderId === "" && values.alternateSenderId !== "") {
@@ -79,16 +82,15 @@ const SmsCampaign = ({
     return senders;
   };
 
-  // console.log(defaultSenderID.defaultSenderID.length);
-
   useEffect(() => {
     dispatch(getSenderID());
     dispatch(getDefaultSenderID());
+    dispatch(getGeneralSender());
   }, [dispatch]);
 
   return (
     <Fragment>
-      {senderID.loading || defaultSenderID.loading ? (
+      {senderID.loading || defaultSenderID.loading || generalSender.loading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -146,11 +148,14 @@ const SmsCampaign = ({
                             <option value="">Select Alternate Sender ID</option>
                             {defaultSenderID &&
                               defaultSenderID.defaultSenderID.map(
-                                (senderids, i) => (
-                                  <option value={senderids} key={i}>
-                                    {senderids}
-                                  </option>
-                                )
+                                (senderids, i) =>
+                                  generalSender &&
+                                  generalSender.generalSender.smsSender ===
+                                    senderids.provider ? (
+                                    <option value={senderids.name} key={i}>
+                                      {senderids.name}
+                                    </option>
+                                  ) : null
                               )}
                           </select>
                           <p className="mg-0 tx-12 tx-italic tx-gray-500">

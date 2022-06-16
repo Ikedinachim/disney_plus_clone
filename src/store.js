@@ -27,6 +27,7 @@ import {
   senderIDReducer,
   createSenderIdReducer,
   defaultSenderIDReducer,
+  generalSenderReducer,
 } from "./reducers/senderIDReducers";
 import {
   walletReducer,
@@ -70,6 +71,9 @@ import {
   getAllBillBoardCampaignReducer,
   getSingleBillBoardCampaignReducer,
   getAllBillBoardReducer,
+  getAllBillboardProviderCampaignReducer,
+  updateBillboardCampaignStatusReducer,
+  updateBillboardPublishedStatusReducer,
 } from "./reducers/campaignReducers";
 
 import {
@@ -108,9 +112,12 @@ const appReducer = combineReducers({
   getBillBoardCampaign: getAllBillBoardCampaignReducer,
   allBillBoard: getAllBillBoardReducer,
   singleBillBoardCampaign: getSingleBillBoardCampaignReducer,
+  providerCampaignList: getAllBillboardProviderCampaignReducer,
   influencerCampaignList: getAllInfluencerCampaignReducer,
   updateInfluencerCampaignStatus: updateInfluencerCampaignStatusReducer,
+  updateBillboardCampaignStatus: updateBillboardCampaignStatusReducer,
   updateInfluencerCampaignPublishStatus: updateInfluencerPublishedStatusReducer,
+  updateBillboardCampaignPublishStatus: updateBillboardPublishedStatusReducer,
   influencerDetails: getInfluencerDetailsReducer,
   digitalCampaigns: getDigitalCampaignsReducer,
   getPropellerCampaigns: getPropellerCampaignsReducer,
@@ -131,6 +138,7 @@ const appReducer = combineReducers({
   AdminSenderId: AdminSenderIDReducer,
   UpdateSenderId: UpdateAdminSenderIDReducer,
   revenueBand: getRevenueBandReducer,
+  generalSender: generalSenderReducer,
 });
 
 const reducer = (state, action) => {

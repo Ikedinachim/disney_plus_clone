@@ -66,7 +66,7 @@ const CreateCampaign = () => {
                     you
                   </p>
                   <div className="row d-flex justify-content-center">
-                    <div className="col-md-6 col-lg-3 col-12 mg-t-20">
+                    <div className="col-md-6 col-lg-4 col-12 mg-t-20">
                       <Link to="/app/campaign/influencer" className="tx-dark">
                         <div className="card card-height rounded bd-0 shadow-sm">
                           <div className="card-body tx-center pd-x-12 pd-md-x-30">
@@ -88,7 +88,7 @@ const CreateCampaign = () => {
                         </div>
                       </Link>
                     </div>
-                    <div className="col-md-6 col-lg-3 col-12 mg-t-20">
+                    <div className="col-md-6 col-lg-4 col-12 mg-t-20">
                       <Link to="/app/campaign/sms" className="tx-dark">
                         <div className="card card-height rounded bd-0 shadow-sm">
                           <div className="card-body tx-center pd-x-12 pd-md-x-30">
@@ -103,7 +103,7 @@ const CreateCampaign = () => {
                         </div>
                       </Link>
                     </div>
-                    <div className="col-md-6 col-lg-3 col-12 mg-t-20">
+                    <div className="col-md-6 col-lg-4 col-12 mg-t-20">
                       <Link to="/app/campaign/flier-video" className="tx-dark">
                         <div className="card card-height rounded bd-0 shadow-sm">
                           <div className="card-body tx-center pd-x-12">
@@ -121,7 +121,7 @@ const CreateCampaign = () => {
                         </div>
                       </Link>
                     </div>
-                    <div className="col-md-6 col-lg-3 col-12 mg-t-20">
+                    <div className="col-md-6 col-lg-4 col-12 mg-t-20">
                       <Link to="/app/campaign/app-download" className="tx-dark">
                         <div className="card card-height rounded bd-0 shadow-sm">
                           <div className="card-body tx-center pd-x-12">
@@ -139,11 +139,15 @@ const CreateCampaign = () => {
                         </div>
                       </Link>
                     </div>
-                    {/* <div className="col-md-6 col-lg-3 col-12 mg-t-20">
+                    {/* <div className="col-md-6 col-lg-4 col-12 mg-t-20">
                       <Link to="/app/campaign/billboard" className="tx-dark">
                         <div className="card card-height rounded bd-0 shadow-sm">
                           <div className="card-body tx-center pd-x-12">
-                            <img src={Billboard} alt="" className="img-fluid" />
+                            <img
+                              src={Billboard}
+                              alt=""
+                              className="img-fluid ht-110"
+                            />
                             <div className="pd-t-15">
                               <p className="tx-16 tx-bold">
                                 Billboard Campaign

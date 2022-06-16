@@ -49,6 +49,7 @@ export const getPropellerCampaign = (propellerId) => async (dispatch) => {
       dayTo: DateTime.now().toFormat("yyyy-MM-dd"),
       campaignId: [parseInt(propellerId)],
       geo: ["NG"],
+      // dept: ["nativeads"],
       dept: ["native"],
     };
 
@@ -99,7 +100,7 @@ export const getOsCampaign = (propellerId) => async (dispatch) => {
       dayTo: DateTime.now().toFormat("yyyy-MM-dd"),
       campaignId: [parseInt(propellerId)],
       geo: ["NG"],
-      dept: ["native"],
+      dept: ["nativeads"],
     };
 
     const data = await axios.post(
@@ -151,7 +152,7 @@ export const getCampaignByDate = (propellerId) => async (dispatch) => {
       dayTo: DateTime.now().toFormat("yyyy-MM-dd"),
       campaignId: [parseInt(propellerId)],
       geo: ["NG"],
-      dept: ["native"],
+      dept: ["nativeads"],
     };
 
     const data = await axios.post(
@@ -201,7 +202,7 @@ export const getMobileCampaign = (propellerId) => async (dispatch) => {
       dayTo: DateTime.now().toFormat("yyyy-MM-dd"),
       campaignId: [parseInt(propellerId)],
       geo: ["NG"],
-      dept: ["native"],
+      dept: ["nativeads"],
     };
 
     const data = await axios.post(

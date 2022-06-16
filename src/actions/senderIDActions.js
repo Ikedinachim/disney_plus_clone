@@ -10,6 +10,9 @@ import {
   GET_ADMIN_SENDERID_REQUEST,
   GET_ADMIN_SENDERID_SUCCESS,
   GET_ADMIN_SENDERID_FAIL,
+  GET_GENERAL_REQUEST,
+  GET_GENERAL_FAIL,
+  GET_GENERAL_SUCCESS,
   UPDATE_ADMIN_SENDERID_REQUEST,
   UPDATE_ADMIN_SENDERID_SUCCESS,
   UPDATE_ADMIN_SENDERID_FAIL,
@@ -54,6 +57,40 @@ export const getDefaultSenderID = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_SENDERID_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+//Get general settings for Sender IDs
+export const getGeneralSender = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_GENERAL_REQUEST });
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get("/api/general-settings", config);
+
+    if (data.status === "success") {
+      dispatch({
+        type: GET_GENERAL_SUCCESS,
+        payload: data.data,
+      });
+    } else {
+      dispatch({
+        type: GET_GENERAL_FAIL,
+        payload: data.message,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: GET_GENERAL_FAIL,
       payload: error.message,
     });
   }

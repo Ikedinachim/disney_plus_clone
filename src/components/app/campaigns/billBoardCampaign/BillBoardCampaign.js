@@ -7,16 +7,11 @@ import Loader from "../../../loader";
 import MetaData from "../../../layout/MetaData";
 import BillBoardCard from "./BillBoardCard";
 import BillBoardModal from "./BillBoardModal";
+import { toast } from "react-toastify";
 
 const BillBoardCampaign = ({
   nextStep,
-  values,
-  handleImageUpload,
-  handleInfluencerChange,
-  handleCheck,
   selectedInfluencer,
-  showModal,
-  activeItemId,
   handleCheckedState,
 }) => {
   const dispatch = useDispatch();
@@ -25,160 +20,79 @@ const BillBoardCampaign = ({
     (state) => state.allBillBoard || []
   );
 
-  const [checkedBillBoard, setCheckedBillBoard] = useState(null);
+  const [tempBillBoard, setTempBillBoard] = useState(null);
+  const [selectedBillBoards, setSelectedBillBoards] = useState([]);
+  const [selectedRate, setSelectedRate] = useState(null);
+
+  console.log("selectedBillBoards", selectedBillBoards);
 
   // const ref = useRef();
   const [closeModal, setCloseModal] = useState(false);
   const [billBoardId, setBillBoardId] = useState("");
 
   const Continue = (e) => {
-    nextStep();
+    if (tempBillBoard === null || selectedBillBoards.length <= 0) {
+      toast.warning("Choose at least a billboard & plan to continue");
+    } else {
+      nextStep();
+    }
   };
-
-  console.log(checkedBillBoard);
 
   const toggleHandler = (item) => (e) => {
     const isChecked = e.target.checked;
+    console.log("e target", e.target.value);
     let singleBillBoard = allBillBoard.find((el) => el.id === item.id);
     if (isChecked) {
-      setCloseModal(true);
       setBillBoardId(e.target.value);
-      singleBillBoard.platforms = [];
-      setCheckedBillBoard(singleBillBoard);
+      singleBillBoard.billboards = tempBillBoard
+        ? [...tempBillBoard.billboards]
+        : [];
+      setTempBillBoard(singleBillBoard);
+      setCloseModal(true);
     } else {
+      const unchecked = selectedBillBoards.filter(
+        (el) => parseInt(el.billboard_id) !== parseInt(e.target.value)
+      );
+      setSelectedBillBoards(unchecked);
+      setSelectedRate(null);
       setCloseModal(false);
     }
-
-    // setPayloadData((state) => ({
-    //   ...state,
-    //   [item.id]: state[item.id] ? null : singleInfluencer,
-    // }));
-    // handleCheckedState(checkedInfluencer);
   };
 
-  const handlePlatformOnChange = (item) => (e) => {
-    const isChecked = e.target.checked;
-    const influencer = { ...checkedBillBoard };
-    let platforms = influencer.platforms;
+  const handlePlatformOnChange = (item, idx) => (e) => {
+    setSelectedRate(item);
+  };
 
-    if (!isChecked) {
-      if (item !== "all") {
-        const platformIndex = platforms.findIndex(
-          (x) => x.id === item.platform
-        );
-        platforms.splice(platformIndex, 1);
-        let allIndex = platforms.findIndex((el) => el.id === "all");
-        if (allIndex !== -1) platforms.splice(allIndex, 1);
-      } else {
-        const platformIndex = platforms.findIndex((x) => x.id === item);
-        platforms.splice(platformIndex, 1);
-      }
-      setCheckedBillBoard((state) => ({
-        ...state,
-        platforms: [...platforms],
-      }));
+  console.log("selectedRate", selectedRate);
+
+  const setSelectedBillBoard = () => {
+    if (!selectedRate) {
+      toast.warning("Please choose a plan");
     } else {
-      platforms.push({
-        id: item !== "all" ? item.platform : item,
-
-        cost: item !== "all" ? item.cost : influencer.allCost,
-      });
-      if (item === "all") {
-        platforms = checkedBillBoard.costs.map((el) => {
-          return {
-            id: el.platform,
-            cost: el.cost,
-          };
-        });
-        platforms.push({
-          id: "all",
-          cost: checkedBillBoard.allCost,
-        });
-      }
-      setCheckedBillBoard((state) => ({
-        ...state,
-        platforms: [...platforms],
-      }));
+      const billboardObject = {
+        rateType: selectedRate.name,
+        cost: selectedRate.cost,
+        billboard_id: selectedRate.billboard_id,
+        imageUrl: tempBillBoard.imageUrl,
+        name: tempBillBoard.title,
+        location: tempBillBoard.location,
+        size: tempBillBoard.size,
+      };
+      setSelectedBillBoards([...selectedBillBoards, billboardObject]);
+      setSelectedRate(null);
+      setCloseModal(false);
     }
   };
-
-  // console.log(values);
 
   useEffect(() => {
     dispatch(getAllBillBoard());
   }, [dispatch]);
 
   useEffect(() => {
-    if (checkedBillBoard !== null) {
-      handleCheckedState(checkedBillBoard);
+    if (selectedBillBoards.length > 0) {
+      handleCheckedState(selectedBillBoards);
     }
-  }, [handleCheckedState, checkedBillBoard]);
-
-  // console.log("This is the payload data", payloadData);
-  // console.log("This is the checkedBillBoard data", checkedInfluencer);
-
-  // const customFilter = (object, key, value) => {
-  //   if (Array.isArray(object)) {
-  //     for (const obj of object) {
-  //       const result = customFilter(obj, key, value);
-  //       if (result) {
-  //         return obj;
-  //       }
-  //     }
-  //   } else {
-  //     if (object.hasOwnProperty(key) && object[key] === value) {
-  //       return object;
-  //     }
-
-  //     for (const k of Object.keys(object)) {
-  //       if (typeof object[k] === "object") {
-  //         const o = customFilter(object[k], key, value);
-  //         if (o !== null && typeof o !== "undefined") return o;
-  //       }
-  //     }
-
-  //     return null;
-  //   }
-  // };
-
-  const sortIcon = (icon) => {
-    if (icon.platform === "instagram") {
-      return (
-        <i
-          className="fab fa-instagram mg-r-5 social-media"
-          aria-hidden="true"
-        />
-      );
-    } else if (icon.platform === "twitter") {
-      return (
-        <i className="fab fa-twitter mg-r-5 social-media" aria-hidden="true" />
-      );
-    } else if (icon.platform === "facebook") {
-      return (
-        <i
-          className="fab fa-facebook-square  mg-r-5 social-media"
-          aria-hidden="true"
-        />
-      );
-    } else if (icon.platform === "snapchat") {
-      return (
-        <i className="fab fa-snapchat mg-r-5 social-media" aria-hidden="true" />
-      );
-    }
-  };
-
-  // const convertToArray = (arr1) => {
-  //   Object.entries(arr1);
-  // };
-
-  // const mergeArrayObjects = (arr1, arr2) => {
-  //   return arr1.map((item, i) => {
-  //     if (item.id === arr2[i].influencerId) {
-  //       //merging two objects
-  //       return Object.assign({}, item, arr2[i]);
-  //     }
-  //   });
-  // };
+  }, [handleCheckedState, selectedBillBoards]);
 
   return (
     <Fragment>
@@ -186,7 +100,7 @@ const BillBoardCampaign = ({
         <Loader />
       ) : (
         <Fragment>
-          <MetaData title={"Influencer Campaign"} />
+          <MetaData title={"BillBoard Campaign"} />
           <div className="content-body">
             <div className="container pd-x-0">
               <div className="mg-b-20 mg-md-b-50">
@@ -206,9 +120,10 @@ const BillBoardCampaign = ({
               </div>
               <div className="row justify-content-between">
                 <div className="col-md-5 col-12 mg-b-20">
-                  <p className="tx-20 mb-1">Influencers</p>
+                  <p className="tx-20 mb-1">BillBoards</p>
                   <p className="tx-blac">
-                    Select your choice influencer to help promote your business
+                    Select your choice billboard package to help promote your
+                    business
                   </p>
                 </div>
                 <div className="col-md-5 col-12 mg-b-20">
@@ -267,14 +182,13 @@ const BillBoardCampaign = ({
               </div>
               <BillBoardModal
                 title="My Modal"
-                // onClose={closePlatFormModal(false)}
                 onClose={() => setCloseModal(false)}
                 show={closeModal}
                 billBoardId={billBoardId}
-                singleBillBoard={checkedBillBoard}
-                sortIcon={sortIcon}
+                checkedBillBoard={tempBillBoard}
                 handlePlatformOnChange={handlePlatformOnChange}
-                // handleAllCostSelection={handleAllCostSelection}
+                setSelectedBillBoard={setSelectedBillBoard}
+                selectedRate={selectedRate}
               />
             </div>
           </div>

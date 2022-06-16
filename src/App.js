@@ -35,6 +35,7 @@ import BillboardDetails from "./components/app/campaigns/campaignDetails/Billboa
 import InfluencerDashboardLayout from "./influencer/InfluencerDashboardLayout";
 import InfluencerDashboard from "./influencer/";
 import InfluencerCampaignDetails from "./influencer/ViewInfluencerCampaignDetails";
+import BillboardCampaignDetails from "./influencer/ViewBillboardCampaignDetails";
 import InfluencerSettings from "./influencer/settings";
 import UpdateInfluencerPassword from "./components/user/UpdatePassword";
 
@@ -479,6 +480,18 @@ function App() {
             element={
               isAuthenticated && user && user.user.role === "influencer" ? (
                 <InfluencerCampaignDetails />
+              ) : (
+                <Login />
+              )
+            }
+          />
+          <Route
+            path="view-campaign/:billboardMarketingId"
+            element={
+              isAuthenticated &&
+              user &&
+              user.user.role === "billboard_provider" ? (
+                <BillboardCampaignDetails />
               ) : (
                 <Login />
               )
