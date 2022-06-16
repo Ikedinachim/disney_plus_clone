@@ -49,7 +49,8 @@ export const getPropellerCampaign = (propellerId) => async (dispatch) => {
       dayTo: DateTime.now().toFormat("yyyy-MM-dd"),
       campaignId: [parseInt(propellerId)],
       geo: ["NG"],
-      dept: ["nativeads"],
+      // dept: ["nativeads"],
+      dept: ["native"],
     };
 
     const data = await axios.post(
