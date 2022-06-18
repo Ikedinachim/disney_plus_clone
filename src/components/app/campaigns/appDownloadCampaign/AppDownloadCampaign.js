@@ -416,40 +416,54 @@ const AppDownloadCampaign = ({
                       </div>
                     </div>
                     <div className="position-sticky t-0 col-md-5 col-12 mg-t-20">
-                      <div className="card shadow-sm rounded bd-0">
-                        <div className="card-body">
-                          {values.assetType === "image" ? (
-                            <div>
-                              <img
-                                src={values.attachment}
-                                className="img-fluid mg-b-10"
-                                alt=""
-                              />
-                              <p className="mb-4">{values.campaignMessage}</p>
-                            </div>
-                          ) : (
-                            <>
-                              <div className="mg-b-10">
-                                <MediaPlayer url={values.attachment} />
-                              </div>
-                              <p className="mb-4">{values.campaignMessage}</p>
-                            </>
-                          )}
-                          {values.callToAction === "" ||
-                          values.iosStoreUrl === "" ? null : (
-                            <button className="btn btn-primary w-100 mg-b-15 round-5">
-                              <i className="fab fa-apple mg-r-10"> </i>
-                              {values.callToAction}
-                            </button>
-                          )}
-                          {values.callToAction === "" ||
-                          values.androidStoreUrl === "" ? null : (
-                            <button className="btn btn-primary w-100 mg-b-15 round-5">
-                              <i className="fab fa-google-play mg-r-10"> </i>
-                              {values.callToAction}
-                            </button>
-                          )}
-                          {/* {values.callToAction === "" ||
+                      <div class="iphone-x">
+                        <i>Speaker</i>
+                        <b>Camera</b>
+                        <s>
+                          <div className="card rounded bd-0">
+                            <div className="card-body pd-0">
+                              {values.assetType === "image" ? (
+                                <div>
+                                  <img
+                                    src={values.attachment}
+                                    className="img-fluid mg-b-10"
+                                    alt=""
+                                  />
+                                  <p className="mb-4 pd-x-20 tx-black tx-bold">
+                                    {values.campaignMessage}
+                                  </p>
+                                </div>
+                              ) : (
+                                <>
+                                  <div className="mg-b-10">
+                                    <MediaPlayer url={values.attachment} />
+                                  </div>
+                                  <p className="mb-4 pd-x-20 tx-black tx-bold">
+                                    {values.campaignMessage}
+                                  </p>
+                                </>
+                              )}
+                              {values.callToAction === "" ||
+                              values.iosStoreUrl === "" ? null : (
+                                <div className="pd-x-20">
+                                  <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                    <i className="fab fa-apple mg-r-10"> </i>
+                                    {values.callToAction}
+                                  </button>
+                                </div>
+                              )}
+                              {values.callToAction === "" ||
+                              values.androidStoreUrl === "" ? null : (
+                                <div className="pd-x-20">
+                                  <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                    <i className="fab fa-google-play mg-r-10">
+                                      {" "}
+                                    </i>
+                                    {values.callToAction}
+                                  </button>
+                                </div>
+                              )}
+                              {/* {values.callToAction === "" ||
                           values.androidStoreUrl === "" ||
                           values.iosStoreUrl === "" ? null : (
                             <div className="pd-b-40">
@@ -463,7 +477,9 @@ const AppDownloadCampaign = ({
                               Download
                             </button>
                           </div> */}
-                        </div>
+                            </div>
+                          </div>
+                        </s>
                       </div>
                     </div>
                   </div>

@@ -140,8 +140,8 @@ const BillBoardModal = ({
                     <div className="row justify content-between mg-b-15">
                       <div className="col">
                         <p className="tx-16 mb-0 tx-com tx-bold">
-                          Customers advert will be displayed for 10 seconds each
-                          time it appears on the billboard.
+                          Adverts will be displayed for 10 seconds each time it
+                          appears on the billboard.
                         </p>
                       </div>
                     </div>
