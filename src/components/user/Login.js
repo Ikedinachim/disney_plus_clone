@@ -7,8 +7,10 @@ import Loader from "../loader";
 import MetaData from "../layout/MetaData";
 import { login, getUser, clearErrors } from "../../actions/authActions";
 import { getWallet } from "../../actions/billingActions";
+import useAnalyticsEventTracker from "../../_helpers/GoogleAnalytics/GoogleAnalytics";
 
 const Login = () => {
+  const gaEventTracker = useAnalyticsEventTracker("Login");
   const navHistory = useNavigate();
   const dispatch = useDispatch();
 
@@ -30,6 +32,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isAuthenticated && user.user.role !== "influencer") {
+      gaEventTracker("Login", "User successfully signed in");
       dispatch(getWallet());
       dispatch(getUser());
       navHistory("/app");
@@ -56,6 +59,7 @@ const Login = () => {
       !error.errors.Verified &&
       error.errors.Verified !== false
     ) {
+      gaEventTracker("Login Failed", "User Login Failed");
       toast.error(error.errors.username || error.message);
       dispatch(clearErrors());
     } else if (error && error.errors.Verified === false) {
@@ -75,6 +79,7 @@ const Login = () => {
     resetPassword,
     error,
     navHistory,
+    // gaEventTracker,
   ]);
 
   const submitHandler = (e) => {

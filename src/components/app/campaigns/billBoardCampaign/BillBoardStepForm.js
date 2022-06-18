@@ -25,7 +25,7 @@ export default class BillBoardStepForm extends Component {
     attachmentPreview: "",
     uploadedImage: "",
     price: 0,
-    campaignType: "influencer_marketing",
+    campaignType: "bill_board",
 
     selectedInfluencer: [],
     selectedInfluencers: [],
@@ -43,6 +43,7 @@ export default class BillBoardStepForm extends Component {
 
     showModal: false,
     activeItemId: "",
+    rawVideoUrl: "",
     selectedFileName: "Upload Asset *png, *jpg, *gif",
   };
 
@@ -243,6 +244,7 @@ export default class BillBoardStepForm extends Component {
       snapchatHandle,
       // attachment,
       imageUrl,
+      rawVideoUrl,
       videoUrl,
       attachmentPreview,
       selectedInfluencer,
@@ -258,14 +260,35 @@ export default class BillBoardStepForm extends Component {
       startDate,
     } = this.state;
 
-    let totalAmount = 0;
+    const setYoutubeUrl = (url) => {
+      let regExp =
+        // eslint-disable-next-line no-useless-escape
+        /^https?\:\/\/(?:www\.youtube(?:\-nocookie)?\.com\/|m\.youtube\.com\/|youtube\.com\/)?(?:ytscreeningroom\?vi?=|youtu\.be\/|vi?\/|user\/.+\/u\/\w{1,2}\/|embed\/|watch\?(?:.*\&)?vi?=|\&vi?=|\?(?:.*\&)?vi?=)([^#\&\?\n\/<>"']*)/i;
+      let match = url && url.match(regExp);
+      const watchUrl = `https://www.youtube.com/watch?v=${match && match[1]}`;
+      // return match && match[1].length === 11 ? match[1] : false;
+
+      const result = match
+        ? { youtubeUrl: watchUrl, videoError: false }
+        : { youtubeUrl: "", videoError: true };
+
+      let youtubeUrl = result.youtubeUrl;
+      let youtubeError = result.videoError;
+
+      return { youtubeUrl, youtubeError };
+    };
+
+    // let totalAmount = 0;
     let attachment = undefined;
+    const { youtubeUrl, youtubeError } = setYoutubeUrl(rawVideoUrl);
 
     const setAssets = () => {
       if (assetType === "image") {
         return (attachment = imageUrl);
       } else if (assetType === "video") {
         return (attachment = videoUrl);
+      } else if (assetType === "youtube") {
+        return (attachment = youtubeUrl);
       }
     };
 
@@ -285,7 +308,7 @@ export default class BillBoardStepForm extends Component {
       startDate,
     };
 
-    // console.log(values);
+    console.log(values);
 
     const payload = {
       campaignMessage: values.campaignMessage,
@@ -327,6 +350,7 @@ export default class BillBoardStepForm extends Component {
             selectedFileName={selectedFileName}
             uploadPercentage={uploadPercentage}
             resetCheckedState={this.resetCheckedState}
+            youtubeError={youtubeError}
           />
         );
       case 3:
