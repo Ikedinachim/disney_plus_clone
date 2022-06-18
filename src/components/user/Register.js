@@ -138,7 +138,7 @@ const Register = () => {
     isRegistered,
     error,
     navigate,
-    gaEventTracker,
+    // gaEventTracker,
   ]);
 
   return (

@@ -79,7 +79,7 @@ const Login = () => {
     resetPassword,
     error,
     navHistory,
-    gaEventTracker,
+    // gaEventTracker,
   ]);
 
   const submitHandler = (e) => {
