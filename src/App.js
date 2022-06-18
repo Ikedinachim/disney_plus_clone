@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
+import ReactGA from "react-ga";
 
 import Loader from "./components/loader";
-
 import Home from "./components/Home";
 import Terms from "./components/Terms";
 import Dashboard from "./components/app";
@@ -76,6 +76,12 @@ function App() {
   const { resetInfluencerPassword } = useSelector(
     (state) => state.resetInfluencerPassword
   );
+  const TRACKING_ID = "UA-232324966-1"; // MYSOGI TRACKING_ID
+  ReactGA.initialize(TRACKING_ID);
+
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, []);
 
   return (
     <div>
