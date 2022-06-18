@@ -30,7 +30,9 @@ const FlierVideoCampaign = ({
 }) => {
   // const alert = useAlert();
   const dispatch = useDispatch();
-  const { senderID, defaultSenderID, generalSender } = useSelector((state) => state || []);
+  const { senderID, defaultSenderID, generalSender } = useSelector(
+    (state) => state || []
+  );
 
   const [showWhatsapp, setShowWhatsapp] = useState(false);
   const [showSms, setShowSms] = useState(false);
@@ -135,7 +137,7 @@ const FlierVideoCampaign = ({
 
   return (
     <Fragment>
-      {senderID.loading || defaultSenderID.loading || generalSender.loading? (
+      {senderID.loading || defaultSenderID.loading || generalSender.loading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -640,75 +642,87 @@ const FlierVideoCampaign = ({
                     </div>
                   </div>
                   <div className="position-sticky t-0 col-md-5 col-12 mg-t-20">
-                    <div className="card shadow-sm rounded bd-0">
-                      <div className="card-body">
-                        {values.assetType === "image" ? (
-                          <div>
-                            <img
-                              src={values && values.attachment}
-                              className="img-fluid mg-b-10"
-                              alt=""
-                            />
-                            <p className="mb-4">{values.campaignMessage}</p>
+                    <div class="iphone-x">
+                      <i>Speaker</i>
+                      <b>Camera</b>
+                      <s>
+                        <div className="card rounded bd-0">
+                          <div className="card-body pd-0">
+                            {values.assetType === "image" ? (
+                              <div>
+                                <img
+                                  src={values && values.attachment}
+                                  className="img-fluid mg-b-10"
+                                  alt=""
+                                />
+                                <p className="mb-4 pd-x-20 tx-black tx-bold">
+                                  {values.campaignMessage}
+                                </p>
+                              </div>
+                            ) : (
+                              <>
+                                <div className="mg-b-10">
+                                  <MediaPlayer url={values.attachment} />
+                                </div>
+                                <p className="mb-4 pd-x-20 tx-black tx-bold">
+                                  {values.campaignMessage}
+                                </p>
+                              </>
+                            )}
+                            {values.channel === "smart_sms" ? (
+                              <div className="pd-x-20">
+                                {values.callToAction === "" ||
+                                values.url === "" ? null : (
+                                  <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                    <i className="fa fa-globe mg-r-5"> </i>
+                                    {values.callToAction} via web
+                                  </button>
+                                )}
+                                {values.callToAction === "" ||
+                                values.whatsAppNumber === "" ? null : (
+                                  <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                    <i className="fa fa-whatsapp mg-r-5"> </i>
+                                    {values.callToAction} via WhatsApp
+                                  </button>
+                                )}
+                                {values.callToAction === "" ||
+                                values.phoneNumber === "" ? null : (
+                                  <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                    <i className="fa fa-phone mg-r-5" />
+                                    {values.callToAction} via Mobile
+                                  </button>
+                                )}
+                                {values.callToAction === "" ||
+                                values.ussd === "" ? null : (
+                                  <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                    <i className="fa fa-phone mg-r-5" />
+                                    {values.callToAction} via USSD
+                                  </button>
+                                )}
+                                {values.callToAction === "" ||
+                                values.smsNumber === "" ? null : (
+                                  <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                    <i className="fa fa-comment mg-r-10"> </i>
+                                    {values.callToAction} via Text
+                                  </button>
+                                )}
+                              </div>
+                            ) : (
+                              <div className="pd-x-20">
+                                {values.callToAction === "" ||
+                                values.url === "" ? null : (
+                                  <button className="btn btn-primary w-100 mg-b-15 round-5">
+                                    <i className="fa fa-globe mg-r-10"> </i>
+                                    {values.callToAction} - via web
+                                  </button>
+                                )}
+                              </div>
+                            )}
                           </div>
-                        ) : (
-                          <>
-                            <div className="mg-b-10">
-                              <MediaPlayer url={values.attachment} />
-                            </div>
-                            <p className="mb-4">{values.campaignMessage}</p>
-                          </>
-                        )}
-                        {values.channel === "smart_sms" ? (
-                          <div>
-                            {values.callToAction === "" ||
-                            values.url === "" ? null : (
-                              <button className="btn btn-primary w-100 mg-b-15 round-5">
-                                <i className="fa fa-globe mg-r-5"> </i>
-                                {values.callToAction} via web
-                              </button>
-                            )}
-                            {values.callToAction === "" ||
-                            values.whatsAppNumber === "" ? null : (
-                              <button className="btn btn-primary w-100 mg-b-15 round-5">
-                                <i className="fa fa-whatsapp mg-r-5"> </i>
-                                {values.callToAction} via WhatsApp
-                              </button>
-                            )}
-                            {values.callToAction === "" ||
-                            values.phoneNumber === "" ? null : (
-                              <button className="btn btn-primary w-100 mg-b-15 round-5">
-                                <i className="fa fa-phone mg-r-5" />
-                                {values.callToAction} via Mobile
-                              </button>
-                            )}
-                            {values.callToAction === "" ||
-                            values.ussd === "" ? null : (
-                              <button className="btn btn-primary w-100 mg-b-15 round-5">
-                                <i className="fa fa-phone mg-r-5" />
-                                {values.callToAction} via USSD
-                              </button>
-                            )}
-                            {values.callToAction === "" ||
-                            values.smsNumber === "" ? null : (
-                              <button className="btn btn-primary w-100 mg-b-15 round-5">
-                                <i className="fa fa-comment mg-r-10"> </i>
-                                {values.callToAction} via Text
-                              </button>
-                            )}
-                          </div>
-                        ) : (
-                          <div>
-                            {values.callToAction === "" ||
-                            values.url === "" ? null : (
-                              <button className="btn btn-primary w-100 mg-b-15 round-5">
-                                <i className="fa fa-globe mg-r-10"> </i>
-                                {values.callToAction} - via web
-                              </button>
-                            )}
-                          </div>
-                        )}
-                      </div>
+                        </div>
+                      </s>
+                      {/* <span>Left action button</span>
+                      <span>Right action button</span> */}
                     </div>
                   </div>
                 </div>

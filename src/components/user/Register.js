@@ -10,8 +10,10 @@ import MetaData from "../layout/MetaData";
 import Loader from "../../components/loader";
 import { registerUser, clearErrors } from "../../actions/authActions";
 import { REGISTER_USER_RESET } from "../../constants/authConstants";
+import useAnalyticsEventTracker from "../../_helpers/GoogleAnalytics/GoogleAnalytics";
 
 const Register = () => {
+  const gaEventTracker = useAnalyticsEventTracker("Sign Up");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -119,16 +121,25 @@ const Register = () => {
 
   useEffect(() => {
     if (isRegistered) {
+      gaEventTracker("Registered", "User registered successfully");
       // toast.success("User registered successfully");
       toast.success("Check email for account activation");
       navigate("/login");
       dispatch({ type: REGISTER_USER_RESET });
     }
     if (error) {
+      gaEventTracker("Failed Sign Up", "User registration failed");
       toast.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, isAuthenticated, isRegistered, error, navigate]);
+  }, [
+    dispatch,
+    isAuthenticated,
+    isRegistered,
+    error,
+    navigate,
+    // gaEventTracker,
+  ]);
 
   return (
     <Fragment>
