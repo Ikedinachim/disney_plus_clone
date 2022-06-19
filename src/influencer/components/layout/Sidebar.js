@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
-import NavLogo from "../../../assets/img/logo.svg";
-
+import { useSelector } from "react-redux";
 import FeatherIcon from "feather-icons-react";
+
+import NavLogo from "../../../assets/img/logo.svg";
 
 const Sidebar = () => {
   const ref = useRef();
@@ -10,6 +11,8 @@ const Sidebar = () => {
   const [width, setWindowWidth] = useState(0);
   const [hovered, setHovered] = useState(false);
   const toggleHover = () => setHovered(!hovered);
+
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     updateDimensions();
@@ -84,7 +87,7 @@ const Sidebar = () => {
         <ul className="nav nav-aside">
           <li className="nav-item active">
             <NavLink
-              to="/influencer"
+              to={user.user.role === "influencer" ? "/influencer" : "billboard"}
               end
               className={({ isActive }) =>
                 isActive ? "nav-link active" : "nav-link"
@@ -94,18 +97,24 @@ const Sidebar = () => {
               <span>Campaigns</span>
             </NavLink>
           </li>
-          <li className="nav-item active">
-            <NavLink
-              to="/influencer/settings"
-              end
-              className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
-              }
-            >
-              <i className="fa fa-cog mr-3" />
-              <span>Settings</span>
-            </NavLink>
-          </li>
+          {user.user.role === "influencer" && (
+            <li className="nav-item active">
+              <NavLink
+                to={
+                  user.user.role === "influencer"
+                    ? "/influencer/settings"
+                    : "/billboard/provider/settings"
+                }
+                end
+                className={({ isActive }) =>
+                  isActive ? "nav-link active" : "nav-link"
+                }
+              >
+                <i className="fa fa-cog mr-3" />
+                <span>Settings</span>
+              </NavLink>
+            </li>
+          )}
         </ul>
       </div>
     </aside>

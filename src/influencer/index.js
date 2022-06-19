@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import NumberFormat from "react-number-format";
 
 import MetaData from "../components/layout/MetaData";
 import Loader from "../components/loader";
@@ -14,6 +15,7 @@ import { MDBDataTable } from "mdbreact";
 import {
   getAllInfluencerCampaign,
   getInfluencerDetails,
+  getAllPoviderCampaign,
   clearErrors,
 } from "../actions/campaignActions";
 
@@ -27,6 +29,11 @@ const Dashboard = () => {
   const { loading, influencerCampaignList } = useSelector(
     (state) => state.influencerCampaignList
   );
+
+  const { providerCampaignList, billboardLoading } = useSelector(
+    (state) => state.providerCampaignList
+  );
+  const { boards } = providerCampaignList || [];
   // console.log(influencerCampaignList);
   const { idLoading } = useSelector((state) => state.influencerDetails);
   const { user } = useSelector((state) => state.auth);
@@ -84,6 +91,9 @@ const Dashboard = () => {
     };
 
     let reverseInfluencerCampaignList = [...influencerCampaignList.reverse()];
+    // let reverseproviderCampaignList = [
+    //   ...providerCampaignList.boards.reverse(),
+    // ];
 
     reverseInfluencerCampaignList.forEach((campaign) => {
       data.rows.push({
@@ -173,14 +183,164 @@ const Dashboard = () => {
     return data;
   };
 
-  useEffect(() => {
-    if (user) {
-      dispatch(getAllInfluencerCampaign(user.user.influencer_id));
-      dispatch(getInfluencerDetails(user.user.influencer_id));
-      dispatch(getUser());
-    }
+  const setAllBillbordCampaigns = () => {
+    const data = {
+      columns: [
+        {
+          label: "ID",
+          field: "id",
+          // sort: "desc",
+        },
+        // {
+        //   label: "CAMPAIGN NAME",
+        //   field: "campaignName",
+        //   // sort: "desc",
+        // },
+        {
+          label: "BILLBOARD",
+          field: "billboard",
+          // sort: "desc",
+        },
+        {
+          label: "RATE TYPE",
+          field: "rateType",
+          // sort: "desc",
+        },
+        {
+          label: "PRICE",
+          field: "price",
+          // sort: "desc",
+        },
+        {
+          label: "DATE CREATED",
+          field: "dateCreated",
+          // sort: "desc",
+        },
+        {
+          label: "EXPECTED START DATE",
+          field: "startDate",
+          // sort: "desc",
+        },
+        {
+          label: "STATUS",
+          field: "status",
+          // sort: "desc",
+        },
+        {
+          label: "ACTIONS",
+          field: "actions",
+          // sort: "desc",
+        },
+      ],
+      rows: [],
+    };
 
-    if (error) {
+    let reverseProviderCampaignList = providerCampaignList
+      ? [...providerCampaignList.reverse()]
+      : [];
+
+    reverseProviderCampaignList.forEach((campaign) => {
+      data.rows.push({
+        id: campaign.id,
+        // campaignName: campaign.name,
+        rateType: <span className="text-capitalize">{campaign.rateType}</span>,
+        billboard: campaign.billBoardId,
+        price: (
+          <NumberFormat
+            value={parseInt(campaign.totalCost)}
+            displayType={"text"}
+            thousandSeparator={true}
+            prefix={"₦"}
+          />
+        ),
+        dateCreated: DateTime.fromJSDate(new Date(campaign.createdAt)).toFormat(
+          "dd MMM, yyyy"
+        ),
+        startDate: DateTime.fromJSDate(new Date(campaign.startDate)).toFormat(
+          "dd MMM, yyyy"
+        ),
+        status: (
+          <span
+            className={`badge d-flex-center ${
+              campaign.isApproved &&
+              !campaign.isPublished &&
+              !campaign.isRejected
+                ? "badge-pending"
+                : ""
+            } ${
+              campaign.isApproved &&
+              campaign.isPublished &&
+              !campaign.isRejected
+                ? "badge-active"
+                : ""
+            } ${
+              !campaign.isApproved &&
+              !campaign.isPublished &&
+              campaign.isRejected
+                ? "badge-primary"
+                : ""
+            }
+             ${
+               !campaign.isApproved &&
+               !campaign.isPublished &&
+               !campaign.isRejected
+                 ? "badge-pink"
+                 : ""
+             }`}
+          >
+            {campaign.isApproved &&
+            !campaign.isPublished &&
+            !campaign.isRejected
+              ? "Unpublished"
+              : null ||
+                (campaign.isApproved &&
+                  campaign.isPublished &&
+                  !campaign.isRejected)
+              ? "Published"
+              : null ||
+                (!campaign.isApproved &&
+                  !campaign.isPublished &&
+                  campaign.isRejected)
+              ? "Rejected"
+              : null ||
+                (!campaign.isApproved &&
+                  !campaign.isPublished &&
+                  !campaign.isRejected)
+              ? "Pending"
+              : null}
+          </span>
+        ),
+        actions: (
+          <Fragment>
+            <div className="tx-black tx-14">
+              <Link
+                to={`/billboard/view-campaign/${campaign.billBoardCampaignId}`}
+                className="d-flex"
+              >
+                <i className="fa fa-eye tx-orange pd-t-4 mg-r-5"></i>
+                {campaign.isApproved &&
+                !campaign.isPublished &&
+                !campaign.isRejected
+                  ? "Confirm"
+                  : "View"}
+              </Link>
+            </div>
+          </Fragment>
+        ),
+      });
+    });
+    return data;
+  };
+
+  useEffect(() => {
+    if (user && user.user.role === "influencer") {
+      dispatch(getAllInfluencerCampaign(user.user.influencer_id));
+      dispatch(getInfluencerDetails(user.user.id));
+      dispatch(getUser());
+    } else if (user && user.user.role === "billboard_provider") {
+      dispatch(getAllPoviderCampaign(user.user.billboard_provider_id));
+      dispatch(getUser());
+    } else if (error) {
       toast.error(error);
       dispatch(clearErrors());
     }
@@ -188,7 +348,7 @@ const Dashboard = () => {
 
   return (
     <Fragment>
-      {loading || idLoading ? (
+      {loading || idLoading || billboardLoading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -353,11 +513,10 @@ const Dashboard = () => {
                           </span>
                           <div className="ml-3">
                             <p className="tx-bold tx-bold tx-28 mg-b-0 lh-1 white">
-                              {influencerCampaignList &&
-                              influencerCampaignList.length
-                                ? influencerCampaignList.length
+                              {providerCampaignList?.length
+                                ? providerCampaignList?.length
                                 : 0}
-                              {influencerCampaignList.length > 1000 ? "k" : ""}
+                              {providerCampaignList?.length > 1000 ? "k" : ""}
                             </p>
                             <p className="tx-gray tx-12 tx-14 mb-0">
                               Total Campaigns
@@ -379,16 +538,15 @@ const Dashboard = () => {
                           </span>
                           <div className="ml-3">
                             <p className="tx-bold tx-bold tx-28 mg-b-0 lh-1 white">
-                              {influencerCampaignList
-                                ? influencerCampaignList &&
-                                  influencerCampaignList.filter(
+                              {providerCampaignList?.length
+                                ? providerCampaignList?.filter(
                                     (x) =>
                                       x.isRejected === false &&
                                       x.isApproved === true &&
                                       x.isPublished === true
                                   ).length
                                 : 0}
-                              {influencerCampaignList.length > 1000 ? "k" : ""}
+                              {providerCampaignList.length > 1000 ? "k" : ""}
                             </p>
                             <p className="tx-gray tx-12 tx-14 mb-0">
                               Published Campaigns
@@ -410,16 +568,15 @@ const Dashboard = () => {
                           </span>
                           <div className="ml-3">
                             <p className="tx-bold tx-bold tx-28 mg-b-0 lh-1 white">
-                              {influencerCampaignList
-                                ? influencerCampaignList &&
-                                  influencerCampaignList.filter(
+                              {providerCampaignList
+                                ? providerCampaignList?.filter(
                                     (x) =>
                                       x.isRejected === false &&
                                       x.isApproved === false &&
                                       x.isPublished === false
                                   ).length
                                 : 0}
-                              {influencerCampaignList.length > 1000 ? "k" : ""}
+                              {providerCampaignList?.length > 1000 ? "k" : ""}
                             </p>
                             <p className="tx-gray tx-12 tx-14 mb-0">
                               Pending Campaigns
@@ -441,13 +598,12 @@ const Dashboard = () => {
                           </span>
                           <div className="ml-3">
                             <p className="tx-bold tx-bold tx-28 mg-b-0 lh-1 white">
-                              {influencerCampaignList
-                                ? influencerCampaignList &&
-                                  influencerCampaignList.filter(
+                              {providerCampaignList
+                                ? providerCampaignList?.filter(
                                     (x) => x.isRejected === true
                                   ).length
                                 : 0}
-                              {influencerCampaignList.length > 1000 ? "k" : ""}
+                              {providerCampaignList?.length > 1000 ? "k" : ""}
                             </p>
                             <p className="tx-gray tx-12 tx-14 mb-0">
                               Rejected Campaigns
@@ -462,7 +618,7 @@ const Dashboard = () => {
                     <div className="card-body pd-md-x-30 pd-t- mg-t-20 mg-md-t-0">
                       <MDBDataTable
                         responsive
-                        data={setAllCampaigns()}
+                        data={setAllBillbordCampaigns()}
                         className="px-3 scroll"
                         bordered
                         striped

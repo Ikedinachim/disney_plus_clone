@@ -2,6 +2,7 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import FeatherIcon from "feather-icons-react";
+import { useSelector } from "react-redux";
 
 import Logo from "../../assets/img/logo2.png";
 
@@ -16,6 +17,7 @@ import "../../main.css";
 // import Search from "./Search";
 
 const Header = () => {
+  const { user } = useSelector((state) => state.auth);
   return (
     <Fragment>
       <header>
