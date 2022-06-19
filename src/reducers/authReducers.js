@@ -222,7 +222,7 @@ export const resetInfluencerPasswordReducer = (
         loading: false,
         passwordUpdated: true,
         isUpdated: action.payload,
-        resetInfluencerPassword: null,
+        // resetInfluencerPassword: null,
       };
 
     case UPDATE_INFLUENCER_PASSWORD_FAIL:

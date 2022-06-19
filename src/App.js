@@ -491,6 +491,71 @@ function App() {
               )
             }
           />
+          {/* <Route
+            path="view-campaign/:billboardMarketingId"
+            element={
+              isAuthenticated &&
+              user &&
+              user.user.role === "billboard_provider" ? (
+                <BillboardCampaignDetails />
+              ) : (
+                <Login />
+              )
+            }
+          /> */}
+        </Route>
+      </Routes>
+
+      <Routes>
+        <Route
+          path="/billboard"
+          element={
+            isAuthenticated &&
+            user &&
+            user.user.role === "billboard_provider" ? (
+              <InfluencerDashboardLayout />
+            ) : (
+              <Login />
+            )
+          }
+        >
+          <Route
+            index
+            element={
+              isAuthenticated &&
+              user &&
+              user.user.role === "billboard_provider" ? (
+                <InfluencerDashboard />
+              ) : (
+                <Login />
+              )
+            }
+          />
+
+          <Route
+            path="provider/settings"
+            element={
+              isAuthenticated &&
+              user &&
+              user.user.role === "billboard_provider" ? (
+                <InfluencerSettings />
+              ) : (
+                <Login />
+              )
+            }
+          />
+          {/* <Route
+            path="view-campaign/:influenceMarketingId"
+            element={
+              isAuthenticated &&
+              user &&
+              user.user.role === "billboard_provider" ? (
+                <InfluencerCampaignDetails />
+              ) : (
+                <Login />
+              )
+            }
+          /> */}
           <Route
             path="view-campaign/:billboardMarketingId"
             element={

@@ -4,9 +4,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { saveAs } from "file-saver";
 import NumberFormat from "react-number-format";
+import { DateTime } from "luxon";
 
 import MetaData from "../components/layout/MetaData";
 import check from "../assets/img/Check.svg";
+import MediaPlayer from "../_helpers/reactPlayer/ReactPlayer";
 import {
   updateBillboardCampaignStatusAction,
   updateBillboardPublishStatusAction,
@@ -16,24 +18,24 @@ import {
   UPDATE_BILLBOARD_CAMPAIGN_STATUS_RESET,
   UPDATE_BILLBOARD_PUBLISHED_STATUS_RESET,
 } from "../constants/campaignConstants";
-import Loader from "../components/layout/Loader";
+import Loader from "../components/loader";
 
 const ViewInfluencerCampaignDetails = () => {
-  const { influenceMarketingId } = useParams();
+  const { billboardMarketingId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { influencerCampaignList } = useSelector(
-    (state) => state.influencerCampaignList || []
+  const { providerCampaignList } = useSelector(
+    (state) => state.providerCampaignList || []
   );
   const { influencerDetails } = useSelector(
     (state) => state.influencerDetails || []
   );
-  const { updateInfluencerCampaignStatus, error, loading } = useSelector(
-    (state) => state.updateInfluencerCampaignStatus || []
+  const { updateBillboardCampaignStatus, error, updateLoading } = useSelector(
+    (state) => state.updateBillboardCampaignStatus || []
   );
-  const { updateInfluencerPublishedStatus, publishError, publishLoading } =
-    useSelector((state) => state.updateInfluencerCampaignPublishStatus || []);
+  const { updateBillboardPublishedStatus, publishError, publishLoading } =
+    useSelector((state) => state.updateBillboardCampaignPublishStatus || []);
 
   const [rejectInput, setRejectInput] = useState("");
   const [publishInputUrl, setPublishInputUrl] = useState("");
@@ -41,80 +43,42 @@ const ViewInfluencerCampaignDetails = () => {
 
   const details = (arr, id) => {
     for (var i in arr) {
-      if (arr[i].marketingData.id === parseInt(id)) {
+      if (arr[i].billBoardCampaignId === parseInt(id)) {
         return arr[i];
       }
     }
   };
 
-  const platformCost = (arr, platform) => {
-    for (var i in arr) {
-      if (arr[i].platform === platform) {
-        return arr[i].cost;
-      }
-    }
-  };
+  // const platformCost = (arr, platform) => {
+  //   for (var i in arr) {
+  //     if (arr[i].platform === platform) {
+  //       return arr[i].cost;
+  //     }
+  //   }
+  // };
 
-  const campaignDetails = details(influencerCampaignList, influenceMarketingId);
-
-  const platforms =
-    campaignDetails &&
-    campaignDetails.platforms.split(",").map((el) => el.trim());
-
-  const checkPlatformCost = (p) => {
-    let findIndex = platforms.findIndex((el) => el === p);
-    let findAll = platforms.findIndex((el) => el === "all");
-    if (findIndex !== -1 && findAll === -1) {
-      let price = parseInt(platformCost(influencerDetails.costs, p));
-      return (
-        <NumberFormat
-          value={parseInt(price)}
-          displayType={"text"}
-          thousandSeparator={true}
-          prefix={"₦"}
-        />
-      );
-    } else if (
-      findIndex !== -1 &&
-      campaignDetails.allPlatform &&
-      findAll !== -1 &&
-      p === "all"
-    ) {
-      let price = parseInt(influencerDetails.allCost);
-      return (
-        <NumberFormat
-          value={parseInt(price)}
-          displayType={"text"}
-          thousandSeparator={true}
-          prefix={"₦"}
-        />
-      );
-    } else {
-      return "-";
-    }
-  };
+  const campaignDetails = details(providerCampaignList, billboardMarketingId);
 
   const approvedPayload = {
-    influencerId: campaignDetails && campaignDetails.influencerId,
-    marketingId: campaignDetails && campaignDetails.marketingData.id,
+    billboardId: campaignDetails && campaignDetails.billBoardId,
+    campaignId: campaignDetails && campaignDetails.campaign.id,
     approvalType: "approved",
-    rejectionMessage: "",
   };
   const rejectPayload = {
-    influencerId: campaignDetails && campaignDetails.influencerId,
-    marketingId: campaignDetails && campaignDetails.marketingData.id,
+    billboardId: campaignDetails && campaignDetails.billBoardId,
+    campaignId: campaignDetails && campaignDetails.campaign.id,
     approvalType: "rejected",
     rejectionMessage: rejectInput,
   };
   const publishPayload = {
-    influencerId: campaignDetails && campaignDetails.influencerId,
-    marketingId: campaignDetails && campaignDetails.marketingData.id,
+    billboardId: campaignDetails && campaignDetails.billBoardId,
+    campaignId: campaignDetails && campaignDetails.campaign.id,
     publishUrl: publishInputUrl,
     publishMessage: publishInputMessage,
   };
 
   const setAsset = () => {
-    fetch(campaignDetails.marketingData.attachment)
+    fetch(campaignDetails.campaign.attachment)
       .then((res) => res.blob())
       .then((blob) => saveAs(blob, "campaign_asset"));
   };
@@ -190,25 +154,25 @@ const ViewInfluencerCampaignDetails = () => {
       campaignDetails.isPublished &&
       !campaignDetails.isRejected
     ) {
-      return <p>Completed</p>;
+      return "";
     }
   };
 
   useEffect(() => {
     if (
-      updateInfluencerCampaignStatus &&
-      updateInfluencerCampaignStatus.status === "success"
+      updateBillboardCampaignStatus &&
+      updateBillboardCampaignStatus.status === "success"
     ) {
-      toast.success(updateInfluencerCampaignStatus.message);
+      toast.success(updateBillboardCampaignStatus.message);
       dispatch({ type: UPDATE_BILLBOARD_CAMPAIGN_STATUS_RESET });
-      navigate("/influencer");
+      navigate("/billboard");
     } else if (
-      updateInfluencerPublishedStatus &&
-      updateInfluencerPublishedStatus.status === "success"
+      updateBillboardPublishedStatus &&
+      updateBillboardPublishedStatus.status === "success"
     ) {
-      toast.success(updateInfluencerPublishedStatus.message);
+      toast.success(updateBillboardPublishedStatus.message);
       dispatch({ type: UPDATE_BILLBOARD_PUBLISHED_STATUS_RESET });
-      navigate("/influencer");
+      navigate("/billboard");
     } else if (error || publishError) {
       toast.error(error || publishError);
       dispatch(clearErrors());
@@ -217,14 +181,14 @@ const ViewInfluencerCampaignDetails = () => {
     dispatch,
     error,
     publishError,
-    updateInfluencerCampaignStatus,
-    updateInfluencerPublishedStatus,
+    updateBillboardCampaignStatus,
+    updateBillboardPublishedStatus,
     navigate,
   ]);
 
   return (
     <Fragment>
-      {loading || publishLoading ? (
+      {updateLoading || publishLoading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -233,7 +197,7 @@ const ViewInfluencerCampaignDetails = () => {
             <div className="container pd-x-0">
               <div className="row justify-content-between">
                 <div className="col-md-6 mg-b-20 mg-md-b-0">
-                  <Link to="/influencer" className="tx-black">
+                  <Link to="/billboard" className="tx-black">
                     <div className="d-flex">
                       <div>
                         <i className="fa fa-angle-left mg-r-10 pd-t-15 tx-18" />
@@ -252,80 +216,301 @@ const ViewInfluencerCampaignDetails = () => {
                 <div className="card-body pd-md-x-30">
                   <div className="col-xl-12 pd-lg-x-30 pd-t-20">
                     <div className="row justify-content-between">
-                      <div className="col-md-8 bd-md-r">
-                        <div className="d-flex justify-content-between">
-                          <div>
-                            <p className="tx-18 mb-0 tx-bold tx-com">
-                              Campaign
-                            </p>
-                          </div>
-                          <button
-                            className="btn"
-                            onClick={
-                              () =>
-                                navigator.clipboard.writeText(
-                                  campaignDetails &&
-                                    campaignDetails.marketingData
-                                      .campaignMessage
-                                )
-                              // alert.success("Message Copied")
-                            }
-                          >
-                            <i className="copy-btn fa fa-copy" />
-                          </button>
-                        </div>
-                        <div className="row mg-t-15">
-                          <div className="form-group col-md-6">
-                            <label className="tx-14 tx-gray mb-0 tx-medium">
-                              Campaign Message
-                            </label>
-                            <p className="tx-14 mb-0">
-                              {campaignDetails &&
-                                campaignDetails.marketingData.campaignMessage}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-md-4 pd-md-l-50">
-                        <div className="d-flex justify-content-between">
-                          <p className="tx-18 mb-0 tx-bold tx-com">Preview</p>
-                          <button
-                            className="btn tx-primary pd-x-0 pd-t-0"
-                            data-toggle="modal"
-                            data-target="#downloadModal"
-                            data-dismiss="modal"
-                          >
-                            <div className="d-flex pd-t-3 justify-content-end">
-                              <div>
-                                <i className="fa fa-download tx-primary mg-r-5" />
-                              </div>
-                              <p className="mb-0 pointer">Download</p>
+                      {campaignDetails.campaign.assetType === "youtube" ? (
+                        <>
+                          <div className="col-md-8">
+                            <div className="d-flex justify-content-between">
+                              <p className="tx-18 mb-0 tx-bold tx-com">
+                                Preview
+                              </p>
                             </div>
-                          </button>
-                        </div>
-                        <div>
-                          <img
-                            src={
-                              campaignDetails &&
-                              campaignDetails.marketingData.attachment
-                            }
-                            className="img-fluid mg-b-20"
-                            alt=""
-                          />
-                        </div>
-                      </div>
+                            <div className="ht-400 d-flex justify-content-center">
+                              <MediaPlayer
+                                url={campaignDetails?.campaign.attachment}
+                              />
+                            </div>
+                          </div>
+                          <div className="col-md-4 bd-md-l">
+                            <div className="d-flex justify-content-between">
+                              <div>
+                                <p className="tx-18 mb-0 tx-bold tx-com">
+                                  Asset Link:
+                                </p>
+                              </div>
+                              <button
+                                className="btn"
+                                onClick={
+                                  () =>
+                                    navigator.clipboard.writeText(
+                                      campaignDetails &&
+                                        campaignDetails.campaign.attachment
+                                    )
+                                  // alert.success("Message Copied")
+                                }
+                              >
+                                <i className="copy-btn fa fa-copy" />
+                              </button>
+                            </div>
+                            <div className="row mg-t-15">
+                              <div className="form-group col-md-12">
+                                <label className="tx-14 mb-0 tx-medium">
+                                  Youtube Url:
+                                </label>
+                                <a
+                                  href={campaignDetails?.campaign.attachment}
+                                  className="tx-14 mb-0"
+                                >
+                                  {campaignDetails?.campaign.attachment}
+                                </a>
+                              </div>
+                              {campaignDetails &&
+                                campaignDetails.isApproved &&
+                                campaignDetails.isPublished &&
+                                !campaignDetails.isRejected && (
+                                  <>
+                                    <div className="form-group col-md-12">
+                                      <label className="tx-14 mb-0 tx-medium">
+                                        Publish Status:
+                                      </label>
+                                      <p className="tx-14 mb-0 tx-bold tx-success">
+                                        Completed
+                                      </p>
+                                    </div>
+                                    <div className="form-group col-md-12">
+                                      <label className="tx-14 mb-0 tx-medium">
+                                        Confirmation URL:
+                                      </label>
+                                      <br />
+                                      <a
+                                        href={campaignDetails?.publishedUrl}
+                                        className="tx-14 mb-0"
+                                      >
+                                        {campaignDetails?.publishedUrl}
+                                      </a>
+                                    </div>
+                                    <div className="form-group col-md-12">
+                                      <label className="tx-14 mb-0 tx-medium">
+                                        Publish Note:
+                                      </label>
+                                      <p className="tx-14 mb-0">
+                                        {campaignDetails?.publishedMessage}
+                                      </p>
+                                    </div>
+                                  </>
+                                )}
+                              {campaignDetails &&
+                                !campaignDetails.isApproved &&
+                                !campaignDetails.isPublished &&
+                                campaignDetails.isRejected && (
+                                  <>
+                                    <div className="form-group col-md-12">
+                                      <label className="tx-14 mb-0 tx-medium">
+                                        Campaign Status:
+                                      </label>
+                                      <p className="tx-14 mb-0 tx-bold tx-danger">
+                                        Rejected
+                                      </p>
+                                    </div>
+                                    <div className="form-group col-md-12">
+                                      <label className="tx-14 mb-0 tx-medium">
+                                        Rejection Note:
+                                      </label>
+                                      <p className="tx-14 mb-0">
+                                        {campaignDetails?.rejectReason}
+                                      </p>
+                                    </div>
+                                  </>
+                                )}
+                              {campaignDetails &&
+                                campaignDetails.isApproved &&
+                                !campaignDetails.isPublished &&
+                                !campaignDetails.isRejected && (
+                                  <>
+                                    <div className="form-group col-md-12">
+                                      <label className="tx-14 mb-0 tx-medium">
+                                        Campaign Status:
+                                      </label>
+                                      <p className="tx-14 mb-0 tx-bold tx-warning">
+                                        Pending Confirmation
+                                      </p>
+                                    </div>
+                                  </>
+                                )}
+                              {campaignDetails &&
+                                !campaignDetails.isApproved &&
+                                !campaignDetails.isPublished &&
+                                !campaignDetails.isRejected && (
+                                  <>
+                                    <div className="form-group col-md-12">
+                                      <label className="tx-14 mb-0 tx-medium">
+                                        Campaign Status:
+                                      </label>
+                                      <p className="tx-14 mb-0 tx-bold tx-warning">
+                                        Pending Approval
+                                      </p>
+                                    </div>
+                                  </>
+                                )}
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="col-md-8">
+                            <div className="d-flex justify-content-between">
+                              <p className="tx-18 mb-0 tx-bold tx-com">
+                                Preview
+                              </p>
+                              <button
+                                className="btn tx-primary pd-x-0 pd-t-0"
+                                data-toggle="modal"
+                                data-target="#downloadModal"
+                                data-dismiss="modal"
+                              >
+                                <div className="d-flex pd-t-3 justify-content-end">
+                                  <div>
+                                    <i className="fa fa-download tx-primary mg-r-5" />
+                                  </div>
+                                  <p className="mb-0 pointer">Download</p>
+                                </div>
+                              </button>
+                            </div>
+                            <div className="ht-350 d-flex justify-content-center">
+                              <img
+                                src={
+                                  campaignDetails &&
+                                  campaignDetails.campaign.attachment
+                                }
+                                className="img-fluid mg-b-20 ht-100p"
+                                alt=""
+                              />
+                            </div>
+                          </div>
+                          {campaignDetails &&
+                            campaignDetails.isApproved &&
+                            campaignDetails &&
+                            campaignDetails.isPublished &&
+                            !campaignDetails.isRejected && (
+                              <div className="col-md-4 bd-md-l">
+                                <div className="d-flex justify-content-between">
+                                  <div>
+                                    <p className="tx-18 mb-0 tx-bold tx-success tx-com">
+                                      Completed
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className="row mg-t-15">
+                                  <div className="form-group col-md-6">
+                                    <label className="tx-14 tx-gray mb-0 tx-medium">
+                                      Proof:
+                                    </label>
+                                    <p className="tx-14 mb-0">
+                                      {campaignDetails?.publishedUrl}
+                                    </p>
+                                  </div>
+                                  <button
+                                    className="btn"
+                                    onClick={
+                                      () =>
+                                        navigator.clipboard.writeText(
+                                          campaignDetails?.publishedUrl
+                                        )
+                                      // alert.success("Message Copied")
+                                    }
+                                  >
+                                    <i className="copy-btn fa fa-copy" />
+                                  </button>
+                                </div>
+                                <div className="row mg-t-15">
+                                  <div className="form-group col-md-6">
+                                    <label className="tx-14 tx-gray mb-0 tx-medium">
+                                      Publish Note:
+                                    </label>
+                                    <p className="tx-14 mb-0">
+                                      {campaignDetails &&
+                                        campaignDetails.publishedMessage}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+                          {campaignDetails &&
+                            !campaignDetails.isApproved &&
+                            !campaignDetails.isPublished &&
+                            campaignDetails.isRejected && (
+                              <div className="col-md-4 bd-md-l">
+                                <div className="d-flex justify-content-between">
+                                  <div>
+                                    <p className="tx-18 mb-0 tx-bold tx-danger tx-com">
+                                      Rejected
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className="row mg-t-15">
+                                  <div className="form-group col-md-12">
+                                    <label className="tx-14 tx-gray mb-0 tx-medium">
+                                      Rejection Note:
+                                    </label>
+                                    <p className="tx-14 mb-0">
+                                      {campaignDetails &&
+                                        campaignDetails.rejectReason}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+                          {campaignDetails &&
+                            campaignDetails.isApproved &&
+                            !campaignDetails.isPublished &&
+                            !campaignDetails.isRejected && (
+                              <div className="col-md-4 bd-md-l">
+                                <div className="d-flex justify-content-between">
+                                  <div>
+                                    <p className="tx-18 mb-0 tx-com">Status:</p>
+                                  </div>
+                                </div>
+                                <div className="row mg-t-15">
+                                  <div className="form-group col-md-12">
+                                    <label className="tx-14 tx-bold tx-warning  mb-0 tx-medium">
+                                      Pending Confirmation
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+                          {campaignDetails &&
+                            !campaignDetails.isApproved &&
+                            !campaignDetails.isPublished &&
+                            !campaignDetails.isRejected && (
+                              <div className="col-md-4 bd-md-l">
+                                <div className="d-flex justify-content-between">
+                                  <div>
+                                    <p className="tx-18 mb-0 tx-com">Status:</p>
+                                  </div>
+                                </div>
+                                <div className="row mg-t-15">
+                                  <div className="form-group col-md-12">
+                                    <label className="tx-14 tx-bold tx-warning  mb-0 tx-medium">
+                                      Pending Approval
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+                        </>
+                      )}
                     </div>
                   </div>
                   <div className="table-responsive mg-t-20">
                     <table className="table inf-table" id="campaig">
                       <thead className="tx-uppercase tx-medium">
                         <tr>
-                          <th scope="col">Influencer</th>
-                          <th scope="col">Instagram</th>
-                          <th scope="col">Snapchat</th>
-                          <th scope="col">Twitter</th>
-                          <th scope="col">Facebook</th>
-                          <th scope="col">All</th>
+                          <th scope="col">Provider</th>
+                          <th scope="col">Campaign ID</th>
+                          <th scope="col">Created Date</th>
+                          <th scope="col">Published Date</th>
+                          <th scope="col">Cost</th>
+                          <th scope="col">Asset Type</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -348,11 +533,28 @@ const ViewInfluencerCampaignDetails = () => {
                               </div>
                             </div>
                           </td>
-                          <td className>{checkPlatformCost("instagram")}</td>
-                          <td className>{checkPlatformCost("snapchat")}</td>
-                          <td className>{checkPlatformCost("twitter")}</td>
-                          <td className>{checkPlatformCost("facebook")}</td>
-                          <td className>{checkPlatformCost("all")}</td>
+                          <td className>{campaignDetails.campaign.id}</td>
+                          <td className>
+                            {DateTime.fromJSDate(
+                              new Date(campaignDetails.campaign.createdAt)
+                            ).toFormat("dd MMM, yyyy")}
+                          </td>
+                          <td className>
+                            {DateTime.fromJSDate(
+                              new Date(campaignDetails.campaign.updatedAt)
+                            ).toFormat("dd MMM, yyyy")}
+                          </td>
+                          <td className>
+                            <NumberFormat
+                              value={parseInt(campaignDetails.campaign.cost)}
+                              displayType={"text"}
+                              thousandSeparator={true}
+                              prefix={"₦"}
+                            />
+                          </td>
+                          <td className>
+                            {campaignDetails.campaign.assetType}
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -402,7 +604,7 @@ const ViewInfluencerCampaignDetails = () => {
                         <div className="modal-body">
                           <div>
                             <img
-                              src={campaignDetails.marketingData.attachment}
+                              src={campaignDetails.campaign.attachment}
                               alt="campaign asset"
                               className="img-fluid"
                             />

@@ -9,6 +9,7 @@ import { logout } from "../../../actions/authActions";
 import FeatherIcon from "feather-icons-react";
 
 const Header = () => {
+  const { user } = useSelector((state) => state.auth);
   const ref = useRef();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -83,7 +84,7 @@ const Header = () => {
             <div className="avatar avatar-sm mg-l-10">
               <img
                 src={
-                  userDetails.user
+                  userDetails?.user && userDetails.user.imageUrl
                     ? userDetails.user.imageUrl
                     : "https://via.placeholder.com/500"
                 }
@@ -97,7 +98,7 @@ const Header = () => {
               <div className="avatar avatar-lg mg-b-15">
                 <img
                   src={
-                    userDetails.user
+                    userDetails?.user && userDetails.user.imageUrl
                       ? userDetails.user.imageUrl
                       : "https://via.placeholder.com/500"
                   }
@@ -118,18 +119,22 @@ const Header = () => {
                 <FeatherIcon icon="user" /> View Profile
               </Link>
               <div className="dropdown-divider" />
-              <Link to="page-help-center.html" className="dropdown-item">
+              <Link to="/" className="dropdown-item">
                 <FeatherIcon icon="help-circle" /> Help Center
               </Link>
-              <Link to="" className="dropdown-item">
-                <FeatherIcon icon="life-buoy" /> Forum
-              </Link>
-              <Link to="settings" className="dropdown-item">
-                <FeatherIcon icon="settings" /> Account Settings
-              </Link>
-              <Link to="settings" className="dropdown-item">
-                <FeatherIcon icon="settings" /> Privacy Settings
-              </Link>
+              {user.user.role === "influencer" && (
+                <>
+                  <Link to="" className="dropdown-item">
+                    <FeatherIcon icon="life-buoy" /> Forum
+                  </Link>
+                  <Link to="settings" className="dropdown-item">
+                    <FeatherIcon icon="settings" /> Account Settings
+                  </Link>
+                  <Link to="settings" className="dropdown-item">
+                    <FeatherIcon icon="settings" /> Privacy Settings
+                  </Link>
+                </>
+              )}
               <Link to="/" className="dropdown-item" onClick={logoutHandler}>
                 <FeatherIcon icon="log-out" /> Sign Out
               </Link>
