@@ -42,8 +42,6 @@ const BillBoardTargetAudience = ({
     prevStep();
   };
 
-  console.log(values);
-
   return (
     <Fragment>
       <MetaData title={"BillBoard Marketing"} />
