@@ -16,6 +16,7 @@ import { INFLUENCER_CAMPAIGN_RESET } from "../../../../constants/campaignConstan
 import Loader from "../../../loader";
 
 import MediaPlayer from "../../../../_helpers/reactPlayer/ReactPlayer";
+import useAnalyticsEventTracker from "../../../../_helpers/GoogleAnalytics/GoogleAnalytics";
 
 // import PreviewIcon from "../../../../assets/img/Promote_Offers.svg";
 
@@ -39,6 +40,7 @@ const PreviewInfluencerCampaign = ({
   const { wallet } = useSelector((state) => state.wallet);
   const [walletTotal, setTotal] = useState(0);
   const [payload, setPayload] = useState({});
+  const gaEventTracker = useAnalyticsEventTracker("Influencer Campaign");
 
   const Continue = (e) => {
     e.preventDefault();
@@ -91,6 +93,7 @@ const PreviewInfluencerCampaign = ({
       createInfluencerCampaign &&
       createInfluencerCampaign.status === "success"
     ) {
+      gaEventTracker("Influencer Campaign", "User created Influencer campaign");
       toast.success(createInfluencerCampaign.message);
       dispatch(getWallet());
       navigate("/app/campaigns");
