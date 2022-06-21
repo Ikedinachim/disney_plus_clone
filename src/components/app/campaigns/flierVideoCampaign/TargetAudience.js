@@ -174,6 +174,8 @@ const TargetAudience = ({
       toast.error("Set duration end date");
     } else if (values.channel === "display_ads" && values.budget === "") {
       toast.error("Set a Budget");
+    } else if (values.channel === "display_ads" && values.budget < 20000) {
+      toast.error("insufficient Budget");
     } else if (
       values.targetAudienceOption === "mysogidb" &&
       values.channel !== "display_ads"
@@ -759,7 +761,7 @@ const TargetAudience = ({
                       onClick={Continue}
                       type="submit"
                       variant="contained"
-                      disabled={values.budget < 10000 ? true : false}
+                      disabled={values.budget < 20000 ? true : false}
                     >
                       Next
                     </button>

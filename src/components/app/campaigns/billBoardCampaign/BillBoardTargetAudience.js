@@ -277,34 +277,33 @@ const BillBoardTargetAudience = ({
               </div>
 
               <div className="position-sticky t-0 col-md-5 col-12 mg-t-20">
-                <div class="iphone-x">
+                {/* <div class="iphone-x">
                   <i>Speaker</i>
                   <b>Camera</b>
-                  <s>
-                    <div className="card shadow-sm rounded bd-0">
-                      <div className="card-body">
-                        {values.assetType === "image" ? (
-                          <div>
-                            <img
-                              src={values && values.attachment}
-                              className="img-fluid mg-b-10"
-                              alt=""
-                            />
-                            <p className="mb-4">{values.campaignMessage}</p>
-                          </div>
-                        ) : (
-                          <>
-                            <div className="mg-b-10">
-                              <MediaPlayer url={values.attachment} />
-                            </div>
-                            <p className="mb-4">{values.campaignMessage}</p>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                  </s>
+                  <s></s>
                   <span>Left action button</span>
                   <span>Right action button</span>
+                </div> */}
+                <div className="card shadow-sm rounded bd-0">
+                  <div className="card-body">
+                    {values.assetType === "image" ? (
+                      <div>
+                        <img
+                          src={values && values.attachment}
+                          className="img-fluid mg-b-10"
+                          alt=""
+                        />
+                        <p className="mb-4">{values.campaignMessage}</p>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="mg-b-10">
+                          <MediaPlayer url={values.attachment} />
+                        </div>
+                        <p className="mb-4">{values.campaignMessage}</p>
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

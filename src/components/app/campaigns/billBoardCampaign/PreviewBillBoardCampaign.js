@@ -16,8 +16,8 @@ import { BILLBOARD_CAMPAIGN_RESET } from "../../../../constants/campaignConstant
 import Loader from "../../../loader";
 
 import MediaPlayer from "../../../../_helpers/reactPlayer/ReactPlayer";
-
-// import PreviewIcon from "../../../../assets/img/Promote_Offers.svg";
+import useAnalyticsEventTracker from "../../../../_helpers/GoogleAnalytics/GoogleAnalytics";
+import billboard from "../../../../assets/img/board2.png";
 
 const PreviewBillBoardCampaign = ({
   nextStep,
@@ -40,6 +40,7 @@ const PreviewBillBoardCampaign = ({
   const { wallet } = useSelector((state) => state.wallet);
   const [walletTotal, setTotal] = useState(0);
   const [payload, setPayload] = useState({});
+  const gaEventTracker = useAnalyticsEventTracker("Billboard Campaign");
 
   const Continue = (e) => {
     e.preventDefault();
@@ -53,6 +54,7 @@ const PreviewBillBoardCampaign = ({
 
   useEffect(() => {
     if (createBillBoardCampaign && createBillBoardCampaign.success === true) {
+      gaEventTracker("Billboard Campaign", "User created billboard campaign");
       toast.success(createBillBoardCampaign.message);
       dispatch(getWallet());
       navigate("/app/campaigns");
@@ -154,6 +156,9 @@ const PreviewBillBoardCampaign = ({
 
   // console.log(filteredValue.map((p) => getTotal(p)));
 
+  const bg =
+    "http://demo.marcofolio.net/rotating_billboard/images/billboard.png";
+
   return (
     <Fragment>
       {loading ? (
@@ -166,10 +171,19 @@ const PreviewBillBoardCampaign = ({
               <p className="tx-24 tx-bold tx-com">Selection Preview</p>
               <div className="card bd-0 rounded shadow-sm">
                 <div className="card-body pd-md-x-30">
-                  <div className="col-xl-11 mx-auto mg-b-20">
-                    <div className="row justify-content-between">
+                  <p className="tx-18 mb-2 tx-bold tx-com">Preview</p>
+                  <div
+                    className="col-xl-11 mx-auto mg-b-20 d-flex justify-content-center align-items-center"
+                    style={{
+                      background: `url(${bg}) top cover no-repeat`,
+                      // backgroundSize: "cover",
+                      // backgroundRepeat: "no-repeat",
+                      // backgroundPosition: "top",
+                      height: "400px",
+                    }}
+                  >
+                    <div className="row justify-content-between w-100">
                       <div className="col-md-12">
-                        <p className="tx-18 mb-0 tx-bold tx-com">Preview</p>
                         {values.assetType === "image" ? (
                           <div className="mg-y30 ht-300 d-flex justify-content-center">
                             <img
