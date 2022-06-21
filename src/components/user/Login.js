@@ -31,7 +31,11 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (isAuthenticated && user.user.role !== "influencer") {
+    if (
+      isAuthenticated &&
+      user.user.role !== "influencer" &&
+      user.user.role !== "billboard_provider"
+    ) {
       gaEventTracker("Login", "User successfully signed in");
       dispatch(getWallet());
       dispatch(getUser());
@@ -46,14 +50,16 @@ const Login = () => {
       navHistory("/update-password");
       toast.error(resetInfluencerPassword.message);
       dispatch(clearErrors());
+    } else if (isAuthenticated && user && user.user.role === "influencer") {
+      dispatch(getWallet());
+      navHistory("/influencer");
     } else if (
       isAuthenticated &&
       user &&
-      (user.user.role === "influencer" ||
-        user.user.role === "billboard_provider")
+      user.user.role === "billboard_provider"
     ) {
       dispatch(getWallet());
-      navHistory("/influencer");
+      navHistory("/billboard");
     } else if (
       error &&
       !error.errors.Verified &&

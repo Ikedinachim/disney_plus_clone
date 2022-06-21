@@ -38,7 +38,8 @@ const Sidebar = ({ user }) => {
       document.body.appendChild(backdrop);
     }
     if ((isMenuOpen && width < 989) || (!isMenuOpen && width > 989)) {
-      document.body.classList.remove("show-aside");
+      document.body.classList.remove("show-aside") &&
+        document.body.classList.remove("show-aside");
       document.querySelector(".aside-backdrop") &&
         document.body.removeChild(document.querySelector(".aside-backdrop"));
     }

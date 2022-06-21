@@ -65,10 +65,10 @@ const UpdateInfluencerPassword = () => {
   };
 
   useEffect(() => {
-    if (passwordUpdated && isUpdated?.statusCode === 100) {
+    if (passwordUpdated && isUpdated && isUpdated.statusCode === 100) {
       toast.success(isUpdated.message);
-      navigate("/login");
       dispatch({ type: UPDATE_INFLUENCER_PASSWORD_RESET });
+      navigate("/login");
     } else if (!isAuthenticated && error) {
       toast.error(error.message);
       dispatch(clearErrors());

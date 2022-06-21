@@ -1092,7 +1092,7 @@ export const getAllPoviderCampaign = (params) => async (dispatch) => {
     };
 
     const { data } = await axios.get(
-      `/api/bill-board/get-provider/${params}`,
+      `/api/bill-board/provider/${params}/campaigns`,
       config
     );
 
@@ -1109,7 +1109,7 @@ export const getAllPoviderCampaign = (params) => async (dispatch) => {
     }
   } catch (error) {
     dispatch({
-      type: GET_ALL_INFLUENCER_CAMPAIGN_FAIL,
+      type: GET_ALL_BILBOARD_PROVIDER_CAMPAIGN_FAIL,
       payload: error.message,
     });
   }
@@ -1169,7 +1169,7 @@ export const updateBillboardPublishStatusAction =
           Authorization: `Bearer ${token}`,
         },
       };
-      const { data } = await axios.put(
+      const { data } = await axios.post(
         "api/campaign/bill-board/confirm-publish",
         payload,
         config

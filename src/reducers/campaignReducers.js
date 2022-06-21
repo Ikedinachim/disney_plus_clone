@@ -765,7 +765,7 @@ export const getAllInfluencerCampaignReducer = (
     case GET_ALL_INFLUENCER_CAMPAIGN_FAIL:
       return {
         loading: false,
-        influencerCampaignList: null,
+        influencerCampaignList: undefined,
         error: action.payload,
       };
 
@@ -1039,19 +1039,19 @@ export const getAllBillboardProviderCampaignReducer = (
   switch (action.type) {
     case GET_ALL_BILBOARD_PROVIDER_CAMPAIGN_REQUEST:
       return {
-        loading: true,
+        billboardLoading: true,
       };
 
     case GET_ALL_BILBOARD_PROVIDER_CAMPAIGN_SUCCESS:
       return {
-        loading: false,
+        billboardLoading: false,
         providerCampaignList: action.payload,
       };
 
     case GET_ALL_BILBOARD_PROVIDER_CAMPAIGN_FAIL:
       return {
-        loading: false,
-        providerCampaignList: null,
+        billboardLoading: false,
+        providerCampaignList: undefined,
         error: action.payload,
       };
 
@@ -1073,18 +1073,18 @@ export const updateBillboardCampaignStatusReducer = (
   switch (action.type) {
     case UPDATE_BILLBOARD_CAMPAIGN_STATUS_REQUEST:
       return {
-        loading: true,
+        updateLoading: true,
         updateBillboardCampaignStatus: [],
       };
 
     case UPDATE_BILLBOARD_CAMPAIGN_STATUS_SUCCESS:
       return {
-        loading: false,
+        updateLoading: false,
         updateBillboardCampaignStatus: action.payload,
       };
     case UPDATE_BILLBOARD_CAMPAIGN_STATUS_FAIL:
       return {
-        loading: false,
+        updateLoading: false,
         updateBillboardCampaignStatus: null,
         error: action.payload,
       };
