@@ -68,14 +68,33 @@ const InfluencerCard = ({
                     </div>
                     <div>
                       <p className="tx-bold">
+                        Pixel Size:{" "}
+                        <span className="tx-normal">
+                          {billboard.pixel_size}
+                        </span>
+                      </p>
+                    </div>
+                    <div>
+                      <p className="tx-bold">
                         impressions:{" "}
-                        <span className="tx-normal">70 per day</span>
+                        <span className="tx-normal">
+                          {billboard.impressions ? billboard.impressions : 70}{" "}
+                          per day
+                        </span>
                       </p>
                     </div>
                     <div>
                       <p className="tx-bold">
                         Traffic:{" "}
                         <span className="tx-normal">{billboard.traffic}</span>
+                      </p>
+                    </div>
+                    <div>
+                      <p className="tx-bold">
+                        Orientation:{" "}
+                        <span className="tx-normal">
+                          {billboard.orientation}
+                        </span>
                       </p>
                     </div>
                     <div>

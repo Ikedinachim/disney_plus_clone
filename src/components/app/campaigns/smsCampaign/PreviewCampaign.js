@@ -14,8 +14,8 @@ import {
 } from "../../../../actions/campaignActions";
 import { SMS_CAMPAIGN_RESET } from "../../../../constants/campaignConstants";
 import Loader from "../../../loader";
-
 import PreviewIcon from "../../../../assets/img/Brand_Awareness.svg";
+import useAnalyticsEventTracker from "../../../../_helpers/GoogleAnalytics/GoogleAnalytics";
 
 const PreviewCampaign = ({
   nextStep,
@@ -38,6 +38,7 @@ const PreviewCampaign = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { wallet } = useSelector((state) => state.wallet);
+  const gaEventTracker = useAnalyticsEventTracker("SMS Campaign");
 
   const Continue = (e) => {
     e.preventDefault();
@@ -95,6 +96,7 @@ const PreviewCampaign = ({
 
   useEffect(() => {
     if (createSmsCampaign && createSmsCampaign.status === "success") {
+      gaEventTracker("SMS Campaign", "User created sms campaign");
       toast.success(createSmsCampaign.message);
       dispatch(getWallet());
       navigate("/app/campaigns");

@@ -17,6 +17,7 @@ import Loader from "../../../loader";
 import MediaPlayer from "../../../../_helpers/reactPlayer/ReactPlayer";
 
 import PreviewIcon from "../../../../assets/img/Promote_Offers.svg";
+import useAnalyticsEventTracker from "../../../../_helpers/GoogleAnalytics/GoogleAnalytics";
 
 const PreviewCampaign = ({
   nextStep,
@@ -40,6 +41,7 @@ const PreviewCampaign = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { wallet } = useSelector((state) => state.wallet);
+  const gaEventTracker = useAnalyticsEventTracker("App Download Campaign");
 
   const Continue = (e) => {
     e.preventDefault();
@@ -110,6 +112,10 @@ const PreviewCampaign = ({
       createAppDownloadCampaign &&
       createAppDownloadCampaign.status === "success"
     ) {
+      gaEventTracker(
+        "APP Download Campaign",
+        "User created app download campaign"
+      );
       toast.success(createAppDownloadCampaign.message);
       dispatch(getWallet());
       navigate("/app/campaigns");

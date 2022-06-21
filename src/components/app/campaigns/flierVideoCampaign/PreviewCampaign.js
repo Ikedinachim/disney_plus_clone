@@ -17,6 +17,7 @@ import Loader from "../../../loader";
 import MediaPlayer from "../../../../_helpers/reactPlayer/ReactPlayer";
 
 import PreviewIcon from "../../../../assets/img/Promote_Offers.svg";
+import useAnalyticsEventTracker from "../../../../_helpers/GoogleAnalytics/GoogleAnalytics";
 
 const PreviewCampaign = ({
   nextStep,
@@ -38,6 +39,7 @@ const PreviewCampaign = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { wallet } = useSelector((state) => state.wallet);
+  const gaEventTracker = useAnalyticsEventTracker("Flier/Video Campaign");
 
   const Continue = (e) => {
     e.preventDefault();
@@ -108,6 +110,10 @@ const PreviewCampaign = ({
       createFlierVideoCampaign &&
       createFlierVideoCampaign.status === "success"
     ) {
+      gaEventTracker(
+        "Flier/Video Campaign",
+        "User created Flier/Video campaign"
+      );
       toast.success(createFlierVideoCampaign.message);
       dispatch(getWallet());
       navigate("/app/campaigns");
