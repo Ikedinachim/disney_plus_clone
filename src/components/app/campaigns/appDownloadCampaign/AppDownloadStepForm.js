@@ -107,6 +107,7 @@ export default class AppDownloadStepForm extends Component {
   };
 
   handleImageUpload = async (e) => {
+    //it can handle multiple images
     let imageurls = [];
     for (let i = 0; i <= Object.keys(e.target.files).length - 1; i++) {
       let file = e.target.files[i];
@@ -171,6 +172,7 @@ export default class AppDownloadStepForm extends Component {
                   this.setState(
                     {
                       imageUrls: imageurls,
+                      //this is what will be displayed on the mockup
                       imageUrl: res.data.secure_url,
                       uploadPercentage: 100,
                       selectedFileName: file.name,
