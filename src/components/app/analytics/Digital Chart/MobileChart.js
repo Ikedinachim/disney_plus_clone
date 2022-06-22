@@ -26,7 +26,7 @@ const MobileChart = ({ propellerId, google }) => {
       const row = [];
       const data = new google.visualization.DataTable();
       data.addColumn("string", "Device");
-      data.addColumn('number', 'clicks')
+      data.addColumn('number', 'conversions')
 
       for (const i in mobileCampaigns) {
         row.push([mobileCampaigns[i].mobile_isp, mobileCampaigns[i].clicks]);
