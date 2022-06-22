@@ -174,13 +174,13 @@ const PreviewBillBoardCampaign = ({
                   <p className="tx-18 mb-2 tx-bold tx-com">Preview</p>
                   <div
                     className="col-xl-11 mx-auto mg-b-20 d-flex justify-content-center align-items-center"
-                    style={{
-                      background: `url(${bg}) top cover no-repeat`,
-                      // backgroundSize: "cover",
-                      // backgroundRepeat: "no-repeat",
-                      // backgroundPosition: "top",
-                      height: "400px",
-                    }}
+                    // style={{
+                    //   background: `url(${bg}) top cover no-repeat`,
+                    //   // backgroundSize: "cover",
+                    //   // backgroundRepeat: "no-repeat",
+                    //   // backgroundPosition: "top",
+                    //   height: "400px",
+                    // }}
                   >
                     <div className="row justify-content-between w-100">
                       <div className="col-md-12">
