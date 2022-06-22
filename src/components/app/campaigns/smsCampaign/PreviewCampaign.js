@@ -108,6 +108,8 @@ const PreviewCampaign = ({
     }
   }, [dispatch, error, createSmsCampaign, navigate]);
 
+  // console.log(values.attachment);
+
   return (
     <Fragment>
       {loading || fcLoading ? (
@@ -182,16 +184,28 @@ const PreviewCampaign = ({
                         </div> */}
                       </div>
                       <div className="row mg-t-15">
-                        <div className="form-group col-md-12">
-                          <label
-                            htmlFor
-                            className="tx-14 tx-gray mb-0 tx-medium"
-                          >
-                            Campaign Message
-                          </label>
+                        {values.channel === "voice_sms" ? (
+                          <>
+                            <div className="form-group col-md-12">
+                              <audio controls src={values.attachment} />
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div className="form-group col-md-12">
+                              <label
+                                htmlFor
+                                className="tx-14 tx-gray mb-0 tx-medium"
+                              >
+                                Campaign Message
+                              </label>
 
-                          <p className="tx-15 mb-0">{values.campaignMessage}</p>
-                        </div>
+                              <p className="tx-15 mb-0">
+                                {values.campaignMessage}
+                              </p>
+                            </div>
+                          </>
+                        )}
                       </div>
                     </div>
                     {values.targetAudienceOption === "mysogidb" && (
