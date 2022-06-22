@@ -56,10 +56,10 @@ const SmsCampaign = ({
       label: "Select Channel",
       value: "select channel",
     },
-    // {
-    //   label: "Voice",
-    //   value: "voice_sms",
-    // },
+    {
+      label: "Voice",
+      value: "voice_sms",
+    },
     {
       label: "SMS",
       value: "sms",
@@ -227,7 +227,7 @@ const SmsCampaign = ({
                                 </span>
                               )}
                               <p className="tx-danger tx-italic">
-                                Audio size: not more than 30mb
+                                Audio size: not more than 10mb
                               </p>
                             </div>
                           </div>
