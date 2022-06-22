@@ -338,7 +338,8 @@ const AppDownloadCampaign = ({
                                     accept="image/png, image/jpeg, image/gif, image/jpg"
                                     className="custom-file-input"
                                     id="customFile"
-                                    onChange={handleImageUpload}
+                                      onChange={handleImageUpload}
+                                      multiple
                                   />
                                   <label
                                     className="custom-file-label"

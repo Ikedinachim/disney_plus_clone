@@ -39,6 +39,7 @@ export default class FlierVideoStepForm extends Component {
     assetType: "image",
     imageUrl: null,
     imageAlt: "",
+    imageUrls: [],
     uploadPercentage: 0,
     rawVideoUrl: "",
     price: 0,
@@ -125,7 +126,7 @@ export default class FlierVideoStepForm extends Component {
 
   handleImageUpload = async (e) => {
     let imageurls = []
-    for (let i = 0; i < Object.keys(e.target.files).length - 1; i++){
+    for (let i = 0; i <= Object.keys(e.target.files).length - 1; i++){
       let file = e.target.files[i]
 
       let reader = new FileReader();
@@ -183,10 +184,11 @@ export default class FlierVideoStepForm extends Component {
               await axios
                 .post(process.env.REACT_APP_CLOUDINARY_URL, formData, options)
                 .then((res) => {
-                  imageurls.push(res.data.secure_url);
+                  imageurls.push(res.data.secure_url)
                   // console.log(res);
                   this.setState(
                     {
+                      imageUrls: imageurls,
                       imageUrl: res.data.secure_url,
                       uploadPercentage: 100,
                       selectedFileName: file.name,
@@ -210,10 +212,8 @@ export default class FlierVideoStepForm extends Component {
       };
       reader.readAsDataURL(file);
 
-      
     }
     
-    console.log(imageurls)
   };
 
   handleCount = (count) => {
@@ -251,6 +251,7 @@ export default class FlierVideoStepForm extends Component {
       timeRangeTo,
       // attachment,
       imageUrl,
+      imageUrls,
       rawVideoUrl,
       attachmentPreview,
       campaignType,
@@ -339,6 +340,7 @@ export default class FlierVideoStepForm extends Component {
     };
 
     let attachment = "";
+    let attachments = imageUrls;
 
     const { videoUrl, videoError } = setYoutubeUrl(rawVideoUrl);
 
@@ -383,6 +385,7 @@ export default class FlierVideoStepForm extends Component {
       smsNumber,
       callToAction,
       attachment: setAssets(),
+      attachments,
       targetAudience: getAudience(),
       campaignType,
       targetAudienceOption,
@@ -395,6 +398,7 @@ export default class FlierVideoStepForm extends Component {
       assetType,
       scheduleOption,
       scheduleTime,
+      imageUrls,
       scheduleFrom,
       scheduleTo,
     };
