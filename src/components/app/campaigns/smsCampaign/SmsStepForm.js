@@ -120,7 +120,7 @@ export default class SmsStepForm extends Component {
     let files = e.target.files[0];
     console.log(files);
     const size = files && files.size;
-    if (size > 31457280) {
+    if (size > 10485760) {
       toast.error("file too large!!");
       clearErrors();
     } else {
