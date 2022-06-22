@@ -437,6 +437,7 @@ const FlierVideoCampaign = ({
                                     // (onChangeAttachment("uploadedImage"),
                                     handleImageUpload
                                   }
+                                  multiple
                                 />
                                 <label
                                   className="custom-file-label"
