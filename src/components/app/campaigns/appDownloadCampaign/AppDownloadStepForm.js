@@ -111,8 +111,6 @@ export default class AppDownloadStepForm extends Component {
   handleImageUpload = async (e) => {
     let channel = this.state.channel;
 
-    console.log(channel);
-
     if (channel === "display_ads") {
       //it can handle multiple images
       let imageurls = [];
@@ -293,15 +291,13 @@ export default class AppDownloadStepForm extends Component {
           img.src = e.target.result;
         };
       reader.readAsDataURL(file);
-      console.log(file.name);
         
     }
-    console.log(this.state.imageUrls)
     
     
   };
 
-  handleImageDelete = (e) =>{
+  handleImageDelete = (e) => {
     console.log(e);
   }
 
@@ -381,7 +377,6 @@ export default class AppDownloadStepForm extends Component {
       arrayArea,
     } = this.state;
 
-    console.log(selectedFileNames);
     /////////////////////////////
 
     const getCsvRawData = (data) => {
@@ -501,6 +496,7 @@ export default class AppDownloadStepForm extends Component {
             onChangeAttachment={this.onChangeAttachment}
             values={values}
             handleImageUpload={this.handleImageUpload}
+            handleImageDelete={this.handleImageDelete}
             attachmentPreview={attachmentPreview}
             selectedFileName={selectedFileName}
             uploadPercentage={uploadPercentage}

@@ -22,6 +22,8 @@ const FlierVideoCampaign = ({
   // attachmentPreview,
   handleImageUpload,
   selectedFileName,
+  selectedFileNames,
+  handleImageDelete,
   uploadPercentage,
   characterCount,
   smsCount,
@@ -457,7 +459,22 @@ const FlierVideoCampaign = ({
                                 <p className="mt-2 tx-danger tx-italic">
                                   Image dimension: 960 x 1280
                                 </p>
-                                {selectedFileName}
+                                {selectedFileNames.map((imgNames, i) => (
+                                  <div className="row mg-10 wd-100p" id={i} key={i}>
+                                    <div className="d-flex justify-content-center tx-base align-items-center wd-50p">
+                                      {imgNames}
+                                    </div>
+                                    <div className="wd-50p justify-content-center d-flex">
+                                      <button
+                                        type="button"
+                                        className="btn-outline-primary"
+                                        onClick={handleImageDelete}
+                                      >
+                                        x
+                                      </button>
+                                    </div>
+                                  </div>
+                                ))}
                                 {/* <ProgressBar
                                   now={uploadPercentage}
                                   // active

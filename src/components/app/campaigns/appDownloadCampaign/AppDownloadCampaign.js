@@ -362,12 +362,12 @@ const AppDownloadCampaign = ({
                                     Image dimension: 960 x 1280
                                   </p>
                                   {selectedFileNames.map((imgNames, i) => (
-                                    <div className="row mg-10 wd-100p" key={i}>
+                                    <div className="row mg-10 wd-100p" id={i}>
                                       <div className="d-flex justify-content-center tx-base align-items-center wd-50p">
                                         {imgNames}
                                       </div>
                                       <div className="wd-50p justify-content-center d-flex">
-                                        <button
+                                        <button type="button"
                                           className="btn-outline-primary"
                                           onClick={handleImageDelete}
                                         >
