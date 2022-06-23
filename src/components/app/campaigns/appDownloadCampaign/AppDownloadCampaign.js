@@ -20,8 +20,10 @@ const AppDownloadCampaign = ({
   values,
   // onChangeAttachment,
   handleImageUpload,
+  handleImageDelete,
   // attachmentPreview,
   selectedFileName,
+  selectedFileNames,
   uploadPercentage,
   characterCount,
   smsCount,
@@ -338,8 +340,8 @@ const AppDownloadCampaign = ({
                                     accept="image/png, image/jpeg, image/gif, image/jpg"
                                     className="custom-file-input"
                                     id="customFile"
-                                      onChange={handleImageUpload}
-                                      multiple
+                                    onChange={handleImageUpload}
+                                    multiple
                                   />
                                   <label
                                     className="custom-file-label"
@@ -359,6 +361,21 @@ const AppDownloadCampaign = ({
                                   <p className="mt-2 tx-danger tx-italic">
                                     Image dimension: 960 x 1280
                                   </p>
+                                  {selectedFileNames.map((imgNames, i) => (
+                                    <div className="row mg-10 wd-100p" key={i}>
+                                      <div className="d-flex justify-content-center tx-base align-items-center wd-50p">
+                                        {imgNames}
+                                      </div>
+                                      <div className="wd-50p justify-content-center d-flex">
+                                        <button
+                                          className="btn-outline-primary"
+                                          onClick={handleImageDelete}
+                                        >
+                                          x
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ))}
                                 </div>
                               </div>
                             )}

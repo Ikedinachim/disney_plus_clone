@@ -457,6 +457,7 @@ const FlierVideoCampaign = ({
                                 <p className="mt-2 tx-danger tx-italic">
                                   Image dimension: 960 x 1280
                                 </p>
+                                {selectedFileName}
                                 {/* <ProgressBar
                                   now={uploadPercentage}
                                   // active
