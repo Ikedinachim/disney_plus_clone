@@ -22,7 +22,6 @@ const FlierVideoCampaign = ({
   // attachmentPreview,
   handleImageUpload,
   selectedFileName,
-  selectedFileNames,
   handleImageDelete,
   uploadPercentage,
   characterCount,
@@ -459,15 +458,19 @@ const FlierVideoCampaign = ({
                                 <p className="mt-2 tx-danger tx-italic">
                                   Image dimension: 960 x 1280
                                 </p>
-                                {selectedFileNames.map((imgNames, i) => (
-                                  <div className="row mg-10 wd-100p" id={i} key={i}>
+                                {values.attachments.map((imgNames, i) => (
+                                  <div className="row mg-10 wd-100p" id={i}>
                                     <div className="d-flex justify-content-center tx-base align-items-center wd-50p">
-                                      {imgNames}
+                                      <img
+                                        src={imgNames}
+                                        alt={"attachments"}
+                                        className={"wd-40p op-7"}
+                                      />
                                     </div>
-                                    <div className="wd-50p justify-content-center d-flex">
+                                    <div className="wd-50p justify-content-start d-flex align-items-center">
                                       <button
                                         type="button"
-                                        className="btn-outline-primary"
+                                        className="btn-outline-primary ht-30 wd-30 justify-content-center align-items-center"
                                         onClick={handleImageDelete}
                                       >
                                         x

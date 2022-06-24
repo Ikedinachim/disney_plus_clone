@@ -66,7 +66,6 @@ export default class FlierVideoStepForm extends Component {
     revenueBand: "",
 
     selectedFileName: "Upload Asset *png, *jpg, *gif",
-    selectedFileNames: [],
 
     parsedCsvData: [],
 
@@ -217,9 +216,6 @@ export default class FlierVideoStepForm extends Component {
         };
         reader.readAsDataURL(file);
 
-        this.setState({
-          selectedFileNames: imagenames,
-        });
       }
     } else {
       //it can handle single image
@@ -371,7 +367,6 @@ export default class FlierVideoStepForm extends Component {
       parsedCsvData,
       assetType,
       selectedFileName,
-      selectedFileNames,
       uploadPercentage,
       characterCount,
       smsCount,
@@ -514,7 +509,6 @@ export default class FlierVideoStepForm extends Component {
             handleImageUpload={this.handleImageUpload}
             handleImageDelete={this.handleImageDelete}
             selectedFileName={selectedFileName}
-            selectedFileNames={selectedFileNames}
             uploadPercentage={uploadPercentage}
             characterCount={characterCount}
             smsCount={smsCount}

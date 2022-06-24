@@ -52,7 +52,6 @@ export default class AppDownloadStepForm extends Component {
     revenueBand: "",
 
     selectedFileName: "Upload Asset *png, *jpg, *gif",
-    selectedFileNames: [],
     parsedCsvData: [],
 
     arrayState: undefined,
@@ -114,10 +113,8 @@ export default class AppDownloadStepForm extends Component {
     if (channel === "display_ads") {
       //it can handle multiple images
       let imageurls = [];
-      let imagenames = [];
       for (let i = 0; i <= Object.keys(e.target.files).length - 1; i++) {
         let file = e.target.files[i];
-        imagenames.push(file.name)
 
         let reader = new FileReader();
         reader.onload = (e) => {
@@ -199,10 +196,6 @@ export default class AppDownloadStepForm extends Component {
           img.src = e.target.result;
         };
         reader.readAsDataURL(file);
-        
-        this.setState({
-          selectedFileNames: imagenames
-        })
       }
     } else {
       //it can handle single image
@@ -360,7 +353,6 @@ export default class AppDownloadStepForm extends Component {
 
       parsedCsvData,
       selectedFileName,
-      selectedFileNames,
       uploadPercentage,
       characterCount,
       smsCount,
@@ -504,7 +496,6 @@ export default class AppDownloadStepForm extends Component {
             smsCount={smsCount}
             callToActionCount={callToActionCount}
             videoError={videoError}
-            selectedFileNames={selectedFileNames}
           />
         );
       case 2:
