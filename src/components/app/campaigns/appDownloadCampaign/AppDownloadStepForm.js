@@ -291,7 +291,12 @@ export default class AppDownloadStepForm extends Component {
   };
 
   handleImageDelete = (e) => {
-    console.log(e);
+    const uuid = e.target.id
+    const attachments = this.state.imageUrls
+    this.setState({
+      imageUrls: attachments.filter((i) => i !== uuid),
+      imageUrl: attachments[attachments.length - 1],
+    });
   }
 
   handleCount = (count) => {

@@ -215,7 +215,6 @@ export default class FlierVideoStepForm extends Component {
           img.src = e.target.result;
         };
         reader.readAsDataURL(file);
-
       }
     } else {
       //it can handle single image
@@ -305,7 +304,12 @@ export default class FlierVideoStepForm extends Component {
   };
 
   handleImageDelete = (e) => {
-    console.log(e);
+    const uuid = e.target.id;
+    const attachments = this.state.imageUrls;
+    this.setState({
+      imageUrls: attachments.filter((i) => i !== uuid),
+      imageUrl: attachments[attachments.length - 1]
+    });
   };
 
   handleCount = (count) => {

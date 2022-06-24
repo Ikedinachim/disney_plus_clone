@@ -459,12 +459,16 @@ const FlierVideoCampaign = ({
                                   Image dimension: 960 x 1280
                                 </p>
                                 {values.attachments.map((imgNames, i) => (
-                                  <div className="row mg-10 wd-100p" id={i}>
+                                  <div
+                                    className="row mg-10 wd-100p"
+                                    id={i}
+                                    key={i}
+                                  >
                                     <div className="d-flex justify-content-center tx-base align-items-center wd-50p">
                                       <img
                                         src={imgNames}
                                         alt={"attachments"}
-                                        className={"wd-40p op-7"}
+                                        className={"wd-40p ht-50 op-7"}
                                       />
                                     </div>
                                     <div className="wd-50p justify-content-start d-flex align-items-center">
@@ -472,6 +476,7 @@ const FlierVideoCampaign = ({
                                         type="button"
                                         className="btn-outline-primary ht-30 wd-30 justify-content-center align-items-center"
                                         onClick={handleImageDelete}
+                                        id={imgNames}
                                       >
                                         x
                                       </button>
