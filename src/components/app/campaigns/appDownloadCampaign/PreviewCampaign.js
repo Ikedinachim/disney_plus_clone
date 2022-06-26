@@ -772,7 +772,10 @@ const PreviewCampaign = ({
                         ) : (
                           <>
                             <div className="mg-b-10">
-                              <MediaPlayer url={values.attachment} />
+                              <MediaPlayer
+                                url={values.attachment}
+                                height={"400px"}
+                              />
                             </div>
                             <p className="mb-4">{values.campaignMessage}</p>
                           </>

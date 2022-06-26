@@ -335,7 +335,7 @@ const Dashboard = () => {
   useEffect(() => {
     if (user && user.user.role === "influencer") {
       dispatch(getAllInfluencerCampaign(user.user.influencer_id));
-      dispatch(getInfluencerDetails(user.user.id));
+      dispatch(getInfluencerDetails(user.user.influencer_id));
       dispatch(getUser());
     } else if (user && user.user.role === "billboard_provider") {
       dispatch(getAllPoviderCampaign(user.user.billboard_provider_id));

@@ -459,7 +459,10 @@ const AppDownloadCampaign = ({
                               ) : (
                                 <>
                                   <div className="mg-b-10">
-                                    <MediaPlayer url={values.attachment} />
+                                    <MediaPlayer
+                                      url={values.attachment}
+                                      height={"400px"}
+                                    />
                                   </div>
                                   <p className="mb-4 pd-x-20 tx-black tx-bold">
                                     {values.campaignMessage}

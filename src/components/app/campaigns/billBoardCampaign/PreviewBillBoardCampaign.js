@@ -17,7 +17,7 @@ import Loader from "../../../loader";
 
 import MediaPlayer from "../../../../_helpers/reactPlayer/ReactPlayer";
 import useAnalyticsEventTracker from "../../../../_helpers/GoogleAnalytics/GoogleAnalytics";
-import billboard from "../../../../assets/img/board2.png";
+import billboard from "../../../../assets/img/bgBillboard.png";
 
 const PreviewBillBoardCampaign = ({
   nextStep,
@@ -173,36 +173,69 @@ const PreviewBillBoardCampaign = ({
                 <div className="card-body pd-md-x-30">
                   <p className="tx-18 mb-2 tx-bold tx-com">Preview</p>
                   <div
-                    className="col-xl-11 mx-auto mg-b-20 d-flex justify-content-center align-items-center"
+                    className=" mg-b-20"
                     // style={{
-                    //   background: `url(${bg}) top cover no-repeat`,
+                    //   background: `url(${billboard})`,
                     //   // backgroundSize: "cover",
-                    //   // backgroundRepeat: "no-repeat",
+                    //   backgroundRepeat: "no-repeat",
                     //   // backgroundPosition: "top",
-                    //   height: "400px",
+                    //   // height: "599px",
+                    //   position: "relative",
+                    //   backgroundColor: "red",
+                    //   paddingTop: "40%",
+                    //   backgroundSize: "contain",
+                    //   backgroundPosition: "center top",
                     // }}
                   >
-                    <div className="row justify-content-between w-100">
-                      <div className="col-md-12">
-                        {values.assetType === "image" ? (
-                          <div className="mg-y30 ht-300 d-flex justify-content-center">
-                            <img
-                              src={values.attachment}
-                              className="img-fluid ht-300"
-                              alt="logo"
-                            />
-                          </div>
-                        ) : (
-                          <>
-                            <div>
-                              <MediaPlayer url={attachment} />
+                    <div
+                      className="w-100"
+                      style={{
+                        position: "relative",
+                        // backgroundColor: "red",
+                        paddingTop: "45%",
+                      }}
+                    >
+                      <img
+                        src={billboard}
+                        alt="billboard-img"
+                        style={{
+                          position: "absolute",
+                          left: "0",
+                          top: "0",
+                          width: "100%",
+                        }}
+                      />
+                      <div
+                        className="justify-content-between"
+                        style={{
+                          position: "absolute",
+                          /* padding-top: 50%; */
+                          top: "5%",
+                          left: "2%",
+                          height: "89.3%",
+                          // backgroundColor: "green",
+                          right: "2%",
+                        }}
+                      >
+                        <div className="col-md-12 pd-0 mg-0 h-100">
+                          {values.assetType === "image" ? (
+                            <div className="h-100 d-flex justify-content-center align-items-center">
+                              <img
+                                src={values.attachment}
+                                className="img-fluid h-100"
+                                alt="logo"
+                              />
                             </div>
-                          </>
-                        )}
+                          ) : (
+                            <div className="h-100">
+                              <MediaPlayer url={attachment} height={"100%"} />
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div className="table-responsive">
+                  <div className="table-responsive mg-t-40">
                     <table className="table inf-table" id="campaig">
                       <thead className="tx-uppercase tx-medium">
                         <tr>
