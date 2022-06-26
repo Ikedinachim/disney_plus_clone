@@ -20,6 +20,7 @@ const AppDownloadCampaign = ({
   values,
   // onChangeAttachment,
   handleImageUpload,
+  handleImageDelete,
   // attachmentPreview,
   selectedFileName,
   uploadPercentage,
@@ -339,6 +340,7 @@ const AppDownloadCampaign = ({
                                     className="custom-file-input"
                                     id="customFile"
                                     onChange={handleImageUpload}
+                                    multiple
                                   />
                                   <label
                                     className="custom-file-label"
@@ -358,6 +360,27 @@ const AppDownloadCampaign = ({
                                   <p className="mt-2 tx-danger tx-italic">
                                     Image dimension: 960 x 1280
                                   </p>
+                                  {values.attachments.map((imgNames, i) => (
+                                    <div className="row mg-10 wd-100p" id={i} key={i}>
+                                      <div className="d-flex justify-content-center tx-base align-items-center wd-50p">
+                                        <img
+                                          src={imgNames}
+                                          alt={"attachments"}
+                                          className={"wd-40p ht-50 op-7" }
+                                        />
+                                      </div>
+                                      <div className="wd-50p justify-content-start d-flex align-items-center">
+                                        <button
+                                          type="button"
+                                          className="btn-outline-primary ht-30 wd-30 justify-content-center align-items-center"
+                                          onClick={handleImageDelete}
+                                          id={imgNames}
+                                        >
+                                          x
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ))}
                                 </div>
                               </div>
                             )}

@@ -39,6 +39,7 @@ export default class FlierVideoStepForm extends Component {
     assetType: "image",
     imageUrl: null,
     imageAlt: "",
+    imageUrls: [],
     uploadPercentage: 0,
     rawVideoUrl: "",
     price: 0,
@@ -124,85 +125,191 @@ export default class FlierVideoStepForm extends Component {
   };
 
   handleImageUpload = async (e) => {
-    let file = e.target.files[0];
-    let reader = new FileReader();
-    reader.onload = (e) => {
-      let img = document.createElement("img");
-      img.onload = async () => {
-        let canvas = document.createElement("canvas");
-        let ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0);
+    let channel = this.state.channel;
 
-        let MAX_WIDTH = 900;
-        let MAX_HEIGHT = 600;
-        let width = img.width;
-        let height = img.height;
-        let maxFileSize = 2097152;
-        if (file.size > maxFileSize) {
-          toast.error(
-            "The selected image file is too big. Please choose one that is smaller than 2 MB."
-          );
-        } else {
-          if (width > height) {
-            if (width > MAX_WIDTH) {
-              height *= MAX_WIDTH / width;
-              width = MAX_WIDTH;
-            }
-          } else {
-            if (height > MAX_HEIGHT) {
-              width *= MAX_HEIGHT / height;
-              height = MAX_HEIGHT;
-            }
-          }
-          canvas.width = width;
-          canvas.height = height;
-          let ctx2 = canvas.getContext("2d");
-          ctx2.drawImage(img, 0, 0, width, height);
-          let dataurl = canvas.toDataURL("image/png");
-          let files = dataurl;
-          const formData = new FormData();
-          formData.append("file", files);
-          formData.append("upload_preset", "mysogi");
+    if (channel === "display_ads") {
+      //it can handle multiple images
+      let imageurls = [];
+      let imagenames = [];
+      for (let i = 0; i <= Object.keys(e.target.files).length - 1; i++) {
+        let file = e.target.files[i];
+        imagenames.push(file.name);
 
-          const options = {
-            onUploadProgress: (progressEvent) => {
-              const { loaded, total } = progressEvent;
-              let percent = Math.floor((loaded * 100) / total);
-              // console.log(`${loaded}kb of ${total}kb | ${percent}%`);
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          let img = document.createElement("img");
+          img.onload = async () => {
+            let canvas = document.createElement("canvas");
+            let ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0);
 
-              if (percent < 100) {
-                this.setState({ uploadPercentage: percent });
+            let MAX_WIDTH = 900;
+            let MAX_HEIGHT = 600;
+            let width = img.width;
+            let height = img.height;
+            let maxFileSize = 2097152;
+            if (file.size > maxFileSize) {
+              toast.error(
+                "The selected image file is too big. Please choose one that is smaller than 2 MB."
+              );
+            } else {
+              if (width > height) {
+                if (width > MAX_WIDTH) {
+                  height *= MAX_WIDTH / width;
+                  width = MAX_WIDTH;
+                }
+              } else {
+                if (height > MAX_HEIGHT) {
+                  width *= MAX_HEIGHT / height;
+                  height = MAX_HEIGHT;
+                }
               }
-            },
-          };
+              canvas.width = width;
+              canvas.height = height;
+              let ctx2 = canvas.getContext("2d");
+              ctx2.drawImage(img, 0, 0, width, height);
+              let dataurl = canvas.toDataURL("image/png");
+              let files = dataurl;
+              const formData = new FormData();
+              formData.append("file", files);
+              formData.append("upload_preset", "mysogi");
 
-          try {
-            await axios
-              .post(process.env.REACT_APP_CLOUDINARY_URL, formData, options)
-              .then((res) => {
-                // console.log(res);
-                this.setState(
-                  {
-                    imageUrl: res.data.secure_url,
-                    uploadPercentage: 100,
-                    selectedFileName: file.name,
-                    imageAlt: `An image of ${res.original_filename}`,
-                  },
-                  () => {
-                    setTimeout(() => {
-                      this.setState({ uploadPercentage: 0 });
-                    }, 1000);
+              const options = {
+                onUploadProgress: (progressEvent) => {
+                  const { loaded, total } = progressEvent;
+                  let percent = Math.floor((loaded * 100) / total);
+                  // console.log(`${loaded}kb of ${total}kb | ${percent}%`);
+
+                  if (percent < 100) {
+                    this.setState({ uploadPercentage: percent });
                   }
-                );
-              });
-          } catch (err) {
-            // return console.log(err);
+                },
+              };
+
+              try {
+                await axios
+                  .post(process.env.REACT_APP_CLOUDINARY_URL, formData, options)
+                  .then((res) => {
+                    imageurls.push(res.data.secure_url);
+                    // console.log(res);
+                    this.setState(
+                      {
+                        imageUrls: imageurls,
+                        //this is what will be displayed on the mockup
+                        imageUrl: res.data.secure_url,
+                        uploadPercentage: 100,
+                        imageAlt: `An image of ${res.original_filename}`,
+                      },
+                      () => {
+                        setTimeout(() => {
+                          this.setState({ uploadPercentage: 0 });
+                        }, 1000);
+                      }
+                    );
+                  });
+              } catch (err) {
+                // return console.log(err);
+              }
+            }
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    } else {
+      //it can handle single image
+      let file = e.target.files[0];
+
+      let reader = new FileReader();
+      reader.onload = (e) => {
+        let img = document.createElement("img");
+        img.onload = async () => {
+          let canvas = document.createElement("canvas");
+          let ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0);
+
+          let MAX_WIDTH = 900;
+          let MAX_HEIGHT = 600;
+          let width = img.width;
+          let height = img.height;
+          let maxFileSize = 2097152;
+          if (file.size > maxFileSize) {
+            toast.error(
+              "The selected image file is too big. Please choose one that is smaller than 2 MB."
+            );
+          } else {
+            if (width > height) {
+              if (width > MAX_WIDTH) {
+                height *= MAX_WIDTH / width;
+                width = MAX_WIDTH;
+              }
+            } else {
+              if (height > MAX_HEIGHT) {
+                width *= MAX_HEIGHT / height;
+                height = MAX_HEIGHT;
+              }
+            }
+            canvas.width = width;
+            canvas.height = height;
+            let ctx2 = canvas.getContext("2d");
+            ctx2.drawImage(img, 0, 0, width, height);
+            let dataurl = canvas.toDataURL("image/png");
+            let files = dataurl;
+            const formData = new FormData();
+            formData.append("file", files);
+            formData.append("upload_preset", "mysogi");
+
+            const options = {
+              onUploadProgress: (progressEvent) => {
+                const { loaded, total } = progressEvent;
+                let percent = Math.floor((loaded * 100) / total);
+                // console.log(`${loaded}kb of ${total}kb | ${percent}%`);
+
+                if (percent < 100) {
+                  this.setState({ uploadPercentage: percent });
+                }
+              },
+            };
+
+            try {
+              await axios
+                .post(process.env.REACT_APP_CLOUDINARY_URL, formData, options)
+                .then((res) => {
+                  // console.log(res);
+                  this.setState(
+                    {
+                      //this is what will be displayed on the mockup
+                      imageUrls: [],
+                      imageUrl: res.data.secure_url,
+                      uploadPercentage: 100,
+                      selectedFileName: file.name,
+                      imageAlt: `An image of ${res.original_filename}`,
+                    },
+                    () => {
+                      setTimeout(() => {
+                        this.setState({ uploadPercentage: 0 });
+                      }, 1000);
+                    }
+                  );
+                });
+            } catch (err) {
+              // return console.log(err);
+            }
           }
-        }
+        };
+        img.src = e.target.result;
       };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
+      reader.readAsDataURL(file);
+    }
+  };
+
+  handleImageDelete = (e) => {
+    const uuid = e.target.id;
+    const attachments = this.state.imageUrls;
+    this.setState({
+      imageUrls: attachments.filter((i) => i !== uuid),
+      imageUrl: attachments[attachments.length - 1]
+    });
   };
 
   handleCount = (count) => {
@@ -240,6 +347,7 @@ export default class FlierVideoStepForm extends Component {
       timeRangeTo,
       // attachment,
       imageUrl,
+      imageUrls,
       rawVideoUrl,
       attachmentPreview,
       campaignType,
@@ -328,6 +436,7 @@ export default class FlierVideoStepForm extends Component {
     };
 
     let attachment = "";
+    let attachments = imageUrls;
 
     const { videoUrl, videoError } = setYoutubeUrl(rawVideoUrl);
 
@@ -372,6 +481,7 @@ export default class FlierVideoStepForm extends Component {
       smsNumber,
       callToAction,
       attachment: setAssets(),
+      attachments,
       targetAudience: getAudience(),
       campaignType,
       targetAudienceOption,
@@ -384,6 +494,7 @@ export default class FlierVideoStepForm extends Component {
       assetType,
       scheduleOption,
       scheduleTime,
+      imageUrls,
       scheduleFrom,
       scheduleTo,
     };
@@ -400,6 +511,7 @@ export default class FlierVideoStepForm extends Component {
             values={values}
             attachmentPreview={attachmentPreview}
             handleImageUpload={this.handleImageUpload}
+            handleImageDelete={this.handleImageDelete}
             selectedFileName={selectedFileName}
             uploadPercentage={uploadPercentage}
             characterCount={characterCount}
