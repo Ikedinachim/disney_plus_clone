@@ -542,8 +542,8 @@ ol.terms-list ol.terms-inner-list > li:before {
 
 .billboard-checkbox::before,
 .billboard-checkbox::after {
-  top: 8% !important;
-  right: 1.5rem;
+  top: 4% !important;
+  right: 0.5rem;
   left: auto;
 }
 
