@@ -16,7 +16,7 @@ import {
   UPDATE_INFLUENCER_CAMPAIGN_STATUS_RESET,
   UPDATE_INFLUENCER_PUBLISHED_STATUS_RESET,
 } from "../constants/campaignConstants";
-import Loader from "../components/layout/Loader";
+import Loader from "../components/loader";
 
 const ViewInfluencerCampaignDetails = () => {
   const { influenceMarketingId } = useParams();
@@ -65,7 +65,9 @@ const ViewInfluencerCampaignDetails = () => {
     let findIndex = platforms.findIndex((el) => el === p);
     let findAll = platforms.findIndex((el) => el === "all");
     if (findIndex !== -1 && findAll === -1) {
-      let price = parseInt(platformCost(influencerDetails.costs, p));
+      let price = parseInt(
+        platformCost(influencerDetails && influencerDetails.costs, p)
+      );
       return (
         <NumberFormat
           value={parseInt(price)}
@@ -80,7 +82,7 @@ const ViewInfluencerCampaignDetails = () => {
       findAll !== -1 &&
       p === "all"
     ) {
-      let price = parseInt(influencerDetails.allCost);
+      let price = parseInt(influencerDetails && influencerDetails.allCost);
       return (
         <NumberFormat
           value={parseInt(price)}
@@ -114,7 +116,7 @@ const ViewInfluencerCampaignDetails = () => {
   };
 
   const setAsset = () => {
-    fetch(campaignDetails.marketingData.attachment)
+    fetch(campaignDetails?.marketingData?.attachment)
       .then((res) => res.blob())
       .then((blob) => saveAs(blob, "campaign_asset"));
   };
@@ -221,6 +223,8 @@ const ViewInfluencerCampaignDetails = () => {
     updateInfluencerPublishedStatus,
     navigate,
   ]);
+
+  // console.log("influencerDetails", influencerDetails);
 
   return (
     <Fragment>
@@ -335,7 +339,7 @@ const ViewInfluencerCampaignDetails = () => {
                               <div className="div">
                                 <div className="avatar avatar-sm">
                                   <img
-                                    src={influencerDetails.imagePath}
+                                    src={influencerDetails?.imagePath}
                                     className="rounded-circle"
                                     alt=""
                                   />
@@ -343,7 +347,7 @@ const ViewInfluencerCampaignDetails = () => {
                               </div>
                               <div className="mg-l-10">
                                 <p className="mb-0 pd-t-5">
-                                  {influencerDetails.name}
+                                  {influencerDetails?.name}
                                 </p>
                               </div>
                             </div>
@@ -365,7 +369,7 @@ const ViewInfluencerCampaignDetails = () => {
                           <div className="col-6">
                             <p className="mb-0 tx-right tx-medium">
                               <NumberFormat
-                                value={parseInt(campaignDetails.totalCost)}
+                                value={parseInt(campaignDetails?.totalCost)}
                                 displayType={"text"}
                                 thousandSeparator={true}
                                 prefix={"₦"}
@@ -402,7 +406,7 @@ const ViewInfluencerCampaignDetails = () => {
                         <div className="modal-body">
                           <div>
                             <img
-                              src={campaignDetails.marketingData.attachment}
+                              src={campaignDetails?.marketingData?.attachment}
                               alt="campaign asset"
                               className="img-fluid"
                             />

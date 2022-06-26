@@ -18,10 +18,10 @@ const InfluencerTargetAudience = ({
   resetCheckedState,
 }) => {
   // const alert = useAlert();
-  const [status, setStatus] = useState(3);
-  const radioHandler = (status) => {
-    setStatus(status);
-  };
+  // const [status, setStatus] = useState(3);
+  // const radioHandler = (status) => {
+  //   // setStatus(status);
+  // };
 
   const Continue = (e) => {
     e.preventDefault();
@@ -39,6 +39,8 @@ const InfluencerTargetAudience = ({
     resetCheckedState();
     prevStep();
   };
+
+  console.log("values", values);;
 
   return (
     <Fragment>

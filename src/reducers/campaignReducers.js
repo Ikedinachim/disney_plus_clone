@@ -251,6 +251,7 @@ export const createInfluencerCampaignReducer = (
     case INFLUENCER_CAMPAIGN_RESET:
       return {
         ...state,
+        loading: false,
         createInfluencerCampaign: [],
       };
 
