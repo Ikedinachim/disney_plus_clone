@@ -126,7 +126,10 @@ const BillBoardTargetAudience = ({
                                 values.attachment !== "" && (
                                   <>
                                     <div className="mg-b-10">
-                                      <MediaPlayer url={values.attachment} />
+                                      <MediaPlayer
+                                        url={values.attachment}
+                                        height={"400px"}
+                                      />
                                     </div>
                                   </>
                                 )

@@ -118,9 +118,9 @@ export default class SmsStepForm extends Component {
   handleAudioUpload = async (e) => {
     // console.log(e);
     let files = e.target.files[0];
-    console.log(files);
+    // console.log(files);
     const size = files && files.size;
-    if (size > 31457280) {
+    if (size > 10485760) {
       toast.error("file too large!!");
       clearErrors();
     } else {
