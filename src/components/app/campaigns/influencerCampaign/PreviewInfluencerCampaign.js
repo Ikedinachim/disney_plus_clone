@@ -217,6 +217,8 @@ const PreviewInfluencerCampaign = ({
     setVal({ ...val, [name]: value });
   };
 
+  console.log("Preview page");
+
   return (
     <Fragment>
       {loading ? (
@@ -274,7 +276,7 @@ const PreviewInfluencerCampaign = ({
                         ) : (
                           <>
                             <div>
-                              <MediaPlayer url={attachment} />
+                              <MediaPlayer url={attachment} height={"400px"} />
                             </div>
                           </>
                         )}
