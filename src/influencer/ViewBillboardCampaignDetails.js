@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import { saveAs } from "file-saver";
 import NumberFormat from "react-number-format";
 import { DateTime } from "luxon";
+import axios from "axios";
+import { ProgressBar } from "react-bootstrap";
 
 import MetaData from "../components/layout/MetaData";
 import check from "../assets/img/Check.svg";
@@ -41,6 +43,11 @@ const ViewInfluencerCampaignDetails = () => {
   const [publishInputUrl, setPublishInputUrl] = useState("");
   const [publishInputMessage, setPublishInputMessage] = useState("");
 
+  const [profile, setProfile] = useState({});
+  const [publishImage, setPublishImage] = useState(null);
+  const [uploadPercentage, setUploadPercentage] = useState(0);
+  const [isUploading, setIsUploading] = useState(null);
+
   const details = (arr, id) => {
     for (var i in arr) {
       if (arr[i].billBoardCampaignId === parseInt(id)) {
@@ -49,13 +56,115 @@ const ViewInfluencerCampaignDetails = () => {
     }
   };
 
-  // const platformCost = (arr, platform) => {
-  //   for (var i in arr) {
-  //     if (arr[i].platform === platform) {
-  //       return arr[i].cost;
-  //     }
-  //   }
-  // };
+  const getBase64Image = (file, callback) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = (event) => {
+      let width = "";
+      let height = "";
+
+      const MAX_WIDTH = 1600;
+      const MAX_HEIGHT = 1600;
+
+      const img = new Image();
+
+      img.style.imageOrientation = "from-image";
+
+      img.src = event.target.result;
+
+      img.onload = () => {
+        width = img.width;
+        height = img.height;
+
+        if (width / MAX_WIDTH > height / MAX_HEIGHT) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height;
+            height = MAX_HEIGHT;
+          }
+        }
+
+        const canvas = document.createElement("canvas");
+        let ctx = canvas.getContext("2d");
+
+        canvas.width = width;
+        canvas.height = height;
+
+        canvas.style.imageOrientation = "from-image";
+        ctx.fillStyle = "rgba(255,255,255,0.0)";
+        ctx.fillRect(0, 0, 700, 600);
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const data = ctx.canvas.toDataURL("image/jpeg");
+        callback(data);
+      };
+    };
+    reader.onerror = function (error) {
+      // console.log("Error: ", error);
+    };
+  };
+
+  const onInputChange = (event) => {
+    setIsUploading(true);
+
+    for (const file of event.target.files) {
+      const url = process.env.REACT_APP_CLOUDINARY_URL;
+
+      getBase64Image(file, (base64Value) => {
+        const data = {
+          // upload_preset: uploadPreset,
+          upload_preset: "mysogi",
+          file: base64Value,
+        };
+
+        const config = {
+          // onUploadProgress: function (progressEvent) {
+          //   const progress = Math.round(
+          //     (progressEvent.loaded * 100) / progressEvent.total
+          //   );
+          //   setProgress(progress);
+          // },
+          onUploadProgress: (progressEvent) => {
+            const { loaded, total } = progressEvent;
+            let percent = Math.floor((loaded * 100) / total);
+            if (percent < 100) {
+              setUploadPercentage(percent);
+            }
+          },
+        };
+
+        axios
+          .post(url, data, config)
+          .then((response) => {
+            setIsUploading(false);
+            setPublishImage({
+              ...publishImage,
+              imageUrl: response.data.url,
+              selectedFileName: file.name,
+              imageAlt: `An image of ${file.name}`,
+            });
+            setPublishInputUrl(response.data.url);
+            setProfile((prevState) => ({
+              ...prevState,
+              imageUrl: response.data.secure_url,
+            }));
+            setUploadPercentage(0);
+          })
+
+          .catch((error) => {
+            // console.log(error);
+            setUploadPercentage(0);
+            setIsUploading(false);
+          });
+      });
+    }
+  };
 
   const campaignDetails = details(providerCampaignList, billboardMarketingId);
 
@@ -227,6 +336,7 @@ const ViewInfluencerCampaignDetails = () => {
                             <div className="ht-400 d-flex justify-content-center">
                               <MediaPlayer
                                 url={campaignDetails?.campaign.attachment}
+                                height={"400px"}
                               />
                             </div>
                           </div>
@@ -567,7 +677,7 @@ const ViewInfluencerCampaignDetails = () => {
                           <div className="col-6">
                             <p className="mb-0 tx-right tx-medium">
                               <NumberFormat
-                                value={parseInt(campaignDetails.totalCost)}
+                                value={parseInt(campaignDetails.campaign.cost)}
                                 displayType={"text"}
                                 thousandSeparator={true}
                                 prefix={"₦"}
@@ -690,24 +800,40 @@ const ViewInfluencerCampaignDetails = () => {
                               className="img-fluid wd-100 ht-100"
                               alt=""
                             />
-                            <p className="tx-26 tx-com tx-bold">Ad Published</p>
-                            <p className="tx-16 mb-3">
-                              Please confirm that you have posted this campaign
-                              on your social media pages.
+                            <p className="tx-26 tx-com tx-bold">
+                              Billboard Published
                             </p>
-                            <input
-                              // name
-                              className="form-control mb-4"
-                              rows={4}
-                              onChange={(e) =>
-                                setPublishInputUrl(e.target.value)
-                              }
-                              placeholder="Enter Url of the Published Campaign"
-                              defaultValue={publishInputUrl}
-                            />
+                            <p className="tx-16 mb-3">
+                              Please confirm that you have displayed this
+                              campaign on your billboard.
+                            </p>
+                            <div className="custom-file">
+                              <input
+                                type="file"
+                                name="file"
+                                accept="image/png, image/jpeg, image/gif, image/jpg"
+                                className="custom-file-input"
+                                id="customFile"
+                                onChange={onInputChange}
+                              />
+                              <label
+                                className="custom-file-label"
+                                htmlFor="customFile"
+                              >
+                                {publishImage && publishImage.selectedFileName}
+                              </label>
+                              {isUploading && uploadPercentage > 0 && (
+                                <span className="mt-2">
+                                  <ProgressBar
+                                    now={uploadPercentage}
+                                    label={`${uploadPercentage}%`}
+                                  />
+                                </span>
+                              )}
+                            </div>
                             <textarea
                               // name
-                              className="form-control"
+                              className="form-control mt-4"
                               rows={4}
                               onChange={(e) =>
                                 setPublishInputMessage(e.target.value)
@@ -723,6 +849,7 @@ const ViewInfluencerCampaignDetails = () => {
                             onClick={publishCampaignHandler}
                             className="btn btn-primary w-45 mg-r-20"
                             data-dismiss="modal"
+                            disabled={publishInputUrl === ""}
                           >
                             Confirm
                           </button>

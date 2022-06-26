@@ -146,6 +146,7 @@ const ViewCampaign = () => {
                         ) : (
                           <MediaPlayer
                             url={createShowAds && createShowAds.attachment}
+                            height={"400px"}
                           />
                         )}
                       </div>

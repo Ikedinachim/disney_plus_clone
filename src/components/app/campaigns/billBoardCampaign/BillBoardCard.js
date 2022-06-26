@@ -18,7 +18,7 @@ const InfluencerCard = ({
     <Fragment>
       <div className="col-md-6 col-lg-6 col-12 mg-b-20">
         <div className="card card-body shadow-sm pd-0 card-height rounded">
-          <div className="custom-control custom-checkbox pd-0">
+          <div className="custom-control custom-checkbox pd-0 h-100">
             {/* <div className="custom-control-input"> */}
             <input
               type="checkbox"
@@ -35,7 +35,7 @@ const InfluencerCard = ({
               data-toggle="modal2"
               data-target="#sideModal"
             >
-              <div className="d-flex">
+              <div className="d-flex h-100">
                 <div className="div pd-l-0 w-50">
                   <div className="billboard-img">
                     <img
