@@ -140,11 +140,9 @@ export default class FlierVideoStepForm extends Component {
 
     if (channel === "display_ads") {
       //it can handle multiple images
-      let imageurls = [];
-      let imagenames = [];
+      let imageurls = this.state.imageUrls;
       for (let i = 0; i <= Object.keys(e.target.files).length - 1; i++) {
         let file = e.target.files[i];
-        imagenames.push(file.name);
 
         let reader = new FileReader();
         reader.onload = (e) => {
@@ -516,7 +514,7 @@ export default class FlierVideoStepForm extends Component {
       campaignSchedule,
     };
 
-    // console.log(values);
+    console.log(values);
 
     switch (step) {
       case 1:
