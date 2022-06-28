@@ -88,7 +88,6 @@ export default class AppDownloadStepForm extends Component {
 
   // Handle image change
   onChangeAttachment = (input) => (e) => {
-    
     const reader = new FileReader();
     let file = e.target.files[0];
 
@@ -112,7 +111,7 @@ export default class AppDownloadStepForm extends Component {
 
     if (channel === "display_ads") {
       //it can handle multiple images
-      let imageurls = [];
+      let imageurls = this.state.imageUrls;
       for (let i = 0; i <= Object.keys(e.target.files).length - 1; i++) {
         let file = e.target.files[i];
 
@@ -201,103 +200,97 @@ export default class AppDownloadStepForm extends Component {
       //it can handle single image
       let file = e.target.files[0];
 
-       
-
       let reader = new FileReader();
-        reader.onload = (e) => {
-          let img = document.createElement("img");
-          img.onload = async () => {
-            let canvas = document.createElement("canvas");
-            let ctx = canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0);
+      reader.onload = (e) => {
+        let img = document.createElement("img");
+        img.onload = async () => {
+          let canvas = document.createElement("canvas");
+          let ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0);
 
-            let MAX_WIDTH = 900;
-            let MAX_HEIGHT = 600;
-            let width = img.width;
-            let height = img.height;
-            let maxFileSize = 2097152;
-            if (file.size > maxFileSize) {
-              toast.error(
-                "The selected image file is too big. Please choose one that is smaller than 2 MB."
-              );
-            } else {
-              if (width > height) {
-                if (width > MAX_WIDTH) {
-                  height *= MAX_WIDTH / width;
-                  width = MAX_WIDTH;
-                }
-              } else {
-                if (height > MAX_HEIGHT) {
-                  width *= MAX_HEIGHT / height;
-                  height = MAX_HEIGHT;
-                }
+          let MAX_WIDTH = 900;
+          let MAX_HEIGHT = 600;
+          let width = img.width;
+          let height = img.height;
+          let maxFileSize = 2097152;
+          if (file.size > maxFileSize) {
+            toast.error(
+              "The selected image file is too big. Please choose one that is smaller than 2 MB."
+            );
+          } else {
+            if (width > height) {
+              if (width > MAX_WIDTH) {
+                height *= MAX_WIDTH / width;
+                width = MAX_WIDTH;
               }
-              canvas.width = width;
-              canvas.height = height;
-              let ctx2 = canvas.getContext("2d");
-              ctx2.drawImage(img, 0, 0, width, height);
-              let dataurl = canvas.toDataURL("image/png");
-              let files = dataurl;
-              const formData = new FormData();
-              formData.append("file", files);
-              formData.append("upload_preset", "mysogi");
-
-              const options = {
-                onUploadProgress: (progressEvent) => {
-                  const { loaded, total } = progressEvent;
-                  let percent = Math.floor((loaded * 100) / total);
-                  // console.log(`${loaded}kb of ${total}kb | ${percent}%`);
-
-                  if (percent < 100) {
-                    this.setState({ uploadPercentage: percent });
-                  }
-                },
-              };
-
-              try {
-                await axios
-                  .post(process.env.REACT_APP_CLOUDINARY_URL, formData, options)
-                  .then((res) => {
-
-                    // console.log(res);
-                    this.setState(
-                      {
-                        //this is what will be displayed on the mockup
-                        imageUrls: [],
-                        imageUrl: res.data.secure_url,
-                        uploadPercentage: 100,
-                        selectedFileName: file.name,
-                        imageAlt: `An image of ${res.original_filename}`,
-                      },
-                      () => {
-                        setTimeout(() => {
-                          this.setState({ uploadPercentage: 0 });
-                        }, 1000);
-                      }
-                    );
-                  });
-              } catch (err) {
-                // return console.log(err);
+            } else {
+              if (height > MAX_HEIGHT) {
+                width *= MAX_HEIGHT / height;
+                height = MAX_HEIGHT;
               }
             }
-          };
-          img.src = e.target.result;
+            canvas.width = width;
+            canvas.height = height;
+            let ctx2 = canvas.getContext("2d");
+            ctx2.drawImage(img, 0, 0, width, height);
+            let dataurl = canvas.toDataURL("image/png");
+            let files = dataurl;
+            const formData = new FormData();
+            formData.append("file", files);
+            formData.append("upload_preset", "mysogi");
+
+            const options = {
+              onUploadProgress: (progressEvent) => {
+                const { loaded, total } = progressEvent;
+                let percent = Math.floor((loaded * 100) / total);
+                // console.log(`${loaded}kb of ${total}kb | ${percent}%`);
+
+                if (percent < 100) {
+                  this.setState({ uploadPercentage: percent });
+                }
+              },
+            };
+
+            try {
+              await axios
+                .post(process.env.REACT_APP_CLOUDINARY_URL, formData, options)
+                .then((res) => {
+                  // console.log(res);
+                  this.setState(
+                    {
+                      //this is what will be displayed on the mockup
+                      imageUrls: [],
+                      imageUrl: res.data.secure_url,
+                      uploadPercentage: 100,
+                      selectedFileName: file.name,
+                      imageAlt: `An image of ${res.original_filename}`,
+                    },
+                    () => {
+                      setTimeout(() => {
+                        this.setState({ uploadPercentage: 0 });
+                      }, 1000);
+                    }
+                  );
+                });
+            } catch (err) {
+              // return console.log(err);
+            }
+          }
         };
+        img.src = e.target.result;
+      };
       reader.readAsDataURL(file);
-        
     }
-    
-    
   };
 
   handleImageDelete = (e) => {
-    const uuid = e.target.id
-    const attachments = this.state.imageUrls
+    const uuid = e.target.id;
+    const attachments = this.state.imageUrls;
     this.setState({
       imageUrls: attachments.filter((i) => i !== uuid),
       imageUrl: attachments[attachments.length - 1],
     });
-  }
+  };
 
   handleCount = (count) => {
     this.setState({ contactNumberCount: count });
