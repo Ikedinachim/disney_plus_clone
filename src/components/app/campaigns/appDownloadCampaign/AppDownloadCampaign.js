@@ -360,27 +360,36 @@ const AppDownloadCampaign = ({
                                   <p className="mt-2 tx-danger tx-italic">
                                     Image dimension: 960 x 1280
                                   </p>
-                                  {values.attachments.map((imgNames, i) => (
-                                    <div className="row mg-10 wd-100p" id={i} key={i}>
-                                      <div className="d-flex justify-content-center tx-base align-items-center wd-50p">
-                                        <img
-                                          src={imgNames}
-                                          alt={"attachments"}
-                                          className={"wd-40p ht-50 op-7" }
-                                        />
+                                  <div className="row mg-10 wd-100p flex-wrap-reverse">
+                                    {values.attachments.map((imgNames, i) => (
+                                      <div
+                                        id={i}
+                                        key={i}
+                                        className="d-flex mg-r-10 mg-y-10"
+                                      >
+                                        <div className="d-flex justify-content-center tx-base align-items-center">
+                                          <img
+                                            src={imgNames}
+                                            alt={"attachments"}
+                                            className={"wd-60 ht-60 op-7"}
+                                          />
+                                        </div>
+                                        <div className="justify-content-start d-flex align-items-center">
+                                          <button
+                                            type="button"
+                                            className="btn pd-0 mg-l-10"
+                                            onClick={handleImageDelete}
+                                            id={imgNames}
+                                          >
+                                            <i
+                                              id={imgNames}
+                                              className="fa fa-trash text-danger"
+                                            ></i>
+                                          </button>
+                                        </div>
                                       </div>
-                                      <div className="wd-50p justify-content-start d-flex align-items-center">
-                                        <button
-                                          type="button"
-                                          className="btn-outline-primary ht-30 wd-30 justify-content-center align-items-center"
-                                          onClick={handleImageDelete}
-                                          id={imgNames}
-                                        >
-                                          x
-                                        </button>
-                                      </div>
-                                    </div>
-                                  ))}
+                                    ))}
+                                  </div>
                                 </div>
                               </div>
                             )}
