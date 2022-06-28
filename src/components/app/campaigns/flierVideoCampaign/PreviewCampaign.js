@@ -46,6 +46,7 @@ const PreviewCampaign = ({
     nextStep();
   };
 
+
   const Previous = (e) => {
     e.preventDefault();
     prevStep();
@@ -378,11 +379,25 @@ const PreviewCampaign = ({
                                     {filterOptions.state}
                                   </span>
                                   <label className="tx-14 tx-gray mb-0 tx-medium d-block mt-3">
-                                    LGA:
+                                    Interest:
                                   </label>
                                   <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
                                     {" "}
-                                    {filterOptions.lga}
+                                    {values.interest}
+                                  </span>
+                                  <label className="tx-14 tx-gray mb-0 tx-medium d-block mt-3">
+                                    Gender:
+                                  </label>
+                                  <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
+                                    {" "}
+                                    {values.gender}
+                                  </span>
+                                  <label className="tx-14 tx-gray mb-0 tx-medium d-block mt-3">
+                                    Age:
+                                  </label>
+                                  <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
+                                    {" "}
+                                    {values.ageRange}
                                   </span>
                                 </div>
                                 <div className="col-md-6 form-group">
@@ -399,6 +414,13 @@ const PreviewCampaign = ({
                                   <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
                                     {" "}
                                     {values.scheduleTo}
+                                  </span>
+                                  <label className="tx-14 tx-gray mb-0 tx-medium d-block mt-3">
+                                    Campaign schedule:
+                                  </label>
+                                  <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
+                                    {" "}
+                                    {values.campaignSchedule}
                                   </span>
                                 </div>
                               </div>

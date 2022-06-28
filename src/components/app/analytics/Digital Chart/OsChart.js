@@ -31,15 +31,15 @@ const OsChart = ({ propellerId, google }) => {
       const data = new google.visualization.DataTable();
       data.addColumn("string", "Os Type");
       data.addColumn("number", "Impressions");
-      data.addColumn("number", "Clicks");
       data.addColumn("number", "Conversions");
+
 
       for (const i in OsCampaigns) {
         row.push([
           OsCampaigns[i].os,
           OsCampaigns[i].impressions,
           OsCampaigns[i].clicks,
-          OsCampaigns[i].conversions,
+
         ]);
       }
       data.addRows(row);
