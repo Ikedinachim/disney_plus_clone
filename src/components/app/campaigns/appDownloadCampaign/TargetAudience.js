@@ -353,7 +353,7 @@ const TargetAudience = ({
                             <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                           </label>
                           <Select
-                            defaultValue={arrayState}
+                            defaultValue={options[0]}
                             onChange={handleStateChange}
                             options={options}
                             isMulti
