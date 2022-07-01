@@ -33,7 +33,7 @@ export default class FlierVideoStepForm extends Component {
     // attachment: "",
     attachmentPreview: "",
     targetAudience: "",
-    campaignSchedule: "",
+    campaignSchedule: "Day",
     uploadedImage: "",
     campaignType: "flier_video",
     targetAudienceOption: "mysogidb",
@@ -58,7 +58,7 @@ export default class FlierVideoStepForm extends Component {
 
     ageRangeTo: undefined,
     ageRangeFrom: undefined,
-    ageRange: "",
+    ageRange: "18-29",
     gender: "B",
     state: "abia",
     lga: "",
