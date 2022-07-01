@@ -16,6 +16,7 @@ export default class AppDownloadStepForm extends Component {
     iosStoreUrl: "",
     androidStoreUrl: "",
     numbers: "",
+    campaignSchedule: "Day",
     callToAction: "",
     attachmentPreview: "",
     uploadedImage: "",
@@ -43,7 +44,7 @@ export default class AppDownloadStepForm extends Component {
 
     ageRangeTo: undefined,
     ageRangeFrom: undefined,
-    ageRange: "",
+    ageRange: "18-29",
     gender: "B",
     state: "abia",
     lga: "",
