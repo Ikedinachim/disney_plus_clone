@@ -128,79 +128,6 @@ const TargetAudience = ({
     },
   ];
 
-  const propellerAge = [
-    {
-      label: "Select Age",
-      value: "",
-    },
-    {
-      label: "18-29",
-      value: "18-29",
-    },
-    {
-      label: "30-49",
-      value: "30-49",
-    },
-    {
-      label: "50+",
-      value: "50",
-    },
-  ];
-
-  const timeSelection = [
-    {
-      label: "Select time for campaign run",
-      value: "",
-    },
-    {
-      label: "Day (5am - 7pm)",
-      value: "Day (5am - 7pm)",
-    },
-    {
-      label: "Night (8pm - 4am)",
-      value: "Night (8pm - 4am)",
-    },
-    {
-      label: "All day",
-      value: "All day",
-    },
-  ];
-
-  const propellerInterest = [
-    {
-      label: "Select Interest",
-      value: "",
-    },
-    {
-      label: "Sports",
-      value: "Sports",
-    },
-    {
-      label: "Finance",
-      value: "Finance",
-    },
-    {
-      label: "Shopping",
-      value: "Shopping",
-    },
-    {
-      label: "iGaming",
-      value: "iGaming",
-    },
-    {
-      label: "Giveaways",
-      value: "Giveaways",
-    },
-    {
-      label: "Dating",
-      value: "Dating",
-    },
-    {
-      label: "Utilities",
-      value: "Utilities",
-    },
-  ];
-
   const Continue = (e) => {
     e.preventDefault();
     // if (
@@ -357,51 +284,14 @@ const TargetAudience = ({
                             // htmlFor
                             className="mb-1 tx-com d-flex align-items-center"
                           >
-                            Gender
+                            LGA
+                            <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                           </label>
                           <Select
-                            defaultValue={selectGenders[0]}
-                            onChange={handleChange("gender")}
-                            options={selectGenders}
-                          />
-                        </div>
-                        <div className="form-group col-md-6">
-                          <label
-                            // htmlFor
-                            className="mb-1 tx-com d-flex align-items-center"
-                          >
-                            Age
-                          </label>
-                          <Select
-                            defaultValue={propellerAge[0]}
-                            onChange={handleChange("ageRange")}
-                            options={propellerAge}
-                          />
-                        </div>
-                        <div className="form-group col-md-6">
-                          <label
-                            // htmlFor
-                            className="mb-1 tx-com d-flex align-items-center"
-                          >
-                            Interest
-                          </label>
-                          <Select
-                            defaultValue={propellerInterest[0]}
-                            onChange={handleChange("interest")}
-                            options={propellerInterest}
-                          />
-                        </div>
-                        <div className="form-group col-md-12">
-                          <label
-                            // htmlFor
-                            className="mb-1 tx-com d-flex align-items-center"
-                          >
-                            Campaign schedule
-                          </label>
-                          <Select
-                            defaultValue={timeSelection[0]}
-                            onChange={handleChange("campaignSchedule")}
-                            options={timeSelection}
+                            defaultValue={rawLga}
+                            onChange={handleLgaChange}
+                            options={mergedLga}
+                            isMulti
                           />
                         </div>
                         <div className="form-group col-md-6">
@@ -441,7 +331,6 @@ const TargetAudience = ({
                             />
                           </div>
                         </div>
-                        {console.log(values)}
                         <div className="form-group col-md-6">
                           <label
                             // htmlFor
@@ -464,7 +353,6 @@ const TargetAudience = ({
                             </p>
                           )}
                         </div>
-
                         {values.budget >= 20000 && (
                           <div className="form-group col-md-6 mb-0 align-items-center d-flex">
                             <div>
