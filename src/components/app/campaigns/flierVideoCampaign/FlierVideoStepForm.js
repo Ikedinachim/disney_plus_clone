@@ -33,7 +33,7 @@ export default class FlierVideoStepForm extends Component {
     // attachment: "",
     attachmentPreview: "",
     targetAudience: "",
-    campaignSchedule: "",
+    campaignSchedule: "Day",
     uploadedImage: "",
     campaignType: "flier_video",
     targetAudienceOption: "mysogidb",
@@ -58,7 +58,7 @@ export default class FlierVideoStepForm extends Component {
 
     ageRangeTo: undefined,
     ageRangeFrom: undefined,
-    ageRange: "",
+    ageRange: "18-29",
     gender: "B",
     state: "abia",
     lga: "",
@@ -101,7 +101,6 @@ export default class FlierVideoStepForm extends Component {
     } else {
       this.setState({ [input]: e.target.value });
     }
-    
 
     if (input === "campaignMessage") {
       this.setState({ characterCount: e.target.value.length });
@@ -317,7 +316,7 @@ export default class FlierVideoStepForm extends Component {
     const attachments = this.state.imageUrls;
     this.setState({
       imageUrls: attachments.filter((i) => i !== uuid),
-      imageUrl: attachments[attachments.length - 1]
+      imageUrl: attachments[attachments.length - 1],
     });
   };
 
