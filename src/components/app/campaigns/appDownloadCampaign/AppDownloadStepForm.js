@@ -486,6 +486,7 @@ export default class AppDownloadStepForm extends Component {
       scheduleTime,
       scheduleFrom,
       scheduleTo,
+      age,
     };
 
     switch (step) {
