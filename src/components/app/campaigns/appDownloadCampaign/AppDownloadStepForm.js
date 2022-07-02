@@ -85,6 +85,7 @@ export default class AppDownloadStepForm extends Component {
     } else if (input === "callToAction") {
       this.setState({ callToActionCount: e.target.value.length });
     }
+    //
   };
 
   // Handle image change

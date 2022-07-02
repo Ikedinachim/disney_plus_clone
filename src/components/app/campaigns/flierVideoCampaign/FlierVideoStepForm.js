@@ -101,6 +101,7 @@ export default class FlierVideoStepForm extends Component {
       this.setState({ callToActionCount: e.target.value.length });
     }
     this.setState({ [input]: e.target.value });
+    //
   };
 
   // Handle image change
