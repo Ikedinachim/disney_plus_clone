@@ -151,11 +151,11 @@ const TargetAudience = ({
     },
     {
       label: "Day (5am - 7pm)",
-      value: "Day (5am - 7pm)",
+      value: "Day",
     },
     {
       label: "Night (8pm - 4am)",
-      value: "Night (8pm - 4am)",
+      value: "Night",
     },
     {
       label: "All day",
