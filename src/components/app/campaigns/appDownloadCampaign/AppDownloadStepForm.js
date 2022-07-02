@@ -76,7 +76,6 @@ export default class AppDownloadStepForm extends Component {
 
   // Handle fields change
   handleChange = (input) => (e) => {
-    this.setState({ [input]: e.target.value });
     if (input === "campaignMessage") {
       this.setState({ characterCount: e.target.value.length });
       this.setState({
@@ -85,6 +84,7 @@ export default class AppDownloadStepForm extends Component {
     } else if (input === "callToAction") {
       this.setState({ callToActionCount: e.target.value.length });
     }
+    this.setState({ [input]: e.target.value });
     //
   };
 
