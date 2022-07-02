@@ -24,8 +24,6 @@ const BillBoardCampaign = ({
   const [selectedBillBoards, setSelectedBillBoards] = useState([]);
   const [selectedRate, setSelectedRate] = useState(null);
 
-  console.log("selectedBillBoards", selectedBillBoards);
-
   // const ref = useRef();
   const [closeModal, setCloseModal] = useState(false);
   const [billBoardId, setBillBoardId] = useState("");
@@ -40,7 +38,6 @@ const BillBoardCampaign = ({
 
   const toggleHandler = (item) => (e) => {
     const isChecked = e.target.checked;
-    console.log("e target", e.target.value);
     let singleBillBoard = allBillBoard.find((el) => el.id === item.id);
     if (isChecked) {
       setBillBoardId(e.target.value);
@@ -62,8 +59,6 @@ const BillBoardCampaign = ({
   const handlePlatformOnChange = (item, idx) => (e) => {
     setSelectedRate(item);
   };
-
-  console.log("selectedRate", selectedRate);
 
   const setSelectedBillBoard = () => {
     if (!selectedRate) {

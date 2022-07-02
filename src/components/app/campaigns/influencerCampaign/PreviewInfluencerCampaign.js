@@ -52,42 +52,6 @@ const PreviewInfluencerCampaign = ({
     prevStep();
   };
 
-  // console.log("This is the original payload", payload);
-  // // const p = Object.values(values.platform);
-  // let c = Object.assign({}, values);
-  // let b = JSON.parse(JSON.stringify(values.platform));
-  // c.platform = Object.assign({}, b);
-  // const p = Object.values(c.platform);
-  // console.log(p);
-  // p.forEach((y) => {
-  //   const platform = y.platforms;
-  //   y["influencer_id"] = y.id;
-  //   const x = y.platforms.map((i) => i.name);
-  //   y["platform"] = x.join(", ");
-  //   y["allPlatform"] = y.allPlatform;
-  //   // platform.forEach((item) => {
-  //   //   ["id", "imagePath", "platforms"].forEach((e) => delete item[e]);
-  //   // });
-  //   p["platform"] = platform;
-  //   delete y["imagePath"];
-  //   delete y["name"];
-  //   delete y["id"];
-  //   delete y["platforms"];
-  // });
-  // // delete p.[("id", "imagePath", "platforms")];
-  // console.log(p);
-
-  // // p.forEach((item) => {
-  // //   ["id", "imagePath", "platforms"].forEach((e) => delete item[e]);
-  // // });
-  // // delete values["checkedInfluencers"];
-  // console.log(p);
-
-  // c["platform"] = Object.values(p);
-
-  // console.log("this is values", values);
-  // console.log("this is c", c);
-
   useEffect(() => {
     if (
       createInfluencerCampaign &&
@@ -106,18 +70,6 @@ const PreviewInfluencerCampaign = ({
   }, [dispatch, error, createInfluencerCampaign, navigate]);
 
   const filteredValue = checkedInfluencers;
-
-  // console.log(filteredValue?.map((platform) => platform));
-
-  // const total = filteredValue.reduce(
-  //   (accumulator, platform, currentIndex, array) => {
-  //     accumulator = accumulator + platform.cost;
-  //     return accumulator;
-  //   },
-  //   0
-  // );
-
-  // console.log(filteredValue); // 1000
 
   useEffect(() => {
     let allTotals = filteredValue.map((el) => {
@@ -171,36 +123,6 @@ const PreviewInfluencerCampaign = ({
     return total;
   };
 
-  // var totalAmount = 0;
-  // for (let i = 0; i < filteredValue.length; i++) {
-  //   let eachTotal = filteredValue[i].platforms;
-  //   console.log(eachTotal);
-  //   let b = eachTotal.reduce((total, current) => {
-  //     total += +parseInt(current.cost);
-  //     return total;
-  //   }, 0);
-  //   console.log(b);
-
-  //   totalAmount += b;
-  // }
-
-  // console.log(values.price);
-
-  // const getTotalAmount = filteredValue.platform.reduce(
-  //   (accumulator, current) => accumulator + current.cost,
-  //   0
-  // );
-
-  // const sumTotal = (arr) =>
-  //   arr.reduce((sum, { cost }) => sum + parseInt(cost), 0);
-
-  // const total = sumTotal(filteredValue[1].platforms);
-
-  // console.log(getTotalAmount);
-
-  // console.log(filteredValue.map((p) => getTotal(p)));
-
-  //Edit functionality
   const [show, setShow] = useState(false);
 
   const [val, setVal] = useState({
@@ -216,8 +138,6 @@ const PreviewInfluencerCampaign = ({
     const value = e.target.value;
     setVal({ ...val, [name]: value });
   };
-
-  console.log("Preview page");
 
   return (
     <Fragment>

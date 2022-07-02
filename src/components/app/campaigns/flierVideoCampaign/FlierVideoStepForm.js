@@ -19,7 +19,7 @@ export default class FlierVideoStepForm extends Component {
     campaignMessage: "",
     targetAge: "21",
     location: ["Lagos"],
-    interest: "sports",
+    interest: "",
     // validatedFile: undefined,
     phoneNumber: "",
     whatsAppNumber: "",
@@ -58,7 +58,7 @@ export default class FlierVideoStepForm extends Component {
 
     ageRangeTo: undefined,
     ageRangeFrom: undefined,
-    ageRange: "18-29",
+    age: "18-29",
     gender: "B",
     state: "abia",
     lga: "",
@@ -91,26 +91,16 @@ export default class FlierVideoStepForm extends Component {
 
   // Handle fields change
   handleChange = (input) => (e) => {
-    if (
-      input === "ageRange" ||
-      input === "gender" ||
-      input === "interest" ||
-      input === "campaignSchedule"
-    ) {
-      this.setState({ [input]: e.value });
-    } else {
-      this.setState({ [input]: e.target.value });
-    }
-
     if (input === "campaignMessage") {
       this.setState({ characterCount: e.target.value.length });
       this.setState({
         smsCount: Math.ceil((e.target.value.length + 25) / 160),
       });
-    }
-    if (input === "callToAction") {
+    } else if (input === "callToAction") {
       this.setState({ callToActionCount: e.target.value.length });
     }
+    this.setState({ [input]: e.target.value });
+    //
   };
 
   // Handle image change
@@ -369,7 +359,7 @@ export default class FlierVideoStepForm extends Component {
 
       ageRangeFrom,
       ageRangeTo,
-      ageRange,
+      age,
       gender,
       state,
       lga,
@@ -508,12 +498,12 @@ export default class FlierVideoStepForm extends Component {
       imageUrls,
       scheduleFrom,
       scheduleTo,
-      ageRange,
+      age,
       gender,
       campaignSchedule,
     };
 
-    console.log(values);
+    // console.log(values);
 
     switch (step) {
       case 1:
