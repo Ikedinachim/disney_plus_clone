@@ -81,8 +81,7 @@ export default class AppDownloadStepForm extends Component {
       this.setState({
         smsCount: Math.ceil((e.target.value.length + 25) / 160),
       });
-    }
-    else if (input === "callToAction") {
+    } else if (input === "callToAction") {
       this.setState({ callToActionCount: e.target.value.length });
     }
     this.setState({ [input]: e.target.value });
