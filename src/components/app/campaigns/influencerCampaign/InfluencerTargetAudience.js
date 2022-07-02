@@ -40,8 +40,6 @@ const InfluencerTargetAudience = ({
     prevStep();
   };
 
-  console.log("values", values);;
-
   return (
     <Fragment>
       <MetaData title={"Influencer Marketing"} />

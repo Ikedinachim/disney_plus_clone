@@ -109,12 +109,12 @@ const ViewCampaign = () => {
     }
   }, [dispatch, error]);
 
-  console.log(
-    createShowAds &&
-      createShowAds.androidStoreUrl &&
-      (createShowAds.androidStoreUrl.indexOf("http://") === 0 ||
-        createShowAds.androidStoreUrl.indexOf("https://") === 0)
-  );
+  // console.log(
+  //   createShowAds &&
+  //     createShowAds.androidStoreUrl &&
+  //     (createShowAds.androidStoreUrl.indexOf("http://") === 0 ||
+  //       createShowAds.androidStoreUrl.indexOf("https://") === 0)
+  // );
 
   return (
     <Fragment>

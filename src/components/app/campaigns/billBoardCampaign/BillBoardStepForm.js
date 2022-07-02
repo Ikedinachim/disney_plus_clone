@@ -308,8 +308,6 @@ export default class BillBoardStepForm extends Component {
       startDate,
     };
 
-    console.log(values);
-
     const payload = {
       campaignMessage: values.campaignMessage,
       campaignType: values.campaignType,
