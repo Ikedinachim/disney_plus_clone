@@ -388,7 +388,7 @@ const TargetAudience = ({
                           <select
                             className="form-control"
                             defaultValue={values.age}
-                            onChange={handleChange("ageRange")}
+                            onChange={handleChange("age")}
                           >
                             {propellerAge.map((age, i) => (
                               <option value={age.value} key={i}>
