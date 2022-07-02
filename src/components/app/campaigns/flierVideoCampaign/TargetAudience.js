@@ -373,7 +373,7 @@ const TargetAudience = ({
                             Age
                           </label>
                           <Select
-                            defaultValue={propellerAge[0]}
+                            defaultValue={values.ageRange}
                             onChange={handleChange("ageRange")}
                             options={propellerAge}
                           />
@@ -386,7 +386,7 @@ const TargetAudience = ({
                             Interest
                           </label>
                           <Select
-                            defaultValue={propellerInterest[0]}
+                            defaultValue={values.interest}
                             onChange={handleChange("interest")}
                             options={propellerInterest}
                           />
@@ -399,7 +399,7 @@ const TargetAudience = ({
                             Campaign schedule
                           </label>
                           <Select
-                            defaultValue={timeSelection[0]}
+                            defaultValue={values.campaignSchedule}
                             onChange={handleChange("campaignSchedule")}
                             options={timeSelection}
                           />
@@ -441,7 +441,6 @@ const TargetAudience = ({
                             />
                           </div>
                         </div>
-                        {console.log(values)}
                         <div className="form-group col-md-6">
                           <label
                             // htmlFor
