@@ -378,11 +378,17 @@ const TargetAudience = ({
                           >
                             Age
                           </label>
-                          <Select
-                            defaultValue={propellerAge[0]}
+                          <select
+                            className="form-control"
+                            defaultValue={values.ageRange}
                             onChange={handleChange("age")}
-                            options={propellerAge}
-                          />
+                          >
+                            {propellerAge.map((age, i) => (
+                              <option value={age.value} key={i}>
+                                {age.label}
+                              </option>
+                            ))}
+                          </select>
                         </div>
                         <div className="form-group col-md-6">
                           <label
