@@ -366,6 +366,7 @@ export default class AppDownloadStepForm extends Component {
       characterCount,
       smsCount,
 
+      campaignSchedule,
       scheduleOption,
       scheduleTime,
       scheduleFrom,
@@ -486,6 +487,7 @@ export default class AppDownloadStepForm extends Component {
       scheduleTime,
       scheduleFrom,
       scheduleTo,
+      campaignSchedule,
       age,
     };
 
