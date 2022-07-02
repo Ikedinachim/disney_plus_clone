@@ -96,8 +96,7 @@ export default class FlierVideoStepForm extends Component {
       this.setState({
         smsCount: Math.ceil((e.target.value.length + 25) / 160),
       });
-    }
-    if (input === "callToAction") {
+    } else if (input === "callToAction") {
       this.setState({ callToActionCount: e.target.value.length });
     }
     this.setState({ [input]: e.target.value });
