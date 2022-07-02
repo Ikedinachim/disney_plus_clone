@@ -91,17 +91,6 @@ export default class FlierVideoStepForm extends Component {
 
   // Handle fields change
   handleChange = (input) => (e) => {
-    if (
-      input === "age" ||
-      input === "gender" ||
-      input === "interest" ||
-      input === "campaignSchedule"
-    ) {
-      this.setState({ [input]: e.value });
-    } else {
-      this.setState({ [input]: e.target.value });
-    }
-
     if (input === "campaignMessage") {
       this.setState({ characterCount: e.target.value.length });
       this.setState({

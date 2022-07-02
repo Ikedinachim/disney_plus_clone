@@ -111,7 +111,7 @@ const SmartSmsAnalytics = () => {
                                 bitlyCount.bitlyCounts.total_clicks >= 0
                               ? bitlyCount.bitlyCounts &&
                                 bitlyCount.bitlyCounts.total_clicks
-                              : "Reload!")}
+                              : "Please Reload page!")}
                           </p>
                           <p className="tx-15 tx-blac">
                             Total number of Clicks

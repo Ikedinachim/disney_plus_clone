@@ -76,25 +76,16 @@ export default class AppDownloadStepForm extends Component {
 
   // Handle fields change
   handleChange = (input) => (e) => {
-
-    if (
-      input === "age" ||
-      input === "gender" ||
-      input === "interest" ||
-      input === "campaignSchedule"
-    ) {
-      this.setState({ [input]: e.value });
-    } else {
-      this.setState({ [input]: e.target.value });
-    }
     if (input === "campaignMessage") {
       this.setState({ characterCount: e.target.value.length });
       this.setState({
         smsCount: Math.ceil((e.target.value.length + 25) / 160),
       });
-    } else if (input === "callToAction") {
+    }
+    if (input === "callToAction") {
       this.setState({ callToActionCount: e.target.value.length });
     }
+    this.setState({ [input]: e.target.value });
     //
   };
 
