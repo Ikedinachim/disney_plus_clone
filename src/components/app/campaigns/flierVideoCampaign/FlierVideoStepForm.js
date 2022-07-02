@@ -514,7 +514,7 @@ export default class FlierVideoStepForm extends Component {
       campaignSchedule,
     };
 
-    console.log(values);
+    // console.log(values);
 
     switch (step) {
       case 1:
