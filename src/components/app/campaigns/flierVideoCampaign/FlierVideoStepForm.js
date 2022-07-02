@@ -58,7 +58,7 @@ export default class FlierVideoStepForm extends Component {
 
     ageRangeTo: undefined,
     ageRangeFrom: undefined,
-    ageRange: "18-29",
+    age: "18-29",
     gender: "B",
     state: "abia",
     lga: "",
@@ -92,7 +92,7 @@ export default class FlierVideoStepForm extends Component {
   // Handle fields change
   handleChange = (input) => (e) => {
     if (
-      input === "ageRange" ||
+      input === "age" ||
       input === "gender" ||
       input === "interest" ||
       input === "campaignSchedule"
@@ -369,7 +369,7 @@ export default class FlierVideoStepForm extends Component {
 
       ageRangeFrom,
       ageRangeTo,
-      ageRange,
+      age,
       gender,
       state,
       lga,
@@ -508,7 +508,7 @@ export default class FlierVideoStepForm extends Component {
       imageUrls,
       scheduleFrom,
       scheduleTo,
-      ageRange,
+      age,
       gender,
       campaignSchedule,
     };

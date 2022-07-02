@@ -381,7 +381,7 @@ const TargetAudience = ({
                           </label>
                           <Select
                             defaultValue={propellerAge[0]}
-                            onChange={handleChange("ageRange")}
+                            onChange={handleChange("age")}
                             options={propellerAge}
                           />
                         </div>
