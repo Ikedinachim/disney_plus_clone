@@ -19,7 +19,7 @@ export default class FlierVideoStepForm extends Component {
     campaignMessage: "",
     targetAge: "21",
     location: ["Lagos"],
-    interest: "sports",
+    interest: "",
     // validatedFile: undefined,
     phoneNumber: "",
     whatsAppNumber: "",
@@ -111,6 +111,7 @@ export default class FlierVideoStepForm extends Component {
     if (input === "callToAction") {
       this.setState({ callToActionCount: e.target.value.length });
     }
+    this.setState({ [input]: e.target.value });
   };
 
   // Handle image change

@@ -359,11 +359,17 @@ const TargetAudience = ({
                           >
                             Gender
                           </label>
-                          <Select
-                            defaultValue={selectGenders[0]}
+                          <select
+                            className="form-control"
+                            defaultValue={values.gender}
                             onChange={handleChange("gender")}
-                            options={selectGenders}
-                          />
+                          >
+                            {selectGenders.map((selectGender, i) => (
+                              <option value={selectGender.value} key={i}>
+                                {selectGender.label}
+                              </option>
+                            ))}
+                          </select>
                         </div>
                         <div className="form-group col-md-6">
                           <label
@@ -385,11 +391,17 @@ const TargetAudience = ({
                           >
                             Interest
                           </label>
-                          <Select
-                            defaultValue={propellerInterest[0]}
+                          <select
+                            className="form-control"
+                            defaultValue={values.interest}
                             onChange={handleChange("interest")}
-                            options={propellerInterest}
-                          />
+                          >
+                            {propellerInterest.map((interest, i) => (
+                              <option value={interest.value} key={i}>
+                                {interest.label}
+                              </option>
+                            ))}
+                          </select>
                         </div>
                         <div className="form-group col-md-12">
                           <label
@@ -398,11 +410,17 @@ const TargetAudience = ({
                           >
                             Campaign schedule
                           </label>
-                          <Select
-                            defaultValue={timeSelection[0]}
+                          <select
+                            className="form-control"
+                            defaultValue={values.campaignSchedule}
                             onChange={handleChange("campaignSchedule")}
-                            options={timeSelection}
-                          />
+                          >
+                            {timeSelection.map((time, i) => (
+                              <option value={time.value} key={i}>
+                                {time.label}
+                              </option>
+                            ))}
+                          </select>
                         </div>
                         <div className="form-group col-md-6">
                           <label className="mb-1">
@@ -441,7 +459,6 @@ const TargetAudience = ({
                             />
                           </div>
                         </div>
-                        {console.log(values)}
                         <div className="form-group col-md-6">
                           <label
                             // htmlFor
