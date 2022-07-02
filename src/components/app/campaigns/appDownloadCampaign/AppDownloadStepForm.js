@@ -44,7 +44,7 @@ export default class AppDownloadStepForm extends Component {
 
     ageRangeTo: undefined,
     ageRangeFrom: undefined,
-    ageRange: "18-29",
+    age: "18-29",
     gender: "B",
     state: "abia",
     lga: "",
@@ -342,7 +342,7 @@ export default class AppDownloadStepForm extends Component {
       targetAudienceOption,
       ageRangeFrom,
       ageRangeTo,
-      ageRange,
+      age,
       gender,
       state,
       lga,
@@ -356,6 +356,7 @@ export default class AppDownloadStepForm extends Component {
       characterCount,
       smsCount,
 
+      campaignSchedule,
       scheduleOption,
       scheduleTime,
       scheduleFrom,
@@ -476,6 +477,8 @@ export default class AppDownloadStepForm extends Component {
       scheduleTime,
       scheduleFrom,
       scheduleTo,
+      campaignSchedule,
+      age,
     };
 
     switch (step) {
