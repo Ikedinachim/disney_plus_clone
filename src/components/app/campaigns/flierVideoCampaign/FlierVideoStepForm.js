@@ -20,7 +20,6 @@ export default class FlierVideoStepForm extends Component {
     targetAge: "21",
     location: ["Lagos"],
     interest: "",
-    // validatedFile: undefined,
     phoneNumber: "",
     whatsAppNumber: "",
     numbers: "",
@@ -30,7 +29,6 @@ export default class FlierVideoStepForm extends Component {
     timeRangeFrom: "",
     timeRangeTo: "",
     campaignImage: "",
-    // attachment: "",
     attachmentPreview: "",
     targetAudience: "",
     campaignSchedule: "Day",
@@ -67,9 +65,7 @@ export default class FlierVideoStepForm extends Component {
     revenueBand: "",
 
     selectedFileName: "Upload Asset *png, *jpg, *gif",
-
     parsedCsvData: [],
-
     arrayState: undefined,
     rawLga: undefined,
     rawArea: undefined,
@@ -344,7 +340,6 @@ export default class FlierVideoStepForm extends Component {
       timeRangeFrom,
       timeRangeTo,
       interest,
-      // attachment,
       imageUrl,
       imageUrls,
       rawVideoUrl,
@@ -366,7 +361,6 @@ export default class FlierVideoStepForm extends Component {
       deviceType,
       deviceBrand,
       revenueBand,
-      // csvFile,
       csvArray,
       parsedCsvData,
       assetType,
