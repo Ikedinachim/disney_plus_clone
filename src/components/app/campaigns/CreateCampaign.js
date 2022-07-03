@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-// import { useAlert } from "react-alert";
 import { Link, useNavigate } from "react-router-dom";
 
 import MetaData from "../../layout/MetaData";
