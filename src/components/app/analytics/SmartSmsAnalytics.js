@@ -107,11 +107,8 @@ const SmartSmsAnalytics = () => {
                             {singleFlierCampaign &&
                             singleFlierCampaign.bitlink === null
                               ? "0"
-                              : (bitlyCount.bitlyCounts &&
-                                bitlyCount.bitlyCounts.total_clicks >= 0
-                              ? bitlyCount.bitlyCounts &&
-                                bitlyCount.bitlyCounts.total_clicks
-                              : "Please reload page!")}
+                              : bitlyCount.bitlyCounts &&
+                                bitlyCount.bitlyCounts.total_clicks}
                           </p>
                           <p className="tx-15 tx-blac">
                             Total number of Clicks
