@@ -20,7 +20,6 @@ const AppDownloadCampaign = ({
   values,
   // onChangeAttachment,
   handleImageUpload,
-  handleImageDelete,
   // attachmentPreview,
   selectedFileName,
   uploadPercentage,
@@ -340,7 +339,6 @@ const AppDownloadCampaign = ({
                                     className="custom-file-input"
                                     id="customFile"
                                     onChange={handleImageUpload}
-                                    multiple
                                   />
                                   <label
                                     className="custom-file-label"
@@ -360,36 +358,6 @@ const AppDownloadCampaign = ({
                                   <p className="mt-2 tx-danger tx-italic">
                                     Image dimension: 960 x 1280
                                   </p>
-                                  <div className="row mg-10 wd-100p flex-wrap-reverse">
-                                    {values.attachments.map((imgNames, i) => (
-                                      <div
-                                        id={i}
-                                        key={i}
-                                        className="d-flex mg-r-10 mg-y-10"
-                                      >
-                                        <div className="d-flex justify-content-center tx-base align-items-center">
-                                          <img
-                                            src={imgNames}
-                                            alt={"attachments"}
-                                            className={"wd-60 ht-60 op-7"}
-                                          />
-                                        </div>
-                                        <div className="justify-content-start d-flex align-items-center">
-                                          <button
-                                            type="button"
-                                            className="btn pd-0 mg-l-10"
-                                            onClick={handleImageDelete}
-                                            id={imgNames}
-                                          >
-                                            <i
-                                              id={imgNames}
-                                              className="fa fa-trash text-danger"
-                                            ></i>
-                                          </button>
-                                        </div>
-                                      </div>
-                                    ))}
-                                  </div>
                                 </div>
                               </div>
                             )}
