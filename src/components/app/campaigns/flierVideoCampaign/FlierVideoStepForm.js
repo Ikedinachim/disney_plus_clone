@@ -244,8 +244,8 @@ export default class FlierVideoStepForm extends Component {
       limit,
       budget,
       contactNumberCount,
-
       campaignSchedule,
+
       ageRangeFrom,
       ageRangeTo,
       age,
