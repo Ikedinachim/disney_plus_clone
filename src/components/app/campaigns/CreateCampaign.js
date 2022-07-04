@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
+// import { useAlert } from "react-alert";
 import { Link, useNavigate } from "react-router-dom";
 
 import MetaData from "../../layout/MetaData";
@@ -138,7 +139,7 @@ const CreateCampaign = () => {
                         </div>
                       </Link>
                     </div>
-                    {/* <div className="col-md-6 col-lg-4 col-12 mg-t-20">
+                    <div className="col-md-6 col-lg-4 col-12 mg-t-20">
                       <Link to="/app/campaign/billboard" className="tx-dark">
                         <div className="card card-height rounded bd-0 shadow-sm">
                           <div className="card-body tx-center pd-x-12">
@@ -159,7 +160,7 @@ const CreateCampaign = () => {
                           </div>
                         </div>
                       </Link>
-                    </div> */}
+                    </div>
                   </div>
                   <div className="col-md-4 mx-auto tx-center mg-y-40 mg-md-y-60">
                     <div className="d-flex justify-content-center">
