@@ -200,6 +200,7 @@ export default class AppDownloadStepForm extends Component {
       }
     } else {
       //it can handle single image
+      let imageurls = [];
       let file = e.target.files[0];
 
       let reader = new FileReader();
@@ -257,11 +258,12 @@ export default class AppDownloadStepForm extends Component {
               await axios
                 .post(process.env.REACT_APP_CLOUDINARY_URL, formData, options)
                 .then((res) => {
+                  imageurls[0] = res.data.secure_url
                   // console.log(res);
                   this.setState(
                     {
                       //this is what will be displayed on the mockup
-                      imageUrls: [],
+                      imageUrls: imageurls,
                       imageUrl: res.data.secure_url,
                       uploadPercentage: 100,
                       selectedFileName: file.name,
