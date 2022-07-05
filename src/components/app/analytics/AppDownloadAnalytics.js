@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -13,7 +13,6 @@ import Loader from "../../loader";
 import ActionsChart from "./SmartSms Chart/ActionsChart";
 
 const AppDownloadAnalytics = () => {
-
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -24,21 +23,24 @@ const AppDownloadAnalytics = () => {
   const { bitlyCount } = useSelector((state) => state || {});
 
   useEffect(() => {
-    if (
-      singleAppCampaign &&
-      (singleAppCampaign.bitlink !== null ||
-        singleAppCampaign.bitlink !== undefined)
-    ) {
-      const link =
-        singleAppCampaign.bitlink &&
-        singleAppCampaign.bitlink.split("//").pop();
-      dispatch(getBitlyCount(link));
+    if (singleAppCampaign) {
       dispatch(getSingleAppDownloadCampaigns(id));
-    } else if (error || bitlyCount.error) {
-      toast.error(error || bitlyCount.error);
+    } else if (error) {
+      toast.error(error);
       dispatch(clearErrors());
     }
   }, [dispatch, error, id]);
+
+  useMemo(() => {
+    if (singleAppCampaign?.bitlink) {
+      const link =
+        singleAppCampaign?.bitlink &&
+        singleAppCampaign.bitlink.split("//").pop();
+      dispatch(getBitlyCount(link));
+    } else if (bitlyCount.error) {
+      toast.error(bitlyCount.error);
+    }
+  }, [dispatch, bitlyCount.error, singleAppCampaign]);
 
   return (
     <Fragment>
@@ -133,7 +135,7 @@ const AppDownloadAnalytics = () => {
                           <p className="tx-24 tx-bold">
                             {singleAppCampaign &&
                               singleAppCampaign.androidStoreClickCount +
-                                singleAppCampaign.iosStoreClickCount }
+                                singleAppCampaign.iosStoreClickCount}
                           </p>
                           <p className="tx-15 tx-blac">
                             Total number of Actions
@@ -156,4 +158,3 @@ const AppDownloadAnalytics = () => {
 };
 
 export default AppDownloadAnalytics;
-
