@@ -39,6 +39,7 @@ const SmartSmsAnalytics = () => {
       dispatch(getBitlyCount(link));
     } else if (bitlyCount.error) {
       toast.error(bitlyCount.error);
+      dispatch(clearErrors());
     }
   }, [dispatch, bitlyCount.error, singleFlierCampaign]);
 
