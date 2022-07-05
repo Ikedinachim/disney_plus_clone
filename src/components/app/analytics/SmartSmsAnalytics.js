@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -23,21 +23,24 @@ const SmartSmsAnalytics = () => {
   const { bitlyCount } = useSelector((state) => state || {});
 
   useEffect(() => {
-    if (
-      singleFlierCampaign &&
-      (singleFlierCampaign.bitlink !== null ||
-        singleFlierCampaign.bitlink !== undefined)
-    ) {
-      const link =
-        singleFlierCampaign.bitlink &&
-        singleFlierCampaign.bitlink.split("//").pop();
-      dispatch(getBitlyCount(link));
+    if (singleFlierCampaign) {
       dispatch(getSingleFlierVideosCampaigns(id));
-    } else if (error || bitlyCount.error) {
-      toast.error(error || bitlyCount.error);
+    } else if (error) {
+      toast.error(error);
       dispatch(clearErrors());
     }
   }, [dispatch, error, id]);
+
+  useMemo(() => {
+    if (singleFlierCampaign?.bitlink) {
+      const link =
+        singleFlierCampaign?.bitlink &&
+        singleFlierCampaign.bitlink.split("//").pop();
+      dispatch(getBitlyCount(link));
+    } else if (bitlyCount.error) {
+      toast.error(bitlyCount.error);
+    }
+  }, [dispatch, bitlyCount.error, singleFlierCampaign]);
 
   return (
     <Fragment>
@@ -107,11 +110,11 @@ const SmartSmsAnalytics = () => {
                             {singleFlierCampaign &&
                             singleFlierCampaign.bitlink === null
                               ? "0"
-                              : (bitlyCount.bitlyCounts &&
+                              : bitlyCount.bitlyCounts &&
                                 bitlyCount.bitlyCounts.total_clicks >= 0
                               ? bitlyCount.bitlyCounts &&
                                 bitlyCount.bitlyCounts.total_clicks
-                              : "Please reload page!")}
+                              : "Please reload page!"}
                           </p>
                           <p className="tx-15 tx-blac">
                             Total number of Clicks
