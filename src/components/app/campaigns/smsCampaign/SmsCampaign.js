@@ -34,8 +34,9 @@ const SmsCampaign = ({
     //   toast.error("Select a Sender ID or choose an alternate ID");
     // } else
     if (
-      (values.senderId === "" && values.alternateSenderId === "") ||
-      values.alternateSenderId === ""
+      values.channel !== "voice_sms" &&
+      ((values.senderId === "" && values.alternateSenderId === "") ||
+        values.alternateSenderId === "")
     ) {
       toast.error("Choose an alternate ID");
     } else if (values.channel === "") {
@@ -121,50 +122,6 @@ const SmsCampaign = ({
                       </p>
                       <div className="row d-flex flex-column">
                         <div className="form-group col-md-6">
-                          <label className="mb-1">Sender ID</label>
-                          <select
-                            className="custom-select"
-                            // value="select channel"
-                            defaultValue={values.senderId}
-                            onChange={handleChange("senderId")}
-                          >
-                            <option value="">Select Sender ID</option>
-                            {senderID.senderID &&
-                              getSenderIDs().map((senderids, i) => (
-                                <option value={senderids} key={i}>
-                                  {senderids}
-                                </option>
-                              ))}
-                          </select>
-                        </div>
-                        <div className="form-group col-md-6">
-                          <label className="mb-1">Alternate Sender ID</label>
-                          <select
-                            className="custom-select"
-                            // value="select channel"
-                            defaultValue={values.alternateSenderId}
-                            onChange={handleChange("alternateSenderId")}
-                          >
-                            <option value="">Select Alternate Sender ID</option>
-                            {defaultSenderID &&
-                              defaultSenderID.defaultSenderID.map(
-                                (senderids, i) =>
-                                  generalSender &&
-                                  generalSender.generalSender.smsSender ===
-                                    senderids.provider ? (
-                                    <option value={senderids.name} key={i}>
-                                      {senderids.name}
-                                    </option>
-                                  ) : null
-                              )}
-                          </select>
-                          <p className="mg-0 tx-12 tx-italic tx-gray-500">
-                            This generic Sender ID would be used when your
-                            Sender ID has not been approved by one or more
-                            Telcos.
-                          </p>
-                        </div>
-                        <div className="form-group col-md-6">
                           <label className="mb-1">Select Channel</label>
                           <select
                             className="custom-select"
@@ -179,6 +136,58 @@ const SmsCampaign = ({
                             ))}
                           </select>
                         </div>
+                        {values.channel !== "voice_sms" && (
+                          <>
+                            <div className="form-group col-md-6">
+                              <label className="mb-1">Sender ID</label>
+                              <select
+                                className="custom-select"
+                                // value="select channel"
+                                defaultValue={values.senderId}
+                                onChange={handleChange("senderId")}
+                              >
+                                <option value="">Select Sender ID</option>
+                                {senderID.senderID &&
+                                  getSenderIDs().map((senderids, i) => (
+                                    <option value={senderids} key={i}>
+                                      {senderids}
+                                    </option>
+                                  ))}
+                              </select>
+                            </div>
+                            <div className="form-group col-md-6">
+                              <label className="mb-1">
+                                Alternate Sender ID
+                              </label>
+                              <select
+                                className="custom-select"
+                                // value="select channel"
+                                defaultValue={values.alternateSenderId}
+                                onChange={handleChange("alternateSenderId")}
+                              >
+                                <option value="">
+                                  Select Alternate Sender ID
+                                </option>
+                                {defaultSenderID &&
+                                  defaultSenderID.defaultSenderID.map(
+                                    (senderids, i) =>
+                                      generalSender &&
+                                      generalSender.generalSender.smsSender ===
+                                        senderids.provider ? (
+                                        <option value={senderids.name} key={i}>
+                                          {senderids.name}
+                                        </option>
+                                      ) : null
+                                  )}
+                              </select>
+                              <p className="mg-0 tx-12 tx-italic tx-gray-500">
+                                This generic Sender ID would be used when your
+                                Sender ID has not been approved by one or more
+                                Telcos.
+                              </p>
+                            </div>
+                          </>
+                        )}
                         {values.channel !== "voice_sms" ? (
                           <>
                             <div className="form-group col-md-6 mb-2">
