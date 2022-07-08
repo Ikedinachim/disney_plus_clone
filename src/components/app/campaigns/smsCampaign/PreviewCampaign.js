@@ -75,12 +75,24 @@ const PreviewCampaign = ({
         parseInt(values.price) *
         setScheduleDate(values.scheduleFrom, values.scheduleTo)
       );
-    } else if (values.limit !== "") {
+    } else if (values.limit !== "" && values.channel !== "voice_sms") {
       return (
         parseInt(values.limit) *
         5 *
         setScheduleDate(values.scheduleFrom, values.scheduleTo)
       );
+    } else if (values.limit !== "" && values.channel === "voice_sms") {
+      return (
+        parseInt(values.limit) *
+        15 *
+        setScheduleDate(values.scheduleFrom, values.scheduleTo)
+      );
+    } else if (values.channel === "voice_sms") {
+      return filteredContactList
+        ? filteredContactList.count *
+            15 *
+            setScheduleDate(values.scheduleFrom, values.scheduleTo)
+        : 0;
     } else {
       return filteredContactList
         ? filteredContactList.count *
