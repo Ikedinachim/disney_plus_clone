@@ -195,7 +195,6 @@ const SmsCampaign = ({
                               <textarea
                                 className="form-control"
                                 rows={3}
-                                // maxlength={150}
                                 placeholder="Type your ad message here e.g Get up to 50% discount on first purchase"
                                 onChange={handleChange("campaignMessage")}
                                 defaultValue={values.campaignMessage}

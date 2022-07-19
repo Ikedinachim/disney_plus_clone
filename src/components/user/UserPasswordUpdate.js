@@ -20,8 +20,15 @@ const UserPasswordUpdate = () => {
   } = useSelector((state) => state);
 
   useEffect(() => {
-    dispatch(getUser());
-  }, [dispatch]);
+    if (message && message.statusCode === 100) {
+      toast.success(message.message);
+      dispatch({ type: NEW_PASSWORD_RESET });
+      navigate("/login");
+    } else if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
+    }
+  }, [dispatch, navigate, message, error]);
 
   const [password, setPassword] = useState({
     resetLink: uuid,
@@ -40,15 +47,6 @@ const UserPasswordUpdate = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     dispatch(sendNewPassword(password));
-
-    if (message && message.statusCode === 100) {
-      toast.success(message.message);
-      dispatch({ type: NEW_PASSWORD_RESET });
-      navigate("/");
-    } else if (error) {
-      toast.error(error);
-      dispatch(clearErrors());
-    }
   };
 
   return (
