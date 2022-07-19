@@ -143,7 +143,7 @@ const ViewCampaignTabs = () => {
                         Influencer
                       </a>
                     </li>
-                    <li className="nav-item">
+                    {/* <li className="nav-item">
                       <a
                         className="nav-link tab"
                         id="influencer-tab"
@@ -156,7 +156,7 @@ const ViewCampaignTabs = () => {
                       >
                         Billboard
                       </a>
-                    </li>
+                    </li> */}
                   </ul>
                   <div className="tab-content bd-t-0" id="myTabContent">
                     <div

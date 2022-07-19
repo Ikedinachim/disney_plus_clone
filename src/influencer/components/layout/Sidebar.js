@@ -87,7 +87,9 @@ const Sidebar = () => {
         <ul className="nav nav-aside">
           <li className="nav-item active">
             <NavLink
-              to={user.user.role === "influencer" ? "/influencer" : "billboard"}
+              to={
+                user.user.role === "influencer" ? "/influencer" : "/billboard"
+              }
               end
               className={({ isActive }) =>
                 isActive ? "nav-link active" : "nav-link"

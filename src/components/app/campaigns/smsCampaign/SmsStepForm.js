@@ -66,13 +66,30 @@ export default class SmsStepForm extends Component {
 
   // Handle fields change
   handleChange = (input) => (e) => {
-    this.setState({ [input]: e.target.value });
-
     if (input === "campaignMessage") {
-      this.setState({ characterCount: e.target.value.length });
+      const isDoubleByte = (str) => {
+        for (var i = 0, n = str.length; i < n; i++) {
+          if (str.charCodeAt(i) > 255) {
+            return true;
+          }
+        }
+        return false;
+      };
+      console.log("unicode", isDoubleByte(e.target.value));
+      // console.log("`".match(/[\u0B80-\u0BFF]+/g));
+      const convertUnicode = (text) => {
+        return text.replace(/\\u([0-9a-fA-F]{4})/g, function (a, b) {
+          var charcode = parseInt(b, 16);
+          return String.fromCharCode(charcode);
+        });
+      };
+      this.setState({ characterCount: convertUnicode(e.target.value).length });
       this.setState({
-        smsCount: Math.ceil((e.target.value.length + 25) / 160),
+        smsCount: Math.ceil((convertUnicode(e.target.value).length + 25) / 160),
       });
+      this.setState({ [input]: convertUnicode(e.target.value) });
+    } else {
+      this.setState({ [input]: e.target.value });
     }
   };
 
