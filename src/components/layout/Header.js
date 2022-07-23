@@ -49,8 +49,13 @@ const Header = () => {
                 >
                   <ul className="navbar-nav ml-auto">
                     <li className="nav-item active">
-                      <a className="nav-link tx-dark tx-bolder" href="#more">
-                        Campaign <span className="sr-only">(current)</span>
+                      <a className="nav-link tx-dark tx-bolder" href="#about">
+                        About Us <span className="sr-only">(about us)</span>
+                      </a>
+                    </li>
+                    <li className="nav-item pd-x-20">
+                      <a className="nav-link tx-dark tx-bolder" href="#about">
+                        FAQ <span className="sr-only">(faq)</span>
                       </a>
                     </li>
                     <li className="nav-item pd-x-20">
@@ -59,6 +64,14 @@ const Header = () => {
                         href="#mysogi-contact"
                       >
                         Contact Us
+                      </a>
+                    </li>
+                    <li className="nav-item pd-x-20">
+                      <a
+                        className="nav-link tx-dark tx-bolder"
+                        href="#mysogi-products"
+                      >
+                        Products
                       </a>
                     </li>
                     <li className="nav-item pd-r-20 pd-md-l-100 pd-l-20">

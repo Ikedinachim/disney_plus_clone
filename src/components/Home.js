@@ -75,15 +75,17 @@ const Home = () => {
                 <div className="row">
                   <div className="col-md-7 col-12 pd-md-r-0 order-2 order-md-1">
                     <p className="tx-44 tx-bold mg-xl-t-100 mg-t-10">
-                      Get your business on the next level with{" "}
+                      Take your business to the next level with{" "}
                       <span className="tx-primary tx-com">Mysogi</span>
                     </p>
                     <p className="tx-16 tx-blac tx-medium mg-t-30">
-                      Leverage on our 50 million+ target audience reach for your
-                      SMS, Email, Voice SMS and Smart SMS marketing campaigns.
-                      Our Catalogue of Influencers connects you to your favorite
-                      influencers to reach their fans and a wider audience and
-                      that's not all.
+                      With over 70 million target audience we connect your
+                      business to the right customer using our{" "}
+                      <span className="tx-bold">
+                        SMART SMS, DISPLAY ADS, VOICE SMS
+                      </span>{" "}
+                      and <span className="tx-bold">TOP INFLUENCERS</span> who
+                      will promote your brand and products.
                     </p>
                     <div className="mg-t-40">
                       <Link
@@ -121,7 +123,48 @@ const Home = () => {
                 </div>
               </div>
             </section>
-            <section className="content-body" id="more">
+            <section className="content-body" id="about">
+              <div className="container pd-y-30 pd-md-t-70 pd-md-b-0">
+                <div className="row mg-t-10 tx-center">
+                  <div className="col-md-6 mg-t-20">
+                    <div className="card-height">
+                      <img
+                        src="./assets/img/mysogi_phone.png"
+                        className="img-fluid"
+                        data-aos="fade-left"
+                        data-aos-duration={2000}
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-6 mg-t-20 d-flex flex-column justify-content-center">
+                    <p className="tx-28 tx-com tx-left tx-bold mb-20">
+                      About Us
+                    </p>
+                    <p className="tx-18 tx-blac tx-left">
+                      Mysogi Company Limited is a tech company that specializes
+                      in Digital Marketing. Our recently developed web-based
+                      digital campaign manager enables corporations & SME's to
+                      promote and target adverts to prospective customers.
+                    </p>
+                    <p className="tx-18 tx-blac tx-left">
+                      Our aim is to aid organisations drive digital campaign
+                      model via our collections of tools specifically developed
+                      to manage the design process, generate leads, imporve user
+                      responsiveness and efficiently deliver advert contents.
+                    </p>
+                    <div className="d-flex">
+                      <Link
+                        to="register"
+                        type="button"
+                        className="btn btn-primary pd-x-40 mg-t-10"
+                      >
+                        Get Started
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div className="container pd-y-30 pd-md-t-70 pd-md-b-0">
                 <p className="tx-28 tx-com tx-center tx-bold mb-0">
                   Why Mysogi?
@@ -136,7 +179,7 @@ const Home = () => {
                           alt=""
                         />
                         <p className="tx-18 tx-com tx-semibold mg-t-10">
-                          High return on Investment
+                          Customer Loyalty Management
                         </p>
                         <p className="tx-14 tx-gray tx-light">
                           We provide well optimised system that allows you
@@ -299,6 +342,152 @@ const Home = () => {
                   </div>
                 </div>
               </section>
+              <section id="mysogi-products">
+                <div className="container pd-y-30 pd-md-t-70 pd-md-b-0">
+                  <p className="tx-28 tx-com tx-center tx-bold mb-0">
+                    Products
+                  </p>
+                  <div className="row mg-t-10">
+                    <div className="col-md-3 col-12 mg-t-20">
+                      <div className="card bd-0 shadoww card-height">
+                        <div className="card-body tx-center pd-md-y-40 pd-md-x-30">
+                          <img
+                            src="./assets/img/High_return_on_investment.svg"
+                            className="img-fluid"
+                            alt=""
+                          />
+                          <p className="tx-18 tx-com tx-bold mg-t-10">
+                            Flash Messaging
+                          </p>
+                          <p className="tx-14 tx-com tx-semibold">
+                            A special kind of pop up SMS displayed directly on
+                            the recipient's screen without the recipient having
+                            to open them.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-md-3 col-12 mg-t-20">
+                      <div className="card bd-0 shadoww card-height">
+                        <div className="card-body tx-center pd-md-y-40 pd-md-x-30">
+                          <img
+                            src="./assets/img/Increase_Leads.svg"
+                            className="img-fluid"
+                            alt=""
+                          />
+                          <p className="tx-18 tx-com tx-bold mg-t-10">
+                            Smart SMS Marketing
+                          </p>
+                          <p className="tx-14 tx-com tx-semibold">
+                            This feature allows clients to send targeted
+                            campaigns to customers. It can be targeted by
+                            demographics, sex, monthly spend, etc.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-md-3 col-12 mg-t-20">
+                      <div className="card bd-0 shadoww card-height">
+                        <div className="card-body tx-center pd-md-y-40 pd-md-x-30">
+                          <img
+                            src="./assets/img/High_return_on_investment.svg"
+                            className="img-fluid"
+                            alt=""
+                          />
+                          <p className="tx-18 tx-com tx-bold mg-t-10">
+                            Digital Ads
+                          </p>
+                          <p className="tx-14 tx-com tx-semibold">
+                            We utilize display ads to reach our target audience
+                            when consuming relevant content on the network. With
+                            this data, we combine the best appraoch to reach
+                            them
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-md-3 col-12 mg-t-20">
+                      <div className="card bd-0 shadoww card-height">
+                        <div className="card-body tx-center pd-md-y-40 pd-md-x-30">
+                          <img
+                            src="./assets/img/High_return_on_investment.svg"
+                            className="img-fluid"
+                            alt=""
+                          />
+                          <p className="tx-18 tx-com tx-bold mg-t-10">
+                            SMS Marketing
+                          </p>
+                          <p className="tx-14 tx-com tx-semibold">
+                            Our SMS Marketing service mostly delivers messages
+                            on latest updates, time-sensitive offers, product
+                            launches, alerts, notifications and any other form
+                            of promotional information.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-md-3 col-12 mg-t-20">
+                      <div className="card bd-0 shadoww card-height">
+                        <div className="card-body tx-center pd-md-y-40 pd-md-x-30">
+                          <img
+                            src="./assets/img/High_return_on_investment.svg"
+                            className="img-fluid"
+                            alt=""
+                          />
+                          <p className="tx-18 tx-com tx-bold mg-t-10">
+                            USSD Campaigns
+                          </p>
+                          <p className="tx-14 tx-com tx-semibold">
+                            Often used as an alternative to SMS in marketing,
+                            because it's cheaper, and does not require data to
+                            work. With its broad reach, this method captures
+                            more audience and it's not limited to SEC.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-md-3 col-12 mg-t-20">
+                      <div className="card bd-0 shadoww card-height">
+                        <div className="card-body tx-center pd-md-y-40 pd-md-x-30">
+                          <img
+                            src="./assets/img/High_return_on_investment.svg"
+                            className="img-fluid"
+                            alt=""
+                          />
+                          <p className="tx-18 tx-com tx-bold mg-t-10">
+                            Influencer Marketing
+                          </p>
+                          <p className="tx-14 tx-com tx-semibold">
+                            Mysogi ads offers the ideal platform for advertisers
+                            to engage influencers to promote their products and
+                            services on their social media platforms at a cost.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-md-3 col-12 mg-t-20">
+                      <div className="card bd-0 shadoww card-height">
+                        <div className="card-body tx-center pd-md-y-40 pd-md-x-30">
+                          <img
+                            src="./assets/img/High_return_on_investment.svg"
+                            className="img-fluid"
+                            alt=""
+                          />
+                          <p className="tx-18 tx-com tx-bold mg-t-10">
+                            Digital Ads
+                          </p>
+                          <p className="tx-14 tx-com tx-semibold">
+                            We utilize display ads to reach our target audience
+                            when consuming relevant content on the network. With
+                            this data, we combine the best appraoch to reach
+                            them
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
               <section className="bg-reddish" id="mysogi-contact">
                 <div className="container py-1">
                   <div className="mg-md-t-40 mg-t-30">
@@ -333,6 +522,8 @@ const Home = () => {
                                     value={name}
                                   />
                                 </div>
+                              </div>
+                              <div className="form-row">
                                 <div className="form-group col-md-5">
                                   <label
                                     htmlFor="name"
@@ -368,7 +559,7 @@ const Home = () => {
                                     value={email}
                                   />
                                 </div>
-                                <div className="form-group col-md-5">
+                                {/* <div className="form-group col-md-5">
                                   <label
                                     htmlFor="name"
                                     className="tx-14 tx-com tx-blac mg-b-3"
@@ -383,9 +574,9 @@ const Home = () => {
                                     onChange={handleStateChange}
                                     value={company}
                                   />
-                                </div>
+                                </div> */}
                               </div>
-                              <div className="form-row">
+                              {/* <div className="form-row">
                                 <div className="form-group col-md-5">
                                   <label
                                     htmlFor="name"
@@ -453,7 +644,7 @@ const Home = () => {
                                     value={city}
                                   />
                                 </div>
-                              </div>
+                              </div> */}
                               <button
                                 type="submit"
                                 className="btn btn-primary pd-x-40 mg-t-20"
@@ -496,18 +687,21 @@ const Home = () => {
                         <div className="col-md-6 mg-t-20">
                           <div className=" card-height text-white">
                             <div className="vert-center">
-                              <p className="tx-16 text-white">
-                                Ready to hit the digital market?
+                              <p className="tx-28 text-white">
+                                Join Mysogi Today
                               </p>
-                              <p className="tx-26 tx-com fw-bold">
-                                Get started with Mysogi
+                              <p className="tx-16 tx-com fw-bold">
+                                You're only a few minutes away from thousands of
+                                unique publishers and direct advertisers. Don't
+                                hesitate
+                                <br /> - register and start testing right now
                               </p>
                               <Link
                                 to="register"
                                 type="button"
                                 className="btn btn-primary pd-x-40 mg-t-20"
                               >
-                                Sign Up
+                                Get Started
                               </Link>
                             </div>
                           </div>

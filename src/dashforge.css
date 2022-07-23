@@ -47342,6 +47342,10 @@ button.bg-twitter:focus,
   text-transform: none;
 }
 
+.tx-underline {
+  text-decoration: underline;
+}
+
 .tx-shadow-none {
   text-shadow: none;
 }

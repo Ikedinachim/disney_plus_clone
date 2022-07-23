@@ -11,21 +11,53 @@ const Footer = () => {
       <section className="footer">
         <div className="container py-5 tx-white">
           <div className="row mg-0 pd-0 col-md-12">
-            <div className="col-md-3 col-6">
+            <div className="col-md-2 col-6=12 pd-md-b-0 pd-b-20">
               <img src="./assets/img/logo.png" alt="" className="w-inherit" />
             </div>
-            <div className="col-md-3 col-6">
-              <ul className="list-unstyled tx-16 tx-bold footer-link">
+            <div className="col-md-5 col-12 pd-md-b-0 pd-b-20">
+              <ul className="list-unstyled tx-16 tx-bold footer-link tx-center">
+                <h2 className="tx-white tx-primary tx-com tx-bold tx-20">
+                  Quick Links
+                </h2>
                 <li>
-                  <Link to="">Campaigns</Link>
+                  <a href="#about">
+                    About Us <span className="sr-only">(current)</span>
+                  </a>
                 </li>
                 <li>
-                  <Link to="">Contact</Link>
+                  <a href="#mysogi-contact">Contact</a>
                 </li>
-                <li></li>
+                <li>
+                  <Link to="">Careers</Link>
+                </li>
+                <li>
+                  <Link to="">FAQ</Link>
+                </li>
               </ul>
             </div>
-            <div className="col-md-6 col-12">
+            <div className="col-md-5 col-12 pd-md-b-0 pd-b-20">
+              <ul className="list-unstyled tx-16 tx-bold footer-link tx-center">
+                <h2 className="tx-white tx-primary tx-com tx-bold tx-20">
+                  Our Services
+                </h2>
+                <li>
+                  <Link to="">Smart SMS</Link>
+                </li>
+                <li>
+                  <Link to="">Influencer Marketing</Link>
+                </li>
+                <li>
+                  <Link to="">Digital Ads</Link>
+                </li>
+                <li>
+                  <Link to="">Voice SMS</Link>
+                </li>
+                <li>
+                  <Link to="">Billboard Marketing</Link>
+                </li>
+              </ul>
+            </div>
+            <div className="col-md-6 col-12 mg-md-t-50 mg-t-20">
               <form action="">
                 <label htmlFor="" className="tx-16 tx-bold footer-label">
                   Subscribe to our newsletter
@@ -57,7 +89,12 @@ const Footer = () => {
           </div>
           <hr className="bg-white mg-t-100" />
           <div className="row mg-t-30">
-            <div className="col-md-3 offset-md-9 col-12">
+            <div className="col-md-6 col-12">
+              <p className="tx-14 mb-0 tx-white ">
+                Mysogi © {new Date().getFullYear()}
+              </p>
+            </div>
+            <div className="col-md-6 col-12 d-flex justify-content-md-end justify-content-sm-start">
               <div className="d-flex">
                 <p className="tx-14 mb-0 tx-light-blue">
                   <Link to={"/terms-of-use"} className="tx-white">
