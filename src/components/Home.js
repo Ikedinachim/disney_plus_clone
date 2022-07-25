@@ -357,12 +357,12 @@ const Home = () => {
                             alt=""
                           />
                           <p className="tx-18 tx-com tx-bold mg-t-10">
-                            Flash Messaging
+                            Voice Messaging
                           </p>
                           <p className="tx-14 tx-com tx-semibold">
-                            A special kind of pop up SMS displayed directly on
-                            the recipient's screen without the recipient having
-                            to open them.
+                            A special kind of messaging that gives your target
+                            audience a phone call with your pre-recorded
+                            messages.
                           </p>
                         </div>
                       </div>
@@ -474,13 +474,13 @@ const Home = () => {
                             alt=""
                           />
                           <p className="tx-18 tx-com tx-bold mg-t-10">
-                            Digital Ads
+                            Billboard Marketing
                           </p>
                           <p className="tx-14 tx-com tx-semibold">
-                            We utilize display ads to reach our target audience
-                            when consuming relevant content on the network. With
-                            this data, we combine the best appraoch to reach
-                            them
+                            With Billboards displayed in strategic locations
+                            across the country, you can reach your customers
+                            with promotional information, product offers and
+                            alerts.
                           </p>
                         </div>
                       </div>
