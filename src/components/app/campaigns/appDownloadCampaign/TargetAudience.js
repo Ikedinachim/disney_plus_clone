@@ -268,22 +268,38 @@ const TargetAudience = ({
 
   ////
   const [parsedCsvData, setParsedCsvData] = useState([]);
+  const [uploadFileType, setUploadFileType] = useState("");
   const [csvName, setCsvName] = useState();
 
   const parseFile = (file) => {
     Papa.parse(file, {
-      // header: true,
+      header: true,
       complete: (results) => {
         setParsedCsvData(results.data);
+        setUploadFileType("csv");
         setCsvName(file.name);
-        // console.log(parsedCsvData);
       },
     });
   };
 
+  const showFile = (files) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const text = e.target.result;
+      const result = text.trim().split(",").join("").trim().split(/\r?\n/);
+      // const result = text.trim().split(/\r?\n/);
+      setParsedCsvData(result);
+      setCsvName(files[0].name);
+      setUploadFileType("txt");
+    };
+    reader.readAsText(files[0]);
+  };
+
   const onDrop = useCallback((acceptedFiles) => {
-    if (acceptedFiles.length) {
+    if (acceptedFiles.length && acceptedFiles[0].type === "text/csv") {
       parseFile(acceptedFiles[0]);
+    } else {
+      showFile(acceptedFiles);
     }
   }, []);
 
@@ -295,7 +311,7 @@ const TargetAudience = ({
     isDragReject,
   } = useDropzone({
     onDrop,
-    accept: ".csv, application/vnd.ms-excel, text/csv",
+    accept: ".csv, application/vnd.ms-excel, text/csv, text/plain,",
     skipEmptyLines: "greedy",
   });
 
@@ -305,13 +321,20 @@ const TargetAudience = ({
   //     .then((blob) => saveAs(blob, "fileName"));
   // };
 
+  const previewUploadedNumbers = values.targetAudience.slice(
+    0,
+    values.targetAudience.length
+  );
+
   useEffect(() => {
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
     }
-    getCsvRawData(parsedCsvData);
-  }, [dispatch, error, parsedCsvData]);
+    getCsvRawData(parsedCsvData, uploadFileType);
+  }, [dispatch, error, parsedCsvData, uploadFileType]);
+
+  // console.log(values);
 
   return (
     <Fragment>
@@ -333,7 +356,7 @@ const TargetAudience = ({
               />
             </div>
             <div className="pd-md-y-20">
-              <div className>
+              <div>
                 <form>
                   {values.channel === "display_ads" ? (
                     <div>
@@ -474,7 +497,7 @@ const TargetAudience = ({
                         </div>
                         <div className="form-group col-md-6">
                           <label
-                            htmlFor
+                            htmlFor="budget"
                             className="mb-1 tx-com d-flex align-items-center"
                           >
                             Budget
@@ -482,6 +505,7 @@ const TargetAudience = ({
                           </label>
                           <input
                             type="text"
+                            name="budget"
                             className="form-control"
                             placeholder="Enter Amount to Spend"
                             defaultValue={values.budget}
@@ -771,7 +795,7 @@ const TargetAudience = ({
                           <div className="row justify-content-md-between">
                             <div className="form-group col-sm-12 col-md-5 d-flex flex-column">
                               <label className="mb-1 tx-com">
-                                Upload CSV Containing Phone Numbers
+                                Upload CSV/Text File Containing Phone Numbers
                               </label>
                               <button
                                 className="btn tx-primary pd-x-0 pd-t-0 justify-content-start"
@@ -784,7 +808,7 @@ const TargetAudience = ({
                                       filename={"mysogi-number-format"}
                                       data={csvData}
                                     >
-                                      Download Sample
+                                      Download CSV Sample
                                     </CSVLink>
                                   </div>
                                 </div>
@@ -810,6 +834,28 @@ const TargetAudience = ({
                                 <p className="mb-0">{csvName}</p>
                               </div>
                             </div>
+                            <div className="col-md-6">
+                              {values.targetAudience.length > 0 && (
+                                <>
+                                  <p className="tx-18 tx-com tx-semibold mb-0">
+                                    Preview Phone Numbers
+                                  </p>
+                                  <textarea
+                                    name="previewUploadedNumbers"
+                                    className="form-control mb-0"
+                                    defaultValue={previewUploadedNumbers.concat()}
+                                    disabled
+                                    // resize={false}
+                                    rows={10}
+                                    placeholder="Preview uploaded numbers"
+                                  />
+                                  <p className="mb-10">
+                                    {values.targetAudience.length} numbers
+                                    loaded
+                                  </p>
+                                </>
+                              )}
+                            </div>
                           </div>
                         </div>
                       )}
@@ -822,9 +868,8 @@ const TargetAudience = ({
                                 23480xxxxxxxx,23480xxxxxxxx
                               </label>
                               <textarea
-                                name
+                                name="numbers"
                                 className="form-control"
-                                id
                                 rows={4}
                                 onChange={handleChange("numbers")}
                                 placeholder="23480xxxxxxxx,23480xxxxxxxx"

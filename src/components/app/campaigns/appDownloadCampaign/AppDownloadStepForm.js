@@ -54,6 +54,7 @@ export default class AppDownloadStepForm extends Component {
 
     selectedFileName: "Upload Asset *png, *jpg, *gif",
     parsedCsvData: [],
+    uploadFileType: "",
 
     arrayState: undefined,
     arrayLga: undefined,
@@ -258,7 +259,7 @@ export default class AppDownloadStepForm extends Component {
               await axios
                 .post(process.env.REACT_APP_CLOUDINARY_URL, formData, options)
                 .then((res) => {
-                  imageurls[0] = res.data.secure_url
+                  imageurls[0] = res.data.secure_url;
                   // console.log(res);
                   this.setState(
                     {
@@ -354,6 +355,7 @@ export default class AppDownloadStepForm extends Component {
       revenueBand,
 
       parsedCsvData,
+      uploadFileType,
       selectedFileName,
       uploadPercentage,
       characterCount,
@@ -374,22 +376,47 @@ export default class AppDownloadStepForm extends Component {
 
     /////////////////////////////
 
-    const getCsvRawData = (data) => {
+    const getCsvRawData = (data, uploadFileType) => {
       this.setState({ parsedCsvData: data });
+      this.setState({ uploadFileType: uploadFileType });
     };
 
-    let personalUpload = parsedCsvData.map(({ Numbers }) => Numbers);
+    let personalUpload = parsedCsvData
+      .map(({ Numbers }) => Numbers)
+      .filter((element) => {
+        if (element !== null) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+
+    let personalTxtUpload = parsedCsvData.map((Numbers) => Numbers);
 
     let targetAudience = [];
 
     const getAudience = () => {
       if (
+        uploadFileType === "csv" &&
         personalUpload.length > 0 &&
         targetAudienceOption === "manual_import"
       ) {
         return (targetAudience = personalUpload);
+      } else if (
+        uploadFileType === "txt" &&
+        personalTxtUpload.length > 0 &&
+        targetAudienceOption === "manual_import"
+      ) {
+        return (targetAudience = personalTxtUpload);
       } else {
-        return (targetAudience = numbers.split(","));
+        if (
+          targetAudienceOption === "manual_import" &&
+          (personalUpload.length === 0 || personalTxtUpload.length === 0)
+        ) {
+          return (targetAudience = []);
+        } else {
+          return (targetAudience = numbers.split(","));
+        }
       }
     };
 

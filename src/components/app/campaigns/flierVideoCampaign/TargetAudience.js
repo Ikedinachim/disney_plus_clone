@@ -39,6 +39,7 @@ const TargetAudience = ({
   const { error } = useSelector((state) => state.filteredContactList || []);
 
   const [parsedCsvData, setParsedCsvData] = useState([]);
+  const [uploadFileType, setUploadFileType] = useState("");
   const [csvName, setCsvName] = useState();
   const { filteredContactList, fcLoading } = useSelector(
     (state) => state.filteredContactList || []
@@ -201,6 +202,11 @@ const TargetAudience = ({
     },
   ];
 
+  const previewUploadedNumbers = values.targetAudience.slice(
+    0,
+    values.targetAudience.length
+  );
+
   const Continue = (e) => {
     e.preventDefault();
     // if (
@@ -273,16 +279,33 @@ const TargetAudience = ({
   const parseFile = (file) => {
     Papa.parse(file, {
       header: true,
+      skipEmptyLines: true,
       complete: (results) => {
         setParsedCsvData(results.data);
+        setUploadFileType("csv");
         setCsvName(file.name);
       },
     });
   };
 
+  const showFile = (files) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const text = e.target.result;
+      const result = text.trim().split(",").join("").trim().split(/\r?\n/);
+      // const result = text.trim().split(/\r?\n/);
+      setParsedCsvData(result);
+      setCsvName(files[0].name);
+      setUploadFileType("txt");
+    };
+    reader.readAsText(files[0]);
+  };
+
   const onDrop = useCallback((acceptedFiles) => {
-    if (acceptedFiles.length) {
+    if (acceptedFiles.length && acceptedFiles[0].type === "text/csv") {
       parseFile(acceptedFiles[0]);
+    } else {
+      showFile(acceptedFiles);
     }
   }, []);
 
@@ -294,7 +317,7 @@ const TargetAudience = ({
     isDragReject,
   } = useDropzone({
     onDrop,
-    accept: ".csv, application/vnd.ms-excel, text/csv",
+    accept: ".csv, application/vnd.ms-excel, text/csv, text/plain",
     skipEmptyLines: "greedy",
   });
 
@@ -303,8 +326,8 @@ const TargetAudience = ({
       toast.error(error);
       dispatch(clearErrors());
     }
-    getCsvRawData(parsedCsvData);
-  }, [dispatch, error, parsedCsvData]);
+    getCsvRawData(parsedCsvData, uploadFileType);
+  }, [dispatch, error, parsedCsvData, uploadFileType]);
 
   return (
     <Fragment>
@@ -823,7 +846,7 @@ const TargetAudience = ({
                           <div className="row justify-content-md-between">
                             <div className="form-group col-sm-12 col-md-5 d-flex flex-column">
                               <label className="mb-1 tx-com">
-                                Upload CSV Containing Phone Numbers
+                                Upload CSV/Text File Containing Phone Numbers
                               </label>
                               <button className="btn tx-primary pd-x-0 pd-t-0 justify-content-start">
                                 <div className="d-flex pd-t-3">
@@ -833,7 +856,7 @@ const TargetAudience = ({
                                       filename={"mysogi-number-format"}
                                       data={csvData}
                                     >
-                                      Download Sample
+                                      Download CSV Sample
                                     </CSVLink>
                                   </div>
                                   {/* <p className="mb-0 pointer">
@@ -861,6 +884,63 @@ const TargetAudience = ({
                                 </div>
                                 <p className="mb-0">{csvName}</p>
                               </div>
+                            </div>
+                            <div className="col-md-6">
+                              {values.targetAudience.length > 0 && (
+                                <>
+                                  {/* <label className="mb-1 tx-com">
+                                      Preview Phone Numbers
+                                    </label> */}
+                                  <p className="tx-18 tx-com tx-semibold mb-0">
+                                    Preview Phone Numbers
+                                  </p>
+                                  <textarea
+                                    name="{previewUploadedNumbers}"
+                                    className="form-control mb-0"
+                                    defaultValue={previewUploadedNumbers.concat()}
+                                    disabled
+                                    resize={false}
+                                    rows={10}
+                                    placeholder="Preview uploaded numbers"
+                                  />
+                                  <p className="mb-10">
+                                    {values.targetAudience.length} numbers
+                                    loaded
+                                  </p>
+                                </>
+                              )}
+                              {/* {values.targetAudienceOption !== "mysogidb" && (
+                          <div className="mg-b-20 mg-md-b-10">
+                            <p className="tx-18 tx-com tx-semibold mb-0">
+                              Pricing
+                            </p>
+                            <div className="form-group mg-t-15">
+                              <label className="tx-14 tx-gray mb-1 tx-medium">
+                                Potential Audience Based on Manual Input
+                              </label>
+                              <p className="tx-18 tx-com tx-bold mb-0">
+                                {audience}{" "}
+                                <span className="tx-14 tx-gray tx-medium">
+                                  number(s) loaded
+                                </span>
+                              </p>
+                            </div>
+                            <div className="form-row mg-t-15 pd-x-0">
+                              <div className=" col-md-2 d-flex align-items-center">
+                                <p className="tx-18 tx-com tx-bold mb-0">
+                                  Amount:
+                                </p>{" "}
+                                <NumberFormat
+                                  className="badge tx-green tx-bold tx-18 tx-amt w-100 mt-0"
+                                  value={parseInt(setPrice())}
+                                  displayType={"text"}
+                                  thousandSeparator={true}
+                                  prefix={"₦"}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        )} */}
                             </div>
                           </div>
                         </div>
