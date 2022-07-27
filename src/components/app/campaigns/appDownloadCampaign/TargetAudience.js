@@ -286,7 +286,7 @@ const TargetAudience = ({
     const reader = new FileReader();
     reader.onload = (e) => {
       const text = e.target.result;
-      const result = text.trim().split(",").join("").trim().split(/\r?\n/);
+      const result = text.trim().split(",").join("").trim().split(/\s+/);
       // const result = text.trim().split(/\r?\n/);
       setParsedCsvData(result);
       setCsvName(files[0].name);
