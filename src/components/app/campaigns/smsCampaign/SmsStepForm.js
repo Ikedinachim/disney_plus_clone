@@ -76,7 +76,7 @@ export default class SmsStepForm extends Component {
         }
         return false;
       };
-      console.log("unicode", isDoubleByte(e.target.value));
+      // console.log("unicode", isDoubleByte(e.target.value));
       // console.log("`".match(/[\u0B80-\u0BFF]+/g));
       const convertUnicode = (text) => {
         return text.replace(/\\u([0-9a-fA-F]{4})/g, function (a, b) {
@@ -251,7 +251,6 @@ export default class SmsStepForm extends Component {
         }
       });
     let personalTxtUpload = parsedCsvData.map((Numbers) => Numbers);
-    console.log("uploadFileType", uploadFileType);
 
     let targetAudience = [];
 
@@ -291,12 +290,9 @@ export default class SmsStepForm extends Component {
     };
 
     /////////////////////////////
-    console.log("audience length", getAudience().length);
     const contactNumber = getAudience();
     const audience = getAudience().length;
     // const price = audience * 5 * smsCount;
-
-    console.log("audience", audience);
 
     const filterOptions = {
       ageRange:
@@ -334,7 +330,7 @@ export default class SmsStepForm extends Component {
       attachment: audioUrl,
     };
 
-    console.log(values);
+    // console.log(values);
 
     switch (step) {
       case 1:

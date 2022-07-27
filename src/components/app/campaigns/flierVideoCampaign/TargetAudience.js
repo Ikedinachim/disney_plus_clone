@@ -207,8 +207,6 @@ const TargetAudience = ({
     values.targetAudience.length
   );
 
-  console.log("previewUploadedNumbers", previewUploadedNumbers);
-
   const Continue = (e) => {
     e.preventDefault();
     // if (
@@ -291,13 +289,11 @@ const TargetAudience = ({
   };
 
   const showFile = (files) => {
-    console.log(files[0].name);
     const reader = new FileReader();
     reader.onload = (e) => {
       const text = e.target.result;
       const result = text.trim().split(",").join("").trim().split(/\r?\n/);
       // const result = text.trim().split(/\r?\n/);
-      console.log("result", result);
       setParsedCsvData(result);
       setCsvName(files[0].name);
       setUploadFileType("txt");
@@ -332,8 +328,6 @@ const TargetAudience = ({
     }
     getCsvRawData(parsedCsvData, uploadFileType);
   }, [dispatch, error, parsedCsvData, uploadFileType]);
-
-  console.log(values);
 
   return (
     <Fragment>
