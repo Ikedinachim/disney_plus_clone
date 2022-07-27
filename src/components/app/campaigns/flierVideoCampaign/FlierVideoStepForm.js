@@ -69,6 +69,7 @@ export default class FlierVideoStepForm extends Component {
     selectedFileName: "Upload Asset *png, *jpg, *gif",
 
     parsedCsvData: [],
+    uploadFileType: "",
 
     arrayState: undefined,
     rawLga: undefined,
@@ -371,6 +372,7 @@ export default class FlierVideoStepForm extends Component {
       // csvFile,
       csvArray,
       parsedCsvData,
+      uploadFileType,
       assetType,
       selectedFileName,
       uploadPercentage,
@@ -392,22 +394,58 @@ export default class FlierVideoStepForm extends Component {
 
     /////////////////////////////
 
-    const getCsvRawData = (data) => {
+    const getCsvRawData = (data, uploadFileType) => {
       this.setState({ parsedCsvData: data });
+      this.setState({ uploadFileType: uploadFileType });
     };
 
-    let personalUpload = parsedCsvData.map(({ Numbers }) => Numbers);
+    let personalUpload = parsedCsvData
+      .map(({ Numbers }) => Numbers)
+      .filter((element) => {
+        if (element !== null) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+
+    let personalTxtUpload = parsedCsvData.map((Numbers) => Numbers);
 
     let targetAudience = [];
 
+    // const getAudience2 = () => {
+    //   if (
+    //     personalUpload.length > 0 &&
+    //     targetAudienceOption === "manual_import"
+    //   ) {
+    //     return (targetAudience = personalUpload);
+    //   } else {
+    //     return (targetAudience = numbers.split(","));
+    //   }
+    // };
+
     const getAudience = () => {
       if (
+        uploadFileType === "csv" &&
         personalUpload.length > 0 &&
         targetAudienceOption === "manual_import"
       ) {
         return (targetAudience = personalUpload);
+      } else if (
+        uploadFileType === "txt" &&
+        personalTxtUpload.length > 0 &&
+        targetAudienceOption === "manual_import"
+      ) {
+        return (targetAudience = personalTxtUpload);
       } else {
-        return (targetAudience = numbers.split(","));
+        if (
+          targetAudienceOption === "manual_import" &&
+          (personalUpload.length === 0 || personalTxtUpload.length === 0)
+        ) {
+          return (targetAudience = []);
+        } else {
+          return (targetAudience = numbers.split(","));
+        }
       }
     };
 

@@ -23,6 +23,7 @@ export default class SmsStepForm extends Component {
     limit: "",
     contactNumberCount: 0,
     parsedCsvData: [],
+    uploadFileType: "",
     audioUrl: undefined,
     uploadPercentage: 0,
 
@@ -212,6 +213,7 @@ export default class SmsStepForm extends Component {
       revenueBand,
 
       parsedCsvData,
+      uploadFileType,
       characterCount,
       smsCount,
 
@@ -227,29 +229,54 @@ export default class SmsStepForm extends Component {
       arrayArea,
     } = this.state;
 
-    // console.log(rawLga);
+    // console.log("parsedCsvData", parsedCsvData);
     /////////////////////////////
 
-    const getCsvRawData = (data) => {
+    const getCsvRawData = (data, uploadFileType) => {
       this.setState({ parsedCsvData: data });
+      this.setState({ uploadFileType: uploadFileType });
     };
 
     // const setCharacterCount = () => {
     //   this.setState({ characterCount: campaignMessage.length });
     // };
 
-    let personalUpload = parsedCsvData.map(({ Numbers }) => Numbers);
+    let personalUpload = parsedCsvData
+      .map(({ Numbers }) => Numbers)
+      .filter((element) => {
+        if (element !== null) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+    let personalTxtUpload = parsedCsvData.map((Numbers) => Numbers);
+    console.log("uploadFileType", uploadFileType);
 
     let targetAudience = [];
 
     const getAudience = () => {
       if (
+        uploadFileType === "csv" &&
         personalUpload.length > 0 &&
         targetAudienceOption === "manual_import"
       ) {
         return (targetAudience = personalUpload);
+      } else if (
+        uploadFileType === "txt" &&
+        personalTxtUpload.length > 0 &&
+        targetAudienceOption === "manual_import"
+      ) {
+        return (targetAudience = personalTxtUpload);
       } else {
-        return (targetAudience = phoneNumber.split(","));
+        if (
+          targetAudienceOption === "manual_import" &&
+          (personalUpload.length === 0 || personalTxtUpload.length === 0)
+        ) {
+          return (targetAudience = []);
+        } else {
+          return (targetAudience = phoneNumber.split(","));
+        }
       }
     };
 
@@ -264,10 +291,12 @@ export default class SmsStepForm extends Component {
     };
 
     /////////////////////////////
-
+    console.log("audience length", getAudience().length);
     const contactNumber = getAudience();
     const audience = getAudience().length;
     // const price = audience * 5 * smsCount;
+
+    console.log("audience", audience);
 
     const filterOptions = {
       ageRange:
@@ -305,7 +334,7 @@ export default class SmsStepForm extends Component {
       attachment: audioUrl,
     };
 
-    // console.log(values);
+    console.log(values);
 
     switch (step) {
       case 1:
