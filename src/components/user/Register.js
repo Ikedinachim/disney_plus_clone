@@ -34,6 +34,7 @@ const Register = () => {
     businessConfirmPassword: "",
     businessPhone: "",
     businessEmail: "",
+    referralCode: "",
   });
 
   const { firstName, lastName, email, phone } = newUser;
@@ -140,6 +141,8 @@ const Register = () => {
     navigate,
     // gaEventTracker,
   ]);
+
+  console.log(newUser);
 
   return (
     <Fragment>
@@ -317,6 +320,15 @@ const Register = () => {
                           />
                         </div>
                         <div className="form-group">
+                          <input
+                            {...register("referralCode")}
+                            type="number"
+                            className="form-control new"
+                            placeholder="Enter Referral Code (Optional)"
+                            onChange={onChange}
+                          />
+                        </div>
+                        <div className="form-group">
                           <div className="col-lg-12 col-12 mg-t-15">
                             <div className="custom-control custom-checkbox pd-l-0">
                               <input
@@ -484,6 +496,14 @@ const Register = () => {
                             type="number"
                             className="form-control new"
                             placeholder="Phone Number"
+                          />
+                        </div>
+                        <div className="form-group">
+                          <input
+                            {...registerBusiness("referralCode")}
+                            type="number"
+                            className="form-control new"
+                            placeholder="Enter Referral Code (Optional)"
                           />
                         </div>
 

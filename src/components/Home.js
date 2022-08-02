@@ -124,7 +124,206 @@ const Home = () => {
               </div>
             </section>
             <section className="content-body" id="about">
-              <div className="container pd-y-30 pd-md-t-70 pd-md-b-0">
+              <div className="container pd-y-30 pd-md-t-70 pd-md-b-70">
+                <div className="col-lg-11 mx-auto pd-lg-t-70 pd-t-30">
+                  <div className="tx-center">
+                    <p className="tx-28 tx-com tx-bold mb-2">
+                      Get your audience’s attention with our services
+                    </p>
+                    <p className="tx-18 ">
+                      Let’s help secure the right audience with our services
+                    </p>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-6 mg-t-20">
+                      <div className="card-height">
+                        <img
+                          src="./assets/img/High_Visual_Display_Ads.svg"
+                          className="img-fluid "
+                          data-aos="fade-up"
+                          data-aos-duration={2000}
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div className="col-md-6 mg-t-20 pd-md-b-100">
+                      <div className=" card-height vert-container">
+                        <div
+                          className="vert-center animate__slower"
+                          data-aos="fade-down"
+                          data-aos-duration={2000}
+                        >
+                          <p className="tx-28 tx-bold tx-com">
+                            Voice/Smart SMS Messaging
+                          </p>
+                          <p className="tx-18 tx-blac mg-b-80">
+                            A special kind of messaging that send targeted
+                            campaigns to customers or gives your target audience
+                            a phone call with your pre-recorded messages.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <section className="bg-reddish">
+                <div className="container">
+                  <div className="col-xl-11 mx-auto">
+                    <div>
+                      <div className="row">
+                        <div className="col-md-6 order-2 order-md-1 mg-t-20">
+                          <div className=" card-height vert-container">
+                            <div
+                              className="vert-center"
+                              data-aos="fade-left"
+                              data-aos-duration={2000}
+                            >
+                              <p className="tx-28 tx-bold tx-com">
+                                Digital Ads
+                              </p>
+                              <p className="tx-18 tx-blac">
+                                We utilize display ads to reach our target
+                                audience when consuming relevant content on the
+                                network. With this data, we combine the best
+                                appraoch to reach them
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-md-6 order-1 order-md-2 mg-y-20 d-flex justify-content-center">
+                          <div className="card-height">
+                            <img
+                              src="./assets/img/Call_Ads.svg"
+                              className="img-fluid"
+                              data-aos="fade-right"
+                              data-aos-duration={2000}
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <section>
+                <div className="container pb-md-5">
+                  <div className="col-xl-11 mx-auto">
+                    <div className="row">
+                      <div className="col-md-6 mg-t-20 d-flex justify-content-center">
+                        <div className="card-height">
+                          <img
+                            src="./assets/img/SMS_Ads.svg"
+                            className="img-fluid img-neg"
+                            data-aos="fade-left"
+                            data-aos-duration={2000}
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-6 mg-t-20">
+                        <div className=" card-height vert-container">
+                          <div
+                            className="vert-center"
+                            data-aos="fade-right"
+                            data-aos-duration={2000}
+                          >
+                            <p className="tx-28 tx-bold tx-com">
+                              SMS Marketing
+                            </p>
+                            <p className="tx-18 tx-blac">
+                              Our SMS Marketing service mostly delivers messages
+                              on latest updates, time-sensitive offers, product
+                              launches, alerts, notifications and any other form
+                              of promotional information.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <section className="bg-reddish">
+                <div className="container">
+                  <div className="col-xl-11 mx-auto">
+                    <div>
+                      <div className="row">
+                        <div className="col-md-6 order-2 order-md-1 mg-y-20">
+                          <div className=" card-height vert-container">
+                            <div
+                              className="vert-center"
+                              data-aos="fade-left"
+                              data-aos-duration={2000}
+                            >
+                              <p className="tx-28 tx-bold tx-com">
+                                Influencer Marketing
+                              </p>
+                              <p className="tx-18 tx-blac">
+                                Mysogi ads offers the ideal platform for
+                                advertisers to engage influencers to promote
+                                their products and services on their social
+                                media platforms at a cost.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-md-6 order-1 order-md-2 mg-y-20 d-flex justify-content-center">
+                          <div className="card-height">
+                            <img
+                              src="./assets/img/Call_Ads.svg"
+                              className="img-fluid"
+                              data-aos="fade-right"
+                              data-aos-duration={2000}
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <section>
+                <div className="container pb-md-5">
+                  <div className="col-xl-11 mx-auto">
+                    <div className="row">
+                      <div className="col-md-6 mg-t-20">
+                        <div className="card-height">
+                          <img
+                            src="./assets/img/SMS_Ads.svg"
+                            className="img-fluid img-neg"
+                            data-aos="fade-left"
+                            data-aos-duration={2000}
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-6 mg-t-20">
+                        <div className=" card-height vert-container">
+                          <div
+                            className="vert-center"
+                            data-aos="fade-right"
+                            data-aos-duration={2000}
+                          >
+                            <p className="tx-28 tx-bold tx-com">
+                              Billboard Marketing
+                            </p>
+                            <p className="tx-18 tx-blac">
+                              With Billboards displayed in strategic locations
+                              across the country, you can reach your customers
+                              with promotional information, product offers and
+                              alerts.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <div className="container pd-y-30 pd-md-t-70 pd-md-b-0 bg-reddish">
                 <div className="row mg-t-10 tx-center">
                   <div className="col-md-6 mg-t-20">
                     <div className="card-height">
@@ -165,7 +364,7 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-              <div className="container pd-y-30 pd-md-t-70 pd-md-b-0">
+              <div className="container pd-y-30 pd-md-t-70 pd-md-b-70">
                 <p className="tx-28 tx-com tx-center tx-bold mb-0">
                   Why Mysogi?
                 </p>
@@ -227,122 +426,8 @@ const Home = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-11 mx-auto pd-lg-t-70 pd-t-30">
-                  <div className="tx-center">
-                    <p className="tx-28 tx-com tx-bold mb-2">
-                      Get your audience’s attention
-                    </p>
-                    <p className="tx-18 ">
-                      Let’s help secure the right audience with our options
-                    </p>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-6 mg-t-20">
-                      <div className="card-height">
-                        <img
-                          src="./assets/img/High_Visual_Display_Ads.svg"
-                          className="img-fluid "
-                          data-aos="fade-up"
-                          data-aos-duration={2000}
-                          alt=""
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-6 mg-t-20 pd-md-b-100">
-                      <div className=" card-height vert-container">
-                        <div
-                          className="vert-center animate__slower"
-                          data-aos="fade-down"
-                          data-aos-duration={2000}
-                        >
-                          <p className="tx-28 tx-bold tx-com">
-                            High Visual Display Ads
-                          </p>
-                          <p className="tx-18 tx-blac mg-b-80">
-                            Capture attention with eye striking visuals and
-                            reach highly engaged users with prominent ad spots
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
-              <section className="bg-reddish">
-                <div className="container">
-                  <div className="col-xl-11 mx-auto">
-                    <div>
-                      <div className="row">
-                        <div className="col-md-6 order-2 order-md-1 mg-t-20">
-                          <div className=" card-height vert-container">
-                            <div
-                              className="vert-center"
-                              data-aos="fade-left"
-                              data-aos-duration={2000}
-                            >
-                              <p className="tx-28 tx-bold tx-com">
-                                Phone Call Ads
-                              </p>
-                              <p className="tx-18 tx-blac">
-                                Promote your brand on calls and enhance recall,
-                                especially in media dark region
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-md-6 order-1 order-md-2 mg-t-20">
-                          <div className="card-height">
-                            <img
-                              src="./assets/img/Call_Ads.svg"
-                              className="img-fluid img-negg"
-                              data-aos="fade-right"
-                              data-aos-duration={2000}
-                              alt=""
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>
-              <section>
-                <div className="container pb-md-5">
-                  <div className="col-xl-11 mx-auto">
-                    <div className="row">
-                      <div className="col-md-6 mg-t-20">
-                        <div className="card-height">
-                          <img
-                            src="./assets/img/SMS_Ads.svg"
-                            className="img-fluid img-neg"
-                            data-aos="fade-left"
-                            data-aos-duration={2000}
-                            alt=""
-                          />
-                        </div>
-                      </div>
-                      <div className="col-md-6 mg-t-20">
-                        <div className=" card-height vert-container">
-                          <div
-                            className="vert-center"
-                            data-aos="fade-right"
-                            data-aos-duration={2000}
-                          >
-                            <p className="tx-28 tx-bold tx-com">
-                              One to One SMS
-                            </p>
-                            <p className="tx-18 tx-blac">
-                              Deliver information with a high success rate and
-                              support your digital marketing efforts
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>
-              <section id="mysogi-products">
+              {/* <section id="mysogi-products">
                 <div className="container pd-y-30 pd-md-t-70 pd-md-b-0">
                   <p className="tx-28 tx-com tx-center tx-bold mb-0">
                     Products
@@ -487,7 +572,7 @@ const Home = () => {
                     </div>
                   </div>
                 </div>
-              </section>
+              </section> */}
               <section className="bg-reddish" id="mysogi-contact">
                 <div className="container py-1">
                   <div className="mg-md-t-40 mg-t-30">

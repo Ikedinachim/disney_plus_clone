@@ -14,7 +14,7 @@ const Footer = () => {
             <div className="col-md-2 col-6=12 pd-md-b-0 pd-b-20">
               <img src="./assets/img/logo.png" alt="" className="w-inherit" />
             </div>
-            <div className="col-md-5 col-12 pd-md-b-0 pd-b-20">
+            <div className="col-md-3 col-12 pd-md-b-0 pd-b-20">
               <ul className="list-unstyled tx-16 tx-bold footer-link tx-center">
                 <h2 className="tx-white tx-primary tx-com tx-bold tx-20">
                   Quick Links
@@ -35,7 +35,7 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
-            <div className="col-md-5 col-12 pd-md-b-0 pd-b-20">
+            <div className="col-md-4 col-12 pd-md-b-0 pd-b-20">
               <ul className="list-unstyled tx-16 tx-bold footer-link tx-center">
                 <h2 className="tx-white tx-primary tx-com tx-bold tx-20">
                   Our Services
@@ -54,6 +54,40 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link to="">Billboard Marketing</Link>
+                </li>
+              </ul>
+            </div>
+            <div className="col-md-3 col-12 pd-md-b-0 pd-b-20">
+              <ul className="list-unstyled tx-16 tx-bold footer-link tx-right">
+                <h2 className="tx-white tx-primary tx-com tx-bold tx-20">
+                  Contact Info
+                </h2>
+                <li className="text-capitalize tx-bold tx-com">
+                  <p className="tx-com">
+                    3 Adedoyin Ogungbe Crecent,
+                    <br />
+                    Lekki Phase 1,
+                    <br />
+                    Lagos, Nigeria
+                  </p>
+                </li>
+                <li>
+                  <a href="tel://+2349130111111">
+                    <i
+                      className="fa fa-phone mg-r-10 tx-primary tx-semibold"
+                      style={{ fontSize: "20px" }}
+                    ></i>
+                    +234 913 011 1111
+                  </a>
+                </li>
+                <li>
+                  <a href="mailto:info@mysogi.com.ng">
+                    <i
+                      className="fa fa-envelope-open mg-r-10 tx-primary tx-semibold"
+                      style={{ fontSize: "20px" }}
+                    ></i>
+                    info@mysogi.com.ng
+                  </a>
                 </li>
               </ul>
             </div>
@@ -102,24 +136,39 @@ const Footer = () => {
                   </Link>
                 </p>
                 <div className="mg-l-10">
-                  <Link to="http://" className="tx-white">
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href="https://www.instagram.com/mysogiads/"
+                    className="tx-white"
+                  >
                     <i
-                      className="fab fa-twitter mg-l-20 text-white"
+                      className="fab fa-instagram mg-l-20 text-white"
                       style={{ fontSize: "20px" }}
                     ></i>
-                  </Link>
-                  <Link to="http://" className="tx-white">
+                  </a>
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href="https://www.facebook.com/mysogiads/"
+                    className="tx-white"
+                  >
                     <i
                       className="fab fa-facebook-f mg-l-20 tx-white"
                       style={{ fontSize: "20px" }}
                     ></i>
-                  </Link>
-                  <Link to="http://" className="tx-white">
+                  </a>
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href="https://www.linkedin.com/company/mysogicompanylimited/"
+                    className="tx-white"
+                  >
                     <i
                       className="fab fa-linkedin-in mg-l-20 tx-white"
                       style={{ fontSize: "20px" }}
                     ></i>
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>
