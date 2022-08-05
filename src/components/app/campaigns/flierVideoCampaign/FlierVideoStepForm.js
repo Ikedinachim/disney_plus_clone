@@ -50,6 +50,7 @@ export default class FlierVideoStepForm extends Component {
     characterCount: 0,
     smsCount: 0,
     callToActionCount: 0,
+    signature: 0,
 
     scheduleOption: "none",
     scheduleTime: "",
@@ -95,8 +96,19 @@ export default class FlierVideoStepForm extends Component {
     if (input === "campaignMessage") {
       this.setState({ characterCount: e.target.value.length });
       this.setState({
-        smsCount: Math.ceil((e.target.value.length + 25) / 160),
+        smsCount: Math.ceil((e.target.value.length + this.state.signature  + 25) / 160),
       });
+    } else if (input === "signatureField") {
+      const convertUnicode = (text) => {
+        return text.replace(/\\u([0-9a-fA-F]{4})/g, function (a, b) {
+          var charcode = parseInt(b, 16);
+          return String.fromCharCode(charcode);
+        });
+      };
+      this.setState({
+        signature: convertUnicode(e.target.value).length,
+      });
+      this.setState({ [input]: convertUnicode(e.target.value) });
     } else if (input === "callToAction") {
       this.setState({ callToActionCount: e.target.value.length });
     }
@@ -317,6 +329,10 @@ export default class FlierVideoStepForm extends Component {
     this.setState({ contactNumberCount: count });
   };
 
+  handleSignatureCount = (count) => {
+    this.setState({ signature: count });
+  };
+
   handleStateChange = (state) => {
     this.setState({ arrayState: state });
   };
@@ -379,6 +395,7 @@ export default class FlierVideoStepForm extends Component {
       characterCount,
       smsCount,
       callToActionCount,
+      signature,
 
       scheduleOption,
       scheduleTime,
@@ -530,6 +547,7 @@ export default class FlierVideoStepForm extends Component {
       csvArray,
       limit,
       contactNumberCount,
+      signature,
       price,
       budget,
       assetType,
@@ -557,6 +575,7 @@ export default class FlierVideoStepForm extends Component {
             handleImageUpload={this.handleImageUpload}
             handleImageDelete={this.handleImageDelete}
             selectedFileName={selectedFileName}
+            signature={signature}
             uploadPercentage={uploadPercentage}
             characterCount={characterCount}
             smsCount={smsCount}

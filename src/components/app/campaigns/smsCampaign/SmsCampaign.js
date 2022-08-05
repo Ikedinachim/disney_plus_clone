@@ -22,6 +22,7 @@ const SmsCampaign = ({
   smsCount,
   uploadPercentage,
   selectedFileName,
+  signature
 }) => {
   // const alert = useAlert();
   const dispatch = useDispatch();
@@ -203,6 +204,21 @@ const SmsCampaign = ({
                             <div className="form-group col-md-6 mb-2 d-flex justify-content-between">
                               <p>{characterCount} Characters</p>
                               <p>{smsCount} SMS</p>
+                            </div>
+                            {/*Signature field */}
+                            <div className="form-group col-md-6 mb-2">
+                              <label className="mb-1">Signature Field</label>
+                              <textarea
+                                className="form-control"
+                                rows={1}
+                                placeholder="Write a signature here, not longer than 11 characters (optional)"
+                                onChange={handleChange("signatureField")}
+                                defaultValue={values.campaignMessage}
+                                maxLength={11}
+                              />
+                            </div>
+                            <div className="form-group col-md-6 mb-2 d-flex justify-content-between tx-12 tx-italic tx-gray-400">
+                              <p>{11 - signature} Characters</p>
                             </div>
                           </>
                         ) : (

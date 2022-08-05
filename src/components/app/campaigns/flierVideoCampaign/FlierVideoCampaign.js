@@ -25,6 +25,7 @@ const FlierVideoCampaign = ({
   handleImageDelete,
   uploadPercentage,
   characterCount,
+  signature,
   smsCount,
   callToActionCount,
   videoError,
@@ -378,6 +379,27 @@ const FlierVideoCampaign = ({
                             </div>
                           )}
                         </div>
+                        {values.channel === "smart_sms" ? (
+                          <>
+                            {/*Signature field */}
+                            <div className="form-group mb-2">
+                              <label className="mb-1">Signature Field</label>
+                              <textarea
+                                className="form-control"
+                                rows={1}
+                                placeholder="Write a signature here, not longer than 11 characters (optional)"
+                                onChange={handleChange("signatureField")}
+                                defaultValue={values.campaignMessage}
+                                maxLength={11}
+                              />
+                            </div>
+                            <div className="d-flex justify-content-between mg-0 tx-12 tx-italic tx-gray-400">
+                              <p>
+                                {11 - signature} Characters Left
+                              </p>
+                            </div>
+                          </>
+                        ) : null}
                         <div className="mg-t-20">
                           <p className="tx-24 tx-bold mb-1 tx-com">
                             Attachment
