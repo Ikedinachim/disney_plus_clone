@@ -24,6 +24,7 @@ const AppDownloadCampaign = ({
   // attachmentPreview,
   selectedFileName,
   uploadPercentage,
+  signature,
   characterCount,
   smsCount,
   callToActionCount,
@@ -284,6 +285,25 @@ const AppDownloadCampaign = ({
                               </div>
                             )}
                           </div>
+                          {values.channel === "smart_sms" ? (
+                            <>
+                              {/*Signature field */}
+                              <div className="form-group mb-2">
+                                <label className="mb-1">Signature Field</label>
+                                <input
+                                  className="form-control"
+                                  rows={1}
+                                  placeholder="Write a signature here, not longer than 11 characters (optional)"
+                                  onChange={handleChange("signature")}
+                                  defaultValue={values.campaignMessage}
+                                  maxLength={11}
+                                />
+                              </div>
+                              <div className="d-flex justify-content-between mg-0 tx-12 tx-italic tx-gray-400">
+                                <p>{11 - signature.length} Characters Left</p>
+                              </div>
+                            </>
+                          ) : null}
                           <div className="mg-t-30">
                             <p className="tx-24 tx-bold mb-1 tx-com">
                               Attachment

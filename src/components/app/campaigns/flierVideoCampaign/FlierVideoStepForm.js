@@ -50,7 +50,7 @@ export default class FlierVideoStepForm extends Component {
     characterCount: 0,
     smsCount: 0,
     callToActionCount: 0,
-    signature: 0,
+    signature: "",
 
     scheduleOption: "none",
     scheduleTime: "",
@@ -96,19 +96,8 @@ export default class FlierVideoStepForm extends Component {
     if (input === "campaignMessage") {
       this.setState({ characterCount: e.target.value.length });
       this.setState({
-        smsCount: Math.ceil((e.target.value.length + this.state.signature  + 25) / 160),
+        smsCount: Math.ceil((e.target.value.length + this.state.signature.length  + 25) / 160),
       });
-    } else if (input === "signatureField") {
-      const convertUnicode = (text) => {
-        return text.replace(/\\u([0-9a-fA-F]{4})/g, function (a, b) {
-          var charcode = parseInt(b, 16);
-          return String.fromCharCode(charcode);
-        });
-      };
-      this.setState({
-        signature: convertUnicode(e.target.value).length,
-      });
-      this.setState({ [input]: convertUnicode(e.target.value) });
     } else if (input === "callToAction") {
       this.setState({ callToActionCount: e.target.value.length });
     }

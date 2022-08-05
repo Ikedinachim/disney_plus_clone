@@ -38,7 +38,7 @@ export default class SmsStepForm extends Component {
     deviceBrand: "",
     revenueBand: "",
     characterCount: 0,
-    signature: 0,
+    signature: "",
     smsCount: 0,
 
     scheduleOption: "none",
@@ -89,21 +89,16 @@ export default class SmsStepForm extends Component {
       this.setState({ characterCount: convertUnicode(e.target.value).length});
       this.setState({
         smsCount: Math.ceil(
-          (convertUnicode(e.target.value).length + this.state.signature + 25) /
+          (convertUnicode(e.target.value).length + this.state.signature.length + 25) /
             160
         ),
       });
       this.setState({ [input]: convertUnicode(e.target.value) });
-    } else if (input === "signatureField") {
-      const convertUnicode = (text) => {
-        return text.replace(/\\u([0-9a-fA-F]{4})/g, function (a, b) {
-          var charcode = parseInt(b, 16);
-          return String.fromCharCode(charcode);
-        });
-      };
-      this.setState({ signature: convertUnicode(e.target.value).length });
-      this.setState({ [input]: convertUnicode(e.target.value) });
-    } else {
+    } else if (input === "campaignMessage") {
+      this.setState({ campaignMessage: this.state.campaignMessage + this.state.signature })
+      this.setState({ [input]: e.target.value });
+     }
+    else {
       this.setState({ [input]: e.target.value });
     }
   };

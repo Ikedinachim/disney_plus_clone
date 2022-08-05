@@ -384,18 +384,18 @@ const FlierVideoCampaign = ({
                             {/*Signature field */}
                             <div className="form-group mb-2">
                               <label className="mb-1">Signature Field</label>
-                              <textarea
+                              <input
                                 className="form-control"
                                 rows={1}
                                 placeholder="Write a signature here, not longer than 11 characters (optional)"
-                                onChange={handleChange("signatureField")}
+                                onChange={handleChange("signature")}
                                 defaultValue={values.campaignMessage}
                                 maxLength={11}
                               />
                             </div>
                             <div className="d-flex justify-content-between mg-0 tx-12 tx-italic tx-gray-400">
                               <p>
-                                {11 - signature} Characters Left
+                                {11 - signature.length} Characters Left
                               </p>
                             </div>
                           </>
