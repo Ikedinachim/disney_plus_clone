@@ -318,10 +318,6 @@ export default class FlierVideoStepForm extends Component {
     this.setState({ contactNumberCount: count });
   };
 
-  handleSignatureCount = (count) => {
-    this.setState({ signature: count });
-  };
-
   handleStateChange = (state) => {
     this.setState({ arrayState: state });
   };

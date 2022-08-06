@@ -22,7 +22,6 @@ const SmsCampaign = ({
   smsCount,
   uploadPercentage,
   selectedFileName,
-  signature
 }) => {
   // const alert = useAlert();
   const dispatch = useDispatch();
@@ -199,7 +198,7 @@ const SmsCampaign = ({
                                 placeholder="Type your ad message here e.g Get up to 50% discount on first purchase"
                                 onChange={handleChange("campaignMessage")}
                                 defaultValue={values.campaignMessage}
-                              />
+                             /> 
                             </div>
                             <div className="form-group col-md-6 mb-2 d-flex justify-content-between">
                               <p>{characterCount} Characters</p>
@@ -210,15 +209,14 @@ const SmsCampaign = ({
                               <label className="mb-1">Signature Field</label>
                               <input
                                 className="form-control"
-                                rows={1}
                                 placeholder="Write a signature here, not longer than 11 characters (optional)"
                                 onChange={handleChange("signature")}
-                                defaultValue={values.campaignMessage}
+                                defaultValue={values.signature}
                                 maxLength={11}
                               />
                             </div>
                             <div className="form-group col-md-6 mb-2 d-flex justify-content-between tx-12 tx-italic tx-gray-400">
-                              <p>{11 - signature.length} Characters</p>
+                              <p>{11 - values.signature.length} Characters</p>
                             </div>
                           </>
                         ) : (

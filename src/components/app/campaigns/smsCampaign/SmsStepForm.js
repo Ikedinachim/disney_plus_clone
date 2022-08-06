@@ -94,10 +94,7 @@ export default class SmsStepForm extends Component {
         ),
       });
       this.setState({ [input]: convertUnicode(e.target.value) });
-    } else if (input === "campaignMessage") {
-      this.setState({ campaignMessage: this.state.campaignMessage + this.state.signature })
-      this.setState({ [input]: e.target.value });
-     }
+    }
     else {
       this.setState({ [input]: e.target.value });
     }
@@ -107,10 +104,6 @@ export default class SmsStepForm extends Component {
     this.setState({ contactNumberCount: count });
   };
   
-  handleSignatureCount = (count) => {
-    this.setState({signature: count})
-  }
-
   handleStateChange = (state) => {
     this.setState({ arrayState: state });
   };
