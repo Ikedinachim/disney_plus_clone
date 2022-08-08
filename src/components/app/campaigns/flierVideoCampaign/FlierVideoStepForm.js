@@ -50,6 +50,7 @@ export default class FlierVideoStepForm extends Component {
     characterCount: 0,
     smsCount: 0,
     callToActionCount: 0,
+    signature: "",
 
     scheduleOption: "none",
     scheduleTime: "",
@@ -95,7 +96,7 @@ export default class FlierVideoStepForm extends Component {
     if (input === "campaignMessage") {
       this.setState({ characterCount: e.target.value.length });
       this.setState({
-        smsCount: Math.ceil((e.target.value.length + 25) / 160),
+        smsCount: Math.ceil((e.target.value.length + this.state.signature.length  + 25) / 160),
       });
     } else if (input === "callToAction") {
       this.setState({ callToActionCount: e.target.value.length });
@@ -379,6 +380,7 @@ export default class FlierVideoStepForm extends Component {
       characterCount,
       smsCount,
       callToActionCount,
+      signature,
 
       scheduleOption,
       scheduleTime,
@@ -530,6 +532,7 @@ export default class FlierVideoStepForm extends Component {
       csvArray,
       limit,
       contactNumberCount,
+      signature,
       price,
       budget,
       assetType,
@@ -557,6 +560,7 @@ export default class FlierVideoStepForm extends Component {
             handleImageUpload={this.handleImageUpload}
             handleImageDelete={this.handleImageDelete}
             selectedFileName={selectedFileName}
+            signature={signature}
             uploadPercentage={uploadPercentage}
             characterCount={characterCount}
             smsCount={smsCount}

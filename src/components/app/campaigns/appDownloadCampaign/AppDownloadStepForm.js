@@ -36,6 +36,7 @@ export default class AppDownloadStepForm extends Component {
     characterCount: 0,
     smsCount: 0,
     callToActionCount: 0,
+    signature: "",
 
     scheduleOption: "none",
     scheduleTime: "",
@@ -82,7 +83,8 @@ export default class AppDownloadStepForm extends Component {
       this.setState({
         smsCount: Math.ceil((e.target.value.length + 25) / 160),
       });
-    } else if (input === "callToAction") {
+    }
+    else if (input === "callToAction") {
       this.setState({ callToActionCount: e.target.value.length });
     }
     this.setState({ [input]: e.target.value });
@@ -325,6 +327,7 @@ export default class AppDownloadStepForm extends Component {
       campaignMessage,
       callToAction,
       timeRangeFrom,
+      signature,
       timeRangeTo,
       // attachment,
       imageUrl,
@@ -488,6 +491,7 @@ export default class AppDownloadStepForm extends Component {
       alternateSenderId,
       channel,
       campaignMessage,
+      signature,
       timeRange,
       callToAction,
       attachment: setAssets(),
@@ -526,6 +530,7 @@ export default class AppDownloadStepForm extends Component {
             uploadPercentage={uploadPercentage}
             characterCount={characterCount}
             smsCount={smsCount}
+            signature={signature}
             callToActionCount={callToActionCount}
             videoError={videoError}
           />
