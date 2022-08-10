@@ -37,7 +37,7 @@ export default class SmsStepForm extends Component {
     deviceBrand: "",
     revenueBand: "",
     characterCount: 0,
-    smsCount: 0,
+    smsCount: 1,
 
     scheduleOption: "none",
     scheduleTime: "",
@@ -86,7 +86,7 @@ export default class SmsStepForm extends Component {
       };
       this.setState({ characterCount: convertUnicode(e.target.value).length });
       this.setState({
-        smsCount: Math.ceil((convertUnicode(e.target.value).length + 25) / 160),
+        smsCount: Math.ceil(convertUnicode(e.target.value).length / 160),
       });
       this.setState({ [input]: convertUnicode(e.target.value) });
     } else {
@@ -330,7 +330,7 @@ export default class SmsStepForm extends Component {
       attachment: audioUrl,
     };
 
-    // console.log(values);
+    console.log(values);
 
     switch (step) {
       case 1:
@@ -383,6 +383,7 @@ export default class SmsStepForm extends Component {
             handleCount={this.handleCount}
             ageRangeFrom={ageRangeFrom}
             ageRangeTo={ageRangeTo}
+            smsCount={smsCount}
           />
         );
       case 4:
@@ -391,6 +392,7 @@ export default class SmsStepForm extends Component {
             prevStep={this.prevStep}
             nextStep={this.nextStep}
             values={values}
+            smsCount={smsCount}
           />
         );
       default:

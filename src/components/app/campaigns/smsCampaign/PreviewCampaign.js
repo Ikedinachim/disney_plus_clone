@@ -25,6 +25,7 @@ const PreviewCampaign = ({
   handleCount,
   filterOptions,
   handleChange,
+  smsCount,
 }) => {
   const { error, createSmsCampaign, loading } = useSelector(
     (state) => state.smsCampaign || []
@@ -79,7 +80,8 @@ const PreviewCampaign = ({
       return (
         parseInt(values.limit) *
         5 *
-        setScheduleDate(values.scheduleFrom, values.scheduleTo)
+        setScheduleDate(values.scheduleFrom, values.scheduleTo) *
+        smsCount
       );
     } else if (values.limit !== "" && values.channel === "voice_sms") {
       return (
@@ -97,7 +99,8 @@ const PreviewCampaign = ({
       return filteredContactList
         ? filteredContactList.count *
             5 *
-            setScheduleDate(values.scheduleFrom, values.scheduleTo)
+            setScheduleDate(values.scheduleFrom, values.scheduleTo) *
+            smsCount
         : 0;
     }
   };
@@ -575,9 +578,9 @@ const PreviewCampaign = ({
                       <div className="mg-t-20 d-flex">
                         {parseInt(wallet.balance) < values.price ||
                         (values.targetAudienceOption === "mysogidb" &&
-                          parseInt(wallet.balance) < setPrice() &&
+                          parseInt(wallet.balance) < parseInt(setPrice()) &&
                           parseInt(wallet.balance) <
-                            filteredContactList.count) ? (
+                            filteredContactList.count * 5 * smsCount) ? (
                           <button
                             className="btn btn-primary w-100 tx-com mg-r-15"
                             onClick={Continue}

@@ -19,7 +19,7 @@ import {
   CONFIRM_FUNDING_RESET,
 } from "../../../../constants/billingConstants";
 
-const FundWalletSMS = ({ prevStep, values }) => {
+const FundWalletSMS = ({ prevStep, values, smsCount }) => {
   // const alert = useAlert();
   const setScheduleDate = (initialDate, endDate) => {
     let day1 = new Date(initialDate);
@@ -47,15 +47,18 @@ const FundWalletSMS = ({ prevStep, values }) => {
           values.limit
             ? values.limit *
                 5 *
+                smsCount *
                 setScheduleDate(values.scheduleFrom, values.scheduleTo) -
                 wallet.balance
             : filteredContactList.filteredContactList.count *
                 5 *
+                smsCount *
                 setScheduleDate(values.scheduleFrom, values.scheduleTo) -
                 wallet.balance
         )
       : Math.ceil(
           values.price *
+            smsCount *
             setScheduleDate(values.scheduleFrom, values.scheduleTo) -
             wallet.balance
         )
