@@ -19,14 +19,14 @@ import {
   CONFIRM_FUNDING_RESET,
 } from "../../../../constants/billingConstants";
 
-const FundWalletSMS = ({ prevStep, values }) => {
+const FundWalletSMS = ({ prevStep, values, smsCount }) => {
   // const alert = useAlert();
   const setScheduleDate = (initialDate, endDate) => {
     let day1 = new Date(initialDate);
     let day2 = new Date(endDate);
 
     const difference = Math.abs(day2 - day1);
-    const days = difference / (1000 * 3600 * 24);
+    const days = difference / (1000 * 3600 * 24) + 1;
 
     if (values.scheduleOption !== "recurrent" || days < 1 || !days) {
       return 1;
@@ -47,10 +47,12 @@ const FundWalletSMS = ({ prevStep, values }) => {
           values.limit
             ? values.limit *
                 5 *
+                smsCount *
                 setScheduleDate(values.scheduleFrom, values.scheduleTo) -
                 wallet.balance
             : filteredContactList.filteredContactList.count *
                 5 *
+                smsCount *
                 setScheduleDate(values.scheduleFrom, values.scheduleTo) -
                 wallet.balance
         )

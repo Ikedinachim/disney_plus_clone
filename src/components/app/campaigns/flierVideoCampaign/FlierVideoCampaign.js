@@ -363,8 +363,8 @@ const FlierVideoCampaign = ({
                                   : undefined
                               }
                               placeholder="Type your ad message here"
-                              defaultValue={values.campaignMessage}
                               onChange={handleChange("campaignMessage")}
+                              value={values.campaignMessage}
                             />
                           </div>
                           {values.channel === "display_ads" ? (
@@ -382,7 +382,7 @@ const FlierVideoCampaign = ({
                           <>
                             {/*values.signature field */}
                             <div className="form-group mb-2">
-                              <label className="mb-1">values.signature Field</label>
+                              <label className="mb-1">Signature Field</label>
                               <input
                                 className="form-control"
                                 rows={1}
@@ -834,7 +834,10 @@ const FlierVideoCampaign = ({
                                   alt=""
                                 />
                                 <p className="mb-4 pd-x-20 tx-black tx-bold">
-                                  {values.campaignMessage}
+                                  {values.campaignMessage +
+                                    (values.signature !== ""
+                                      ? " - " + values.signature
+                                      : "")}
                                 </p>
                               </div>
                             ) : (
@@ -846,7 +849,10 @@ const FlierVideoCampaign = ({
                                   />
                                 </div>
                                 <p className="mb-4 pd-x-20 tx-black tx-bold">
-                                  {values.campaignMessage}
+                                  {values.campaignMessage +
+                                    (values.signature !== ""
+                                      ? " - " + values.signature
+                                      : "")}
                                 </p>
                               </>
                             )}

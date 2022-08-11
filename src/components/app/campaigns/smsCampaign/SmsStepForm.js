@@ -39,7 +39,7 @@ export default class SmsStepForm extends Component {
     revenueBand: "",
     characterCount: 0,
     signature: "",
-    smsCount: 0,
+    smsCount: 1,
 
     scheduleOption: "none",
     scheduleTime: "",
@@ -86,16 +86,32 @@ export default class SmsStepForm extends Component {
           return String.fromCharCode(charcode);
         });
       };
-      this.setState({ characterCount: convertUnicode(e.target.value).length});
+      this.setState({
+        characterCount:
+          convertUnicode(e.target.value).length + this.state.signature.length,
+      });
       this.setState({
         smsCount: Math.ceil(
-          (convertUnicode(e.target.value).length + this.state.signature.length + 25) /
+          (convertUnicode(e.target.value).length +
+            this.state.signature.length) /
             160
         ),
       });
       this.setState({ [input]: convertUnicode(e.target.value) });
-    }
-    else {
+    } else if (input === "signature") {
+      this.setState({
+        [input]: e.target.value,
+      });
+      this.setState({
+        characterCount:
+          e.target.value.length + this.state.campaignMessage.length,
+      });
+      this.setState({
+        smsCount: Math.ceil(
+          (e.target.value.length + this.state.campaignMessage.length) / 160
+        ),
+      });
+    } else {
       this.setState({ [input]: e.target.value });
     }
   };
@@ -103,7 +119,7 @@ export default class SmsStepForm extends Component {
   handleCount = (count) => {
     this.setState({ contactNumberCount: count });
   };
-  
+
   handleStateChange = (state) => {
     this.setState({ arrayState: state });
   };
@@ -349,7 +365,7 @@ export default class SmsStepForm extends Component {
             handleChange={this.handleChange}
             values={values}
             characterCount={characterCount}
-            signature = {signature}
+            signature={signature}
             smsCount={smsCount}
             onChangeAttachment={this.onChangeAttachment}
             handleAudioUpload={this.handleAudioUpload}
@@ -393,6 +409,7 @@ export default class SmsStepForm extends Component {
             handleCount={this.handleCount}
             ageRangeFrom={ageRangeFrom}
             ageRangeTo={ageRangeTo}
+            smsCount={smsCount}
           />
         );
       case 4:
@@ -401,6 +418,7 @@ export default class SmsStepForm extends Component {
             prevStep={this.prevStep}
             nextStep={this.nextStep}
             values={values}
+            smsCount={smsCount}
           />
         );
       default:

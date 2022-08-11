@@ -298,7 +298,9 @@ const AppDownloadCampaign = ({
                                 />
                               </div>
                               <div className="d-flex justify-content-between mg-0 tx-12 tx-italic tx-gray-400">
-                                <p>{11 - values.signature.length} Characters Left</p>
+                                <p>
+                                  {11 - values.signature.length} Characters Left
+                                </p>
                               </div>
                             </>
                           ) : null}
@@ -480,7 +482,10 @@ const AppDownloadCampaign = ({
                                     alt=""
                                   />
                                   <p className="mb-4 pd-x-20 tx-black tx-bold">
-                                    {values.campaignMessage}
+                                    {values.campaignMessage +
+                                      (values.signature !== ""
+                                        ? " - " + values.signature
+                                        : "")}
                                   </p>
                                 </div>
                               ) : (
@@ -492,7 +497,10 @@ const AppDownloadCampaign = ({
                                     />
                                   </div>
                                   <p className="mb-4 pd-x-20 tx-black tx-bold">
-                                    {values.campaignMessage}
+                                    {values.campaignMessage +
+                                      (values.signature !== ""
+                                        ? " - " + values.signature
+                                        : "")}
                                   </p>
                                 </>
                               )}

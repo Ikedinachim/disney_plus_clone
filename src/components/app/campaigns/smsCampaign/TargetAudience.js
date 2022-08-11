@@ -772,6 +772,9 @@ const TargetAudience = ({
                               placeholder="23480xxxxxxxx,23480xxxxxxxx"
                               defaultValue={phoneNumber}
                             />
+                            {/* <p className="mb-10">
+                              {values.contactNumber.length} numbers loaded
+                            </p> */}
                           </div>
                         </div>
                       </div>

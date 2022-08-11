@@ -197,8 +197,8 @@ const SmsCampaign = ({
                                 rows={3}
                                 placeholder="Type your ad message here e.g Get up to 50% discount on first purchase"
                                 onChange={handleChange("campaignMessage")}
-                                defaultValue={values.campaignMessage}
-                             /> 
+                                value={values.campaignMessage}
+                              />
                             </div>
                             <div className="form-group col-md-6 mb-2 d-flex justify-content-between">
                               <p>{characterCount} Characters</p>
@@ -216,7 +216,9 @@ const SmsCampaign = ({
                               />
                             </div>
                             <div className="form-group col-md-6 mb-2 d-flex justify-content-between tx-12 tx-italic tx-gray-400">
-                              <p>{11 - values.signature.length} Characters</p>
+                              <p>
+                                {11 - values.signature.length} Characters Left
+                              </p>
                             </div>
                           </>
                         ) : (

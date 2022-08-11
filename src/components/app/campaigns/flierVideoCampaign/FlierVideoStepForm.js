@@ -48,7 +48,7 @@ export default class FlierVideoStepForm extends Component {
     budget: 20000,
     contactNumberCount: 0,
     characterCount: 0,
-    smsCount: 0,
+    smsCount: 1,
     callToActionCount: 0,
     signature: "",
 
@@ -94,14 +94,32 @@ export default class FlierVideoStepForm extends Component {
   // Handle fields change
   handleChange = (input) => (e) => {
     if (input === "campaignMessage") {
-      this.setState({ characterCount: e.target.value.length });
       this.setState({
-        smsCount: Math.ceil((e.target.value.length + this.state.signature.length  + 25) / 160),
+        characterCount: e.target.value.length + this.state.signature.length,
       });
+      this.setState({
+        smsCount: Math.ceil(
+          (e.target.value.length + this.state.signature.length + 25) / 160
+        ),
+      });
+      this.setState({ [input]: e.target.value });
     } else if (input === "callToAction") {
       this.setState({ callToActionCount: e.target.value.length });
-    }
-    this.setState({ [input]: e.target.value });
+      this.setState({ [input]: e.target.value });
+    } else if (input === "signature") {
+      this.setState({
+        [input]: e.target.value,
+      });
+      this.setState({
+        characterCount:
+          e.target.value.length + this.state.campaignMessage.length,
+      });
+      this.setState({
+        smsCount: Math.ceil(
+          (e.target.value.length + this.state.campaignMessage.length) / 160
+        ),
+      });
+    } else this.setState({ [input]: e.target.value });
     //
   };
 
@@ -606,6 +624,7 @@ export default class FlierVideoStepForm extends Component {
             csvArray={csvArray}
             handleChange={this.handleChange}
             handleCount={this.handleCount}
+            smsCount={smsCount}
           />
         );
       case 4:
@@ -615,6 +634,7 @@ export default class FlierVideoStepForm extends Component {
             nextStep={this.nextStep}
             price={price}
             values={values}
+            smsCount={smsCount}
           />
         );
       default:
