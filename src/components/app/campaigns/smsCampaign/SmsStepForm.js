@@ -18,6 +18,7 @@ export default class SmsStepForm extends Component {
     interest: "business",
     phoneNumber: "",
     campaignType: "general",
+    signatureField: "",
     price: 0,
     targetAudienceOption: "mysogidb",
     limit: "",
@@ -37,6 +38,7 @@ export default class SmsStepForm extends Component {
     deviceBrand: "",
     revenueBand: "",
     characterCount: 0,
+    signature: "",
     smsCount: 1,
 
     scheduleOption: "none",
@@ -84,11 +86,31 @@ export default class SmsStepForm extends Component {
           return String.fromCharCode(charcode);
         });
       };
-      this.setState({ characterCount: convertUnicode(e.target.value).length });
       this.setState({
-        smsCount: Math.ceil(convertUnicode(e.target.value).length / 160),
+        characterCount:
+          convertUnicode(e.target.value).length + this.state.signature.length,
+      });
+      this.setState({
+        smsCount: Math.ceil(
+          (convertUnicode(e.target.value).length +
+            this.state.signature.length) /
+            160
+        ),
       });
       this.setState({ [input]: convertUnicode(e.target.value) });
+    } else if (input === "signature") {
+      this.setState({
+        [input]: e.target.value,
+      });
+      this.setState({
+        characterCount:
+          e.target.value.length + this.state.campaignMessage.length,
+      });
+      this.setState({
+        smsCount: Math.ceil(
+          (e.target.value.length + this.state.campaignMessage.length) / 160
+        ),
+      });
     } else {
       this.setState({ [input]: e.target.value });
     }
@@ -197,6 +219,7 @@ export default class SmsStepForm extends Component {
       phoneNumber,
       targetAudienceOption,
       limit,
+      signature,
       contactNumberCount,
       audioUrl,
       uploadPercentage,
@@ -314,6 +337,8 @@ export default class SmsStepForm extends Component {
       channel,
       campaignMessage,
       contactNumber,
+      signature,
+
       targetAge,
       interest,
       campaignType,
@@ -330,7 +355,7 @@ export default class SmsStepForm extends Component {
       attachment: audioUrl,
     };
 
-    console.log(values);
+    // console.log(values);
 
     switch (step) {
       case 1:
@@ -340,6 +365,7 @@ export default class SmsStepForm extends Component {
             handleChange={this.handleChange}
             values={values}
             characterCount={characterCount}
+            signature={signature}
             smsCount={smsCount}
             onChangeAttachment={this.onChangeAttachment}
             handleAudioUpload={this.handleAudioUpload}

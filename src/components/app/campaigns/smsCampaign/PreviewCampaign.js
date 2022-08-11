@@ -216,7 +216,9 @@ const PreviewCampaign = ({
                               </label>
 
                               <p className="tx-15 mb-0">
-                                {values.campaignMessage}
+                                {values.campaignMessage +
+                                  " - " +
+                                  values.signature}
                               </p>
                             </div>
                           </>
@@ -576,7 +578,7 @@ const PreviewCampaign = ({
                     )}
                     <div className="col-md-5 pd-x-0 mg-y-40">
                       <div className="mg-t-20 d-flex">
-                        {parseInt(wallet.balance) < values.price ||
+                        {parseInt(wallet.balance) < parseInt(setPrice()) ||
                         (values.targetAudienceOption === "mysogidb" &&
                           parseInt(wallet.balance) < parseInt(setPrice()) &&
                           parseInt(wallet.balance) <

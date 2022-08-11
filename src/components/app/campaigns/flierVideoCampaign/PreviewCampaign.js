@@ -28,6 +28,7 @@ const PreviewCampaign = ({
   price,
   filterOptions,
   handleChange,
+  smsCount,
 }) => {
   const { error, createFlierVideoCampaign, loading } = useSelector(
     (state) => state.flierVideoCampaign || []
@@ -45,7 +46,6 @@ const PreviewCampaign = ({
     e.preventDefault();
     nextStep();
   };
-
 
   const Previous = (e) => {
     e.preventDefault();
@@ -84,6 +84,7 @@ const PreviewCampaign = ({
       return (
         parseInt(values.limit) *
         5 *
+        smsCount *
         setScheduleDate(values.scheduleFrom, values.scheduleTo)
       );
     } else if (
@@ -97,6 +98,7 @@ const PreviewCampaign = ({
       return filteredContactList
         ? filteredContactList.count *
             5 *
+            smsCount *
             setScheduleDate(values.scheduleFrom, values.scheduleTo)
         : 0;
     }
@@ -230,7 +232,10 @@ const PreviewCampaign = ({
                                   Campaign Message
                                 </label>
                                 <p className="tx-15 mb-0">
-                                  {values.campaignMessage}
+                                  {values.campaignMessage +
+                                    (values.signature !== ""
+                                      ? " - " + values.signature
+                                      : "")}
                                 </p>
                               </div>
                               <div className="form-group col-md-6">
@@ -780,9 +785,9 @@ const PreviewCampaign = ({
                           <div className="mg-t-20 d-flex">
                             {parseInt(wallet.balance) < price ||
                             (values.targetAudienceOption === "mysogidb" &&
-                              parseInt(wallet.balance) < setPrice() &&
+                              parseInt(wallet.balance) < parseInt(setPrice()) &&
                               parseInt(wallet.balance) <
-                                filteredContactList.count * 5) ||
+                                filteredContactList.count * 5 * smsCount) ||
                             (values.channel === "display_ads" &&
                               parseInt(wallet.balance) < values.budget) ? (
                               <button
@@ -839,7 +844,11 @@ const PreviewCampaign = ({
                                 height={"400px"}
                               />
                             </div>
-                            <p className="mb-4">{values.campaignMessage}</p>
+                            <p className="mb-4">
+                              {values.campaignMessage +
+                                " - " +
+                                values.signature}
+                            </p>
                           </>
                         )}
                         {values.channel === "smart_sms" ? (

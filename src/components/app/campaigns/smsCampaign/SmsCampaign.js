@@ -197,12 +197,28 @@ const SmsCampaign = ({
                                 rows={3}
                                 placeholder="Type your ad message here e.g Get up to 50% discount on first purchase"
                                 onChange={handleChange("campaignMessage")}
-                                defaultValue={values.campaignMessage}
+                                value={values.campaignMessage}
                               />
                             </div>
                             <div className="form-group col-md-6 mb-2 d-flex justify-content-between">
                               <p>{characterCount} Characters</p>
                               <p>{smsCount} SMS</p>
+                            </div>
+                            {/*Signature field */}
+                            <div className="form-group col-md-6 mb-2">
+                              <label className="mb-1">Signature Field</label>
+                              <input
+                                className="form-control"
+                                placeholder="Write a signature here, not longer than 11 characters (optional)"
+                                onChange={handleChange("signature")}
+                                defaultValue={values.signature}
+                                maxLength={11}
+                              />
+                            </div>
+                            <div className="form-group col-md-6 mb-2 d-flex justify-content-between tx-12 tx-italic tx-gray-400">
+                              <p>
+                                {11 - values.signature.length} Characters Left
+                              </p>
                             </div>
                           </>
                         ) : (

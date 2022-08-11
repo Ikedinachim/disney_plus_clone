@@ -34,8 +34,9 @@ export default class AppDownloadStepForm extends Component {
     budget: 20000,
     contactNumberCount: 0,
     characterCount: 0,
-    smsCount: 0,
+    smsCount: 1,
     callToActionCount: 0,
+    signature: "",
 
     scheduleOption: "none",
     scheduleTime: "",
@@ -78,14 +79,32 @@ export default class AppDownloadStepForm extends Component {
   // Handle fields change
   handleChange = (input) => (e) => {
     if (input === "campaignMessage") {
-      this.setState({ characterCount: e.target.value.length });
       this.setState({
-        smsCount: Math.ceil((e.target.value.length + 25) / 160),
+        characterCount: e.target.value.length + this.state.signature.length,
       });
+      this.setState({
+        smsCount: Math.ceil(
+          (e.target.value.length + this.state.signature.length + 25) / 160
+        ),
+      });
+      this.setState({ [input]: e.target.value });
     } else if (input === "callToAction") {
       this.setState({ callToActionCount: e.target.value.length });
-    }
-    this.setState({ [input]: e.target.value });
+      this.setState({ [input]: e.target.value });
+    } else if (input === "signature") {
+      this.setState({
+        [input]: e.target.value,
+      });
+      this.setState({
+        characterCount:
+          e.target.value.length + this.state.campaignMessage.length,
+      });
+      this.setState({
+        smsCount: Math.ceil(
+          (e.target.value.length + this.state.campaignMessage.length) / 160
+        ),
+      });
+    } else this.setState({ [input]: e.target.value });
     //
   };
 
@@ -325,6 +344,7 @@ export default class AppDownloadStepForm extends Component {
       campaignMessage,
       callToAction,
       timeRangeFrom,
+      signature,
       timeRangeTo,
       // attachment,
       imageUrl,
@@ -488,6 +508,7 @@ export default class AppDownloadStepForm extends Component {
       alternateSenderId,
       channel,
       campaignMessage,
+      signature,
       timeRange,
       callToAction,
       attachment: setAssets(),
@@ -511,6 +532,8 @@ export default class AppDownloadStepForm extends Component {
       age,
     };
 
+    // console.log(values);
+
     switch (step) {
       case 1:
         return (
@@ -526,6 +549,7 @@ export default class AppDownloadStepForm extends Component {
             uploadPercentage={uploadPercentage}
             characterCount={characterCount}
             smsCount={smsCount}
+            signature={signature}
             callToActionCount={callToActionCount}
             videoError={videoError}
           />
@@ -566,6 +590,7 @@ export default class AppDownloadStepForm extends Component {
             filterOptions={filterOptions}
             handleChange={this.handleChange}
             handleCount={this.handleCount}
+            smsCount={smsCount}
           />
         );
       case 4:
@@ -574,6 +599,7 @@ export default class AppDownloadStepForm extends Component {
             prevStep={this.prevStep}
             nextStep={this.nextStep}
             values={values}
+            smsCount={smsCount}
           />
         );
       default:

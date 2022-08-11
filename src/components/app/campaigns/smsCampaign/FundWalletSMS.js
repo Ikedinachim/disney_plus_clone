@@ -26,7 +26,7 @@ const FundWalletSMS = ({ prevStep, values, smsCount }) => {
     let day2 = new Date(endDate);
 
     const difference = Math.abs(day2 - day1);
-    const days = difference / (1000 * 3600 * 24);
+    const days = difference / (1000 * 3600 * 24) + 1;
 
     if (values.scheduleOption !== "recurrent" || days < 1 || !days) {
       return 1;
@@ -58,7 +58,6 @@ const FundWalletSMS = ({ prevStep, values, smsCount }) => {
         )
       : Math.ceil(
           values.price *
-            smsCount *
             setScheduleDate(values.scheduleFrom, values.scheduleTo) -
             wallet.balance
         )
