@@ -94,7 +94,7 @@ const CreateCampaign = () => {
                           <div className="card-body tx-center pd-x-12 pd-md-x-30">
                             <img src={FlashSms} alt="" className="img-fluid" />
                             <div className="pd-t-15">
-                              <p className="tx-16 tx-bold">Voice / SMS</p>
+                              <p className="tx-16 tx-bold">Voice Ad / SMS</p>
                               <p className="tx-14 tx-gray mb-0">
                                 Hit your right target with smart Voice / SMS
                               </p>
@@ -110,7 +110,7 @@ const CreateCampaign = () => {
                             <img src={Flier} alt="" className="img-fluid" />
                             <div className="pd-t-15">
                               <p className="tx-16 tx-bold">
-                                Digital / Display Ads Campaign
+                                Smart SMS / Display
                               </p>
                               <p className="tx-14 tx-gray mb-0">
                                 Bring speed and scale to your business with

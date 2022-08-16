@@ -95,7 +95,7 @@ const SmsCampaign = ({
         <Loader />
       ) : (
         <Fragment>
-          <MetaData title={"Create SMS Campaign"} />
+          <MetaData title={"Create Voice Ad/SMS Campaign"} />
           <div className="content-body">
             <div className="container pd-x-0">
               <div className="d-flex justify-content-between">
@@ -206,7 +206,7 @@ const SmsCampaign = ({
                             </div>
                             {/*Signature field */}
                             <div className="form-group col-md-6 mb-2">
-                              <label className="mb-1">Signature Field</label>
+                              <label className="mb-1">Personalized ID</label>
                               <input
                                 className="form-control"
                                 placeholder="Write a signature here, not longer than 11 characters (optional)"
@@ -214,6 +214,10 @@ const SmsCampaign = ({
                                 defaultValue={values.signature}
                                 maxLength={11}
                               />
+                              <p className="mg-0 tx-12 tx-italic tx-gray-500">
+                                Text field for Users to input their desired
+                                signature that would go out with the message
+                              </p>
                             </div>
                             <div className="form-group col-md-6 mb-2 d-flex justify-content-between tx-12 tx-italic tx-gray-400">
                               <p>
