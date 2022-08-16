@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -16,6 +16,8 @@ const Register = () => {
   const gaEventTracker = useAnalyticsEventTracker("Sign Up");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { uuid } = useParams();
+  console.log("uuid", uuid);
 
   const [newUser, setNewUser] = useState({
     firstName: "",
@@ -34,10 +36,10 @@ const Register = () => {
     businessConfirmPassword: "",
     businessPhone: "",
     businessEmail: "",
-    referralCode: "",
+    referralCode: uuid,
   });
 
-  const { firstName, lastName, email, phone } = newUser;
+  const { firstName, lastName, email, phone, referralCode } = newUser;
 
   const schema = Yup.object().shape({
     firstName: Yup.string()
@@ -322,10 +324,12 @@ const Register = () => {
                         <div className="form-group">
                           <input
                             {...register("referralCode")}
-                            type="number"
+                            type="text"
+                            disabled={uuid}
                             className="form-control new"
                             placeholder="Enter Referral Code (Optional)"
                             onChange={onChange}
+                            value={referralCode}
                           />
                         </div>
                         <div className="form-group">
@@ -501,9 +505,11 @@ const Register = () => {
                         <div className="form-group">
                           <input
                             {...registerBusiness("referralCode")}
-                            type="number"
+                            type="text"
+                            disabled={uuid}
                             className="form-control new"
                             placeholder="Enter Referral Code (Optional)"
+                            value={referralCode}
                           />
                         </div>
 

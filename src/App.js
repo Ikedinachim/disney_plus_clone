@@ -371,6 +371,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/terms-of-use" element={<Terms />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/referral/:uuid" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route
