@@ -36,7 +36,7 @@ const Register = () => {
     businessConfirmPassword: "",
     businessPhone: "",
     businessEmail: "",
-    referralCode: uuid,
+    referralCode: uuid ? parseInt(uuid) : "",
   });
 
   const { firstName, lastName, email, phone, referralCode } = newUser;

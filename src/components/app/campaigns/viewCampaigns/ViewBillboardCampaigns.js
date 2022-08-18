@@ -30,8 +30,8 @@ const ViewBillboardCampaign = () => {
           sort: "asc",
         },
         {
-          label: "CAMPAIGN NAME",
-          field: "campaignName",
+          label: "BILLBOARD TITLE",
+          field: "billboardTitle",
           sort: "asc",
         },
         {
@@ -73,7 +73,7 @@ const ViewBillboardCampaign = () => {
               </div>
             </Fragment>
           ),
-          campaignName: campaign.campaignType,
+          billboardTitle: campaign.title,
           cost: (
             <NumberFormat
               value={parseInt(campaign.cost)}
