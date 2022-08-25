@@ -530,8 +530,110 @@ ol.terms-list ol.terms-inner-list > li:before {
 }
 
 .billboard-img {
-  width: 100%;
+  background-color: #000;
+  color: #fff;
+  display: inline-block;
+  /* margin: 8px; */
+  /* max-width: 320px;
+  min-width: 240px; */
+  overflow: hidden;
+  position: relative;
+  text-align: center;
   height: 100%;
+  width: 100%;
+}
+
+.billboard-img * {
+  box-sizing: border-box;
+  transition: all 0.45s ease;
+}
+
+.billboard-img-hover .preview-expand {
+  color: #ff1f00;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.billboard-img-hover .preview-expand i {
+  opacity: 0.3;
+}
+
+.billboard-img-hover .preview-expand p {
+  margin: 0;
+  margin-right: 5px;
+  /* text-align: center;
+  display: flex; */
+  line-height: initial;
+}
+
+.billboard-img-hover:before,
+.billboard-img-hover:after {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-top: 32px solid rgba(0, 0, 0, 0.5);
+  border-bottom: 32px solid rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  content: "";
+  transition: all 0.3s ease;
+  z-index: 1;
+  opacity: 0;
+  transform: scaleY(2);
+}
+
+.billboard-img img {
+  vertical-align: top;
+  max-width: 100%;
+  backface-visibility: hidden;
+}
+
+.billboard-img figcaption {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  align-items: center;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.1em;
+  opacity: 0;
+  z-index: 2;
+  transition-delay: 0.1s;
+  font-size: 24px;
+  font-family: sans-serif;
+  font-weight: 400;
+  letter-spacing: 1px;
+  /* text-transform: uppercase; */
+}
+
+.billboard-img figcaption h3 {
+  color: #ffff;
+}
+
+.billboard-img-hover {
+  cursor: zoom-in;
+}
+
+.billboard-img-hover:hover:before,
+.billboard-img-hover:hover:after {
+  transform: scale(1);
+  opacity: 0.1;
+}
+
+.billboard-img-hover:hover > img {
+  opacity: 0.7;
+}
+
+.billboard-img-hover:hover figcaption {
+  opacity: 1;
 }
 
 .billboard-img img {
@@ -659,4 +761,10 @@ ol.terms-list ol.terms-inner-list > li:before {
 .iphone-x > span + span {
   left: auto;
   right: 30px;
+}
+
+.iphone-x .iphone-x-content {
+  overflow-y: auto;
+  max-height: 110px;
+  height: 100%;
 }

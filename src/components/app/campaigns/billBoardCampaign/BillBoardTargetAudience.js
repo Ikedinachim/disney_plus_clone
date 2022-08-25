@@ -19,23 +19,31 @@ const BillBoardTargetAudience = ({
   youtubeError,
 }) => {
   let date = new Date();
+  let endingDate = new Date(values.startDate !== "" ? values.startDate : date);
   // add 1 day
   date.setDate(date.getDate() + 1);
+
   const Continue = (e) => {
     e.preventDefault();
     let d1 = new Date().setHours(0, 0, 0, 0);
     let d2 = new Date(values.startDate).setHours(0, 0, 0, 0);
+    let ed = new Date(values.endDate).setHours(0, 0, 0, 0);
 
     if (values.startDate === "") {
       toast.warning("Please choose a start date");
+    } else if (values.campaignDuration === "Daily" && values.endDate === "") {
+      toast.warning("Please choose an end date");
     } else if (d1.valueOf() > d2.valueOf()) {
       toast.warning("Please set a valid date");
+    } else if (d2.valueOf() > ed.valueOf()) {
+      toast.warning("Invalid end date");
     } else if (!values.attachment) {
       toast.warning("Please upload billboard creative");
     } else {
       nextStep();
     }
   };
+
   const Previous = (e) => {
     e.preventDefault();
     resetCheckedState();
@@ -78,24 +86,44 @@ const BillBoardTargetAudience = ({
                       <div className="form-group">
                         <div className="form-group">
                           <label className="mb-1">
-                            Start Date
+                            Start / End Date
                             <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                           </label>
-                          <div className="input-group mg-b-0">
-                            <div className="input-group-prepend">
-                              <span className="input-group-text">Start</span>
+                          <div className="d-flex">
+                            <div className="pd-0 input-group mg-b-0">
+                              <div className="input-group-prepend">
+                                <span className="input-group-text">Start</span>
+                              </div>
+                              <input
+                                type="date"
+                                className="form-control"
+                                placeholder="Username"
+                                aria-label="Username"
+                                aria-describedby="basic-addon1"
+                                defaultValue={values.startDate}
+                                onChange={handleChange("startDate")}
+                                min={date.toISOString().split("T")[0]}
+                                // max="6/11/2022"
+                              />
                             </div>
-                            <input
-                              type="date"
-                              className="form-control"
-                              placeholder="Username"
-                              aria-label="Username"
-                              aria-describedby="basic-addon1"
-                              defaultValue={values.startDate}
-                              onChange={handleChange("startDate")}
-                              min={date.toISOString().split("T")[0]}
-                              // max="6/11/2022"
-                            />
+                            {values.campaignDuration === "Daily" && (
+                              <div className="col-md-6 pd-0 mg-l-10 input-group mg-b-0">
+                                <div className="input-group-prepend">
+                                  <span className="input-group-text">End</span>
+                                </div>
+                                <input
+                                  type="date"
+                                  className="form-control"
+                                  placeholder="Username"
+                                  aria-label="Username"
+                                  aria-describedby="basic-addon1"
+                                  defaultValue={values.endDate}
+                                  onChange={handleChange("endDate")}
+                                  min={endingDate.toISOString().split("T")[0]}
+                                  // max="6/11/2022"
+                                />
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>

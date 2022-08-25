@@ -112,7 +112,7 @@ const ViewCampaignTabs = () => {
                         aria-controls="display"
                         aria-selected="false"
                       >
-                        Digital/Display
+                        Smart SMS/Display Ad
                       </a>
                     </li>
                     <li className="nav-item">

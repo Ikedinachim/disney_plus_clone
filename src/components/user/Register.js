@@ -17,7 +17,6 @@ const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { uuid } = useParams();
-  console.log("uuid", uuid);
 
   const [newUser, setNewUser] = useState({
     firstName: "",
@@ -143,8 +142,6 @@ const Register = () => {
     navigate,
     // gaEventTracker,
   ]);
-
-  console.log(newUser);
 
   return (
     <Fragment>

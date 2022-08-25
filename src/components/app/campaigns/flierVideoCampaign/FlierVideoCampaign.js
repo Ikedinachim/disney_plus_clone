@@ -142,7 +142,7 @@ const FlierVideoCampaign = ({
         <Loader />
       ) : (
         <Fragment>
-          <MetaData title={"Create Smart SMS/Display Campaign"} />
+          <MetaData title={"Create Smart SMS/Display Ad"} />
           <div className="content-body">
             <div className="container pd-x-0">
               <div className="d-flex justify-content-between">
@@ -165,7 +165,7 @@ const FlierVideoCampaign = ({
                       <form>
                         <div>
                           <p className="tx-24 tx-bold mb-1 tx-com">
-                            Digital / Display Ads Campaign
+                            Smart SMS / Display Ad
                           </p>
                           <p className="tx-14">
                             Provide all requested details to help complete the
@@ -837,7 +837,7 @@ const FlierVideoCampaign = ({
                                   className="img-fluid mg-b-10"
                                   alt=""
                                 />
-                                <p className="mb-4 pd-x-20 tx-black tx-bold">
+                                <p className="mb-4 pd-x-20 tx-black tx-bold iphone-x-content">
                                   {values.campaignMessage +
                                     (values.signature !== ""
                                       ? " - " + values.signature
@@ -852,7 +852,7 @@ const FlierVideoCampaign = ({
                                     height={"400px"}
                                   />
                                 </div>
-                                <p className="mb-4 pd-x-20 tx-black tx-bold">
+                                <p className="mb-4 pd-x-20 tx-black tx-bold iphone-x-content">
                                   {values.campaignMessage +
                                     (values.signature !== ""
                                       ? " - " + values.signature

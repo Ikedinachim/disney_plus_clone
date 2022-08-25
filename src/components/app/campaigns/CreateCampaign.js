@@ -104,13 +104,13 @@ const CreateCampaign = () => {
                       </Link>
                     </div>
                     <div className="col-md-6 col-lg-4 col-12 mg-t-20">
-                      <Link to="/app/campaign/flier-video" className="tx-dark">
+                      <Link to="/app/campaign/smart-ads" className="tx-dark">
                         <div className="card card-height rounded bd-0 shadow-sm">
                           <div className="card-body tx-center pd-x-12">
                             <img src={Flier} alt="" className="img-fluid" />
                             <div className="pd-t-15">
                               <p className="tx-16 tx-bold">
-                                Smart SMS / Display
+                                Smart SMS / Display Ad
                               </p>
                               <p className="tx-14 tx-gray mb-0">
                                 Bring speed and scale to your business with

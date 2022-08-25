@@ -18,6 +18,7 @@ import Loader from "../../../loader";
 import MediaPlayer from "../../../../_helpers/reactPlayer/ReactPlayer";
 import useAnalyticsEventTracker from "../../../../_helpers/GoogleAnalytics/GoogleAnalytics";
 import billboard from "../../../../assets/img/bgBillboard.png";
+import billboardPortrait from "../../../../assets/img/bgPortrait.png";
 
 const PreviewBillBoardCampaign = ({
   nextStep,
@@ -28,6 +29,7 @@ const PreviewBillBoardCampaign = ({
   checkedInfluencers,
   price,
   handlePrice,
+  orientation,
   // payload,
 }) => {
   const { error, createBillBoardCampaign, loading } = useSelector(
@@ -39,8 +41,11 @@ const PreviewBillBoardCampaign = ({
   const navigate = useNavigate();
   const { wallet } = useSelector((state) => state.wallet);
   const [walletTotal, setTotal] = useState(0);
+  const [campaignDays, setCampaignDays] = useState(1);
   const [payload, setPayload] = useState({});
   const gaEventTracker = useAnalyticsEventTracker("Billboard Campaign");
+
+  // console.log("payload", payload);
 
   const Continue = (e) => {
     e.preventDefault();
@@ -50,6 +55,21 @@ const PreviewBillBoardCampaign = ({
   const Previous = (e) => {
     e.preventDefault();
     prevStep();
+  };
+
+  const setScheduleDate = (initialDate, endDate) => {
+    let day1 = new Date(initialDate);
+    let day2 = new Date(endDate);
+
+    const difference = Math.abs(day2 - day1);
+    const days = difference / (1000 * 3600 * 24) + 1;
+    setCampaignDays(days);
+
+    if (values.campaignDuration !== "Daily" || days < 1 || !days) {
+      return 1;
+    } else if (values.campaignDuration === "Daily") {
+      return days;
+    }
   };
 
   useEffect(() => {
@@ -75,8 +95,8 @@ const PreviewBillBoardCampaign = ({
     // console.log("this is all todal", allTotals);
     const total = allTotals.reduce((acc, curr) => acc + curr, 0);
     // console.log(total);
-    setTotal(total);
-    handlePrice(total);
+    setTotal(total * setScheduleDate(values.startDate, values.endDate));
+    handlePrice(walletTotal);
 
     let platforms = filteredValue.map((el) => {
       return {
@@ -91,13 +111,14 @@ const PreviewBillBoardCampaign = ({
     const payload = {
       user_id: user.user.id,
       startDate: values.startDate,
+      endDate: values.endDate,
       attachment: values.attachment,
       assetType: values.assetType,
       billboards: filteredValue[0],
     };
     setPayload(payload);
     // console.log(payload);
-  }, [filteredValue]);
+  }, [filteredValue, walletTotal]);
 
   // console.log("filteredValue", filteredValue);
 
@@ -108,21 +129,11 @@ const PreviewBillBoardCampaign = ({
   };
 
   const getTotal = (p) => {
-    // console.log(p.platforms);
-    // let allIndex = p.platforms.findIndex((el) => el.id === "all");
     let total;
     total = p.reduce(
       (accumulator, current) => accumulator + parseInt(current.cost),
       0
     );
-    // if (allIndex !== -1) {
-    //   total = parseInt(p.platforms[allIndex].cost);
-    // } else {
-    //   total = p.billboards.reduce(
-    //     (accumulator, current) => accumulator + parseInt(current.cost),
-    //     0
-    //   );
-    // }
 
     return total;
   };
@@ -156,8 +167,7 @@ const PreviewBillBoardCampaign = ({
 
   // console.log(filteredValue.map((p) => getTotal(p)));
 
-  const bg =
-    "http://demo.marcofolio.net/rotating_billboard/images/billboard.png";
+  // console.log(orientation);
 
   return (
     <Fragment>
@@ -172,68 +182,105 @@ const PreviewBillBoardCampaign = ({
               <div className="card bd-0 rounded shadow-sm">
                 <div className="card-body pd-md-x-30">
                   <p className="tx-18 mb-2 tx-bold tx-com">Preview</p>
-                  <div
-                    className=" mg-b-20"
-                    // style={{
-                    //   background: `url(${billboard})`,
-                    //   // backgroundSize: "cover",
-                    //   backgroundRepeat: "no-repeat",
-                    //   // backgroundPosition: "top",
-                    //   // height: "599px",
-                    //   position: "relative",
-                    //   backgroundColor: "red",
-                    //   paddingTop: "40%",
-                    //   backgroundSize: "contain",
-                    //   backgroundPosition: "center top",
-                    // }}
-                  >
-                    <div
-                      className="w-100"
-                      style={{
-                        position: "relative",
-                        // backgroundColor: "red",
-                        paddingTop: "45%",
-                      }}
-                    >
-                      <img
-                        src={billboard}
-                        alt="billboard-img"
-                        style={{
-                          position: "absolute",
-                          left: "0",
-                          top: "0",
-                          width: "100%",
-                        }}
-                      />
+                  <div className=" mg-b-20">
+                    {orientation === "portrait" || orientation === "even" ? (
                       <div
-                        className="justify-content-between"
+                        className="w-100"
                         style={{
-                          position: "absolute",
-                          /* padding-top: 50%; */
-                          top: "5%",
-                          left: "2%",
-                          height: "89.3%",
-                          // backgroundColor: "green",
-                          right: "2%",
+                          position: "relative",
+                          // backgroundColor: "red",
+                          paddingTop: "45%",
                         }}
                       >
-                        <div className="col-md-12 pd-0 mg-0 h-100">
-                          {values.assetType === "image" ? (
-                            <div className="h-100 d-flex justify-content-center align-items-center">
-                              <img
-                                src={values.attachment}
-                                className="img-fluid h-100"
-                                alt="logo"
-                              />
-                            </div>
-                          ) : (
-                            <div className="h-100">
-                              <MediaPlayer url={attachment} height={"100%"} />
-                            </div>
-                          )}
+                        <img
+                          src={billboardPortrait}
+                          alt="billboard-img"
+                          style={{
+                            position: "absolute",
+                            left: "33%",
+                            top: "0",
+                            width: "35%",
+                            height: "100%",
+                          }}
+                        />
+                        <div
+                          className="justify-content-between"
+                          style={{
+                            position: "absolute",
+                            /* padding-top: 50%; */
+                            top: "5.5%",
+                            left: "34%",
+                            height: "85%",
+                            // backgroundColor: "green",
+                            right: "33%",
+                          }}
+                        >
+                          <div className="col-md-12 pd-0 mg-0 h-100">
+                            {values.assetType === "image" ? (
+                              <div className="h-100 d-flex justify-content-center align-items-center">
+                                <img
+                                  src={values.attachment}
+                                  className="img-fluid h-100"
+                                  alt="logo"
+                                />
+                              </div>
+                            ) : (
+                              <div className="h-100">
+                                <MediaPlayer url={attachment} height={"100%"} />
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    ) : (
+                      <div
+                        className="w-100"
+                        style={{
+                          position: "relative",
+                          // backgroundColor: "red",
+                          paddingTop: "45%",
+                        }}
+                      >
+                        <img
+                          src={billboard}
+                          alt="billboard-img"
+                          style={{
+                            position: "absolute",
+                            left: "0",
+                            top: "0",
+                            width: "100%",
+                          }}
+                        />
+                        <div
+                          className="justify-content-between"
+                          style={{
+                            position: "absolute",
+                            /* padding-top: 50%; */
+                            top: "5%",
+                            left: "2%",
+                            height: "89.3%",
+                            // backgroundColor: "green",
+                            right: "2%",
+                          }}
+                        >
+                          <div className="col-md-12 pd-0 mg-0 h-100">
+                            {values.assetType === "image" ? (
+                              <div className="h-100 d-flex justify-content-center align-items-center">
+                                <img
+                                  src={values.attachment}
+                                  className="img-fluid h-100"
+                                  alt="logo"
+                                />
+                              </div>
+                            ) : (
+                              <div className="h-100">
+                                <MediaPlayer url={attachment} height={"100%"} />
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                   <div className="table-responsive mg-t-40">
                     <table className="table inf-table" id="campaig">
@@ -244,6 +291,7 @@ const PreviewBillBoardCampaign = ({
                           <th scope="col">Size</th>
                           <th scope="col">Duration</th>
                           <th scope="col">Start Date</th>
+                          <th scope="col">End Date</th>
                           <th scope="col">Cost</th>
                           {/* <th scope="col">Weekly</th>
                           <th scope="col">Monthly</th> */}
@@ -254,8 +302,8 @@ const PreviewBillBoardCampaign = ({
                         </tr>
                       </thead>
                       <tbody>
-                        {filteredValue[0]?.map((platform) => (
-                          <tr>
+                        {filteredValue[0]?.map((platform, id) => (
+                          <tr key={id}>
                             <td>
                               <div className="d-flex">
                                 <div className="div">
@@ -276,6 +324,9 @@ const PreviewBillBoardCampaign = ({
                             <td>{platform.size}</td>
                             <td>{platform.rateType}</td>
                             <td>{values.startDate}</td>
+                            <td>
+                              {values.endDate !== "" ? values.endDate : " - "}
+                            </td>
                             <td>
                               {
                                 <NumberFormat
@@ -307,6 +358,11 @@ const PreviewBillBoardCampaign = ({
                                 />
                               }
                             </p>
+                            {values.campaignDuration === "Daily" && (
+                              <p className="tx-bold mb-0 tx-right">
+                                cost x {campaignDays} day(s)
+                              </p>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -363,12 +419,12 @@ const PreviewBillBoardCampaign = ({
                               src="../../assets/img/my4.svg"
                               className="img-fluid wd-100 ht-100"
                               alt=""
-                              srcSet
+                              // srcSet
                             />
                             <p className="tx-26 tx-com tx-bold">Please Note</p>
                             <p className="tx-16 mb-0">
-                              Your campaign is been vetted by AMCON and will be
-                              published within 24 hours
+                              Your campaign is being vetted by AMCON and will be
+                              published within 48 hours
                             </p>
                           </div>
                         </div>

@@ -26,6 +26,7 @@ export default class BillBoardStepForm extends Component {
     uploadedImage: "",
     price: 0,
     campaignType: "bill_board",
+    campaignDuration: "",
 
     selectedInfluencer: [],
     selectedInfluencers: [],
@@ -40,11 +41,13 @@ export default class BillBoardStepForm extends Component {
     platform: [],
     assetType: "image",
     startDate: "",
+    endDate: "",
 
     showModal: false,
     activeItemId: "",
     rawVideoUrl: "",
     selectedFileName: "Upload Asset *png, *jpg, *gif",
+    orientation: "",
   };
 
   // go back to previous step
@@ -62,6 +65,10 @@ export default class BillBoardStepForm extends Component {
   // Handle fields change
   handleChange = (input) => (e) => {
     this.setState({ [input]: e.target.value });
+  };
+
+  handleCampaignDuration = (duration) => {
+    this.setState({ campaignDuration: duration });
   };
 
   handleCheckedState = (input) => {
@@ -143,6 +150,28 @@ export default class BillBoardStepForm extends Component {
   handleImageUpload = async (e) => {
     const width = e.target.offsetWidth;
     const height = e.target.offsetHeight;
+    const getOrientation = (e) => {
+      let _URL = window.URL || window.webkitURL;
+      let orientation;
+      let img = new Image();
+      var objectUrl = _URL.createObjectURL(e.target.files[0]);
+
+      img.onload = () => {
+        if (img.naturalWidth > img.naturalHeight) {
+          orientation = "landscape";
+        } else if (img.naturalWidth < img.naturalHeight) {
+          orientation = "portrait";
+        } else {
+          orientation = "even";
+        }
+        // _URL.revokeObjectURL(objectUrl);
+        // console.log("getOrientation", orientation);
+        this.setState({ orientation: orientation });
+      };
+      img.src = objectUrl;
+    };
+
+    getOrientation(e);
 
     if (width > 960 || height > 1280) {
       toast.error("image dimensions not fitting");
@@ -247,6 +276,7 @@ export default class BillBoardStepForm extends Component {
       rawVideoUrl,
       videoUrl,
       attachmentPreview,
+      orientation,
       selectedInfluencer,
       selectedInfluencers,
       activeItemId,
@@ -254,10 +284,12 @@ export default class BillBoardStepForm extends Component {
       closeModal,
       checkedInfluencers,
       campaignType,
+      campaignDuration,
       selectedFileName,
       uploadPercentage,
       assetType,
       startDate,
+      endDate,
     } = this.state;
 
     const setYoutubeUrl = (url) => {
@@ -301,11 +333,13 @@ export default class BillBoardStepForm extends Component {
       snapchatHandle,
       campaignMessage,
       campaignType,
+      campaignDuration,
       attachment: setAssets(),
       platform,
       assetType,
       price,
       startDate,
+      endDate,
     };
 
     const payload = {
@@ -313,6 +347,8 @@ export default class BillBoardStepForm extends Component {
       campaignType: values.campaignType,
       attachment: values.attachment,
     };
+
+    // console.log(values);
 
     switch (step) {
       case 1:
@@ -332,6 +368,7 @@ export default class BillBoardStepForm extends Component {
             toggleHandler={this.toggleHandler}
             handlePlatformOnChange={this.handlePlatformOnChange}
             handleCheckedState={this.handleCheckedState}
+            handleCampaignDuration={this.handleCampaignDuration}
           />
         );
       case 2:
@@ -361,6 +398,7 @@ export default class BillBoardStepForm extends Component {
             checkedInfluencers={selectedInfluencers}
             payload={payload}
             handlePrice={this.handlePrice}
+            orientation={orientation}
           />
         );
       case 4:
