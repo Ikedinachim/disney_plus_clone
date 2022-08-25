@@ -485,10 +485,10 @@ const AppDownloadCampaign = ({
                                     className="img-fluid mg-b-10"
                                     alt=""
                                   />
-                                  <p className="mb-4 pd-x-20 tx-black tx-bold">
+                                  <p className="mb-4 pd-x-20 tx-black tx-bold iphone-x-content">
                                     {values.campaignMessage +
                                       (values.signature !== ""
-                                        ? " - " + values.signature
+                                        ? "\n" + values.signature
                                         : "")}
                                   </p>
                                 </div>
@@ -500,10 +500,10 @@ const AppDownloadCampaign = ({
                                       height={"400px"}
                                     />
                                   </div>
-                                  <p className="mb-4 pd-x-20 tx-black tx-bold">
+                                  <p className="mb-4 pd-x-20 tx-black tx-bold iphone-x-content">
                                     {values.campaignMessage +
                                       (values.signature !== ""
-                                        ? " - " + values.signature
+                                        ? "\n" + values.signature
                                         : "")}
                                   </p>
                                 </>

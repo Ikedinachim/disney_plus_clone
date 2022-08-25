@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
+import FsLightbox from "fslightbox-react";
 import NumberFormat from "react-number-format";
 
 const InfluencerCard = ({
@@ -14,43 +15,79 @@ const InfluencerCard = ({
   // useEffect(() => {
   //   // console.log(show.indexOf(influencer.id + ""), influencer.id);
   // }, [show]);
+  const [toggler, setToggler] = useState(false);
+  const billboardImages = billboard?.images.map((image) => image.url);
+  const handleToggle = () => {
+    if (billboardImages.length > 0) {
+      setToggler(!toggler);
+    } else {
+      setToggler(false);
+    }
+  };
+
+  // console.log(
+  //   "rates",
+  //   billboard.rates.find((rate) => rate.name === "Daily")?.cost
+  // );
+
   return (
     <Fragment>
       <div className="col-md-6 col-lg-6 col-12 mg-b-20">
         <div className="card card-body shadow-sm pd-0 card-height rounded">
-          <div className="custom-control custom-checkbox pd-0 h-100">
+          <div className="custom-control custom-radio pd-0 h-100">
             {/* <div className="custom-control-input"> */}
-            <input
-              type="checkbox"
-              name={billboard.title}
-              className="custom-control-input pd-r-0 mg-r-0"
-              value={billboard.id}
-              onChange={toggleHandler(billboard)}
-              id={billboard.id}
-            />
+
             {/* </div> */}
-            <label
-              className="custom-control-label d-inline billboard-checkbox"
-              htmlFor={billboard.id}
-              data-toggle="modal2"
-              data-target="#sideModal"
-            >
-              <div className="d-flex h-100">
-                <div className="div pd-l-0 w-50">
-                  <div className="billboard-img">
-                    <img
-                      src={
-                        billboard.imageUrl && billboard.imageUrl !== ""
-                          ? billboard.imageUrl
-                          : billboard.imagePath
-                      }
-                      className=""
-                      alt={billboard.title}
-                    />
-                  </div>
-                </div>
-                <div className="mg-l-10 w-50">
-                  <div className="pd-y-30">
+            <div className="d-flex h-100">
+              <div className="div pd-l-0 w-65">
+                <figure
+                  className={`billboard-img ${
+                    billboardImages.length > 0 ? "billboard-img-hover" : ""
+                  }`}
+                  onClick={handleToggle}
+                >
+                  <img
+                    src={
+                      billboard.imageUrl && billboard.imageUrl !== ""
+                        ? billboard.imageUrl
+                        : billboard.imagePath
+                    }
+                    className=""
+                    alt={billboard.title}
+                  />
+                  {billboardImages.length > 0 && (
+                    <>
+                      {/* <i className="fa fa-arrows-alt preview-expand"/> */}
+                      <span className="preview-expand">
+                        <p>{billboardImages.length}</p>
+                        <i className="fa fa-camera tx-20" />
+                      </span>
+
+                      <figcaption>
+                        <h3 className="tx-com tx-14">Preview</h3>
+                      </figcaption>
+                    </>
+                  )}
+                </figure>
+              </div>
+
+              <div className="mg-l-10">
+                <input
+                  type="radio"
+                  name="billboard"
+                  className="custom-control-input pd-r-0 mg-r-0"
+                  value={billboard.id}
+                  // onChange={toggleHandler(billboard)}
+                  onClick={toggleHandler(billboard)}
+                  id={billboard.id}
+                />
+                <label
+                  className="custom-control-label d-inline billboard-checkbox w-50 clickable"
+                  htmlFor={billboard.id}
+                  data-toggle="modal2"
+                  data-target="#sideModal"
+                >
+                  <div className="pd-y-30 pd-x-5">
                     <h2 className="tx-24 tx-bold mg-b-20 tx-com text-uppercase">
                       {billboard.title}
                     </h2>
@@ -103,7 +140,11 @@ const InfluencerCard = ({
                         <span className="tx-normal">
                           From{" "}
                           <NumberFormat
-                            value={10000}
+                            value={
+                              billboard.rates.find(
+                                (rate) => rate.name === "Daily"
+                              )?.cost
+                            }
                             displayType={"text"}
                             thousandSeparator={true}
                             prefix={"₦"}
@@ -112,11 +153,12 @@ const InfluencerCard = ({
                       </p>
                     </div>
                   </div>
-                </div>
+                </label>
               </div>
-            </label>
+            </div>
           </div>
         </div>
+        <FsLightbox toggler={toggler} sources={billboardImages} />
       </div>
     </Fragment>
   );

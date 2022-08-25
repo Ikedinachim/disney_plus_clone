@@ -193,7 +193,7 @@ function App() {
             }
           />
           <Route
-            path="campaign/flier-video"
+            path="campaign/smart-ads"
             element={
               isAuthenticated && user && user.user.role === "user" ? (
                 <FlierVideoStepForm />

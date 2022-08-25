@@ -116,7 +116,7 @@ export default class FlierVideoStepForm extends Component {
       });
       this.setState({
         smsCount: Math.ceil(
-          (e.target.value.length + this.state.campaignMessage.length) / 160
+          (e.target.value.length + this.state.campaignMessage.length + 25) / 160
         ),
       });
     } else this.setState({ [input]: e.target.value });

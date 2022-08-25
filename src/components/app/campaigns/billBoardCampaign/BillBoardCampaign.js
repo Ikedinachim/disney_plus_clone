@@ -13,6 +13,7 @@ const BillBoardCampaign = ({
   nextStep,
   selectedInfluencer,
   handleCheckedState,
+  handleCampaignDuration,
 }) => {
   const dispatch = useDispatch();
 
@@ -28,6 +29,8 @@ const BillBoardCampaign = ({
   const [closeModal, setCloseModal] = useState(false);
   const [billBoardId, setBillBoardId] = useState("");
 
+  // console.log("selectedRate", selectedRate);
+
   const Continue = (e) => {
     if (tempBillBoard === null || selectedBillBoards.length <= 0) {
       toast.warning("Choose at least a billboard & plan to continue");
@@ -37,6 +40,7 @@ const BillBoardCampaign = ({
   };
 
   const toggleHandler = (item) => (e) => {
+    setCloseModal(!closeModal);
     const isChecked = e.target.checked;
     let singleBillBoard = allBillBoard.find((el) => el.id === item.id);
     if (isChecked) {
@@ -45,19 +49,21 @@ const BillBoardCampaign = ({
         ? [...tempBillBoard.billboards]
         : [];
       setTempBillBoard(singleBillBoard);
-      setCloseModal(true);
+      // setCloseModal(true);
     } else {
       const unchecked = selectedBillBoards.filter(
         (el) => parseInt(el.billboard_id) !== parseInt(e.target.value)
       );
       setSelectedBillBoards(unchecked);
       setSelectedRate(null);
-      setCloseModal(false);
+      // setCloseModal(false);
     }
   };
 
   const handlePlatformOnChange = (item, idx) => (e) => {
+    // console.log("item", item);
     setSelectedRate(item);
+    handleCampaignDuration(item.name);
   };
 
   const setSelectedBillBoard = () => {
@@ -73,8 +79,8 @@ const BillBoardCampaign = ({
         location: tempBillBoard.location,
         size: tempBillBoard.size,
       };
-      setSelectedBillBoards([...selectedBillBoards, billboardObject]);
-      setSelectedRate(null);
+      setSelectedBillBoards([billboardObject]);
+      // setSelectedRate(null);
       setCloseModal(false);
     }
   };
