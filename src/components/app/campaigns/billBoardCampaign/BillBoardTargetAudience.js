@@ -20,8 +20,9 @@ const BillBoardTargetAudience = ({
 }) => {
   let date = new Date();
   let endingDate = new Date(values.startDate !== "" ? values.startDate : date);
-  // add 1 day
-  date.setDate(date.getDate() + 1);
+  // add 2 day
+  date.setDate(date.getDate() + 2);
+  endingDate.setDate(date.getDate() + 1);
 
   const Continue = (e) => {
     e.preventDefault();
@@ -148,7 +149,7 @@ const BillBoardTargetAudience = ({
                             </label>
                           </div>
                         </div>
-                        <div className="form-group">
+                        {/* <div className="form-group">
                           <div className="custom-control custom-radio">
                             <input
                               type="radio"
@@ -166,7 +167,7 @@ const BillBoardTargetAudience = ({
                               Video Asset
                             </label>
                           </div>
-                        </div>
+                        </div> */}
                         <div className="form-group">
                           <div className="custom-control custom-radio">
                             <input
