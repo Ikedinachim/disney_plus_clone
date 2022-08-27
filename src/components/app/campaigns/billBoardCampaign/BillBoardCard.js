@@ -17,6 +17,7 @@ const InfluencerCard = ({
   // }, [show]);
   const [toggler, setToggler] = useState(false);
   const billboardImages = billboard?.images.map((image) => image.url);
+  // const billboardImages = ["https://www.youtube.com/watch?v=u1428Alws5Qa"];
   const handleToggle = () => {
     if (billboardImages.length > 0) {
       setToggler(!toggler);

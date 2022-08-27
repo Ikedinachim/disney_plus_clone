@@ -62,7 +62,7 @@ const PreviewBillBoardCampaign = ({
     let day2 = new Date(endDate);
 
     const difference = Math.abs(day2 - day1);
-    const days = difference / (1000 * 3600 * 24) + 1;
+    const days = difference / (1000 * 3600 * 24);
     setCampaignDays(days);
 
     if (values.campaignDuration !== "Daily" || days < 1 || !days) {
@@ -217,10 +217,10 @@ const PreviewBillBoardCampaign = ({
                         >
                           <div className="col-md-12 pd-0 mg-0 h-100">
                             {values.assetType === "image" ? (
-                              <div className="h-100 d-flex justify-content-center align-items-center">
+                              <div className="h-100 w-100 justify-content-center align-items-center">
                                 <img
                                   src={values.attachment}
-                                  className="img-fluid h-100"
+                                  className="img-fluid img-fit-cover"
                                   alt="logo"
                                 />
                               </div>
@@ -265,10 +265,10 @@ const PreviewBillBoardCampaign = ({
                         >
                           <div className="col-md-12 pd-0 mg-0 h-100">
                             {values.assetType === "image" ? (
-                              <div className="h-100 d-flex justify-content-center align-items-center">
+                              <div className="h-100 w-100 justify-content-center align-items-center">
                                 <img
                                   src={values.attachment}
-                                  className="img-fluid h-100"
+                                  className="img-fluid img-fit-cover"
                                   alt="logo"
                                 />
                               </div>
@@ -291,7 +291,9 @@ const PreviewBillBoardCampaign = ({
                           <th scope="col">Size</th>
                           <th scope="col">Duration</th>
                           <th scope="col">Start Date</th>
-                          <th scope="col">End Date</th>
+                          {values.campaignDuration === "Daily" && (
+                            <th scope="col">End Date</th>
+                          )}
                           <th scope="col">Cost</th>
                           {/* <th scope="col">Weekly</th>
                           <th scope="col">Monthly</th> */}
@@ -322,11 +324,18 @@ const PreviewBillBoardCampaign = ({
                             </td>
                             <td>{platform.location}</td>
                             <td>{platform.size}</td>
-                            <td>{platform.rateType}</td>
-                            <td>{values.startDate}</td>
                             <td>
-                              {values.endDate !== "" ? values.endDate : " - "}
+                              {platform.rateType +
+                                (values.campaignDuration === "Daily"
+                                  ? ` - ${campaignDays} day(s)`
+                                  : "")}
                             </td>
+                            <td>{values.startDate}</td>
+                            {values.campaignDuration === "Daily" && (
+                              <td>
+                                {values.endDate !== "" ? values.endDate : " - "}
+                              </td>
+                            )}
                             <td>
                               {
                                 <NumberFormat
