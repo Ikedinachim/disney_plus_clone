@@ -23,8 +23,11 @@ const BillboardDetails = () => {
       toast.error(error);
       dispatch(clearErrors());
     }
+  }, [dispatch, error]);
+
+  useEffect(() => {
     dispatch(getSingleBillBoardCampaign(id));
-  }, [dispatch, error, id]);
+  }, [dispatch, id]);
 
   return (
     <Fragment>

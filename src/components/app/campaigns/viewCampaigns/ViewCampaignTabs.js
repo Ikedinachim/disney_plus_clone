@@ -146,12 +146,12 @@ const ViewCampaignTabs = () => {
                     <li className="nav-item">
                       <a
                         className="nav-link tab"
-                        id="influencer-tab"
+                        id="billboard-tab"
                         data-toggle="tab"
-                        href="#influencer"
+                        href="#billboard"
                         role="tab"
                         onClick={handleTab5}
-                        aria-controls="influencer"
+                        aria-controls="billboard"
                         aria-selected="false"
                       >
                         Billboard

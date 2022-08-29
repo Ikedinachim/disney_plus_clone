@@ -212,6 +212,7 @@ const ViewInfluencerCampaignDetails = () => {
 
   const loadActionButtons = () => {
     if (
+      campaignDetails &&
       !campaignDetails.isApproved &&
       !campaignDetails.isPublished &&
       !campaignDetails.isRejected
@@ -325,7 +326,7 @@ const ViewInfluencerCampaignDetails = () => {
                 <div className="card-body pd-md-x-30">
                   <div className="col-xl-12 pd-lg-x-30 pd-t-20">
                     <div className="row justify-content-between">
-                      {campaignDetails.campaign.assetType === "youtube" ? (
+                      {campaignDetails?.campaign.assetType === "youtube" ? (
                         <>
                           <div className="col-md-8">
                             <div className="d-flex justify-content-between">
@@ -630,7 +631,7 @@ const ViewInfluencerCampaignDetails = () => {
                               <div className="div">
                                 <div className="avatar avatar-sm">
                                   <img
-                                    src={influencerDetails.imagePath}
+                                    src={influencerDetails?.imagePath}
                                     className="rounded-circle"
                                     alt=""
                                   />
@@ -638,32 +639,32 @@ const ViewInfluencerCampaignDetails = () => {
                               </div>
                               <div className="mg-l-10">
                                 <p className="mb-0 pd-t-5">
-                                  {influencerDetails.name}
+                                  {influencerDetails?.name}
                                 </p>
                               </div>
                             </div>
                           </td>
-                          <td className>{campaignDetails.campaign.id}</td>
+                          <td className>{campaignDetails?.campaign.id}</td>
                           <td className>
                             {DateTime.fromJSDate(
-                              new Date(campaignDetails.campaign.createdAt)
+                              new Date(campaignDetails?.campaign.createdAt)
                             ).toFormat("dd MMM, yyyy")}
                           </td>
                           <td className>
                             {DateTime.fromJSDate(
-                              new Date(campaignDetails.campaign.updatedAt)
+                              new Date(campaignDetails?.campaign.updatedAt)
                             ).toFormat("dd MMM, yyyy")}
                           </td>
                           <td className>
                             <NumberFormat
-                              value={parseInt(campaignDetails.campaign.cost)}
+                              value={parseInt(campaignDetails?.campaign.cost)}
                               displayType={"text"}
                               thousandSeparator={true}
                               prefix={"₦"}
                             />
                           </td>
                           <td className>
-                            {campaignDetails.campaign.assetType}
+                            {campaignDetails?.campaign.assetType}
                           </td>
                         </tr>
                       </tbody>
@@ -677,7 +678,7 @@ const ViewInfluencerCampaignDetails = () => {
                           <div className="col-6">
                             <p className="mb-0 tx-right tx-medium">
                               <NumberFormat
-                                value={parseInt(campaignDetails.campaign.cost)}
+                                value={parseInt(campaignDetails?.campaign.cost)}
                                 displayType={"text"}
                                 thousandSeparator={true}
                                 prefix={"₦"}
@@ -714,7 +715,7 @@ const ViewInfluencerCampaignDetails = () => {
                         <div className="modal-body">
                           <div>
                             <img
-                              src={campaignDetails.campaign.attachment}
+                              src={campaignDetails?.campaign.attachment}
                               alt="campaign asset"
                               className="img-fluid"
                             />

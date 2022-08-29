@@ -82,12 +82,14 @@ const FundWalletSMS = ({ prevStep, values, smsCount }) => {
 
   const config = {
     reference:
-      Object.keys(fundWallet).length > 0 ? fundWallet.data.reference : "",
+      fundWallet &&
+      (Object.keys(fundWallet).length > 0 ? fundWallet.data.reference : ""),
     email: user.user.email,
     amount:
-      Object.keys(fundWallet).length > 0
+      fundWallet &&
+      (Object.keys(fundWallet).length > 0
         ? parseInt(fundWallet.data.amount) * 100
-        : 0,
+        : 0),
     publicKey: process.env.REACT_APP_PAYSTACK_PUBLIC_KEY,
   };
 
@@ -229,7 +231,7 @@ const FundWalletSMS = ({ prevStep, values, smsCount }) => {
                           />
                         </p>
                         <form onSubmit={makePaymentHandler}>
-                          {Object.keys(fundWallet).length <= 0 && (
+                          {fundWallet && Object.keys(fundWallet).length <= 0 && (
                             <>
                               <div className="form-group mg-t-40">
                                 <label className="tx-blac mb-1">
@@ -259,7 +261,8 @@ const FundWalletSMS = ({ prevStep, values, smsCount }) => {
                               </button>
                             </>
                           )}
-                          {Object.keys(fundWallet).length > 0 &&
+                          {fundWallet &&
+                            Object.keys(fundWallet).length > 0 &&
                             fundWallet.status === "success" && (
                               <>
                                 <PaystackHookExample />
