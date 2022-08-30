@@ -618,7 +618,7 @@ export const getAllBillBoardCampaign = () => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.get(`/api/bill-board`, config);
+    const { data } = await axios.get(`/api/bill-board/user-campaigns`, config);
 
     if (data.status === "success") {
       dispatch({

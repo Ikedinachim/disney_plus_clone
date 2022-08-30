@@ -168,21 +168,15 @@ const BillboardDetails = () => {
                                 Status
                               </label>
                               <p className="tx-16 mb-0">
-                                {singleBillBoardCampaign.isApproved &&
-                                !singleBillBoardCampaign.isPublished &&
-                                !singleBillBoardCampaign.isRejected
-                                  ? "Unpublished"
-                                  : null ||
-                                    (singleBillBoardCampaign.isApproved &&
-                                      singleBillBoardCampaign.isPublished &&
-                                      !singleBillBoardCampaign.isRejected)
+                                {singleBillBoardCampaign.isAdminApproved
                                   ? "Published"
                                   : null ||
-                                    (!singleBillBoardCampaign.isApproved &&
-                                      !singleBillBoardCampaign.isPublished &&
-                                      singleBillBoardCampaign.isRejected)
-                                  ? "Rejected"
-                                  : null ||
+                                    // ||
+                                    //   (!singleBillBoardCampaign.isApproved &&
+                                    //     !singleBillBoardCampaign.isPublished &&
+                                    //     singleBillBoardCampaign.isRejected)
+                                    // ? "Rejected"
+                                    // : null
                                     (!singleBillBoardCampaign.isApproved &&
                                       !singleBillBoardCampaign.isPublished &&
                                       !singleBillBoardCampaign.isRejected)
@@ -206,24 +200,25 @@ const BillboardDetails = () => {
                           </div>
                         </div>
                         <div className="col-md-6 col-lg-5 mg-b-20 mg-md-b-10">
-                          {singleBillBoardCampaign.isApproved &&
-                            singleBillBoardCampaign.isPublished &&
-                            !singleBillBoardCampaign.isRejected && (
-                              <>
-                                <p className="tx-18 tx-semibold mb-0">
-                                  Billboard Placement
-                                </p>
-                                <div className="row mg-t-15">
-                                  <div className="form-group col-md-12">
-                                    <img
-                                      src={Billboard}
-                                      className="img-fluid mg-b-10 img-fit-contain"
-                                      alt=""
-                                    />
-                                  </div>
+                          {singleBillBoardCampaign.isAdminApproved && (
+                            // &&
+                            //   singleBillBoardCampaign.isPublished &&
+                            //   !singleBillBoardCampaign.isRejected &&
+                            <>
+                              <p className="tx-18 tx-semibold mb-0">
+                                Billboard Placement
+                              </p>
+                              <div className="row mg-t-15">
+                                <div className="form-group col-md-12">
+                                  <img
+                                    src={Billboard}
+                                    className="img-fluid mg-b-10 img-fit-contain"
+                                    alt=""
+                                  />
                                 </div>
-                              </>
-                            )}
+                              </div>
+                            </>
+                          )}
                         </div>
                       </div>
                     </Fragment>
