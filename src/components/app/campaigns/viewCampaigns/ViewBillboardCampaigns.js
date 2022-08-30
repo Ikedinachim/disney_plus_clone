@@ -30,8 +30,8 @@ const ViewBillboardCampaign = () => {
           sort: "asc",
         },
         {
-          label: "BILLBOARD TITLE",
-          field: "billboardTitle",
+          label: "CAMPAIGN ID",
+          field: "campaignId",
           sort: "asc",
         },
         {
@@ -73,7 +73,7 @@ const ViewBillboardCampaign = () => {
               </div>
             </Fragment>
           ),
-          billboardTitle: campaign.title,
+          campaignId: campaign.id,
           cost: (
             <NumberFormat
               value={parseInt(campaign.cost)}
@@ -88,51 +88,38 @@ const ViewBillboardCampaign = () => {
           status: (
             <span
               className={`badge d-flex-center ${
-                campaign.isApproved &&
-                !campaign.isPublished &&
-                !campaign.isRejected
-                  ? "badge-pending"
+                !campaign.isAdminApproved
+                  ? // &&
+                    // !campaign.isPublished &&
+                    // !campaign.isRejected
+                    "badge-pending"
                   : ""
-              } ${
-                campaign.isApproved &&
-                campaign.isPublished &&
-                !campaign.isRejected
-                  ? "badge-active"
+              } 
+              ${
+                campaign.isAdminApproved
+                  ? // &&
+                    // campaign.isPublished &&
+                    // !campaign.isRejected
+                    "badge-pending"
                   : ""
-              } ${
-                !campaign.isApproved &&
-                !campaign.isPublished &&
-                campaign.isRejected
-                  ? "badge-primary"
-                  : ""
-              }
-             ${
-               !campaign.isApproved &&
-               !campaign.isPublished &&
-               !campaign.isRejected
-                 ? "badge-pink"
-                 : ""
-             }`}
+              }`}
             >
-              {campaign.isApproved &&
-              !campaign.isPublished &&
-              !campaign.isRejected
-                ? "Unpublished"
+              {campaign.isAdminApproved
+                ? // &&
+                  // campaign.isPublished &&
+                  // !campaign.isRejected
+                  "Approved"
                 : null ||
-                  (campaign.isApproved &&
-                    campaign.isPublished &&
-                    !campaign.isRejected)
-                ? "Published"
-                : null ||
-                  (!campaign.isApproved &&
-                    !campaign.isPublished &&
-                    campaign.isRejected)
-                ? "Rejected"
-                : null ||
-                  (!campaign.isApproved &&
-                    !campaign.isPublished &&
-                    !campaign.isRejected)
-                ? "Pending"
+                  //   (!campaign.isApproved &&
+                  //     !campaign.isPublished &&
+                  //     campaign.isRejected)
+                  // ? "Rejected"
+                  // : null ||
+                  !campaign.isAdminApproved
+                ? // &&
+                  // !campaign.isPublished &&
+                  // !campaign.isRejected
+                  "Pending"
                 : null}
             </span>
           ),
@@ -164,7 +151,7 @@ const ViewBillboardCampaign = () => {
 
   return (
     <Fragment>
-      <MetaData title={"SMS Campaigns"} />
+      <MetaData title={"Billboard Campaigns"} />
       {loading ? (
         <Loader />
       ) : (
