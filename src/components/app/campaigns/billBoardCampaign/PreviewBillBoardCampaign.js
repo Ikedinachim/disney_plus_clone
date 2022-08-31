@@ -120,7 +120,7 @@ const PreviewBillBoardCampaign = ({
     // console.log(payload);
   }, [filteredValue, walletTotal]);
 
-  // console.log("filteredValue", filteredValue);
+  // console.log("payload", payload);
 
   const submitInfluencerCampaignHandler = (e) => {
     e.preventDefault();

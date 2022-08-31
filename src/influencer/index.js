@@ -217,8 +217,13 @@ const Dashboard = () => {
           // sort: "desc",
         },
         {
-          label: "EXPECTED START DATE",
+          label: "START DATE",
           field: "startDate",
+          // sort: "desc",
+        },
+        {
+          label: "END DATE",
+          field: "endDate",
           // sort: "desc",
         },
         {
@@ -257,6 +262,9 @@ const Dashboard = () => {
           "dd MMM, yyyy"
         ),
         startDate: DateTime.fromJSDate(new Date(campaign.startDate)).toFormat(
+          "dd MMM, yyyy"
+        ),
+        endDate: DateTime.fromJSDate(new Date(campaign.endDate)).toFormat(
           "dd MMM, yyyy"
         ),
         status: (
