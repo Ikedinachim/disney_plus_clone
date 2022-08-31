@@ -67,13 +67,16 @@ const ViewSmsCampaign = () => {
         data.rows.push({
           checkBoxes: (
             <Fragment>
-              <div class="custom-control custom-checkbox">
+              <div className="custom-control custom-checkbox">
                 <input
                   type="checkbox"
-                  class="custom-control-input"
+                  className="custom-control-input"
                   id="customCheck1"
                 />
-                <label class="custom-control-label" for="customCheck1"></label>
+                <label
+                  className="custom-control-label"
+                  htmlFor="customCheck1"
+                ></label>
               </div>
             </Fragment>
           ),
@@ -101,8 +104,8 @@ const ViewSmsCampaign = () => {
           ),
           actions: (
             <Fragment>
-              <div class="tx-black tx-14">
-                <div class="d-flex">
+              <div className="tx-black tx-14">
+                <div className="d-flex">
                   <Link to={`../campaign/single-sms/${campaign.id}`}>
                     <i className="fa fa-eye tx-orange pd-t-4 mg-r-5" /> View{" "}
                   </Link>
@@ -135,7 +138,6 @@ const ViewSmsCampaign = () => {
           bordered
           striped
           hover
-          checkboxFirstColumn
           responsive
         />
       )}
