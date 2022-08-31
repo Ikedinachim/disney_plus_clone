@@ -211,7 +211,7 @@ const BillboardDetails = () => {
                               <div className="row mg-t-15">
                                 <div className="form-group col-md-12">
                                   <img
-                                    src={Billboard}
+                                    src={singleBillBoardCampaign.attachment}
                                     className="img-fluid mg-b-10 img-fit-contain"
                                     alt=""
                                   />
