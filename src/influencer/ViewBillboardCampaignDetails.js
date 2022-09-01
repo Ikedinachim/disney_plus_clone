@@ -651,9 +651,11 @@ const ViewInfluencerCampaignDetails = () => {
                             ).toFormat("dd MMM, yyyy")}
                           </td>
                           <td className>
-                            {DateTime.fromJSDate(
-                              new Date(campaignDetails?.campaign.updatedAt)
-                            ).toFormat("dd MMM, yyyy")}
+                            {campaignDetails?.campaign.endDate
+                              ? DateTime.fromJSDate(
+                                  new Date(campaignDetails?.campaign.endDate)
+                                ).toFormat("dd MMM, yyyy")
+                              : "-"}
                           </td>
                           <td className>
                             <NumberFormat
