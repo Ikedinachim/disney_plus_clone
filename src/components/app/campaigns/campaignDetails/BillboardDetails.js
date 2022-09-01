@@ -147,9 +147,11 @@ const BillboardDetails = () => {
                                 To
                               </label>
                               <p className="tx-16 mb-0">
-                                {DateTime.fromJSDate(
-                                  new Date(singleBillBoardCampaign.updatedAt)
-                                ).toFormat("dd MMM, yyyy")}
+                                {singleBillBoardCampaign?.endDate
+                                  ? DateTime.fromJSDate(
+                                      new Date(singleBillBoardCampaign.endDate)
+                                    ).toFormat("dd MMM, yyyy")
+                                  : "-"}
                               </p>
                             </div>
                           </div>
