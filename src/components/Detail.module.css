@@ -1,0 +1,121 @@
+.container{
+    min-height: calc(100vh - 70px);
+    
+    padding: 0 calc(3.5vw - 5px);
+
+}
+.background-image{
+    overflow-y: hidden;
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0.8;
+}
+.background-image img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.image-title{
+    height: 30vh ;
+    width: 35vw;
+    min-width: 200px;
+    min-height: 170px;
+}
+
+.image-title img{
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+.controls{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+.play-button{
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    border-radius: 5px;
+    height: 56px;
+    margin-right: 22px;
+    background: rgb(249, 249, 249);
+    border: none;
+    letter-spacing: 1.8px;
+    cursor: pointer;
+
+}
+.play-button:hover{
+    background: rgb(198, 198, 198);
+}
+.trailer-button{
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    border-radius: 5px;
+    height: 56px;
+    background: rgba(0, 0, 0,0.3);
+    border: 1px solid rgb(249, 249, 249);
+    color: rgb(249, 249, 249);
+    text-transform: uppercase   ;
+    margin-right: 22px;
+    letter-spacing: 1.8px;
+    cursor: pointer;
+    
+
+}
+.trailer-button:hover{
+    background: rgb(198, 198, 198);
+}
+
+.add-button{
+    height: 44px;
+    width: 44px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background-color: rgba(0, 0, 0,0.6);
+    color: white;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    cursor: pointer;
+    margin-right: 22px;
+}
+.add-button span{
+    font-size: 30px;
+}
+
+.group-watch-button{
+    height: 44px;
+    width: 44px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background-color: rgba(0, 0, 0,0.6);
+    color: white;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    cursor: pointer;
+}
+.subtitle{
+color: rgb(249, 249, 249);
+min-height: 20px;
+margin-top: 26px;
+font-size: 15px;
+
+
+}
+
+
+.description{
+    /* line-height: 1.4px; */
+    font-size: 20px;
+    margin-top: 16px;
+    width: 510px;
+    color: rgb(249, 249, 249);
+
+}

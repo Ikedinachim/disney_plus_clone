@@ -17,7 +17,7 @@ const Header = () => {
             </a>
             <a href="">
                 <img src="images/watchlist-icon.png"  alt="home icon" />
-                <span>WATCH LIST</span>
+                <span>WATCHLIST</span>
             </a>
             <a href="">
                 <img src="images/original-icon.png"  alt="home icon" />

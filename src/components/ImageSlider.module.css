@@ -1,0 +1,13 @@
+.carousal{
+margin-top: 20px;
+
+
+}
+
+
+.carousal img{
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    border-radius: 20px;
+}
