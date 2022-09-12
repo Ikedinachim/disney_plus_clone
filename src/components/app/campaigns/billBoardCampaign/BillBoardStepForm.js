@@ -42,6 +42,7 @@ export default class BillBoardStepForm extends Component {
     assetType: "image",
     startDate: "",
     endDate: "",
+    duration: 1,
 
     showModal: false,
     activeItemId: "",
@@ -64,7 +65,11 @@ export default class BillBoardStepForm extends Component {
 
   // Handle fields change
   handleChange = (input) => (e) => {
-    this.setState({ [input]: e.target.value });
+    if (input === "duration") {
+      this.setState({ [input]: parseInt(e.target.value) });
+    } else {
+      this.setState({ [input]: e.target.value });
+    }
   };
 
   handleCampaignDuration = (duration) => {
@@ -98,6 +103,10 @@ export default class BillBoardStepForm extends Component {
     this.setState((state) => ({
       ...state,
       selectedInfluencers: [],
+    }));
+    this.setState((state) => ({
+      ...state,
+      duration: 1,
     }));
   };
 
@@ -290,6 +299,7 @@ export default class BillBoardStepForm extends Component {
       assetType,
       startDate,
       endDate,
+      duration,
     } = this.state;
 
     const setYoutubeUrl = (url) => {
@@ -340,6 +350,7 @@ export default class BillBoardStepForm extends Component {
       price,
       startDate,
       endDate,
+      duration,
     };
 
     const payload = {

@@ -619,7 +619,7 @@ const ViewInfluencerCampaignDetails = () => {
                           <th scope="col">Provider</th>
                           <th scope="col">Campaign ID</th>
                           <th scope="col">Created Date</th>
-                          <th scope="col">Published Date</th>
+                          <th scope="col">Ending Date</th>
                           <th scope="col">Cost</th>
                           <th scope="col">Asset Type</th>
                         </tr>

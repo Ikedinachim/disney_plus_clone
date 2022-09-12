@@ -72,6 +72,17 @@ const PreviewBillBoardCampaign = ({
     }
   };
 
+  const setEndDate = () => {
+    let monthAway = new Date(values.startDate);
+    monthAway.setMonth(monthAway.getMonth() + values.duration);
+
+    let day = monthAway.getDate();
+    let month = monthAway.getMonth() + 1;
+    let year = monthAway.getFullYear();
+
+    return year + "-" + month + "-" + day;
+  };
+
   useEffect(() => {
     if (createBillBoardCampaign && createBillBoardCampaign.success === true) {
       gaEventTracker("Billboard Campaign", "User created billboard campaign");
@@ -95,7 +106,14 @@ const PreviewBillBoardCampaign = ({
     // console.log("this is all todal", allTotals);
     const total = allTotals.reduce((acc, curr) => acc + curr, 0);
     // console.log(total);
-    setTotal(total * setScheduleDate(values.startDate, values.endDate));
+    setTotal(
+      total *
+        setScheduleDate(values.startDate, values.endDate) *
+        (values.campaignDuration === "Weekly" ||
+        values.campaignDuration === "Monthly"
+          ? values.duration
+          : 1)
+    );
     handlePrice(walletTotal);
 
     let platforms = filteredValue.map((el) => {
@@ -114,13 +132,14 @@ const PreviewBillBoardCampaign = ({
       endDate: values.endDate,
       attachment: values.attachment,
       assetType: values.assetType,
+      rateType: values.campaignDuration,
       billboards: filteredValue[0],
+      duration: values.duration,
     };
     setPayload(payload);
     // console.log(payload);
+    // console.log("payload", payload);
   }, [filteredValue, walletTotal]);
-
-  // console.log("payload", payload);
 
   const submitInfluencerCampaignHandler = (e) => {
     e.preventDefault();
@@ -291,9 +310,7 @@ const PreviewBillBoardCampaign = ({
                           <th scope="col">Size</th>
                           <th scope="col">Duration</th>
                           <th scope="col">Start Date</th>
-                          {values.campaignDuration === "Daily" && (
-                            <th scope="col">End Date</th>
-                          )}
+                          <th scope="col">End Date</th>
                           <th scope="col">Cost</th>
                           {/* <th scope="col">Weekly</th>
                           <th scope="col">Monthly</th> */}
@@ -325,17 +342,31 @@ const PreviewBillBoardCampaign = ({
                             <td>{platform.location}</td>
                             <td>{platform.size}</td>
                             <td>
-                              {platform.rateType +
-                                (values.campaignDuration === "Daily"
-                                  ? ` - ${campaignDays} day(s)`
+                              {(values.campaignDuration === "Daily"
+                                ? `${campaignDays} day(s)`
+                                : "") ||
+                                (values.campaignDuration === "Weekly"
+                                  ? `${values.duration} week(s)`
+                                  : "") ||
+                                (values.campaignDuration === "Monthly"
+                                  ? `${values.duration} month(s)`
                                   : "")}
                             </td>
                             <td>{values.startDate}</td>
-                            {values.campaignDuration === "Daily" && (
-                              <td>
-                                {values.endDate !== "" ? values.endDate : " - "}
-                              </td>
-                            )}
+                            <td>
+                              {values.campaignDuration === "Daily" &&
+                                (values.endDate !== ""
+                                  ? values.endDate
+                                  : " - ")}
+                              {values.campaignDuration === "Weekly" &&
+                                (values.startDate !== ""
+                                  ? setEndDate()
+                                  : " - ")}
+                              {values.campaignDuration === "Monthly" &&
+                                (values.startDate !== ""
+                                  ? setEndDate()
+                                  : " - ")}
+                            </td>
                             <td>
                               {
                                 <NumberFormat
@@ -370,6 +401,16 @@ const PreviewBillBoardCampaign = ({
                             {values.campaignDuration === "Daily" && (
                               <p className="tx-bold mb-0 tx-right">
                                 cost x {campaignDays} day(s)
+                              </p>
+                            )}
+                            {values.campaignDuration === "Weekly" && (
+                              <p className="tx-bold mb-0 tx-right">
+                                cost x {values.duration} week(s)
+                              </p>
+                            )}
+                            {values.campaignDuration === "Monthly" && (
+                              <p className="tx-bold mb-0 tx-right">
+                                cost x {values.duration} month(s)
                               </p>
                             )}
                           </div>
@@ -432,7 +473,7 @@ const PreviewBillBoardCampaign = ({
                             />
                             <p className="tx-26 tx-com tx-bold">Please Note</p>
                             <p className="tx-16 mb-0">
-                              Your campaign is being vetted by AMCON and will be
+                              Your campaign is being vetted by ARCON and will be
                               published within 48 hours
                             </p>
                           </div>

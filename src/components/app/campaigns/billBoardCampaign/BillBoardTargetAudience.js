@@ -38,6 +38,12 @@ const BillBoardTargetAudience = ({
       toast.warning("Please set a valid date");
     } else if (d2.valueOf() > ed.valueOf()) {
       toast.warning("Invalid end date");
+    } else if (
+      (values.campaignDuration === "Daily" && !values.duration) ||
+      values.campaignDuration === "Montly" ||
+      !values.duration
+    ) {
+      toast.warning("Please select a valid duration");
     } else if (!values.attachment) {
       toast.warning("Please upload billboard creative");
     } else {
@@ -124,6 +130,75 @@ const BillBoardTargetAudience = ({
                                   // max="6/11/2022"
                                 />
                               </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="form-group">
+                        <div className="form-group">
+                          <label className="mb-1">
+                            Duration
+                            <i className="tx-6 fa fa-star tx-primary mg-l-2" />
+                          </label>
+                          <div className="pd-0 input-group mg-b-0">
+                            {values.campaignDuration === "Weekly" && (
+                              <>
+                                <select
+                                  className="custom-select"
+                                  // value="select channel"
+                                  defaultValue={values.duration}
+                                  onChange={handleChange("duration")}
+                                >
+                                  {/* <option value="1">
+                                    Select number week(s)
+                                  </option> */}
+                                  {Array.from(Array(3), (e, i) => {
+                                    return (
+                                      <option value={i + 1}>{i + 1}</option>
+                                    );
+                                  })}
+                                </select>
+                                <div className="input-group-append">
+                                  <span className="input-group-text">
+                                    Week(s)
+                                  </span>
+                                </div>
+                              </>
+                            )}
+                            {values.campaignDuration === "Monthly" && (
+                              <>
+                                {/* inputmode="numeric" */}
+                                {/* <select
+                                  className="custom-select"
+                                  // value="select channel"
+                                  defaultValue={values.numOfMonth}
+                                  onChange={handleChange("numOfMonth")}
+                                >
+                                  <option value="1">
+                                    Select monthly value
+                                  </option>
+                                  {Array.from(Array(12), (e, i) => {
+                                    return (
+                                      <option value={i + 1}>{i + 1}</option>
+                                    );
+                                  })}
+                                </select> */}
+                                <input
+                                  type="number"
+                                  inputMode="numeric"
+                                  pattern="[0-9]*"
+                                  id="numOfMonth"
+                                  className="form-control"
+                                  defaultValue={values.duration}
+                                  onChange={handleChange("duration")}
+                                  min="1"
+                                />
+                                <div className="input-group-append">
+                                  <span className="input-group-text">
+                                    Month(s)
+                                  </span>
+                                </div>
+                              </>
                             )}
                           </div>
                         </div>
@@ -268,6 +343,12 @@ const BillBoardTargetAudience = ({
                                 />
                               </div>
                             </div>
+                            <p className="mg-0 tx-12 tx-italic tx-bold tx-gray-500">
+                              <span className="tx-danger tx-14">Note* </span>-
+                              Videos length per view is 10 seconds, price is
+                              doubled for another 10 seconds. (Total max of 20
+                              seconds per campaign)
+                            </p>
                             {youtubeError && (
                               <p className="mt-2 tx-danger tx-italic">
                                 Enter a valid youtube url
