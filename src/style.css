@@ -558,7 +558,7 @@ ol.terms-list ol.terms-inner-list > li:before {
 }
 
 .billboard-img-hover .preview-expand i {
-  opacity: 0.3;
+  opacity: 0.8;
 }
 
 .billboard-img-hover .preview-expand p {
@@ -767,4 +767,8 @@ ol.terms-list ol.terms-inner-list > li:before {
   overflow-y: auto;
   max-height: 110px;
   height: 100%;
+}
+
+.split-content {
+  column-count: 2;
 }

@@ -473,8 +473,8 @@ const PreviewBillBoardCampaign = ({
                             />
                             <p className="tx-26 tx-com tx-bold">Please Note</p>
                             <p className="tx-16 mb-0">
-                              Your campaign is being vetted by ARCON and will be
-                              published within 48 hours
+                              Your campaign is being vetted by ARCON and would
+                              be published within 48 hours if successful
                             </p>
                           </div>
                         </div>

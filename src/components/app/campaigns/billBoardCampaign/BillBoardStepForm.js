@@ -359,7 +359,7 @@ export default class BillBoardStepForm extends Component {
       attachment: values.attachment,
     };
 
-    // console.log(values);
+    console.log(values);
 
     switch (step) {
       case 1:

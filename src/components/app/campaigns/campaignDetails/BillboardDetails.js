@@ -4,12 +4,14 @@ import MetaData from "../../../layout/MetaData";
 import { useSelector, useDispatch } from "react-redux";
 import { DateTime } from "luxon";
 import { toast } from "react-toastify";
+import NumberFormat from "react-number-format";
 import {
   getSingleBillBoardCampaign,
   clearErrors,
 } from "../../../../actions/campaignActions";
-import Billboard from "../../../../assets/img/billboard.png";
+// import Billboard from "../../../../assets/img/billboard.png";
 import Loader from "../../../loader";
+import MediaPlayer from "../../../../_helpers/reactPlayer/ReactPlayer";
 
 const BillboardDetails = () => {
   const { loading, error, singleBillBoardCampaign } = useSelector(
@@ -28,6 +30,8 @@ const BillboardDetails = () => {
   useEffect(() => {
     dispatch(getSingleBillBoardCampaign(id));
   }, [dispatch, id]);
+
+  console.log("singleBillBoardCampaign", singleBillBoardCampaign);
 
   return (
     <Fragment>
@@ -79,10 +83,12 @@ const BillboardDetails = () => {
                                 for=""
                                 className="tx-14 tx-gray mb-0 tx-medium"
                               >
-                                Campaign Name
+                                Created At
                               </label>
                               <p className="tx-16 mb-0">
-                                {singleBillBoardCampaign.campaignType}
+                                {DateTime.fromJSDate(
+                                  new Date(singleBillBoardCampaign[0].createdAt)
+                                ).toFormat("dd MMM, yyyy")}
                               </p>
                             </div>
                             <div className="form-group col-md-6">
@@ -93,7 +99,7 @@ const BillboardDetails = () => {
                                 Rate Type
                               </label>
                               <p className="tx-16 mb-0 text-capitalize">
-                                {singleBillBoardCampaign.rateType}
+                                {singleBillBoardCampaign[0].details.rateType}
                               </p>
                             </div>
                             <div className="form-group col-md-6">
@@ -104,7 +110,7 @@ const BillboardDetails = () => {
                                 Campaign-ID
                               </label>
                               <p className="tx-16 mb-0">
-                                {singleBillBoardCampaign.id}
+                                {singleBillBoardCampaign[0].id}
                               </p>
                             </div>
                           </div>
@@ -116,42 +122,54 @@ const BillboardDetails = () => {
                           <div className="row mg-t-15">
                             <div className="form-group col-md-12">
                               <label
-                                for=""
+                                htmlFor=""
                                 className="tx-14 tx-gray mb-0 tx-medium"
                               >
                                 Price
                               </label>
                               <p className="tx-16 mb-0">
-                                {singleBillBoardCampaign.cost}
+                                <NumberFormat
+                                  value={parseInt(
+                                    singleBillBoardCampaign[0].cost
+                                  )}
+                                  displayType={"text"}
+                                  thousandSeparator={true}
+                                  prefix={"₦"}
+                                />
+                                {/* {singleBillBoardCampaign[0].cost} */}
                               </p>
                             </div>
 
                             <div className="form-group col-md-6">
                               <label
-                                for=""
+                                htmlFor=""
                                 className="tx-14 tx-gray mb-0 tx-medium"
                               >
                                 From
                               </label>
                               <p className="tx-16 mb-0">
                                 {DateTime.fromJSDate(
-                                  new Date(singleBillBoardCampaign.createdAt)
+                                  new Date(
+                                    singleBillBoardCampaign[0].details.startDate
+                                  )
                                 ).toFormat("dd MMM, yyyy")}
+                                {/* {singleBillBoardCampaign[0].detail.startDate} */}
                               </p>
                             </div>
                             <div className="form-group col-md-6">
                               <label
-                                for=""
+                                htmlFor=""
                                 className="tx-14 tx-gray mb-0 tx-medium"
                               >
                                 To
                               </label>
                               <p className="tx-16 mb-0">
-                                {singleBillBoardCampaign?.endDate
-                                  ? DateTime.fromJSDate(
-                                      new Date(singleBillBoardCampaign.endDate)
-                                    ).toFormat("dd MMM, yyyy")
-                                  : "-"}
+                                {DateTime.fromJSDate(
+                                  new Date(
+                                    singleBillBoardCampaign[0].details.endDate
+                                  )
+                                ).toFormat("dd MMM, yyyy")}
+                                {/* {singleBillBoardCampaign[0].endDate} */}
                               </p>
                             </div>
                           </div>
@@ -170,7 +188,7 @@ const BillboardDetails = () => {
                                 Status
                               </label>
                               <p className="tx-16 mb-0">
-                                {singleBillBoardCampaign.isAdminApproved
+                                {singleBillBoardCampaign[0].isAdminApproved
                                   ? "Published"
                                   : null ||
                                     // ||
@@ -179,14 +197,14 @@ const BillboardDetails = () => {
                                     //     singleBillBoardCampaign.isRejected)
                                     // ? "Rejected"
                                     // : null
-                                    (!singleBillBoardCampaign.isApproved &&
-                                      !singleBillBoardCampaign.isPublished &&
-                                      !singleBillBoardCampaign.isRejected)
+                                    (!singleBillBoardCampaign[0].isApproved &&
+                                      !singleBillBoardCampaign[0].isPublished &&
+                                      !singleBillBoardCampaign[0].isRejected)
                                   ? "Pending"
                                   : null}
                               </p>
                             </div>
-                            {singleBillBoardCampaign.isRejected && (
+                            {singleBillBoardCampaign[0].isRejected && (
                               <div className="form-group col-md-6">
                                 <label
                                   for=""
@@ -195,14 +213,14 @@ const BillboardDetails = () => {
                                   Rejection Reason
                                 </label>
                                 <p className="tx-16 mb-0">
-                                  {singleBillBoardCampaign.rejectionReason}
+                                  {singleBillBoardCampaign[0].rejectionReason}
                                 </p>
                               </div>
                             )}
                           </div>
                         </div>
                         <div className="col-md-6 col-lg-5 mg-b-20 mg-md-b-10">
-                          {singleBillBoardCampaign.isAdminApproved && (
+                          {singleBillBoardCampaign[0].isAdminApproved && (
                             // &&
                             //   singleBillBoardCampaign.isPublished &&
                             //   !singleBillBoardCampaign.isRejected &&
@@ -212,11 +230,23 @@ const BillboardDetails = () => {
                               </p>
                               <div className="row mg-t-15">
                                 <div className="form-group col-md-12">
-                                  <img
-                                    src={singleBillBoardCampaign.attachment}
-                                    className="img-fluid mg-b-10 img-fit-contain"
-                                    alt=""
-                                  />
+                                  {singleBillBoardCampaign[0].assetType ===
+                                  "image" ? (
+                                    <img
+                                      src={
+                                        singleBillBoardCampaign[0].attachment
+                                      }
+                                      className="img-fluid mg-b-10 img-fit-contain"
+                                      alt=""
+                                    />
+                                  ) : (
+                                    <MediaPlayer
+                                      url={
+                                        singleBillBoardCampaign[0].attachment
+                                      }
+                                      height={"400px"}
+                                    />
+                                  )}
                                 </div>
                               </div>
                             </>

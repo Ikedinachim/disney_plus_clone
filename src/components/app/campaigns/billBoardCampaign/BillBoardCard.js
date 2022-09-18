@@ -39,8 +39,8 @@ const InfluencerCard = ({
             {/* <div className="custom-control-input"> */}
 
             {/* </div> */}
-            <div className="d-flex h-100">
-              <div className="div pd-l-0 w-65">
+            <div className="d-flex h-100 flex-column">
+              <div className="div pd-l-0 w-100 ht-300">
                 <figure
                   className={`billboard-img ${
                     billboardImages.length > 0 ? "billboard-img-hover" : ""
@@ -72,7 +72,7 @@ const InfluencerCard = ({
                 </figure>
               </div>
 
-              <div className="mg-l-10">
+              <div className="pd-20 flex-1">
                 <input
                   type="radio"
                   name="billboard"
@@ -83,83 +83,110 @@ const InfluencerCard = ({
                   id={billboard.id}
                 />
                 <label
-                  className="custom-control-label d-inline billboard-checkbox w-50 clickable"
+                  className="custom-control-label d-inline-flex flex-column billboard-checkbox w-100 h-100 clickable"
                   htmlFor={billboard.id}
                   data-toggle="modal2"
                   data-target="#sideModal"
                 >
-                  <div className="pd-y-30 pd-x-5">
-                    <h2 className="tx-24 tx-bold mg-b-20 tx-com text-uppercase">
+                  <div className="pd-x-5 d-flex flex-column h-100">
+                    <h2 className="tx-18 tx-bold mg-b-20 tx-com text-capitalize tx-primary">
                       {billboard.title}
                     </h2>
-                    <div>
-                      <p className="tx-bold">
-                        Location:{" "}
-                        <span className="tx-normal">{billboard.location}</span>
-                      </p>
+                    <div className="split-content flex-1">
+                      <div>
+                        <p className="tx-bold">
+                          Location:{" "}
+                          <span className="tx-normal">
+                            {billboard.location}
+                          </span>
+                        </p>
+                      </div>
+                      <div>
+                        <p className="tx-bold">
+                          Size:{" "}
+                          <span className="tx-normal">{billboard.size}</span>
+                        </p>
+                      </div>
+                      <div>
+                        <p className="tx-bold">
+                          Pixel Size:{" "}
+                          <span className="tx-normal">
+                            {billboard.pixel_size}
+                          </span>
+                        </p>
+                      </div>
+                      <div>
+                        <p className="tx-bold">
+                          impressions:{" "}
+                          <span className="tx-normal">
+                            {billboard.impressions ? billboard.impressions : 70}{" "}
+                            per day
+                          </span>
+                        </p>
+                      </div>
+                      <div>
+                        <p className="tx-bold">
+                          Traffic:{" "}
+                          <span className="tx-normal">{billboard.traffic}</span>
+                        </p>
+                      </div>
+                      <div>
+                        <p className="tx-bold">
+                          Orientation:{" "}
+                          <span className="tx-normal">
+                            {billboard.orientation}
+                          </span>
+                        </p>
+                      </div>
+                      <div>
+                        <p className="tx-bold">
+                          Price:{" "}
+                          <span className="tx-normal">
+                            From{" "}
+                            <NumberFormat
+                              value={
+                                billboard.rates.find(
+                                  (rate) => rate.name === "Daily"
+                                )?.cost
+                              }
+                              displayType={"text"}
+                              thousandSeparator={true}
+                              prefix={"₦"}
+                            />
+                          </span>
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="tx-bold">
-                        Size:{" "}
-                        <span className="tx-normal">{billboard.size}</span>
-                      </p>
-                    </div>
-                    <div>
-                      <p className="tx-bold">
-                        Pixel Size:{" "}
-                        <span className="tx-normal">
-                          {billboard.pixel_size}
-                        </span>
-                      </p>
-                    </div>
-                    <div>
-                      <p className="tx-bold">
-                        impressions:{" "}
-                        <span className="tx-normal">
-                          {billboard.impressions ? billboard.impressions : 70}{" "}
-                          per day
-                        </span>
-                      </p>
-                    </div>
-                    <div>
-                      <p className="tx-bold">
-                        Traffic:{" "}
-                        <span className="tx-normal">{billboard.traffic}</span>
-                      </p>
-                    </div>
-                    <div>
-                      <p className="tx-bold">
-                        Orientation:{" "}
-                        <span className="tx-normal">
-                          {billboard.orientation}
-                        </span>
-                      </p>
-                    </div>
-                    <div>
-                      <p className="tx-bold">
-                        Price:{" "}
-                        <span className="tx-normal">
-                          From{" "}
-                          <NumberFormat
-                            value={
-                              billboard.rates.find(
-                                (rate) => rate.name === "Daily"
-                              )?.cost
-                            }
-                            displayType={"text"}
-                            thousandSeparator={true}
-                            prefix={"₦"}
-                          />
-                        </span>
-                      </p>
+                    <div className=" d-flex justify-content-end">
+                      <span
+                        className="btn btn-primary pd-x-50 w-50 mg-t-20"
+                        htmlFor={billboard.id}
+                        data-toggle="modal2"
+                        data-target="#sideModal"
+                      >
+                        Select Board
+                      </span>
                     </div>
                   </div>
                 </label>
               </div>
+              {/* <button
+                className="btn btn-primary pd-x-50"
+                // onClick={Continue}
+                type="submit"
+                // variant="contained"
+              >
+                Select Board
+              </button> */}
             </div>
           </div>
         </div>
-        <FsLightbox toggler={toggler} sources={billboardImages} />
+        <FsLightbox
+          toggler={toggler}
+          sources={billboardImages}
+          disableLocalStorage={true}
+          captions={[<p>Hello</p>]}
+        />
       </div>
     </Fragment>
   );
