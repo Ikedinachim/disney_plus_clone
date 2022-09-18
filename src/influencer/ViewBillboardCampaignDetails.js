@@ -40,6 +40,7 @@ const ViewInfluencerCampaignDetails = () => {
     useSelector((state) => state.updateBillboardCampaignPublishStatus || []);
 
   const [rejectInput, setRejectInput] = useState("");
+  const [ammendInput, setAmmendInput] = useState("");
   const [publishInputUrl, setPublishInputUrl] = useState("");
   const [publishInputMessage, setPublishInputMessage] = useState("");
 
@@ -168,17 +169,28 @@ const ViewInfluencerCampaignDetails = () => {
 
   const campaignDetails = details(providerCampaignList, billboardMarketingId);
 
+  console.log("campaignDetails", campaignDetails);
+
   const approvedPayload = {
     billboardId: campaignDetails && campaignDetails.billBoardId,
     campaignId: campaignDetails && campaignDetails.campaign.id,
     approvalType: "approved",
   };
+
   const rejectPayload = {
     billboardId: campaignDetails && campaignDetails.billBoardId,
     campaignId: campaignDetails && campaignDetails.campaign.id,
     approvalType: "rejected",
     rejectionMessage: rejectInput,
   };
+
+  const ammendPayload = {
+    billboardId: campaignDetails && campaignDetails.billBoardId,
+    campaignId: campaignDetails && campaignDetails.campaign.id,
+    approvalType: "ammend",
+    rejectionMessage: ammendInput,
+  };
+
   const publishPayload = {
     billboardId: campaignDetails && campaignDetails.billBoardId,
     campaignId: campaignDetails && campaignDetails.campaign.id,
@@ -196,6 +208,12 @@ const ViewInfluencerCampaignDetails = () => {
     e.preventDefault();
 
     dispatch(updateBillboardCampaignStatusAction(approvedPayload));
+  };
+
+  const ammendCampaignHandler = (e) => {
+    e.preventDefault();
+
+    dispatch(updateBillboardCampaignStatusAction(ammendPayload));
   };
 
   const rejectCampaignHandler = (e) => {
@@ -228,6 +246,14 @@ const ViewInfluencerCampaignDetails = () => {
           >
             Approve
           </button>
+          {/* <button
+            className="btn btn-warning tx-com tx-white mg-r-15 pd-x-30"
+            data-toggle="modal"
+            data-dismiss="modal"
+            data-target="#ammendModal"
+          >
+            Amend
+          </button> */}
           <button
             className="btn btn-outline-primary pd-x-30"
             data-toggle="modal"
@@ -619,7 +645,8 @@ const ViewInfluencerCampaignDetails = () => {
                           <th scope="col">Provider</th>
                           <th scope="col">Campaign ID</th>
                           <th scope="col">Created Date</th>
-                          <th scope="col">Ending Date</th>
+                          <th scope="col">Rate Type</th>
+                          <th scope="col">End Date</th>
                           <th scope="col">Cost</th>
                           <th scope="col">Asset Type</th>
                         </tr>
@@ -650,10 +677,11 @@ const ViewInfluencerCampaignDetails = () => {
                               new Date(campaignDetails?.campaign.createdAt)
                             ).toFormat("dd MMM, yyyy")}
                           </td>
+                          <td className>{campaignDetails?.rateType}</td>
                           <td className>
-                            {campaignDetails?.campaign.endDate
+                            {campaignDetails?.endDate
                               ? DateTime.fromJSDate(
-                                  new Date(campaignDetails?.campaign.endDate)
+                                  new Date(campaignDetails?.endDate)
                                 ).toFormat("dd MMM, yyyy")
                               : "-"}
                           </td>
@@ -773,6 +801,54 @@ const ViewInfluencerCampaignDetails = () => {
                             data-dismiss="modal"
                           >
                             Reject
+                          </button>
+                          <button
+                            type="button"
+                            className="btn btn-outline-primary w-45"
+                            data-dismiss="modal"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {/*Ammend  Modal */}
+                  <div
+                    id="amendModal"
+                    className="modal fade"
+                    tabIndex={-1}
+                    aria-labelledby="assignModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div className="modal-dialog modal-dialog-centered modal-smm">
+                      <div className="modal-content pd-md-x-30 pd-x-20 pd-y-20">
+                        <div className="modal-header bd-b-0"></div>
+                        <div className="modal-body tx-center pd-x-10">
+                          <div className="form-group">
+                            <p className="tx-26 tx-com tx-bold">
+                              Ammend Campaign
+                            </p>
+                            <p className="tx-16 mb-10">
+                              Please specify the reason for the ammendment.
+                            </p>
+                            <textarea
+                              className="form-control"
+                              rows={4}
+                              onChange={(e) => setAmmendInput(e.target.value)}
+                              placeholder="Enter Reasons"
+                              defaultValue={ammendInput}
+                            />
+                          </div>
+                        </div>
+                        <div className="tx-center modal-footer bd-t-0 pd-b-30">
+                          <button
+                            type="button"
+                            className="btn btn-primary w-45 mg-r-20"
+                            onClick={ammendCampaignHandler}
+                            data-dismiss="modal"
+                          >
+                            Ammend
                           </button>
                           <button
                             type="button"
