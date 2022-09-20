@@ -14,6 +14,7 @@ const BillBoardTargetAudience = ({
   handleVideoUpload,
   values,
   selectedFileName,
+  selectedvideoFileName,
   uploadPercentage,
   resetCheckedState,
   youtubeError,
@@ -311,7 +312,7 @@ const BillBoardTargetAudience = ({
                                 className="custom-file-label"
                                 htmlFor="videoAsset"
                               >
-                                {selectedFileName}
+                                {selectedvideoFileName}
                               </label>
                               {uploadPercentage > 0 && (
                                 <span className="mt-2">
