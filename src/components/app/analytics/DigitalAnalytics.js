@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, Suspense } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import Loader from '../../loader';
+import Loader from "../../loader";
 import MobileChart from "./Digital Chart/MobileChart";
 import OsChart from "./Digital Chart/OsChart";
 import DateChart from "./Digital Chart/DateChart";
@@ -93,7 +93,7 @@ const DigitalAnalytics = () => {
                             <div>
                               <p className="tx-24 tx-bold">{campaign.clicks}</p>
                               <p className="tx-15 tx-blac">
-                                Total number of conversions
+                                Total number of clicks
                               </p>
                               <br></br>
                             </div>
@@ -110,7 +110,7 @@ const DigitalAnalytics = () => {
 
               <div className="row mg-t-30">
                 {/* ads performed & actions performed */}
-                <OsChart propellerId={propellerId} google={google}/>
+                <OsChart propellerId={propellerId} google={google} />
 
                 {/* chartArea */}
                 <MobileChart propellerId={propellerId} google={google} />
