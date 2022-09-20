@@ -274,8 +274,6 @@ const TargetAudience = ({
     prevStep();
   };
 
-  ////
-
   const parseFile = (file) => {
     Papa.parse(file, {
       header: true,
