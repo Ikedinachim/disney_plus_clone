@@ -48,6 +48,7 @@ export default class BillBoardStepForm extends Component {
     activeItemId: "",
     rawVideoUrl: "",
     selectedFileName: "Upload Asset *png, *jpg, *gif",
+    selectedvideoFileName: "Upload Asset *mp4",
     orientation: "",
   };
 
@@ -256,7 +257,7 @@ export default class BillBoardStepForm extends Component {
               {
                 videoUrl: res.data.secure_url,
                 uploadPercentage: 100,
-                selectedFileName: files.name,
+                selectedvideoFileName: files.name,
               },
               () => {
                 setTimeout(() => {
@@ -295,6 +296,7 @@ export default class BillBoardStepForm extends Component {
       campaignType,
       campaignDuration,
       selectedFileName,
+      selectedvideoFileName,
       uploadPercentage,
       assetType,
       startDate,
@@ -394,6 +396,7 @@ export default class BillBoardStepForm extends Component {
             attachmentPreview={attachmentPreview}
             values={values}
             selectedFileName={selectedFileName}
+            selectedvideoFileName={selectedvideoFileName}
             uploadPercentage={uploadPercentage}
             resetCheckedState={this.resetCheckedState}
             youtubeError={youtubeError}
