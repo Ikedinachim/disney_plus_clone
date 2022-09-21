@@ -352,7 +352,8 @@ const ViewInfluencerCampaignDetails = () => {
                 <div className="card-body pd-md-x-30">
                   <div className="col-xl-12 pd-lg-x-30 pd-t-20">
                     <div className="row justify-content-between">
-                      {campaignDetails?.campaign.assetType === "youtube" ? (
+                      {campaignDetails?.campaign.assetType === "youtube" ||
+                      campaignDetails?.campaign.assetType === "video" ? (
                         <>
                           <div className="col-md-8">
                             <div className="d-flex justify-content-between">
@@ -390,9 +391,17 @@ const ViewInfluencerCampaignDetails = () => {
                             </div>
                             <div className="row mg-t-15">
                               <div className="form-group col-md-12">
-                                <label className="tx-14 mb-0 tx-medium">
-                                  Youtube Url:
-                                </label>
+                                {campaignDetails?.campaign.assetType ===
+                                "youtube" ? (
+                                  <label className="tx-14 mb-0 tx-medium">
+                                    Youtube Url:
+                                  </label>
+                                ) : (
+                                  <label className="tx-14 mb-0 tx-medium">
+                                    Video Url:
+                                  </label>
+                                )}
+
                                 <a
                                   href={campaignDetails?.campaign.attachment}
                                   className="tx-14 mb-0"
