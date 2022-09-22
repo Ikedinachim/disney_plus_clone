@@ -323,7 +323,13 @@ const BillBoardTargetAudience = ({
                                   />
                                 </span>
                               )}
-                              <p className="tx-danger tx-italic">
+                              <p className="mg-0 tx-12 tx-italic tx-bold tx-gray-500">
+                                <span className="tx-danger tx-14">Note* </span>-
+                                Videos length per view is 10 seconds, price is
+                                doubled for another 10 seconds. (Total max of 20
+                                seconds per campaign)
+                              </p>
+                              <p className="mt-2 tx-danger tx-italic">
                                 Video size: not more than 30mb
                               </p>
                             </div>

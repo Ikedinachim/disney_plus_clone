@@ -6,6 +6,7 @@ import FeatherIcon from "feather-icons-react";
 
 import { logout } from "../../actions/authActions";
 import { getWallet } from "../../actions/billingActions";
+import walletIcon from "../../assets/img/campaign.svg";
 
 const Header = () => {
   const ref = useRef();
@@ -56,7 +57,7 @@ const Header = () => {
             </Link>
             <span className="mg-l-3 tx-14 tx-medium">
               <img
-                src="../../assets/img/campaign.svg"
+                src={walletIcon}
                 alt="asset"
                 // srcSet
                 style={{ marginRight: "3px" }}
