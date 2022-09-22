@@ -76,10 +76,10 @@ const ViewBillboardCampaign = () => {
               </div>
             </Fragment>
           ),
-          campaignId: campaign.id,
+          campaignId: campaign.billBoardCampaignId,
           cost: (
             <NumberFormat
-              value={parseInt(campaign.cost)}
+              value={parseInt(campaign.totalCost)}
               displayType={"text"}
               thousandSeparator={true}
               prefix={"₦"}
@@ -91,38 +91,70 @@ const ViewBillboardCampaign = () => {
           status: (
             <span
               className={`badge d-flex-center ${
-                !campaign.isAdminApproved
-                  ? // &&
-                    // !campaign.isPublished &&
-                    // !campaign.isRejected
-                    "badge-pink"
+                !campaign.isAdminApproved &&
+                !campaign.isPublished &&
+                !campaign.isRejected &&
+                !campaign.isApproved &&
+                !campaign.isAdminRejected
+                  ? "badge-pink"
                   : ""
               } 
               ${
-                campaign.isAdminApproved
-                  ? // &&
-                    // campaign.isPublished &&
-                    // !campaign.isRejected
-                    "badge-pending"
+                campaign.isAdminApproved &&
+                campaign.isPublished &&
+                !campaign.isRejected &&
+                campaign.isApproved
+                  ? "badge-active"
                   : ""
-              }`}
+              }
+              ${
+                !campaign.isAdminApproved &&
+                !campaign.isPublished &&
+                (campaign.isRejected || campaign.isAdminRejected) &&
+                !campaign.isApproved
+                  ? "badge-danger"
+                  : ""
+              }
+              ${
+                campaign.isAdminApproved &&
+                !campaign.isPublished &&
+                !campaign.isRejected &&
+                campaign.isApproved
+                  ? "badge-pending"
+                  : ""
+              }
+              `}
             >
-              {campaign.isAdminApproved
-                ? // &&
-                  // campaign.isPublished &&
-                  // !campaign.isRejected
-                  "Approved"
+              {campaign.isAdminApproved &&
+              !campaign.isApproved &&
+              !campaign.isRejected &&
+              !campaign.isPublished
+                ? "Approved"
                 : null ||
-                  //   (!campaign.isApproved &&
-                  //     !campaign.isPublished &&
-                  //     campaign.isRejected)
-                  // ? "Rejected"
-                  // : null ||
-                  !campaign.isAdminApproved
-                ? // &&
-                  // !campaign.isPublished &&
-                  // !campaign.isRejected
-                  "Pending"
+                  (campaign.isAdminApproved &&
+                    !campaign.isPublished &&
+                    !campaign.isRejected &&
+                    campaign.isApproved)
+                ? "Running"
+                : null ||
+                  (!campaign.isAdminApproved &&
+                    !campaign.isPublished &&
+                    !campaign.isRejected &&
+                    !campaign.isApproved &&
+                    !campaign.isAdminRejected)
+                ? "Pending"
+                : null ||
+                  (campaign.isAdminApproved &&
+                    campaign.isPublished &&
+                    !campaign.isRejected &&
+                    campaign.isApproved)
+                ? "Published"
+                : null ||
+                  (!campaign.isAdminApproved &&
+                    !campaign.isPublished &&
+                    !campaign.isApproved &&
+                    (campaign.isRejected || campaign.isAdminRejected))
+                ? "Rejected"
                 : null}
             </span>
           ),
@@ -130,7 +162,9 @@ const ViewBillboardCampaign = () => {
             <Fragment>
               <div className="tx-black tx-14">
                 <div className="d-flex">
-                  <Link to={`../campaign/single-billboard/${campaign.id}`}>
+                  <Link
+                    to={`../campaign/single-billboard/${campaign.billBoardCampaignId}`}
+                  >
                     <i className="fa fa-eye tx-orange pd-t-4 mg-r-5" /> View{" "}
                   </Link>
                 </div>
@@ -143,12 +177,14 @@ const ViewBillboardCampaign = () => {
   };
 
   useEffect(() => {
+    dispatch(getAllBillBoardCampaign());
+  }, [dispatch]);
+
+  useEffect(() => {
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
       navigate("/app/campaigns");
-    } else {
-      dispatch(getAllBillBoardCampaign());
     }
   }, [dispatch, error, navigate]);
 
