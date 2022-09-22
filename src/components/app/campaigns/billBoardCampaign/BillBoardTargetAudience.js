@@ -135,41 +135,42 @@ const BillBoardTargetAudience = ({
                           </div>
                         </div>
                       </div>
-                      <div className="form-group">
+                      {values.campaignDuration !== "Daily" && (
                         <div className="form-group">
-                          <label className="mb-1">
-                            Duration
-                            <i className="tx-6 fa fa-star tx-primary mg-l-2" />
-                          </label>
-                          <div className="pd-0 input-group mg-b-0">
-                            {values.campaignDuration === "Weekly" && (
-                              <>
-                                <select
-                                  className="custom-select"
-                                  // value="select channel"
-                                  defaultValue={values.duration}
-                                  onChange={handleChange("duration")}
-                                >
-                                  {/* <option value="1">
+                          <div className="form-group">
+                            <label className="mb-1">
+                              Duration
+                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
+                            </label>
+                            <div className="pd-0 input-group mg-b-0">
+                              {values.campaignDuration === "Weekly" && (
+                                <>
+                                  <select
+                                    className="custom-select"
+                                    // value="select channel"
+                                    defaultValue={values.duration}
+                                    onChange={handleChange("duration")}
+                                  >
+                                    {/* <option value="1">
                                     Select number week(s)
                                   </option> */}
-                                  {Array.from(Array(3), (e, i) => {
-                                    return (
-                                      <option value={i + 1}>{i + 1}</option>
-                                    );
-                                  })}
-                                </select>
-                                <div className="input-group-append">
-                                  <span className="input-group-text">
-                                    Week(s)
-                                  </span>
-                                </div>
-                              </>
-                            )}
-                            {values.campaignDuration === "Monthly" && (
-                              <>
-                                {/* inputmode="numeric" */}
-                                {/* <select
+                                    {Array.from(Array(3), (e, i) => {
+                                      return (
+                                        <option value={i + 1}>{i + 1}</option>
+                                      );
+                                    })}
+                                  </select>
+                                  <div className="input-group-append">
+                                    <span className="input-group-text">
+                                      Week(s)
+                                    </span>
+                                  </div>
+                                </>
+                              )}
+                              {values.campaignDuration === "Monthly" && (
+                                <>
+                                  {/* inputmode="numeric" */}
+                                  {/* <select
                                   className="custom-select"
                                   // value="select channel"
                                   defaultValue={values.numOfMonth}
@@ -184,26 +185,27 @@ const BillBoardTargetAudience = ({
                                     );
                                   })}
                                 </select> */}
-                                <input
-                                  type="number"
-                                  inputMode="numeric"
-                                  pattern="[0-9]*"
-                                  id="numOfMonth"
-                                  className="form-control"
-                                  defaultValue={values.duration}
-                                  onChange={handleChange("duration")}
-                                  min="1"
-                                />
-                                <div className="input-group-append">
-                                  <span className="input-group-text">
-                                    Month(s)
-                                  </span>
-                                </div>
-                              </>
-                            )}
+                                  <input
+                                    type="number"
+                                    inputMode="numeric"
+                                    pattern="[0-9]*"
+                                    id="numOfMonth"
+                                    className="form-control"
+                                    defaultValue={values.duration}
+                                    onChange={handleChange("duration")}
+                                    min="1"
+                                  />
+                                  <div className="input-group-append">
+                                    <span className="input-group-text">
+                                      Month(s)
+                                    </span>
+                                  </div>
+                                </>
+                              )}
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      )}
                       <div className="mg-t-40">
                         <p className="tx-22 tx-bold mb-1 tx-com">Attachment</p>
                         <div className="form-group">
