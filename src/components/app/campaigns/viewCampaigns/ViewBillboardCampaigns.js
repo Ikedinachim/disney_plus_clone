@@ -91,7 +91,7 @@ const ViewBillboardCampaign = () => {
           status: (
             <span
               className={`badge d-flex-center ${
-                !campaign.isAdminApproved &&
+                (!campaign.isAdminApproved || campaign.isAdminApproved) &&
                 !campaign.isPublished &&
                 !campaign.isRejected &&
                 !campaign.isApproved &&
@@ -125,37 +125,39 @@ const ViewBillboardCampaign = () => {
               }
               `}
             >
-              {campaign.isAdminApproved &&
-              !campaign.isApproved &&
-              !campaign.isRejected &&
-              !campaign.isPublished
-                ? "Approved"
-                : null ||
-                  (campaign.isAdminApproved &&
-                    !campaign.isPublished &&
-                    !campaign.isRejected &&
-                    campaign.isApproved)
-                ? "Running"
-                : null ||
-                  (!campaign.isAdminApproved &&
-                    !campaign.isPublished &&
-                    !campaign.isRejected &&
-                    !campaign.isApproved &&
-                    !campaign.isAdminRejected)
-                ? "Pending"
-                : null ||
-                  (campaign.isAdminApproved &&
-                    campaign.isPublished &&
-                    !campaign.isRejected &&
-                    campaign.isApproved)
-                ? "Published"
-                : null ||
-                  (!campaign.isAdminApproved &&
-                    !campaign.isPublished &&
-                    !campaign.isApproved &&
-                    (campaign.isRejected || campaign.isAdminRejected))
-                ? "Rejected"
-                : null}
+              {
+                // campaign.isAdminApproved &&
+                // campaign.isApproved &&
+                // !campaign.isRejected &&
+                // !campaign.isPublished
+                //   ? "Approved"
+                //   : null ||
+                campaign.isAdminApproved &&
+                !campaign.isPublished &&
+                !campaign.isRejected &&
+                campaign.isApproved
+                  ? "Running"
+                  : null ||
+                    ((!campaign.isAdminApproved || campaign.isAdminApproved) &&
+                      !campaign.isPublished &&
+                      !campaign.isRejected &&
+                      !campaign.isApproved &&
+                      !campaign.isAdminRejected)
+                  ? "Pending"
+                  : null ||
+                    (campaign.isAdminApproved &&
+                      campaign.isPublished &&
+                      !campaign.isRejected &&
+                      campaign.isApproved)
+                  ? "Published"
+                  : null ||
+                    (!campaign.isAdminApproved &&
+                      !campaign.isPublished &&
+                      !campaign.isApproved &&
+                      (campaign.isRejected || campaign.isAdminRejected))
+                  ? "Rejected"
+                  : null
+              }
             </span>
           ),
           actions: (

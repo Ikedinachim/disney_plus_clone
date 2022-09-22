@@ -241,7 +241,7 @@ const Dashboard = () => {
     };
 
     let reverseProviderCampaignList = providerCampaignList
-      ? [...providerCampaignList.reverse()]
+      ? providerCampaignList.sort((a, b) => b.id - a.id)
       : [];
 
     reverseProviderCampaignList.forEach((campaign) => {
@@ -249,7 +249,7 @@ const Dashboard = () => {
         id: campaign.id,
         // campaignName: campaign.name,
         rateType: <span className="text-capitalize">{campaign.rateType}</span>,
-        billboard: campaign.billBoardId,
+        billboard: campaign.billBoardCampaignId,
         price: (
           <NumberFormat
             value={parseInt(campaign.totalCost)}

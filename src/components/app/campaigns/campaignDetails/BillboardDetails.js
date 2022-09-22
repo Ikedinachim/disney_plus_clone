@@ -231,12 +231,29 @@ const BillboardDetails = () => {
                                   for=""
                                   className="tx-14 tx-gray mb-0 tx-medium"
                                 >
-                                  Rejection Reason
+                                  Rejection Reason:
                                 </label>
                                 <p className="tx-16 mb-0">
                                   {
                                     singleBillBoardCampaign[0]?.details
                                       .rejectReason
+                                  }
+                                </p>
+                              </div>
+                            )}
+                            {singleBillBoardCampaign[0]?.details
+                              .isPublished && (
+                              <div className="form-group col-md-6">
+                                <label
+                                  for=""
+                                  className="tx-14 tx-gray mb-0 tx-medium"
+                                >
+                                  Publisher Message
+                                </label>
+                                <p className="tx-16 mb-0">
+                                  {
+                                    singleBillBoardCampaign[0]?.details
+                                      .publishedMessage
                                   }
                                 </p>
                               </div>
@@ -255,11 +272,12 @@ const BillboardDetails = () => {
                               </p>
                               <div className="row mg-t-15">
                                 <div className="form-group col-md-12">
-                                  {singleBillBoardCampaign[0]?.assetType ===
+                                  {/* {singleBillBoardCampaign[0]?.assetType ===
                                   "image" ? (
                                     <img
                                       src={
-                                        singleBillBoardCampaign[0]?.attachment
+                                        singleBillBoardCampaign[0]?.details
+                                          .publishedUrl
                                       }
                                       className="img-fluid mg-b-10 img-fit-contain"
                                       alt=""
@@ -267,11 +285,20 @@ const BillboardDetails = () => {
                                   ) : (
                                     <MediaPlayer
                                       url={
-                                        singleBillBoardCampaign[0]?.attachment
+                                        singleBillBoardCampaign[0]?.details
+                                          .publishedUrl
                                       }
                                       height={"400px"}
                                     />
-                                  )}
+                                  )} */}
+                                  <img
+                                    src={
+                                      singleBillBoardCampaign[0]?.details
+                                        .publishedUrl
+                                    }
+                                    className="img-fluid mg-b-10 img-fit-contain"
+                                    alt=""
+                                  />
                                 </div>
                               </div>
                             </>
