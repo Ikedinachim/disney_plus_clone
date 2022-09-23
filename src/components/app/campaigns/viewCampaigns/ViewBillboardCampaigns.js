@@ -93,7 +93,7 @@ const ViewBillboardCampaign = () => {
               className={`badge d-flex-center ${
                 (!campaign.isAdminApproved || campaign.isAdminApproved) &&
                 !campaign.isPublished &&
-                !campaign.isRejected &&
+                (!campaign.isRejected || campaign.isRejected) &&
                 !campaign.isApproved &&
                 !campaign.isAdminRejected
                   ? "badge-pink"
@@ -110,7 +110,7 @@ const ViewBillboardCampaign = () => {
               ${
                 !campaign.isAdminApproved &&
                 !campaign.isPublished &&
-                (campaign.isRejected || campaign.isAdminRejected) &&
+                campaign.isAdminRejected &&
                 !campaign.isApproved
                   ? "badge-danger"
                   : ""
@@ -140,7 +140,7 @@ const ViewBillboardCampaign = () => {
                   : null ||
                     ((!campaign.isAdminApproved || campaign.isAdminApproved) &&
                       !campaign.isPublished &&
-                      !campaign.isRejected &&
+                      (!campaign.isRejected || campaign.isRejected) &&
                       !campaign.isApproved &&
                       !campaign.isAdminRejected)
                   ? "Pending"
@@ -154,7 +154,7 @@ const ViewBillboardCampaign = () => {
                     (!campaign.isAdminApproved &&
                       !campaign.isPublished &&
                       !campaign.isApproved &&
-                      (campaign.isRejected || campaign.isAdminRejected))
+                      campaign.isAdminRejected)
                   ? "Rejected"
                   : null
               }

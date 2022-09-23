@@ -208,7 +208,7 @@ const BillboardDetails = () => {
                                       !singleBillBoardCampaign[0]?.details
                                         .isPublished &&
                                       !singleBillBoardCampaign[0]?.details
-                                        .isRejected)
+                                        .isAdminRejected)
                                   ? "Pending"
                                   : null ||
                                     (singleBillBoardCampaign[0]?.details
