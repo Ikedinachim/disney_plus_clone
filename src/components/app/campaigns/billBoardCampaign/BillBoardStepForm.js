@@ -229,7 +229,8 @@ export default class BillBoardStepForm extends Component {
   handleVideoUpload = async (e) => {
     let files = e.target.files[0];
     const size = files && files.size;
-    if (size > 31457280) {
+    const fileSize = Math.round(size / 1024);
+    if (fileSize > 2048) {
       toast.error("file too large!!");
       clearErrors();
     } else {
@@ -361,7 +362,7 @@ export default class BillBoardStepForm extends Component {
       attachment: values.attachment,
     };
 
-    console.log(values);
+    // console.log(values);
 
     switch (step) {
       case 1:
@@ -400,6 +401,7 @@ export default class BillBoardStepForm extends Component {
             uploadPercentage={uploadPercentage}
             resetCheckedState={this.resetCheckedState}
             youtubeError={youtubeError}
+            checkedInfluencers={checkedInfluencers}
           />
         );
       case 3:
@@ -409,7 +411,8 @@ export default class BillBoardStepForm extends Component {
             nextStep={this.nextStep}
             values={values}
             attachment={attachment}
-            checkedInfluencers={selectedInfluencers}
+            checkedInfluencers={checkedInfluencers}
+            selectedBillboards={selectedInfluencers}
             payload={payload}
             handlePrice={this.handlePrice}
             orientation={orientation}

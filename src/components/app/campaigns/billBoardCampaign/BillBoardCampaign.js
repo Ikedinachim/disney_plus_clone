@@ -77,7 +77,8 @@ const BillBoardCampaign = ({
         imageUrl: tempBillBoard.imageUrl,
         name: tempBillBoard.title,
         location: tempBillBoard.location,
-        size: tempBillBoard.size,
+        pixel_size: tempBillBoard.pixel_size,
+        orientation: tempBillBoard.orientation,
       };
       setSelectedBillBoards([billboardObject]);
       // setSelectedRate(null);

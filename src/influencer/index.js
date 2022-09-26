@@ -241,7 +241,9 @@ const Dashboard = () => {
     };
 
     let reverseProviderCampaignList = providerCampaignList
-      ? providerCampaignList.sort((a, b) => b.id - a.id)
+      ? providerCampaignList.sort(
+          (a, b) => b.billBoardCampaignId - a.billBoardCampaignId
+        )
       : [];
 
     reverseProviderCampaignList.forEach((campaign) => {
@@ -249,7 +251,7 @@ const Dashboard = () => {
         id: campaign.id,
         // campaignName: campaign.name,
         rateType: <span className="text-capitalize">{campaign.rateType}</span>,
-        billboard: campaign.billBoardCampaignId,
+        billboard: campaign.board_detail.title,
         price: (
           <NumberFormat
             value={parseInt(campaign.totalCost)}
@@ -387,10 +389,10 @@ const Dashboard = () => {
                           <div className="ml-3">
                             <p className="tx-bold tx-bold tx-28 mg-b-0 lh-1 white">
                               {influencerCampaignList &&
-                              influencerCampaignList.length
-                                ? influencerCampaignList.length
+                              influencerCampaignList?.length
+                                ? influencerCampaignList?.length
                                 : 0}
-                              {influencerCampaignList.length > 1000 ? "k" : ""}
+                              {influencerCampaignList?.length > 1000 ? "k" : ""}
                             </p>
                             <p className="tx-gray tx-12 tx-14 mb-0">
                               Total Campaigns
@@ -419,9 +421,9 @@ const Dashboard = () => {
                                       x.isRejected === false &&
                                       x.isApproved === true &&
                                       x.isPublished === true
-                                  ).length
+                                  )?.length
                                 : 0}
-                              {influencerCampaignList.length > 1000 ? "k" : ""}
+                              {influencerCampaignList?.length > 1000 ? "k" : ""}
                             </p>
                             <p className="tx-gray tx-12 tx-14 mb-0">
                               Published Campaigns
@@ -450,9 +452,9 @@ const Dashboard = () => {
                                       x.isRejected === false &&
                                       x.isApproved === false &&
                                       x.isPublished === false
-                                  ).length
+                                  )?.length
                                 : 0}
-                              {influencerCampaignList.length > 1000 ? "k" : ""}
+                              {influencerCampaignList?.length > 1000 ? "k" : ""}
                             </p>
                             <p className="tx-gray tx-12 tx-14 mb-0">
                               Pending Campaigns
@@ -478,9 +480,9 @@ const Dashboard = () => {
                                 ? influencerCampaignList &&
                                   influencerCampaignList.filter(
                                     (x) => x.isRejected === true
-                                  ).length
+                                  )?.length
                                 : 0}
-                              {influencerCampaignList.length > 1000 ? "k" : ""}
+                              {influencerCampaignList?.length > 1000 ? "k" : ""}
                             </p>
                             <p className="tx-gray tx-12 tx-14 mb-0">
                               Rejected Campaigns
@@ -552,9 +554,9 @@ const Dashboard = () => {
                                       x.isRejected === false &&
                                       x.isApproved === true &&
                                       x.isPublished === true
-                                  ).length
+                                  )?.length
                                 : 0}
-                              {providerCampaignList.length > 1000 ? "k" : ""}
+                              {providerCampaignList?.length > 1000 ? "k" : ""}
                             </p>
                             <p className="tx-gray tx-12 tx-14 mb-0">
                               Published Campaigns
@@ -582,7 +584,7 @@ const Dashboard = () => {
                                       x.isRejected === false &&
                                       x.isApproved === false &&
                                       x.isPublished === false
-                                  ).length
+                                  )?.length
                                 : 0}
                               {providerCampaignList?.length > 1000 ? "k" : ""}
                             </p>
@@ -609,7 +611,7 @@ const Dashboard = () => {
                               {providerCampaignList
                                 ? providerCampaignList?.filter(
                                     (x) => x.isRejected === true
-                                  ).length
+                                  )?.length
                                 : 0}
                               {providerCampaignList?.length > 1000 ? "k" : ""}
                             </p>

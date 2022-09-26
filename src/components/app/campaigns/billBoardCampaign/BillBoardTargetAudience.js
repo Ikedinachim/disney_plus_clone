@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import { toast } from "react-toastify";
 import { ProgressBar } from "react-bootstrap";
 // import DatePicker from "react-datepicker";
@@ -18,6 +18,7 @@ const BillBoardTargetAudience = ({
   uploadPercentage,
   resetCheckedState,
   youtubeError,
+  checkedInfluencers,
 }) => {
   let date = new Date();
   let endingDate = new Date(values.startDate !== "" ? values.startDate : date);
@@ -291,7 +292,8 @@ const BillBoardTargetAudience = ({
                                 </span>
                               )}
                               <p className="mt-2 tx-danger tx-italic">
-                                Image dimension: 960 x 1280
+                                Required billboard image dimension:{" "}
+                                {checkedInfluencers[0].pixel_size}
                               </p>
                             </div>
                           </div>
@@ -327,12 +329,12 @@ const BillBoardTargetAudience = ({
                               )}
                               <p className="mg-0 tx-12 tx-italic tx-bold tx-gray-500">
                                 <span className="tx-danger tx-14">Note* </span>-
-                                Videos length per view is 10 seconds, price is
-                                doubled for another 10 seconds. (Total max of 20
-                                seconds per campaign)
+                                Videos should be a Maximum of 10 seconds. Extra
+                                seconds would be cut off while posting to
+                                Billboard..
                               </p>
                               <p className="mt-2 tx-danger tx-italic">
-                                Video size: not more than 30mb
+                                Video size: not more than 2mb
                               </p>
                             </div>
                           </div>
@@ -354,9 +356,9 @@ const BillBoardTargetAudience = ({
                             </div>
                             <p className="mg-0 tx-12 tx-italic tx-bold tx-gray-500">
                               <span className="tx-danger tx-14">Note* </span>-
-                              Videos length per view is 10 seconds, price is
-                              doubled for another 10 seconds. (Total max of 20
-                              seconds per campaign)
+                              Videos should be a Maximum of 10 seconds. Extra
+                              seconds would be cut off while posting to
+                              Billboard.
                             </p>
                             {youtubeError && (
                               <p className="mt-2 tx-danger tx-italic">
