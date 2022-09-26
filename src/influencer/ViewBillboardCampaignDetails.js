@@ -42,7 +42,9 @@ const ViewInfluencerCampaignDetails = () => {
   const [rejectInput, setRejectInput] = useState("");
   const [ammendInput, setAmmendInput] = useState("");
   const [publishInputUrl, setPublishInputUrl] = useState("");
-  const [publishInputMessage, setPublishInputMessage] = useState("");
+  const [publishInputMessage, setPublishInputMessage] = useState(
+    `Thank You for Advertising with us.`
+  );
 
   const [profile, setProfile] = useState({});
   const [publishImage, setPublishImage] = useState(null);
@@ -169,7 +171,7 @@ const ViewInfluencerCampaignDetails = () => {
 
   const campaignDetails = details(providerCampaignList, billboardMarketingId);
 
-  console.log("campaignDetails", campaignDetails);
+  // console.log("campaignDetails", campaignDetails);
 
   const approvedPayload = {
     billboardId: campaignDetails && campaignDetails.billBoardId,

@@ -31,7 +31,7 @@ const BillboardDetails = () => {
     dispatch(getSingleBillBoardCampaign(id));
   }, [dispatch, id]);
 
-  console.log("singleBillBoardCampaign", singleBillBoardCampaign);
+  // console.log("singleBillBoardCampaign", singleBillBoardCampaign);
 
   return (
     <Fragment>

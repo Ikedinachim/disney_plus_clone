@@ -60,7 +60,7 @@ const BillBoardModal = ({
                             {checkedBillBoard.impressions
                               ? checkedBillBoard.impressions
                               : 70}{" "}
-                            impressions per day
+                            Impressions per day
                           </p>
                         </div>
                       </div>
@@ -136,8 +136,8 @@ const BillBoardModal = ({
                       <div className="col">
                         <h3>Note:</h3>
                         <p className="tx-14 mb-0 tx-com tx-bold">
-                          Customers advert will be displayed 70 times daily on
-                          the billboard.
+                          Your advert will be displayed 70 times daily on the
+                          billboard.
                         </p>
                       </div>
                     </div>

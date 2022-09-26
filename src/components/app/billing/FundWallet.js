@@ -26,6 +26,8 @@ const FundWallet = () => {
   const navigate = useNavigate();
 
   const [amount, setAmountToPay] = useState("");
+  const [priceToPay, setPriceToPay] = useState(0);
+  const [applicableFee, setApplicableFee] = useState(0);
   const { fundWallet, loading, error } = useSelector(
     (state) => state.fundWallet
   );
@@ -35,9 +37,45 @@ const FundWallet = () => {
   const { wallet } = useSelector((state) => state.wallet);
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
+  // const setPrice = () => {
+  //   let decimalFee = 0.015;
+  //   let applicableFee = decimalFee * amount;
+  //   let feeCap = 2000;
+  //   let finalAmount = 0;
+
+  //   if (applicableFee > feeCap) {
+  //     setApplicableFee(applicableFee);
+  //     finalAmount = amount + feeCap;
+  //     return Math.round(finalAmount);
+  //   } else {
+  //     setApplicableFee(applicableFee);
+  //     finalAmount = amount / (1 - decimalFee) + 0.01;
+  //     return Math.round(finalAmount);
+  //   }
+  // };
+
+  useEffect(() => {
+    let decimalFee = 0.015;
+    let applicableFee = decimalFee * parseInt(amount);
+    let feeCap = 2000;
+    let finalAmount = 0;
+
+    if (applicableFee > feeCap) {
+      setApplicableFee(feeCap);
+      finalAmount = parseInt(amount) + feeCap;
+      setPriceToPay(Math.round(finalAmount));
+    } else {
+      setApplicableFee(applicableFee);
+      finalAmount = parseInt(amount) / (1 - decimalFee) + 0.01;
+      setPriceToPay(Math.round(finalAmount));
+    }
+  }, [amount]);
+
+  // console.log("applicableFee", applicableFee, "priceToPay", priceToPay);
+
   const makePaymentHandler = (e) => {
     e.preventDefault();
-    const obj = amount && JSON.parse(`{"amount": ${amount}}`);
+    const obj = amount && JSON.parse(`{"amount": ${priceToPay}}`);
 
     dispatch(fundUserWallet(obj));
   };
@@ -194,7 +232,7 @@ const FundWallet = () => {
                             <>
                               <div className="form-group mg-t-40">
                                 <label className="tx-blac mb-1">
-                                  How much would you like to fund your wallet
+                                  How much would you like to credit your wallet
                                   with?
                                 </label>
 
@@ -210,6 +248,25 @@ const FundWallet = () => {
                                   }
                                 />
                               </div>
+                              <p className="mg-0 tx-12 tx-italic tx-bold tx-gray-500">
+                                <span className="tx-danger tx-14">Note* </span>
+                                <br />
+                                <span className="tx-bold tx-14">
+                                  Transaction Fee -{" "}
+                                </span>{" "}
+                                {applicableFee}
+                                <br />
+                                <span className="tx-bold tx-14">
+                                  Amount to Pay -{" "}
+                                </span>{" "}
+                                <NumberFormat
+                                  className="tx-green tx-24"
+                                  value={priceToPay}
+                                  displayType={"text"}
+                                  thousandSeparator={true}
+                                  prefix={"₦"}
+                                />
+                              </p>
                               <button
                                 className="btn btn-primary mg-t-10 mg-md-t-30"
                                 name=""
@@ -217,7 +274,7 @@ const FundWallet = () => {
                                 disabled={loading ? true : false}
                               >
                                 {" "}
-                                Fund Wallet{" "}
+                                Credit Wallet{" "}
                               </button>
                             </>
                           )}

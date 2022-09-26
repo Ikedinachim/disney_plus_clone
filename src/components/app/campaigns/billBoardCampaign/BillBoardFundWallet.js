@@ -29,7 +29,12 @@ const InfluencerFundWallet = ({ prevStep, values, price }) => {
     (state) => state.fundWallet
   );
   const { confirmFund } = useSelector((state) => state.confirmFund);
-  const [amount, setAmountToPay] = useState(price - parseInt(wallet.balance));
+  const [amount, setAmountToPay] = useState(
+    price - parseInt(wallet.balance) + 2000
+  );
+  // const [priceToPay, setPriceToPay] = useState(0);
+  // const [applicableFee, setApplicableFee] = useState(0);
+  // const [charge, setApplicableFee] = useState(0);
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   const makePaymentHandler = (e) => {
@@ -45,6 +50,47 @@ const InfluencerFundWallet = ({ prevStep, values, price }) => {
     e.preventDefault();
     prevStep();
   };
+
+  // useEffect(() => {
+  //   let decimalFee = 0.015;
+  //   let applicableFee = decimalFee * amount + (amount > 2500 ? 100 : 0);
+  //   let feeCap = 2000;
+  //   let finalAmount = 0;
+
+  //   // let transactionCharge = 0.015;
+
+  //   console.log("amount", parseInt(amount) + applicableFee);
+
+  //   if (amount >= 2500) {
+  //     if (applicableFee > feeCap) {
+  //       console.log("high fee");
+  //       setApplicableFee(feeCap);
+  //       finalAmount = parseInt(amount) + feeCap;
+  //       setPriceToPay(Math.round(finalAmount));
+  //     } else {
+  //       setApplicableFee(Math.round(applicableFee));
+  //       console.log("less fee");
+  //       finalAmount = parseInt(amount) + Math.round(applicableFee);
+  //       // finalAmount = parseInt(amount) / (1 - decimalFee) + 0.01 + 100;
+  //       setPriceToPay(Math.round(finalAmount));
+  //     }
+  //   } else {
+  //     if (applicableFee > feeCap) {
+  //       console.log("high fee; cap fee not 2500");
+  //       setApplicableFee(feeCap);
+  //       finalAmount = parseInt(amount) + feeCap;
+  //       setPriceToPay(Math.round(finalAmount));
+  //     } else {
+  //       setApplicableFee(Math.round(applicableFee));
+  //       console.log("less fee; cap fee not 2500");
+  //       // finalAmount = parseInt(amount) / (1 - decimalFee) + 0.01;
+  //       finalAmount = parseInt(amount) + Math.round(applicableFee);
+  //       setPriceToPay(Math.round(finalAmount));
+  //     }
+  //   }
+  // }, [amount]);
+
+  // console.log("applicableFee", applicableFee, "priceToPay", priceToPay);
 
   const config = {
     reference:
@@ -138,7 +184,6 @@ const InfluencerFundWallet = ({ prevStep, values, price }) => {
     }
   }, [
     dispatch,
-    toast,
     loading,
     error,
     fundWallet,
@@ -196,22 +241,42 @@ const InfluencerFundWallet = ({ prevStep, values, price }) => {
                             <>
                               <div className="form-group mg-t-40">
                                 <label className="tx-blac mb-1">
-                                  How much would you like to fund your wallet
+                                  How much would you like to credit your wallet
                                   with?
                                 </label>
 
                                 <input
-                                  type="text"
+                                  type="number"
                                   className="form-control form-control-lg"
                                   placeholder="Enter amount (NGN)"
                                   id="email_field"
                                   name="amount"
                                   value={amount}
                                   onChange={(e) =>
-                                    setAmountToPay(e.target.value)
+                                    setAmountToPay(parseInt(e.target.value))
                                   }
+                                  min="2000"
                                 />
                               </div>
+                              {/* <p className="mg-0 tx-12 tx-italic tx-bold tx-gray-500">
+                                <span className="tx-danger tx-14">Note* </span>
+                                <br />
+                                <span className="tx-bold tx-14">
+                                  Transaction Fee -{" "}
+                                </span>{" "}
+                                {applicableFee}
+                                <br />
+                                <span className="tx-bold tx-14">
+                                  Amount to Pay -{" "}
+                                </span>{" "}
+                                <NumberFormat
+                                  className="tx-green tx-24"
+                                  value={priceToPay}
+                                  displayType={"text"}
+                                  thousandSeparator={true}
+                                  prefix={"₦"}
+                                />
+                              </p> */}
                               <button
                                 className="btn btn-primary mg-t-10 mg-md-t-30"
                                 name=""

@@ -27,6 +27,7 @@ const PreviewBillBoardCampaign = ({
   audience,
   attachment,
   checkedInfluencers,
+  selectedBillboards,
   price,
   handlePrice,
   orientation,
@@ -73,14 +74,25 @@ const PreviewBillBoardCampaign = ({
   };
 
   const setEndDate = () => {
-    let monthAway = new Date(values.startDate);
-    monthAway.setMonth(monthAway.getMonth() + values.duration);
+    if (values.campaignDuration === "Monthly") {
+      let monthAway = new Date(values.startDate);
+      monthAway.setMonth(monthAway.getMonth() + values.duration);
 
-    let day = monthAway.getDate();
-    let month = monthAway.getMonth() + 1;
-    let year = monthAway.getFullYear();
+      let day = monthAway.getDate();
+      let month = monthAway.getMonth() + 1;
+      let year = monthAway.getFullYear();
 
-    return year + "-" + month + "-" + day;
+      return year + "-" + month + "-" + day;
+    } else {
+      let weekAway = new Date(values.startDate);
+      weekAway.setDate(weekAway.getDate() + values.duration * 7);
+
+      let day = weekAway.getDate();
+      let month = weekAway.getMonth() + 1;
+      let year = weekAway.getFullYear();
+
+      return year + "-" + month + "-" + day;
+    }
   };
 
   useEffect(() => {
@@ -97,7 +109,9 @@ const PreviewBillBoardCampaign = ({
     }
   }, [dispatch, error, createBillBoardCampaign, navigate]);
 
-  const filteredValue = checkedInfluencers;
+  const filteredValue = selectedBillboards;
+
+  // console.log("checkedInfluencers", checkedInfluencers[0].orientation);
 
   useEffect(() => {
     let allTotals = filteredValue.map((el) => {
@@ -200,9 +214,12 @@ const PreviewBillBoardCampaign = ({
               <p className="tx-24 tx-bold tx-com">Selection Preview</p>
               <div className="card bd-0 rounded shadow-sm">
                 <div className="card-body pd-md-x-30">
-                  <p className="tx-18 mb-2 tx-bold tx-com">Preview</p>
+                  <p className="tx-18 mb-2 tx-bold tx-com">
+                    Preview: ({checkedInfluencers[0].orientation})
+                  </p>
                   <div className=" mg-b-20">
-                    {orientation === "portrait" || orientation === "even" ? (
+                    {checkedInfluencers[0].orientation === "Portrait" ||
+                    checkedInfluencers[0].orientation === "portrait" ? (
                       <div
                         className="w-100"
                         style={{
@@ -471,10 +488,12 @@ const PreviewBillBoardCampaign = ({
                               alt=""
                               // srcSet
                             />
-                            <p className="tx-26 tx-com tx-bold">Please Note</p>
+                            <p className="tx-26 tx-com tx-bold">
+                              Thanks For Your Order
+                            </p>
                             <p className="tx-16 mb-0">
-                              Your campaign is being vetted by ARCON and would
-                              be published within 48 hours if successful
+                              Your campaign will be vetted by ARCON and would be
+                              published within 48 hours if successful
                             </p>
                           </div>
                         </div>
