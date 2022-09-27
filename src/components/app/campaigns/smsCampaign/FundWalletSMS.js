@@ -55,12 +55,12 @@ const FundWalletSMS = ({ prevStep, values, smsCount }) => {
                 smsCount *
                 setScheduleDate(values.scheduleFrom, values.scheduleTo) -
                 wallet.balance
-        )
+        ) + 2000
       : Math.ceil(
           values.price *
             setScheduleDate(values.scheduleFrom, values.scheduleTo) -
             wallet.balance
-        )
+        ) + 2000
   );
   const { fundWallet, loading, error } = useSelector(
     (state) => state.fundWallet
@@ -251,6 +251,25 @@ const FundWalletSMS = ({ prevStep, values, smsCount }) => {
                                   }
                                 />
                               </div>
+                              <p className="mg-0 tx-12 tx-italic tx-bold tx-gray-500">
+                                <span className="tx-danger tx-14">Note* </span>
+                                <br />
+                                {/* <span className="tx-bold tx-14">
+                                  Flat Transaction Rate -{" "}
+                                </span>{" "}
+                                {applicableFee}
+                                <br /> */}
+                                <span className="tx-bold tx-14">
+                                  Flat Transaction Rate -{" "}
+                                </span>{" "}
+                                <NumberFormat
+                                  className=""
+                                  value={2000}
+                                  displayType={"text"}
+                                  thousandSeparator={true}
+                                  prefix={"₦"}
+                                />
+                              </p>
                               <button
                                 className="btn btn-primary mg-t-10 mg-md-t-30"
                                 name=""

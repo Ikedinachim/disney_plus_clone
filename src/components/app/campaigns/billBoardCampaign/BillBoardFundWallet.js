@@ -275,15 +275,7 @@ const InfluencerFundWallet = ({ prevStep, values, price }) => {
                                   displayType={"text"}
                                   thousandSeparator={true}
                                   prefix={"₦"}
-                                />{" "}
-                                {/* +{" "}
-                                <NumberFormat
-                                  className=""
-                                  value={amount}
-                                  displayType={"text"}
-                                  thousandSeparator={true}
-                                  prefix={"₦"}
-                                /> */}
+                                />
                               </p>
                               <button
                                 className="btn btn-primary mg-t-10 mg-md-t-30"

@@ -29,7 +29,9 @@ const InfluencerFundWallet = ({ prevStep, values, price }) => {
     (state) => state.fundWallet
   );
   const { confirmFund } = useSelector((state) => state.confirmFund);
-  const [amount, setAmountToPay] = useState(price - parseInt(wallet.balance));
+  const [amount, setAmountToPay] = useState(
+    price - parseInt(wallet.balance) + 2000
+  );
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   const makePaymentHandler = (e) => {
@@ -138,7 +140,6 @@ const InfluencerFundWallet = ({ prevStep, values, price }) => {
     }
   }, [
     dispatch,
-    toast,
     loading,
     error,
     fundWallet,
@@ -212,6 +213,25 @@ const InfluencerFundWallet = ({ prevStep, values, price }) => {
                                   }
                                 />
                               </div>
+                              <p className="mg-0 tx-12 tx-italic tx-bold tx-gray-500">
+                                <span className="tx-danger tx-14">Note* </span>
+                                <br />
+                                {/* <span className="tx-bold tx-14">
+                                  Flat Transaction Rate -{" "}
+                                </span>{" "}
+                                {applicableFee}
+                                <br /> */}
+                                <span className="tx-bold tx-14">
+                                  Flat Transaction Rate -{" "}
+                                </span>{" "}
+                                <NumberFormat
+                                  className=""
+                                  value={2000}
+                                  displayType={"text"}
+                                  thousandSeparator={true}
+                                  prefix={"₦"}
+                                />
+                              </p>
                               <button
                                 className="btn btn-primary mg-t-10 mg-md-t-30"
                                 name=""
