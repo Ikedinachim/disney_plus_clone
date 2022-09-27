@@ -33,8 +33,7 @@ const Dashboard = () => {
   const { providerCampaignList, billboardLoading } = useSelector(
     (state) => state.providerCampaignList
   );
-  const { boards } = providerCampaignList || [];
-  // console.log(influencerCampaignList);
+  // const combineBillbordCampaign = [...providerCampaignList?.approved, ...providerCampaignList?.rejected];
   const { idLoading } = useSelector((state) => state.influencerDetails);
   const { user } = useSelector((state) => state.auth);
   const { error } = useSelector((state) => state.wallet);
@@ -240,8 +239,8 @@ const Dashboard = () => {
       rows: [],
     };
 
-    let reverseProviderCampaignList = providerCampaignList
-      ? providerCampaignList.sort(
+    let reverseProviderCampaignList = providerCampaignList?.approved
+      ? providerCampaignList?.approved.sort(
           (a, b) => b.billBoardCampaignId - a.billBoardCampaignId
         )
       : [];
@@ -523,10 +522,12 @@ const Dashboard = () => {
                           </span>
                           <div className="ml-3">
                             <p className="tx-bold tx-bold tx-28 mg-b-0 lh-1 white">
-                              {providerCampaignList?.length
-                                ? providerCampaignList?.length
+                              {providerCampaignList?.approved?.length
+                                ? providerCampaignList?.approved?.length
                                 : 0}
-                              {providerCampaignList?.length > 1000 ? "k" : ""}
+                              {providerCampaignList?.approved.length > 1000
+                                ? "k"
+                                : ""}
                             </p>
                             <p className="tx-gray tx-12 tx-14 mb-0">
                               Total Campaigns
@@ -548,15 +549,17 @@ const Dashboard = () => {
                           </span>
                           <div className="ml-3">
                             <p className="tx-bold tx-bold tx-28 mg-b-0 lh-1 white">
-                              {providerCampaignList?.length
-                                ? providerCampaignList?.filter(
+                              {providerCampaignList?.approved?.length
+                                ? providerCampaignList?.approved?.filter(
                                     (x) =>
                                       x.isRejected === false &&
                                       x.isApproved === true &&
                                       x.isPublished === true
                                   )?.length
                                 : 0}
-                              {providerCampaignList?.length > 1000 ? "k" : ""}
+                              {providerCampaignList?.approved?.length > 1000
+                                ? "k"
+                                : ""}
                             </p>
                             <p className="tx-gray tx-12 tx-14 mb-0">
                               Published Campaigns
@@ -579,14 +582,16 @@ const Dashboard = () => {
                           <div className="ml-3">
                             <p className="tx-bold tx-bold tx-28 mg-b-0 lh-1 white">
                               {providerCampaignList
-                                ? providerCampaignList?.filter(
+                                ? providerCampaignList?.approved?.filter(
                                     (x) =>
                                       x.isRejected === false &&
                                       x.isApproved === false &&
                                       x.isPublished === false
                                   )?.length
                                 : 0}
-                              {providerCampaignList?.length > 1000 ? "k" : ""}
+                              {providerCampaignList?.approved?.length > 1000
+                                ? "k"
+                                : ""}
                             </p>
                             <p className="tx-gray tx-12 tx-14 mb-0">
                               Pending Campaigns
@@ -609,11 +614,13 @@ const Dashboard = () => {
                           <div className="ml-3">
                             <p className="tx-bold tx-bold tx-28 mg-b-0 lh-1 white">
                               {providerCampaignList
-                                ? providerCampaignList?.filter(
+                                ? providerCampaignList?.rejected?.filter(
                                     (x) => x.isRejected === true
                                   )?.length
                                 : 0}
-                              {providerCampaignList?.length > 1000 ? "k" : ""}
+                              {providerCampaignList?.rejected?.length > 1000
+                                ? "k"
+                                : ""}
                             </p>
                             <p className="tx-gray tx-12 tx-14 mb-0">
                               Rejected Campaigns

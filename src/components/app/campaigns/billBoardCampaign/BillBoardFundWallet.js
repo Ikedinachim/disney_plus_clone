@@ -258,25 +258,33 @@ const InfluencerFundWallet = ({ prevStep, values, price }) => {
                                   min="2000"
                                 />
                               </div>
-                              {/* <p className="mg-0 tx-12 tx-italic tx-bold tx-gray-500">
+                              <p className="mg-0 tx-12 tx-italic tx-bold tx-gray-500">
                                 <span className="tx-danger tx-14">Note* </span>
                                 <br />
-                                <span className="tx-bold tx-14">
-                                  Transaction Fee -{" "}
+                                {/* <span className="tx-bold tx-14">
+                                  Flat Transaction Rate -{" "}
                                 </span>{" "}
                                 {applicableFee}
-                                <br />
+                                <br /> */}
                                 <span className="tx-bold tx-14">
-                                  Amount to Pay -{" "}
+                                  Flat Transaction Rate -{" "}
                                 </span>{" "}
                                 <NumberFormat
-                                  className="tx-green tx-24"
-                                  value={priceToPay}
+                                  className=""
+                                  value={2000}
+                                  displayType={"text"}
+                                  thousandSeparator={true}
+                                  prefix={"₦"}
+                                />{" "}
+                                +{" "}
+                                <NumberFormat
+                                  className=""
+                                  value={amount}
                                   displayType={"text"}
                                   thousandSeparator={true}
                                   prefix={"₦"}
                                 />
-                              </p> */}
+                              </p>
                               <button
                                 className="btn btn-primary mg-t-10 mg-md-t-30"
                                 name=""
