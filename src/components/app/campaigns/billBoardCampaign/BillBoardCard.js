@@ -117,7 +117,7 @@ const InfluencerCard = ({
                       </div>
                       <div>
                         <p className="tx-bold">
-                          impressions:{" "}
+                          Impressions:{" "}
                           <span className="tx-normal">
                             {billboard.impressions ? billboard.impressions : 70}{" "}
                             per day
@@ -153,6 +153,14 @@ const InfluencerCard = ({
                               thousandSeparator={true}
                               prefix={"₦"}
                             />
+                          </span>
+                        </p>
+                      </div>
+                      <div>
+                        <p className="tx-bold">
+                          Run-time:{" "}
+                          <span className="tx-normal">
+                            16hrs (6am - 10pm) 6days/week
                           </span>
                         </p>
                       </div>
