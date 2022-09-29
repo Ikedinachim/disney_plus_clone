@@ -132,6 +132,14 @@ const InfluencerCard = ({
                       </div>
                       <div>
                         <p className="tx-bold">
+                          Board Type:{" "}
+                          <span className="tx-normal">
+                            {billboard.illumination}
+                          </span>
+                        </p>
+                      </div>
+                      <div>
+                        <p className="tx-bold">
                           Orientation:{" "}
                           <span className="tx-normal">
                             {billboard.orientation}
