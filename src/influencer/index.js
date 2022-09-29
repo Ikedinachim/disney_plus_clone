@@ -525,7 +525,7 @@ const Dashboard = () => {
                               {providerCampaignList?.approved?.length
                                 ? providerCampaignList?.approved?.length
                                 : 0}
-                              {providerCampaignList?.approved.length > 1000
+                              {providerCampaignList?.approved?.length > 1000
                                 ? "k"
                                 : ""}
                             </p>
