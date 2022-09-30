@@ -52,9 +52,9 @@ const ViewInfluencerCampaignDetails = () => {
   const [isUploading, setIsUploading] = useState(null);
 
   const details = (arr, id) => {
-    for (var i in arr) {
-      if (arr[i].billBoardCampaignId === parseInt(id)) {
-        return arr[i];
+    for (var i in arr.approved) {
+      if (arr?.approved[i]?.billBoardCampaignId === parseInt(id)) {
+        return arr.approved[i];
       }
     }
   };
@@ -171,7 +171,7 @@ const ViewInfluencerCampaignDetails = () => {
 
   const campaignDetails = details(providerCampaignList, billboardMarketingId);
 
-  // console.log("campaignDetails", campaignDetails);
+  console.log("campaignDetails", campaignDetails);
 
   const approvedPayload = {
     billboardId: campaignDetails && campaignDetails.billBoardId,

@@ -112,12 +112,16 @@ const Header = () => {
                   (userDetails.user.lastName ? userDetails.user.lastName : "")}
               </h6>
               <p className="mg-b-25 tx-12 tx-color-03">Administrator</p>
-              <Link to="settings" className="dropdown-item">
-                <FeatherIcon icon="edit-3" /> Edit Profile
-              </Link>
-              <Link to="settings" className="dropdown-item">
-                <FeatherIcon icon="user" /> View Profile
-              </Link>
+              {user.user.role === "influencer" && (
+                <>
+                  <Link to="settings" className="dropdown-item">
+                    <FeatherIcon icon="edit-3" /> Edit Profile
+                  </Link>
+                  <Link to="settings" className="dropdown-item">
+                    <FeatherIcon icon="user" /> View Profile
+                  </Link>
+                </>
+              )}
               <div className="dropdown-divider" />
               <Link to="/" className="dropdown-item">
                 <FeatherIcon icon="help-circle" /> Help Center
