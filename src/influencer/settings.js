@@ -294,8 +294,6 @@ const InfluencerSettings = () => {
     newPassword: password.newPassword,
   };
 
-  console.log("passwordPayload", passwordPayload);
-
   useEffect(() => {
     if (updateInfluencer && updateInfluencer.statusCode === 100) {
       toast.success(updateInfluencer.message);
