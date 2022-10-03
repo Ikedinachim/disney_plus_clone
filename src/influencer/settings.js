@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import {
   updateInfluencerProfile,
   updatingInfluencerCost,
+  updateInfluencerPassword,
+  logout,
   getUser,
 } from "../actions/authActions";
 
@@ -15,8 +17,12 @@ import {
   CLEAR_ERRORS,
   UPDATE_INFLUENCER_PROFILE_RESET,
   UPDATE_INFLUENCER_COST_RESET,
+  UPDATE_INFLUENCER_PASSWORD_RESET,
 } from "../constants/authConstants";
-import { getInfluencerDetails } from "../actions/campaignActions";
+import {
+  getInfluencerDetails,
+  getAllPoviderCampaign,
+} from "../actions/campaignActions";
 import { ProgressBar } from "react-bootstrap";
 
 const InfluencerSettings = () => {
@@ -29,6 +35,13 @@ const InfluencerSettings = () => {
     (state) => state || []
   );
   const { user } = useSelector((state) => state.auth || []);
+
+  const {
+    passwordUpdated,
+    error: passwordError,
+    loading: passwordLoading,
+    isUpdated,
+  } = useSelector((state) => state.resetInfluencerPassword);
 
   const influencer = useMemo(() => {
     return {
@@ -46,6 +59,13 @@ const InfluencerSettings = () => {
       updatedCosts: [],
     };
   }, [user]);
+
+  const [password, setPassword] = useState({
+    oldPassword: "",
+    newPassword: "",
+  });
+
+  // console.log("password", password);
 
   const [updateCost, setUpdateCost] = useState({});
 
@@ -202,6 +222,14 @@ const InfluencerSettings = () => {
     }));
   };
 
+  const handlePasswordChange = (e) => {
+    const { name, value } = e.target;
+    setPassword((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
   const handleCostChange = (e) => {
     const { name, value } = e.target;
     setUpdateCost((updateCost) => ({
@@ -228,6 +256,15 @@ const InfluencerSettings = () => {
     setProfileImage({});
   };
 
+  const handlePasswordSubmit = (e) => {
+    e.preventDefault();
+    dispatch(updateInfluencerPassword(passwordPayload));
+    setProfile({});
+    setUpdateCost("");
+    setProfileImage({});
+    setPassword({});
+  };
+
   const setImagePreview = () => {
     if (profileImage && profileImage.imageUrl) {
       return profileImage.imageUrl;
@@ -250,20 +287,22 @@ const InfluencerSettings = () => {
       updatedCosts: Object.entries(updateCost).map(([k, v]) => ({ [k]: v })),
     },
   };
+
+  let passwordPayload = {
+    email: userDetails.user.email,
+    oldPassword: password.oldPassword,
+    newPassword: password.newPassword,
+  };
+
   useEffect(() => {
-    // let plaformCost;
-    // plaformCost = Object.entries(updateCost).map(([k, v]) => ({ [k]: v }));
-
-    // payload = {
-    //   id: influencer.id,
-    //   profile,
-    //   updatedCosts: { updatedCosts: plaformCost },
-    // };
-
     if (updateInfluencer && updateInfluencer.statusCode === 100) {
       toast.success(updateInfluencer.message);
       dispatch({ type: UPDATE_INFLUENCER_PROFILE_RESET });
-      dispatch(getInfluencerDetails(influencer.id));
+      if (user && user.user.role === "billboard_provider") {
+        dispatch(getAllPoviderCampaign(user.user.billboard_provider_id));
+      } else if (user && user.user.role === "influencer") {
+        dispatch(getInfluencerDetails(influencer.id));
+      }
       dispatch(getUser());
     }
     if (
@@ -279,8 +318,6 @@ const InfluencerSettings = () => {
       toast.error(error);
       dispatch({ type: CLEAR_ERRORS });
     }
-
-    // return payload;
   }, [
     dispatch,
     updateCost,
@@ -294,12 +331,24 @@ const InfluencerSettings = () => {
     influencer,
   ]);
 
+  useEffect(() => {
+    if (passwordUpdated && isUpdated && isUpdated.statusCode === 100) {
+      toast.success(isUpdated.message);
+      dispatch({ type: UPDATE_INFLUENCER_PASSWORD_RESET });
+      dispatch(logout());
+    } else if (passwordError) {
+      toast.error(passwordError.message);
+      dispatch({ type: CLEAR_ERRORS });
+    }
+  }, [dispatch, user, passwordUpdated, isUpdated, passwordError]);
+
   return (
     <Fragment>
       {loading ||
       updateInfluencerCost.loading ||
       influencerDetails.idLoading ||
-      userDetails.loading ? (
+      userDetails.loading ||
+      passwordLoading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -422,36 +471,40 @@ const InfluencerSettings = () => {
                                 disabled
                               />
                             </div>
-                            <div className="form-group col-md-6">
+                            {/* <div className="form-group col-md-6">
                               <label className="mb-1 tx-com">Password</label>
                               <input
                                 name="password"
                                 type="password"
                                 className="form-control"
                                 placeholder="********"
-                                value={influencer.password}
+                                // value={influencer.password}
                                 onChange={handleChange}
                               />
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label className="mb-1 tx-com">Occupation</label>
-                              <select
-                                name="kind"
-                                className="custom-select"
-                                // value="select channel"
-                                defaultValue={
-                                  influencerDetails.influencerDetails &&
-                                  influencerDetails.influencerDetails.kind
-                                }
-                                onChange={handleChange}
-                              >
-                                {occupations.map((occupation, i) => (
-                                  <option value={occupation.value} key={i}>
-                                    {occupation.label}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
+                            </div> */}
+                            {user.user.role === "influencer" && (
+                              <div className="form-group col-md-6">
+                                <label className="mb-1 tx-com">
+                                  Occupation
+                                </label>
+                                <select
+                                  name="kind"
+                                  className="custom-select"
+                                  // value="select channel"
+                                  defaultValue={
+                                    influencerDetails.influencerDetails &&
+                                    influencerDetails.influencerDetails.kind
+                                  }
+                                  onChange={handleChange}
+                                >
+                                  {occupations.map((occupation, i) => (
+                                    <option value={occupation.value} key={i}>
+                                      {occupation.label}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -473,123 +526,191 @@ const InfluencerSettings = () => {
                         </div>
                       </div>
                     </form>
-                    <form onSubmit={handleCostSubmit}>
+                    {user.user.role === "influencer" && (
+                      <form onSubmit={handleCostSubmit}>
+                        <div>
+                          <div className="pd-md-x-30 pd-xl-x-50">
+                            <p className="tx-20 tx-com tx-bold mg-t-30">
+                              Pricing
+                            </p>
+                            <div className="row justify-content-md-between">
+                              <div className="form-group col-md-6">
+                                <label className="mb-1 tx-com">
+                                  Instagram Handle
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="@tomedow"
+                                  disabled
+                                />
+                              </div>
+                              <div className="form-group col-md-6">
+                                <label className="mb-1 tx-com">Amount</label>
+                                <input
+                                  name="instagram"
+                                  type="text"
+                                  defaultValue={
+                                    (influencerDetails.influencerDetails &&
+                                      influencerDetails.influencerDetails.costs.find(
+                                        (c) => c.platform === "instagram"
+                                      )?.cost) ||
+                                    0
+                                  }
+                                  className="form-control"
+                                  placeholder="N500,000.00"
+                                  onBlur={handleCostChange}
+                                />
+                              </div>
+                              <div className="form-group col-md-6">
+                                <label className="mb-1 tx-com">
+                                  Twitter Handle
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="@Johndoe"
+                                  disabled
+                                />
+                              </div>
+                              <div className="form-group col-md-6">
+                                <label className="mb-1 tx-com">Amount</label>
+                                <input
+                                  name="twitter"
+                                  type="text"
+                                  defaultValue={
+                                    (influencerDetails.influencerDetails &&
+                                      influencerDetails.influencerDetails.costs.find(
+                                        (c) => c.platform === "twitter"
+                                      )?.cost) ||
+                                    0
+                                  }
+                                  className="form-control"
+                                  placeholder="N500,000.00"
+                                  onBlur={handleCostChange}
+                                />
+                              </div>
+                              <div className="form-group col-md-6">
+                                <label className="mb-1 tx-com">
+                                  Snapchat Handle
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="@tomedow"
+                                  disabled
+                                />
+                              </div>
+                              <div className="form-group col-md-6">
+                                <label className="mb-1 tx-com">Amount</label>
+                                <input
+                                  name="snapchat"
+                                  type="text"
+                                  defaultValue={
+                                    (influencerDetails.influencerDetails &&
+                                      influencerDetails.influencerDetails.costs.find(
+                                        (c) => c.platform === "snapchat"
+                                      )?.cost) ||
+                                    0
+                                  }
+                                  className="form-control"
+                                  placeholder="N500,000.00"
+                                  onBlur={handleCostChange}
+                                />
+                              </div>
+                              <div className="form-group col-md-6">
+                                <label className="mb-1 tx-com">
+                                  Facebook Handle
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  placeholder="@tomedow"
+                                  disabled
+                                />
+                              </div>
+                              <div className="form-group col-md-6">
+                                <label className="mb-1 tx-com">Amount</label>
+                                <input
+                                  name="facebook"
+                                  type="text"
+                                  defaultValue={
+                                    (influencerDetails.influencerDetails &&
+                                      influencerDetails.influencerDetails.costs.find(
+                                        (c) => c.platform === "facebook"
+                                      )?.cost) ||
+                                    ""
+                                  }
+                                  className="form-control"
+                                  placeholder="N500,000.00"
+                                  onBlur={handleCostChange}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-md-4 pd-x-0 pd-md-l-30 pd-xl-l-50 mg-y-40">
+                          <div className="d-flex">
+                            <button
+                              type="submit"
+                              className="btn btn-primary"
+                              // onSubmit={handleSubmit}
+                            >
+                              Save Changes
+                            </button>
+                            {/* <button
+                            type="button"
+                            className="btn btn-outline-primary w-100 mg-l-20"
+                          >
+                            Cancel
+                          </button> */}
+                          </div>
+                        </div>
+                      </form>
+                    )}
+                    <form onSubmit={handlePasswordSubmit}>
                       <div>
                         <div className="pd-md-x-30 pd-xl-x-50">
                           <p className="tx-20 tx-com tx-bold mg-t-30">
-                            Pricing
+                            Password
                           </p>
                           <div className="row justify-content-md-between">
-                            <div className="form-group col-md-6">
-                              <label className="mb-1 tx-com">
-                                Instagram Handle
-                              </label>
+                            {/* <div className="form-group col-md-6">
+                              <label className="mb-1 tx-com">User Name</label>
                               <input
-                                type="text"
+                                name="username"
+                                type="hidden"
                                 className="form-control"
-                                placeholder="@tomedow"
+                                placeholder={userDetails.user.username}
+                                defaultValue={userDetails.user.username}
+                                onChange={handlePasswordChange}
                                 disabled
                               />
-                            </div>
+                            </div> */}
                             <div className="form-group col-md-6">
-                              <label className="mb-1 tx-com">Amount</label>
+                              <label className="mb-1 tx-com">
+                                Current Password
+                              </label>
                               <input
-                                name="instagram"
-                                type="text"
-                                defaultValue={
-                                  (influencerDetails.influencerDetails &&
-                                    influencerDetails.influencerDetails.costs.find(
-                                      (c) => c.platform === "instagram"
-                                    )?.cost) ||
-                                  0
-                                }
+                                name="oldPassword"
+                                type="password"
+                                placeholder="********"
+                                // defaultValue={password.oldPassword}
                                 className="form-control"
-                                placeholder="N500,000.00"
-                                onBlur={handleCostChange}
+                                onBlur={handlePasswordChange}
                               />
                             </div>
                             <div className="form-group col-md-6">
                               <label className="mb-1 tx-com">
-                                Twitter Handle
+                                New Password
                               </label>
                               <input
-                                type="text"
+                                name="newPassword"
+                                type="password"
+                                placeholder="********"
+                                // defaultValue={password.newPassword}
                                 className="form-control"
-                                placeholder="@Johndoe"
-                                disabled
-                              />
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label className="mb-1 tx-com">Amount</label>
-                              <input
-                                name="twitter"
-                                type="text"
-                                defaultValue={
-                                  (influencerDetails.influencerDetails &&
-                                    influencerDetails.influencerDetails.costs.find(
-                                      (c) => c.platform === "twitter"
-                                    )?.cost) ||
-                                  0
-                                }
-                                className="form-control"
-                                placeholder="N500,000.00"
-                                onBlur={handleCostChange}
-                              />
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label className="mb-1 tx-com">
-                                Snapchat Handle
-                              </label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="@tomedow"
-                                disabled
-                              />
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label className="mb-1 tx-com">Amount</label>
-                              <input
-                                name="snapchat"
-                                type="text"
-                                defaultValue={
-                                  (influencerDetails.influencerDetails &&
-                                    influencerDetails.influencerDetails.costs.find(
-                                      (c) => c.platform === "snapchat"
-                                    )?.cost) ||
-                                  0
-                                }
-                                className="form-control"
-                                placeholder="N500,000.00"
-                                onBlur={handleCostChange}
-                              />
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label className="mb-1 tx-com">
-                                Facebook Handle
-                              </label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="@tomedow"
-                                disabled
-                              />
-                            </div>
-                            <div className="form-group col-md-6">
-                              <label className="mb-1 tx-com">Amount</label>
-                              <input
-                                name="facebook"
-                                type="text"
-                                defaultValue={
-                                  (influencerDetails.influencerDetails &&
-                                    influencerDetails.influencerDetails.costs.find(
-                                      (c) => c.platform === "facebook"
-                                    )?.cost) ||
-                                  ""
-                                }
-                                className="form-control"
-                                placeholder="N500,000.00"
-                                onBlur={handleCostChange}
+                                onBlur={handlePasswordChange}
                               />
                             </div>
                           </div>
@@ -602,7 +723,7 @@ const InfluencerSettings = () => {
                             className="btn btn-primary"
                             // onSubmit={handleSubmit}
                           >
-                            Save Changes
+                            Update Password
                           </button>
                           {/* <button
                             type="button"

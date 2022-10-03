@@ -123,22 +123,28 @@ const Header = () => {
                 </>
               )}
               <div className="dropdown-divider" />
-              <Link to="/" className="dropdown-item">
+              {/* <Link to="/" className="dropdown-item">
                 <FeatherIcon icon="help-circle" /> Help Center
-              </Link>
-              {user.user.role === "influencer" && (
-                <>
-                  <Link to="" className="dropdown-item">
+              </Link> */}
+              {/* {user.user.role === "influencer" && ( */}
+              <>
+                {/* <Link to="" className="dropdown-item">
                     <FeatherIcon icon="life-buoy" /> Forum
-                  </Link>
-                  <Link to="settings" className="dropdown-item">
-                    <FeatherIcon icon="settings" /> Account Settings
-                  </Link>
-                  <Link to="settings" className="dropdown-item">
+                  </Link> */}
+                <Link
+                  to={
+                    user?.user.role === "billboard_provider"
+                      ? "provider/settings"
+                      : "settings"
+                  }
+                  className="dropdown-item"
+                >
+                  <FeatherIcon icon="settings" /> Account Settings
+                </Link>
+                {/* <Link to="settings" className="dropdown-item">
                     <FeatherIcon icon="settings" /> Privacy Settings
-                  </Link>
-                </>
-              )}
+                  </Link> */}
+              </>
               <Link to="/" className="dropdown-item" onClick={logoutHandler}>
                 <FeatherIcon icon="log-out" /> Sign Out
               </Link>
