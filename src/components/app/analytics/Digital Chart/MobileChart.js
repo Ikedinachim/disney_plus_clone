@@ -4,7 +4,7 @@ import { getMobileCampaign } from "../../../../actions/analyticsActions";
 import { Spinner } from "react-bootstrap";
 
 const MobileChart = ({ propellerId, google }) => {
-  const [chart, setChart] = useState(null)
+  const [chart, setChart] = useState(null);
   const dispatch = useDispatch();
 
   const {
@@ -26,7 +26,7 @@ const MobileChart = ({ propellerId, google }) => {
       const row = [];
       const data = new google.visualization.DataTable();
       data.addColumn("string", "Device");
-      data.addColumn('number', 'conversions')
+      data.addColumn("number", "Clicks");
 
       for (const i in mobileCampaigns) {
         row.push([mobileCampaigns[i].mobile_isp, mobileCampaigns[i].clicks]);
@@ -39,7 +39,7 @@ const MobileChart = ({ propellerId, google }) => {
       newChart.draw(data, ActionsPerformed);
       setChart(newChart);
     }
-  }, [chart, google, mobileCampaigns])
+  }, [chart, google, mobileCampaigns]);
 
   return (
     <Fragment>
@@ -48,7 +48,11 @@ const MobileChart = ({ propellerId, google }) => {
           <div className="card-body">
             <div className="d-flex">
               {!google && <Spinner />}
-              <div id='mobileChart' className={!google ? 'd-none': ''} style={{width: 400, height:300}}></div>
+              <div
+                id="mobileChart"
+                className={!google ? "d-none" : ""}
+                style={{ width: 400, height: 300 }}
+              ></div>
             </div>
           </div>
         </div>
