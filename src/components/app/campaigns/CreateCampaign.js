@@ -67,21 +67,21 @@ const CreateCampaign = () => {
                   </p>
                   <div className="row d-flex justify-content-center">
                     <div className="col-md-6 col-lg-4 col-12 mg-t-20">
-                      <Link to="/app/campaign/influencer" className="tx-dark">
+                      <Link to="/app/campaign/billboard" className="tx-dark">
                         <div className="card card-height rounded bd-0 shadow-sm">
-                          <div className="card-body tx-center pd-x-12 pd-md-x-30">
+                          <div className="card-body tx-center pd-x-12">
                             <img
-                              src={Markerting}
+                              src={Billboard}
                               alt=""
-                              className="img-fluid"
+                              className="img-fluid ht-110"
                             />
                             <div className="pd-t-15">
                               <p className="tx-16 tx-bold">
-                                Influencer Marketing
+                                Billboard Campaign
                               </p>
                               <p className="tx-14 tx-gray mb-0">
-                                Tap from our unlimited network of top
-                                influencers
+                                Get access to a new world of campaigning with
+                                the right touch
                               </p>
                             </div>
                           </div>
@@ -122,17 +122,21 @@ const CreateCampaign = () => {
                       </Link>
                     </div>
                     <div className="col-md-6 col-lg-4 col-12 mg-t-20">
-                      <Link to="/app/campaign/app-download" className="tx-dark">
+                      <Link to="/app/campaign/influencer" className="tx-dark">
                         <div className="card card-height rounded bd-0 shadow-sm">
-                          <div className="card-body tx-center pd-x-12">
-                            <img src={Phone} alt="" className="img-fluid" />
+                          <div className="card-body tx-center pd-x-12 pd-md-x-30">
+                            <img
+                              src={Markerting}
+                              alt=""
+                              className="img-fluid"
+                            />
                             <div className="pd-t-15">
                               <p className="tx-16 tx-bold">
-                                APP Download Campaign
+                                Influencer Marketing
                               </p>
                               <p className="tx-14 tx-gray mb-0">
-                                Get access to a new world of campaigning with
-                                the right touch
+                                Tap from our unlimited network of top
+                                influencers
                               </p>
                             </div>
                           </div>
@@ -140,17 +144,13 @@ const CreateCampaign = () => {
                       </Link>
                     </div>
                     <div className="col-md-6 col-lg-4 col-12 mg-t-20">
-                      <Link to="/app/campaign/billboard" className="tx-dark">
+                      <Link to="/app/campaign/app-download" className="tx-dark">
                         <div className="card card-height rounded bd-0 shadow-sm">
                           <div className="card-body tx-center pd-x-12">
-                            <img
-                              src={Billboard}
-                              alt=""
-                              className="img-fluid ht-110"
-                            />
+                            <img src={Phone} alt="" className="img-fluid" />
                             <div className="pd-t-15">
                               <p className="tx-16 tx-bold">
-                                Billboard Campaign
+                                APP Download Campaign
                               </p>
                               <p className="tx-14 tx-gray mb-0">
                                 Get access to a new world of campaigning with

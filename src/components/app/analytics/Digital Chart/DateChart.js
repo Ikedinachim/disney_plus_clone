@@ -29,7 +29,7 @@ const DateChart = ({ propellerId, google }) => {
       const data = new google.visualization.DataTable();
       data.addColumn("string", "Day");
       data.addColumn("number", "Number of impressions");
-      data.addColumn("number", "Number of conversion")
+      data.addColumn("number", "Number of clicks")
 
       for (const i in dateCampaigns && dateCampaigns.sort((a,b)=>a.date_time - b.date_time)) {
         row.push([
