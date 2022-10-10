@@ -578,7 +578,7 @@ const TargetAudience = ({
                                 className="custom-control-label"
                                 htmlFor="import"
                               >
-                                Import My Own Database
+                                Import My Own Databases
                               </label>
                             </div>
                           </div>

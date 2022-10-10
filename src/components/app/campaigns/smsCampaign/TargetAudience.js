@@ -226,7 +226,7 @@ const TargetAudience = ({
 
   const parseFile = (file) => {
     Papa.parse(file, {
-      header: true,
+      // header: true,
       dynamicTyping: true,
       complete: (results) => {
         setParsedCsvData(results.data);
