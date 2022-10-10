@@ -269,8 +269,8 @@ const AppDownloadCampaign = ({
                                     : undefined
                                 }
                                 placeholder="Type your ad message here"
-                                defaultValue={values.campaignMessage}
-                                onChange={handleChange("campaignMessage")}
+                                value={values.nonEncodedMessage}
+                                onChange={handleChange("nonEncodedMessage")}
                               />
                             </div>
                             {values.channel === "display_ads" ? (
@@ -293,7 +293,7 @@ const AppDownloadCampaign = ({
                                   className="form-control"
                                   placeholder="Write a signature here, not longer than 11 characters (optional)"
                                   onChange={handleChange("signature")}
-                                  defaultValue={values.signature}
+                                  value={values.signature}
                                   maxLength={11}
                                 />
                                 <p className="mg-0 tx-12 tx-italic tx-gray-500">
@@ -472,7 +472,7 @@ const AppDownloadCampaign = ({
                       </div>
                     </div>
                     <div className="position-sticky t-0 col-md-5 col-12 mg-t-20">
-                      <div class="iphone-x">
+                      <div className="iphone-x">
                         <i>Speaker</i>
                         <b>Camera</b>
                         <s>

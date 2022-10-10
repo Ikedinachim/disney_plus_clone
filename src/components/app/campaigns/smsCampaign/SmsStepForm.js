@@ -16,6 +16,7 @@ export default class SmsStepForm extends Component {
     alternateSenderId: "",
     channel: "sms",
     campaignMessage: "",
+    nonEncodedMessage: "",
     interest: "business",
     phoneNumber: "",
     campaignType: "general",
@@ -70,51 +71,45 @@ export default class SmsStepForm extends Component {
 
   // Handle fields change
   handleChange = (input) => (e) => {
-    if (input === "campaignMessage") {
-      const isDoubleByte = (str) => {
-        for (var i = 0, n = str.length; i < n; i++) {
-          if (str.charCodeAt(i) > 255) {
-            return true;
-          }
-        }
-        return false;
-      };
-      // console.log("unicode", isDoubleByte(e.target.value));
-      // console.log("`".match(/[\u0B80-\u0BFF]+/g));
-      // const convertUnicode = (text) => {
-      //   return text.replace(/\\u([0-9a-fA-F]{4})/g, function (a, b) {
-      //     var charcode = parseInt(b, 16);
-      //     return String.fromCharCode(charcode);
-      //   });
-      // };
+    if (input === "nonEncodedMessage") {
+      this.setState({ [input]: e.target.value.replace(/[^\x00-\x7F]/g, "") });
+      this.setState({
+        campaignMessage: utf8
+          .encode(e.target.value)
+          .replace(/[^\x00-\x7F]/g, ""),
+      });
       this.setState({
         characterCount:
-          utf8.encode(e.target.value).length + this.state.signature.length,
+          e.target.value.replace(/[^\x00-\x7F]/g, "").length +
+          this.state.signature.length,
       });
       this.setState({
         smsCount: Math.ceil(
-          (utf8.encode(e.target.value).length + this.state.signature.length) /
+          (e.target.value.replace(/[^\x00-\x7F]/g, "").length +
+            this.state.signature.length) /
             160
         ),
       });
-      this.setState({ [input]: utf8.encode(e.target.value) });
     } else if (input === "signature") {
       this.setState({
-        [input]: utf8.encode(e.target.value),
+        [input]: e.target.value.replace(/[^\x00-\x7F]/g, ""),
       });
       this.setState({
         characterCount:
-          e.target.value.length + this.state.campaignMessage.length,
+          e.target.value.replace(/[^\x00-\x7F]/g, "").length +
+          this.state.campaignMessage.length,
       });
       this.setState({
         smsCount: Math.ceil(
-          (utf8.encode(e.target.value).length +
+          (e.target.value.replace(/[^\x00-\x7F]/g, "").length +
             this.state.campaignMessage.length) /
             160
         ),
       });
     } else {
-      this.setState({ [input]: utf8.encode(e.target.value) });
+      this.setState({
+        [input]: utf8.encode(e.target.value).replace(/[^\x00-\x7F]/g, ""),
+      });
     }
   };
 
@@ -215,6 +210,7 @@ export default class SmsStepForm extends Component {
       alternateSenderId,
       channel,
       campaignMessage,
+      nonEncodedMessage,
       targetAge,
       interest,
       campaignType,
@@ -337,6 +333,7 @@ export default class SmsStepForm extends Component {
       senderId,
       alternateSenderId,
       channel,
+      nonEncodedMessage,
       campaignMessage,
       contactNumber,
       signature,
@@ -357,7 +354,7 @@ export default class SmsStepForm extends Component {
       attachment: audioUrl,
     };
 
-    console.log(values);
+    // console.log(values);
 
     switch (step) {
       case 1:

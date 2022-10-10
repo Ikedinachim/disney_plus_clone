@@ -15,6 +15,7 @@ export default class AppDownloadStepForm extends Component {
     alternateSenderId: "",
     channel: "",
     campaignMessage: "",
+    nonEncodedMessage: "",
     iosStoreUrl: "",
     androidStoreUrl: "",
     numbers: "",
@@ -80,41 +81,52 @@ export default class AppDownloadStepForm extends Component {
 
   // Handle fields change
   handleChange = (input) => (e) => {
-    if (input === "campaignMessage") {
+    if (input === "nonEncodedMessage") {
+      this.setState({
+        [input]: e.target.value.replace(/[^\x00-\x7F]/g, ""),
+      });
+      this.setState({
+        campaignMessage: utf8
+          .encode(e.target.value)
+          .replace(/[^\x00-\x7F]/g, ""),
+      });
       this.setState({
         characterCount:
-          utf8.encode(e.target.value).length + this.state.signature.length,
+          e.target.value.replace(/[^\x00-\x7F]/g, "").length +
+          this.state.signature.length,
       });
       this.setState({
         smsCount: Math.ceil(
-          (utf8.encode(e.target.value).length +
+          (e.target.value.replace(/[^\x00-\x7F]/g, "").length +
             this.state.signature.length +
             25) /
             160
         ),
       });
-      this.setState({ [input]: utf8.encode(e.target.value) });
     } else if (input === "callToAction") {
       this.setState({ callToActionCount: e.target.value.length });
       this.setState({ [input]: e.target.value });
     } else if (input === "signature") {
       this.setState({
-        [input]: utf8.encode(e.target.value),
+        [input]: e.target.value.replace(/[^\x00-\x7F]/g, ""),
       });
       this.setState({
         characterCount:
-          utf8.encode(e.target.value).length +
+          e.target.value.replace(/[^\x00-\x7F]/g, "").length +
           this.state.campaignMessage.length,
       });
       this.setState({
         smsCount: Math.ceil(
-          (utf8.encode(e.target.value).length +
+          (e.target.value.replace(/[^\x00-\x7F]/g, "").length +
             this.state.campaignMessage.length +
             25) /
             160
         ),
       });
-    } else this.setState({ [input]: utf8.encode(e.target.value) });
+    } else
+      this.setState({
+        [input]: utf8.encode(e.target.value).replace(/[^\x00-\x7F]/g, ""),
+      });
     //
   };
 
@@ -352,6 +364,7 @@ export default class AppDownloadStepForm extends Component {
       alternateSenderId,
       channel,
       campaignMessage,
+      nonEncodedMessage,
       callToAction,
       timeRangeFrom,
       signature,
@@ -518,6 +531,7 @@ export default class AppDownloadStepForm extends Component {
       alternateSenderId,
       channel,
       campaignMessage,
+      nonEncodedMessage,
       signature,
       timeRange,
       callToAction,

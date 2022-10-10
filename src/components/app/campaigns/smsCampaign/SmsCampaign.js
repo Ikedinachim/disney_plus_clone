@@ -43,7 +43,7 @@ const SmsCampaign = ({
       toast.error("Choose a channel");
     } else if (
       values.channel !== "voice_sms" &&
-      values.campaignMessage === ""
+      values.nonEncodedMessage === ""
     ) {
       toast.error("Create the campaign message");
     } else if (values.channel === "voice_sms" && !values.attachment) {
@@ -196,8 +196,8 @@ const SmsCampaign = ({
                                 className="form-control"
                                 rows={3}
                                 placeholder="Type your ad message here e.g Get up to 50% discount on first purchase"
-                                onChange={handleChange("campaignMessage")}
-                                value={values.campaignMessage}
+                                onChange={handleChange("nonEncodedMessage")}
+                                value={values.nonEncodedMessage}
                               />
                             </div>
                             <div className="form-group col-md-6 mb-2 d-flex justify-content-between">
@@ -211,7 +211,7 @@ const SmsCampaign = ({
                                 className="form-control"
                                 placeholder="Write a signature here, not longer than 11 characters (optional)"
                                 onChange={handleChange("signature")}
-                                defaultValue={values.signature}
+                                value={values.signature}
                                 maxLength={11}
                               />
                               <p className="mg-0 tx-12 tx-italic tx-gray-500">

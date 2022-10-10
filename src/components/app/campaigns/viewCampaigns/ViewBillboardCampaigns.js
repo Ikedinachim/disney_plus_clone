@@ -136,7 +136,7 @@ const ViewBillboardCampaign = () => {
                 !campaign.isPublished &&
                 !campaign.isRejected &&
                 campaign.isApproved
-                  ? "Running"
+                  ? "Approved"
                   : null ||
                     ((!campaign.isAdminApproved || campaign.isAdminApproved) &&
                       !campaign.isPublished &&

@@ -513,11 +513,11 @@ const TargetAudience = ({
                           <div className="form-group col-md-6 mb-0 align-items-center d-flex">
                             <div>
                               <span>
-                                {Math.ceil((values.budget * 720) / 1000)}
+                                {Math.ceil(values.budget / 6 / 100) * 100}
                               </span>
                               {" - "}
                               <span>
-                                {Math.ceil((values.budget * 720) / 1000) * 1.5}{" "}
+                                {Math.ceil(values.budget / 3 / 1000) * 1000}{" "}
                                 Estimated Reach{" "}
                                 <i className="tx-15 fa fa-users" />
                               </span>
@@ -578,7 +578,7 @@ const TargetAudience = ({
                                 className="custom-control-label"
                                 htmlFor="import"
                               >
-                                Import My Own Database
+                                Import My Own Databases
                               </label>
                             </div>
                           </div>

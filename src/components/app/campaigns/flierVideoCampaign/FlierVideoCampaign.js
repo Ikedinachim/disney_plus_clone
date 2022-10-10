@@ -363,8 +363,8 @@ const FlierVideoCampaign = ({
                                   : undefined
                               }
                               placeholder="Type your ad message here"
-                              onChange={handleChange("campaignMessage")}
-                              value={values.campaignMessage}
+                              onChange={handleChange("nonEncodedMessage")}
+                              value={values.nonEncodedMessage}
                             />
                           </div>
                           {values.channel === "display_ads" ? (
@@ -388,7 +388,7 @@ const FlierVideoCampaign = ({
                                 rows={1}
                                 placeholder="Write a signature here, not longer than 11 characters (optional)"
                                 onChange={handleChange("signature")}
-                                defaultValue={values.signature}
+                                value={values.signature}
                                 maxLength={11}
                               />
                               <p className="mg-0 tx-12 tx-italic tx-gray-500">
@@ -824,7 +824,7 @@ const FlierVideoCampaign = ({
                     </div>
                   </div>
                   <div className="position-sticky t-0 col-md-5 col-12 mg-t-20">
-                    <div class="iphone-x">
+                    <div className="iphone-x">
                       <i>Speaker</i>
                       <b>Camera</b>
                       <s>
@@ -838,7 +838,7 @@ const FlierVideoCampaign = ({
                                   alt=""
                                 />
                                 <p className="mb-4 pd-x-20 tx-black tx-bold iphone-x-content">
-                                  {values.campaignMessage +
+                                  {values.nonEncodedMessage +
                                     (values.signature !== ""
                                       ? " - " + values.signature
                                       : "")}
@@ -853,7 +853,7 @@ const FlierVideoCampaign = ({
                                   />
                                 </div>
                                 <p className="mb-4 pd-x-20 tx-black tx-bold iphone-x-content">
-                                  {values.campaignMessage +
+                                  {values.nonEncodedMessage +
                                     (values.signature !== ""
                                       ? " - " + values.signature
                                       : "")}
