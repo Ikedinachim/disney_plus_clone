@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import utf8 from "utf8";
 
 import SmsCampaign from "./SmsCampaign";
 import TargetAudience from "./TargetAudience";
@@ -80,27 +81,26 @@ export default class SmsStepForm extends Component {
       };
       // console.log("unicode", isDoubleByte(e.target.value));
       // console.log("`".match(/[\u0B80-\u0BFF]+/g));
-      const convertUnicode = (text) => {
-        return text.replace(/\\u([0-9a-fA-F]{4})/g, function (a, b) {
-          var charcode = parseInt(b, 16);
-          return String.fromCharCode(charcode);
-        });
-      };
+      // const convertUnicode = (text) => {
+      //   return text.replace(/\\u([0-9a-fA-F]{4})/g, function (a, b) {
+      //     var charcode = parseInt(b, 16);
+      //     return String.fromCharCode(charcode);
+      //   });
+      // };
       this.setState({
         characterCount:
-          convertUnicode(e.target.value).length + this.state.signature.length,
+          utf8.encode(e.target.value).length + this.state.signature.length,
       });
       this.setState({
         smsCount: Math.ceil(
-          (convertUnicode(e.target.value).length +
-            this.state.signature.length) /
+          (utf8.encode(e.target.value).length + this.state.signature.length) /
             160
         ),
       });
-      this.setState({ [input]: convertUnicode(e.target.value) });
+      this.setState({ [input]: utf8.encode(e.target.value) });
     } else if (input === "signature") {
       this.setState({
-        [input]: e.target.value,
+        [input]: utf8.encode(e.target.value),
       });
       this.setState({
         characterCount:
@@ -108,11 +108,13 @@ export default class SmsStepForm extends Component {
       });
       this.setState({
         smsCount: Math.ceil(
-          (e.target.value.length + this.state.campaignMessage.length) / 160
+          (utf8.encode(e.target.value).length +
+            this.state.campaignMessage.length) /
+            160
         ),
       });
     } else {
-      this.setState({ [input]: e.target.value });
+      this.setState({ [input]: utf8.encode(e.target.value) });
     }
   };
 
@@ -355,7 +357,7 @@ export default class SmsStepForm extends Component {
       attachment: audioUrl,
     };
 
-    // console.log(values);
+    console.log(values);
 
     switch (step) {
       case 1:

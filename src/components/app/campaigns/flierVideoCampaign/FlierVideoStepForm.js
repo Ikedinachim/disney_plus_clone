@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import utf8 from "utf8";
+
 import FlierVideoCampaign from "./FlierVideoCampaign";
 import TargetAudience from "./TargetAudience";
 import axios from "axios";
@@ -95,31 +97,39 @@ export default class FlierVideoStepForm extends Component {
   handleChange = (input) => (e) => {
     if (input === "campaignMessage") {
       this.setState({
-        characterCount: e.target.value.length + this.state.signature.length,
+        characterCount:
+          utf8.encode(e.target.value).length + this.state.signature.length,
       });
       this.setState({
         smsCount: Math.ceil(
-          (e.target.value.length + this.state.signature.length + 25) / 160
+          (utf8.encode(e.target.value).length +
+            this.state.signature.length +
+            25) /
+            160
         ),
       });
-      this.setState({ [input]: e.target.value });
+      this.setState({ [input]: utf8.encode(e.target.value) });
     } else if (input === "callToAction") {
       this.setState({ callToActionCount: e.target.value.length });
       this.setState({ [input]: e.target.value });
     } else if (input === "signature") {
       this.setState({
-        [input]: e.target.value,
+        [input]: utf8.encode(e.target.value),
       });
       this.setState({
         characterCount:
-          e.target.value.length + this.state.campaignMessage.length,
+          utf8.encode(e.target.value).length +
+          this.state.campaignMessage.length,
       });
       this.setState({
         smsCount: Math.ceil(
-          (e.target.value.length + this.state.campaignMessage.length + 25) / 160
+          (utf8.encode(e.target.value).length +
+            this.state.campaignMessage.length +
+            25) /
+            160
         ),
       });
-    } else this.setState({ [input]: e.target.value });
+    } else this.setState({ [input]: utf8.encode(e.target.value) });
     //
   };
 
