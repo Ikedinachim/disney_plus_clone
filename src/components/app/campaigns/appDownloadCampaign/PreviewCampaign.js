@@ -552,6 +552,20 @@ const PreviewCampaign = ({
                                     {" "}
                                     {filterOptions.lga}
                                   </span>
+                                  <label className="tx-14 tx-gray mb-0 tx-medium d-block mt-3">
+                                    Gender:
+                                  </label>
+                                  <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
+                                    {" "}
+                                    {values.gender}
+                                  </span>
+                                  <label className="tx-14 tx-gray mb-0 tx-medium d-block mt-3">
+                                    Age:
+                                  </label>
+                                  <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
+                                    {" "}
+                                    {values.ageRange}
+                                  </span>
                                 </div>
                                 <div className="col-md-6 form-group">
                                   <label className="tx-14 tx-gray mb-0 tx-medium d-block">
@@ -567,6 +581,15 @@ const PreviewCampaign = ({
                                   <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
                                     {" "}
                                     {values.scheduleTo}
+                                  </span>
+                                  <label className="tx-14 tx-gray mb-0 tx-medium d-block mt-3">
+                                    Campaign schedule:
+                                  </label>
+                                  <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
+                                    {" "}
+                                    {values.campaignSchedule === "All_Time"
+                                      ? "All day"
+                                      : ""}
                                   </span>
                                 </div>
                               </div>
@@ -679,9 +702,8 @@ const PreviewCampaign = ({
                                 Potential Reach Based on Budget
                               </label>
                               <p className="tx-18 tx-com tx-bold mb-0">
-                                {Math.ceil(values.budget / 6 / 100) * 100} -{" "}
-                                {""}
-                                {Math.ceil(values.budget / 3 / 1000) * 1000}
+                                {Math.ceil((values.budget * 1000) / 720)} - {""}
+                                {Math.ceil((values.budget * 1000) / 720) * 1.5}
                                 <span className="tx-14 tx-gray tx-medium">
                                   {" "}
                                   Estimated Reach{" "}

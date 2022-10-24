@@ -425,7 +425,9 @@ const PreviewCampaign = ({
                                   </label>
                                   <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
                                     {" "}
-                                    {values.campaignSchedule}
+                                    {values.campaignSchedule === "All_Time"
+                                      ? "All day"
+                                      : ""}
                                   </span>
                                 </div>
                               </div>
@@ -741,9 +743,8 @@ const PreviewCampaign = ({
                                 Potential Reach Based on Budget
                               </label>
                               <p className="tx-18 tx-com tx-bold mb-0">
-                                {Math.ceil(values.budget / 6 / 100) * 100} -{" "}
-                                {""}
-                                {Math.ceil(values.budget / 3 / 1000) * 1000}
+                                {Math.ceil((values.budget * 1000) / 720)} - {""}
+                                {Math.ceil((values.budget * 1000) / 720) * 1.5}
                                 <span className="tx-14 tx-gray tx-medium">
                                   {" "}
                                   Estimated Reach{" "}

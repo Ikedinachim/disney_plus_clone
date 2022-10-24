@@ -103,6 +103,7 @@ import {
 } from "../constants/campaignConstants";
 
 const baseURL = process.env.REACT_APP_MYSOGI_BASE_URL;
+const billboardBaseUrl = process.env.REACT_APP_MYSOGI_BILLBOARD_URL;
 
 const axios = Axios.create({
   baseURL,
@@ -113,7 +114,7 @@ const filterContactAxios = Axios.create({
 });
 
 const billBoardAxios = Axios.create({
-  baseURL: "https://proxi.uat.com.ng/",
+  baseURL: billboardBaseUrl,
 });
 
 // Create SMS Campaign Action
@@ -581,7 +582,7 @@ export const createBillBoardCampaignAction =
         },
       };
       const { data } = await billBoardAxios.post(
-        "billboard/create/",
+        "create/",
         billBoardCampaignData,
         config
       );
@@ -655,7 +656,7 @@ export const getAllBillBoard = () => async (dispatch) => {
       },
     };
 
-    const { data } = await billBoardAxios.get(`billboards/`, config);
+    const { data } = await billBoardAxios.get(`list/`, config);
 
     if (data) {
       dispatch({
