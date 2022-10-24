@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import utf8 from "utf8";
+import { count } from "sms-length";
 
 import SmsCampaign from "./SmsCampaign";
 import TargetAudience from "./TargetAudience";
@@ -41,7 +41,7 @@ export default class SmsStepForm extends Component {
     revenueBand: "",
     characterCount: 0,
     signature: "",
-    smsCount: 1,
+    smsCount: 0,
 
     scheduleOption: "none",
     scheduleTime: "",
@@ -72,43 +72,30 @@ export default class SmsStepForm extends Component {
   // Handle fields change
   handleChange = (input) => (e) => {
     if (input === "nonEncodedMessage") {
-      this.setState({ [input]: e.target.value.replace(/[^\x00-\x7F]/g, "") });
+      this.setState({ [input]: e.target.value });
       this.setState({
-        campaignMessage: utf8
-          .encode(e.target.value)
-          .replace(/[^\x00-\x7F]/g, ""),
+        campaignMessage: e.target.value,
       });
       this.setState({
-        characterCount:
-          e.target.value.replace(/[^\x00-\x7F]/g, "").length +
-          this.state.signature.length,
+        characterCount: count(e.target.value + this.state.signature).length,
       });
       this.setState({
-        smsCount: Math.ceil(
-          (e.target.value.replace(/[^\x00-\x7F]/g, "").length +
-            this.state.signature.length) /
-            160
-        ),
+        smsCount: count(e.target.value + this.state.signature).messages,
       });
     } else if (input === "signature") {
       this.setState({
-        [input]: e.target.value.replace(/[^\x00-\x7F]/g, ""),
+        [input]: e.target.value,
       });
       this.setState({
-        characterCount:
-          e.target.value.replace(/[^\x00-\x7F]/g, "").length +
-          this.state.campaignMessage.length,
+        characterCount: count(e.target.value + this.state.campaignMessage)
+          .length,
       });
       this.setState({
-        smsCount: Math.ceil(
-          (e.target.value.replace(/[^\x00-\x7F]/g, "").length +
-            this.state.campaignMessage.length) /
-            160
-        ),
+        smsCount: count(e.target.value + this.state.campaignMessage).messages,
       });
     } else {
       this.setState({
-        [input]: utf8.encode(e.target.value).replace(/[^\x00-\x7F]/g, ""),
+        [input]: e.target.value,
       });
     }
   };
@@ -354,7 +341,9 @@ export default class SmsStepForm extends Component {
       attachment: audioUrl,
     };
 
-    // console.log(values);
+    console.log("smsCount", smsCount);
+    console.log("characterCount", characterCount);
+    console.log("count", count(campaignMessage + 25));
 
     switch (step) {
       case 1:

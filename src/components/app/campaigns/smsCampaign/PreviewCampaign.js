@@ -208,10 +208,7 @@ const PreviewCampaign = ({
                         ) : (
                           <>
                             <div className="form-group col-md-12">
-                              <label
-                                htmlFor
-                                className="tx-14 tx-gray mb-0 tx-medium"
-                              >
+                              <label className="tx-14 tx-gray mb-0 tx-medium">
                                 Campaign Message
                               </label>
 
@@ -258,10 +255,7 @@ const PreviewCampaign = ({
                               </div>
                             </div>
                             <div className="col-md-1 form-group">
-                              <label
-                                htmlFor
-                                className="tx-14 tx-gray mb-0 tx-medium d-block"
-                              >
+                              <label className="tx-14 tx-gray mb-0 tx-medium d-block">
                                 Gender
                               </label>
                               <span className="badge badge-pink tx-14 mg-5">
@@ -273,10 +267,7 @@ const PreviewCampaign = ({
                             </div>
                           </div>
                           <div className="form-group">
-                            <label
-                              htmlFor
-                              className="tx-14 tx-gray mb-0 tx-medium d-block"
-                            >
+                            <label className="tx-14 tx-gray mb-0 tx-medium d-block">
                               State:
                             </label>
 
@@ -511,10 +502,7 @@ const PreviewCampaign = ({
                       <div className="mg-b-20 mg-md-b-10">
                         <p className="tx-18 tx-com tx-semibold mb-0">Pricing</p>
                         <div className="form-group mg-t-15">
-                          <label
-                            htmlFor
-                            className="tx-14 tx-gray mb-0 tx-medium"
-                          >
+                          <label className="tx-14 tx-gray mb-0 tx-medium">
                             Potential Audience Based on filter
                           </label>
                           <p className="tx-18 tx-com tx-bold mb-1">
@@ -549,10 +537,7 @@ const PreviewCampaign = ({
                       <div className="mg-b-20 mg-md-b-10">
                         <p className="tx-18 tx-com tx-semibold mb-0">Pricing</p>
                         <div className="form-group mg-t-15">
-                          <label
-                            htmlFor
-                            className="tx-14 tx-gray mb-1 tx-medium"
-                          >
+                          <label className="tx-14 tx-gray mb-1 tx-medium">
                             Potential Audience Based on Manual Input
                           </label>
                           <p className="tx-18 tx-com tx-bold mb-0">

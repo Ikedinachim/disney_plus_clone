@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import utf8 from "utf8";
+import { count } from "sms-length";
 
 import AppDownloadCampaign from "./AppDownloadCampaign";
 import TargetAudience from "./TargetAudience";
@@ -82,50 +82,37 @@ export default class AppDownloadStepForm extends Component {
   // Handle fields change
   handleChange = (input) => (e) => {
     if (input === "nonEncodedMessage") {
+      this.setState({ [input]: e.target.value });
       this.setState({
-        [input]: e.target.value.replace(/[^\x00-\x7F]/g, ""),
+        campaignMessage: e.target.value,
       });
       this.setState({
-        campaignMessage: utf8
-          .encode(e.target.value)
-          .replace(/[^\x00-\x7F]/g, ""),
+        characterCount: count(e.target.value + this.state.signature).length,
       });
       this.setState({
-        characterCount:
-          e.target.value.replace(/[^\x00-\x7F]/g, "").length +
-          this.state.signature.length,
-      });
-      this.setState({
-        smsCount: Math.ceil(
-          (e.target.value.replace(/[^\x00-\x7F]/g, "").length +
-            this.state.signature.length +
-            25) /
-            160
-        ),
+        smsCount: count(
+          e.target.value + this.state.signature + Array(26).join("x")
+        ).messages,
       });
     } else if (input === "callToAction") {
       this.setState({ callToActionCount: e.target.value.length });
       this.setState({ [input]: e.target.value });
     } else if (input === "signature") {
       this.setState({
-        [input]: e.target.value.replace(/[^\x00-\x7F]/g, ""),
+        [input]: e.target.value,
       });
       this.setState({
-        characterCount:
-          e.target.value.replace(/[^\x00-\x7F]/g, "").length +
-          this.state.campaignMessage.length,
+        characterCount: count(e.target.value + this.state.campaignMessage)
+          .length,
       });
       this.setState({
-        smsCount: Math.ceil(
-          (e.target.value.replace(/[^\x00-\x7F]/g, "").length +
-            this.state.campaignMessage.length +
-            25) /
-            160
-        ),
+        smsCount: count(
+          e.target.value + this.state.campaignMessage + Array(26).join("x")
+        ).messages,
       });
     } else
       this.setState({
-        [input]: utf8.encode(e.target.value).replace(/[^\x00-\x7F]/g, ""),
+        [input]: e.target.value,
       });
     //
   };

@@ -149,17 +149,17 @@ const TargetAudience = ({
       label: "Select time for campaign run",
       value: "",
     },
-    {
-      label: "Day (5am - 7pm)",
-      value: "Day",
-    },
-    {
-      label: "Night (8pm - 4am)",
-      value: "Night",
-    },
+    // {
+    //   label: "Day (5am - 7pm)",
+    //   value: "Day",
+    // },
+    // {
+    //   label: "Night (8pm - 4am)",
+    //   value: "Night",
+    // },
     {
       label: "All day",
-      value: "All day",
+      value: "All_Time",
     },
   ];
 
