@@ -1,8 +1,7 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-// import { useAlert } from "react-alert";
 import { toast } from "react-toastify";
 import MetaData from "../../../layout/MetaData";
 import NumberFormat from "react-number-format";
@@ -43,6 +42,15 @@ const PreviewCampaign = ({
   const navigate = useNavigate();
   const { wallet } = useSelector((state) => state.wallet);
   const gaEventTracker = useAnalyticsEventTracker("App Download Campaign");
+
+  // Set scheduling date
+  let date = new Date();
+  let endingDate = new Date(
+    values.scheduleFrom !== "" ? values.scheduleFrom : date
+  );
+  // add 2 day
+  date.setDate(date.getDate() + 0);
+  endingDate.setDate(date.getDate() + 1);
 
   const Continue = (e) => {
     e.preventDefault();
@@ -280,7 +288,6 @@ const PreviewCampaign = ({
                                     name="scheduleRadio"
                                     className="custom-control-input"
                                     checked={values.scheduleOption === "none"}
-                                    // onClick={(e) => assetTypeHandler("image")}
                                     value={"none"}
                                     onChange={handleChange("scheduleOption")}
                                   />
@@ -300,7 +307,6 @@ const PreviewCampaign = ({
                                     name="scheduleRadio"
                                     className="custom-control-input"
                                     checked={values.scheduleOption === "once"}
-                                    // onClick={(e) => assetTypeHandler("video")}
                                     value={"once"}
                                     onChange={handleChange("scheduleOption")}
                                   />
@@ -322,7 +328,6 @@ const PreviewCampaign = ({
                                     checked={
                                       values.scheduleOption === "recurrent"
                                     }
-                                    // onClick={(e) => assetTypeHandler("video")}
                                     value={"recurrent"}
                                     onChange={handleChange("scheduleOption")}
                                   />
@@ -347,11 +352,12 @@ const PreviewCampaign = ({
                                       <input
                                         type="date"
                                         className="form-control"
-                                        placeholder="Username"
-                                        aria-label="Username"
+                                        placeholder="scheduleFrom"
+                                        aria-label="scheduleFrom"
                                         aria-describedby="basic-addon1"
                                         defaultValue={values.scheduleFrom}
                                         onChange={handleChange("scheduleFrom")}
+                                        min={date.toISOString().split("T")[0]}
                                       />
                                     </div>
                                   </div>
@@ -366,39 +372,29 @@ const PreviewCampaign = ({
                                       <input
                                         type="date"
                                         className="form-control"
-                                        placeholder="Username"
-                                        aria-label="Username"
+                                        placeholder="scheduleTo"
+                                        aria-label="scheduleTo"
                                         aria-describedby="basic-addon1"
                                         defaultValue={values.scheduleTo}
                                         onChange={handleChange("scheduleTo")}
+                                        min={
+                                          values.scheduleFrom !== ""
+                                            ? new Date(
+                                                new Date(
+                                                  values.scheduleFrom
+                                                ).setDate(
+                                                  new Date(
+                                                    values.scheduleFrom
+                                                  ).getDate() + 1
+                                                )
+                                              )
+                                                .toISOString()
+                                                .split("T")[0]
+                                            : date.toISOString().split("T")[0]
+                                        }
                                       />
                                     </div>
                                   </div>
-                                  {/* <div className="form-group col-md-6 mb-0">
-                                    <label
-                                      className="mb-1"
-                                      htmlFor="schedule-time"
-                                    >
-                                      Time
-                                    </label>
-                                    <div className="input-group mg-b-10">
-                                      <div className="input-group-prepend">
-                                        <span className="input-group-text">
-                                          Time
-                                        </span>
-                                      </div>
-                                      <input
-                                        type="time"
-                                        id="schedule-time"
-                                        min="08:00"
-                                        max="20:00"
-                                        className="form-control"
-                                        aria-describedby="basic-addon1"
-                                        defaultValue={values.scheduleTime}
-                                        onChange={handleChange("scheduleTime")}
-                                      />
-                                    </div>
-                                  </div> */}
                                 </div>
                               )}
                               {values.scheduleOption === "once" && (

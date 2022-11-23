@@ -85,11 +85,6 @@ function App() {
 
   return (
     <div>
-      {/* {!loading && (isAuthenticated) ? <Sidebar /> : ""} */}
-      {/* <div className="content ht-100v pd-0"> */}
-      {/* {!loading && (isAuthenticated) && (
-          <Header />
-        )} */}
       <Routes>
         <Route
           path="/app"
@@ -356,15 +351,6 @@ function App() {
             }
           />
         </Route>
-        {/* <Route path="/app/campaign/preview" element={isAuthenticated ? <PreviewCampaign /> : <Login />} /> */}
-        {/* <Route path="/app/campaign/audience" element={isAuthenticated ? <TargetAudience /> : <Login />} /> */}
-        {/* <Route path="/register" element={<Register />} /> */}
-        {/* <Route path="/login" element={<Login />} /> */}
-        {/* <Route path="/app" element={isAuthenticated ? <Dashboard /> : <Home />} /> */}
-        {/* <Route path="*" element={isAuthenticated ? <Dashboard /> : <Login />} /> */}
-        {/* <Route exact path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} /> */}
       </Routes>
 
       <Routes>
@@ -572,14 +558,8 @@ function App() {
         </Route>
       </Routes>
       {loading ? <Loader /> : null}
-      {/* </div> */}
     </div>
   );
 }
 
 export default App;
-
-// function PrivateRoute({ children }) {
-//   return localStorage.getItem('user') !== null ? children : <Navigate to="/login" />;
-
-// }

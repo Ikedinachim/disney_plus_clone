@@ -168,7 +168,7 @@ const InfluencerCard = ({
                         <p className="tx-bold">
                           Run-time:{" "}
                           <span className="tx-normal">
-                            16hrs (6am - 10pm) 6days/week
+                            14hrs (6am - 9pm) 6days/week
                           </span>
                         </p>
                       </div>

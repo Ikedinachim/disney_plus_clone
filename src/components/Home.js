@@ -82,7 +82,7 @@ const Home = () => {
                       With over 70 million target audience we connect your
                       business to the right customer using our{" "}
                       <span className="tx-bold">
-                        SMART SMS, DISPLAY ADS, VOICE SMS
+                        BILLBOARDS, SMART SMS, DISPLAY ADS, VOICE SMS
                       </span>{" "}
                       and <span className="tx-bold">TOP INFLUENCERS</span> who
                       will promote your brand and products.

@@ -577,7 +577,6 @@ export default class FlierVideoStepForm extends Component {
     };
 
     // console.log(values);
-    // console.log(Array(26).join("x").length);
 
     switch (step) {
       case 1:

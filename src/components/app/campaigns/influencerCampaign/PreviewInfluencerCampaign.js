@@ -223,8 +223,8 @@ const PreviewInfluencerCampaign = ({
                         </tr>
                       </thead>
                       <tbody>
-                        {filteredValue?.map((platform) => (
-                          <tr>
+                        {filteredValue?.map((platform, i) => (
+                          <tr key={i}>
                             <td>
                               <div className="d-flex">
                                 <div className="div">

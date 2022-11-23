@@ -35,7 +35,6 @@ const TargetAudience = ({
   rawArea,
 }) => {
   const dispatch = useDispatch();
-
   const { error } = useSelector((state) => state.filteredContactList || []);
 
   const [parsedCsvData, setParsedCsvData] = useState([]);
@@ -44,6 +43,15 @@ const TargetAudience = ({
   const { filteredContactList, fcLoading } = useSelector(
     (state) => state.filteredContactList || []
   );
+
+  // Set scheduling date
+  let date = new Date();
+  let endingDate = new Date(
+    values.scheduleFrom !== "" ? values.scheduleFrom : date
+  );
+  // add 2 day
+  date.setDate(date.getDate() + 0);
+  endingDate.setDate(date.getDate() + 1);
 
   useEffect(() => {
     if (values.targetAudienceOption === "mysogidb") {
@@ -461,11 +469,12 @@ const TargetAudience = ({
                             <input
                               type="date"
                               className="form-control"
-                              placeholder="Username"
-                              aria-label="Username"
+                              placeholder="Start Date"
+                              aria-label="scheduleFrom"
                               aria-describedby="basic-addon1"
                               defaultValue={values.scheduleFrom}
                               onChange={handleChange("scheduleFrom")}
+                              min={date.toISOString().split("T")[0]}
                             />
                           </div>
                         </div>
@@ -478,11 +487,24 @@ const TargetAudience = ({
                             <input
                               type="date"
                               className="form-control"
-                              placeholder="Username"
-                              aria-label="Username"
+                              placeholder="End Date"
+                              aria-label="scheduleTo"
                               aria-describedby="basic-addon1"
                               defaultValue={values.scheduleTo}
                               onChange={handleChange("scheduleTo")}
+                              min={
+                                values.scheduleFrom !== ""
+                                  ? new Date(
+                                      new Date(values.scheduleFrom).setDate(
+                                        new Date(
+                                          values.scheduleFrom
+                                        ).getDate() + 1
+                                      )
+                                    )
+                                      .toISOString()
+                                      .split("T")[0]
+                                  : date.toISOString().split("T")[0]
+                              }
                             />
                           </div>
                         </div>

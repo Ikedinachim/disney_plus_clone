@@ -36,7 +36,6 @@ const PreviewCampaign = ({
   const { filteredContactList, fcLoading } = useSelector(
     (state) => state.filteredContactList || []
   );
-  // const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { wallet } = useSelector((state) => state.wallet);
@@ -56,6 +55,14 @@ const PreviewCampaign = ({
     e.preventDefault();
     dispatch(createFlierVideoCampaignAction(values));
   };
+
+  let date = new Date();
+  let endingDate = new Date(
+    values.scheduleFrom !== "" ? values.scheduleFrom : date
+  );
+  // add 1 day
+  date.setDate(date.getDate() + 0);
+  endingDate.setDate(date.getDate() + 1);
 
   const setScheduleDate = (initialDate, endDate) => {
     let day1 = new Date(initialDate);
@@ -186,7 +193,7 @@ const PreviewCampaign = ({
                             <div className="row mg-t-15">
                               <div className="form-group col-md-6">
                                 <label
-                                  htmlFor
+                                  // htmlFor
                                   className="tx-14 tx-gray mb-0 tx-medium"
                                 >
                                   USSD Code
@@ -195,7 +202,7 @@ const PreviewCampaign = ({
                               </div>
                               <div className="form-group col-md-6">
                                 <label
-                                  htmlFor
+                                  // htmlFor
                                   className="tx-14 tx-gray mb-0 tx-medium"
                                 >
                                   Phone Call
@@ -206,7 +213,7 @@ const PreviewCampaign = ({
                               </div>
                               <div className="form-group col-md-6">
                                 <label
-                                  htmlFor
+                                  // htmlFor
                                   className="tx-14 tx-gray mb-0 tx-medium"
                                 >
                                   WhatsApp Number
@@ -217,7 +224,7 @@ const PreviewCampaign = ({
                               </div>
                               <div className="form-group col-md-6">
                                 <label
-                                  htmlFor
+                                  // htmlFor
                                   className="tx-14 tx-gray mb-0 tx-medium"
                                 >
                                   SMS Number
@@ -226,7 +233,7 @@ const PreviewCampaign = ({
                               </div>
                               <div className="form-group col-md-6">
                                 <label
-                                  htmlFor
+                                  // htmlFor
                                   className="tx-14 tx-gray mb-0 tx-medium"
                                 >
                                   Campaign Message
@@ -240,7 +247,7 @@ const PreviewCampaign = ({
                               </div>
                               <div className="form-group col-md-6">
                                 <label
-                                  htmlFor
+                                  // htmlFor
                                   className="tx-14 tx-gray mb-0 tx-medium"
                                 >
                                   URL
@@ -252,7 +259,7 @@ const PreviewCampaign = ({
                             <div className="row mg-t-15">
                               <div className="form-group col-md-6">
                                 <label
-                                  htmlFor
+                                  // htmlFor
                                   className="tx-14 tx-gray mb-0 tx-medium"
                                 >
                                   Campaign Message
@@ -263,7 +270,7 @@ const PreviewCampaign = ({
                               </div>
                               <div className="form-group col-md-6">
                                 <label
-                                  htmlFor
+                                  // htmlFor
                                   className="tx-14 tx-gray mb-0 tx-medium"
                                 >
                                   URL
@@ -272,7 +279,7 @@ const PreviewCampaign = ({
                               </div>
                               <div className="form-group col-md-6">
                                 <label
-                                  htmlFor
+                                  // htmlFor
                                   className="tx-14 tx-gray mb-0 tx-medium"
                                 >
                                   Call to Action
@@ -299,7 +306,7 @@ const PreviewCampaign = ({
                                 <div className="row mg-t-15">
                                   <div className="col-md-3 form-group">
                                     <label
-                                      htmlFor
+                                      // htmlFor
                                       className="tx-14 tx-gray mb-0 tx-medium d-block"
                                     >
                                       Age Range
@@ -520,6 +527,7 @@ const PreviewCampaign = ({
                                         aria-describedby="basic-addon1"
                                         defaultValue={values.scheduleFrom}
                                         onChange={handleChange("scheduleFrom")}
+                                        min={date.toISOString().split("T")[0]}
                                       />
                                     </div>
                                   </div>
@@ -539,6 +547,24 @@ const PreviewCampaign = ({
                                         aria-describedby="basic-addon1"
                                         defaultValue={values.scheduleTo}
                                         onChange={handleChange("scheduleTo")}
+                                        // min={
+                                        //   endingDate.toISOString().split("T")[0]
+                                        // }
+                                        min={
+                                          values.scheduleFrom !== ""
+                                            ? new Date(
+                                                new Date(
+                                                  values.scheduleFrom
+                                                ).setDate(
+                                                  new Date(
+                                                    values.scheduleFrom
+                                                  ).getDate() + 1
+                                                )
+                                              )
+                                                .toISOString()
+                                                .split("T")[0]
+                                            : date.toISOString().split("T")[0]
+                                        }
                                       />
                                     </div>
                                   </div>
@@ -646,7 +672,7 @@ const PreviewCampaign = ({
                               </p>
                               <div className="form-group mg-t-15">
                                 <label
-                                  htmlFor
+                                  // htmlFor
                                   className="tx-14 tx-gray mb-0 tx-medium"
                                 >
                                   Potential Audience Based on filter
@@ -688,7 +714,7 @@ const PreviewCampaign = ({
                               </p>
                               <div className="form-group mg-t-15">
                                 <label
-                                  htmlFor
+                                  // htmlFor
                                   className="tx-14 tx-gray mb-1 tx-medium"
                                 >
                                   Potential Audience Based on Manual Input
@@ -737,7 +763,7 @@ const PreviewCampaign = ({
                             </p>
                             <div className="form-group mg-t-15">
                               <label
-                                htmlFor
+                                // htmlFor
                                 className="tx-14 tx-gray mb-1 tx-medium"
                               >
                                 Potential Reach Based on Budget

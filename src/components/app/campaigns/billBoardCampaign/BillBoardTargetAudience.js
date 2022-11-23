@@ -22,6 +22,7 @@ const BillBoardTargetAudience = ({
 }) => {
   let date = new Date();
   let endingDate = new Date(values.startDate !== "" ? values.startDate : date);
+
   // add 2 day
   date.setDate(date.getDate() + 2);
   endingDate.setDate(date.getDate() + 1);
@@ -105,13 +106,14 @@ const BillBoardTargetAudience = ({
                               </div>
                               <input
                                 type="date"
+                                name="startDate"
                                 className="form-control"
-                                placeholder="Username"
-                                aria-label="Username"
+                                placeholder="startDate"
+                                aria-label="startDate"
                                 aria-describedby="basic-addon1"
                                 defaultValue={values.startDate}
                                 onChange={handleChange("startDate")}
-                                min={date.toISOString().split("T")[0]}
+                                min={new Date().toISOString().split("T")[0]}
                                 // max="6/11/2022"
                               />
                             </div>
@@ -122,14 +124,26 @@ const BillBoardTargetAudience = ({
                                 </div>
                                 <input
                                   type="date"
+                                  name="endDate"
                                   className="form-control"
-                                  placeholder="Username"
-                                  aria-label="Username"
+                                  placeholder="endDate"
+                                  aria-label="endDate"
                                   aria-describedby="basic-addon1"
                                   defaultValue={values.endDate}
                                   onChange={handleChange("endDate")}
-                                  min={endingDate.toISOString().split("T")[0]}
-                                  // max="6/11/2022"
+                                  min={
+                                    values.startDate !== ""
+                                      ? new Date(
+                                          new Date(values.startDate).setDate(
+                                            new Date(
+                                              values.startDate
+                                            ).getDate() + 2
+                                          )
+                                        )
+                                          .toISOString()
+                                          .split("T")[0]
+                                      : date.toISOString().split("T")[0]
+                                  }
                                 />
                               </div>
                             )}
