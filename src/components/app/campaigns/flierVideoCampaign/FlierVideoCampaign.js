@@ -17,9 +17,7 @@ import { ProgressBar } from "react-bootstrap";
 const FlierVideoCampaign = ({
   nextStep,
   handleChange,
-  // onChangeAttachment,
   values,
-  // attachmentPreview,
   handleImageUpload,
   selectedFileName,
   handleImageDelete,
@@ -29,7 +27,6 @@ const FlierVideoCampaign = ({
   callToActionCount,
   videoError,
 }) => {
-  // const alert = useAlert();
   const dispatch = useDispatch();
   const { senderID, defaultSenderID, generalSender } = useSelector(
     (state) => state || []
@@ -39,24 +36,11 @@ const FlierVideoCampaign = ({
   const [showSms, setShowSms] = useState(false);
   const [showUssd, setShowUssd] = useState(false);
 
-  const maxTimeMinDay = new Date().setHours(19, 59, 0, 0);
-  const minTimeMaxDay = new Date().setHours(0, 0, 0, 0);
-
-  // const [assetType, setAssetType] = useState("image");
-  // const assetTypeHandler = (asset) => {
-  //   setAssetType(asset);
-  // };
+  // const maxTimeMinDay = new Date().setHours(19, 59, 0, 0);
+  // const minTimeMaxDay = new Date().setHours(0, 0, 0, 0);
 
   const Continue = (e) => {
     e.preventDefault();
-    // if (
-    //   values.channel === "smart_sms" &&
-    //   values.senderId === ""
-    //   // &&
-    //   // values.alternateSenderId === ""
-    // ) {
-    //   toast.error("Select a Sender ID or request for one if not available");
-    // } else
     if (values.channel === "") {
       toast.error("Choose a channel");
     } else if (
@@ -126,7 +110,6 @@ const FlierVideoCampaign = ({
             senderId.senderId
         )
         .filter((sender) => sender);
-    // .concat(defaultSenderID.defaultSenderID);
     return senders;
   };
 
@@ -194,7 +177,6 @@ const FlierVideoCampaign = ({
                                 <label className="mb-1">Sender ID</label>
                                 <select
                                   className="custom-select"
-                                  // value="select channel"
                                   defaultValue={values.senderId}
                                   onChange={handleChange("senderId")}
                                 >
@@ -212,7 +194,6 @@ const FlierVideoCampaign = ({
                                 </label>
                                 <select
                                   className="custom-select"
-                                  // value="select channel"
                                   defaultValue={values.alternateSenderId}
                                   onChange={handleChange("alternateSenderId")}
                                 >
@@ -264,13 +245,11 @@ const FlierVideoCampaign = ({
                                     defaultValue={values.phoneNumber}
                                     onChange={handleChange("phoneNumber")}
                                   />
-                                  {/* <button onClick={handleAddClick}>Add</button> */}
                                   <button
                                     className="btn btn-success ml-2 col-md-3 text-center"
                                     onClick={handleAddClick}
                                   >
                                     More Options
-                                    {/* <i class="fa fa-plus"></i> */}
                                   </button>
                                 </div>
                               </div>
@@ -380,7 +359,6 @@ const FlierVideoCampaign = ({
                         </div>
                         {values.channel === "smart_sms" ? (
                           <>
-                            {/*values.signature field */}
                             <div className="form-group mb-2">
                               <label className="mb-1">Personalized ID</label>
                               <input
@@ -415,7 +393,6 @@ const FlierVideoCampaign = ({
                                 name="customRadio"
                                 className="custom-control-input"
                                 checked={values.assetType === "image"}
-                                // onClick={(e) => assetTypeHandler("image")}
                                 value={"image"}
                                 onChange={handleChange("assetType")}
                               />
@@ -436,7 +413,6 @@ const FlierVideoCampaign = ({
                                   name="customRadio"
                                   className="custom-control-input"
                                   checked={values.assetType === "video"}
-                                  // onClick={(e) => assetTypeHandler("video")}
                                   value={"video"}
                                   onChange={handleChange("assetType")}
                                 />
@@ -458,11 +434,7 @@ const FlierVideoCampaign = ({
                                   accept="image/png, image/jpeg, image/gif, image/jpg"
                                   className="custom-file-input"
                                   id="customFile"
-                                  // defaultValue={values.attachment}
-                                  onChange={
-                                    // (onChangeAttachment("uploadedImage"),
-                                    handleImageUpload
-                                  }
+                                  onChange={handleImageUpload}
                                   multiple
                                 />
                                 <label
@@ -475,7 +447,6 @@ const FlierVideoCampaign = ({
                                   <span className="mt-2">
                                     <ProgressBar
                                       now={uploadPercentage}
-                                      // active
                                       label={`${uploadPercentage}%`}
                                     />
                                   </span>
@@ -513,11 +484,6 @@ const FlierVideoCampaign = ({
                                     </div>
                                   ))}
                                 </div>
-                                {/* <ProgressBar
-                                  now={uploadPercentage}
-                                  // active
-                                  label={`${uploadPercentage}%`}
-                                /> */}
                               </div>
                             </div>
                           )}
@@ -545,256 +511,6 @@ const FlierVideoCampaign = ({
                               </>
                             )}
                         </div>
-                        {/* <div className="mg-t-20">
-                          <p className="tx-24 tx-bold mb-1 tx-com">Schedule</p>
-                          <div className="form-group">
-                            <div className="custom-control custom-radio">
-                              <input
-                                type="radio"
-                                id="none"
-                                name="scheduleRadio"
-                                className="custom-control-input"
-                                checked={values.scheduleOption === "none"}
-                                // onClick={(e) => assetTypeHandler("image")}
-                                value={"none"}
-                                onChange={handleChange("scheduleOption")}
-                              />
-                              <label
-                                className="custom-control-label"
-                                htmlFor="none"
-                              >
-                                Publish Now
-                              </label>
-                            </div>
-                          </div>
-                          <div className="form-group">
-                            <div className="custom-control custom-radio">
-                              <input
-                                type="radio"
-                                id="once"
-                                name="scheduleRadio"
-                                className="custom-control-input"
-                                checked={values.scheduleOption === "once"}
-                                // onClick={(e) => assetTypeHandler("video")}
-                                value={"once"}
-                                onChange={handleChange("scheduleOption")}
-                              />
-                              <label
-                                className="custom-control-label"
-                                htmlFor="once"
-                              >
-                                Once
-                              </label>
-                            </div>
-                          </div>
-                          <div className="form-group">
-                            <div className="custom-control custom-radio">
-                              <input
-                                type="radio"
-                                id="recurring"
-                                name="scheduleRadio"
-                                className="custom-control-input"
-                                checked={values.scheduleOption === "recurring"}
-                                // onClick={(e) => assetTypeHandler("video")}
-                                value={"recurring"}
-                                onChange={handleChange("scheduleOption")}
-                              />
-                              <label
-                                className="custom-control-label"
-                                htmlFor="recurring"
-                              >
-                                Recurring
-                              </label>
-                            </div>
-                          </div>
-                          {values.scheduleOption === "recurring" && (
-                            <div className="form-row">
-                              <div className="form-group col-md-6 mg-b-0">
-                                <label className="mb-1">Date Range</label>
-                                <div className="input-group mg-b-0">
-                                  <div className="input-group-prepend">
-                                    <span className="input-group-text">
-                                      From
-                                    </span>
-                                  </div>
-                                  <input
-                                    type="date"
-                                    className="form-control"
-                                    placeholder="Username"
-                                    aria-label="Username"
-                                    aria-describedby="basic-addon1"
-                                    defaultValue={values.scheduleFrom}
-                                    onChange={handleChange("scheduleFrom")}
-                                  />
-                                </div>
-                              </div>
-                              <div className="form-group col-md-6 mb-0">
-                                <label />
-                                <div className="input-group mg-b-10 mg-t-5">
-                                  <div className="input-group-prepend">
-                                    <span className="input-group-text">To</span>
-                                  </div>
-                                  <input
-                                    type="date"
-                                    className="form-control"
-                                    placeholder="Username"
-                                    aria-label="Username"
-                                    aria-describedby="basic-addon1"
-                                    defaultValue={values.scheduleTo}
-                                    onChange={handleChange("scheduleTo")}
-                                  />
-                                </div>
-                              </div>
-                              <div className="form-group col-md-6 mb-0">
-                                <label className="mb-1" htmlFor="schedule-time">
-                                  Time
-                                </label>
-                                <div className="input-group mg-b-10 mg-t-5">
-                                  <div className="input-group-prepend">
-                                    <span className="input-group-text">
-                                      Time
-                                    </span>
-                                  </div>
-                                  <input
-                                    type="time"
-                                    id="schedule-time"
-                                    min="08:00"
-                                    max="20:00"
-                                    className="form-control"
-                                    aria-describedby="basic-addon1"
-                                    defaultValue={values.scheduleTime}
-                                    onChange={handleChange("scheduleTime")}
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                        </div> */}
-                        {/* <div className="mg-t-20">
-                          <p className="tx-24 tx-bold mb-1 tx-com">Schedule</p>
-                          <div className="form-group">
-                            <div className="custom-control custom-radio">
-                              <input
-                                type="radio"
-                                id="none"
-                                name="scheduleRadio"
-                                className="custom-control-input"
-                                checked={values.scheduleOption === "none"}
-                                // onClick={(e) => assetTypeHandler("image")}
-                                value={"none"}
-                                onChange={handleChange("scheduleOption")}
-                              />
-                              <label
-                                className="custom-control-label"
-                                htmlFor="none"
-                              >
-                                Publish Now
-                              </label>
-                            </div>
-                          </div>
-                          <div className="form-group">
-                            <div className="custom-control custom-radio">
-                              <input
-                                type="radio"
-                                id="once"
-                                name="scheduleRadio"
-                                className="custom-control-input"
-                                checked={values.scheduleOption === "once"}
-                                // onClick={(e) => assetTypeHandler("video")}
-                                value={"once"}
-                                onChange={handleChange("scheduleOption")}
-                              />
-                              <label
-                                className="custom-control-label"
-                                htmlFor="once"
-                              >
-                                Once
-                              </label>
-                            </div>
-                          </div>
-                          <div className="form-group">
-                            <div className="custom-control custom-radio">
-                              <input
-                                type="radio"
-                                id="recurring"
-                                name="scheduleRadio"
-                                className="custom-control-input"
-                                checked={values.scheduleOption === "recurring"}
-                                // onClick={(e) => assetTypeHandler("video")}
-                                value={"recurring"}
-                                onChange={handleChange("scheduleOption")}
-                              />
-                              <label
-                                className="custom-control-label"
-                                htmlFor="recurring"
-                              >
-                                Recurring
-                              </label>
-                            </div>
-                          </div>
-                          {values.scheduleOption === "recurring" && (
-                            <div className="form-row">
-                              <div className="form-group col-md-6 mg-b-0">
-                                <label className="mb-1">Date Range</label>
-                                <div className="input-group mg-b-0">
-                                  <div className="input-group-prepend">
-                                    <span className="input-group-text">
-                                      From
-                                    </span>
-                                  </div>
-                                  <input
-                                    type="date"
-                                    className="form-control"
-                                    placeholder="Username"
-                                    aria-label="Username"
-                                    aria-describedby="basic-addon1"
-                                    defaultValue={values.scheduleFrom}
-                                    onChange={handleChange("scheduleFrom")}
-                                  />
-                                </div>
-                              </div>
-                              <div className="form-group col-md-6 mb-0">
-                                <label />
-                                <div className="input-group mg-b-10 mg-t-5">
-                                  <div className="input-group-prepend">
-                                    <span className="input-group-text">To</span>
-                                  </div>
-                                  <input
-                                    type="date"
-                                    className="form-control"
-                                    placeholder="Username"
-                                    aria-label="Username"
-                                    aria-describedby="basic-addon1"
-                                    defaultValue={values.scheduleTo}
-                                    onChange={handleChange("scheduleTo")}
-                                  />
-                                </div>
-                              </div>
-                              <div className="form-group col-md-6 mb-0">
-                                <label className="mb-1" htmlFor="schedule-time">
-                                  Time
-                                </label>
-                                <div className="input-group mg-b-10 mg-t-5">
-                                  <div className="input-group-prepend">
-                                    <span className="input-group-text">
-                                      Time
-                                    </span>
-                                  </div>
-                                  <input
-                                    type="time"
-                                    id="schedule-time"
-                                    min="08:00"
-                                    max="20:00"
-                                    className="form-control"
-                                    aria-describedby="basic-addon1"
-                                    defaultValue={values.scheduleTime}
-                                    onChange={handleChange("scheduleTime")}
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                        </div> */}
                       </form>
                       <div className="col-md-7 pd-x-0 mg-y-30">
                         <div className="d-flex">
@@ -912,8 +628,6 @@ const FlierVideoCampaign = ({
                           </div>
                         </div>
                       </s>
-                      {/* <span>Left action button</span>
-                      <span>Right action button</span> */}
                     </div>
                   </div>
                 </div>

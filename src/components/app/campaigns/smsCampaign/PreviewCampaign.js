@@ -56,6 +56,15 @@ const PreviewCampaign = ({
     dispatch(createSmsCampaignAction(values));
   };
 
+  // Set scheduling date
+  let date = new Date();
+  let endingDate = new Date(
+    values.scheduleFrom !== "" ? values.scheduleFrom : date
+  );
+  // add 2 day
+  date.setDate(date.getDate() + 0);
+  endingDate.setDate(date.getDate() + 1);
+
   const setScheduleDate = (initialDate, endDate) => {
     let day1 = new Date(initialDate);
     let day2 = new Date(endDate);
@@ -390,11 +399,12 @@ const PreviewCampaign = ({
                               <input
                                 type="date"
                                 className="form-control"
-                                placeholder="Username"
-                                aria-label="Username"
+                                placeholder="scheduleFrom"
+                                aria-label="scheduleFrom"
                                 aria-describedby="basic-addon1"
                                 defaultValue={values.scheduleFrom}
                                 onChange={handleChange("scheduleFrom")}
+                                min={date.toISOString().split("T")[0]}
                               />
                             </div>
                           </div>
@@ -407,11 +417,24 @@ const PreviewCampaign = ({
                               <input
                                 type="date"
                                 className="form-control"
-                                placeholder="Username"
-                                aria-label="Username"
+                                placeholder="scheduleTo"
+                                aria-label="scheduleTo"
                                 aria-describedby="basic-addon1"
                                 defaultValue={values.scheduleTo}
                                 onChange={handleChange("scheduleTo")}
+                                min={
+                                  values.scheduleFrom !== ""
+                                    ? new Date(
+                                        new Date(values.scheduleFrom).setDate(
+                                          new Date(
+                                            values.scheduleFrom
+                                          ).getDate() + 1
+                                        )
+                                      )
+                                        .toISOString()
+                                        .split("T")[0]
+                                    : date.toISOString().split("T")[0]
+                                }
                               />
                             </div>
                           </div>

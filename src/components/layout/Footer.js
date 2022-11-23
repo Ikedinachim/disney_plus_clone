@@ -72,12 +72,12 @@ const Footer = () => {
                   </p>
                 </li>
                 <li>
-                  <a href="tel://+2349130111111">
+                  <a href="tel://+2348122089773">
                     <i
                       className="fa fa-phone mg-r-10 tx-primary tx-semibold"
                       style={{ fontSize: "20px" }}
                     ></i>
-                    +234 913 011 1111
+                    +234 812 208 9773
                   </a>
                 </li>
                 <li>
