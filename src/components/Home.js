@@ -99,21 +99,21 @@ const Home = () => {
                   <div className="col-md-5 col-12 order-1 order-md-2">
                     <div
                       id="carouselExampleSlidesOnly"
-                      className="carousel slide"
+                      className="carousel slide h-100"
                       data-ride="carousel"
                     >
                       <div className="carousel-inner">
-                        <div className="carousel-item active">
+                        <div className="h-100 carousel-item active">
                           <img
                             src="./assets/img/landing-image.png"
-                            className="d-block w-100 img-fluid"
+                            className="img-fit-cover d-block w-100 img-fluid"
                             alt="..."
                           />
                         </div>
-                        <div className="carousel-item">
+                        <div className="h-100 carousel-item">
                           <img
                             src="./assets/img/landing_picture.png"
-                            className="d-block w-100 img-fluid"
+                            className="img-fit-cover d-block w-100 img-fluid"
                             alt="..."
                           />
                         </div>
@@ -123,9 +123,9 @@ const Home = () => {
                 </div>
               </div>
             </section>
-            <section className="content-body" id="about">
+            <section className="content-body pd-x-0" id="about">
               <div className="container pd-y-30 pd-md-t-70 pd-md-b-70">
-                <div className="col-lg-11 mx-auto pd-lg-t-70 pd-t-30">
+                <div className="col-lg-12 pd-x-0 mx-auto pd-lg-t-70 pd-t-30">
                   <div className="tx-center">
                     <p className="tx-28 tx-com tx-bold mb-2">
                       Get your audience’s attention with our services
@@ -215,7 +215,7 @@ const Home = () => {
                         <div className="card-height">
                           <img
                             src="./assets/img/SMS_Ads.svg"
-                            className="img-fluid img-neg"
+                            className="img-fluid"
                             data-aos="fade-left"
                             data-aos-duration={2000}
                             alt=""
@@ -323,43 +323,47 @@ const Home = () => {
                   </div>
                 </div>
               </section>
-              <div className="container pd-y-30 pd-md-t-70 pd-md-b-0 bg-reddish">
-                <div className="row mg-t-10 tx-center">
-                  <div className="col-md-6 mg-t-20">
-                    <div className="card-height">
-                      <img
-                        src="./assets/img/mysogi_phone.png"
-                        className="img-fluid"
-                        data-aos="fade-left"
-                        data-aos-duration={2000}
-                        alt=""
-                      />
+              <div className="container-fluid pd-y-30 pd-md-t-70 pd-md-b-20 bg-reddish">
+                <div className="col-xl-11 mx-auto">
+                  <div className="row mg-t-10 tx-center">
+                    <div className="col-md-6 mg-t-20">
+                      <div className="card-height">
+                        <img
+                          src="./assets/img/mysogi_phone.png"
+                          className="img-fluid"
+                          data-aos="fade-left"
+                          data-aos-duration={2000}
+                          alt=""
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className="col-md-6 mg-t-20 d-flex flex-column justify-content-center">
-                    <p className="tx-28 tx-com tx-left tx-bold mb-20">
-                      About Us
-                    </p>
-                    <p className="tx-18 tx-blac tx-left">
-                      Mysogi Company Limited is a tech company that specializes
-                      in Digital Marketing. Our recently developed web-based
-                      digital campaign manager enables corporations & SME's to
-                      promote and target adverts to prospective customers.
-                    </p>
-                    <p className="tx-18 tx-blac tx-left">
-                      Our aim is to aid organisations drive digital campaign
-                      model via our collections of tools specifically developed
-                      to manage the design process, generate leads, imporve user
-                      responsiveness and efficiently deliver advert contents.
-                    </p>
-                    <div className="d-flex">
-                      <Link
-                        to="register"
-                        type="button"
-                        className="btn btn-primary pd-x-40 mg-t-10"
-                      >
-                        Get Started
-                      </Link>
+                    <div className="col-md-6 mg-t-20 d-flex flex-column justify-content-center">
+                      <p className="tx-28 tx-com tx-left tx-bold mb-20">
+                        About Us
+                      </p>
+                      <p className="tx-18 tx-blac tx-left">
+                        Mysogi Company Limited is a tech company that
+                        specializes in Digital Marketing. Our recently developed
+                        web-based digital campaign manager enables corporations
+                        & SME's to promote and target adverts to prospective
+                        customers.
+                      </p>
+                      <p className="tx-18 tx-blac tx-left">
+                        Our aim is to aid organisations drive digital campaign
+                        model via our collections of tools specifically
+                        developed to manage the design process, generate leads,
+                        imporve user responsiveness and efficiently deliver
+                        advert contents.
+                      </p>
+                      <div className="d-flex">
+                        <Link
+                          to="register"
+                          type="button"
+                          className="btn btn-primary pd-x-40 mg-t-10"
+                        >
+                          Get Started
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -574,8 +578,8 @@ const Home = () => {
                 </div>
               </section> */}
               <section className="bg-reddish" id="mysogi-contact">
-                <div className="container py-1">
-                  <div className="mg-md-t-40 mg-t-30">
+                <div className="container py-1 pos-rel overflow-hidden">
+                  <div className="mg-md-y-40 mg-y-30">
                     <p className="tx-36 tx-bold mb-2 tx-com ">Let's discuss</p>
                     <p className="tx-20">
                       I am a <span className="tx-primary tx-medium">brand</span>{" "}
@@ -584,13 +588,13 @@ const Home = () => {
                         build awareness
                       </span>
                     </p>
-                    <div className="row pos-rel">
-                      <div className="col-md-11 mg-t-20 order-2 ">
+                    <div className="row">
+                      <div className="col-md-6 mg-t-20 order-2 ">
                         <div className="card bd-0 shadow">
                           <div className="card-body pd-lg-60">
                             <form onSubmit={submitEmail}>
                               <div className="form-row">
-                                <div className="form-group col-md-5">
+                                <div className="form-group col-md-12">
                                   <label
                                     htmlFor="name"
                                     className="tx-14 tx-com tx-blac mg-b-3"
@@ -609,7 +613,7 @@ const Home = () => {
                                 </div>
                               </div>
                               <div className="form-row">
-                                <div className="form-group col-md-5">
+                                <div className="form-group col-md-12">
                                   <label
                                     htmlFor="name"
                                     className="tx-14 tx-com tx-blac mg-b-3"
@@ -627,7 +631,7 @@ const Home = () => {
                                 </div>
                               </div>
                               <div className="form-row">
-                                <div className="form-group col-md-5">
+                                <div className="form-group col-md-12">
                                   <label
                                     htmlFor="name"
                                     className="tx-14 tx-com tx-blac mg-b-3"
@@ -740,16 +744,16 @@ const Home = () => {
                           </div>
                         </div>
                       </div>
-                      <div className=" mg-t-20 pd-md-t-40 order-1 order-md-2 pd-md-x-0 mar-left">
-                        <img
-                          src="./assets/img/woman_smiling.png"
-                          className="img-fluid"
-                          data-aos="fade-down"
-                          data-aos-duration={3000}
-                          alt=""
-                        />
-                      </div>
                     </div>
+                  </div>
+                  <div className="order-1 order-md-2 pd-md-x-0 mar-left h-100">
+                    <img
+                      src="./assets/img/woman_smiling.png"
+                      className="img-fluid h-100"
+                      data-aos="fade-down"
+                      data-aos-duration={3000}
+                      alt=""
+                    />
                   </div>
                 </div>
               </section>

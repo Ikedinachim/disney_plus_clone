@@ -43,6 +43,8 @@ export default class BillBoardStepForm extends Component {
     startDate: "",
     endDate: "",
     duration: 1,
+    pixel_height: 0,
+    pixel_width: 0,
 
     showModal: false,
     activeItemId: "",
@@ -79,6 +81,8 @@ export default class BillBoardStepForm extends Component {
 
   handleCheckedState = (input) => {
     this.setState({ checkedInfluencers: input });
+    this.setState({ pixel_height: input[0].pixel_height });
+    this.setState({ pixel_width: input[0].pixel_width });
 
     let mulInfluencers = this.state.selectedInfluencers;
     let selectedIndex =
@@ -183,8 +187,13 @@ export default class BillBoardStepForm extends Component {
 
     getOrientation(e);
 
-    if (width > 960 || height > 1280) {
-      toast.error("image dimensions not fitting");
+    if (
+      width !== this.state.pixel_width ||
+      height !== this.state.pixel_height
+    ) {
+      toast.error(
+        `Upload an image with the right billboard dimensions (${this.state.pixel_height}px by ${this.state.pixel_width}px)`
+      );
     } else {
       let files = e.target.files[0];
       const formData = new FormData();
@@ -303,6 +312,8 @@ export default class BillBoardStepForm extends Component {
       startDate,
       endDate,
       duration,
+      pixel_height,
+      pixel_width,
     } = this.state;
 
     const setYoutubeUrl = (url) => {
