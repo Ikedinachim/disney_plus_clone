@@ -58,7 +58,7 @@ const Footer = () => {
               </ul>
             </div>
             <div className="col-md-3 col-12 pd-md-b-0 pd-b-20">
-              <ul className="list-unstyled tx-16 tx-bold footer-link tx-right">
+              <ul className="list-unstyled tx-16 tx-bold footer-link text-center-f text-lg-right">
                 <h2 className="tx-white tx-primary tx-com tx-bold tx-20">
                   Contact Info
                 </h2>
@@ -81,7 +81,10 @@ const Footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:info@mysogi.com.ng">
+                  <a
+                    className="text-lowercase"
+                    href="mailto:info@mysogi.com.ng"
+                  >
                     <i
                       className="fa fa-envelope-open mg-r-10 tx-primary tx-semibold"
                       style={{ fontSize: "20px" }}
@@ -93,15 +96,19 @@ const Footer = () => {
             </div>
             <div className="col-md-6 col-12 mg-md-t-50 mg-t-20">
               <form action="">
-                <label htmlFor="" className="tx-16 tx-bold footer-label">
+                <label
+                  htmlFor="newsLetter"
+                  className="tx-16 tx-bold footer-label"
+                >
                   Subscribe to our newsletter
                 </label>
                 <div className="input-group pd-5 bg-white">
                   <input
                     type="text"
+                    name="newsLetter"
                     className="form-control bd-0"
                     placeholder=""
-                    aria-label="Recipient's username"
+                    aria-label="newsLetter"
                     aria-describedby="button-addon2"
                   />
                   <div className="input-group-append">

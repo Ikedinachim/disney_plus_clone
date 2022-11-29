@@ -341,10 +341,6 @@ export default class SmsStepForm extends Component {
       attachment: audioUrl,
     };
 
-    console.log("smsCount", smsCount);
-    console.log("characterCount", characterCount);
-    console.log("count", count(campaignMessage + 25));
-
     switch (step) {
       case 1:
         return (

@@ -184,22 +184,6 @@ const BillBoardTargetAudience = ({
                               )}
                               {values.campaignDuration === "Monthly" && (
                                 <>
-                                  {/* inputmode="numeric" */}
-                                  {/* <select
-                                  className="custom-select"
-                                  // value="select channel"
-                                  defaultValue={values.numOfMonth}
-                                  onChange={handleChange("numOfMonth")}
-                                >
-                                  <option value="1">
-                                    Select monthly value
-                                  </option>
-                                  {Array.from(Array(12), (e, i) => {
-                                    return (
-                                      <option value={i + 1}>{i + 1}</option>
-                                    );
-                                  })}
-                                </select> */}
                                   <input
                                     type="number"
                                     inputMode="numeric"
@@ -307,7 +291,9 @@ const BillBoardTargetAudience = ({
                               )}
                               <p className="mt-2 tx-danger tx-italic">
                                 Required billboard image dimension:{" "}
-                                {checkedInfluencers[0].pixel_size}
+                                <strong>
+                                  {checkedInfluencers[0].pixel_size}
+                                </strong>
                               </p>
                             </div>
                           </div>
@@ -320,7 +306,7 @@ const BillBoardTargetAudience = ({
                                 type="file"
                                 name="file"
                                 id="videoAsset"
-                                className="custom-file-input"
+                                className="custom-file-input mg-b-10"
                                 accept="video/mp4,video/x-m4v,video/*"
                                 // value={values.attachment}
                                 // placeholder="https://www.youtube.com/watch?v=ysz5S6PUM-U"

@@ -79,6 +79,8 @@ const BillBoardCampaign = ({
         location: tempBillBoard.location,
         pixel_size: tempBillBoard.pixel_size,
         orientation: tempBillBoard.orientation,
+        pixel_width: tempBillBoard.pixel_width,
+        pixel_height: tempBillBoard.pixel_height,
       };
       setSelectedBillBoards([billboardObject]);
       // setSelectedRate(null);
