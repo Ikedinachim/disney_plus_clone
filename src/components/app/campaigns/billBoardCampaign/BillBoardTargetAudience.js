@@ -113,7 +113,7 @@ const BillBoardTargetAudience = ({
                                 aria-describedby="basic-addon1"
                                 defaultValue={values.startDate}
                                 onChange={handleChange("startDate")}
-                                min={new Date().toISOString().split("T")[0]}
+                                min={date.toISOString().split("T")[0]}
                                 // max="6/11/2022"
                               />
                             </div>
@@ -171,7 +171,9 @@ const BillBoardTargetAudience = ({
                                   </option> */}
                                     {Array.from(Array(3), (e, i) => {
                                       return (
-                                        <option value={i + 1}>{i + 1}</option>
+                                        <option key={i} value={i + 1}>
+                                          {i + 1}
+                                        </option>
                                       );
                                     })}
                                   </select>
