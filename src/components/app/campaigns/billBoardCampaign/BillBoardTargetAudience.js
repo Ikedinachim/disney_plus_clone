@@ -137,7 +137,7 @@ const BillBoardTargetAudience = ({
                                           new Date(values.startDate).setDate(
                                             new Date(
                                               values.startDate
-                                            ).getDate() + 2
+                                            ).getDate() + 1
                                           )
                                         )
                                           .toISOString()

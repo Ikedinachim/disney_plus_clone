@@ -45,6 +45,8 @@ export default class BillBoardStepForm extends Component {
     duration: 1,
     pixel_height: 0,
     pixel_width: 0,
+    img_width: 0,
+    img_height: 0,
 
     showModal: false,
     activeItemId: "",
@@ -162,8 +164,6 @@ export default class BillBoardStepForm extends Component {
   };
 
   handleImageUpload = async (e) => {
-    const width = e.target.offsetWidth;
-    const height = e.target.offsetHeight;
     const getOrientation = (e) => {
       let _URL = window.URL || window.webkitURL;
       let orientation;
@@ -187,52 +187,58 @@ export default class BillBoardStepForm extends Component {
 
     getOrientation(e);
 
-    if (
-      width !== this.state.pixel_width ||
-      height !== this.state.pixel_height
-    ) {
-      toast.error(
-        `Upload an image with the right billboard dimensions (${this.state.pixel_height}px by ${this.state.pixel_width}px)`
-      );
-    } else {
-      let files = e.target.files[0];
-      const formData = new FormData();
-      formData.append("file", files);
-      formData.append("upload_preset", "mysogi");
+    let _URL = window.URL || window.webkitURL;
+    var objectUrl = _URL.createObjectURL(e.target.files[0]);
+    let img = new Image();
+    img.onload = async () => {
+      if (
+        img.width !== this.state.pixel_width ||
+        img.height !== this.state.pixel_height
+      ) {
+        toast.error(
+          `Upload an image with the right billboard dimensions (${this.state.pixel_height}px by ${this.state.pixel_width}px)`
+        );
+      } else {
+        let files = e.target.files[0];
+        const formData = new FormData();
+        formData.append("file", files);
+        formData.append("upload_preset", "mysogi");
 
-      const options = {
-        onUploadProgress: (progressEvent) => {
-          const { loaded, total } = progressEvent;
-          let percent = Math.floor((loaded * 100) / total);
+        const options = {
+          onUploadProgress: (progressEvent) => {
+            const { loaded, total } = progressEvent;
+            let percent = Math.floor((loaded * 100) / total);
 
-          if (percent < 100) {
-            this.setState({ uploadPercentage: percent });
-          }
-        },
-      };
+            if (percent < 100) {
+              this.setState({ uploadPercentage: percent });
+            }
+          },
+        };
 
-      try {
-        await axios
-          .post(process.env.REACT_APP_CLOUDINARY_URL, formData, options)
-          .then((res) => {
-            this.setState(
-              {
-                imageUrl: res.data.secure_url,
-                uploadPercentage: 100,
-                selectedFileName: files.name,
-                imageAlt: `An image of ${res.original_filename}`,
-              },
-              () => {
-                setTimeout(() => {
-                  this.setState({ uploadPercentage: 0 });
-                }, 1000);
-              }
-            );
-          });
-      } catch (err) {
-        // return console.log(err);
+        try {
+          await axios
+            .post(process.env.REACT_APP_CLOUDINARY_URL, formData, options)
+            .then((res) => {
+              this.setState(
+                {
+                  imageUrl: res.data.secure_url,
+                  uploadPercentage: 100,
+                  selectedFileName: files.name,
+                  imageAlt: `An image of ${res.original_filename}`,
+                },
+                () => {
+                  setTimeout(() => {
+                    this.setState({ uploadPercentage: 0 });
+                  }, 1000);
+                }
+              );
+            });
+        } catch (err) {
+          // return console.log(err);
+        }
       }
-    }
+    };
+    img.src = objectUrl;
   };
 
   handleVideoUpload = async (e) => {

@@ -42,12 +42,12 @@ const ViewInfluencerCampaignDetails = () => {
   const [rejectInput, setRejectInput] = useState("");
   const [ammendInput, setAmmendInput] = useState("");
   const [publishInputUrl, setPublishInputUrl] = useState("");
+  const [publishAssetType, setPublishAssetType] = useState("image");
   const [publishInputMessage, setPublishInputMessage] = useState(
     `Thank You for Advertising with us.`
   );
 
-  const [profile, setProfile] = useState({});
-  const [publishImage, setPublishImage] = useState(null);
+  const [publishAsset, setPublishAsset] = useState(null);
   const [uploadPercentage, setUploadPercentage] = useState(0);
   const [isUploading, setIsUploading] = useState(null);
 
@@ -118,21 +118,12 @@ const ViewInfluencerCampaignDetails = () => {
 
     for (const file of event.target.files) {
       const url = process.env.REACT_APP_CLOUDINARY_URL;
-
       getBase64Image(file, (base64Value) => {
         const data = {
-          // upload_preset: uploadPreset,
           upload_preset: "mysogi",
           file: base64Value,
         };
-
         const config = {
-          // onUploadProgress: function (progressEvent) {
-          //   const progress = Math.round(
-          //     (progressEvent.loaded * 100) / progressEvent.total
-          //   );
-          //   setProgress(progress);
-          // },
           onUploadProgress: (progressEvent) => {
             const { loaded, total } = progressEvent;
             let percent = Math.floor((loaded * 100) / total);
@@ -141,25 +132,19 @@ const ViewInfluencerCampaignDetails = () => {
             }
           },
         };
-
         axios
           .post(url, data, config)
           .then((response) => {
             setIsUploading(false);
-            setPublishImage({
-              ...publishImage,
+            setPublishAsset({
+              ...publishAsset,
               imageUrl: response.data.url,
               selectedFileName: file.name,
               imageAlt: `An image of ${file.name}`,
             });
             setPublishInputUrl(response.data.url);
-            setProfile((prevState) => ({
-              ...prevState,
-              imageUrl: response.data.secure_url,
-            }));
             setUploadPercentage(0);
           })
-
           .catch((error) => {
             // console.log(error);
             setUploadPercentage(0);
@@ -169,9 +154,56 @@ const ViewInfluencerCampaignDetails = () => {
     }
   };
 
-  const campaignDetails = details(providerCampaignList, billboardMarketingId);
+  const handleVideoUpload = async (e) => {
+    let files = e.target.files[0];
+    const size = files && files.size;
+    const fileSize = Math.round(size / 1024);
+    if (fileSize > 10240) {
+      toast.error("file too large!!");
+      clearErrors();
+    } else {
+      const formData = new FormData();
+      formData.append("file", files);
+      formData.append("upload_preset", "mysogi");
 
-  console.log("campaignDetails", campaignDetails);
+      const options = {
+        onUploadProgress: (progressEvent) => {
+          const { loaded, total } = progressEvent;
+          let percent = Math.floor((loaded * 100) / total);
+
+          if (percent < 100) {
+            setUploadPercentage(percent);
+          }
+        },
+      };
+
+      try {
+        await axios
+          .post(process.env.REACT_APP_CLOUDINARY_VIDEO_URL, formData, options)
+          .then((res) => {
+            // console.log(res);
+            setPublishAsset({
+              ...publishAsset,
+              imageUrl: res.data.url,
+              selectedFileName: files.name,
+            });
+            setPublishInputUrl(res.data.url);
+          })
+          .then(
+            //   () => {
+            //   setTimeout(() => {
+            //     setUploadPercentage(0);
+            //   }, 500);
+            // }
+            () => setUploadPercentage(0)
+          );
+      } catch (err) {
+        // return console.log(err);
+      }
+    }
+  };
+
+  const campaignDetails = details(providerCampaignList, billboardMarketingId);
 
   const approvedPayload = {
     billboardId: campaignDetails && campaignDetails.billBoardId,
@@ -198,6 +230,7 @@ const ViewInfluencerCampaignDetails = () => {
     campaignId: campaignDetails && campaignDetails.campaign.id,
     publishUrl: publishInputUrl,
     publishMessage: publishInputMessage,
+    publishedUrlMediaType: publishAssetType,
   };
 
   const setAsset = () => {
@@ -897,28 +930,114 @@ const ViewInfluencerCampaignDetails = () => {
                               Please confirm that you have displayed this
                               campaign on your billboard.
                             </p>
-                            <div className="custom-file">
-                              <input
-                                type="file"
-                                name="file"
-                                accept="image/png, image/jpeg, image/gif, image/jpg"
-                                className="custom-file-input"
-                                id="customFile"
-                                onChange={onInputChange}
-                              />
-                              <label
-                                className="custom-file-label"
-                                htmlFor="customFile"
-                              >
-                                {publishImage && publishImage.selectedFileName}
-                              </label>
-                              {isUploading && uploadPercentage > 0 && (
-                                <span className="mt-2">
-                                  <ProgressBar
-                                    now={uploadPercentage}
-                                    label={`${uploadPercentage}%`}
+                            <div className="mg-t-40">
+                              <p className="tx-22 tx-bold mb-1 tx-com">
+                                Attachment
+                              </p>
+                              <div className="form-group d-flex justify-content-evenly">
+                                <div className="custom-control custom-radio">
+                                  <input
+                                    type="radio"
+                                    id="image"
+                                    name="customRadio"
+                                    className="custom-control-input"
+                                    checked={publishAssetType === "image"}
+                                    value={"image"}
+                                    onChange={() =>
+                                      setPublishAssetType("image")
+                                    }
                                   />
-                                </span>
+                                  <label
+                                    className="custom-control-label"
+                                    htmlFor="image"
+                                  >
+                                    Image Asset
+                                  </label>
+                                </div>
+                                <div className="custom-control custom-radio">
+                                  <input
+                                    type="radio"
+                                    id="video"
+                                    name="customRadio"
+                                    className="custom-control-input"
+                                    checked={publishAssetType === "video"}
+                                    value={"video"}
+                                    onChange={() =>
+                                      setPublishAssetType("video")
+                                    }
+                                  />
+                                  <label
+                                    className="custom-control-label"
+                                    htmlFor="video"
+                                  >
+                                    Video Asset
+                                  </label>
+                                </div>
+                              </div>
+                              {publishAssetType === "image" && (
+                                <div className="form-group">
+                                  <div className="custom-file">
+                                    <input
+                                      type="file"
+                                      name="file"
+                                      accept="image/png, image/jpeg, image/gif, image/jpg"
+                                      className="custom-file-input"
+                                      id="customFile"
+                                      onChange={onInputChange}
+                                    />
+                                    <label
+                                      className="custom-file-label"
+                                      htmlFor="customFile"
+                                    >
+                                      {publishAsset
+                                        ? publishAsset.selectedFileName
+                                        : "Choose a file"}
+                                    </label>
+                                    {isUploading && uploadPercentage > 0 && (
+                                      <span className="mt-2">
+                                        <ProgressBar
+                                          now={uploadPercentage}
+                                          label={`${uploadPercentage}%`}
+                                        />
+                                      </span>
+                                    )}
+                                  </div>
+                                </div>
+                              )}
+                              {publishAssetType === "video" && (
+                                <div className="form-group">
+                                  <div className="custom-file">
+                                    {/* <label className="mb-1">Youtube URL</label> */}
+                                    <input
+                                      type="file"
+                                      name="videoAsset"
+                                      id="videoAsset"
+                                      className="custom-file-input mg-b-10"
+                                      accept="video/mp4,video/x-m4v,video/*"
+                                      onChange={handleVideoUpload}
+                                    />
+                                    <label
+                                      className="custom-file-label"
+                                      htmlFor="videoAsset"
+                                    >
+                                      {publishAsset
+                                        ? publishAsset.selectedFileName
+                                        : "Upload a video file"}
+                                    </label>
+                                    {uploadPercentage > 0 && (
+                                      <span className="mt-2">
+                                        <ProgressBar
+                                          now={uploadPercentage}
+                                          // active
+                                          label={`${uploadPercentage}%`}
+                                        />
+                                      </span>
+                                    )}
+                                    <p className="tx-danger tx-italic">
+                                      Video size: not more than 10mb
+                                    </p>
+                                  </div>
+                                </div>
                               )}
                             </div>
                             <textarea
@@ -939,7 +1058,9 @@ const ViewInfluencerCampaignDetails = () => {
                             onClick={publishCampaignHandler}
                             className="btn btn-primary w-45 mg-r-20"
                             data-dismiss="modal"
-                            disabled={publishInputUrl === ""}
+                            disabled={
+                              publishInputUrl === "" && publishInputUrl === ""
+                            }
                           >
                             Confirm
                           </button>

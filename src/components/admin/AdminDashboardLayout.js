@@ -3,10 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import Loader from './components/layout/Loader';
-import Header from './components/layout/Header';
-import Sidebar from './components/layout/Sidebar';
-import Dashboard from './components/layout/DashboardHeader';
+import Loader from "./components/layout/Loader";
+import Header from "./components/layout/Header";
+import Sidebar from "./components/layout/AdminSidebar";
+import DashboardHeader from "./components/layout/DashboardHeader";
 import { getUser } from "../../actions/authActions";
 
 const AdminDashboardLayout = () => {
@@ -16,7 +16,7 @@ const AdminDashboardLayout = () => {
   const { error } = useSelector((state) => state.wallet);
 
   useEffect(() => {
-    dispatch(getUser())
+    dispatch(getUser());
     if (error) {
       return toast.error(error);
     }
@@ -30,7 +30,7 @@ const AdminDashboardLayout = () => {
         <Fragment>
           <Sidebar />
           <div className="content ht-100v pd-0">
-              <Dashboard/>
+            <DashboardHeader />
             <Outlet />
           </div>
         </Fragment>
@@ -40,4 +40,3 @@ const AdminDashboardLayout = () => {
 };
 
 export default AdminDashboardLayout;
-
