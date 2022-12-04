@@ -8,7 +8,7 @@ import { logout } from "../../../../actions/authActions";
 
 import FeatherIcon from "feather-icons-react";
 
-const Header = () => {
+const DashboardHeader = () => {
   const ref = useRef();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -141,4 +141,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default DashboardHeader;

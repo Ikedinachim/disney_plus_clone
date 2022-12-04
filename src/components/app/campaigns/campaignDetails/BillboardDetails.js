@@ -60,7 +60,8 @@ const BillboardDetails = () => {
                         src="../../assets/img/Brand_Awareness.svg"
                         className="tx-primary"
                         alt=""
-                        srcset=""
+                        // srcset=""
+                        // alt="Brand_Awareness Icon"
                       />
                     </div>
                     <div>
@@ -123,10 +124,7 @@ const BillboardDetails = () => {
                           </p>
                           <div className="row mg-t-15">
                             <div className="form-group col-md-12">
-                              <label
-                                htmlFor=""
-                                className="tx-14 tx-gray mb-0 tx-medium"
-                              >
+                              <label className="tx-14 tx-gray mb-0 tx-medium">
                                 Price
                               </label>
                               <p className="tx-16 mb-0">
@@ -143,10 +141,7 @@ const BillboardDetails = () => {
                             </div>
 
                             <div className="form-group col-md-6">
-                              <label
-                                htmlFor=""
-                                className="tx-14 tx-gray mb-0 tx-medium"
-                              >
+                              <label className="tx-14 tx-gray mb-0 tx-medium">
                                 From
                               </label>
                               <p className="tx-16 mb-0">
@@ -159,10 +154,7 @@ const BillboardDetails = () => {
                               </p>
                             </div>
                             <div className="form-group col-md-6">
-                              <label
-                                htmlFor=""
-                                className="tx-14 tx-gray mb-0 tx-medium"
-                              >
+                              <label className="tx-14 tx-gray mb-0 tx-medium">
                                 To
                               </label>
                               <p className="tx-16 mb-0">
@@ -183,10 +175,7 @@ const BillboardDetails = () => {
                           <p className="tx-18 tx-semibold mb-0">Status</p>
                           <div className="row mg-t-15">
                             <div className="form-group col-md-6">
-                              <label
-                                for=""
-                                className="tx-14 tx-gray mb-0 tx-medium"
-                              >
+                              <label className="tx-14 tx-gray mb-0 tx-medium">
                                 Status
                               </label>
                               <p className="tx-16 mb-0">
@@ -227,10 +216,7 @@ const BillboardDetails = () => {
                             </div>
                             {singleBillBoardCampaign[0]?.details.isRejected && (
                               <div className="form-group col-md-6">
-                                <label
-                                  for=""
-                                  className="tx-14 tx-gray mb-0 tx-medium"
-                                >
+                                <label className="tx-14 tx-gray mb-0 tx-medium">
                                   Rejection Reason:
                                 </label>
                                 <p className="tx-16 mb-0">
@@ -244,10 +230,7 @@ const BillboardDetails = () => {
                             {singleBillBoardCampaign[0]?.details
                               .isPublished && (
                               <div className="form-group col-md-6">
-                                <label
-                                  for=""
-                                  className="tx-14 tx-gray mb-0 tx-medium"
-                                >
+                                <label className="tx-14 tx-gray mb-0 tx-medium">
                                   Publisher Message
                                 </label>
                                 <p className="tx-16 mb-0">
@@ -272,15 +255,15 @@ const BillboardDetails = () => {
                               </p>
                               <div className="row mg-t-15">
                                 <div className="form-group col-md-12">
-                                  {/* {singleBillBoardCampaign[0]?.assetType ===
-                                  "image" ? (
+                                  {singleBillBoardCampaign[0]?.details
+                                    .publishedUrlMediaType === "image" ? (
                                     <img
                                       src={
                                         singleBillBoardCampaign[0]?.details
                                           .publishedUrl
                                       }
                                       className="img-fluid mg-b-10 img-fit-contain"
-                                      alt=""
+                                      alt="Asset"
                                     />
                                   ) : (
                                     <MediaPlayer
@@ -290,15 +273,7 @@ const BillboardDetails = () => {
                                       }
                                       height={"400px"}
                                     />
-                                  )} */}
-                                  <img
-                                    src={
-                                      singleBillBoardCampaign[0]?.details
-                                        .publishedUrl
-                                    }
-                                    className="img-fluid mg-b-10 img-fit-contain"
-                                    alt=""
-                                  />
+                                  )}
                                 </div>
                               </div>
                             </>

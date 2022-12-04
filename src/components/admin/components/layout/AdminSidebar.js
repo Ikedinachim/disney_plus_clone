@@ -4,7 +4,7 @@ import NavLogo from "../../../../assets/img/logo.svg";
 
 import FeatherIcon from "feather-icons-react";
 
-const Sidebar = () => {
+const AdminSidebar = () => {
   const ref = useRef();
   const [width, setWindowWidth] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(width > 989 ? false : true);
@@ -124,4 +124,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default AdminSidebar;
