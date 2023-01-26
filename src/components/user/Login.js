@@ -33,13 +33,13 @@ const Login = () => {
   useEffect(() => {
     if (
       isAuthenticated &&
-      user.user.role !== "influencer" &&
-      user.user.role !== "billboard_provider"
+      user?.user?.role !== "influencer" &&
+      user?.user?.role !== "billboard_provider"
     ) {
       gaEventTracker("Login", "User successfully signed in");
       dispatch(getWallet());
       dispatch(getUser());
-      navHistory("/app");
+      // navHistory("/app");
     } else if (
       !isAuthenticated &&
       error &&
@@ -50,13 +50,13 @@ const Login = () => {
       navHistory("/update-password");
       toast.error(resetInfluencerPassword.message);
       dispatch(clearErrors());
-    } else if (isAuthenticated && user && user.user.role === "influencer") {
+    } else if (isAuthenticated && user && user?.user?.role === "influencer") {
       dispatch(getWallet());
       navHistory("/influencer");
     } else if (
       isAuthenticated &&
       user &&
-      user.user.role === "billboard_provider"
+      user?.user?.role === "billboard_provider"
     ) {
       dispatch(getWallet());
       navHistory("/billboard");
@@ -91,7 +91,6 @@ const Login = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(login(userName, password));
-    dispatch(getWallet());
     setUsername("");
     setPassword("");
   };
@@ -192,13 +191,13 @@ const Login = () => {
                         <span
                           className="tx-dark"
                           style={{
-                            color: "#000;",
-                            textDecoration: "underline;",
+                            color: "#000",
+                            textDecoration: "underline",
                           }}
                         >
                           Don’t have an account yet?
                         </span>
-                        <span style={{ textDecoration: "underline;" }}>
+                        <span style={{ textDecoration: "underline" }}>
                           Sign Up.
                         </span>
                       </Link>

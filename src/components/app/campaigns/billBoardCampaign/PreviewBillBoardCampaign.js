@@ -63,13 +63,19 @@ const PreviewBillBoardCampaign = ({
     let day2 = new Date(endDate);
 
     const difference = Math.abs(day2 - day1);
-    const days = difference / (1000 * 3600 * 24);
-    setCampaignDays(days);
+    const days = () => {
+      if (values.campaignDuration === "Daily") {
+        return values.publishDates.length;
+      } else {
+        return difference / (1000 * 3600 * 24);
+      }
+    };
+    setCampaignDays(days());
 
     if (values.campaignDuration !== "Daily" || days < 1 || !days) {
       return 1;
     } else if (values.campaignDuration === "Daily") {
-      return days;
+      return days();
     }
   };
 
@@ -121,12 +127,14 @@ const PreviewBillBoardCampaign = ({
     const total = allTotals.reduce((acc, curr) => acc + curr, 0);
     // console.log(total);
     setTotal(
-      total *
-        setScheduleDate(values.startDate, values.endDate) *
-        (values.campaignDuration === "Weekly" ||
-        values.campaignDuration === "Monthly"
-          ? values.duration
-          : 1)
+      values.campaignDuration === "Daily"
+        ? total * setScheduleDate(values.startDate, values.endDate)
+        : total *
+            setScheduleDate(values.startDate, values.endDate) *
+            (values.campaignDuration === "Weekly" ||
+            values.campaignDuration === "Monthly"
+              ? values.duration
+              : 1)
     );
     handlePrice(walletTotal);
 
@@ -149,6 +157,7 @@ const PreviewBillBoardCampaign = ({
       rateType: values.campaignDuration,
       billboards: filteredValue[0],
       duration: values.duration,
+      publishDates: values.publishDates,
     };
     setPayload(payload);
     // console.log(payload);
@@ -170,37 +179,6 @@ const PreviewBillBoardCampaign = ({
 
     return total;
   };
-
-  // var totalAmount = 0;
-  // for (let i = 0; i < filteredValue.length; i++) {
-  //   let eachTotal = filteredValue[i].platforms;
-  //   console.log(eachTotal);
-  //   let b = eachTotal.reduce((total, current) => {
-  //     total += +parseInt(current.cost);
-  //     return total;
-  //   }, 0);
-  //   console.log(b);
-
-  //   totalAmount += b;
-  // }
-
-  // console.log(values.price);
-
-  // const getTotalAmount = filteredValue.platform.reduce(
-  //   (accumulator, current) => accumulator + current.cost,
-  //   0
-  // );
-
-  // const sumTotal = (arr) =>
-  //   arr.reduce((sum, { cost }) => sum + parseInt(cost), 0);
-
-  // const total = sumTotal(filteredValue[1].platforms);
-
-  // console.log(getTotalAmount);
-
-  // console.log(filteredValue.map((p) => getTotal(p)));
-
-  // console.log(orientation);
 
   return (
     <Fragment>
@@ -291,11 +269,9 @@ const PreviewBillBoardCampaign = ({
                           className="justify-content-between"
                           style={{
                             position: "absolute",
-                            /* padding-top: 50%; */
                             top: "5%",
                             left: "2%",
                             height: "89.3%",
-                            // backgroundColor: "green",
                             right: "2%",
                           }}
                         >
@@ -329,12 +305,6 @@ const PreviewBillBoardCampaign = ({
                           <th scope="col">Start Date</th>
                           <th scope="col">End Date</th>
                           <th scope="col">Cost</th>
-                          {/* <th scope="col">Weekly</th>
-                          <th scope="col">Monthly</th> */}
-                          {/* <th scope="col" className="tx-right">
-                            Total Amount
-                          </th> */}
-                          {/* <th /> */}
                         </tr>
                       </thead>
                       <tbody>
@@ -369,11 +339,17 @@ const PreviewBillBoardCampaign = ({
                                   ? `${values.duration} month(s)`
                                   : "")}
                             </td>
-                            <td>{values.startDate}</td>
+                            <td>
+                              {values.campaignDuration === "Daily"
+                                ? values.publishDates.length >= 1
+                                  ? values.publishDates[0]
+                                  : values.startDate
+                                : values.startDate}
+                            </td>
                             <td>
                               {values.campaignDuration === "Daily" &&
-                                (values.endDate !== ""
-                                  ? values.endDate
+                                (values.publishDates.length >= 1
+                                  ? values.publishDates.slice(-1)
                                   : " - ")}
                               {values.campaignDuration === "Weekly" &&
                                 (values.startDate !== ""

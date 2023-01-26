@@ -42,6 +42,7 @@ export default class BillBoardStepForm extends Component {
     assetType: "image",
     startDate: "",
     endDate: "",
+    publishDates: [],
     duration: 1,
     pixel_height: 0,
     pixel_width: 0,
@@ -72,6 +73,8 @@ export default class BillBoardStepForm extends Component {
   handleChange = (input) => (e) => {
     if (input === "duration") {
       this.setState({ [input]: parseInt(e.target.value) });
+    } else if (input === "publishDates") {
+      this.setState({ [input]: e.join(",").split(",") });
     } else {
       this.setState({ [input]: e.target.value });
     }
@@ -105,16 +108,25 @@ export default class BillBoardStepForm extends Component {
   resetCheckedState = () => {
     this.setState((state) => ({
       ...state,
+      publishDates: [],
+      imageUrl: undefined,
+      videoUrl: "",
       checkedInfluencers: [],
-    }));
-    this.setState((state) => ({
-      ...state,
       selectedInfluencers: [],
-    }));
-    this.setState((state) => ({
-      ...state,
       duration: 1,
     }));
+    // this.setState((state) => ({
+    //   ...state,
+    //   checkedInfluencers: [],
+    // }));
+    // this.setState((state) => ({
+    //   ...state,
+    //   selectedInfluencers: [],
+    // }));
+    // this.setState((state) => ({
+    //   ...state,
+    //   duration: 1,
+    // }));
   };
 
   handleCheck(e) {
@@ -317,6 +329,7 @@ export default class BillBoardStepForm extends Component {
       assetType,
       startDate,
       endDate,
+      publishDates,
       duration,
       pixel_height,
       pixel_width,
@@ -370,6 +383,7 @@ export default class BillBoardStepForm extends Component {
       price,
       startDate,
       endDate,
+      publishDates,
       duration,
     };
 

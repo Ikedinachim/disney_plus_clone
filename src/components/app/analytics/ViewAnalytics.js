@@ -13,7 +13,7 @@ import {
   clearErrors,
   getViewFlierVideosCampaigns,
   getDigitalCampaigns,
-  getAppDownloadCampaigns
+  getAppDownloadCampaigns,
 } from "../../../actions/campaignActions";
 import SmartSmsAnalyticsTable from "./SmartSmsAnalyticsTable";
 import SmsAnalyticsTable from "./SmsAnalyticsTable";
@@ -68,21 +68,17 @@ const ViewAnalytics = () => {
           <MetaData title={"All Campaigns"} />
           <div className="content-body">
             <div className="container pd-x-0">
-              <div className="row justify-content-between">
-                <div className="col-md-6 col-6">
-                  <p className="mg-b-0 tx-26 tx-bold">Analytics</p>
-                </div>
-                <div className="col-md-2 col-6">
-                  <p>
-                    <Link
-                      to="/app/campaign/create"
-                      className="btn btn-primary w-100"
-                    >
-                      {" "}
-                      New Campaign
-                    </Link>
-                  </p>
-                </div>
+              <div className="d-flex flex-wrap justify-content-between">
+                <p className="mg-b-0 tx-26 tx-bold">Analytics</p>
+                <p>
+                  <Link
+                    to="/app/campaign/create"
+                    className="btn btn-primary w-100"
+                  >
+                    {" "}
+                    New Campaign
+                  </Link>
+                </p>
               </div>
               <div className="card card rounded bd-0 shadow-sm">
                 <div className="card-body pd-md-x-30 pd-t- mg-t-20 mg-md-t-0">
@@ -98,7 +94,7 @@ const ViewAnalytics = () => {
                         aria-controls="sms"
                         aria-selected="true"
                       >
-                       Digital Campaign
+                        Digital Campaign
                       </a>
                     </li>
                     <li className="nav-item">

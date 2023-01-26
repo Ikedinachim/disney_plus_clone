@@ -772,3 +772,26 @@ ol.terms-list ol.terms-inner-list > li:before {
 .split-content {
   column-count: 2;
 }
+
+.rmdp-container .ep-arrow.custom-arrow::after {
+  background-color: #ff1f00;
+}
+
+.rmdp-panel,
+.rmdp-wrapper {
+  width: 100%;
+}
+
+.rmdp-day.rmdp-selected span:not(.highlight) {
+  background-color: #ff1f00;
+}
+
+.rmdp-panel-body li,
+.rmdp-panel-body li.bg-blue {
+  background-color: #ff1f00;
+}
+
+.rmdp-week-day,
+.rmdp-header-values {
+  color: #ff1f00;
+}

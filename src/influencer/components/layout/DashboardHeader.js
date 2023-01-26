@@ -8,7 +8,7 @@ import { logout } from "../../../actions/authActions";
 
 import FeatherIcon from "feather-icons-react";
 
-const Header = () => {
+const InfluencerHeader = () => {
   const { user } = useSelector((state) => state.auth);
   const ref = useRef();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -156,4 +156,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default InfluencerHeader;

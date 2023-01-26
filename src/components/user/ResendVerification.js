@@ -79,12 +79,13 @@ const ResendVerification = () => {
                       <span
                         className="tx-dark"
                         style={{
-                          color: "#000;",
+                          color: "#000",
                           textDecoration: "underline;",
                         }}
                       >
                         Return to Sign in?
-                      </span>{"  "}
+                      </span>
+                      {"  "}
                       <Link to="/login">
                         <span style={{ textDecoration: "underline;" }}>
                           Click here

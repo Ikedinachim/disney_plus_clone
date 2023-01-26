@@ -30,8 +30,12 @@ const Home = () => {
     city: "",
   });
 
-  const { name, email, phone, company, designation, industry, employee, city } =
-    mailerState;
+  const {
+    name,
+    email,
+    phone,
+    // company, designation, industry, employee, city
+  } = mailerState;
 
   const handleStateChange = (e) => {
     setMailerState({

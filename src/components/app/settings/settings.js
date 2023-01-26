@@ -205,7 +205,7 @@ const Settings = () => {
                           disabled="disabled"
                         />
                       </div>
-                      <div className="col-md-6 p-3">
+                      <div className="form-group col-md-6">
                         <label htmlFor="phone-no">Phone number</label>
                         <br />
                         <input

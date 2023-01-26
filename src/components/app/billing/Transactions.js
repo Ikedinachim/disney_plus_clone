@@ -140,20 +140,16 @@ const Transactions = () => {
           <MetaData title={"Sender ID"} />
           <div className="content-body">
             <div className="container pd-x-0">
-              <div className="row justify-content-between">
-                <div className="col-md-6 col-6">
-                  <Link to={"/app/billing"} className="mg-b-0 tx-26 tx-bold">
-                    Transaction History
+              <div className="d-flex justify-content-between">
+                <Link to={"/app/billing"} className="mg-b-0 tx-26 tx-bold">
+                  Transaction History
+                </Link>
+                <p>
+                  <Link to="/app/campaigns" className="btn btn-primary w-100">
+                    {" "}
+                    Create Campaign
                   </Link>
-                </div>
-                <div className="col-md-2 col-6">
-                  <p>
-                    <Link to="/app/campaigns" className="btn btn-primary w-100">
-                      {" "}
-                      Create Campaign
-                    </Link>
-                  </p>
-                </div>
+                </p>
               </div>
               <div className="card card rounded bd-0 shadow-sm">
                 <div className="card-header bd-b-0 pd-b-0 pd-t-40 pd-md-x-30"></div>

@@ -1,8 +1,8 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 
-import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
+import { useSelector } from "react-redux";
+// import { useAlert } from "react-alert";
 import { DateTime } from "luxon";
 import NumberFormat from "react-number-format";
 
@@ -13,11 +13,11 @@ import MetaData from "../../../layout/MetaData";
 import { MDBDataTable } from "mdbreact";
 
 const ViewFlierVideosCampaigns = () => {
-  const { vfLoading, error, viewFlierVideosCampaigns } = useSelector(
+  const { vfLoading, viewFlierVideosCampaigns } = useSelector(
     (state) => state.viewFlierVideosCampaign || {}
   );
-  const dispatch = useDispatch();
-  const alert = useAlert();
+  // const dispatch = useDispatch();
+  // const alert = useAlert();
 
   // useEffect(() => {
   //     dispatch(getViewFlierVideosCampaigns())

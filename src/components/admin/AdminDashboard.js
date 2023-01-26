@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import {
@@ -272,7 +272,6 @@ const AdminDashboard = () => {
                 bordered
                 striped
                 hover
-                checkboxFirstColumn
               />
             </div>
           </div>

@@ -131,7 +131,7 @@ const Sidebar = ({ user }) => {
           </li>
           <li className="nav-item active">
             <NavLink
-              to="/app/setting"
+              to="/app/settings"
               end
               className={({ isActive }) =>
                 isActive ? "nav-link active" : "nav-link"
@@ -152,7 +152,7 @@ const Sidebar = ({ user }) => {
               <span className="marine-active-menu">Analytics</span>
             </NavLink>
           </li>
-          {user.user.isAdmin ? (
+          {user?.user?.isAdmin ? (
             <li className="nav-item active">
               <NavLink
                 to="/admin"

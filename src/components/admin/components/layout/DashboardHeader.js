@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { logout } from "../../../../actions/authActions";
+import { logout, getUser } from "../../../../actions/authActions";
 // import { getWallet } from "../../../actions/billingActions";
 
 import FeatherIcon from "feather-icons-react";
@@ -24,7 +24,7 @@ const DashboardHeader = () => {
   // const { wallet } = useSelector((state) => state.wallet);
 
   useEffect(() => {
-    // dispatch(getWallet());
+    dispatch(getUser());
     const checkIfClickedOutside = (e) => {
       // If the menu is open and the clicked target is not within the menu,
       // then close the menu
