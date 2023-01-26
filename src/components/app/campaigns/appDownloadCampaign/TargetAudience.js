@@ -396,6 +396,33 @@ const TargetAudience = ({
                             // htmlFor
                             className="mb-1 tx-com d-flex align-items-center"
                           >
+                            LGA
+                            {/* <i className="tx-6 fa fa-star tx-primary mg-l-2" /> */}
+                          </label>
+                          <Select
+                            defaultValue={rawLga}
+                            onChange={handleLgaChange}
+                            options={mergedLga}
+                            isMulti
+                          />
+                        </div>
+                        <div className="form-group col-md-6">
+                          <label className="mb-1 tx-com d-flex align-items-center">
+                            Area
+                            {/* <i className="tx-6 fa fa-star tx-primary mg-l-2" /> */}
+                          </label>
+                          <Select
+                            defaultValue={rawArea}
+                            onChange={handleAreaChange}
+                            options={mergedArea}
+                            isMulti
+                          />
+                        </div>
+                        <div className="form-group col-md-6">
+                          <label
+                            // htmlFor
+                            className="mb-1 tx-com d-flex align-items-center"
+                          >
                             Gender
                           </label>
                           <select

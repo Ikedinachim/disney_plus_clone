@@ -110,7 +110,7 @@ const ForgotPassword = () => {
                               <span
                                 className="tx-dark"
                                 style={{
-                                  color: "#000;",
+                                  color: "#000",
                                   textDecoration: "underline;",
                                 }}
                               >

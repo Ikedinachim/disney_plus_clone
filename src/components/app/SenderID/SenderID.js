@@ -207,21 +207,17 @@ const SenderID = () => {
           <MetaData title={"Sender ID"} />
           <div className="content-body">
             <div className="container pd-x-0">
-              <div className="row justify-content-between">
-                <div className="col-md-6 col-6">
-                  <p className="mg-b-0 tx-26 tx-bold">Sender ID</p>
-                </div>
-                <div className="col-md-2 col-6">
-                  <p>
-                    <Link
-                      to="/app/request-sender-id"
-                      className="btn btn-primary w-100"
-                    >
-                      {" "}
-                      New Sender ID
-                    </Link>
-                  </p>
-                </div>
+              <div className="d-flex flex-wrap justify-content-between">
+                <p className="mg-b-0 tx-26 tx-bold">Sender ID</p>
+                <p>
+                  <Link
+                    to="/app/request-sender-id"
+                    className="btn btn-primary w-100"
+                  >
+                    {" "}
+                    New Sender ID
+                  </Link>
+                </p>
               </div>
               <div className="card card rounded bd-0 shadow-sm">
                 <div className="card-header bd-b-0 pd-b-0 pd-t-40 pd-md-x-30"></div>

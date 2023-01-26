@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import FeatherIcon from "feather-icons-react";
 
+import { clearErrors, getUser } from "../../actions/authActions";
+import { getWallet } from "../../actions/billingActions";
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader";
 
@@ -13,7 +15,8 @@ const Dashboard = () => {
 
   const { loading, user } = useSelector((state) => state.auth);
   const { error } = useSelector((state) => state.wallet);
-  const [isActive, setActive] = useState("false");
+  const { userDetails } = useSelector((state) => state);
+  const [isActive, setActive] = useState(true);
 
   const ToggleClass = (e) => {
     setActive(!isActive);
@@ -21,10 +24,16 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
+    dispatch(getWallet());
+    dispatch(getUser());
     if (error) {
-      return toast.error(error);
+      toast.error(error);
+      dispatch(clearErrors());
+    } else if (userDetails?.error) {
+      toast.error(userDetails?.error);
+      dispatch(clearErrors());
     }
-  }, [dispatch, error]);
+  }, [dispatch, error, userDetails?.error]);
 
   return (
     <Fragment>
@@ -37,8 +46,8 @@ const Dashboard = () => {
           <div className="content-body">
             <div className="container pd-x-0">
               <p className="mg-b-0 tx-26 tx-bold tx-com">
-                Hello <span>{user.user.firstName},</span> what would you like to
-                do?
+                Hello <span>{user?.user?.firstName},</span> what would you like
+                to do?
               </p>
               <div className="row justify-content-between">
                 <div className="col-md-6 col-12">

@@ -5,7 +5,7 @@ import NumberFormat from "react-number-format";
 import FeatherIcon from "feather-icons-react";
 
 import { logout } from "../../actions/authActions";
-import { getWallet } from "../../actions/billingActions";
+// import { getWallet } from "../../actions/billingActions";
 import walletIcon from "../../assets/img/campaign.svg";
 
 const Header = () => {
@@ -22,7 +22,7 @@ const Header = () => {
   const { wallet } = useSelector((state) => state.wallet);
 
   useEffect(() => {
-    dispatch(getWallet());
+    // dispatch(getWallet());
     const checkIfClickedOutside = (e) => {
       // If the menu is open and the clicked target is not within the menu,
       // then close the menu
@@ -64,7 +64,7 @@ const Header = () => {
               />
               Balance:{" "}
               <NumberFormat
-                value={wallet && wallet.balance}
+                value={wallet && wallet?.balance}
                 displayType={"text"}
                 thousandSeparator={true}
                 prefix={"₦"}
@@ -77,12 +77,12 @@ const Header = () => {
             className="dropdown-link tx-dark tx-13 tx-medium"
             onClick={() => setIsMenuOpen((oldState) => !oldState)}
           >
-            {userDetails.user.username}
+            {userDetails?.user?.username}
             <div className="avatar avatar-sm mg-l-10">
               <img
                 src={
-                  userDetails.user && userDetails.user.imageUrl
-                    ? userDetails.user.imageUrl
+                  userDetails?.user && userDetails?.user?.imageUrl
+                    ? userDetails?.user?.imageUrl
                     : "https://via.placeholder.com/500"
                 }
                 className="rounded-circle"
@@ -95,8 +95,8 @@ const Header = () => {
               <div className="avatar avatar-lg mg-b-15">
                 <img
                   src={
-                    userDetails.user && userDetails.user.imageUrl
-                      ? userDetails.user.imageUrl
+                    userDetails?.user && userDetails?.user.imageUrl
+                      ? userDetails?.user.imageUrl
                       : "https://via.placeholder.com/500"
                   }
                   className="rounded-circle"
@@ -104,7 +104,9 @@ const Header = () => {
                 />
               </div>
               <h6 className="tx-semibold mg-b-5">
-                {userDetails.user.firstName + " " + userDetails.user.lastName}
+                {userDetails?.user?.firstName +
+                  " " +
+                  userDetails?.user?.lastName}
               </h6>
               <p className="mg-b-25 tx-12 tx-color-03">Administrator</p>
               {/* <Link to="admin" className="dropdown-item">

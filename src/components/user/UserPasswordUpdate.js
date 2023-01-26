@@ -3,11 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import MetaData from "../layout/MetaData";
-import {
-  getUser,
-  clearErrors,
-  sendNewPassword,
-} from "../../actions/authActions";
+import { clearErrors, sendNewPassword } from "../../actions/authActions";
 import { NEW_PASSWORD_RESET } from "../../constants/authConstants";
 import Loader from "../loader";
 

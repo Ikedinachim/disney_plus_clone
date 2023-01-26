@@ -1,8 +1,10 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import { ProgressBar } from "react-bootstrap";
+import DatePanel from "react-multi-date-picker/plugins/date_panel";
 // import DatePicker from "react-datepicker";
 
+import { Calendar } from "react-multi-date-picker";
 import MetaData from "../../../layout/MetaData";
 import MediaPlayer from "../../../../_helpers/reactPlayer/ReactPlayer";
 
@@ -33,10 +35,13 @@ const BillBoardTargetAudience = ({
     let d2 = new Date(values.startDate).setHours(0, 0, 0, 0);
     let ed = new Date(values.endDate).setHours(0, 0, 0, 0);
 
-    if (values.startDate === "") {
+    if (values.campaignDuration !== "Daily" && values.startDate === "") {
       toast.warning("Please choose a start date");
-    } else if (values.campaignDuration === "Daily" && values.endDate === "") {
-      toast.warning("Please choose an end date");
+    } else if (
+      values.campaignDuration === "Daily" &&
+      values.publishDates.length <= 0
+    ) {
+      toast.warning("Please choose a date");
     } else if (d1.valueOf() > d2.valueOf()) {
       toast.warning("Please set a valid date");
     } else if (d2.valueOf() > ed.valueOf()) {
@@ -93,63 +98,59 @@ const BillBoardTargetAudience = ({
                         Provide all requested details to help complete the
                         campaign creation
                       </p>
-                      <div className="form-group">
+                      {values.campaignDuration !== "Daily" ? (
                         <div className="form-group">
                           <label className="mb-1">
                             Start / End Date
                             <i className="tx-6 fa fa-star tx-primary mg-l-2" />
                           </label>
-                          <div className="d-flex">
-                            <div className="pd-0 input-group mg-b-0">
-                              <div className="input-group-prepend">
-                                <span className="input-group-text">Start</span>
-                              </div>
-                              <input
-                                type="date"
-                                name="startDate"
-                                className="form-control"
-                                placeholder="startDate"
-                                aria-label="startDate"
-                                aria-describedby="basic-addon1"
-                                defaultValue={values.startDate}
-                                onChange={handleChange("startDate")}
-                                min={date.toISOString().split("T")[0]}
-                                // max="6/11/2022"
-                              />
+                          <div className="pd-0 input-group mg-b-0">
+                            <div className="input-group-prepend">
+                              <span className="input-group-text">Start</span>
                             </div>
-                            {values.campaignDuration === "Daily" && (
-                              <div className="col-md-6 pd-0 mg-l-10 input-group mg-b-0">
-                                <div className="input-group-prepend">
-                                  <span className="input-group-text">End</span>
-                                </div>
-                                <input
-                                  type="date"
-                                  name="endDate"
-                                  className="form-control"
-                                  placeholder="endDate"
-                                  aria-label="endDate"
-                                  aria-describedby="basic-addon1"
-                                  defaultValue={values.endDate}
-                                  onChange={handleChange("endDate")}
-                                  min={
-                                    values.startDate !== ""
-                                      ? new Date(
-                                          new Date(values.startDate).setDate(
-                                            new Date(
-                                              values.startDate
-                                            ).getDate() + 1
-                                          )
-                                        )
-                                          .toISOString()
-                                          .split("T")[0]
-                                      : date.toISOString().split("T")[0]
-                                  }
-                                />
-                              </div>
-                            )}
+                            <input
+                              type="date"
+                              name="startDate"
+                              className="form-control"
+                              placeholder="startDate"
+                              aria-label="startDate"
+                              aria-describedby="basic-addon1"
+                              defaultValue={values.startDate}
+                              onChange={handleChange("startDate")}
+                              min={date.toISOString().split("T")[0]}
+                              // max="6/11/2022"
+                            />
                           </div>
                         </div>
-                      </div>
+                      ) : (
+                        <div className="form-group">
+                          <div className=" input-group mg-b-0">
+                            <label className="mb-2">
+                              Choose day(s) to run campaign
+                              <i className="tx-6 fa fa-star tx-primary mg-l-2" />
+                            </label>
+                            <Calendar
+                              multiple
+                              value={values.publishDates}
+                              onChange={handleChange("publishDates")}
+                              format="YYYY-MM-DD"
+                              arrowClassName="custom-arrow"
+                              containerClassName="custom-container"
+                              sort
+                              minDate={date.toISOString().split("T")[0]}
+                              plugins={[<DatePanel header="Selected Dates" />]}
+                              style={{
+                                width: "100%",
+                                boxSizing: "border-box",
+                                height: "26px",
+                              }}
+                              containerStyle={{
+                                width: "100%",
+                              }}
+                            />
+                          </div>
+                        </div>
+                      )}
                       {values.campaignDuration !== "Daily" && (
                         <div className="form-group">
                           <div className="form-group">

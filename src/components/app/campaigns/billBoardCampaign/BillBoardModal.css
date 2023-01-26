@@ -16,7 +16,7 @@
 }
 
 .modal2.enter-done {
-  opacity: 1;
+  opacity: 1 !important;
   pointer-events: visible;
 }
 

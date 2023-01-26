@@ -62,7 +62,7 @@ const ChangeAdminPassword = () => {
             <div className="col-md-12 login-side">
               <div className="container pd-lg-30 pd-10">
                 <Link
-                  to="../setting"
+                  to="../settings"
                   type="button"
                   className="close close-btn"
                   aria-label="Close"
@@ -124,7 +124,7 @@ const ChangeAdminPassword = () => {
                           <span
                             className="tx-dark"
                             style={{
-                              color: "#000;",
+                              color: "#000",
                               textDecoration: "underline;",
                             }}
                           >

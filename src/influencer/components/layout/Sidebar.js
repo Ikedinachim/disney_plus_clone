@@ -5,7 +5,7 @@ import FeatherIcon from "feather-icons-react";
 
 import NavLogo from "../../../assets/img/logo.svg";
 
-const Sidebar = () => {
+const InfluencerSidebar = () => {
   const ref = useRef();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [width, setWindowWidth] = useState(0);
@@ -123,4 +123,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default InfluencerSidebar;
