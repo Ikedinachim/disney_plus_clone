@@ -95,13 +95,13 @@ const PreviewCampaign = ({
     } else if (values.limit !== "" && values.channel === "voice_sms") {
       return (
         parseInt(values.limit) *
-        15 *
+        20 *
         setScheduleDate(values.scheduleFrom, values.scheduleTo)
       );
     } else if (values.channel === "voice_sms") {
       return filteredContactList
         ? filteredContactList.count *
-            15 *
+            20 *
             setScheduleDate(values.scheduleFrom, values.scheduleTo)
         : 0;
     } else {

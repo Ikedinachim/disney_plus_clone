@@ -324,7 +324,7 @@ const PreviewInfluencerCampaign = ({
                         </button>
                       ) : (
                         <button
-                          className="btn btn-primary pd-x-40 tx-com mg-r-15"
+                          className="w-100 btn btn-primary pd-x-40 tx-com mg-r-15"
                           onClick={submitInfluencerCampaignHandler}
                           disabled={loading ? true : false}
                           type="submit"
@@ -334,7 +334,7 @@ const PreviewInfluencerCampaign = ({
                         </button>
                       )}
                       <button
-                        className="btn btn-outline-primary pd-x-30"
+                        className="w-100 btn btn-outline-primary pd-x-30"
                         onClick={Previous}
                         disabled={loading ? true : false}
                         type="submit"
