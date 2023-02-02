@@ -291,7 +291,7 @@ export default class SmsStepForm extends Component {
 
     const setPrice = () => {
       if (channel === "voice_sms") {
-        return (price = audience * 15);
+        return (price = audience * 20);
       } else {
         return (price = audience * 5 * smsCount);
       }
