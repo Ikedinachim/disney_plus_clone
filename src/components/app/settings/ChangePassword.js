@@ -44,7 +44,7 @@ const ChangePassword = () => {
     if (updatePassword && updatePassword.status === "success") {
       toast.success(updatePassword.message);
       dispatch({ type: USER_PASSWORD_RESET });
-      navHistory("/app/setting");
+      navHistory("/app/settings");
     } else if (error) {
       toast.error(error);
       dispatch(clearErrors());
@@ -62,7 +62,7 @@ const ChangePassword = () => {
             <div className="col-md-12 login-side">
               <div className="container pd-lg-30 pd-10">
                 <Link
-                  to="../setting"
+                  to="../settings"
                   type="button"
                   className="close close-btn"
                   aria-label="Close"

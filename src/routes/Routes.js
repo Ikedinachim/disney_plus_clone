@@ -74,9 +74,8 @@ const MainRoutes = () => {
         <Route path="sender-id" element={<SenderID />} />
         <Route path="request-sender-id" element={<RequestSenderID />} />
         <Route path="transactions" element={<Transactions />} />
-        <Route path="billing" element={<BillingOverview />}>
-          <Route path="billing/fund-wallet" element={<FundWallet />} />
-        </Route>
+        <Route path="billing" element={<BillingOverview />} />
+        <Route path="billing/fund-wallet" element={<FundWallet />} />
         <Route path="campaigns" element={<ViewCampaignTabs />} />
         <Route path="campaign/smart-ads" element={<FlierVideoStepForm />} />
         <Route path="campaign/app-download" element={<AppDownloadStepForm />} />
