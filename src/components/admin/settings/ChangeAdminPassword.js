@@ -44,7 +44,7 @@ const ChangeAdminPassword = () => {
     if (updatePassword && updatePassword.status === "success") {
       toast.success(updatePassword.message);
       dispatch({ type: USER_PASSWORD_RESET });
-      navHistory("/app/setting");
+      navHistory("/app/settings");
     } else if (error) {
       toast.error(error);
       dispatch(clearErrors());

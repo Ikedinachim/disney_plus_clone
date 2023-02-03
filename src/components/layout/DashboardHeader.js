@@ -115,7 +115,7 @@ const Header = () => {
               {/* <Link to="/app/setting" className="dropdown-item">
                 <FeatherIcon icon="user" /> View Profile
               </Link> */}
-              <Link to="setting" className="dropdown-item">
+              <Link to="settings" className="dropdown-item">
                 <FeatherIcon icon="settings" /> Account Settings
               </Link>
               <div className="dropdown-divider" />

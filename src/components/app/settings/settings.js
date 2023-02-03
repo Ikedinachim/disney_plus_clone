@@ -236,7 +236,7 @@ const Settings = () => {
                       >
                         Want to Change password?
                       </span>
-                      <span style={{ textDecoration: "underline;" }}>
+                      <span style={{ textDecoration: "underline" }}>
                         {" "}
                         Click here
                       </span>
