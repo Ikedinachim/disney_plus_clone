@@ -103,12 +103,17 @@ const MainRoutes = () => {
           <Route index element={<CreateCampaign />} />
           <Route path="create" element={<CreateCampaign />} />
         </Route>
-        <Route path="analytics" element={<ViewAnalytics />}>
-          <Route path="graph/:propellerId" element={<DigitalAnalytics />} />
-          <Route path="smartsms/:id" element={<SmartSmsAnalytics />} />
-          <Route path="sms/:id" element={<SmsAnalytics />} />
-          <Route path="appdownload/:id" element={<AppDownloadAnalytics />} />
-        </Route>
+        <Route path="analytics" element={<ViewAnalytics />} />
+        <Route
+          path="analytics/graph/:propellerId"
+          element={<DigitalAnalytics />}
+        />
+        <Route path="analytics/smartsms/:id" element={<SmartSmsAnalytics />} />
+        <Route path="analytics/sms/:id" element={<SmsAnalytics />} />
+        <Route
+          path="analytics/appdownload/:id"
+          element={<AppDownloadAnalytics />}
+        />
         <Route path="settings" element={<Settings />}>
           <Route path="change-password" element={<ChangePassword />} />
         </Route>

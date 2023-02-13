@@ -46,6 +46,10 @@ const ViewAnalytics = () => {
     // update the state to tab4
     setActiveTab("tab4");
   };
+  const handleTab5 = () => {
+    // update the state to tab4
+    setActiveTab("tab5");
+  };
 
   useEffect(() => {
     dispatch(getDigitalCampaigns());
@@ -148,14 +152,11 @@ const ViewAnalytics = () => {
                       aria-labelledby="home-tab"
                     >
                       <div className="pd-y-20">
-                        {activeTab === "tab1" ? <DigitalAnalyticsTable /> : ""}
-                        {activeTab === "tab2" ? <SmartSmsAnalyticsTable /> : ""}
-                        {activeTab === "tab3" ? <SmsAnalyticsTable /> : ""}
-                        {activeTab === "tab4" ? (
-                          <AppDownloadAnalyticsTable />
-                        ) : (
-                          ""
-                        )}
+                        {activeTab === "tab1" && <DigitalAnalyticsTable />}
+                        {activeTab === "tab2" && <SmartSmsAnalyticsTable />}
+                        {activeTab === "tab3" && <SmsAnalyticsTable />}
+                        {activeTab === "tab4" && <AppDownloadAnalyticsTable />}
+                        {/* {activeTab === "tab5" && <AppDownloadAnalyticsTable /> } */}
                       </div>
                     </div>
                   </div>

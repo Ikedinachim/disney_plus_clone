@@ -66,9 +66,11 @@ const DigitalAnalyticsTable = () => {
               className={`{"badge" ${
                 campaign.status === "Stopped"
                   ? "badge-primary"
-                  : "" || campaign.status === "Working" 
+                  : "" || campaign.status === "Working"
                   ? "badge-active"
-                  : "" || campaign.status === "Completed" ? "badge-pink" : ""
+                  : "" || campaign.status === "Completed"
+                  ? "badge-pink"
+                  : ""
               }`}
             >
               {campaign.status === "Stopped"
@@ -82,8 +84,8 @@ const DigitalAnalyticsTable = () => {
           ),
           actions: (
             <Fragment>
-              <div class="tx-black tx-14">
-                <div class="d-flex">
+              <div className="tx-black tx-14">
+                <div className="d-flex">
                   <Link to={`../analytics/graph/${campaign.propellerId}`}>
                     <i className="fa fa-eye tx-orange pd-t-4 mg-r-5" /> View
                     Analytics{" "}
@@ -110,7 +112,6 @@ const DigitalAnalyticsTable = () => {
             className="px-3 scroll"
             striped
             hover
-            checkboxFirstColumn
           />
         </Fragment>
       )}

@@ -42,7 +42,7 @@ export default class AppDownloadStepForm extends Component {
     signature: "",
 
     scheduleOption: "none",
-    scheduleTime: "",
+    scheduleTime: new Date().toLocaleTimeString(),
     scheduleFrom: "",
     scheduleTo: "",
 
@@ -543,7 +543,7 @@ export default class AppDownloadStepForm extends Component {
       age,
     };
 
-    // console.log(values);
+    console.log(values);
 
     switch (step) {
       case 1:
