@@ -53,7 +53,6 @@ const SmsAnalytics = () => {
                         src="../../../assets/img/Brand_Awareness.svg"
                         className="tx-primary"
                         alt=""
-                        srcset=""
                       />
                     </div>
                     <div>
@@ -64,7 +63,9 @@ const SmsAnalytics = () => {
 
                   <div>
                     <p className="tx-24 tx-bold">
-                      {singleSmsCampaign.count === 0 ? singleSmsCampaign.smsSent : singleSmsCampaign.count}
+                      {singleSmsCampaign.count === 0
+                        ? singleSmsCampaign.smsSent
+                        : singleSmsCampaign.count}
                     </p>
                     <p className="tx-15 tx-blac">Total number of impressions</p>
                   </div>
