@@ -1,21 +1,21 @@
-import React, { Fragment } from "react";
-import { useSelector } from "react-redux";
+import React, { Fragment, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { MDBDataTable } from "mdbreact";
 import { DateTime } from "luxon";
+import { getViewFlierVideosCampaigns } from "../../../actions/campaignActions";
 
 import Loader from "../../loader";
 
 const SmartSmsAnalyticsTable = () => {
+  const dispatch = useDispatch();
   const { vfLoading, viewFlierVideosCampaigns } = useSelector(
     (state) => state.viewFlierVideosCampaign || {}
   );
 
   // useEffect(() => {
-  //     dispatch(getViewFlierVideosCampaigns())
-  //     // dispatch(getWallet())
-
-  // }, [])
+  //   dispatch(getViewFlierVideosCampaigns());
+  // });
 
   const setViewFlierVideosCampaigns = () => {
     const data = {
@@ -60,10 +60,10 @@ const SmartSmsAnalyticsTable = () => {
           data.rows.push({
             checkBoxes: (
               <Fragment>
-                <div class="custom-control custom-checkbox">
+                <div className="custom-control custom-checkbox">
                   <input
                     type="checkbox"
-                    class="custom-control-input"
+                    className="custom-control-input"
                     id="customCheck1"
                   />
                   <label
@@ -89,8 +89,8 @@ const SmartSmsAnalyticsTable = () => {
             ),
             actions: (
               <Fragment>
-                <div class="tx-black tx-14">
-                  <div class="d-flex">
+                <div className="tx-black tx-14">
+                  <div className="d-flex">
                     <Link to={`../analytics/smartsms/${campaign.id}`}>
                       <i className="fa fa-eye tx-orange pd-t-4 mg-r-5" /> View
                       Analytics{" "}
@@ -117,7 +117,6 @@ const SmartSmsAnalyticsTable = () => {
           bordered
           striped
           hover
-          checkboxFirstColumn
           responsive
         />
       )}

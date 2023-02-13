@@ -50,10 +50,10 @@ const DigitalAnalytics = () => {
 
               {/* numbers doing */}
               {propellerCampaigns &&
-                propellerCampaigns.map((campaign) => (
-                  <div className="row">
+                propellerCampaigns.map((campaign, index) => (
+                  <div className="row" key={index}>
                     <div className="col-md-6 col-12 mg-t-20 mg-md-t-0">
-                      <div className="card rounded bd-0 shadow-sm">
+                      <div className="card rounded bd-0 shadow-sm h-100">
                         <div className="card-body h-25">
                           <div className="d-flex">
                             <div className="mg-r-20">
@@ -62,7 +62,6 @@ const DigitalAnalytics = () => {
                                 src="../../../assets/img/Brand_Awareness.svg"
                                 className="tx-primary"
                                 alt=""
-                                srcset=""
                               />
                             </div>
                             <div>
