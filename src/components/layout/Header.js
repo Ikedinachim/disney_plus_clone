@@ -16,6 +16,15 @@ const Header = () => {
   return (
     <Fragment>
       <header>
+     {!isAuthenticated && <div className="new-billboard">
+                <button  className="new-billboard-btn" >
+                    New Billboard!
+                </button>
+                 <h3>A new billboard is available</h3>
+                 <a href='#'>Learn more 
+                 <img src="../assets/arrow.png" alt="" />
+                 </a>
+            </div>}
         <nav className="navbar navbar-expand-lg bg-white bd shadow-sm">
           <div className="container">
             <Link
@@ -48,7 +57,7 @@ const Header = () => {
                   id="navbarSupportedContent"
                 >
                   <ul className="navbar-nav ml-auto">
-                    <li className="nav-item active">
+                    {/* <li className="nav-item active">
                       <a className="nav-link tx-dark tx-bolder" href="#about">
                         About Us <span className="sr-only">(about us)</span>
                       </a>
@@ -57,6 +66,14 @@ const Header = () => {
                       <a className="nav-link tx-dark tx-bolder" href="#about">
                         FAQ <span className="sr-only">(faq)</span>
                       </a>
+                    </li> */}
+                    <li className="nav-item pd-x-20">
+                      <a
+                        className="nav-link tx-dark tx-bolder"
+                        href="#campaigns"
+                      >
+                        Campaigns
+                      </a>
                     </li>
                     <li className="nav-item pd-x-20">
                       <a
@@ -64,14 +81,6 @@ const Header = () => {
                         href="#mysogi-contact"
                       >
                         Contact Us
-                      </a>
-                    </li>
-                    <li className="nav-item pd-x-20">
-                      <a
-                        className="nav-link tx-dark tx-bolder"
-                        href="#mysogi-products"
-                      >
-                        Products
                       </a>
                     </li>
                     <li className="nav-item pd-r-20 pd-md-l-100 pd-l-20">
