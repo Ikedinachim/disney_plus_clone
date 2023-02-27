@@ -34,6 +34,9 @@ import SmsAnalytics from "../components/app/analytics/SmsAnalytics";
 import AppDownloadAnalytics from "../components/app/analytics/AppDownloadAnalytics";
 import RegistrationConfirmation from "../components/user/RegistrationConfirmation";
 import ResendVerification from "../components/user/ResendVerification";
+import Ecommerce from "../components/app/ecommerce/Ecommerce";
+import CreateStore from "../components/app/ecommerce/CreateStore";
+import AddProduct from "../components/app/ecommerce/AddProduct";
 
 // Public Import
 import Home from "../components/Home";
@@ -117,6 +120,10 @@ const MainRoutes = () => {
         <Route path="settings" element={<Settings />}>
           <Route path="change-password" element={<ChangePassword />} />
         </Route>
+        <Route path="ecommerce" element={<Ecommerce />} />
+        <Route path="ecommerce" element={<Ecommerce />} />
+        <Route path="ecommerce/create-store" element={<CreateStore />} />
+        <Route path="ecommerce/add-product" element={<AddProduct />} />
       </Route>
 
       {/** Protected Routes For Admin */}

@@ -474,8 +474,9 @@ table.dataTable thead th {
   font-weight: 600 !important;
 }
 .btn-outline-primary:hover {
-  color: #a71906;
-  border-color: #971503;
+  color: #fff;
+  background: linear-gradient(180deg, #ff6600 0%, #ac0303 86.1%);
+  opacity: 0.75;
 }
 .table.inf-table thead th {
   border-bottom: 0;

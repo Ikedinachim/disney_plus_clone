@@ -107,6 +107,18 @@ const Sidebar = ({ user }) => {
               <span>Campaigns</span>
             </NavLink>
           </li>
+          {/* <li className="nav-item active">
+            <NavLink
+              to="/app/ecommerce"
+              end
+              className={({ isActive }) =>
+                isActive ? "nav-link active" : "nav-link"
+              }
+            >
+              <i className="fa fa-store mr-3" />
+              <span>Ecommerce</span>
+            </NavLink>
+          </li> */}
           <li className="nav-item active">
             <NavLink
               to="/app/billing"
