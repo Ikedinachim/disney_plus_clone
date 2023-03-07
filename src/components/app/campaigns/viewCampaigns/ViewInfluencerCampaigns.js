@@ -110,7 +110,7 @@ const ViewInfluencerCampaigns = () => {
           ).toFormat("dd MMM, yyyy"),
           status: (
             <span
-              className={`{"badge" ${
+              className={`badge d-flex-center ${
                 !campaign.isAdminApproved ? "badge-pink" : "badge-active"
               }`}
             >
