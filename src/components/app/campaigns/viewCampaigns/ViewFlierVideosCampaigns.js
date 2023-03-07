@@ -104,7 +104,7 @@ const ViewFlierVideosCampaigns = () => {
           status:
             (campaign.channel === "smart_sms" && (
               <span
-                className={`{"badge" ${
+                className={`badge d-flex-center ${
                   !campaign.isApproved ? "badge-pink" : "badge-active"
                 }`}
               >
@@ -113,7 +113,7 @@ const ViewFlierVideosCampaigns = () => {
             )) ||
             (campaign.channel === "display_ads" && (
               <span
-                className={`{"badge" ${
+                className={`badge d-flex-center ${
                   !campaign.displayAdsStatus ? "badge-pink" : "badge-active"
                 }`}
               >

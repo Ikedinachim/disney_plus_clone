@@ -373,7 +373,8 @@ const Register = () => {
                             }}
                           >
                             Already have an account?
-                          </span>{" "}
+                          </span>
+                          &nbsp;
                           <span style={{ textDecoration: "underline" }}>
                             Sign in.
                           </span>

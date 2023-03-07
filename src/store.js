@@ -23,6 +23,8 @@ import {
   // userDetailsReducer
 } from "./reducers/authReducers";
 
+import { storeReducer } from "./reducers/ecommerceReducers";
+
 import {
   senderIDReducer,
   createSenderIdReducer,
@@ -139,6 +141,7 @@ const appReducer = combineReducers({
   UpdateSenderId: UpdateAdminSenderIDReducer,
   revenueBand: getRevenueBandReducer,
   generalSender: generalSenderReducer,
+  store: storeReducer,
 });
 
 const reducer = (state, action) => {

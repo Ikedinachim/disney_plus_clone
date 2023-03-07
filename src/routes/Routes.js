@@ -36,7 +36,9 @@ import RegistrationConfirmation from "../components/user/RegistrationConfirmatio
 import ResendVerification from "../components/user/ResendVerification";
 import Ecommerce from "../components/app/ecommerce/Ecommerce";
 import CreateStore from "../components/app/ecommerce/CreateStore";
+import EditStore from "../components/app/ecommerce/EditStore";
 import AddProduct from "../components/app/ecommerce/AddProduct";
+import EditProduct from "../components/app/ecommerce/EditProduct";
 
 // Public Import
 import Home from "../components/Home";
@@ -123,7 +125,9 @@ const MainRoutes = () => {
         <Route path="ecommerce" element={<Ecommerce />} />
         <Route path="ecommerce" element={<Ecommerce />} />
         <Route path="ecommerce/create-store" element={<CreateStore />} />
+        <Route path="ecommerce/edit-store" element={<EditStore />} />
         <Route path="ecommerce/add-product" element={<AddProduct />} />
+        <Route path="ecommerce/edit-product" element={<EditProduct />} />
       </Route>
 
       {/** Protected Routes For Admin */}

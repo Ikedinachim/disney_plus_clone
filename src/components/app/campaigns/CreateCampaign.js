@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 // import { useAlert } from "react-alert";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import MetaData from "../../layout/MetaData";
 import Loader from "../../loader";
@@ -16,12 +16,17 @@ import Phone from "../../../assets/img/mysogi_phone_sm.png";
 import Billboard from "../../../assets/img/billboard.png";
 
 const CreateCampaign = () => {
-  // const alert = useAlert();
+  const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isAuthenticated, user, loading, error } = useSelector(
     (state) => state.auth
   );
+
+  //////
+  window.history.replaceState({}, document.title);
+  const isEcommere = location?.state?.prevPath === "/app/ecommerce";
+  /////
 
   useEffect(() => {
     if (!isAuthenticated || user === null) {
@@ -35,6 +40,10 @@ const CreateCampaign = () => {
     dispatch(getWallet());
     dispatch(getSenderID());
   }, [dispatch, error, isAuthenticated, navigate, user]);
+
+  const preventClick = (event) => {
+    event.preventDefault();
+  };
 
   return (
     <Fragment>
@@ -67,9 +76,17 @@ const CreateCampaign = () => {
                   </p>
                   <div className="row d-flex justify-content-center">
                     <div className="col-md-6 col-lg-4 col-12 mg-t-20">
-                      <Link to="/app/campaign/billboard" className="tx-dark">
+                      <Link
+                        to="/app/campaign/billboard"
+                        className={`tx-dark ${isEcommere ? "disabled" : ""}`}
+                        onClick={isEcommere ? preventClick : null}
+                      >
                         <div className="card card-height rounded bd-0 shadow-sm">
-                          <div className="card-body tx-center pd-x-12">
+                          <div
+                            className={`card-body tx-center pd-x-12 ${
+                              isEcommere ? "store-disabled" : ""
+                            }`}
+                          >
                             <img
                               src={Billboard}
                               alt=""
@@ -89,9 +106,17 @@ const CreateCampaign = () => {
                       </Link>
                     </div>
                     <div className="col-md-6 col-lg-4 col-12 mg-t-20">
-                      <Link to="/app/campaign/sms" className="tx-dark">
+                      <Link
+                        to="/app/campaign/sms"
+                        className={`tx-dark ${isEcommere ? "disabled" : ""}`}
+                        onClick={isEcommere ? preventClick : null}
+                      >
                         <div className="card card-height rounded bd-0 shadow-sm">
-                          <div className="card-body tx-center pd-x-12 pd-md-x-30">
+                          <div
+                            className={`card-body tx-center pd-x-12 pd-md-x-30 ${
+                              isEcommere ? "store-disabled" : ""
+                            }`}
+                          >
                             <img src={FlashSms} alt="" className="img-fluid" />
                             <div className="pd-t-15">
                               <p className="tx-16 tx-bold">Voice Ad / SMS</p>
@@ -144,9 +169,17 @@ const CreateCampaign = () => {
                       </Link>
                     </div>
                     <div className="col-md-6 col-lg-4 col-12 mg-t-20">
-                      <Link to="/app/campaign/app-download" className="tx-dark">
+                      <Link
+                        to="/app/campaign/app-download"
+                        className={`tx-dark ${isEcommere ? "disabled" : ""}`}
+                        onClick={isEcommere ? preventClick : null}
+                      >
                         <div className="card card-height rounded bd-0 shadow-sm">
-                          <div className="card-body tx-center pd-x-12">
+                          <div
+                            className={`card-body tx-center pd-x-12 ${
+                              isEcommere ? "store-disabled" : ""
+                            }`}
+                          >
                             <img src={Phone} alt="" className="img-fluid" />
                             <div className="pd-t-15">
                               <p className="tx-16 tx-bold">
