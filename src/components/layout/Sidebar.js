@@ -107,7 +107,7 @@ const Sidebar = ({ user }) => {
               <span>Campaigns</span>
             </NavLink>
           </li>
-          {/* <li className="nav-item active">
+          <li className="nav-item active">
             <NavLink
               to="/app/ecommerce"
               end
@@ -118,7 +118,7 @@ const Sidebar = ({ user }) => {
               <i className="fa fa-store mr-3" />
               <span>Ecommerce</span>
             </NavLink>
-          </li> */}
+          </li>
           <li className="nav-item active">
             <NavLink
               to="/app/billing"

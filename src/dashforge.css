@@ -53,6 +53,9 @@
 .clickable {
   cursor: pointer;
 }
+.not-clickable {
+  cursor: no-drop;
+}
 html {
   font-family: "Montserrat", sans-serif;
   line-height: 1.15;
@@ -2361,6 +2364,7 @@ textarea.form-control.is-invalid {
   box-shadow: none;
 }
 .btn.disabled,
+.label-disabled,
 .ui-datepicker-buttonpane button.disabled,
 .sp-container button.disabled,
 .btn:disabled,
@@ -2385,8 +2389,13 @@ fieldset:disabled a.btn {
 .btn-primary:hover {
   color: #fff;
   opacity: 1.75;
+  cursor: no-drop;
   /* background-color: #ff1f00;
   border-color: #ff1f00; */
+}
+.btn-primary:hover:disabled {
+  cursor: no-drop;
+  opacity: 0.75;
 }
 .btn-primary:focus,
 .btn-primary.focus {
@@ -2395,7 +2404,8 @@ fieldset:disabled a.btn {
 .btn-primary.disabled,
 .btn-primary:disabled {
   color: #fff;
-  background-color: #ff1f00;
+  /* background-color: #ff1f00; */
+  background: linear-gradient(180deg, #ff6600 0%, #ac0303 86.1%);
   border-color: #ff1f00;
 }
 .btn-primary:not(:disabled):not(.disabled):active,
@@ -3937,7 +3947,8 @@ input[type="button"].btn-block {
   border-color: #7cb2fe;
   box-shadow: 0 0 0 0.2rem rgba(1, 104, 250, 0.25);
 }
-.custom-file-input:disabled ~ .custom-file-label {
+.custom-file-input:disabled ~ .custom-file-label,
+.add-image-label.label-disabled {
   background-color: #e3e7ed;
 }
 .custom-file-input:lang(en) ~ .custom-file-label::after {
@@ -4852,7 +4863,7 @@ input[type="button"].btn-block {
   z-index: 1;
   color: #fff;
   background-color: #ff1f00;
-  border-color: #ff1f00;
+  border-color: #ac0303;
 }
 
 .page-item.disabled .page-link {
@@ -10564,7 +10575,7 @@ textarea.form-control {
 }
 
 .page-item.active .page-link {
-  background-color: #ff1f00;
+  background: linear-gradient(180deg, #ff6600 0%, #ac0303 86.1%);
 }
 
 .page-link {

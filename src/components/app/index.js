@@ -16,16 +16,26 @@ const Dashboard = () => {
   const { loading, user } = useSelector((state) => state.auth);
   const { error } = useSelector((state) => state.wallet);
   const { userDetails } = useSelector((state) => state);
-  const [isActive, setActive] = useState(true);
+  const [createCampaignActive, setCreateCampaignActive] = useState(true);
+  const [viewCampaignActive, setViewCampaignActive] = useState(false);
 
-  const ToggleClass = (e) => {
-    setActive(!isActive);
+  const ToggleClass = (actionType) => (e) => {
     e.preventDefault();
+    if (actionType === "create") {
+      setCreateCampaignActive(true);
+      setViewCampaignActive(false);
+    } else if (actionType === "view") {
+      setViewCampaignActive(true);
+      setCreateCampaignActive(false);
+    }
   };
 
   useEffect(() => {
     dispatch(getWallet());
     dispatch(getUser());
+  }, [dispatch]);
+
+  useEffect(() => {
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
@@ -58,8 +68,10 @@ const Dashboard = () => {
               </div>
               <div id="myCard">
                 <div
-                  className={`card ${isActive ? "card-active" : null}`}
-                  onClick={ToggleClass}
+                  className={`card clickable ${
+                    createCampaignActive ? "card-active" : null
+                  }`}
+                  onClick={ToggleClass("create")}
                 >
                   <div className="card-body">
                     <FeatherIcon icon="check-circle" className="check" />
@@ -74,7 +86,7 @@ const Dashboard = () => {
                       </div>
                       <div
                         className={`col-md-5 col-10 mg-y-20 pd-md-b-40 ${
-                          !isActive ? "disabler" : null
+                          viewCampaignActive ? "disabler" : null
                         }`}
                       >
                         <p className="tx-24 tx-bold mb-4 tx-com">
@@ -86,7 +98,7 @@ const Dashboard = () => {
                         </p>
                         <button
                           type="button"
-                          disabled={!isActive}
+                          disabled={viewCampaignActive}
                           // navigate = "/app/create"
                           className="btn btn-primary pd-x-40"
                           onClick={() => navigate("/app/campaign/create")}
@@ -100,7 +112,7 @@ const Dashboard = () => {
                             src="../../assets/img/create_ads_illustration.svg"
                             id="secondImg"
                             className={`img-fluid ${
-                              isActive ? "d-block" : null
+                              createCampaignActive ? "d-block" : null
                             }`}
                             alt="asset"
                           />
@@ -108,7 +120,7 @@ const Dashboard = () => {
                             src="../../assets/img/become_partners_illustration.svg"
                             id="firstImg"
                             className={`img-fluid mg-t-100 ${
-                              !isActive ? "d-block" : "d-none"
+                              viewCampaignActive ? "d-block" : "d-none"
                             }`}
                             alt="asset"
                           />
@@ -118,8 +130,10 @@ const Dashboard = () => {
                   </div>
                 </div>
                 <div
-                  className={`card mg-t-40 ${!isActive ? "card-active" : null}`}
-                  onClick={ToggleClass}
+                  className={`card clickable mg-t-40 ${
+                    viewCampaignActive ? "card-active" : null
+                  }`}
+                  onClick={ToggleClass("view")}
                 >
                   <div className="card-body">
                     <FeatherIcon icon="check-circle" className="check" />
@@ -134,7 +148,7 @@ const Dashboard = () => {
                       </div>
                       <div
                         className={`col-md-5 col-10 mg-y-20 mg-md-t-20 pd-md-b-40 ${
-                          isActive ? "disabler" : null
+                          createCampaignActive ? "disabler" : null
                         }`}
                       >
                         <p className="tx-24 tx-bold mb-4 tx-com">
@@ -146,7 +160,7 @@ const Dashboard = () => {
                         </p>
                         <button
                           type="button"
-                          disabled={isActive}
+                          disabled={createCampaignActive}
                           href="./all-campaigns.html"
                           className="btn btn-primary pd-x-30"
                           onClick={() => navigate("/app/campaigns")}

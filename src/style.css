@@ -796,6 +796,15 @@ ol.terms-list ol.terms-inner-list > li:before {
   color: #ff1f00;
 }
 
+.store-prefix-label {
+  border: none;
+  cursor: pointer;
+  background: none;
+  padding: 0;
+  width: max-content;
+  color: #001737;
+}
+
 .store-label {
   border: none;
   cursor: pointer;
@@ -840,6 +849,24 @@ ol.terms-list ol.terms-inner-list > li:before {
   background: #f2f5f9;
 }
 
+.store-preview-mobile {
+  padding: 65px 15px;
+  background: #f2f5f9;
+}
+
+.store-banner {
+  width: 100%;
+  height: 100px;
+  padding: 0 27px;
+  margin-bottom: 16px;
+}
+
+.store-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .store-close {
   border-radius: 50%;
   height: 20px;
@@ -863,12 +890,47 @@ ol.terms-list ol.terms-inner-list > li:before {
   font-size: 10px;
 }
 
+.product-close {
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(360deg, #ff2400 -1.92%, #ff6200 101.92%);
+  padding: 10px;
+  opacity: 0.9;
+}
+
+.product-close:hover,
+.product-close:focus {
+  background: linear-gradient(360deg, #ff2400 -1.92%, #ff6200 101.92%);
+  opacity: 1;
+}
+
+.product-close-icon {
+  color: #fff;
+  font-size: 10px;
+}
+
 .store-preview-icon {
   margin-top: 32px;
   margin-bottom: 11px;
   flex: 1;
   display: flex;
   align-items: center;
+}
+
+.store-preview-img {
+  flex: auto;
+  height: 75px;
+  width: 75px;
+}
+
+.store-preview-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .store-preview-icon svg {
@@ -957,4 +1019,221 @@ ol.terms-list ol.terms-inner-list > li:before {
   font-weight: 700;
   font-size: 12px;
   line-height: 10px;
+}
+
+.copy-box {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.copy-button {
+  padding: 0;
+  background: #ff0000;
+  color: #fff;
+  padding: 9px 6px;
+  align-self: flex-end;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.copy-button:hover,
+.copy-button:focus {
+  background: #ff0000;
+  opacity: 1;
+}
+
+.edit-button {
+  color: #ff0000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 600;
+}
+
+.mg-b-22 {
+  margin-bottom: 22px;
+}
+
+/* a.disabled {
+  pointer-events: none;
+  cursor: no-drop;
+} */
+a.disabled:hover {
+  color: inherit;
+  cursor: no-drop;
+}
+
+.store-disabled {
+  opacity: 0.2;
+  color: inherit;
+}
+
+.overlay-icon-container {
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+}
+
+.overlay-icon {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.overlay-icon-img {
+  opacity: 0.5;
+  height: 100%;
+  width: 100%;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.add-image-label {
+  background: #ff0000;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  opacity: 0.9;
+  margin: 0;
+  height: 50px;
+}
+
+.add-image-label:hover {
+  opacity: 1;
+}
+
+.add-image-label i {
+  padding: 15px 22px;
+}
+
+.mobile-action {
+  width: 100%;
+  display: none;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding: 0 15px;
+  margin-top: 18px;
+}
+
+.mobile-action .save-btn {
+  width: 130px;
+  margin-top: 10px;
+}
+
+.mobile-action-holder {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.mobile-action-holder button {
+  background-color: transparent;
+  padding: 0;
+  color: #ff0000;
+  font-size: 12px;
+  font-weight: 700;
+  margin-left: 20px;
+}
+
+.SideDrawer {
+  position: relative;
+}
+
+.SideDrawerButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+}
+
+.SideDrawerContent {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  height: 100%;
+  width: 300px;
+  background-color: #fff;
+  transition: left 0.3s ease-in-out;
+  z-index: 1;
+}
+
+.SideDrawerContent.open {
+  left: 0;
+}
+
+/*  /////  */
+
+.side-drawer {
+  position: fixed;
+  top: 0;
+  right: -351px; /* initially, the drawer is offscreen to the right */
+  height: 100%;
+  width: 351px;
+  background-color: white;
+  z-index: 1000;
+  transition: transform 0.3s ease-out; /* add a transition for the transform property */
+}
+
+.side-drawer.open {
+  transform: translateX(
+    -351px
+  ); /* when the drawer is open, move it to the left to appear on screen */
+}
+
+.drawer-close {
+  z-index: 300;
+  position: absolute;
+  right: 11px;
+  top: 11px;
+}
+
+.drawer-close-icon {
+  font-size: 24px;
+  color: #000;
+}
+
+.show-drawer .aside-backdrop {
+  opacity: 1;
+  visibility: visible;
+}
+
+.preview-save-btn {
+  max-width: 337px;
+}
+
+@media screen and (max-width: 600px) {
+  .d-none-sm {
+    display: none;
+  }
+  .copy-box {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .copy-button {
+    align-self: flex-start;
+    margin-top: 16px;
+  }
+  .edit-button {
+    margin-top: 16px;
+  }
+  .mobile-action {
+    display: flex;
+  }
+}
+@media screen and (max-width: 768px) {
+  .mobile-action {
+    display: flex;
+  }
+  .d-none-sm {
+    display: none;
+  }
+  .content-body-store {
+    overflow-y: initial;
+  }
+  .store-banner {
+    height: 60px;
+  }
 }
