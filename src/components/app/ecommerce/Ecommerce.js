@@ -49,10 +49,10 @@ const Ecommerce = () => {
   }, [dispatch, user?.user.id]);
 
   useEffect(() => {
-    if (!loading && store && Object.keys(store)?.length === 0) {
+    if (!store) {
       navigate("/app/ecommerce/create-store");
     }
-  }, [navigate, store, loading]);
+  }, [navigate, store]);
 
   const setStoreData = () => {
     const data = {

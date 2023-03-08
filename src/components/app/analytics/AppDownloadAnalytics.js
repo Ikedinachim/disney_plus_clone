@@ -10,7 +10,9 @@ import {
 } from "../../../actions/campaignActions";
 import { getBitlyCount } from "../../../actions/analyticsActions";
 import Loader from "../../loader";
-import ActionsChart from "./SmartSms Chart/ActionsChart";
+// import ActionsChart from "./SmartSms Chart/ActionsChart";
+
+import AppDownloadActionsChart from "./AppDownload Chart/AppDownloadActionsChart";
 
 const AppDownloadAnalytics = () => {
   const { id } = useParams();
@@ -150,7 +152,7 @@ const AppDownloadAnalytics = () => {
                 </div>
               </div>
               <div className="card-body">
-                <ActionsChart />
+                <AppDownloadActionsChart />
               </div>
             </div>
           </div>

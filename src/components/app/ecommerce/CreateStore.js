@@ -266,7 +266,7 @@ const CreateStore = () => {
   }, [navigate, dispatch, error, createStore, pathname]);
 
   useEffect(() => {
-    if (Object.keys(store)?.length !== 0) {
+    if (store !== null) {
       navigate("/app/ecommerce");
     }
   }, [navigate, store]);
