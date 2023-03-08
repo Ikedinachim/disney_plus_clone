@@ -115,7 +115,13 @@ export const getStoreDataAction = (userId) => async (dispatch) => {
         type: GET_STORE_SUCCESS,
         payload: data.store,
       });
+    } else if (!data.store) {
+      dispatch({
+        type: GET_STORE_FAIL,
+        payload: "Create Store to proceed",
+      });
     } else {
+      console.log(data);
       dispatch({
         type: GET_STORE_FAIL,
         payload: "Something went wrong!",
