@@ -357,6 +357,8 @@ thead,
   width: 100% !important;
   table-layout: fixed;
 }
+
+
 /* X-Small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) {
   .started-btn {
@@ -591,3 +593,4 @@ table.dataTable thead th {
   border: 2px solid #d3d6f4;
   border-radius: 5px;
 }
+
