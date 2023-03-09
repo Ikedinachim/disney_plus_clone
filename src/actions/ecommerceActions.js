@@ -19,7 +19,7 @@ const axios = Axios.create({
 });
 
 // Create New Ecommerce Store Action
-export const createStoreAction = (storeData, storeId) => async (dispatch) => {
+export const createStoreAction = (storeData, userId) => async (dispatch) => {
   try {
     dispatch({ type: CREATE_STORE_REQUEST });
     let user = JSON.parse(sessionStorage.getItem("user"));
@@ -31,11 +31,7 @@ export const createStoreAction = (storeData, storeId) => async (dispatch) => {
         Authorization: `Bearer ${token}`,
       },
     };
-    const { data } = await axios.post(
-      `store/create/${storeId}`,
-      storeData,
-      config
-    );
+    const { data } = await axios.post(`store/create/`, storeData, config);
 
     if (data.success) {
       dispatch({
