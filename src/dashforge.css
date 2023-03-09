@@ -2376,18 +2376,17 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #fff;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 102, 0, 1) 0%,
-    rgba(255, 31, 0, 1) 100%
-  );
+  background: linear-gradient(180deg, #ff6600 0%, #ac0303 86.1%);
+  opacity: 0.75;
   border: none;
+  font-weight: 700;
   /* border-color: #FF1F00; */
 }
 .btn-primary:hover {
   color: #fff;
-  background-color: #ff1f00;
-  border-color: #ff1f00;
+  opacity: 1.75;
+  /* background-color: #ff1f00;
+  border-color: #ff1f00; */
 }
 .btn-primary:focus,
 .btn-primary.focus {
@@ -2658,6 +2657,7 @@ fieldset:disabled a.btn {
 .btn-outline-primary {
   color: #ff1f00;
   border-color: #ff1f00;
+  font-weight: 700;
 }
 .btn-outline-primary:hover {
   color: #fff;

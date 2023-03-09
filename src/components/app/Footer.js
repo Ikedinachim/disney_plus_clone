@@ -13,41 +13,50 @@ const Footer = () => {
                 <div className='icons-div'>
                     <img src="./assets/img/logowhite.png" alt="" />
                     <div className='icons'>
+                      <a href="https://twitter.com/MysogiAds">
+
                     <img src="./assets/img/twitter.png" alt="twitter-icon" />
+                      </a>
+                    <a href="https://www.instagram.com/mysogiads/">
                     <img src="./assets/img/instagram.png" alt="instagram-icon" />
-                    <img src="./assets/img/telegram.png" alt="telegram-icon" />
-                    <img src="./assets/img/youtube.png" alt="youtube-icon" />
+
+                    </a>
+                    <a href="https://www.linkedin.com/company/mysogicompanylimited/">
+                    <img src="./assets/img/linkin.png" alt="linkdin-icon" />
+
+                    </a>
+                    <a href="https://www.facebook.com/MysogiAdsCompany">
                     <img src="./assets/img/facebook.png" alt="facebook-icon" />
+
+                    </a>
                     </div>
                 </div>
             <div className='inner-footer'>
                 <div  className='links'>
-                    <h2>Products</h2>
-                    <a href="#">Visual Advert</a>
-                    <a href="#">Text Advert</a>
-                    <a href="#">Billboard Advert</a>
-                    <a href="#">One-to-one Advert</a>
-                    <a href="#">Ecommerce</a>
-                </div>
-                <div  className='links'>
-                    <h2>Help and Support</h2>
+                    <h2>Quick Links</h2>
+                    <a href="#about-us">About Us</a>
+                    <a href="#">Careers</a>
                     <a href="#">FAQs</a>
-                    <a href="#">Help center</a>
-                    <a href="#">Report an issue</a>
+                    <a href="#mysogi-contact">Help center</a>
                     
                 </div>
                 <div  className='links'>
-                    <h2>Contact Us</h2>
-                    <a href="#mysogi-contact">Send an email</a>
-                    <a href="#mysogi-contact">Talk to a Customer Rep</a>
+                    <h2>OUR SERVICES</h2>
+                    <a href="#section-two">Billboard Marketing</a>
+                    <a href="#mini-website">Ecommerce Mini Website</a>
+                    <a href="#section-three">Smart Ads SMS</a>
+                    <a href="#section-six">Influencer Marketing</a>
+                    <a href="#section-four">Digital Ads</a>
+                    <a href="#section-five">Voice Ads</a>
+                    
                 </div>
                 <div  className='links'>
-                    <h2>Legals</h2>
-                    <Link to={"/terms-of-use"}>
-                    Terms and Policy
-                  </Link>
-                    <a href="#">Privacy Policy</a>
+                    <h2>Contact Info</h2>
+                    <p>9, Adedoyin Ogungbe Crescent,Lekki Phase 1, Lagos, Nigeria.</p>
+                    <p>+2348120889773</p>
+                    <p>info@mysogi.com.ng</p>
                 </div>
+               
             </div>
         </div>
         

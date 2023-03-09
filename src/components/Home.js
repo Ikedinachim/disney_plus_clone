@@ -7,10 +7,11 @@ import { toast } from "react-toastify";
 
 import "rc-slider/assets/index.css";
 import Header from "./layout/Header";
-import Footer from './app/Footer';
+import Footer from "./app/Footer";
 import MetaData from "./layout/MetaData";
 import Loader from "./layout/Loader";
 import WhyContainer from "./widgets/WhyContainer/WhyContainer";
+import PriceList from "./widgets/priceList";
 const Home = () => {
   const baseURL = process.env.REACT_APP_MYSOGI_BASE_URL;
 
@@ -74,192 +75,313 @@ const Home = () => {
           <MetaData title={"Welcome to MysogiAds"} />
           <div className="w-100 overflow-x-hidden">
             <Header />
-            <section className="home">
-         
+            <section className="home-section">
+             <div className="home-section-container">
 
-        
-           
-              <div className="center-div">
+             
+             <div className="home">
 
-             <h1>Get your business to the target audience with <span>Mysogi</span></h1>
-             <div className='rectangle'></div>
-             <h3>Relied upon to get constant engagement with audience and provide the win your organisation needs.</h3>
-             <button className='get-started-btn'>
-                 Get Started
-             </button>
-              </div>
-             <div className='description-div'>
-         <p>Mysogi Company Limited is a tech company that specializes in Digital Marketing. Our State Of the Art web-based digital campaign manager enables Agencies, Corporations & SMEs to promote and target adverts to prospective customers.</p>
+           
 
-     </div>
-           
-         </section>
-     
-            <section className='section-two' > 
-             <div
-              className="vert-center"
-              data-aos="fade-left"
-              data-aos-duration={2000}
-              >
-            <div className='section-two-left-div'>
-                <h1>Billboard</h1>
-                <h1><span>Campaign</span></h1>
-                <h1>Ads</h1>
-                <div className='section-two-rectangle'></div>
-                <b>What's this?</b>
-                <p>
-                Capture attention with eye striking visuals and reach highly engaged users with prominent ad spots
-                </p>
-            </div>
-            </div>
-           
-            <img src="./assets/img/billboard_big.png"
-            alt="" 
-            className="section-two-img"
-            data-aos="fade-right"
-            data-aos-duration={2000}/>
-            
-        </section>
-        
-              <section className="bg-reddish">
-              <div className='section-three' > 
-            <img 
-            className="section-three-img"
-            // data-aos="fade-right"
-            data-aos-duration={2000}
-            src="./assets/img/section_three_pic.png" 
-            alt=""
-             />
-            <div
-              className="vert-center"
-              data-aos="fade-left"
-              data-aos-duration={2000}
-              >
-            <div className='section-three-right-div'>
-                <h1>One-to-one</h1>
-                <h1><span>SMS</span></h1>
-                <h1>Advert</h1>
-                <div className='section-three-rectangle'></div>
-                <b>What's this?</b>
-                <p>
-                Deliver information with a high success rate and support your digital marketing efforts 
-                </p>
-            </div>
-            </div>
-        </div>
-              </section>
-              <section className="section-four-section">
-                <div className="container pb-md-5">
-                 <div className='section-four' > 
-                 <div
-                  className="vert-center"
-                  data-aos="fade-left"
-                  data-aos-duration={2000}
-                  >
-            <div className='section-four-left-div'>
-                <h1>High</h1>
-                <h1><span>Visual</span></h1>
-                <h1>Display Ads</h1>
-                <div className='section-four-rectangle'></div>
-                <b>What's this?</b>
-                <p>
-                Capture attention with eye striking visuals and reach highly engaged users with prominent ad spots</p>
-            </div>
-            </div>
-            <img src="./assets/img/sectionfour.png"  
-              className="section-four-img "
-              data-aos="fade-left"
-              data-aos-duration={2000} alt="" />
-            
-        </div>
+              <div className="home-left-div">
+                <div className="home-left-div-container">
+              <h3 className="home-left-div-h3">Advertise. Connect. Convert.</h3>
+                <div className="home-rectangle">
+              <span className="home-rectangle-span">
+
+              </span>
+
                 </div>
-              </section>
-              <section className="bg-reddish">
-                
-              <div className='section-five' > 
-            <img src="./assets/img/sectionfive.png"
-              className="section-five-img"
-            data-aos="fade-right"
-            data-aos-duration={2000}
-            alt="" />
-            <div
-                              className="vert-center"
-                              data-aos="fade-left"
-                              data-aos-duration={2000}
-                            >
-            <div className='section-five-right-div'>
-            <h1>Phone</h1>
-                <h1><span>Call</span></h1>
-                <h1>Advert</h1>
-               
-                <div className='section-five-rectangle'></div>
-                <b>What's this?</b>
+
+                <h1 className="home-left-div-h1">Promote & Grow your business with <span>Mysogi</span> Ads.</h1>
+                <h2 className="home-left-div-h2">The most powerful advertisting solution for your brand</h2>
+                </div>
+                 <Link
+                        to={"/register"}
+                        className="btn btn-primary pd-x-40 btn-auth get-started-btn"
+                      >
+                        Get Started
+                      </Link>
+              </div>
+              <div className="home-img-container">
+              <img src="./assets/img/bg-1.png" alt="image" className="home-img-desktop" />
+              <img src="./assets/img/mobile-bg.png" className="home-img-mobile" />
+
+              </div>
+              </div>
+              </div> 
+              
+            </section>
+                      <div className="description-div" id="about-us">
                 <p>
-                Promote your brand on calls and enhance recall, especially in media dark region.
+                  Mysogi Company Limited is a tech company that specializes in
+                  Digital Marketing. Our State Of the Art web-based digital
+                  campaign manager enables Agencies, Corporations & SMEs to
+                  promote and target adverts to prospective customers.
                 </p>
-            </div>
-            </div>
+              </div>
+                {/* <button className="get-started-btn">Get Started</button> */}
             
-        </div>
-                </section>
-              <section>
-                
-               
-                <div className='section-six' > 
+             
+              
+              <div>
+
+            <section className=" " id="section-two">
+              <div className="col-md-12 section-two">
+
+              <div
+                className="vert-center col-md-6"
+                data-aos="fade-left"
+                data-aos-duration={2000}
+                >
+                <div className="section-two-left-div">
+                  <h1>Billboard</h1>
+                  <h1>
+                    <span>Campaign</span>
+                  </h1>
+                  <h1>Ads</h1>
+                  <div className="section-two-rectangle"></div>
+                  <b>What's this?</b>
+                  <p>
+                  Put your brand on digital billboards in just a few taps starting from 30k/day. No contracts and no upfront pricing required. Get the best quality for the cheapest price.
+                  </p>
+                </div>
+              </div>
+              <div className="section-two-img-container col-md-6">
+
+              <img
+                src="./assets/img/billboard.png"
+                alt=""
+                className="section-two-img "
+                data-aos="fade-right"
+                data-aos-duration={2000}
+                />
+                </div>
+              </div>
+
+           
+              <PriceList/>
+              
+            </section>
+            
+                </div>
+
+            <section className="bg-reddish" id="section-three">
+              <div className="section-three col-md-12">
+                <div className="section-three-img-container col-md-6">
+
+                <img
+                  className="section-three-img"
+                  data-aos="fade-right"
+                  data-aos-duration={2000}
+                  src="./assets/img/sectionthree.png"
+                  alt=""
+                  />
+                  </div>
                 <div
-                  className="vert-center"
+                  className="vert-center col-md-6"
                   data-aos="fade-left"
                   data-aos-duration={2000}
+                  
+                >
+                  <div className="section-three-right-div">
+                    <h1>Smart</h1>
+                    <h1>
+                      <span>SMS</span>
+                    </h1>
+                    <h1>Ads</h1>
+                   
+                    <div className="section-three-rectangle"></div>
+                    <b>What's this?</b>
+                    <p>
+                    The SMS marketing feature allows customers send targeted campaigns to their customers, which can be targeted by state, Town, Local government, gender, monthly spend, etc. This will ensure that customers are targeting the right demography for their products. SMART SMS marketing can be used to deliver everything that traditional marketing can deliver today.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section className="section-four-section" id="section-four">
+              <div className="container pb-md-5">
+                <div className="section-four col-md-12">
+                  <div 
+                    className="vert-center col-md-6"
+                    data-aos="fade-left"
+                    data-aos-duration={2000}
                   >
-        <div className='section-six-left-div'>
-            <h1>Influencer</h1>
-            <h1><span>Marketing</span></h1>
-            <h1>Ads</h1>
-            <div className='section-six-rectangle'></div>
-            <b>What's this?</b>
-            <p>
-            Deliver information with a high success rate and support your digital marketing efforts
-            </p>
-        </div>
-        </div>
-        <img 
-         data-aos="fade-left"
-         data-aos-duration={2000}
-         src="./assets/img/sectionsix.png" alt="" />
-        
-    </div>
-              </section>
-              <div className='why-mysogi-section'>
-            <h2><span>Why</span> Mysogi?</h2>
-            <div className='why-mysogi-container'>
-               <WhyContainer 
-               imagePath = "./assets/img/invest.png" 
-               title = 'High return on Investment' 
-               content = "We provide a well optimised system that allows you access to all you need to grow your business, thereby giving you your money's worth of service"/>
-                <WhyContainer 
-               imagePath = "./assets/img/increase.png" 
-               title = 'Increase Leads & Customers ' 
-               content = "We allow you to focus on the people who are searching for what your business offers. Watch your number increase with our transparent process."/>
-                <WhyContainer 
-               imagePath = "./assets/img/target.png" 
-               title = 'Target Demography' 
-               content = "We target on the basis of age, gender and location to communicate with relevance and precision."/>
-            </div>
-        </div>
-        <div className={'section-seven'} > 
-        <div className='section-seven-left-div'>
-            <h1>Build your Brand with <span>Mysogi</span></h1>
+                    <div className="section-four-left-div">
+                      <h1>High</h1>
+                      <h1>
+                        <span>Visual</span>
+                      </h1>
+                      <h1>Display Ads</h1>
+                      <div className="section-four-rectangle"></div>
+                      <b>What's this?</b>
+                      <p>
+                      Drive awareness on relevant display channels and drive traffic to your offer, using Mysogi's  programmatic display feature to reach your target audience when they consume relevant content online. We will  combine the best targeting approach to reach the audience.
+
+                      </p>
+                    </div>
+                  </div>
+                  <div className="col-md-6 section-two-img-container">
+                    <img
+                    src="./assets/img/sectionfour.png"
+                    className="section-four-img "
+                    data-aos="fade-right"
+                    data-aos-duration={2000}
+                    alt=""
+                    />
+                    </div>
+                </div>
+              </div>
+            </section>
+            <section className="bg-reddish" id="section-five">
+              <div className="section-five col-md-12">
+              <div className="col-md-6 section-five-img-container">
+                <img 
+                  src="./assets/img/Rectangle.png"
+                  className="section-five-img "
+                  data-aos="fade-right"
+                  data-aos-duration={2000}
+                  alt=""
+                  />
+                  </div>
+                <div
+                  className="vert-center col-md-6"
+                  data-aos="fade-left"
+                  data-aos-duration={2000}
+                >
+                  <div className="section-five-right-div">
+                    <h1>Voice</h1>
+                    <h1>
+                      <span>Ads</span>
+                    </h1>
+                  
+
+                    <div className="section-five-rectangle"></div>
+                    <b>What's this?</b>
+                    <p>
+                    Our Voice Ads Services seamlessly helps you deliver pre-recorded  messages and any other promotional information directly to customers, enlightening them about products, services,  new offers, discounts upgrades and a whole lot more, especially in media-dark regions.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section className="section-six-container" id="section-six">
+              <div className="section-six col-md-12">
+                <div
+                  className="vert-center col-md-6"
+                  data-aos="fade-left"
+                  data-aos-duration={2000}
+                >
+                  <div className="section-six-left-div ">
+                    <h1>Influencer</h1>
+                    <h1>
+                      <span>Marketing</span>
+                    </h1>
+                    <h1>Ads</h1>
+                    <div className="section-six-rectangle"></div>
+                    <b>What's this?</b>
+                    <p>
+                      Deliver information with a high success rate and support
+                      your digital marketing efforts with our network of influencers
+                    </p>
+                  </div>
+                </div>
+                <div className="col-md-6 section-three-img-container">
+                  <img
+                    className="section-six-img"
+                    data-aos="fade-right"
+                    data-aos-duration={2000}
+                    src="./assets/img/influencer.png"
+                    alt=""
+                  />
+                </div>
+              </div>
+            </section>
            
-            <p>The smartads company...</p>
-        <img className='mobImage' src="./assets/img/mysogipic.png" alt="" />
-            <button >
-                Join Mysogi Today
-            </button>
-        </div>
-        <img className='sogiImage' src="./assets/img/mysogiapp.png" alt="" />
-        
-    </div>
-              {/* <section id="mysogi-products">
+            <section className="bg-reddish section-three-container" id="mini-website" >
+              <div className="section-three col-md-12">
+                <div className="section-three-img-container col-md-6">
+
+                <img
+                  className="section-three-img"
+                  data-aos="fade-right"
+                  data-aos-duration={2000}
+                  src="./assets/img/miniwebsite.png"
+                  alt=""
+                  />
+                  </div>
+                <div
+                  className="vert-center col-md-6"
+                  data-aos="fade-left"
+                  data-aos-duration={2000}
+                  
+                >
+                  <div className="section-three-right-div">
+                    <h1>Mini</h1>
+                    <h1>
+                      <span>Website</span>
+                    </h1>
+                 
+                   
+                    <div className="section-three-rectangle"></div>
+                    <b>What's this?</b>
+                    <p>
+                    Want a personal e-commerce website,to showcase your goods and services in detail? Mysogi gives your brand/business a website in 5minutes for free!
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <div className="why-mysogi-section">
+              <h2>
+                <span>Why</span> Mysogi?
+              </h2>
+              <div className="why-mysogi-container">
+                <WhyContainer
+                  imagePath="./assets/img/invest.png"
+                  title="High return on Investment"
+                  content="We provide a well optimised system that allows you access to all you need to grow your business, thereby giving you your money's worth of service"
+                />
+                <WhyContainer
+                  imagePath="./assets/img/increase.png"
+                  title="Increase Leads & Customers "
+                  content="We allow you to focus on the people who are searching for what your business offers. Watch your number increase with our transparent process."
+                />
+                <WhyContainer
+                  imagePath="./assets/img/target.png"
+                  title="Target Demography"
+                  content="We target on the basis of age, gender and location to communicate with relevance and precision."
+                />
+              </div>
+            </div>
+            <section className="section-seven-container" id="section-seven">
+              <div className={"section-seven"}>
+                <div className="section-seven-left-div">
+                  <h1>
+                    Build your Brand with <span>Mysogi</span>
+                  </h1>
+
+                  <p>The smartads company...</p>
+                  <img
+                    className="mobImage"
+                    src="./assets/img/mysogipic.png"
+                    alt=""
+                  />
+                    <Link to={"/register"}> 
+                  <button>
+                    Join Mysogi Today
+                   </button>
+                    </Link>
+                </div>
+                <img
+                  className="sogiImage"
+                  src="./assets/img/mysogiapp.png"
+                  alt=""
+                />
+              </div>
+            </section>
+            {/* <section id="mysogi-products">
                 <div className="container pd-y-30 pd-md-t-70 pd-md-b-0">
                   <p className="tx-28 tx-com tx-center tx-bold mb-0">
                     Products
@@ -405,45 +527,183 @@ const Home = () => {
                   </div>
                 </div>
               </section> */}
-              {/* <section className="bg-reddish" id="mysogi-contact"> */}
-              <div className="ask-section">
+            {/* <section className="bg-reddish" id="mysogi-contact"> */}
 
-<div className="ask-section-left-div">
-    <p>
-        I’m a <span>brand owner</span>, looking to create <span>brand awareness</span>
-    </p>
-    <h1>Have questions? Let’s discuss.</h1>
-</div>
+            <div className="ask-section container-fluid" id="mysogi-contact">
+              <div className="ask-section-container col-md-12 mx-auto">
+                <div className=" align-items-center row mg-t-12">
 
-<div className="ask-section-right-div">
-    {/* <form action="submit"> */}
-        <div className="ask-section-input-div">
-            <p>First Name</p>
-            <input type="text" placeholder="Enter your first name" />
-        </div>
-        <div className="ask-section-input-div">
-            <p>Email address</p>
-            <input type="text" placeholder="Enter your email address" />
-        </div>
-        <div className="ask-section-phone-input">    
-            <p>Phone number</p>
-            <div className="ask-section-phone-div">
-                <input className="ask-section-phone-drop"type="number" step={1} min={+1} max="596" defaultValue="234" />
+                
+                <div className="ask-section-left-div col-md-6 col-sm-12">
+                  <p>
+                    I’m a <span>brand owner</span>, looking to create{" "}
+                    <span>brand awareness</span>
+                  </p>
+                  <h1>Have questions? Let’s discuss.</h1>
+                </div>
 
-                <input className="ask-section-phone-field" type="tel" />
+                {/* <div className="ask-section-right-div"> */}
+                <div className="col-md-6 mg-t-20 order-2col-sm-12">
+                  <div className="card bd-0 shadow ask-section-card" >
+                    <div className="card-body pd-lg-60">
+                      <form onSubmit={submitEmail}>
+                        <div className="form-row">
+                          <div className="form-group col-md-12">
+                            <label
+                              htmlFor="name"
+                              className="tx-14 tx-bold tx-com label-black mg-b-8"
+                            >
+                              Your Name
+                            </label>
+                            <input
+                              name="name"
+                              type="text"
+                              className="form-control contact"
+                              id="inputEmail4"
+                              placeholder="Enter Name"
+                              onChange={handleStateChange}
+                              value={name}
+                            />
+                          </div>
+                        </div>
+                        <div className="form-row">
+                          <div className="form-group col-md-12">
+                            <label
+                              htmlFor="name"
+                              className="tx-14 tx-bold tx-com label-black mg-b-8"
+                            >
+                              Phone Number
+                            </label>
+                            <input
+                              name="phone"
+                              type="text"
+                              className="form-control contact"
+                              placeholder="Enter Number"
+                              onChange={handleStateChange}
+                              value={phone}
+                            />
+                          </div>
+                        </div>
+                        <div className="form-row">
+                          <div className="form-group col-md-12">
+                            <label
+                              htmlFor="name"
+                              className="tx-14 tx-bold tx-com label-black mg-b-8"
+                            >
+                              Email Address
+                            </label>
+                            <input
+                              name="email"
+                              type="email"
+                              className="form-control contact"
+                              id="inputEmail4"
+                              placeholder="Enter Email Address"
+                              onChange={handleStateChange}
+                              value={email}
+                            />
+                          </div>
+                          <div className="form-group col-md-12">
+                                  <label
+                                    htmlFor="notes"
+                                    className="tx-14 tx-bold tx-com label-black mg-b-8"
+                                  >
+                                    Notes
+                                  </label>
+                                  <input
+                                    name="notes"
+                                    type="text"
+                                    className="form-control contact"
+                                    placeholder="Enter your question/complaint"
+                                    onChange={handleStateChange}
+                                    // value={notes}
+                                  />
+                                </div>
+                        </div>
+                        {/* <div className="form-row">
+                                <div className="form-group col-md-5">
+                                  <label
+                                    htmlFor="name"
+                                    className="tx-14 tx-com tx-blac mg-b-3"
+                                  >
+                                    Designation
+                                  </label>
+                                  <input
+                                    name="designation"
+                                    type="text"
+                                    className="form-control contact"
+                                    placeholder="Enter Designation"
+                                    onChange={handleStateChange}
+                                    value={designation}
+                                  />
+                                </div>
+                                <div className="form-group col-md-5">
+                                  <label
+                                    htmlFor="name"
+                                    className="tx-14 tx-com tx-blac mg-b-3"
+                                  >
+                                    Industry
+                                  </label>
+                                  <input
+                                    name="industry"
+                                    type="text"
+                                    className="form-control contact"
+                                    id="inputEmail4"
+                                    placeholder="Enter Industry"
+                                    onChange={handleStateChange}
+                                    value={industry}
+                                  />
+                                </div>
+                              </div>
+                              <div className="form-row">
+                                <div className="form-group col-md-5">
+                                  <label
+                                    htmlFor="name"
+                                    className="tx-14 tx-com tx-blac mg-b-3"
+                                  >
+                                    Employee Count
+                                  </label>
+                                  <input
+                                    name="employee"
+                                    type="text"
+                                    className="form-control contact"
+                                    placeholder="Enter Number"
+                                    onChange={handleStateChange}
+                                    value={employee}
+                                  />
+                                </div>
+                                <div className="form-group col-md-5">
+                                  <label
+                                    htmlFor="name"
+                                    className="tx-14 tx-com tx-blac mg-b-3"
+                                  >
+                                    City
+                                  </label>
+                                  <input
+                                    name="city"
+                                    type="text"
+                                    className="form-control contact"
+                                    placeholder="Enter City"
+                                    onChange={handleStateChange}
+                                    value={city}
+                                  />
+                                </div>
+                              </div> */}
+                        <button
+                          type="submit"
+                          className="btn btn-primary pd-x-40 mg-t-20"
+                        >
+                          Submit
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                  {/* </div> */}
+                </div>
+                </div>
+              </div>
             </div>
-        </div>
-        {/* <div className="ask-section-input-div">
-            <p>Notes</p>
-            <input type="text" placeholder="Enter your question/complaint" />
-        </div> */}
-        <button className="ask-section-submit-btn">Register</button>
-    {/* </form> */}
-</div>
-</div>
-              {/* </section> */}
-              
-           
+            {/* </section> */}
+
             <Footer />
           </div>
         </Fragment>

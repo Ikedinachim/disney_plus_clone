@@ -17,12 +17,12 @@ const Header = () => {
     <Fragment>
       <header>
      {!isAuthenticated && <div className="new-billboard">
-                <button  className="new-billboard-btn" >
-                    New Billboard!
-                </button>
-                 <h3>A new billboard is available</h3>
-                 <a href='#'>Learn more 
-                 <img src="../assets/arrow.png" alt="" />
+                <div  className="new-billboard-btn" onClick={null} >
+                    E-Commerce!
+                </div>
+                 <h3>Get your mini-website in 5 minutes</h3>
+                 <a href='#section-three'>Learn more 
+                 <img src="./assets/img/arrow.png" alt="" />
                  </a>
             </div>}
         <nav className="navbar navbar-expand-lg bg-white bd shadow-sm">
