@@ -210,6 +210,37 @@ const TargetAudience = ({
     },
   ];
 
+  const googleInterest = [
+    { value: 3, label: "Arts & Entertainment" },
+    { value: 47, label: "Autos & Vehicles" },
+    { value: 44, label: "Beauty & Fitness" },
+    { value: 22, label: "Books & Literature" },
+    { value: 12, label: "Business & Industrial" },
+    { value: 5, label: "Computers & Electronics" },
+    { value: 7, label: "Finance" },
+    { value: 71, label: "Food & Drink" },
+    { value: 8, label: "Games" },
+    { value: 45, label: "Health" },
+    { value: 65, label: "Hobbies & Leisure" },
+    { value: 11, label: "Home & Garden" },
+    { value: 13, label: "Internet & Telecom" },
+    { value: 958, label: "Jobs & Education" },
+    { value: 19, label: "Law & Government" },
+    { value: 16, label: "News" },
+    { value: 299, label: "Online Communities" },
+    { value: 14, label: "People & Society" },
+    { value: 66, label: "Pets & Animals" },
+    { value: 29, label: "Real Estate" },
+    { value: 533, label: "Reference" },
+    { value: 174, label: "Science" },
+    { value: 18, label: "Shopping" },
+    { value: 20, label: "Sports" },
+    { value: 67, label: "Travel & Transportation" },
+    { value: 5000, label: "World Localities" },
+  ];
+
+  const combinedInterests = propellerInterest.concat(googleInterest);
+
   const previewUploadedNumbers = values.targetAudience.slice(
     0,
     values.targetAudience.length
@@ -458,7 +489,7 @@ const TargetAudience = ({
                             defaultValue={values.interest}
                             onChange={handleChange("interest")}
                           >
-                            {propellerInterest.map((interest, i) => (
+                            {combinedInterests.map((interest, i) => (
                               <option value={interest.value} key={i}>
                                 {interest.label}
                               </option>

@@ -38,14 +38,12 @@ const AppDownloadAnalytics = () => {
     }
   }, [dispatch, error, bitlyCount.error]);
 
-  useMemo(() => {
+  useEffect(() => {
     if (singleAppCampaign?.bitlink) {
-      const link =
-        singleAppCampaign?.bitlink &&
-        singleAppCampaign.bitlink.split("//").pop();
+      const link = singleAppCampaign?.bitlink.split("//").pop();
       dispatch(getBitlyCount(link));
     }
-  }, [dispatch, singleAppCampaign]);
+  }, [dispatch, singleAppCampaign?.bitlink]);
 
   return (
     <Fragment>
@@ -152,6 +150,20 @@ const AppDownloadAnalytics = () => {
                 </div>
               </div>
               <div className="card-body">
+                <div className="analytics-data">
+                  <div className="analytics-card">
+                    <h4 className="tx-white tx-bold tx-18">Installations</h4>
+                    <h2 className="tx-white tx-normal">99</h2>
+                  </div>
+                  <div className="analytics-card">
+                    <h4 className="tx-white tx-bold tx-18">Impressions</h4>
+                    <h2 className="tx-white tx-normal">13.4K</h2>
+                  </div>
+                  <div className="analytics-card">
+                    <h4 className="tx-white tx-bold tx-18">Clicks</h4>
+                    <h2 className="tx-white tx-normal">466</h2>
+                  </div>
+                </div>
                 <AppDownloadActionsChart />
               </div>
             </div>

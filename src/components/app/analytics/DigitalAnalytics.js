@@ -89,7 +89,7 @@ const DigitalAnalytics = () => {
                                 src="../../../assets/img/Reach_Conversion_Goals.svg"
                                 className="tx-primary"
                                 alt=""
-                                srcset=""
+                                srcSet=""
                               />
                             </div>
                             <div>
