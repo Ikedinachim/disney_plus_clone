@@ -1,21 +1,21 @@
-import React, { Fragment } from "react";
-import { useSelector } from "react-redux";
+import React, { Fragment, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { MDBDataTable } from "mdbreact";
 import { DateTime } from "luxon";
 
+import { getViewFlierVideosCampaigns } from "../../../actions/campaignActions";
 import Loader from "../../loader";
 
 const AppDownloadAnalyticsTable = () => {
+  const dispatch = useDispatch();
   const { adLoading, viewAppDownloadCampaigns } = useSelector(
     (state) => state.viewAppDownloadCampaign || {}
   );
 
   // useEffect(() => {
-  //     dispatch(getViewFlierVideosCampaigns())
-  //     // dispatch(getWallet())
-
-  // }, [])
+  //   dispatch(getViewFlierVideosCampaigns());
+  // }, [dispatch]);
 
   const setViewAppDownloadCampaigns = () => {
     const data = {
@@ -80,7 +80,7 @@ const AppDownloadAnalyticsTable = () => {
             ).toFormat("dd MMM, yyyy"),
             status: (
               <span
-                className={`{"badge" ${
+                className={`badge d-flex-center ${
                   !campaign.isApproved ? "badge-pink" : "badge-active"
                 }`}
               >

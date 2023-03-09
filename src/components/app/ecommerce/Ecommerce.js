@@ -1,5 +1,5 @@
-import React, { Fragment, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { Fragment, useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import { DateTime } from "luxon";
@@ -7,140 +7,119 @@ import { toast } from "react-toastify";
 import Loader from "../../loader";
 import MetaData from "../../layout/MetaData";
 import { MDBDataTable } from "mdbreact";
-import { getSenderID, clearErrors } from "../../../actions/senderIDActions";
+import NumberFormat from "react-number-format";
+import {
+  getStoreDataAction,
+  clearErrors,
+} from "../../../actions/ecommerceActions";
 
 const Ecommerce = () => {
-  const { loading, error, senderID } = useSelector(
-    (state) => state.senderID || []
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const { loading, store, error } = useSelector((state) => state.store || []);
+  const { user } = useSelector((state) => state.auth);
+  const [textToCopy, setTextToCopy] = useState("");
+
+  const handleCopyClick = async () => {
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+      toast.success("Link copied to clipboard");
+    } catch (err) {
+      toast.error("Link not copied to clipboard");
+    }
+  };
+
+  useEffect(
+    () => {
+      if (error) {
+        toast.error(error);
+        dispatch(clearErrors());
+      }
+    }
+    // [dispatch, error, user?.user.id]
   );
-  // const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(getSenderID());
-  //   if (error) {
-  //     toast.error(error);
-  //     dispatch(clearErrors());
-  //   }
-  // }, [dispatch, error]);
+  useEffect(() => {
+    setTextToCopy(store?.url);
+  }, [store?.url]);
 
-  const setSenderID = () => {
+  useEffect(() => {
+    dispatch(getStoreDataAction(user?.user.id));
+  }, [dispatch, user?.user.id]);
+
+  useEffect(() => {
+    if (!store) {
+      navigate("/app/ecommerce/create-store");
+    }
+  }, [navigate, store]);
+
+  const setStoreData = () => {
     const data = {
       columns: [
         {
-          label: "SENDER ID",
-          field: "senderId",
+          label: "PRODUCT NAME",
+          field: "productName",
           sort: "asc",
         },
         {
-          label: "DATE REQUESTED",
-          field: "dataRequested",
+          label: "PRICE",
+          field: "price",
           sort: "asc",
+        },
+        {
+          label: "ORDER",
+          field: "order",
+        },
+        {
+          label: "DATE CREATED",
+          field: "dateCreated",
         },
         {
           label: "STATUS",
           field: "status",
         },
         {
-          label: "ADDITIONAL INFO",
-          field: "additionalInfo",
-        },
-        {
-          label: "ACTION",
-          field: "actions",
+          label: "",
+          field: "action",
         },
       ],
       rows: [],
     };
 
-    senderID.forEach((senderids) => {
+    store?.products?.forEach((store) => {
       data.rows.push({
-        // id: senderids._id,
-        // name: senderids.name,
-        senderId: senderids.senderId,
-        dataRequested: DateTime.fromJSDate(
-          new Date(senderids.createdAt)
+        productName: store?.name,
+        price: (
+          <NumberFormat
+            value={parseInt(store?.price)}
+            displayType={"text"}
+            thousandSeparator={true}
+            prefix={"₦"}
+          />
+        ),
+        order: store.senderId + " unit",
+        dateCreated: DateTime.fromJSDate(
+          new Date(store?.date_created)
         ).toFormat("dd MMM yyyy"),
         status: (
           <span
             className={`badge d-flex-center ${
-              senderids.telcoStatus === null ||
-              senderids.telcoStatus === "pending"
-                ? "badge-pink"
-                : ""
-            } ${senderids.telcoStatus === "approved" ? "badge-active" : ""} ${
-              senderids.telcoStatus === "declined" ? "badge-primary" : ""
-            }`}
+              store?.telcoStatus === "approved" ? "badge-active" : ""
+            } ${store.telcoStatus === "declined" ? "badge-primary" : ""}`}
           >
-            {senderids.telcoStatus === "pending" ||
-            senderids.telcoStatus === null
-              ? "Pending"
-              : null || senderids.telcoStatus === "declined"
-              ? "Declined"
-              : null || senderids.telcoStatus === "approved"
-              ? "Approved"
+            {store?.telcoStatus === "declined"
+              ? "Inactive"
+              : null || store?.telcoStatus === "approved"
+              ? "Activate"
               : null}
           </span>
         ),
-        // telcoStatus: (
-        //   <span
-        //     className={`{"badge" ${
-        //       senderids.status === null || senderids.telcoStatus === "pending"
-        //         ? "badge-pink"
-        //         : "badge-active"
-        //     }`}
-        //   >
-        //     {senderids.status === null || senderids.telcoStatus === "pending"
-        //       ? "Pending"
-        //       : "Approved"}
-        //   </span>
-        // ),
-        additionalInfo: senderids.additionalInfo
-          ? senderids.additionalInfo
-          : "-",
-        actions: (
+        action: (
           <Fragment>
-            <div className="dropdown">
-              <span
-                className
-                type="button"
-                id="dropdownMenuButton"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <span className="dot" />
-                <span className="dot" />
-                <span className="dot" />
-              </span>
-              <div
-                className="dropdown-menu"
-                aria-labelledby="dropdownMenuButton"
-              >
-                <a className="dropdown-item" href="./view-sender.html">
-                  {" "}
-                  <i
-                    data-feather="eye"
-                    className="favourite-icon mr-2 wd-15 ht-15"
-                  />
-                  View
-                </a>
-                <a className="dropdown-item" href>
-                  {" "}
-                  <i
-                    data-feather="edit"
-                    className="favourite-icon mr-2 wd-15 ht-15"
-                  />
-                  Edit
-                </a>
-                <a className="dropdown-item" href="#">
-                  <i
-                    data-feather="trash-2"
-                    className="favourite-icon mr-2 wd-15 ht-15"
-                  />
-                  Delete
-                </a>
-              </div>
-            </div>
+            <Link to="#" className="edit-button tx-underline">
+              Edit Product
+            </Link>
           </Fragment>
         ),
       });
@@ -148,74 +127,69 @@ const Ecommerce = () => {
     return data;
   };
 
-  // const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  //     [`&.${tableCellClasses.head}`]: {
-  //       backgroundColor: theme.palette.common.black,
-  //       color: theme.palette.common.white,
-  //     },
-  //     [`&.${tableCellClasses.body}`]: {
-  //       fontSize: 14,
-  //     },
-  // }));
-
-  // const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  //     '&:nth-of-type(odd)': {
-  //         backgroundColor: theme.palette.action.hover,
-  //     },
-  //     // hide last border
-  //     '&:last-child td, &:last-child th': {
-  //         border: 0,
-  //     },
-  // }));
-
-  // function createData(name, calories, fat, carbs, protein) {
-  //     return { name, calories, fat, carbs, protein };
-  // }
-
-  // const rows = [
-  //     createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  //     createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  //     createData('Eclair', 262, 16.0, 24, 6.0),
-  //     createData('Cupcake', 305, 3.7, 67, 4.3),
-  //     createData('Gingerbread', 356, 16.0, 49, 3.9),
-  // ];
-
-  // const deleteProductHandler = (id) => {
-  //     // dispatch(deleteProduct(id))
-  // }
-
   return (
     <Fragment>
       {loading ? (
         <Loader />
       ) : (
         <Fragment>
-          <MetaData title={"Sender ID"} />
+          <MetaData title={"Store"} />
           <div className="content-body">
             <div className="container pd-x-0">
-              <div className="d-flex flex-wrap justify-content-between">
-                <p className="mg-b-0 tx-26 tx-bold">Sender ID</p>
-                <p>
-                  <Link
-                    to="/app/request-sender-id"
-                    className="btn btn-primary w-100"
+              <div className="d-flex flex-wrap copy-box mg-b-22">
+                <div className="d-flex copy-box">
+                  <div className="d-flex flex-column mg-r-15">
+                    <p className="mg-b-0 tx-26 tx-bold">{store?.name}</p>
+                    <a target={"_blank"} rel="noreferrer" href={store?.url}>
+                      {store?.url}
+                    </a>
+                  </div>
+                  <button
+                    className="btn copy-button btn-primary"
+                    type="submit"
+                    onClick={handleCopyClick}
                   >
-                    {" "}
-                    New Sender ID
-                  </Link>
-                </p>
+                    <i className="fa fa-link mg-r-8"></i>
+                    Copy link
+                  </button>
+                </div>
+                <Link
+                  to="#"
+                  className="edit-button"
+                  state={{ prevPath: pathname }}
+                >
+                  <i className="fa fa-edit mg-b-8 tx-20"></i>
+                  Edit
+                </Link>
               </div>
               <div className="card card rounded bd-0 shadow-sm">
-                <div className="card-header bd-b-0 pd-b-0 pd-t-40 pd-md-x-30"></div>
-                <div className="card-body pd-md-x-30 pd-t- mg-t-20 mg-md-t-0">
+                <div className="card-header bd-b-0 pd-0 pd-md-x-30 mg-t-40 mg-b-30">
+                  <div className="w-100 d-flex justify-content-end pd-x-15">
+                    <div className="d-flex overflow-hidden">
+                      <a
+                        href={store?.url}
+                        target={"_blank"}
+                        rel="noreferrer"
+                        className="btn btn-outline-primary w-100"
+                      >
+                        View Store
+                      </a>
+                      <Link
+                        to="/app/ecommerce/add-product"
+                        className="btn btn-primary w-100 mg-l-20"
+                      >
+                        Add new product
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+                <div className="card-body pd-md-x-30 pd-t-0 mg-t-20 mg-md-t-0">
                   <MDBDataTable
                     responsive
-                    data={setSenderID()}
+                    data={setStoreData()}
                     className="px-3 scroll"
-                    bordered
-                    striped
+                    // bordered
                     hover
-                    checkboxFirstColumn
                   />
                 </div>
               </div>

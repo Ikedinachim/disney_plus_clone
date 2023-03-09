@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { MDBDataTable } from "mdbreact";
 // import NumberFormat from "react-number-format";
 
-// import { getDigitalCampaigns } from "../../../actions/campaignActions";
+import { getDigitalCampaigns } from "../../../actions/campaignActions";
 import Loader from "../../loader";
 import MetaData from "../../layout/MetaData";
 
@@ -63,7 +63,7 @@ const DigitalAnalyticsTable = () => {
           ).toFormat("dd MMM, yyyy"),
           status: (
             <span
-              className={`{"badge" ${
+              className={`badge d-flex-center ${
                 campaign.status === "Stopped"
                   ? "badge-primary"
                   : "" || campaign.status === "Working"

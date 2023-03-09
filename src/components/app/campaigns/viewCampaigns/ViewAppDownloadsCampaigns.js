@@ -96,7 +96,7 @@ const ViewAppDownloadsCampaigns = () => {
           ).toFormat("dd MMM, yyyy"),
           status: (
             <span
-              className={`{"badge" ${
+              className={`badge d-flex-center ${
                 !campaign.isApproved ? "badge-pink" : "badge-active"
               }`}
             >

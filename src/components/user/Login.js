@@ -197,6 +197,7 @@ const Login = () => {
                         >
                           Don’t have an account yet?
                         </span>
+                        &nbsp;
                         <span style={{ textDecoration: "underline" }}>
                           Sign Up.
                         </span>

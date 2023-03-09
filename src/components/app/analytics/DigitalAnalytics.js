@@ -24,12 +24,15 @@ const DigitalAnalytics = () => {
   } = useSelector((state) => state);
 
   useEffect(() => {
+    dispatch(getPropellerCampaign(propellerId));
+  }, [dispatch, propellerId]);
+
+  useEffect(() => {
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
     }
-    dispatch(getPropellerCampaign(propellerId));
-  }, [dispatch, error, propellerId]);
+  }, [dispatch, error]);
 
   return (
     <Fragment>

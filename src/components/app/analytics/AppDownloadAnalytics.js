@@ -10,7 +10,9 @@ import {
 } from "../../../actions/campaignActions";
 import { getBitlyCount } from "../../../actions/analyticsActions";
 import Loader from "../../loader";
-import ActionsChart from "./SmartSms Chart/ActionsChart";
+// import ActionsChart from "./SmartSms Chart/ActionsChart";
+
+import AppDownloadActionsChart from "./AppDownload Chart/AppDownloadActionsChart";
 
 const AppDownloadAnalytics = () => {
   const { id } = useParams();
@@ -23,13 +25,18 @@ const AppDownloadAnalytics = () => {
   const { bitlyCount } = useSelector((state) => state || {});
 
   useEffect(() => {
-    if (singleAppCampaign) {
-      dispatch(getSingleAppDownloadCampaigns(id));
-    } else if (error) {
+    dispatch(getSingleAppDownloadCampaigns(id));
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    if (error) {
       toast.error(error);
       dispatch(clearErrors());
+    } else if (bitlyCount.error) {
+      toast.error(bitlyCount.error);
+      dispatch(clearErrors());
     }
-  }, [dispatch, error, id]);
+  }, [dispatch, error, bitlyCount.error]);
 
   useMemo(() => {
     if (singleAppCampaign?.bitlink) {
@@ -37,11 +44,8 @@ const AppDownloadAnalytics = () => {
         singleAppCampaign?.bitlink &&
         singleAppCampaign.bitlink.split("//").pop();
       dispatch(getBitlyCount(link));
-    } else if (bitlyCount.error) {
-      toast.error(bitlyCount.error);
-      dispatch(clearErrors());
     }
-  }, [dispatch, bitlyCount.error, singleAppCampaign]);
+  }, [dispatch, singleAppCampaign]);
 
   return (
     <Fragment>
@@ -49,7 +53,7 @@ const AppDownloadAnalytics = () => {
         <Loader />
       ) : (
         <Fragment>
-          <MetaData title={"Campaign Details"} />
+          <MetaData title={"App Downloads Campaign Details"} />
           <div className="content-body">
             <div className="container pd-x-0">
               <div className="row justify-content-between">
@@ -148,7 +152,7 @@ const AppDownloadAnalytics = () => {
                 </div>
               </div>
               <div className="card-body">
-                <ActionsChart />
+                <AppDownloadActionsChart />
               </div>
             </div>
           </div>
