@@ -21,7 +21,7 @@ const Header = () => {
                     E-Commerce!
                 </div>
                  <h3>Get your mini-website in 5 minutes</h3>
-                 <a href='#section-three'>Learn more 
+                 <a href='#mini-website'>Learn more 
                  <img src="./assets/img/arrow.png" alt="" />
                  </a>
             </div>}
@@ -67,6 +67,14 @@ const Header = () => {
                         FAQ <span className="sr-only">(faq)</span>
                       </a>
                     </li> */}
+                    <li className="nav-item pd-x-20">
+                      <a
+                        className="nav-link tx-dark tx-bolder"
+                        href="#about-us"
+                      >
+                        About Us
+                      </a>
+                    </li>
                     <li className="nav-item pd-x-20">
                       <a
                         className="nav-link tx-dark tx-bolder"
