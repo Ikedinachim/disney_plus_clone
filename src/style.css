@@ -1217,7 +1217,13 @@ a.disabled:hover {
   min-width: 160px;
 }
 
-.analytics-card h4 {
+.analytics-card:hover {
+  cursor: pointer;
+}
+
+.analytics-card:hover h4,
+.analytics-card:hover h2 {
+  color: #353e43;
 }
 
 .analytics-card:nth-child(1) {

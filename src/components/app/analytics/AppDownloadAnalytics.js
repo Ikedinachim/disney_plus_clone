@@ -64,7 +64,7 @@ const AppDownloadAnalytics = () => {
                   </Link>
                 </div>
               </div>
-              <div className="row justify-content-around">
+              {/* <div className="row justify-content-around">
                 <div className="col-md-3 col-12 mg-t-20 mg-md-t-0">
                   <div className="card rounded bd-0 shadow-sm row">
                     <div className="card-body vh-36">
@@ -148,23 +148,29 @@ const AppDownloadAnalytics = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="card-body">
-                <div className="analytics-data">
-                  <div className="analytics-card">
-                    <h4 className="tx-white tx-bold tx-18">Installations</h4>
-                    <h2 className="tx-white tx-normal">99</h2>
-                  </div>
-                  <div className="analytics-card">
-                    <h4 className="tx-white tx-bold tx-18">Impressions</h4>
-                    <h2 className="tx-white tx-normal">13.4K</h2>
-                  </div>
-                  <div className="analytics-card">
-                    <h4 className="tx-white tx-bold tx-18">Clicks</h4>
-                    <h2 className="tx-white tx-normal">466</h2>
+              </div> */}
+              <div className="col-md-12 col-12 mg-t-20 mg-md-t-0">
+                <div className="card rounded bd-0 shadow-sm">
+                  <div className="card-body">
+                    <div className="analytics-data">
+                      <div className="analytics-card">
+                        <h4 className="tx-white tx-bold tx-18">
+                          Installations
+                        </h4>
+                        <h2 className="tx-white tx-normal">99</h2>
+                      </div>
+                      <div className="analytics-card">
+                        <h4 className="tx-white tx-bold tx-18">Impressions</h4>
+                        <h2 className="tx-white tx-normal">13.4K</h2>
+                      </div>
+                      <div className="analytics-card">
+                        <h4 className="tx-white tx-bold tx-18">Clicks</h4>
+                        <h2 className="tx-white tx-normal">466</h2>
+                      </div>
+                    </div>
+                    <AppDownloadActionsChart />
                   </div>
                 </div>
-                <AppDownloadActionsChart />
               </div>
             </div>
           </div>
