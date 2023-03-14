@@ -103,7 +103,7 @@ const Home = () => {
                         Get Started
                       </Link>
               </div>
-              <div className="home-img-container">
+              <div className="home-img-container ">
               <img src="./assets/img/bg-1.png" alt="image" className="home-img-desktop" />
               <img src="./assets/img/mobile-bg.png" className="home-img-mobile" />
 
@@ -152,7 +152,7 @@ const Home = () => {
               <img
                 src="./assets/img/billboard.png"
                 alt=""
-                className="section-two-img "
+                className="section-two-img  "
                 data-aos="fade-right"
                 data-aos-duration={2000}
                 />
@@ -166,7 +166,7 @@ const Home = () => {
             
                 </div>
 
-            <section className="bg-reddish" id="section-three">
+            <section className="bg-pinkish" id="section-three">
               <div className="section-three col-md-12">
                 <div className="section-three-img-container col-md-6">
 
@@ -234,7 +234,7 @@ const Home = () => {
                 </div>
               </div>
             </section>
-            <section className="bg-reddish" id="section-five">
+            <section className="bg-pinkish" id="section-five">
               <div className="section-five col-md-12">
               <div className="col-md-6 section-five-img-container">
                 <img 
@@ -299,7 +299,7 @@ const Home = () => {
               </div>
             </section>
            
-            <section className="bg-reddish section-three-container" id="mini-website" >
+            <section className="bg-pinkish section-three-container" id="mini-website" >
               <div className="section-three col-md-12">
                 <div className="section-three-img-container col-md-6">
 
