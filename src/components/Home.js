@@ -333,6 +333,37 @@ const Home = () => {
                 </div>
               </div>
             </section>
+            <section className="section-eight-container" id="section-eight">
+              <div className="section-eight col-md-12">
+                <div
+                  className="vert-center col-md-6"
+                  data-aos="fade-left"
+                  data-aos-duration={2000}
+                >
+                  <div className="section-eight-left-div ">
+                    <h1>Apps</h1>
+                    <h1>
+                      <span>Download</span>
+                    </h1>
+                    <h1>Campaign</h1>
+                    <div className="section-eight-rectangle"></div>
+                    <b>What's this?</b>
+                    <p>
+                    Mysogi Ads App Download Channel is a powerful platform that helps you create and manage mobile app ad campaigns across multiple networks. With our easy-to-use interface, you can set up your campaigns in minutes, target your ideal audience, and track your results in real-time.
+                    </p>
+                  </div>
+                </div>
+                <div className="col-md-6 section-eight-img-container">
+                  <img
+                    className="section-eight-img"
+                    data-aos="fade-right"
+                    data-aos-duration={2000}
+                    src="./assets/img/campaign_img.png"
+                    alt=""
+                  />
+                </div>
+              </div>
+            </section>
             <div className="why-mysogi-section">
               <h2>
                 <span>Why</span> Mysogi?

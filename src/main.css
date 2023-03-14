@@ -979,7 +979,7 @@ top: -153px; */
   /* max-width:  65vw; */
   /* height: 414px; */
   /* width: 600px; */
-  margin-top: 119px;
+  margin-top: 44px;
 }
 .section-six-left-div h1{
 font-family: 'Montserrat';
@@ -1021,6 +1021,98 @@ margin-top: 24px;
 line-height: 29px;
 color: #121212;
 }
+.section-eight{
+  /* position: absolute; */
+  display: flex;
+  padding-left: 122px;
+  padding-right:151px ;
+  max-width: 1440px;
+  margin: 0 auto;
+  position: relative;
+  /* justify-content: center; */
+  box-sizing: border-box;
+  
+
+/* top: 4026px; */
+background: #FFFFFF;
+  z-index: 30;
+  /* width: 100vw;
+  height: 900px;
+  max-height: 100vh; */
+ 
+  
+}
+.section-eight-img{
+  position: relative;
+  z-index: 13;
+  top: -80px;
+  /* right: 230px; */
+  width: 100%;
+  overflow: visible;
+  height: 100%;
+  object-fit: contain;
+  overflow: visible;
+/* width: 60%;
+height: 1130px;
+right: 138px;
+top: -153px; */
+}
+.section-eight-img-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-eight-left-div{
+  position: relative;
+  z-index: 15;
+  /* max-width:  65vw; */
+  /* height: 414px; */
+  /* width: 600px; */
+  margin-top: 44px;
+}
+.section-eight-left-div h1{
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 700;
+font-size: 60px;
+line-height: 102.49%;
+color: #121212;
+margin: 0px;
+}
+.section-eight-rectangle{
+width: 105px;
+height: 3px;
+background: #FF6600;
+border-radius: 13px;
+margin-top: 16px;
+margin-bottom: 32px;
+}
+.section-eight-left-div h1 span{
+  color: #FF6600;
+}
+.section-eight-left-div b{
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 600;
+font-size: 24px;
+line-height: 32px;
+letter-spacing: -0.025em;
+color: #121212;
+}
+.section-eight-left-div p{
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 500;
+font-size: 24px;
+margin-top: 24px;
+/* width: 500px; */
+
+line-height: 29px;
+color: #121212;
+}
+
 
 
 
@@ -1533,12 +1625,8 @@ text-align: center;
 
 /* X-Small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) {
-  .section-two{
-    padding-bottom: 200px;
-  }
-  .section-two img{
-    margin-top: 10px;
-  }
+ 
+ 
   .home::before{
     width: 305.54px;
 height: 278.1px;
@@ -1646,6 +1734,9 @@ margin-bottom: 0px;
     top: 0;
   }
   .section-six-img{
+    top: 0;
+  }
+  .section-eight-img{
     top: 0;
   }
   
@@ -1832,8 +1923,46 @@ margin: 0px auto;
         
         
     }
-  .section-three-right-div{
-    max-width: calc(100vw - 22px);
+    .section-eight-left-div{
+      /* width: calc(100vw - 22px); */
+      /* max-width: 100vw; */
+     left: 0px;
+     margin-left: 22px;
+     margin-top: 10px;
+     
+  }
+  .section-eight{
+      position: relative;
+      flex-direction: column;
+      padding: 0px;
+      background-color: white;
+      z-index: 8;
+      height: fit-content;
+     
+      padding-bottom: 0px;
+  }
+  .section-eight-left-div p{
+      /* margin: 0px 22px; */
+      width:100%;
+      /* margin-right: 52px; */
+      /* width: 100%; */
+  }
+
+  .section-eight-img{
+    
+    overflow: visible;
+    position: relative;
+    width: 300px;
+    /* right: 20%; */
+    top: auto;
+     
+      
+     
+      
+      
+  }
+  .section-eight-right-div{
+    /* max-width: calc(100vw - 22px); */
    left: 0px;
    height: auto;
    margin-left: 22px;
@@ -1878,6 +2007,7 @@ margin: 0px auto;
 }
   .section-two{
   display: flex;
+  padding-bottom: 0px;
   padding-left: 22px;
   /* padding-right:71px ; */
   box-sizing: border-box;
@@ -1888,7 +2018,7 @@ margin: 0px auto;
   /* height: 130vh; */
 }
 .section-two-img-container{
-  /* width: 100vw; */
+  width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;

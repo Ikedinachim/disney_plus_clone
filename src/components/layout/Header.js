@@ -78,7 +78,7 @@ const Header = () => {
                     <li className="nav-item pd-x-20">
                       <a
                         className="nav-link tx-dark tx-bolder"
-                        href="#campaigns"
+                        href="#section-eight"
                       >
                         Campaigns
                       </a>
