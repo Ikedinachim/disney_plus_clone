@@ -4,7 +4,7 @@ import { Chart } from "react-google-charts";
 
 import { getOsCampaign } from "../../../../actions/analyticsActions";
 import { Spinner } from "react-bootstrap";
-import { width } from "@mui/system";
+// import { width } from "@mui/system";
 
 const OsChart = ({ propellerId, google }) => {
   const [chart, setChart] = useState(null);
@@ -19,7 +19,7 @@ const OsChart = ({ propellerId, google }) => {
   }, [dispatch, propellerId]);
 
   useEffect(() => {
-    if (google && !chart) { 
+    if (google && !chart) {
       const Adsreport = {
         title: "Os report",
         chartArea: { width: "50%" },
@@ -33,24 +33,23 @@ const OsChart = ({ propellerId, google }) => {
       data.addColumn("number", "Impressions");
       data.addColumn("number", "Clicks");
 
-
       for (const i in OsCampaigns) {
         row.push([
           OsCampaigns[i].os,
           OsCampaigns[i].impressions,
           OsCampaigns[i].clicks,
-
         ]);
       }
       data.addRows(row);
 
       const newChart = new google.visualization.BarChart(
-        document.getElementById('osChart'));
+        document.getElementById("osChart")
+      );
       newChart.draw(data, Adsreport);
-      setChart(newChart)
+      setChart(newChart);
     }
-  }, [chart, google, OsCampaigns])
-  
+  }, [chart, google, OsCampaigns]);
+
   return (
     <Fragment>
       <div className="col-md-6 col-12 mg-t-20 mg-md-t-0">
@@ -61,7 +60,7 @@ const OsChart = ({ propellerId, google }) => {
               <div
                 id="osChart"
                 className={!google ? "d-none" : ""}
-                style={{width: 400, height:300}}
+                style={{ width: 400, height: 300 }}
               ></div>
             </div>
           </div>
