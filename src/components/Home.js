@@ -103,7 +103,7 @@ const Home = () => {
                         Get Started
                       </Link>
               </div>
-              <div className="home-img-container">
+              <div className="home-img-container ">
               <img src="./assets/img/bg-1.png" alt="image" className="home-img-desktop" />
               <img src="./assets/img/mobile-bg.png" className="home-img-mobile" />
 
@@ -152,7 +152,7 @@ const Home = () => {
               <img
                 src="./assets/img/billboard.png"
                 alt=""
-                className="section-two-img "
+                className="section-two-img  "
                 data-aos="fade-right"
                 data-aos-duration={2000}
                 />
@@ -166,7 +166,7 @@ const Home = () => {
             
                 </div>
 
-            <section className="bg-reddish" id="section-three">
+            <section className="bg-pinkish" id="section-three">
               <div className="section-three col-md-12">
                 <div className="section-three-img-container col-md-6">
 
@@ -234,7 +234,7 @@ const Home = () => {
                 </div>
               </div>
             </section>
-            <section className="bg-reddish" id="section-five">
+            <section className="bg-pinkish" id="section-five">
               <div className="section-five col-md-12">
               <div className="col-md-6 section-five-img-container">
                 <img 
@@ -299,7 +299,7 @@ const Home = () => {
               </div>
             </section>
            
-            <section className="bg-reddish section-three-container" id="mini-website" >
+            <section className="bg-pinkish section-three-container" id="mini-website" >
               <div className="section-three col-md-12">
                 <div className="section-three-img-container col-md-6">
 
@@ -330,6 +330,37 @@ const Home = () => {
                     Want a personal e-commerce website,to showcase your goods and services in detail? Mysogi gives your brand/business a website in 5minutes for free!
                     </p>
                   </div>
+                </div>
+              </div>
+            </section>
+            <section className="section-eight-container" id="section-eight">
+              <div className="section-eight col-md-12">
+                <div
+                  className="vert-center col-md-6"
+                  data-aos="fade-left"
+                  data-aos-duration={2000}
+                >
+                  <div className="section-eight-left-div ">
+                    <h1>Apps</h1>
+                    <h1>
+                      <span>Download</span>
+                    </h1>
+                    <h1>Campaign</h1>
+                    <div className="section-eight-rectangle"></div>
+                    <b>What's this?</b>
+                    <p>
+                    Mysogi Ads App Download Channel is a powerful platform that helps you create and manage mobile app ad campaigns across multiple networks. With our easy-to-use interface, you can set up your campaigns in minutes, target your ideal audience, and track your results in real-time.
+                    </p>
+                  </div>
+                </div>
+                <div className="col-md-6 section-eight-img-container">
+                  <img
+                    className="section-eight-img"
+                    data-aos="fade-right"
+                    data-aos-duration={2000}
+                    src="./assets/img/campaign_img.png"
+                    alt=""
+                  />
                 </div>
               </div>
             </section>

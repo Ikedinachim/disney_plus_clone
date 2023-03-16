@@ -53,7 +53,7 @@ const Footer = () => {
                 <div  className='links'>
                     <h2>Contact Info</h2>
                     <p>9, Adedoyin Ogungbe Crescent,Lekki Phase 1, Lagos, Nigeria.</p>
-                    <p>+2348120889773</p>
+                    <p>+234 812 088 9773</p>
                     <p>info@mysogi.com.ng</p>
                 </div>
                
