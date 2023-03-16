@@ -50,6 +50,17 @@ const axios = Axios.create({
   baseURL,
 });
 
+// Add an interceptor for error handling
+axios.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const message =
+      error.response?.data?.message ||
+      "Something went wrong. Please try again.";
+    return Promise.reject(new Error(message));
+  }
+);
+
 // Login
 export const login = (username, password) => async (dispatch) => {
   try {

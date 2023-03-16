@@ -25,7 +25,7 @@ const CreateCampaign = () => {
 
   //////
   window.history.replaceState({}, document.title);
-  const isEcommere = location?.state?.prevPath === "/app/ecommerce";
+  const isEcommerce = location?.state?.prevPath === "/app/ecommerce";
   /////
 
   useEffect(() => {
@@ -51,7 +51,9 @@ const CreateCampaign = () => {
         <Loader />
       ) : (
         <Fragment>
-          <MetaData title={"Create a Campaign"} />
+          <MetaData
+            title={isEcommerce ? "Promote store" : "Create a Campaign"}
+          />
           <div className="content-body">
             <div className="container pd-x-0">
               <div className="pd-y-20">
@@ -69,7 +71,9 @@ const CreateCampaign = () => {
                   />
                 </div>
                 <div className="pd-md-y-40">
-                  <p className="tx-24 tx-bold mb-1">Create a campaign!</p>
+                  <p className="tx-24 tx-bold mb-1">
+                    {isEcommerce ? "Promote store" : "Create a campaign!"}
+                  </p>
                   <p className="tx-14">
                     Select the goal that would make the campaign successful for
                     you
@@ -78,13 +82,13 @@ const CreateCampaign = () => {
                     <div className="col-md-6 col-lg-4 col-12 mg-t-20">
                       <Link
                         to="/app/campaign/billboard"
-                        className={`tx-dark ${isEcommere ? "disabled" : ""}`}
-                        onClick={isEcommere ? preventClick : null}
+                        className={`tx-dark ${isEcommerce ? "disabled" : ""}`}
+                        onClick={isEcommerce ? preventClick : null}
                       >
                         <div className="card card-height rounded bd-0 shadow-sm">
                           <div
                             className={`card-body tx-center pd-x-12 ${
-                              isEcommere ? "store-disabled" : ""
+                              isEcommerce ? "store-disabled" : ""
                             }`}
                           >
                             <img
@@ -108,13 +112,13 @@ const CreateCampaign = () => {
                     <div className="col-md-6 col-lg-4 col-12 mg-t-20">
                       <Link
                         to="/app/campaign/sms"
-                        className={`tx-dark ${isEcommere ? "disabled" : ""}`}
-                        onClick={isEcommere ? preventClick : null}
+                        className={`tx-dark ${isEcommerce ? "disabled" : ""}`}
+                        onClick={isEcommerce ? preventClick : null}
                       >
                         <div className="card card-height rounded bd-0 shadow-sm">
                           <div
                             className={`card-body tx-center pd-x-12 pd-md-x-30 ${
-                              isEcommere ? "store-disabled" : ""
+                              isEcommerce ? "store-disabled" : ""
                             }`}
                           >
                             <img src={FlashSms} alt="" className="img-fluid" />
@@ -129,7 +133,11 @@ const CreateCampaign = () => {
                       </Link>
                     </div>
                     <div className="col-md-6 col-lg-4 col-12 mg-t-20">
-                      <Link to="/app/campaign/smart-ads" className="tx-dark">
+                      <Link
+                        to="/app/campaign/smart-ads"
+                        state={{ fromStore: isEcommerce }}
+                        className="tx-dark"
+                      >
                         <div className="card card-height rounded bd-0 shadow-sm">
                           <div className="card-body tx-center pd-x-12">
                             <img src={Flier} alt="" className="img-fluid" />
@@ -147,7 +155,11 @@ const CreateCampaign = () => {
                       </Link>
                     </div>
                     <div className="col-md-6 col-lg-4 col-12 mg-t-20">
-                      <Link to="/app/campaign/influencer" className="tx-dark">
+                      <Link
+                        to="/app/campaign/influencer"
+                        state={{ fromStore: isEcommerce }}
+                        className="tx-dark"
+                      >
                         <div className="card card-height rounded bd-0 shadow-sm">
                           <div className="card-body tx-center pd-x-12 pd-md-x-30">
                             <img
@@ -171,13 +183,13 @@ const CreateCampaign = () => {
                     <div className="col-md-6 col-lg-4 col-12 mg-t-20">
                       <Link
                         to="/app/campaign/app-download"
-                        className={`tx-dark ${isEcommere ? "disabled" : ""}`}
-                        onClick={isEcommere ? preventClick : null}
+                        className={`tx-dark ${isEcommerce ? "disabled" : ""}`}
+                        onClick={isEcommerce ? preventClick : null}
                       >
                         <div className="card card-height rounded bd-0 shadow-sm">
                           <div
                             className={`card-body tx-center pd-x-12 ${
-                              isEcommere ? "store-disabled" : ""
+                              isEcommerce ? "store-disabled" : ""
                             }`}
                           >
                             <img src={Phone} alt="" className="img-fluid" />

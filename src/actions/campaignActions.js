@@ -117,6 +117,27 @@ const billBoardAxios = Axios.create({
   baseURL: billboardBaseUrl,
 });
 
+// Add an interceptor for error handling
+billBoardAxios.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const message =
+      error.response?.data?.message ||
+      "Something went wrong. Please try again.";
+    return Promise.reject(new Error(message));
+  }
+);
+
+filterContactAxios.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const message =
+      error.response?.data?.message ||
+      "Something went wrong. Please try again.";
+    return Promise.reject(new Error(message));
+  }
+);
+
 // Create SMS Campaign Action
 export const createSmsCampaignAction =
   (smsCampaignData) => async (dispatch) => {
@@ -719,14 +740,6 @@ export const getFilteredContactList =
   (filterContactData) => async (dispatch) => {
     try {
       dispatch({ type: GET_FILTERED_CONTACT_LIST_REQUEST });
-      // let user = JSON.parse(sessionStorage.getItem("user"));
-      // const token = user.user.token;
-
-      // const config = {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      // };
 
       const { data } = await filterContactAxios.post(
         "/filter-db/",
