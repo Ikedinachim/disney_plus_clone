@@ -76,54 +76,126 @@ export const data = {
 export const Data = [
   {
     id: 1,
+    datasets: {
+      label: "Installations",
+      data: [0, 10, 23, 30, 80, 66, 33],
+      backgroundColor: [
+        "#1a73e9",
+        "&quot;#ecf0f1",
+        "#50AF95",
+        "#f3ba2f",
+        "#2a71d0",
+      ],
+      borderColor: "#1a73e9",
+      borderWidth: 2,
+    },
+  },
+  {
+    id: 2,
+    datasets: {
+      label: "Impressions",
+      data: [0, 20, 55, 23, 30, 11, 2],
+      backgroundColor: [
+        "#d83025",
+        "&quot;#ecf0f1",
+        "#50AF95",
+        "#f3ba2f",
+        "#2a71d0",
+      ],
+      borderColor: "#d83025",
+      borderWidth: 2,
+    },
+  },
+  {
+    id: 3,
+    datasets: {
+      label: "Clicks",
+      data: [20, 0, 23, 39, 27, 92, 40],
+      backgroundColor: [
+        "#f9ab00",
+        "&quot;#ecf0f1",
+        "#50AF95",
+        "#f3ba2f",
+        "#2a71d0",
+      ],
+      borderColor: "#f9ab00",
+      borderWidth: 2,
+    },
+  },
+];
+
+export const Data2 = [
+  {
+    id: 1,
     year: 2016,
     userGain: 80000,
     userLost: 823,
+    data: [55, 23, 30],
   },
   {
     id: 2,
     year: 2017,
     userGain: 45677,
     userLost: 345,
+    data: [57, 23, 10],
   },
   {
     id: 3,
     year: 2018,
     userGain: 78888,
     userLost: 555,
+    data: [495, 83, 30],
   },
   {
     id: 4,
     year: 2019,
     userGain: 90000,
     userLost: 4555,
+    data: [7, 23, 190],
   },
   {
     id: 5,
     year: 2020,
     userGain: 4300,
     userLost: 234,
+    data: [50, 90, 75],
   },
 ];
 
 const AppDownloadActionsChart = () => {
   const [chartData, setChartData] = useState({
-    labels: Data.map((data) => data.year),
-    datasets: [
-      {
-        label: "Users Gained ",
-        data: Data.map((data) => data.userGain),
-        backgroundColor: [
-          "rgba(75,192,192,1)",
-          "&quot;#ecf0f1",
-          "#50AF95",
-          "#f3ba2f",
-          "#2a71d0",
-        ],
-        borderColor: "black",
-        borderWidth: 2,
-      },
-    ],
+    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    datasets: Data.map((data) => data.datasets),
+    // datasets: [
+    //   {
+    //     label: "Installations",
+    //     data: [55, 23, 30, 80, 66],
+    //     backgroundColor: [
+    //       "rgba(75,192,192,1)",
+    //       "&quot;#ecf0f1",
+    //       "#50AF95",
+    //       "#f3ba2f",
+    //       "#2a71d0",
+    //     ],
+    //     borderColor: "black",
+    //     borderWidth: 2,
+    //   },
+    // ],
+    // datasets: [
+    //   {
+    //     label: "Installs",
+    //     data: Data.map((data) => data.data),
+    //     backgroundColor: [
+    //       "rgba(75,192,192,1)",
+    //       "&quot;#ecf0f1",
+    //       "#50AF95",
+    //       "#f3ba2f",
+    //       "#2a71d0",
+    //     ],
+    //     borderColor: "black",
+    //     borderWidth: 2,
+    //   },
+    // ],
   });
   // const { loading, error, singleAppCampaign } = useSelector(
   //   (state) => state.singleAppCampaign || {}
@@ -157,7 +229,10 @@ const AppDownloadActionsChart = () => {
 
   // useEffect(() => {}, [singleAppCampaign]);
 
-  console.log("data", data);
+  // console.log(
+  //   "data",
+  //   Data.map((data) => data.datasets)
+  // );
 
   return (
     <Fragment>
@@ -165,12 +240,8 @@ const AppDownloadActionsChart = () => {
         <Loader />
       ) : ( */}
       <Fragment>
-        <div className="col-md-12 col-12 mg-t-20 mg-md-t-0">
-          <div className="card rounded bd-0 shadow-sm">
-            <div className="card-body">
-              <div></div>
-              <div className="d-flex flex-column">
-                {/* <Chart
+        <div className="mg-t-20">
+          {/* <Chart
                     chartType="PieChart"
                     data={data}
                     width="100%"
@@ -178,18 +249,15 @@ const AppDownloadActionsChart = () => {
                     options={ActionsPerformed}
                     legendToggle
                   /> */}
-                {/* <Chart
+          {/* <Chart
                   chartType="LineChart"
                   width="400px"
                   height="400px"
                   data={data}
                   options={options}
                 /> */}
-                {/* <Line options={options} data={data} />;
-                <LineChart chartData={chartData} /> */}
-              </div>
-            </div>
-          </div>
+          {/* <Line options={options} data={data} />; */}
+          <LineChart chartData={chartData} />
         </div>
       </Fragment>
       {/* )} */}

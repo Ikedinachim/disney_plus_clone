@@ -14,6 +14,7 @@ import {
   getFilteredContactList,
   clearErrors,
 } from "../../../../actions/campaignActions";
+import useDebounce from "../../../../_helpers/debounce.js";
 
 const TargetAudience = ({
   prevStep,
@@ -28,18 +29,17 @@ const TargetAudience = ({
   values,
   ageRangeFrom,
   ageRangeTo,
-  getCsvRawData,
   arrayState,
   arrayArea,
   rawLga,
   rawArea,
+  previewUploadedNumbers,
+  handleParsedFileData,
+  uploadedFileName,
 }) => {
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.filteredContactList || []);
 
-  const [parsedCsvData, setParsedCsvData] = useState([]);
-  const [uploadFileType, setUploadFileType] = useState("");
-  const [csvName, setCsvName] = useState();
   const { filteredContactList, fcLoading } = useSelector(
     (state) => state.filteredContactList || []
   );
@@ -53,11 +53,17 @@ const TargetAudience = ({
   date.setDate(date.getDate() + 0);
   endingDate.setDate(date.getDate() + 1);
 
-  useEffect(() => {
+  const handleDebouncedSearch = useCallback(() => {
     if (values.targetAudienceOption === "mysogidb") {
       dispatch(getFilteredContactList(filterOptions));
     }
-  }, [dispatch, filterOptions, values]);
+  }, [dispatch, filterOptions, values.targetAudienceOption]);
+
+  const resetDebounce = useDebounce(handleDebouncedSearch, 500);
+
+  useEffect(() => {
+    resetDebounce();
+  }, [resetDebounce, handleDebouncedSearch]);
 
   const csvData = [
     ["Numbers"],
@@ -210,38 +216,39 @@ const TargetAudience = ({
     },
   ];
 
-  const previewUploadedNumbers = values.targetAudience.slice(
-    0,
-    values.targetAudience.length
-  );
+  const googleInterest = [
+    { value: 3, label: "Arts & Entertainment" },
+    { value: 47, label: "Autos & Vehicles" },
+    { value: 44, label: "Beauty & Fitness" },
+    { value: 22, label: "Books & Literature" },
+    { value: 12, label: "Business & Industrial" },
+    { value: 5, label: "Computers & Electronics" },
+    { value: 7, label: "Finance" },
+    { value: 71, label: "Food & Drink" },
+    { value: 8, label: "Games" },
+    { value: 45, label: "Health" },
+    { value: 65, label: "Hobbies & Leisure" },
+    { value: 11, label: "Home & Garden" },
+    { value: 13, label: "Internet & Telecom" },
+    { value: 958, label: "Jobs & Education" },
+    { value: 19, label: "Law & Government" },
+    { value: 16, label: "News" },
+    { value: 299, label: "Online Communities" },
+    { value: 14, label: "People & Society" },
+    { value: 66, label: "Pets & Animals" },
+    { value: 29, label: "Real Estate" },
+    { value: 533, label: "Reference" },
+    { value: 174, label: "Science" },
+    { value: 18, label: "Shopping" },
+    { value: 20, label: "Sports" },
+    { value: 67, label: "Travel & Transportation" },
+    { value: 5000, label: "World Localities" },
+  ];
+
+  const combinedInterests = propellerInterest.concat(googleInterest);
 
   const Continue = (e) => {
     e.preventDefault();
-    // if (
-    //   values.channel !== "display_ads" &&
-    //   values.targetAudienceOption === "mysogidb" &&
-    //   filterOptions.ageRange === ""
-    // ) {
-    //   toast.error("Set a Valid Age Range");
-    // } else if (
-    //   values.channel !== "display_ads" &&
-    //   values.targetAudienceOption === "mysogidb" &&
-    //   filterOptions.gender === ""
-    // ) {
-    //   toast.error("Set Gender");
-    // } else if (
-    //   (values.targetAudienceOption === "mysogidb" ||
-    //     values.channel === "display_ads") &&
-    //   (filterOptions.state === "" || filterOptions.state === undefined)
-    // ) {
-    //   toast.error("Choose a State");
-    // } else if (
-    //   (values.targetAudienceOption === "mysogidb" ||
-    //     values.channel === "display_ads") &&
-    //   (filterOptions.lga === "" || filterOptions.lga === undefined)
-    // ) {
-    //   toast.error("Choose an LGA");
-    // } else
     if (
       values.channel !== "display_ads" &&
       values.targetAudienceOption === "manual_import" &&
@@ -282,38 +289,47 @@ const TargetAudience = ({
     prevStep();
   };
 
-  const parseFile = (file) => {
-    Papa.parse(file, {
-      header: true,
-      skipEmptyLines: true,
-      complete: (results) => {
-        setParsedCsvData(results.data);
-        setUploadFileType("csv");
-        setCsvName(file.name);
-      },
-    });
-  };
+  const parseFile = useCallback(
+    (file) => {
+      Papa.parse(file, {
+        header: true,
+        skipEmptyLines: true,
+        complete: (results) => {
+          handleParsedFileData(results.data, "csv", file.name);
+        },
+      });
+    },
+    [handleParsedFileData]
+  );
 
-  const showFile = (files) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const text = e.target.result;
-      const result = text.trim().split(",").join("").trim().split(/\s+/);
-      // const result = text.trim().split(/\r?\n/);
-      setParsedCsvData(result);
-      setCsvName(files[0].name);
-      setUploadFileType("txt");
-    };
-    reader.readAsText(files[0]);
-  };
+  const showFile = useCallback(
+    (files) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const text = e.target.result
+          .trim()
+          .split(",")
+          .join("")
+          .trim()
+          .split(/\s+/);
+        handleParsedFileData(text, "txt", files[0].name);
+      };
+      reader.readAsText(files[0]);
+    },
+    [handleParsedFileData]
+  );
 
-  const onDrop = useCallback((acceptedFiles) => {
-    if (acceptedFiles.length && acceptedFiles[0].type === "text/csv") {
-      parseFile(acceptedFiles[0]);
-    } else {
-      showFile(acceptedFiles);
-    }
-  }, []);
+  const onDrop = useCallback(
+    (acceptedFiles) => {
+      const [file] = acceptedFiles;
+      if (file.type === "text/csv") {
+        parseFile(file);
+      } else {
+        showFile(acceptedFiles);
+      }
+    },
+    [parseFile, showFile]
+  );
 
   const {
     getRootProps,
@@ -332,12 +348,11 @@ const TargetAudience = ({
       toast.error(error);
       dispatch(clearErrors());
     }
-    getCsvRawData(parsedCsvData, uploadFileType);
-  }, [dispatch, error, parsedCsvData, uploadFileType]);
+  }, [dispatch, error]);
 
   return (
     <Fragment>
-      <MetaData title={"Target Audience"} />
+      <MetaData title={"smart Ads Target Audience"} />
       <div className="content-body">
         <div className="container pd-x-0">
           <div className="card card-body rounded bd-0 shadow-sm pd-lg-x-50 pd-lg-y-30">
@@ -458,7 +473,7 @@ const TargetAudience = ({
                             defaultValue={values.interest}
                             onChange={handleChange("interest")}
                           >
-                            {propellerInterest.map((interest, i) => (
+                            {combinedInterests.map((interest, i) => (
                               <option value={interest.value} key={i}>
                                 {interest.label}
                               </option>
@@ -929,7 +944,7 @@ const TargetAudience = ({
                                     </p>
                                   )}
                                 </div>
-                                <p className="mb-0">{csvName}</p>
+                                <p className="mb-0">{uploadedFileName}</p>
                               </div>
                             </div>
                             <div className="col-md-6">
@@ -946,7 +961,7 @@ const TargetAudience = ({
                                     className="form-control mb-0"
                                     defaultValue={previewUploadedNumbers.concat()}
                                     disabled
-                                    resize={false}
+                                    // resize={false}
                                     rows={10}
                                     placeholder="Preview uploaded numbers"
                                   />

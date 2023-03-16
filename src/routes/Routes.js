@@ -16,6 +16,7 @@ import CreateCampaign from "../components/app/campaigns/CreateCampaign";
 import ViewCampaignTabs from "../components/app/campaigns/viewCampaigns/ViewCampaignTabs";
 import SmsStepForm from "../components/app/campaigns/smsCampaign/SmsStepForm";
 import FlierVideoStepForm from "../components/app/campaigns/flierVideoCampaign/FlierVideoStepForm";
+import SmartAdStepForm from "../components/app/campaigns/flierVideoCampaign/SmartAdStepForm";
 import AppDownloadStepForm from "../components/app/campaigns/appDownloadCampaign/AppDownloadStepForm";
 import InfluencerStepForm from "../components/app/campaigns/influencerCampaign/InfluencerStepForm";
 import BillBoardStepForm from "../components/app/campaigns/billBoardCampaign/BillBoardStepForm";
@@ -82,7 +83,8 @@ const MainRoutes = () => {
         <Route path="billing" element={<BillingOverview />} />
         <Route path="billing/fund-wallet" element={<FundWallet />} />
         <Route path="campaigns" element={<ViewCampaignTabs />} />
-        <Route path="campaign/smart-ads" element={<FlierVideoStepForm />} />
+        {/* <Route path="campaign/smart-ads" element={<FlierVideoStepForm />} /> */}
+        <Route path="campaign/smart-ads" element={<SmartAdStepForm />} />
         <Route path="campaign/app-download" element={<AppDownloadStepForm />} />
         <Route
           path="campaign/single-app-download/:id"
@@ -123,11 +125,11 @@ const MainRoutes = () => {
           <Route path="change-password" element={<ChangePassword />} />
         </Route>
         <Route path="ecommerce" element={<Ecommerce />} />
-        <Route path="ecommerce" element={<Ecommerce />} />
+        {/* <Route path="ecommerce" element={<Ecommerce />} /> */}
         <Route path="ecommerce/create-store" element={<CreateStore />} />
-        <Route path="ecommerce/edit-store" element={<EditStore />} />
+        <Route path="ecommerce/edit-store/:id" element={<EditStore />} />
         <Route path="ecommerce/add-product" element={<AddProduct />} />
-        <Route path="ecommerce/edit-product" element={<EditProduct />} />
+        <Route path="ecommerce/edit-product/:id" element={<EditProduct />} />
       </Route>
 
       {/** Protected Routes For Admin */}

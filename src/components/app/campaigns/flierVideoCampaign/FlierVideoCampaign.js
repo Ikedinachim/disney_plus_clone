@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 // import { useAlert } from "react-alert";
 import { toast } from "react-toastify";
@@ -28,7 +28,8 @@ const FlierVideoCampaign = ({
   videoError,
 }) => {
   const dispatch = useDispatch();
-  const { senderID, defaultSenderID, generalSender } = useSelector(
+  const location = useLocation();
+  const { senderID, defaultSenderID, generalSender, store } = useSelector(
     (state) => state || []
   );
 
@@ -38,6 +39,11 @@ const FlierVideoCampaign = ({
 
   // const maxTimeMinDay = new Date().setHours(19, 59, 0, 0);
   // const minTimeMaxDay = new Date().setHours(0, 0, 0, 0);
+
+  //////
+  window.history.replaceState({}, document.title);
+  const isEcommerce = location?.state?.fromStore;
+  /////
 
   const Continue = (e) => {
     e.preventDefault();
@@ -231,6 +237,7 @@ const FlierVideoCampaign = ({
                               placeholder="Enter URL customers can order or view your products through"
                               defaultValue={values.url}
                               onChange={handleChange("url")}
+                              disabled={isEcommerce}
                             />
                           </div>
                           {values.channel === "smart_sms" && (
@@ -455,34 +462,35 @@ const FlierVideoCampaign = ({
                                   Image dimension: 960 x 1280
                                 </p>
                                 <div className="row mg-0 mg-y-20 flex-wrap-reverse">
-                                  {values.attachments.map((imgNames, i) => (
-                                    <div
-                                      id={i}
-                                      key={i}
-                                      className="d-flex mg-r-10 mg-y-10"
-                                    >
-                                      <div className="d-flex justify-content-center tx-base align-items-center">
-                                        <img
-                                          src={imgNames}
-                                          alt={"attachments"}
-                                          className={"wd-60 ht-60 op-7"}
-                                        />
-                                      </div>
-                                      <div className="justify-content-start d-flex align-items-center">
-                                        <button
-                                          type="button"
-                                          className="btn pd-0 mg-l-10"
-                                          onClick={handleImageDelete}
-                                          id={imgNames}
-                                        >
-                                          <i
+                                  {values.channel === "display_ads" &&
+                                    values?.attachments.map((imgNames, i) => (
+                                      <div
+                                        id={i}
+                                        key={i}
+                                        className="d-flex mg-r-10 mg-y-10"
+                                      >
+                                        <div className="d-flex justify-content-center tx-base align-items-center">
+                                          <img
+                                            src={imgNames}
+                                            alt={"attachments"}
+                                            className={"wd-60 ht-60 op-7"}
+                                          />
+                                        </div>
+                                        <div className="justify-content-start d-flex align-items-center">
+                                          <button
+                                            type="button"
+                                            className="btn pd-0 mg-l-10"
+                                            onClick={handleImageDelete}
                                             id={imgNames}
-                                            className="fa fa-trash text-danger"
-                                          ></i>
-                                        </button>
+                                          >
+                                            <i
+                                              id={imgNames}
+                                              className="fa fa-trash text-danger"
+                                            ></i>
+                                          </button>
+                                        </div>
                                       </div>
-                                    </div>
-                                  ))}
+                                    ))}
                                 </div>
                               </div>
                             </div>
@@ -549,7 +557,13 @@ const FlierVideoCampaign = ({
                             {values.assetType === "image" ? (
                               <div>
                                 <img
-                                  src={values && values.attachment}
+                                  src={
+                                    values?.channel === "display_ads"
+                                      ? values?.attachments.length > 0
+                                        ? values?.attachments
+                                        : ""
+                                      : values?.attachment
+                                  }
                                   className="img-fluid mg-b-10"
                                   alt=""
                                 />

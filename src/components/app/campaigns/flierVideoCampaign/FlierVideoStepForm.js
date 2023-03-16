@@ -7,10 +7,6 @@ import axios from "axios";
 import PreviewCampaign from "./PreviewCampaign";
 import FundWalletFlierVideo from "./FundWalletFlierVideo";
 import { toast } from "react-toastify";
-// import { useDropzone } from "react-dropzone";
-
-// const buttonRef = React.createRef();
-
 export default class FlierVideoStepForm extends Component {
   state = {
     step: 1,
@@ -443,17 +439,6 @@ export default class FlierVideoStepForm extends Component {
     let personalTxtUpload = parsedCsvData.map((Numbers) => Numbers);
 
     let targetAudience = [];
-
-    // const getAudience2 = () => {
-    //   if (
-    //     personalUpload.length > 0 &&
-    //     targetAudienceOption === "manual_import"
-    //   ) {
-    //     return (targetAudience = personalUpload);
-    //   } else {
-    //     return (targetAudience = numbers.split(","));
-    //   }
-    // };
 
     const getAudience = () => {
       if (
