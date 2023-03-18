@@ -111,9 +111,15 @@ const PreviewCampaign = ({
     }
   };
 
+  // useEffect(() => {
+  //   if (filteredContactList && filteredContactList?.count) {
+  //     handleCount(filteredContactList.count);
+  //   }
+  // }, [filteredContactList]);
+
   useEffect(() => {
     handleCount(filteredContactList && filteredContactList.count);
-  }, [handleCount, filteredContactList]);
+  }, [filteredContactList, handleCount]);
 
   useEffect(() => {
     if (
@@ -409,7 +415,7 @@ const PreviewCampaign = ({
                                   </label>
                                   <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
                                     {" "}
-                                    {values.ageRange}
+                                    {filterOptions.ageRange}
                                   </span>
                                 </div>
                                 <div className="col-md-6 form-group">

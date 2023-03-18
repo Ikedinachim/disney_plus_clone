@@ -10,6 +10,12 @@ import {
   ADD_PRODUCT_REQUEST,
   ADD_PRODUCT_SUCCESS,
   ADD_PRODUCT_FAIL,
+  EDIT_PRODUCT_REQUEST,
+  EDIT_PRODUCT_SUCCESS,
+  EDIT_PRODUCT_FAIL,
+  EDIT_STORE_REQUEST,
+  EDIT_STORE_SUCCESS,
+  EDIT_STORE_FAIL,
   CLEAR_ERRORS,
 } from "../constants/ecommerceConstants";
 
@@ -19,7 +25,7 @@ const axios = Axios.create({
 });
 
 // Create New Ecommerce Store Action
-export const createStoreAction = (storeData, userId) => async (dispatch) => {
+export const createStoreAction = (storeData) => async (dispatch) => {
   try {
     dispatch({ type: CREATE_STORE_REQUEST });
     let user = JSON.parse(sessionStorage.getItem("user"));
@@ -52,7 +58,45 @@ export const createStoreAction = (storeData, userId) => async (dispatch) => {
   }
 };
 
-// Create New Ecommerce Store Action
+// Edit Ecommerce Store Action
+export const editStoreAction = (storeData, storeId) => async (dispatch) => {
+  try {
+    dispatch({ type: EDIT_STORE_REQUEST });
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const { data } = await axios.post(
+      `store/edit/${storeId}/`,
+      storeData,
+      config
+    );
+
+    if (data.success) {
+      dispatch({
+        type: EDIT_STORE_SUCCESS,
+        payload: data,
+      });
+    } else {
+      dispatch({
+        type: EDIT_STORE_FAIL,
+        payload: "Something went wrong!",
+      });
+    }
+  } catch (data) {
+    dispatch({
+      type: EDIT_STORE_FAIL,
+      payload: data.message,
+    });
+  }
+};
+
+// Create New Ecommerce Product Action
 export const addNewProductAction =
   (productData, storeId) => async (dispatch) => {
     try {
@@ -90,6 +134,44 @@ export const addNewProductAction =
       });
     }
   };
+
+// Edit Ecommerce Product Action
+export const editProductAction = (productData, storeId) => async (dispatch) => {
+  try {
+    dispatch({ type: EDIT_PRODUCT_REQUEST });
+    let user = JSON.parse(sessionStorage.getItem("user"));
+    const token = user.user.token;
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const { data } = await axios.post(
+      `store/product/edit/${storeId}/`,
+      productData,
+      config
+    );
+
+    if (data.success) {
+      dispatch({
+        type: EDIT_PRODUCT_SUCCESS,
+        payload: data,
+      });
+    } else {
+      dispatch({
+        type: EDIT_PRODUCT_FAIL,
+        payload: "Something went wrong!",
+      });
+    }
+  } catch (data) {
+    dispatch({
+      type: EDIT_PRODUCT_FAIL,
+      payload: data.message,
+    });
+  }
+};
 
 // Get Store Data Action
 export const getStoreDataAction = (userId) => async (dispatch) => {

@@ -1204,6 +1204,38 @@ a.disabled:hover {
   max-width: 337px;
 }
 
+.analytics-data {
+  display: flex;
+}
+
+.analytics-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 20px;
+  min-width: 160px;
+}
+
+.analytics-card:hover {
+  cursor: pointer;
+}
+
+.analytics-card:hover h4,
+.analytics-card:hover h2 {
+  color: #353e43;
+}
+
+.analytics-card:nth-child(1) {
+  background: #1a73e9;
+}
+.analytics-card:nth-child(2) {
+  background: #d83025;
+}
+.analytics-card:nth-child(3) {
+  background: #f9ab00;
+}
+
 @media screen and (max-width: 600px) {
   .d-none-sm {
     display: none;
@@ -1235,5 +1267,8 @@ a.disabled:hover {
   }
   .store-banner {
     height: 60px;
+  }
+  .analytics-data {
+    flex-direction: column;
   }
 }

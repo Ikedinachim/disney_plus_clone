@@ -67,10 +67,10 @@ const Ecommerce = () => {
           field: "price",
           sort: "asc",
         },
-        {
-          label: "ORDER",
-          field: "order",
-        },
+        // {
+        //   label: "ORDER",
+        //   field: "order",
+        // },
         {
           label: "DATE CREATED",
           field: "dateCreated",
@@ -98,7 +98,7 @@ const Ecommerce = () => {
             prefix={"₦"}
           />
         ),
-        order: store.senderId + " unit",
+        // order: store.senderId + " unit",
         dateCreated: DateTime.fromJSDate(
           new Date(store?.date_created)
         ).toFormat("dd MMM yyyy"),
@@ -106,18 +106,25 @@ const Ecommerce = () => {
           <span
             className={`badge d-flex-center ${
               store?.telcoStatus === "approved" ? "badge-active" : ""
-            } ${store.telcoStatus === "declined" ? "badge-primary" : ""}`}
+            } ${
+              store?.telcoStatus === "declined"
+                ? "badge-primary"
+                : "badge-active"
+            }`}
           >
             {store?.telcoStatus === "declined"
               ? "Inactive"
               : null || store?.telcoStatus === "approved"
-              ? "Activate"
-              : null}
+              ? "Active"
+              : "Active"}
           </span>
         ),
         action: (
           <Fragment>
-            <Link to="#" className="edit-button tx-underline">
+            <Link
+              to={`/app/ecommerce/edit-product/${store.product_id}`}
+              className="edit-button tx-underline"
+            >
               Edit Product
             </Link>
           </Fragment>
@@ -154,9 +161,8 @@ const Ecommerce = () => {
                   </button>
                 </div>
                 <Link
-                  to="#"
+                  to={`/app/ecommerce/edit-store/${store?.store_id}`}
                   className="edit-button"
-                  state={{ prevPath: pathname }}
                 >
                   <i className="fa fa-edit mg-b-8 tx-20"></i>
                   Edit
@@ -164,7 +170,16 @@ const Ecommerce = () => {
               </div>
               <div className="card card rounded bd-0 shadow-sm">
                 <div className="card-header bd-b-0 pd-0 pd-md-x-30 mg-t-40 mg-b-30">
-                  <div className="w-100 d-flex justify-content-end pd-x-15">
+                  <div className="w-100 d-flex justify-content-between pd-x-15">
+                    <div className="d-flex overflow-hidden">
+                      <Link
+                        to="/app/campaign/create"
+                        state={{ prevPath: pathname }}
+                        className="btn btn-primary w-100 mg-l-20"
+                      >
+                        Promote
+                      </Link>
+                    </div>
                     <div className="d-flex overflow-hidden">
                       <a
                         href={store?.url}
