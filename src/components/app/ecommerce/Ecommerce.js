@@ -30,23 +30,20 @@ const Ecommerce = () => {
     }
   };
 
-  useEffect(
-    () => {
-      if (error) {
-        toast.error(error);
-        dispatch(clearErrors());
-      }
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
     }
-    // [dispatch, error, user?.user.id]
-  );
+  });
 
   useEffect(() => {
     setTextToCopy(store?.url);
   }, [store?.url]);
 
   useEffect(() => {
-    dispatch(getStoreDataAction(user?.user.id));
-  }, [dispatch, user?.user.id]);
+    dispatch(getStoreDataAction(user?.user?.id));
+  }, [dispatch, user?.user?.id]);
 
   useEffect(() => {
     if (!store) {

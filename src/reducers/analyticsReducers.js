@@ -18,6 +18,9 @@ import {
   BITLY_CLICK_REQUEST,
   BITLY_CLICK_SUCCESS,
   BITLY_CLICK_FAIL,
+  GET_APP_DOWNLOAD_ANALYTICS_REQUEST,
+  GET_APP_DOWNLOAD_ANALYTICS_SUCCESS,
+  GET_APP_DOWNLOAD_ANALYTICS_FAIL,
   CLEAR_ERRORS,
 } from "../constants/analyticsConstants";
 
@@ -202,6 +205,40 @@ export const bitlyCountReducer = (state = { bitlyCounts: [] }, action) => {
     case BITLY_CLICK_FAIL:
       return {
         blLoading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+//Appdownload analytics reducer
+export const appDownloadAnalyticsReducer = (
+  state = { appDownloadAnalytics: {} },
+  action
+) => {
+  switch (action.type) {
+    case GET_APP_DOWNLOAD_ANALYTICS_REQUEST:
+      return {
+        analyticsLoading: true,
+      };
+
+    case GET_APP_DOWNLOAD_ANALYTICS_SUCCESS:
+      return {
+        analyticsLoading: false,
+        appDownloadAnalytics: action.payload,
+      };
+
+    case GET_APP_DOWNLOAD_ANALYTICS_FAIL:
+      return {
+        analyticsLoading: false,
         error: action.payload,
       };
 

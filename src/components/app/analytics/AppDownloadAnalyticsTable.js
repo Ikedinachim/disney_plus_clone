@@ -122,5 +122,5 @@ const AppDownloadAnalyticsTable = () => {
     </Fragment>
   );
 };
-
+//https://proxi.uat.com.ng/campaign/app_download/stats/1/
 export default AppDownloadAnalyticsTable;

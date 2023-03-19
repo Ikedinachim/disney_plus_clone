@@ -1,14 +1,18 @@
-import React, { Fragment, useEffect, useMemo } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
 import MetaData from "../../layout/MetaData";
+// import {
+//   getSingleAppDownloadCampaigns,
+//   clearErrors,
+// } from "../../../actions/campaignActions";
 import {
-  getSingleAppDownloadCampaigns,
+  getBitlyCount,
+  getAppdownloadAnalyticsAction,
   clearErrors,
-} from "../../../actions/campaignActions";
-import { getBitlyCount } from "../../../actions/analyticsActions";
+} from "../../../actions/analyticsActions";
 import Loader from "../../loader";
 // import ActionsChart from "./SmartSms Chart/ActionsChart";
 
@@ -18,36 +22,32 @@ const AppDownloadAnalytics = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const { loading, error, singleAppCampaign } = useSelector(
-    (state) => state.singleAppCampaign || {}
+  const { analyticsLoading, error, appDownloadAnalytics } = useSelector(
+    (state) => state.appDownloadAnalyticsData || {}
   );
 
-  const { bitlyCount } = useSelector((state) => state || {});
+  const formatNumber = (num) => {
+    if (num >= 1000) {
+      // Divide the number by 1000 and round it to one decimal place
+      num = (num / 1000).toFixed(1) + "k";
+    }
+    return num;
+  };
 
   useEffect(() => {
-    dispatch(getSingleAppDownloadCampaigns(id));
+    dispatch(getAppdownloadAnalyticsAction(id));
   }, [dispatch, id]);
 
   useEffect(() => {
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
-    } else if (bitlyCount.error) {
-      toast.error(bitlyCount.error);
-      dispatch(clearErrors());
     }
-  }, [dispatch, error, bitlyCount.error]);
-
-  useEffect(() => {
-    if (singleAppCampaign?.bitlink) {
-      const link = singleAppCampaign?.bitlink.split("//").pop();
-      dispatch(getBitlyCount(link));
-    }
-  }, [dispatch, singleAppCampaign?.bitlink]);
+  }, [dispatch, error]);
 
   return (
     <Fragment>
-      {loading || bitlyCount.blLoading ? (
+      {analyticsLoading ? (
         <Loader />
       ) : (
         <Fragment>
@@ -157,18 +157,26 @@ const AppDownloadAnalytics = () => {
                         <h4 className="tx-white tx-bold tx-18">
                           Installations
                         </h4>
-                        <h2 className="tx-white tx-normal">99</h2>
+                        <h2 className="tx-white tx-normal">
+                          {formatNumber(appDownloadAnalytics?.installations)}
+                        </h2>
                       </div>
                       <div className="analytics-card">
                         <h4 className="tx-white tx-bold tx-18">Impressions</h4>
-                        <h2 className="tx-white tx-normal">13.4K</h2>
+                        <h2 className="tx-white tx-normal">
+                          {formatNumber(appDownloadAnalytics?.impressions)}
+                        </h2>
                       </div>
                       <div className="analytics-card">
                         <h4 className="tx-white tx-bold tx-18">Clicks</h4>
-                        <h2 className="tx-white tx-normal">466</h2>
+                        <h2 className="tx-white tx-normal">
+                          {formatNumber(appDownloadAnalytics?.clicks)}
+                        </h2>
                       </div>
                     </div>
-                    <AppDownloadActionsChart />
+                    <AppDownloadActionsChart
+                      appDownloadAnalytics={appDownloadAnalytics}
+                    />
                   </div>
                 </div>
               </div>
