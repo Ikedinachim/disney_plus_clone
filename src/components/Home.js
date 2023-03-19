@@ -12,6 +12,7 @@ import MetaData from "./layout/MetaData";
 import Loader from "./layout/Loader";
 import WhyContainer from "./widgets/WhyContainer/WhyContainer";
 import PriceList from "./widgets/priceList";
+
 const Home = () => {
   const baseURL = process.env.REACT_APP_MYSOGI_BASE_URL;
 
