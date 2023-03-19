@@ -507,11 +507,11 @@ const SmartAdStepForm = () => {
 
   useEffect(() => {
     const setAssets = () => {
-      if (assetType === "image") {
+      if (assetType === "image" && channel === "smart_sms") {
         return imageUrl;
       } else if (assetType === "video") {
         return videoUrl;
-      }
+      } else return null;
     };
     const { videoUrl, videoError } = setYoutubeUrl(rawVideoUrl);
     setSmartAdsData((s) => ({
@@ -520,7 +520,7 @@ const SmartAdStepForm = () => {
       videoUrl,
       videoError,
     }));
-  }, [rawVideoUrl, assetType, imageUrl, videoUrl]);
+  }, [rawVideoUrl, assetType, imageUrl, channel, videoUrl]);
 
   const previewUploadedNumbers =
     targetAudienceOption === "manual_import"

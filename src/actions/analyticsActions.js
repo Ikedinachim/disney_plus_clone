@@ -21,12 +21,20 @@ import {
   BITLY_CLICK_REQUEST,
   BITLY_CLICK_SUCCESS,
   BITLY_CLICK_FAIL,
+  GET_APP_DOWNLOAD_ANALYTICS_REQUEST,
+  GET_APP_DOWNLOAD_ANALYTICS_SUCCESS,
+  GET_APP_DOWNLOAD_ANALYTICS_FAIL,
 } from "../constants/analyticsConstants";
 
 const baseURL = process.env.REACT_APP_MYSOGI_BASE_URL;
+const secondaryBaseUrl = process.env.REACT_APP_MYSOGI_BETA_URL;
 
 const axios = Axios.create({
   baseURL,
+});
+
+const secondaryAxios = Axios.create({
+  baseURL: secondaryBaseUrl,
 });
 
 //Get Statistics data
@@ -292,6 +300,44 @@ export const getBitlyCount = (links) => async (dispatch) => {
     });
   }
 };
+
+// Get Store Data Action
+export const getAppdownloadAnalyticsAction =
+  (campaignId) => async (dispatch) => {
+    try {
+      dispatch({ type: GET_APP_DOWNLOAD_ANALYTICS_REQUEST });
+      let user = JSON.parse(sessionStorage.getItem("user"));
+      const token = user.user.token;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await secondaryAxios.get(
+        `campaign/app_download/stats/${campaignId}/`,
+        config
+      );
+
+      if (data.success) {
+        dispatch({
+          type: GET_APP_DOWNLOAD_ANALYTICS_SUCCESS,
+          payload: data,
+        });
+      } else {
+        dispatch({
+          type: GET_APP_DOWNLOAD_ANALYTICS_FAIL,
+          payload: "Something went wrong!",
+        });
+      }
+    } catch (data) {
+      dispatch({
+        type: GET_APP_DOWNLOAD_ANALYTICS_FAIL,
+        payload: data.message,
+      });
+    }
+  };
 
 // Clear Errors
 export const clearErrors = () => async (dispatch) => {

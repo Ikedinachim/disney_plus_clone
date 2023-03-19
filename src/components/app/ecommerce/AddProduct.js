@@ -10,6 +10,7 @@ import Loader from "../../loader";
 import { ProgressBar } from "react-bootstrap";
 import {
   addNewProductAction,
+  getStoreDataAction,
   clearErrors,
 } from "../../../actions/ecommerceActions";
 import useAnalyticsEventTracker from "../../../_helpers/GoogleAnalytics/GoogleAnalytics";
@@ -25,6 +26,7 @@ const AddProduct = () => {
   const { loading, store, addProduct, error } = useSelector(
     (state) => state.store || []
   );
+  const { user } = useSelector((state) => state.auth);
   const [isUploading, setIsUploading] = useState(null);
   const [productBuild, setProductBuild] = useState([
     {
@@ -35,6 +37,7 @@ const AddProduct = () => {
       images: [],
     },
   ]);
+
   const [tempFormData, setTempFormData] = useState({
     id: Math.random().toString(16).slice(2),
     name: "",
@@ -241,12 +244,6 @@ const AddProduct = () => {
   }, [dispatch, navigate, error, addProduct]);
 
   useEffect(() => {
-    // const checkIfClickedOutside = (e) => {
-    //   if (!showDrawer && ref.current && !ref.current.contains(e.target)) {
-    //     setShowDrawer(false);
-    //   }
-    // };
-
     let backdrop = document.createElement("div");
 
     if (showDrawer) {
@@ -260,13 +257,6 @@ const AddProduct = () => {
       document.querySelector(".aside-backdrop") &&
         document.body.removeChild(document.querySelector(".aside-backdrop"));
     }
-
-    // document.addEventListener("mousedown", checkIfClickedOutside);
-
-    // return () => {
-    //   // Cleanup the event listener
-    //   document.removeEventListener("mousedown", checkIfClickedOutside);
-    // };
   }, [showDrawer, setShowDrawer]);
 
   useEffect(() => {
@@ -281,6 +271,10 @@ const AddProduct = () => {
       document.removeEventListener("click", handleClickOutside, true);
     };
   }, []);
+
+  useEffect(() => {
+    dispatch(getStoreDataAction(user?.user?.id));
+  }, [dispatch, user?.user?.id]);
 
   return (
     <Fragment>

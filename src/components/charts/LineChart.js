@@ -15,18 +15,6 @@ export const options = {
   },
 };
 
-const dataSample = {
-  plugins: {
-    title: {
-      display: true,
-      text: "Users Gained between 2016-2020",
-    },
-    legend: {
-      display: false,
-    },
-  },
-};
-
 const LineChart = ({ chartData }) => {
   return (
     <div className="chart-container">
