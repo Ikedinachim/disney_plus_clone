@@ -143,7 +143,7 @@ const Home = () => {
                   <div className="section-two-rectangle"></div>
                   <b>What's this?</b>
                   <p>
-                  Put your brand on digital billboards in just a few taps starting from 30k/day. No contracts and no upfront pricing required. Get the best quality for the cheapest price.
+                  Put your brand on digital billboards in just a few taps starting from 30k₦/day. No contracts and no upfront pricing required. Get the best quality for the cheapest price.
                   </p>
                 </div>
               </div>
@@ -282,8 +282,7 @@ const Home = () => {
                     <div className="section-six-rectangle"></div>
                     <b>What's this?</b>
                     <p>
-                      Deliver information with a high success rate and support
-                      your digital marketing efforts with our network of influencers
+                    The Mysogi platform aggregates influencers and makes it easy to access influencers that are registered on our platform. With Mysogi platform, it is as easy as typing what you need the specific influencer to post on his platform and the other part is basically taken care of from our platform.
                     </p>
                   </div>
                 </div>
