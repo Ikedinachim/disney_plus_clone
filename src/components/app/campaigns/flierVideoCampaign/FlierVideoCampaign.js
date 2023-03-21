@@ -125,6 +125,22 @@ const FlierVideoCampaign = ({
     dispatch(getGeneralSender());
   }, [dispatch]);
 
+  const setDisabledButton = () => {
+    if (
+      values.channel === "smart_ads" &&
+      uploadPercentage !== 100 &&
+      (values.attachment === null || values.attachment === "")
+    ) {
+      return true;
+    } else if (
+      values.channel === "display_ads" &&
+      uploadPercentage !== 100 &&
+      values.attachments.length <= 0
+    ) {
+      return true;
+    } else return false;
+  };
+
   return (
     <Fragment>
       {senderID.loading || defaultSenderID.loading || generalSender.loading ? (
@@ -528,11 +544,12 @@ const FlierVideoCampaign = ({
                             type="submit"
                             variant="contained"
                             disabled={
-                              uploadPercentage !== 100 &&
-                              (values.attachment === null ||
-                                values.attachment === "")
-                                ? true
-                                : false
+                              // uploadPercentage !== 100 &&
+                              // (values.attachment === null ||
+                              //   values.attachment === "")
+                              //   ? true
+                              //   : false
+                              setDisabledButton()
                             }
                           >
                             Proceed

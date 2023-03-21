@@ -44,6 +44,7 @@ import {
   getCampaignByDateReducer,
   adsClickReducer,
   bitlyCountReducer,
+  appDownloadAnalyticsReducer,
 } from "./reducers/analyticsReducers";
 import {
   createSmsCampaignReducer,
@@ -142,6 +143,7 @@ const appReducer = combineReducers({
   revenueBand: getRevenueBandReducer,
   generalSender: generalSenderReducer,
   store: storeReducer,
+  appDownloadAnalyticsData: appDownloadAnalyticsReducer,
 });
 
 const reducer = (state, action) => {

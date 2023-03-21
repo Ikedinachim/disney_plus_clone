@@ -12,6 +12,7 @@ import MetaData from "./layout/MetaData";
 import Loader from "./layout/Loader";
 import WhyContainer from "./widgets/WhyContainer/WhyContainer";
 import PriceList from "./widgets/priceList";
+
 const Home = () => {
   const baseURL = process.env.REACT_APP_MYSOGI_BASE_URL;
 
@@ -76,113 +77,109 @@ const Home = () => {
           <div className="w-100 overflow-x-hidden">
             <Header />
             <section className="home-section">
-             <div className="home-section-container">
+              <div className="home-section-container">
+                <div className="home">
+                  <div className="home-left-div">
+                    <div className="home-left-div-container">
+                      <h3 className="home-left-div-h3">
+                        Advertise. Connect. Convert.
+                      </h3>
+                      <div className="home-rectangle">
+                        <span className="home-rectangle-span"></span>
+                      </div>
 
-             
-             <div className="home">
-
-           
-
-              <div className="home-left-div">
-                <div className="home-left-div-container">
-              <h3 className="home-left-div-h3">Advertise. Connect. Convert.</h3>
-                <div className="home-rectangle">
-              <span className="home-rectangle-span">
-
-              </span>
-
+                      <h1 className="home-left-div-h1">
+                        Promote & Grow your business with <span>Mysogi</span>{" "}
+                        Ads.
+                      </h1>
+                      <h2 className="home-left-div-h2">
+                        The most powerful advertisting solution for your brand
+                      </h2>
+                    </div>
+                    <Link
+                      to={"/register"}
+                      className="btn btn-primary pd-x-40 btn-auth get-started-btn"
+                    >
+                      Get Started
+                    </Link>
+                  </div>
+                  <div className="home-img-container ">
+                    <img
+                      src="./assets/img/bg-1.png"
+                      alt="image"
+                      className="home-img-desktop"
+                    />
+                    <img
+                      src="./assets/img/mobile-bg.png"
+                      className="home-img-mobile"
+                    />
+                  </div>
                 </div>
-
-                <h1 className="home-left-div-h1">Promote & Grow your business with <span>Mysogi</span> Ads.</h1>
-                <h2 className="home-left-div-h2">The most powerful advertisting solution for your brand</h2>
-                </div>
-                 <Link
-                        to={"/register"}
-                        className="btn btn-primary pd-x-40 btn-auth get-started-btn"
-                      >
-                        Get Started
-                      </Link>
               </div>
-              <div className="home-img-container ">
-              <img src="./assets/img/bg-1.png" alt="image" className="home-img-desktop" />
-              <img src="./assets/img/mobile-bg.png" className="home-img-mobile" />
-
-              </div>
-              </div>
-              </div> 
-              
             </section>
-                      <div className="description-div" id="about-us">
-                <p>
-                  Mysogi Company Limited is a tech company that specializes in
-                  Digital Marketing. Our State Of the Art web-based digital
-                  campaign manager enables Agencies, Corporations & SMEs to
-                  promote and target adverts to prospective customers.
-                </p>
-              </div>
-                {/* <button className="get-started-btn">Get Started</button> */}
-            
-             
-              
-              <div>
-
-            <section className=" " id="section-two">
-              <div className="col-md-12 section-two">
-
-              <div
-                className="vert-center col-md-6"
-                data-aos="fade-left"
-                data-aos-duration={2000}
-                >
-                <div className="section-two-left-div">
-                  <h1>Billboard</h1>
-                  <h1>
-                    <span>Campaign</span>
-                  </h1>
-                  <h1>Ads</h1>
-                  <div className="section-two-rectangle"></div>
-                  <b>What's this?</b>
-                  <p>
-                  Put your brand on digital billboards in just a few taps starting from 30k₦/day. No contracts and no upfront pricing required. Get the best quality for the cheapest price.
-                  </p>
+            <div className="description-div" id="about-us">
+              <p>
+                Mysogi Company Limited is a tech company that specializes in
+                Digital Marketing. Our State Of the Art web-based digital
+                campaign manager enables Agencies, Corporations & SMEs to
+                promote and target adverts to prospective customers.
+              </p>
+            </div>
+            {/* <button className="get-started-btn">Get Started</button> */}
+            <div>
+              <section className=" " id="section-two">
+                <div className="col-md-12 section-two">
+                  <div
+                    className="vert-center col-md-6"
+                    data-aos="fade-left"
+                    data-aos-duration={2000}
+                  >
+                    <div className="section-two-left-div">
+                      <h1>Billboard</h1>
+                      <h1>
+                        <span>Campaign</span>
+                      </h1>
+                      <h1>Ads</h1>
+                      <div className="section-two-rectangle"></div>
+                      <b>What's this?</b>
+                      <p>
+                        Put your brand on digital billboards in just a few taps
+                        starting from 30k₦/day. No contracts and no upfront
+                        pricing required. Get the best quality for the cheapest
+                        price.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="section-two-img-container col-md-6">
+                    <img
+                      src="./assets/img/billboard.png"
+                      alt=""
+                      className="section-two-img  "
+                      data-aos="fade-right"
+                      data-aos-duration={2000}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="section-two-img-container col-md-6">
 
-              <img
-                src="./assets/img/billboard.png"
-                alt=""
-                className="section-two-img  "
-                data-aos="fade-right"
-                data-aos-duration={2000}
-                />
-                </div>
-              </div>
-
-           
-              <PriceList/>
-              
-            </section>
-            
-                </div>
+                <PriceList />
+              </section>
+            </div>
 
             <section className="bg-pinkish" id="section-three">
               <div className="section-three col-md-12">
                 <div className="section-three-img-container col-md-6">
-
-                <img
-                  className="section-three-img"
-                  data-aos="fade-right"
-                  data-aos-duration={2000}
-                  src="./assets/img/sectionthree.png"
-                  alt=""
+                  <img
+                    className="section-three-img"
+                    data-aos="fade-right"
+                    data-aos-duration={2000}
+                    src="./assets/img/sectionthree.png"
+                    alt=""
                   />
-                  </div>
+                </div>
                 <div
                   className="vert-center col-md-6"
                   data-aos="fade-left"
                   data-aos-duration={2000}
-                  
                 >
                   <div className="section-three-right-div">
                     <h1>Smart</h1>
@@ -190,11 +187,17 @@ const Home = () => {
                       <span>SMS</span>
                     </h1>
                     <h1>Ads</h1>
-                   
+
                     <div className="section-three-rectangle"></div>
                     <b>What's this?</b>
                     <p>
-                    The SMS marketing feature allows customers send targeted campaigns to their customers, which can be targeted by state, Town, Local government, gender, monthly spend, etc. This will ensure that customers are targeting the right demography for their products. SMART SMS marketing can be used to deliver everything that traditional marketing can deliver today.
+                      The SMS marketing feature allows customers send targeted
+                      campaigns to their customers, which can be targeted by
+                      state, Town, Local government, gender, monthly spend, etc.
+                      This will ensure that customers are targeting the right
+                      demography for their products. SMART SMS marketing can be
+                      used to deliver everything that traditional marketing can
+                      deliver today.
                     </p>
                   </div>
                 </div>
@@ -203,7 +206,7 @@ const Home = () => {
             <section className="section-four-section" id="section-four">
               <div className="container pb-md-5">
                 <div className="section-four col-md-12">
-                  <div 
+                  <div
                     className="vert-center col-md-6"
                     data-aos="fade-left"
                     data-aos-duration={2000}
@@ -217,34 +220,37 @@ const Home = () => {
                       <div className="section-four-rectangle"></div>
                       <b>What's this?</b>
                       <p>
-                      Drive awareness on relevant display channels and drive traffic to your offer, using Mysogi's  programmatic display feature to reach your target audience when they consume relevant content online. We will  combine the best targeting approach to reach the audience.
-
+                        Drive awareness on relevant display channels and drive
+                        traffic to your offer, using Mysogi's programmatic
+                        display feature to reach your target audience when they
+                        consume relevant content online. We will combine the
+                        best targeting approach to reach the audience.
                       </p>
                     </div>
                   </div>
                   <div className="col-md-6 section-two-img-container">
                     <img
-                    src="./assets/img/sectionfour.png"
-                    className="section-four-img "
-                    data-aos="fade-right"
-                    data-aos-duration={2000}
-                    alt=""
+                      src="./assets/img/sectionfour.png"
+                      className="section-four-img "
+                      data-aos="fade-right"
+                      data-aos-duration={2000}
+                      alt=""
                     />
-                    </div>
+                  </div>
                 </div>
               </div>
             </section>
             <section className="bg-pinkish" id="section-five">
               <div className="section-five col-md-12">
-              <div className="col-md-6 section-five-img-container">
-                <img 
-                  src="./assets/img/Rectangle.png"
-                  className="section-five-img "
-                  data-aos="fade-right"
-                  data-aos-duration={2000}
-                  alt=""
+                <div className="col-md-6 section-five-img-container">
+                  <img
+                    src="./assets/img/Rectangle.png"
+                    className="section-five-img "
+                    data-aos="fade-right"
+                    data-aos-duration={2000}
+                    alt=""
                   />
-                  </div>
+                </div>
                 <div
                   className="vert-center col-md-6"
                   data-aos="fade-left"
@@ -255,12 +261,15 @@ const Home = () => {
                     <h1>
                       <span>Ads</span>
                     </h1>
-                  
 
                     <div className="section-five-rectangle"></div>
                     <b>What's this?</b>
                     <p>
-                    Our Voice Ads Services seamlessly helps you deliver pre-recorded  messages and any other promotional information directly to customers, enlightening them about products, services,  new offers, discounts upgrades and a whole lot more, especially in media-dark regions.
+                      Our Voice Ads Services seamlessly helps you deliver
+                      pre-recorded messages and any other promotional
+                      information directly to customers, enlightening them about
+                      products, services, new offers, discounts upgrades and a
+                      whole lot more, especially in media-dark regions.
                     </p>
                   </div>
                 </div>
@@ -282,7 +291,12 @@ const Home = () => {
                     <div className="section-six-rectangle"></div>
                     <b>What's this?</b>
                     <p>
-                    The Mysogi platform aggregates influencers and makes it easy to access influencers that are registered on our platform. With Mysogi platform, it is as easy as typing what you need the specific influencer to post on his platform and the other part is basically taken care of from our platform.
+                      The Mysogi platform aggregates influencers and makes it
+                      easy to access influencers that are registered on our
+                      platform. With Mysogi platform, it is as easy as typing
+                      what you need the specific influencer to post on his
+                      platform and the other part is basically taken care of
+                      from our platform.
                     </p>
                   </div>
                 </div>
@@ -297,36 +311,38 @@ const Home = () => {
                 </div>
               </div>
             </section>
-           
-            <section className="bg-pinkish section-three-container" id="mini-website" >
+
+            <section
+              className="bg-pinkish section-three-container"
+              id="mini-website"
+            >
               <div className="section-three col-md-12">
                 <div className="section-three-img-container col-md-6">
-
-                <img
-                  className="section-three-img"
-                  data-aos="fade-right"
-                  data-aos-duration={2000}
-                  src="./assets/img/miniwebsite.png"
-                  alt=""
+                  <img
+                    className="section-three-img"
+                    data-aos="fade-right"
+                    data-aos-duration={2000}
+                    src="./assets/img/miniwebsite.png"
+                    alt=""
                   />
-                  </div>
+                </div>
                 <div
                   className="vert-center col-md-6"
                   data-aos="fade-left"
                   data-aos-duration={2000}
-                  
                 >
                   <div className="section-three-right-div">
                     <h1>Mini</h1>
                     <h1>
                       <span>Website</span>
                     </h1>
-                 
-                   
+
                     <div className="section-three-rectangle"></div>
                     <b>What's this?</b>
                     <p>
-                    Want a personal e-commerce website,to showcase your goods and services in detail? Mysogi gives your brand/business a website in 5minutes for free!
+                      Want a personal e-commerce website,to showcase your goods
+                      and services in detail? Mysogi gives your brand/business a
+                      website in 5minutes for free!
                     </p>
                   </div>
                 </div>
@@ -340,7 +356,7 @@ const Home = () => {
                   data-aos-duration={2000}
                 >
                   <div className="section-eight-left-div ">
-                    <h1>Apps</h1>
+                    <h1>App</h1>
                     <h1>
                       <span>Download</span>
                     </h1>
@@ -348,7 +364,11 @@ const Home = () => {
                     <div className="section-eight-rectangle"></div>
                     <b>What's this?</b>
                     <p>
-                    Mysogi Ads App Download Channel is a powerful platform that helps you create and manage mobile app ad campaigns across multiple networks. With our easy-to-use interface, you can set up your campaigns in minutes, target your ideal audience, and track your results in real-time.
+                      Mysogi Ads App Download Channel is a powerful platform
+                      that helps you create and manage mobile app ad campaigns
+                      across multiple networks. With our easy-to-use interface,
+                      you can set up your campaigns in minutes, target your
+                      ideal audience, and track your results in real-time.
                     </p>
                   </div>
                 </div>
@@ -401,11 +421,9 @@ const Home = () => {
                     src="./assets/img/mysogipic.png"
                     alt=""
                   />
-                    <Link to={"/register"}> 
-                  <button>
-                    Join Mysogi Today
-                   </button>
-                    </Link>
+                  <Link to={"/register"}>
+                    <button>Join Mysogi Today</button>
+                  </Link>
                 </div>
                 <img
                   className="sogiImage"
@@ -565,94 +583,92 @@ const Home = () => {
             <div className="ask-section container-fluid" id="mysogi-contact">
               <div className="ask-section-container col-md-12 mx-auto">
                 <div className=" align-items-center row mg-t-12">
+                  <div className="ask-section-left-div col-md-6 col-sm-12">
+                    <p>
+                      I’m a <span>brand owner</span>, looking to create{" "}
+                      <span>brand awareness</span>
+                    </p>
+                    <h1>Have questions? Let’s discuss.</h1>
+                  </div>
 
-                
-                <div className="ask-section-left-div col-md-6 col-sm-12">
-                  <p>
-                    I’m a <span>brand owner</span>, looking to create{" "}
-                    <span>brand awareness</span>
-                  </p>
-                  <h1>Have questions? Let’s discuss.</h1>
-                </div>
-
-                {/* <div className="ask-section-right-div"> */}
-                <div className="col-md-6 mg-t-20 order-2col-sm-12">
-                  <div className="card bd-0 shadow ask-section-card" >
-                    <div className="card-body pd-lg-60">
-                      <form onSubmit={submitEmail}>
-                        <div className="form-row">
-                          <div className="form-group col-md-12">
-                            <label
-                              htmlFor="name"
-                              className="tx-14 tx-bold tx-com label-black mg-b-8"
-                            >
-                              Your Name
-                            </label>
-                            <input
-                              name="name"
-                              type="text"
-                              className="form-control contact"
-                              id="inputEmail4"
-                              placeholder="Enter Name"
-                              onChange={handleStateChange}
-                              value={name}
-                            />
+                  {/* <div className="ask-section-right-div"> */}
+                  <div className="col-md-6 mg-t-20 order-2col-sm-12">
+                    <div className="card bd-0 shadow ask-section-card">
+                      <div className="card-body pd-lg-60">
+                        <form onSubmit={submitEmail}>
+                          <div className="form-row">
+                            <div className="form-group col-md-12">
+                              <label
+                                htmlFor="name"
+                                className="tx-14 tx-bold tx-com label-black mg-b-8"
+                              >
+                                Your Name
+                              </label>
+                              <input
+                                name="name"
+                                type="text"
+                                className="form-control contact"
+                                id="inputEmail4"
+                                placeholder="Enter Name"
+                                onChange={handleStateChange}
+                                value={name}
+                              />
+                            </div>
                           </div>
-                        </div>
-                        <div className="form-row">
-                          <div className="form-group col-md-12">
-                            <label
-                              htmlFor="name"
-                              className="tx-14 tx-bold tx-com label-black mg-b-8"
-                            >
-                              Phone Number
-                            </label>
-                            <input
-                              name="phone"
-                              type="text"
-                              className="form-control contact"
-                              placeholder="Enter Number"
-                              onChange={handleStateChange}
-                              value={phone}
-                            />
+                          <div className="form-row">
+                            <div className="form-group col-md-12">
+                              <label
+                                htmlFor="name"
+                                className="tx-14 tx-bold tx-com label-black mg-b-8"
+                              >
+                                Phone Number
+                              </label>
+                              <input
+                                name="phone"
+                                type="text"
+                                className="form-control contact"
+                                placeholder="Enter Number"
+                                onChange={handleStateChange}
+                                value={phone}
+                              />
+                            </div>
                           </div>
-                        </div>
-                        <div className="form-row">
-                          <div className="form-group col-md-12">
-                            <label
-                              htmlFor="name"
-                              className="tx-14 tx-bold tx-com label-black mg-b-8"
-                            >
-                              Email Address
-                            </label>
-                            <input
-                              name="email"
-                              type="email"
-                              className="form-control contact"
-                              id="inputEmail4"
-                              placeholder="Enter Email Address"
-                              onChange={handleStateChange}
-                              value={email}
-                            />
+                          <div className="form-row">
+                            <div className="form-group col-md-12">
+                              <label
+                                htmlFor="name"
+                                className="tx-14 tx-bold tx-com label-black mg-b-8"
+                              >
+                                Email Address
+                              </label>
+                              <input
+                                name="email"
+                                type="email"
+                                className="form-control contact"
+                                id="inputEmail4"
+                                placeholder="Enter Email Address"
+                                onChange={handleStateChange}
+                                value={email}
+                              />
+                            </div>
+                            <div className="form-group col-md-12">
+                              <label
+                                htmlFor="notes"
+                                className="tx-14 tx-bold tx-com label-black mg-b-8"
+                              >
+                                Notes
+                              </label>
+                              <input
+                                name="notes"
+                                type="text"
+                                className="form-control contact"
+                                placeholder="Enter your question/complaint"
+                                onChange={handleStateChange}
+                                // value={notes}
+                              />
+                            </div>
                           </div>
-                          <div className="form-group col-md-12">
-                                  <label
-                                    htmlFor="notes"
-                                    className="tx-14 tx-bold tx-com label-black mg-b-8"
-                                  >
-                                    Notes
-                                  </label>
-                                  <input
-                                    name="notes"
-                                    type="text"
-                                    className="form-control contact"
-                                    placeholder="Enter your question/complaint"
-                                    onChange={handleStateChange}
-                                    // value={notes}
-                                  />
-                                </div>
-                        </div>
-                        {/* <div className="form-row">
+                          {/* <div className="form-row">
                                 <div className="form-group col-md-5">
                                   <label
                                     htmlFor="name"
@@ -721,17 +737,17 @@ const Home = () => {
                                   />
                                 </div>
                               </div> */}
-                        <button
-                          type="submit"
-                          className="btn btn-primary pd-x-40 mg-t-20"
-                        >
-                          Submit
-                        </button>
-                      </form>
+                          <button
+                            type="submit"
+                            className="btn btn-primary pd-x-40 mg-t-20"
+                          >
+                            Submit
+                          </button>
+                        </form>
+                      </div>
                     </div>
+                    {/* </div> */}
                   </div>
-                  {/* </div> */}
-                </div>
                 </div>
               </div>
             </div>
