@@ -17202,7 +17202,7 @@ textarea.parsley-success:focus {
 .aside-body {
   position: relative;
   padding: 25px;
-  height: calc(100% - 59px);
+  height: calc(100% - 50px);
   border-top: 1px solid rgba(72, 94, 144, 0.16);
   border-right: 1px solid rgba(72, 94, 144, 0.16);
   background-color: #fff;
@@ -23019,6 +23019,65 @@ button.bg-twitter:focus,
 
 .mg-l-10-f {
   margin-left: 10px !important;
+}
+.mg-12 {
+  margin: 12px;
+}
+
+.mg-12-f {
+  margin: 12px !important;
+}
+
+.mg-y-12 {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.mg-y-12-f {
+  margin-top: 12px !important;
+  margin-bottom: 12px !important;
+}
+
+.mg-x-12 {
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+.mg-x-12-f {
+  margin-left: 12px !important;
+  margin-right: 12px !important;
+}
+
+.mg-t-12 {
+  margin-top: 12px;
+}
+
+.mg-r-12 {
+  margin-right: 12px;
+}
+
+.mg-b-12 {
+  margin-bottom: 12px;
+}
+
+.mg-l-12 {
+  margin-left: 12px;
+}
+
+.mg-t-12-f {
+  margin-top: 12px !important;
+}
+
+.mg-r-12-f {
+  margin-right: 12px !important;
+}
+
+.mg-b-12-f {
+  margin-bottom: 12px !important;
+}
+
+.mg-l-12-f {
+  margin-left: 12px !important;
 }
 
 .mg-15 {

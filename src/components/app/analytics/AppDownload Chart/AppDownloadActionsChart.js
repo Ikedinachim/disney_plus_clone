@@ -25,7 +25,8 @@ ChartJS.register(
 );
 
 export const options = {
-  responsive: true,
+  maintainAspectRatio: false,
+  // responsive: true,
   plugins: {
     legend: {
       position: "top",
@@ -109,14 +110,15 @@ export const Data = [
 ];
 
 const AppDownloadActionsChart = ({ appDownloadAnalytics }) => {
-  const [chartData, setChartData] = useState({
+  const [chartData] = useState({
     labels: appDownloadAnalytics?.labels,
-    // datasets: appDownloadAnalytics?.data.map((data) => data.datasets),
-    datasets: Data.map((data) => data.datasets),
+    datasets: appDownloadAnalytics?.data
+      ? appDownloadAnalytics?.data.map((data) => data.datasets)
+      : [],
   });
 
   return (
-    <div className="mg-t-20">
+    <div className="mg-t-20 overflow-scroll">
       {/* <Line options={options} data={data} />; */}
       <LineChart chartData={chartData} />
     </div>

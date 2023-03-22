@@ -9,7 +9,7 @@ import MetaData from "../../layout/MetaData";
 //   clearErrors,
 // } from "../../../actions/campaignActions";
 import {
-  getBitlyCount,
+  // getBitlyCount,
   getAppdownloadAnalyticsAction,
   clearErrors,
 } from "../../../actions/analyticsActions";
@@ -35,7 +35,7 @@ const AppDownloadAnalytics = () => {
   };
 
   useEffect(() => {
-    dispatch(getAppdownloadAnalyticsAction(id));
+    dispatch(getAppdownloadAnalyticsAction(1430));
   }, [dispatch, id]);
 
   useEffect(() => {
