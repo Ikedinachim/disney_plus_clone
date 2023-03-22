@@ -64,7 +64,11 @@ export default class AppDownloadStepForm extends Component {
     arrayLga: undefined,
     rawLga: undefined,
     rawArea: undefined,
+
+    interest: "",
     arrayArea: undefined,
+    arrayInterest: undefined,
+    arrayInterestLabel: undefined,
   };
 
   // go back to previous step
@@ -334,13 +338,25 @@ export default class AppDownloadStepForm extends Component {
   };
 
   handleLgaChange = (lga) => {
-    this.setState({ arrayLga: lga.map((value) => value.value).join(",") });
-    this.setState({ rawLga: lga });
+    this.setState({
+      arrayLga: lga.map((value) => value.value).join(","),
+      rawLga: lga,
+    });
   };
 
   handleAreaChange = (area) => {
-    this.setState({ arrayArea: area.map((value) => value.value).join(",") });
-    this.setState({ rawArea: area });
+    this.setState({
+      arrayArea: area.map((value) => value.value).join(","),
+      rawArea: area,
+    });
+  };
+
+  handleInterestChange = (interest) => {
+    this.setState({
+      arrayInterest: interest,
+      interest: interest.map((value) => value.value).join(", "),
+      arrayInterestLabel: interest.map((label) => label.label).join(", "),
+    });
   };
 
   render() {
@@ -402,6 +418,9 @@ export default class AppDownloadStepForm extends Component {
       rawArea,
       arrayLga,
       arrayArea,
+      interest,
+      arrayInterest,
+      arrayInterestLabel,
     } = this.state;
 
     /////////////////////////////
@@ -540,7 +559,10 @@ export default class AppDownloadStepForm extends Component {
       scheduleFrom,
       scheduleTo,
       campaignSchedule,
-      age,
+      age: ageRangeFrom && ageRangeTo ? ageRangeFrom + "-" + ageRangeTo : "",
+      interest,
+      arrayInterest,
+      arrayInterestLabel,
     };
 
     console.log(values);
@@ -582,11 +604,13 @@ export default class AppDownloadStepForm extends Component {
             handleStateChange={this.handleStateChange}
             handleLgaChange={this.handleLgaChange}
             handleAreaChange={this.handleAreaChange}
+            handleInterestChange={this.handleInterestChange}
             arrayState={arrayState}
             arrayLga={arrayLga}
             rawLga={rawLga}
             rawArea={rawArea}
             arrayArea={arrayArea}
+            arrayInterest={arrayInterest}
           />
         );
       case 3:

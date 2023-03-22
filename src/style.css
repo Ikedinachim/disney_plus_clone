@@ -1293,6 +1293,10 @@ a.disabled:hover {
   color: #ff0000;
 }
 
+.non-mobile-chart {
+  height: 45vh;
+}
+
 @media screen and (max-width: 600px) {
   .d-none-sm {
     display: none;

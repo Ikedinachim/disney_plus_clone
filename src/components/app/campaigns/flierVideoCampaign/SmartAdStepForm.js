@@ -652,6 +652,7 @@ const SmartAdStepForm = () => {
             contactNumberCount: contactNumberCount,
             attachments: attachments,
             timeRange: `${timeRangeFrom} - ${timeRangeTo}`,
+            age: setAge,
           }}
           audience={audience}
           handleCount={handleCount}

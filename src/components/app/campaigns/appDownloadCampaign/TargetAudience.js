@@ -23,6 +23,7 @@ const TargetAudience = ({
   handleStateChange,
   handleLgaChange,
   handleAreaChange,
+  handleInterestChange,
   numbers,
   personalUpload,
   filterOptions,
@@ -31,6 +32,7 @@ const TargetAudience = ({
   ageRangeFrom,
   ageRangeTo,
   arrayState,
+  arrayInterest,
   rawLga,
   rawArea,
 }) => {
@@ -205,6 +207,35 @@ const TargetAudience = ({
       label: "Utilities",
       value: "Utilities",
     },
+  ];
+
+  const googleInterest = [
+    { value: 3, label: "Arts & Entertainment" },
+    { value: 47, label: "Autos & Vehicles" },
+    { value: 44, label: "Beauty & Fitness" },
+    { value: 22, label: "Books & Literature" },
+    { value: 12, label: "Business & Industrial" },
+    { value: 5, label: "Computers & Electronics" },
+    { value: 7, label: "Finance" },
+    { value: 71, label: "Food & Drink" },
+    { value: 8, label: "Games" },
+    { value: 45, label: "Health" },
+    { value: 65, label: "Hobbies & Leisure" },
+    { value: 11, label: "Home & Garden" },
+    { value: 13, label: "Internet & Telecom" },
+    { value: 958, label: "Jobs & Education" },
+    { value: 19, label: "Law & Government" },
+    { value: 16, label: "News" },
+    { value: 299, label: "Online Communities" },
+    { value: 14, label: "People & Society" },
+    { value: 66, label: "Pets & Animals" },
+    { value: 29, label: "Real Estate" },
+    { value: 533, label: "Reference" },
+    { value: 174, label: "Science" },
+    { value: 18, label: "Shopping" },
+    { value: 20, label: "Sports" },
+    { value: 67, label: "Travel & Transportation" },
+    { value: 5000, label: "World Localities" },
   ];
 
   const Continue = (e) => {
@@ -444,36 +475,53 @@ const TargetAudience = ({
                           >
                             Age
                           </label>
-                          <select
-                            className="form-control"
-                            defaultValue={values.age}
-                            onChange={handleChange("age")}
-                          >
-                            {propellerAge.map((age, i) => (
-                              <option value={age.value} key={i}>
-                                {age.label}
-                              </option>
-                            ))}
-                          </select>
+                          <div className="form-row">
+                            <div className="form-group col-md-6 mg-b-0">
+                              <div className="input-group mg-b-10">
+                                <div className="input-group-prepend">
+                                  <span className="input-group-text">From</span>
+                                </div>
+                                <input
+                                  type="number"
+                                  id="age-from"
+                                  min="18"
+                                  max="50"
+                                  className="form-control"
+                                  aria-describedby="basic-addon1"
+                                  defaultValue={ageRangeFrom}
+                                  onChange={handleChange("ageRangeFrom")}
+                                />
+                              </div>
+                            </div>
+                            <div className="form-group col-md-6 mg-b-0">
+                              <div className="input-group mg-b-10">
+                                <div className="input-group-prepend">
+                                  <span className="input-group-text">To</span>
+                                </div>
+                                <input
+                                  type="number"
+                                  id="age-to"
+                                  min="18"
+                                  max="50"
+                                  className="form-control"
+                                  aria-describedby="basic-addon1"
+                                  defaultValue={ageRangeTo}
+                                  onChange={handleChange("ageRangeTo")}
+                                />
+                              </div>
+                            </div>
+                          </div>
                         </div>
                         <div className="form-group col-md-6">
-                          <label
-                            // htmlFor
-                            className="mb-1 tx-com d-flex align-items-center"
-                          >
+                          <label className="mb-1 tx-com d-flex align-items-center">
                             Interest
                           </label>
-                          <select
-                            className="form-control"
-                            defaultValue={values.interest}
-                            onChange={handleChange("interest")}
-                          >
-                            {propellerInterest.map((interest, i) => (
-                              <option value={interest.value} key={i}>
-                                {interest.label}
-                              </option>
-                            ))}
-                          </select>
+                          <Select
+                            defaultValue={arrayInterest}
+                            onChange={handleInterestChange}
+                            options={googleInterest}
+                            isMulti
+                          />
                         </div>
                         <div className="form-group col-md-12">
                           <label

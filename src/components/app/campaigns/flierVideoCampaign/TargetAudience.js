@@ -251,7 +251,7 @@ const TargetAudience = ({
     { value: 5000, label: "World Localities" },
   ];
 
-  const combinedInterests = propellerInterest.concat(googleInterest);
+  // const combinedInterests = propellerInterest.concat(googleInterest);
 
   const Continue = (e) => {
     e.preventDefault();
@@ -493,25 +493,6 @@ const TargetAudience = ({
                             </div>
                           </div>
                         </div>
-                        {/* <div className="form-group col-md-6">
-                          <label
-                            // htmlFor
-                            className="mb-1 tx-com d-flex align-items-center"
-                          >
-                            Age
-                          </label>
-                          <select
-                            className="form-control"
-                            defaultValue={values.age}
-                            onChange={handleChange("age")}
-                          >
-                            {propellerAge.map((age, i) => (
-                              <option value={age.value} key={i}>
-                                {age.label}
-                              </option>
-                            ))}
-                          </select>
-                        </div> */}
                         <div className="form-group col-md-6">
                           <label
                             // htmlFor
@@ -525,17 +506,6 @@ const TargetAudience = ({
                             options={googleInterest}
                             isMulti
                           />
-                          {/* <select
-                            className="form-control"
-                            defaultValue={values.interest}
-                            onChange={handleChange("interest")}
-                          >
-                            {googleInterest.map((interest, i) => (
-                              <option value={interest.value} key={i}>
-                                {interest.label}
-                              </option>
-                            ))}
-                          </select> */}
                         </div>
                         <div className="form-group col-md-12">
                           <label

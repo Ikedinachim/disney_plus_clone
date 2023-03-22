@@ -3,7 +3,7 @@ import React from "react";
 import { Line } from "react-chartjs-2";
 
 export const options = {
-  // responsive: true,
+  responsive: true,
   maintainAspectRatio: false,
   plugins: {
     legend: {
@@ -18,7 +18,7 @@ export const options = {
 
 const LineChart = ({ chartData }) => {
   return (
-    <div className="chart-container mobile-chart">
+    <div className="chart-container non-mobile-chart mobile-chart">
       {/* <h2 style={{ textAlign: "center" }}>Line Chart</h2> */}
       <Line data={chartData} options={options} />
     </div>
