@@ -1,31 +1,44 @@
-import React, { Fragment, useEffect, Suspense } from "react";
+import React, { Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../../loader";
-import MobileChart from "./Digital Chart/MobileChart";
-import OsChart from "./Digital Chart/OsChart";
-import DateChart from "./Digital Chart/DateChart";
-import useGoogleCharts from "./googleChart/useGoogleChart";
+// import MobileChart from "./Digital Chart/MobileChart";
+// import OsChart from "./Digital Chart/OsChart";
+// import DateChart from "./Digital Chart/DateChart";
+// import useGoogleCharts from "./googleChart/useGoogleChart";
+import AppDownloadActionsChart from "./AppDownload Chart/AppDownloadActionsChart";
 
 import {
+  getAppdownloadAnalyticsAction,
   clearErrors,
-  getPropellerCampaign,
+  // getPropellerCampaign,
 } from "../../../actions/analyticsActions";
 import MetaData from "../../layout/MetaData";
 
 const DigitalAnalytics = () => {
-  const google = useGoogleCharts();
-  const { propellerId } = useParams();
+  const { campaignId } = useParams();
   const dispatch = useDispatch();
 
-  const {
-    getPropellerCampaigns: { error, propellerCampaigns, loading },
-  } = useSelector((state) => state);
+  // const {
+  //   getPropellerCampaigns: { error, propellerCampaigns, loading },
+  // } = useSelector((state) => state);
+
+  const { analyticsLoading, error, appDownloadAnalytics } = useSelector(
+    (state) => state.appDownloadAnalyticsData || {}
+  );
+
+  const formatNumber = (num) => {
+    if (num >= 1000) {
+      // Divide the number by 1000 and round it to one decimal place
+      num = (num / 1000).toFixed(1) + "k";
+    }
+    return num;
+  };
 
   useEffect(() => {
-    dispatch(getPropellerCampaign(propellerId));
-  }, [dispatch, propellerId]);
+    dispatch(getAppdownloadAnalyticsAction(campaignId));
+  }, [dispatch, campaignId]);
 
   useEffect(() => {
     if (error) {
@@ -36,11 +49,11 @@ const DigitalAnalytics = () => {
 
   return (
     <Fragment>
-      {loading ? (
+      {analyticsLoading ? (
         <Loader />
       ) : (
         <Fragment>
-          <MetaData title={"Analytics"} />
+          <MetaData title={"Digital Campaign Analytics"} />
           <div className="content-body">
             <div className="container pd-x-0">
               <div className="row justify-content-between">
@@ -50,9 +63,32 @@ const DigitalAnalytics = () => {
                   </Link>
                 </div>
               </div>
+              <div className="col-md-12 col-12 mg-t-20 mg-md-t-0">
+                <div className="card rounded bd-0 shadow-sm">
+                  <div className="card-body">
+                    <div className="analytics-data">
+                      <div className="analytics-card">
+                        <h4 className="tx-white tx-bold tx-18">Impressions</h4>
+                        <h2 className="tx-white tx-normal">
+                          {formatNumber(appDownloadAnalytics?.impressions)}
+                        </h2>
+                      </div>
+                      <div className="analytics-card">
+                        <h4 className="tx-white tx-bold tx-18">Clicks</h4>
+                        <h2 className="tx-white tx-normal">
+                          {formatNumber(appDownloadAnalytics?.clicks)}
+                        </h2>
+                      </div>
+                    </div>
+                    <AppDownloadActionsChart
+                      appDownloadAnalytics={appDownloadAnalytics}
+                    />
+                  </div>
+                </div>
+              </div>
 
               {/* numbers doing */}
-              {propellerCampaigns &&
+              {/* {propellerCampaigns &&
                 propellerCampaigns.map((campaign, index) => (
                   <div className="row" key={index}>
                     <div className="col-md-6 col-12 mg-t-20 mg-md-t-0">
@@ -104,19 +140,19 @@ const DigitalAnalytics = () => {
                       </div>
                     </div>
                   </div>
-                ))}
+                ))} */}
 
               {/* diagram of clicks and impressions  */}
 
-              <DateChart propellerId={propellerId} google={google} />
+              {/* <DateChart propellerId={propellerId} google={google} /> */}
 
-              <div className="row mg-t-30">
-                {/* ads performed & actions performed */}
-                <OsChart propellerId={propellerId} google={google} />
+              {/* <div className="row mg-t-30"> */}
+              {/* ads performed & actions performed */}
+              {/* <OsChart propellerId={propellerId} google={google} /> */}
 
-                {/* chartArea */}
-                <MobileChart propellerId={propellerId} google={google} />
-              </div>
+              {/* chartArea */}
+              {/* <MobileChart propellerId={propellerId} google={google} /> */}
+              {/* </div> */}
             </div>
           </div>
         </Fragment>

@@ -4,17 +4,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
 import MetaData from "../../layout/MetaData";
-// import {
-//   getSingleAppDownloadCampaigns,
-//   clearErrors,
-// } from "../../../actions/campaignActions";
 import {
-  getBitlyCount,
   getAppdownloadAnalyticsAction,
   clearErrors,
 } from "../../../actions/analyticsActions";
 import Loader from "../../loader";
-// import ActionsChart from "./SmartSms Chart/ActionsChart";
 
 import AppDownloadActionsChart from "./AppDownload Chart/AppDownloadActionsChart";
 
@@ -64,91 +58,6 @@ const AppDownloadAnalytics = () => {
                   </Link>
                 </div>
               </div>
-              {/* <div className="row justify-content-around">
-                <div className="col-md-3 col-12 mg-t-20 mg-md-t-0">
-                  <div className="card rounded bd-0 shadow-sm row">
-                    <div className="card-body vh-36">
-                      <div className="d-flex">
-                        <div className="mg-r-20">
-                          {" "}
-                          <img
-                            src="../../../assets/img/Brand_Awareness.svg"
-                            className="tx-primary"
-                            alt=""
-                            srcSet=""
-                          />
-                        </div>
-                        <div>
-                          <p className="tx-24 tx-bold">
-                            {singleAppCampaign &&
-                              singleAppCampaign.targetAudienceCount}
-                          </p>
-                          <p className="tx-15 tx-blac">
-                            Total number of impressions
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-3 col-12 mg-t-20 mg-md-t-0">
-                  <div className="card rounded bd-0 shadow-sm row">
-                    <div className="card-body vh-36">
-                      <div className="d-flex">
-                        <div className="mg-r-20">
-                          {" "}
-                          <img
-                            src="../../../assets/img/Reach_Conversion_Goals.svg"
-                            className="tx-primary"
-                            alt=""
-                            srcSet=""
-                          />
-                        </div>
-                        <div>
-                          <p className="tx-24 tx-bold">
-                            {singleAppCampaign &&
-                            singleAppCampaign.bitlink === null
-                              ? "0"
-                              : bitlyCount.bitlyCounts &&
-                                bitlyCount.bitlyCounts.total_clicks}
-                          </p>
-                          <p className="tx-15 tx-blac">
-                            Total number of Clicks
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="col-md-3 col-12 mg-t-20 mg-md-t-0">
-                  <div className="card rounded bd-0 shadow-sm row">
-                    <div className="card-body vh-36">
-                      <div className="d-flex">
-                        <div className="mg-r-20">
-                          {" "}
-                          <img
-                            src="../../../assets/img/Revenue_Generated.svg"
-                            className="tx-primary"
-                            alt=""
-                            srcSet=""
-                          />
-                        </div>
-                        <div>
-                          <p className="tx-24 tx-bold">
-                            {singleAppCampaign &&
-                              singleAppCampaign.androidStoreClickCount +
-                                singleAppCampaign.iosStoreClickCount}
-                          </p>
-                          <p className="tx-15 tx-blac">
-                            Total number of Actions
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
               <div className="col-md-12 col-12 mg-t-20 mg-md-t-0">
                 <div className="card rounded bd-0 shadow-sm">
                   <div className="card-body">

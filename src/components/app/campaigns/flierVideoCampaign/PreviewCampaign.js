@@ -30,6 +30,7 @@ const PreviewCampaign = ({
   handleChange,
   smsCount,
 }) => {
+  console.log("🚀 ~ file: PreviewCampaign.js:33 ~ values:", values);
   const { error, createFlierVideoCampaign, loading } = useSelector(
     (state) => state.flierVideoCampaign || []
   );
@@ -394,28 +395,42 @@ const PreviewCampaign = ({
                                   </label>
                                   <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
                                     {" "}
-                                    {filterOptions.state}
+                                    {filterOptions.state
+                                      ? filterOptions.state
+                                      : "-"}
                                   </span>
                                   <label className="tx-14 tx-gray mb-0 tx-medium d-block mt-3">
                                     Interest:
                                   </label>
                                   <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
                                     {" "}
-                                    {values.interest}
+                                    {values.arrayInterestLabel
+                                      ? values.arrayInterestLabel
+                                      : "-"}
                                   </span>
                                   <label className="tx-14 tx-gray mb-0 tx-medium d-block mt-3">
                                     Gender:
                                   </label>
                                   <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
                                     {" "}
-                                    {values.gender}
+                                    {values.gender
+                                      ? values.gender === "B"
+                                        ? "Both"
+                                        : values.gender === "M"
+                                        ? "Male"
+                                        : values.gender === "F"
+                                        ? "Female"
+                                        : "-"
+                                      : "-"}
                                   </span>
                                   <label className="tx-14 tx-gray mb-0 tx-medium d-block mt-3">
                                     Age:
                                   </label>
                                   <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
                                     {" "}
-                                    {filterOptions.ageRange}
+                                    {filterOptions.ageRange
+                                      ? filterOptions.ageRange
+                                      : "-"}
                                   </span>
                                 </div>
                                 <div className="col-md-6 form-group">
@@ -424,14 +439,18 @@ const PreviewCampaign = ({
                                   </label>
                                   <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
                                     {" "}
-                                    {values.scheduleFrom}
+                                    {values.scheduleFrom
+                                      ? values.scheduleFrom
+                                      : "-"}
                                   </span>
                                   <label className="tx-14 tx-gray mb-0 tx-medium d-block mt-3">
                                     End Date:
                                   </label>
                                   <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
                                     {" "}
-                                    {values.scheduleTo}
+                                    {values.scheduleTo
+                                      ? values.scheduleTo
+                                      : "-"}
                                   </span>
                                   <label className="tx-14 tx-gray mb-0 tx-medium d-block mt-3">
                                     Campaign schedule:
@@ -440,7 +459,7 @@ const PreviewCampaign = ({
                                     {" "}
                                     {values.campaignSchedule === "All_Time"
                                       ? "All day"
-                                      : ""}
+                                      : "-"}
                                   </span>
                                 </div>
                               </div>
@@ -863,7 +882,13 @@ const PreviewCampaign = ({
                         {values.assetType === "image" ? (
                           <div>
                             <img
-                              src={values.attachment}
+                              src={
+                                values?.channel === "display_ads"
+                                  ? values?.attachments.length > 0
+                                    ? values?.attachments
+                                    : ""
+                                  : values?.attachment
+                              }
                               className="img-fluid mg-b-10"
                               alt=""
                             />

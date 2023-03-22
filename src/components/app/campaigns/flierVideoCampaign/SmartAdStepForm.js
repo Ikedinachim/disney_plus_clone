@@ -25,6 +25,8 @@ const SmartAdStepForm = () => {
     targetAge: "21",
     location: ["Lagos"],
     interest: "",
+    arrayInterest: [],
+    arrayInterestLabel: [],
     phoneNumber: "",
     whatsAppNumber: "",
     numbers: "",
@@ -101,6 +103,8 @@ const SmartAdStepForm = () => {
     timeRangeFrom,
     timeRangeTo,
     interest,
+    arrayInterest,
+    arrayInterestLabel,
     selectedFileName,
     signature,
     uploadPercentage,
@@ -352,6 +356,15 @@ const SmartAdStepForm = () => {
     });
   };
 
+  const handleInterestChange = (interest) => {
+    setSmartAdsData({
+      ...smartAdsData,
+      arrayInterest: interest,
+      interest: interest.map((value) => value.value).join(", "),
+      arrayInterestLabel: interest.map((label) => label.label).join(", "),
+    });
+  };
+
   const handleParsedFileData = (
     uploadedFile,
     uploadedFileType,
@@ -370,6 +383,8 @@ const SmartAdStepForm = () => {
       }, []),
     });
   };
+
+  console.log("smartAdsData", smartAdsData);
 
   useEffect(() => {
     const getAudience = () => {
@@ -443,13 +458,14 @@ const SmartAdStepForm = () => {
 
   const setAge = useMemo(() => {
     const setAge =
-      channel === "display_ads"
-        ? age
-        : ageRangeFrom && ageRangeTo
-        ? `${ageRangeFrom + "-" + ageRangeTo}`
-        : "";
+      // channel === "display_ads"
+      //   ? age
+      //   : ageRangeFrom && ageRangeTo
+      //   ? `${ageRangeFrom + "-" + ageRangeTo}`
+      //   : "";
+      ageRangeFrom && ageRangeTo ? `${ageRangeFrom + "-" + ageRangeTo}` : "";
     return setAge;
-  }, [channel, ageRangeFrom, age, ageRangeTo]);
+  }, [ageRangeFrom, ageRangeTo]);
 
   const filterOptions = useMemo(() => {
     return {
@@ -573,8 +589,9 @@ const SmartAdStepForm = () => {
             targetAudience: targetAudience,
             scheduleTo: scheduleTo,
             gender: gender,
-            age: age,
+            age: setAge,
             interest: interest,
+            arrayInterest: arrayInterest,
             channel: channel,
           }}
           prevStep={prevStep}
@@ -583,15 +600,16 @@ const SmartAdStepForm = () => {
           handleStateChange={handleStateChange}
           handleLgaChange={handleLgaChange}
           handleAreaChange={handleAreaChange}
+          handleInterestChange={handleInterestChange}
           numbers={numbers}
           personalUpload={personalUpload}
           filterOptions={filterOptions}
           ageRangeFrom={ageRangeFrom}
           ageRangeTo={ageRangeTo}
-          // getCsvRawData={getCsvRawData}
           arrayState={arrayState}
           rawLga={rawLga}
           rawArea={rawArea}
+          arrayInterest={arrayInterest}
           previewUploadedNumbers={previewUploadedNumbers}
           handleParsedFileData={handleParsedFileData}
           uploadedFileName={uploadedFileName}
@@ -620,6 +638,8 @@ const SmartAdStepForm = () => {
             campaignType: campaignType,
             state: state,
             interest: interest,
+            arrayInterestLabel: arrayInterestLabel,
+            arrayInterest: arrayInterest,
             gender: gender,
             campaignSchedule: campaignSchedule,
             budget: budget,
@@ -632,6 +652,7 @@ const SmartAdStepForm = () => {
             contactNumberCount: contactNumberCount,
             attachments: attachments,
             timeRange: `${timeRangeFrom} - ${timeRangeTo}`,
+            age: setAge,
           }}
           audience={audience}
           handleCount={handleCount}
