@@ -533,7 +533,7 @@ margin: 0px;
   color: #FFFFFF;
   }
   .section-six-container{
-    padding-bottom: 100px;
+    /* padding-bottom: 100px; */
   }
   .section-three-container{
    
@@ -612,7 +612,8 @@ font-weight:bold ;
 }
 .section-two{
   display: flex;
-  padding-left: 62px;
+  padding-left: 196px;
+  padding-right: 196px;
   /* padding: 100px; */
   margin: 0px auto;
   box-sizing: border-box;
@@ -690,8 +691,9 @@ color: #121212;
   position: relative;
   z-index: 2;
   display: flex;
-  padding-left: 122px;
-  padding-right:101px ;
+  padding-left: 196px;
+  padding-right:196px ;
+  align-items: center;
   padding-top: 20px;
   /* padding-bottom: 160px; */
   margin: 0px auto;
@@ -811,7 +813,7 @@ color: #121212;
   /* max-width: 40vw; */
   /* height: 414px; */
   /* width: 600px; */
-  margin-top: 44px;
+ 
   z-index: 1;
 }
 .section-four-left-div h1{
@@ -856,16 +858,17 @@ color: #121212;
 .section-five{
      display: flex;
     flex-direction: row;
-    /* padding-left: 122px; */
-    /* padding-right: 101px; */
+    padding-left: 196px; 
+     padding-right: 196px;
     /* padding-bottom: 160px; */
     box-sizing: border-box;
     max-width: 1440px;
     background: #F7CAC4;
     justify-content: center;
+    align-items: center;
     position: relative;
     margin-left: auto;
-    z-index: 9;
+    z-index: 29;
     margin-right: auto;
 }
 .section-five-img{
@@ -878,7 +881,7 @@ color: #121212;
   height: 100%;
   width: 100%;
   top: -150px;
-  right: 30px;
+
   z-index: 1;
   /* height: 414px; */
   /* margin-top: 119px; */
@@ -893,7 +896,7 @@ color: #121212;
   /* max-width: 40vw; */
   /* width: 600px; */
   /* height: 414px; */
-  margin-top: 60px;
+  
 }
 .section-five-right-div h1{
   font-family: 'Montserrat';
@@ -939,9 +942,10 @@ color: #121212;
 .section-six{
   /* position: absolute; */
   display: flex;
-  padding-left: 122px;
-  padding-right:151px ;
+  padding-left: 196px;
+  padding-right:196px ;
   max-width: 1440px;
+  align-items: center;
   margin: 0 auto;
   position: relative;
   /* justify-content: center; */
@@ -979,7 +983,7 @@ top: -153px; */
   /* max-width:  65vw; */
   /* height: 414px; */
   /* width: 600px; */
-  margin-top: 44px;
+  /* margin-top: 44px; */
 }
 .section-six-left-div h1{
 font-family: 'Montserrat';
@@ -1024,8 +1028,9 @@ color: #121212;
 .section-eight{
   /* position: absolute; */
   display: flex;
-  padding-left: 122px;
-  padding-right:151px ;
+  padding-left: 196px;
+  padding-right:196px ;
+  align-items: center;
   max-width: 1440px;
   margin: 0 auto;
   position: relative;
@@ -1070,7 +1075,7 @@ top: -153px; */
   /* max-width:  65vw; */
   /* height: 414px; */
   /* width: 600px; */
-  margin-top: 44px;
+  /* margin-top: 44px; */
 }
 .section-eight-left-div h1{
 font-family: 'Montserrat';
@@ -1542,6 +1547,7 @@ font-style: normal;
   @media (max-width: 768px) {
     .container{
       margin: 0;
+      padding: 0;
     }
       .footer{
           /* height: 0px; */
@@ -1570,9 +1576,9 @@ font-style: normal;
     /* top: 124vh; */
     /* margin: 0px auto; */
     /* right: 10%; */
-    margin-left: 10px;
+    margin-left: 21px;
     /* left: 10%; */
-    margin-right: 10px;
+    margin-right: 21px;
        
     
     }
@@ -1600,7 +1606,10 @@ font-style: normal;
     cursor: pointer;
 }
 
-
+.section-padding{
+  padding-top: 33px;
+  padding-bottom: 33px;
+}
 .rectangle{
 width: 105px;
 height: 3px;
@@ -1711,10 +1720,17 @@ margin-bottom: 0px;
 }
 @media (max-width: 1300px) {
   .priceList-img{
-    display: none;
+     display: none;
   }
 }
 @media (max-width: 768px) {
+  .section-padding{
+    padding-top: 33px;
+    padding-bottom: 33px;
+    padding-left: 21px;
+    padding-right: 21px;
+  }
+
   .home{
     text-align: center;
     margin-top: -70px;
@@ -1819,9 +1835,7 @@ margin: 0px auto;
   }
 
   .section-five-right-div{
-    /* max-width: 100vw; */
-   left: 0px;
-   margin-left: 22px;
+   
 }
 .section-five{
     position: relative;
@@ -1851,7 +1865,7 @@ margin: 0px auto;
 
 
   .section-four-left-div{
-    width: calc(100vw - 22px);
+    /* width: calc(100vw - 22px); */
       /* max-width: 100vw; */
    left: 0px;
    height: auto;
@@ -1890,9 +1904,9 @@ margin: 0px auto;
   .section-six-left-div{
        
         /* max-width: 100vw; */
-       left: 0px;
-       margin-left: 22px;
-       margin-top: 10px;
+     
+     
+      
        
     }
     .section-six{
@@ -1928,10 +1942,10 @@ margin: 0px auto;
     .section-eight-left-div{
       /* width: calc(100vw - 22px); */
       /* max-width: 100vw; */
-     left: 0px;
+     /* left: 0px;
      margin-left: 22px;
      margin-top: 10px;
-     
+      */
   }
   .section-eight{
       position: relative;
@@ -2011,7 +2025,7 @@ margin: 0px auto;
   display: flex;
   padding-bottom: 0px;
   padding-left: 22px;
-  /* padding-right:71px ; */
+  padding-right:22px ;
   box-sizing: border-box;
   background-color: white;
   /* width: 100vw; */

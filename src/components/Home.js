@@ -165,7 +165,7 @@ const Home = () => {
               </section>
             </div>
 
-            <section className="bg-pinkish" id="section-three">
+            <section className="bg-pinkish section-padding" id="section-three">
               <div className="section-three col-md-12">
                 <div className="section-three-img-container col-md-6">
                   <img
@@ -203,9 +203,9 @@ const Home = () => {
                 </div>
               </div>
             </section>
-            <section className="section-four-section" id="section-four">
-              <div className="container pb-md-5">
-                <div className="section-four col-md-12">
+            <section className="section-six-container section-padding" id="section-four">
+              {/* <div className="container pb-md-5"> */}
+                <div className="section-six col-md-12">
                   <div
                     className="vert-center col-md-6"
                     data-aos="fade-left"
@@ -238,9 +238,9 @@ const Home = () => {
                     />
                   </div>
                 </div>
-              </div>
+              {/* </div> */}
             </section>
-            <section className="bg-pinkish" id="section-five">
+            <section className="bg-pinkish section-padding" id="section-five">
               <div className="section-five col-md-12">
                 <div className="col-md-6 section-five-img-container">
                   <img
@@ -275,7 +275,7 @@ const Home = () => {
                 </div>
               </div>
             </section>
-            <section className="section-six-container" id="section-six">
+            <section className="section-six-container section-padding" id="section-six">
               <div className="section-six col-md-12">
                 <div
                   className="vert-center col-md-6"
@@ -313,7 +313,7 @@ const Home = () => {
             </section>
 
             <section
-              className="bg-pinkish section-three-container"
+              className="bg-pinkish section-padding section-three-container"
               id="mini-website"
             >
               <div className="section-three col-md-12">
@@ -348,7 +348,7 @@ const Home = () => {
                 </div>
               </div>
             </section>
-            <section className="section-eight-container" id="section-eight">
+            <section className="section-eight-container section-padding" id="section-eight">
               <div className="section-eight col-md-12">
                 <div
                   className="vert-center col-md-6"
