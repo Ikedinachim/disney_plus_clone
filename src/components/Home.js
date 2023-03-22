@@ -409,7 +409,10 @@ const Home = () => {
               <div className={"section-seven"}>
                 <div className="section-seven-left-div">
                   <h1>
-                    Build your Brand with <span>Mysogi</span>
+                    Build your Brand 
+                  </h1>
+                  <h1>
+                    with <span>Mysogi</span>
                   </h1>
 
                   <p>The smartads company...</p>

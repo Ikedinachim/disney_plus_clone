@@ -48,3 +48,9 @@
             width: 200px;
         }
     }
+    @media (max-width: 526px) {
+        .container{
+            margin-bottom: 20px;
+            width: 80%;
+
+        }}
