@@ -78,7 +78,7 @@ const Header = () => {
                   />
                 </svg>
               </div>
-              <span className="nav-balance tx-14 tx-md-12 tx-dark tx-medium">
+              <span className="nav-balance tx-14 tx-md-12 tx-dark tx-bold">
                 Balance:{" "}
                 <NumberFormat
                   value={wallet && wallet?.balance}
