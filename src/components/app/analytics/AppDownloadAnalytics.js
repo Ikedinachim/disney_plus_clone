@@ -62,7 +62,7 @@ const AppDownloadAnalytics = () => {
                 <div className="card rounded bd-0 shadow-sm">
                   <div className="card-body">
                     <div className="analytics-data">
-                      <div className="analytics-card">
+                      <div className="analytics-card analytics-card-color">
                         <h4 className="tx-white tx-bold tx-18">
                           Installations
                         </h4>
@@ -70,13 +70,13 @@ const AppDownloadAnalytics = () => {
                           {formatNumber(appDownloadAnalytics?.installations)}
                         </h2>
                       </div>
-                      <div className="analytics-card">
+                      <div className="analytics-card analytics-card-color">
                         <h4 className="tx-white tx-bold tx-18">Impressions</h4>
                         <h2 className="tx-white tx-normal">
                           {formatNumber(appDownloadAnalytics?.impressions)}
                         </h2>
                       </div>
-                      <div className="analytics-card">
+                      <div className="analytics-card analytics-card-color">
                         <h4 className="tx-white tx-bold tx-18">Clicks</h4>
                         <h2 className="tx-white tx-normal">
                           {formatNumber(appDownloadAnalytics?.clicks)}

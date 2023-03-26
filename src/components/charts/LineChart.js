@@ -17,10 +17,14 @@ export const options = {
 };
 
 const LineChart = ({ chartData }) => {
+  console.log("🚀 ~ file: LineChart.js:20 ~ LineChart ~ chartData:", chartData);
   return (
     <div className="chart-container non-mobile-chart mobile-chart">
-      {/* <h2 style={{ textAlign: "center" }}>Line Chart</h2> */}
-      <Line data={chartData} options={options} />
+      {chartData?.datasets.length <= 0 ? (
+        "No data"
+      ) : (
+        <Line data={chartData} options={options} />
+      )}
     </div>
   );
 };

@@ -140,7 +140,7 @@ const Ecommerce = () => {
           <MetaData title={"Store"} />
           <div className="content-body">
             <div className="container pd-x-0">
-              <div className="d-flex flex-wrap store-main-header copy-box mg-b-22">
+              <div className="d-flex store-main-header copy-box mg-b-22">
                 <div className="d-flex copy-box">
                   <div className="d-flex flex-column mg-r-15">
                     <p className="mg-b-0 tx-26 tx-bold">{store?.name}</p>
