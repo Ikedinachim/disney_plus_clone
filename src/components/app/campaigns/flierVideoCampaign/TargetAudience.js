@@ -23,6 +23,7 @@ const TargetAudience = ({
   handleStateChange,
   handleLgaChange,
   handleAreaChange,
+  handleInterestChange,
   numbers,
   personalUpload,
   filterOptions,
@@ -36,7 +37,12 @@ const TargetAudience = ({
   previewUploadedNumbers,
   handleParsedFileData,
   uploadedFileName,
+  arrayInterest,
 }) => {
+  console.log(
+    "🚀 ~ file: TargetAudience.js:42 ~ arrayInterest:",
+    arrayInterest
+  );
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.filteredContactList || []);
 
@@ -245,7 +251,7 @@ const TargetAudience = ({
     { value: 5000, label: "World Localities" },
   ];
 
-  const combinedInterests = propellerInterest.concat(googleInterest);
+  // const combinedInterests = propellerInterest.concat(googleInterest);
 
   const Continue = (e) => {
     e.preventDefault();
@@ -448,18 +454,44 @@ const TargetAudience = ({
                             className="mb-1 tx-com d-flex align-items-center"
                           >
                             Age
+                            {/* <i className="tx-6 fa fa-star tx-primary mg-l-2" /> */}
                           </label>
-                          <select
-                            className="form-control"
-                            defaultValue={values.age}
-                            onChange={handleChange("age")}
-                          >
-                            {propellerAge.map((age, i) => (
-                              <option value={age.value} key={i}>
-                                {age.label}
-                              </option>
-                            ))}
-                          </select>
+                          <div className="form-row">
+                            <div className="form-group col-md-6 mg-b-0">
+                              <div className="input-group mg-b-10">
+                                <div className="input-group-prepend">
+                                  <span className="input-group-text">From</span>
+                                </div>
+                                <input
+                                  type="number"
+                                  id="age-from"
+                                  min="18"
+                                  max="50"
+                                  className="form-control"
+                                  aria-describedby="basic-addon1"
+                                  defaultValue={ageRangeFrom}
+                                  onChange={handleChange("ageRangeFrom")}
+                                />
+                              </div>
+                            </div>
+                            <div className="form-group col-md-6 mg-b-0">
+                              <div className="input-group mg-b-10">
+                                <div className="input-group-prepend">
+                                  <span className="input-group-text">To</span>
+                                </div>
+                                <input
+                                  type="number"
+                                  id="age-to"
+                                  min="18"
+                                  max="50"
+                                  className="form-control"
+                                  aria-describedby="basic-addon1"
+                                  defaultValue={ageRangeTo}
+                                  onChange={handleChange("ageRangeTo")}
+                                />
+                              </div>
+                            </div>
+                          </div>
                         </div>
                         <div className="form-group col-md-6">
                           <label
@@ -468,17 +500,12 @@ const TargetAudience = ({
                           >
                             Interest
                           </label>
-                          <select
-                            className="form-control"
-                            defaultValue={values.interest}
-                            onChange={handleChange("interest")}
-                          >
-                            {combinedInterests.map((interest, i) => (
-                              <option value={interest.value} key={i}>
-                                {interest.label}
-                              </option>
-                            ))}
-                          </select>
+                          <Select
+                            defaultValue={arrayInterest}
+                            onChange={handleInterestChange}
+                            options={googleInterest}
+                            isMulti
+                          />
                         </div>
                         <div className="form-group col-md-12">
                           <label
@@ -716,38 +743,6 @@ const TargetAudience = ({
                               </div>
                             </div>
                           )}
-                          {/* {values.targetAudienceOption !== "mysogidb" && (
-                          <div className="mg-b-20 mg-md-b-10">
-                            <p className="tx-18 tx-com tx-semibold mb-0">
-                              Pricing
-                            </p>
-                            <div className="form-group mg-t-15">
-                              <label className="tx-14 tx-gray mb-1 tx-medium">
-                                Potential Audience Based on Manual Input
-                              </label>
-                              <p className="tx-18 tx-com tx-bold mb-0">
-                                {audience}{" "}
-                                <span className="tx-14 tx-gray tx-medium">
-                                  number(s) loaded
-                                </span>
-                              </p>
-                            </div>
-                            <div className="form-row mg-t-15 pd-x-0">
-                              <div className=" col-md-2 d-flex align-items-center">
-                                <p className="tx-18 tx-com tx-bold mb-0">
-                                  Amount:
-                                </p>{" "}
-                                <NumberFormat
-                                  className="badge tx-green tx-bold tx-18 tx-amt w-100 mt-0"
-                                  value={parseInt(setPrice())}
-                                  displayType={"text"}
-                                  thousandSeparator={true}
-                                  prefix={"₦"}
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        )} */}
                         </div>
                       </div>
                       {values.targetAudienceOption === "mysogidb" && (

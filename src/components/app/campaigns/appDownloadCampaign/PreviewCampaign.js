@@ -534,33 +534,58 @@ const PreviewCampaign = ({
                               </div>
                               <div className="row mg-t-15">
                                 <div className="col-md-6 form-group">
+                                  <label className="tx-14 tx-gray mb-0 tx-medium d-block mt-3">
+                                    Interest:
+                                  </label>
+                                  <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
+                                    {" "}
+                                    {values.arrayInterestLabel
+                                      ? values.arrayInterestLabel
+                                      : "-"}
+                                  </span>
                                   <label className="tx-14 tx-gray mb-0 tx-medium d-block">
                                     State:
                                   </label>
                                   <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
                                     {" "}
-                                    {filterOptions.state}
+                                    {filterOptions.state
+                                      ? filterOptions.state
+                                      : "-"}
                                   </span>
                                   <label className="tx-14 tx-gray mb-0 tx-medium d-block mt-3">
                                     LGA:
                                   </label>
                                   <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
                                     {" "}
-                                    {filterOptions.lga}
+                                    {filterOptions.laga
+                                      ? filterOptions.laga
+                                      : "-"}
                                   </span>
                                   <label className="tx-14 tx-gray mb-0 tx-medium d-block mt-3">
                                     Gender:
                                   </label>
                                   <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
                                     {" "}
-                                    {values.gender}
+                                    {values.gender
+                                      ? values.gender === "B"
+                                        ? "Both"
+                                        : values.gender === "M"
+                                        ? "Male"
+                                        : values.gender === "F"
+                                        ? "Female"
+                                        : "-"
+                                      : "-"}
                                   </span>
                                   <label className="tx-14 tx-gray mb-0 tx-medium d-block mt-3">
                                     Age:
                                   </label>
                                   <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
                                     {" "}
-                                    {values.ageRange}
+                                    {filterOptions.ageRange
+                                      ? filterOptions.ageRange
+                                      : values.age
+                                      ? values.age
+                                      : "-"}
                                   </span>
                                 </div>
                                 <div className="col-md-6 form-group">
@@ -569,14 +594,18 @@ const PreviewCampaign = ({
                                   </label>
                                   <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
                                     {" "}
-                                    {values.scheduleFrom}
+                                    {values.scheduleFrom
+                                      ? values.scheduleFrom
+                                      : "-"}
                                   </span>
                                   <label className="tx-14 tx-gray mb-0 tx-medium d-block mt-3">
                                     End Date:
                                   </label>
                                   <span className="tx-left text-wrap badge badge-pink tx-14 mg-0">
                                     {" "}
-                                    {values.scheduleTo}
+                                    {values.scheduleTo
+                                      ? values.scheduleTo
+                                      : "-"}
                                   </span>
                                   <label className="tx-14 tx-gray mb-0 tx-medium d-block mt-3">
                                     Campaign schedule:
@@ -585,7 +614,7 @@ const PreviewCampaign = ({
                                     {" "}
                                     {values.campaignSchedule === "All_Time"
                                       ? "All day"
-                                      : ""}
+                                      : "-"}
                                   </span>
                                 </div>
                               </div>

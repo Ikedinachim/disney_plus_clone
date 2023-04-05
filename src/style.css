@@ -997,7 +997,7 @@ ol.terms-list ol.terms-inner-list > li:before {
   text-transform: uppercase;
   font-weight: 400;
   font-size: 16px;
-  line-height: 9px;
+  line-height: normal;
   color: #2c2c2c;
   margin-bottom: 12px;
 }
@@ -1221,19 +1221,86 @@ a.disabled:hover {
   cursor: pointer;
 }
 
-.analytics-card:hover h4,
-.analytics-card:hover h2 {
+.analytics-card-color:hover h4,
+.analytics-card-color:hover h2 {
   color: #353e43;
 }
 
-.analytics-card:nth-child(1) {
+.analytics-card-color:nth-child(1) {
   background: #1a73e9;
 }
-.analytics-card:nth-child(2) {
+.analytics-card-color:nth-child(2) {
   background: #d83025;
 }
-.analytics-card:nth-child(3) {
+.analytics-card-color:nth-child(3) {
   background: #f9ab00;
+}
+.analytics-card-color:nth-child(4) {
+  background: #1e8d3e;
+}
+
+.accordion {
+  border-bottom: 1px solid #ff1f00;
+  margin-bottom: 20px;
+}
+
+.accordion-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  cursor: pointer;
+  color: #f0f1fa;
+}
+
+.accordion-header h3 {
+  margin: 0;
+}
+
+.accordion-content {
+  padding: 10px;
+}
+
+.accordion-header-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.sm-hide {
+  display: block;
+}
+
+.sm-show {
+  display: none;
+}
+.sm-nav {
+  width: -webkit-fill-available;
+}
+
+.nav-wallet {
+  display: flex;
+  align-items: center;
+}
+
+.nav-balance {
+  margin-left: 3px;
+}
+
+.nav-aside .nav-item.nav-signout {
+  color: #ff0000;
+  margin-top: 20px;
+}
+
+.nav-item.nav-signout a {
+  color: #ff0000;
+}
+
+.non-mobile-chart {
+  height: 45vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media screen and (max-width: 600px) {
@@ -1270,5 +1337,42 @@ a.disabled:hover {
   }
   .analytics-data {
     flex-direction: column;
+  }
+  .analytics-card {
+    padding: 15px 20px;
+  }
+  .store-sub-header {
+    flex-direction: column;
+  }
+  .store-sub-header-main a {
+    margin: 0;
+    margin-bottom: 30px;
+  }
+  .edit-button {
+    margin-top: 0;
+  }
+  .store-main-header {
+    flex-direction: row;
+  }
+  .mobile-chart {
+    position: relative;
+    height: 50vh;
+  }
+  .sm-hide {
+    display: none;
+  }
+  .sm-show {
+    display: block;
+  }
+  .content-header .sm-nav {
+    width: 100%;
+  }
+  .nav-wallet {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .nav-balance {
+    margin-left: 0;
+    margin-top: 3px;
   }
 }

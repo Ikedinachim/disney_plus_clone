@@ -112,7 +112,7 @@ const MainRoutes = () => {
         </Route>
         <Route path="analytics" element={<ViewAnalytics />} />
         <Route
-          path="analytics/graph/:propellerId"
+          path="analytics/digital-campaign/:campaignId"
           element={<DigitalAnalytics />}
         />
         <Route path="analytics/smartsms/:id" element={<SmartSmsAnalytics />} />

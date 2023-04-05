@@ -120,7 +120,7 @@ const Ecommerce = () => {
           <Fragment>
             <Link
               to={`/app/ecommerce/edit-product/${store.product_id}`}
-              className="edit-button tx-underline"
+              className="edit-button tx-underline text-nowrap"
             >
               Edit Product
             </Link>
@@ -140,7 +140,7 @@ const Ecommerce = () => {
           <MetaData title={"Store"} />
           <div className="content-body">
             <div className="container pd-x-0">
-              <div className="d-flex flex-wrap copy-box mg-b-22">
+              <div className="d-flex store-main-header copy-box mg-b-22">
                 <div className="d-flex copy-box">
                   <div className="d-flex flex-column mg-r-15">
                     <p className="mg-b-0 tx-26 tx-bold">{store?.name}</p>
@@ -167,8 +167,8 @@ const Ecommerce = () => {
               </div>
               <div className="card card rounded bd-0 shadow-sm">
                 <div className="card-header bd-b-0 pd-0 pd-md-x-30 mg-t-40 mg-b-30">
-                  <div className="w-100 d-flex justify-content-between pd-x-15">
-                    <div className="d-flex overflow-hidden">
+                  <div className="store-sub-header w-100 d-flex justify-content-between pd-x-15">
+                    <div className="store-sub-header-main d-flex overflow-hidden">
                       <Link
                         to="/app/campaign/create"
                         state={{ prevPath: pathname }}

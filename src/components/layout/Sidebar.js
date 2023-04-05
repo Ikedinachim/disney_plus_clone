@@ -1,20 +1,37 @@
 import React, { useEffect, useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
-import NavLogo from "../../assets/img/logo.svg";
-
+import { useSelector, useDispatch } from "react-redux";
 import FeatherIcon from "feather-icons-react";
+
+import NavLogo from "../../assets/img/logo.svg";
+import { logout } from "../../actions/authActions";
 
 const Sidebar = ({ user }) => {
   const ref = useRef();
+  const dispatch = useDispatch();
   const [width, setWindowWidth] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(width > 989 ? false : true);
+  // const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [hovered, setHovered] = useState(false);
   const toggleHover = () => setHovered(!hovered);
+  const { userDetails } = useSelector((state) => state);
+  const logoutHandler = () => {
+    dispatch(logout());
+    setIsMenuOpen(false);
+    document.body.classList.remove("show-aside") &&
+      document.body.classList.remove("show-aside");
+    document.querySelector(".aside-backdrop") &&
+      document.body.removeChild(document.querySelector(".aside-backdrop"));
+  };
 
   const updateDimensions = () => {
     const width = window.innerWidth;
     setWindowWidth(width);
   };
+
+  // const toggleProfile = () => {
+  //   setIsProfileOpen(!isProfileOpen);
+  // };
 
   useEffect(() => {
     updateDimensions();
@@ -82,6 +99,59 @@ const Sidebar = ({ user }) => {
         </div>
       </div>
       <div className="aside-body">
+        <div className="sm-show accordion">
+          <div
+            className="accordion-header tx-13 tx-medium"
+            // onClick={toggleProfile}
+          >
+            <div className="accordion-header-main">
+              {userDetails?.user?.firstName + " " + userDetails?.user?.lastName}
+              {/* <span>
+                {isProfileOpen ? (
+                  <i className="fa fa-chevron-up"></i>
+                ) : (
+                  <i className="fa fa-chevron-down"></i>
+                )}
+              </span> */}
+              <div className="avatar avatar-sm mg-l-10">
+                <img
+                  src={
+                    userDetails?.user && userDetails?.user?.imageUrl
+                      ? userDetails?.user?.imageUrl
+                      : "https://via.placeholder.com/500"
+                  }
+                  className="rounded-circle"
+                  alt="asset"
+                />
+              </div>
+            </div>
+            <p className="tx-12 tx-color-03">Administrator</p>
+          </div>
+          {/* {isProfileOpen && (
+            <div className="accordion-content">
+              {userDetails?.user?.username}
+              <div>
+                <NavLink
+                  to="/app"
+                  end
+                  className={({ isActive }) =>
+                    isActive ? "nav-link active" : "nav-link"
+                  }
+                >
+                  <i className="fa fa-home mr-3" />
+                  <span>Home</span>
+                </NavLink>
+              </div>
+              <NavLink to="settings" className="dropdown-item">
+                <FeatherIcon icon="settings" /> Account Settings
+              </NavLink>
+              <div className="dropdown-divider" />
+              <NavLink to="/" className="dropdown-item" onClick={logoutHandler}>
+                <FeatherIcon icon="log-out" /> Sign Out
+              </NavLink>
+            </div>
+          )} */}
+        </div>
         <ul className="nav nav-aside">
           <li className="nav-item active">
             <NavLink
@@ -177,6 +247,17 @@ const Sidebar = ({ user }) => {
               </NavLink>
             </li>
           ) : null}
+          <li className="nav-signout nav-item active sm-show">
+            <NavLink
+              to="/"
+              className="nav-link"
+              onClick={logoutHandler}
+              // ref={ref}
+            >
+              <i className="fas fa-sign-out-alt mr-3" />{" "}
+              <span className="marine-active-menu">Sign Out</span>
+            </NavLink>
+          </li>
         </ul>
       </div>
     </aside>
