@@ -152,7 +152,7 @@ const Home = () => {
                   </div>
                   <div className="section-two-img-container col-md-6">
                     <img
-                      src="./assets/img/billboard.png"
+                      src="./assets/img/billboard_phone.png"
                       alt=""
                       className="section-two-img  "
                       data-aos="fade-right"
