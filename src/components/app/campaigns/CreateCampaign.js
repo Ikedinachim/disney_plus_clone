@@ -12,9 +12,9 @@ import { toast } from "react-toastify";
 import FlashSms from "../../../assets/img/flashsms_sm.png";
 import Markerting from "../../../assets/img/Influencer_Marketing_sm.png";
 import Flier from "../../../assets/img/flier_campaign_sm.png";
-import Phone from "../../../assets/img/mysogi_phone_sm.png";
+import Phone from "../../../assets/img/campaign_img_full.png";
 import Billboard from "../../../assets/img/billboard.png";
-
+//116.59 x 110
 const CreateCampaign = () => {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -192,7 +192,7 @@ const CreateCampaign = () => {
                               isEcommerce ? "store-disabled" : ""
                             }`}
                           >
-                            <img src={Phone} alt="" className="img-fluid" />
+                            <img src={Phone} alt="" className="img-fluid" style={{height: '117px'}} />
                             <div className="pd-t-15">
                               <p className="tx-16 tx-bold">
                                 APP Download Campaign
