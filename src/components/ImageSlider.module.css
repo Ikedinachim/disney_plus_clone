@@ -3,7 +3,9 @@ margin-top: 20px;
 
 
 }
-
+.carousal slack-list{
+    overflow: visible;
+}
 
 .carousal img{
     height: 100%;
